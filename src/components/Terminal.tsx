@@ -104,8 +104,8 @@ const Terminal: React.FC<TerminalProps> = ({
           <div className="w-3 h-3 rounded-full bg-terminal-success" />
         </div>
         <div className="text-terminal-foreground/70 text-sm font-mono flex-1 text-center">
-          <span className="mr-1">&lt;programmer&gt;._</span>
-          <span className="typing-cursor"></span>
+          <span className="mr-1">&lt;programmer&gt;</span>
+          <span className="animate-cursor-blink">_</span>
         </div>
         <div className="w-10"></div> {/* Spacer for symmetry */}
       </div>
