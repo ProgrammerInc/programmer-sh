@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import CommandLine from './CommandLine';
 import TerminalResponse from './TerminalResponse';
@@ -26,13 +25,14 @@ const Terminal: React.FC<TerminalProps> = ({
   const terminalRef = useRef<HTMLDivElement>(null);
   
   const asciiArt = [
-    "  ______               _             _   ______          _    __      _ _       ",
-    " |  ____|             (_)           | | |  ____|        | |  / _|    | (_)      ",
-    " | |__   _ __ ___  ___ _  ___  _ __ | | | |__ ___  _ __| |_| |_ ___ | |_  ___  ",
-    " |  __| | '_ ` _ \\/ __| |/ _ \\| '_ \\| | |  __/ _ \\| '__| __|  _/ _ \\| | |/ _ \\ ",
-    " | |____| | | | | \\__ \\ | (_) | | | |_| | | | (_) | |  | |_| || (_) | | | (_) |",
-    " |______|_| |_| |_|___/_|\\___/|_| |_(_) |_|  \\___/|_|   \\__|_| \\___/|_|_|\\___/ ",
-    "                                                                                ",
+    " _____                                                         _____ _    _ ",
+    "|  __ \\                                                       / ____| |  | |",
+    "| |__) | __ ___   __ _ _ __ __ _ _ __ ___  _ __ ___   ___ _ _| (___ | |__| |",
+    "|  ___/ '__/ _ \\ / _` | '__/ _` | '_ ` _ \\| '_ ` _ \\ / _ \\ '__\\___ \\|  __  |",
+    "| |   | | | (_) | (_| | | | (_| | | | | | | | | | | |  __/ |  ____) | |  | |",
+    "|_|   |_|  \\___/ \\__, |_|  \\__,_|_| |_| |_|_| |_| |_|\\___|_| |_____/|_|  |_|",
+    "                  __/ |                                                      ",
+    "                 |___/                                                       ",
   ];
   
   const { displayLines, currentLineText, isDone } = useMultiLineTypingEffect(asciiArt, {
@@ -105,7 +105,7 @@ const Terminal: React.FC<TerminalProps> = ({
         </div>
         <div className="text-terminal-foreground/70 text-sm font-mono flex-1 text-center">
           <span>&lt;programmer&gt;.</span>
-          <span className="mr-1 animate-cursor-blink">_</span>
+          <span className="animate-cursor-blink">_</span>
           <span>~ portfolio</span>
         </div>
         <div className="w-10"></div> {/* Spacer for symmetry */}
@@ -118,11 +118,11 @@ const Terminal: React.FC<TerminalProps> = ({
         style={{ maxHeight: 'calc(100% - 46px)' }}
       >
         {/* ASCII Art Animation */}
-        <div className="mb-6 text-terminal-prompt font-mono text-sm">
+        <div className="mb-6 text-terminal-prompt font-mono text-xs md:text-sm">
           {displayLines.map((line, i) => (
-            <div key={i}>{line}</div>
+            <div key={i} className="whitespace-pre">{line}</div>
           ))}
-          {currentLineText && <div>{currentLineText}</div>}
+          {currentLineText && <div className="whitespace-pre">{currentLineText}</div>}
         </div>
         
         {/* Command History */}
