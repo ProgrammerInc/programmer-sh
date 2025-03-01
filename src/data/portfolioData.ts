@@ -52,25 +52,25 @@ export interface Profile {
 }
 
 const portfolioData: Profile = {
-  name: "John Doe",
+  name: "James A. Black Jr.",
   title: "Full Stack Developer",
-  summary: "Passionate software engineer with 5+ years of experience building web applications. Specialized in React, TypeScript, and Node.js. Dedicated to creating elegant, efficient, and user-friendly solutions.",
-  location: "San Francisco, CA",
+  summary: "Passionate software engineer with 25+ years of experience building web applications. Specialized in Angular and React front-end frameworks, working with both JavaScript/TypeScript languages, and well versed with many backend languages and frameworks from Node.JS to Python, Golang and more. Dedicated to creating elegant, efficient, and user-friendly solutions.",
+  location: "Frisco, TX",
   contact: {
-    email: "john.doe@example.com",
-    linkedin: "linkedin.com/in/johndoe",
-    github: "github.com/johndoe",
-    twitter: "twitter.com/johndoe",
-    website: "johndoe.dev"
+    email: "james.black@programmer.sh",
+    linkedin: "linkedin.com/in/ProgrammerInc",
+    github: "github.com/ProgrammerInc",
+    twitter: "x.com/ProgrammerInc",
+    website: "programmer.to/website"
   },
   skills: [
     {
       category: "Frontend",
-      items: ["React", "TypeScript", "JavaScript", "HTML/CSS", "Next.js", "Tailwind CSS"]
+      items: ["Angular", "React", "TypeScript", "JavaScript", "HTML/CSS", "Next.js", "Tailwind CSS"]
     },
     {
       category: "Backend",
-      items: ["Node.js", "Express", "Python", "Django", "GraphQL", "REST APIs"]
+      items: ["Node.js", "Python", "Golang", "Express", "Django", "GraphQL", "REST APIs"]
     },
     {
       category: "DevOps",
@@ -83,74 +83,73 @@ const portfolioData: Profile = {
   ],
   experience: [
     {
-      company: "TechCorp Inc.",
-      position: "Senior Full Stack Developer",
+      company: "Bank of America Corporate",
+      position: "Feature Team Lead",
       duration: "2020 - Present",
-      description: "Lead developer for the company's main SaaS platform",
-      technologies: ["React", "TypeScript", "Node.js", "PostgreSQL", "AWS"],
+      description: "Lead developer for corporate banking platforms",
+      technologies: ["Angular", "TypeScript", "Node.js", "PostgreSQL", "AWS"],
       achievements: [
-        "Redesigned architecture reducing load times by 40%",
-        "Led team of 5 developers to launch 3 major features",
+        "Architected solutions reducing load times by 40%",
+        "Led team of developers to launch major features",
         "Implemented CI/CD pipeline reducing deployment time by 70%"
       ]
     },
     {
-      company: "StartupXYZ",
-      position: "Full Stack Developer",
-      duration: "2018 - 2020",
-      description: "Core team member building the company's MVP and scaling for initial growth",
+      company: "Previous Company",
+      position: "Senior Full Stack Developer",
+      duration: "2015 - 2020",
+      description: "Core team member building enterprise applications",
       technologies: ["React", "Node.js", "MongoDB", "Docker"],
       achievements: [
-        "Built responsive frontend used by 10K+ monthly users",
+        "Built responsive frontends used by thousands of users",
         "Developed RESTful API services with 99.9% uptime",
         "Optimized database queries improving performance by 30%"
       ]
     },
     {
-      company: "WebAgency Co.",
-      position: "Frontend Developer",
-      duration: "2016 - 2018",
-      description: "Developed frontend solutions for various client projects",
-      technologies: ["JavaScript", "HTML/CSS", "jQuery", "WordPress"],
+      company: "Early Career",
+      position: "Software Developer",
+      duration: "2000 - 2015",
+      description: "Developed solutions for various industries",
+      technologies: ["JavaScript", "C#", ".NET", "SQL"],
       achievements: [
-        "Delivered 15+ client projects on time and within budget",
-        "Created custom component library used across multiple projects",
-        "Mentored 3 junior developers"
+        "Delivered numerous client projects on time and within budget",
+        "Created reusable component libraries",
+        "Mentored junior developers"
       ]
     }
   ],
   projects: [
     {
       id: "proj1",
-      title: "E-commerce Platform",
-      description: "Full-featured e-commerce solution with product management, cart, checkout, and admin dashboard",
-      technologies: ["React", "Node.js", "PostgreSQL", "Stripe", "AWS"],
-      github: "github.com/johndoe/ecommerce",
+      title: "Banking API Platform",
+      description: "Enterprise solution for banking API management with security, performance monitoring, and developer tooling",
+      technologies: ["Angular", "Node.js", "PostgreSQL", "AWS", "Docker"],
+      github: "github.com/ProgrammerInc/banking-api",
       highlights: [
-        "Implemented shopping cart with local storage persistence",
-        "Built responsive product catalog with advanced filtering options",
-        "Integrated secure payment processing with Stripe"
+        "Implemented OAuth 2.0 authorization framework",
+        "Built responsive admin dashboard with real-time metrics",
+        "Designed scalable microservices architecture"
       ]
     },
     {
       id: "proj2",
-      title: "Task Management App",
-      description: "Collaborative task management application with real-time updates",
-      technologies: ["React", "TypeScript", "Firebase", "Material UI"],
-      link: "task-app.example.com",
-      github: "github.com/johndoe/task-app",
+      title: "Distributed Workflow System",
+      description: "Scalable workflow orchestration system for enterprise processes",
+      technologies: ["React", "TypeScript", "Golang", "Kubernetes"],
+      github: "github.com/ProgrammerInc/workflow-engine",
       highlights: [
-        "Real-time updates using Firebase Firestore",
-        "Drag-and-drop task organization with React DnD",
-        "User authentication and team management features"
+        "Event-driven architecture with message queuing",
+        "Interactive workflow designer with drag-and-drop functionality",
+        "Multi-tenant system supporting enterprise scale"
       ]
     },
     {
       id: "proj3",
-      title: "Developer Portfolio",
+      title: "Terminal Portfolio",
       description: "Terminal-style developer portfolio showcasing projects and skills",
       technologies: ["React", "TypeScript", "Tailwind CSS", "Vite"],
-      github: "github.com/johndoe/terminal-portfolio",
+      github: "github.com/ProgrammerInc/terminal-portfolio",
       highlights: [
         "Custom terminal emulator with command processing",
         "Animated typing effects and smooth transitions",
@@ -160,16 +159,10 @@ const portfolioData: Profile = {
   ],
   education: [
     {
-      degree: "Master of Science in Computer Science",
-      institution: "Stanford University",
-      year: "2016",
-      details: "Specialization in Software Engineering and Human-Computer Interaction"
-    },
-    {
-      degree: "Bachelor of Science in Computer Science",
-      institution: "University of California, Berkeley",
-      year: "2014",
-      details: "Minor in Mathematics, Dean's List all semesters"
+      degree: "Computer Science",
+      institution: "University of Texas",
+      year: "2000",
+      details: "Focus on Software Engineering"
     }
   ]
 };
