@@ -54,7 +54,7 @@ const CommandLine: React.FC<CommandLineProps> = ({
         )}
         aria-label="Terminal command input"
       />
-      <span className="typing-cursor h-5 ml-0.5"></span>
+      {/* Removed the extra cursor that was here */}
     </form>
   );
 };
