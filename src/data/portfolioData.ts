@@ -52,7 +52,7 @@ export interface Profile {
 }
 
 const portfolioData: Profile = {
-  name: "James A. Black Jr.",
+  name: "James Black",
   title: "Full Stack Developer",
   summary: "Passionate software engineer with 25+ years of experience building web applications. Specialized in Angular and React front-end frameworks, working with both JavaScript/TypeScript languages, and well versed with many backend languages and frameworks from Node.JS to Python, Golang and more. Dedicated to creating elegant, efficient, and user-friendly solutions.",
   location: "Frisco, TX",
