@@ -68,7 +68,7 @@ const Index = () => {
       </div>
 
       <div
-        className={`w-full h-full flex items-center justify-center transition-all duration-1000 ease-out ${
+        className={`w-full max-w-4xl h-[80vh] transition-all duration-1000 ease-out terminal-glow-shadow ${
           isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
         }`}
       >
