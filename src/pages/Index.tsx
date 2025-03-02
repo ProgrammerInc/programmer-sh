@@ -122,22 +122,14 @@ const Index = () => {
     return classes.join(' ');
   };
 
-  const currentYear = new Date().getFullYear();
-
   return (
     <div className={getWallpaperClasses()}>
-      <div className="flex flex-col min-h-screen justify-between">
-        <div
-          className={`w-full max-w-4xl mx-auto transition-all duration-1000 ease-out terminal-glow-shadow ${
-            isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
-          }`}
-        >
-          <Terminal initialCommands={initialCommands} />
-        </div>
-        
-        <footer className="w-full text-center py-4 text-xs text-terminal-muted mt-4">
-          <p>&copy; {currentYear} Programmer Incorporated LLC. All rights reserved.</p>
-        </footer>
+      <div
+        className={`w-full max-w-4xl h-[80vh] transition-all duration-1000 ease-out terminal-glow-shadow ${
+          isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+        }`}
+      >
+        <Terminal initialCommands={initialCommands} />
       </div>
       <Toaster />
     </div>
