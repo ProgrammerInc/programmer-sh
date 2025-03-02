@@ -9,6 +9,7 @@ import { helpCommand } from './helpCommand';
 import { clearCommand } from './systemCommands';
 import { loginCommand, logoutCommand, signupCommand, whoamiCommand, profileCommand } from './authCommands';
 import { themeCommand } from './themeCommand';
+import { welcomeCommand } from './welcomeCommand';
 
 export const processCommand = (commandString: string) => {
   if (commandString.trim() === '') {
@@ -26,6 +27,11 @@ export const processCommand = (commandString: string) => {
   const tokens = commandString.trim().split(/\s+/);
   const commandName = tokens[0].toLowerCase();
   const args = tokens.slice(1).join(' ');
+
+  // Welcome command
+  if (commandName === welcomeCommand.name) {
+    return welcomeCommand.execute();
+  }
 
   // Auth commands
   if (commandName === loginCommand.name) {

@@ -1,3 +1,4 @@
+
 import { Command } from './types';
 
 // Update the helpCommand to include auth commands
@@ -16,13 +17,14 @@ Authentication:
   profile set <field> <value>  - Update your profile information
 
 Information:
-  about          - Display information about me
-  contact        - Display my contact information
-  skills         - Display my skills and technologies
-  experience     - Display my work experience
-  projects       - Display my projects
-  project <id>   - Display details about a specific project
-  education      - Display my educational background
+  welcome         - Display the welcome message
+  about           - Display information about me
+  contact         - Display my contact information
+  skills          - Display my skills and technologies
+  experience      - Display my work experience
+  projects        - Display my projects
+  project <id>    - Display details about a specific project
+  education       - Display my educational background
 
 System:
   help           - Display this help message
