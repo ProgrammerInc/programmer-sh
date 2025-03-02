@@ -1,6 +1,6 @@
 
 import React from 'react';
-import TerminalResponse from './TerminalResponse';
+import TerminalResponse from './terminal-response';
 import { CommandResult } from '../utils/commands/types';
 
 interface HistoryItem {
