@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Github, Linkedin, Twitter, X, Plus, Minus } from 'lucide-react';
+import { Github, Linkedin, Twitter, Mail, Globe, X, Plus, Minus } from 'lucide-react';
 import { SocialLink } from '@/types/socialLinks';
 
 interface TerminalHeaderProps {
@@ -17,6 +18,10 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socia
         return <Linkedin className="w-4 h-4" />;
       case 'twitter':
         return <Twitter className="w-4 h-4" />;
+      case 'email':
+        return <Mail className="w-4 h-4" />;
+      case 'website':
+        return <Globe className="w-4 h-4" />;
       default:
         return null;
     }

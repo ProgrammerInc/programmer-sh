@@ -1,3 +1,4 @@
+
 import type { SocialLink } from '../../types/socialLinks';
 import { fetchProfile } from './portfolioServices';
 
@@ -29,7 +30,7 @@ export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
       });
     }
 
-    // Add Twitter if available
+    // Add Twitter/X if available
     if (profile.contact.twitter) {
       socialLinks.push({
         type: 'twitter',
@@ -38,20 +39,20 @@ export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
     }
 
     // Add email if available
-    // if (profile.contact.email) {
-    //   socialLinks.push({
-    //     type: 'email',
-    //     url: `mailto:${profile.contact.email}`
-    //   });
-    // }
+    if (profile.contact.email) {
+      socialLinks.push({
+        type: 'email',
+        url: `mailto:${profile.contact.email}`
+      });
+    }
 
     // Add website if available
-    // if (profile.contact.website) {
-    //   socialLinks.push({
-    //     type: 'website',
-    //     url: profile.contact.website
-    //   });
-    // }
+    if (profile.contact.website) {
+      socialLinks.push({
+        type: 'website',
+        url: profile.contact.website
+      });
+    }
 
     return socialLinks;
   } catch (error) {

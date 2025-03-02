@@ -1,3 +1,4 @@
+
 import { fetchProfile } from '../database/portfolioServices';
 import { Command, CommandResult } from './types';
 
@@ -31,12 +32,12 @@ ${profile.summary}
 
 Contact:
 
-- E-mail: ${profile.contact.email}
+- E-mail: <a href="mailto:${profile.contact.email}" target="_blank">${profile.contact.email}</a>
 - Phone: ${profile.contact.phone}
-${profile.contact.github ? `- GitHub: ${profile.contact.github}` : ''}
-${profile.contact.linkedin ? `- LinkedIn: ${profile.contact.linkedin}` : ''}
-${profile.contact.twitter ? `- X/Twitter: ${profile.contact.twitter}` : ''}
-${profile.contact.website ? `- Website: ${profile.contact.website}` : ''}
+${profile.contact.github ? `- GitHub: <a href="${profile.contact.github}" target="_blank">${profile.contact.github}</a>` : ''}
+${profile.contact.linkedin ? `- LinkedIn: <a href="${profile.contact.linkedin}" target="_blank">${profile.contact.linkedin}</a>` : ''}
+${profile.contact.twitter ? `- X/Twitter: <a href="${profile.contact.twitter}" target="_blank">${profile.contact.twitter}</a>` : ''}
+${profile.contact.website ? `- Website: <a href="${profile.contact.website}" target="_blank">${profile.contact.website}</a>` : ''}
 `,
           isError: false,
         };
@@ -67,12 +68,12 @@ export const contactCommand: Command = {
         return {
           content: `My Contact Information:
 
-E-mail: ${profile.contact.email}
+E-mail: <a href="mailto:${profile.contact.email}" target="_blank">${profile.contact.email}</a>
 ${profile.contact.phone ? `Phone: ${profile.contact.phone}` : ''}
-${profile.contact.linkedin ? `LinkedIn: ${profile.contact.linkedin}` : ''}
-${profile.contact.github ? `GitHub: ${profile.contact.github}` : ''}
-${profile.contact.twitter ? `X/Twitter: ${profile.contact.twitter}` : ''}
-${profile.contact.website ? `Website: ${profile.contact.website}` : ''}
+${profile.contact.linkedin ? `LinkedIn: <a href="${profile.contact.linkedin}" target="_blank">${profile.contact.linkedin}</a>` : ''}
+${profile.contact.github ? `GitHub: <a href="${profile.contact.github}" target="_blank">${profile.contact.github}</a>` : ''}
+${profile.contact.twitter ? `X/Twitter: <a href="${profile.contact.twitter}" target="_blank">${profile.contact.twitter}</a>` : ''}
+${profile.contact.website ? `Website: <a href="${profile.contact.website}" target="_blank">${profile.contact.website}</a>` : ''}
 `,
           isError: false,
         };
