@@ -44,9 +44,9 @@ export const aboutCommand: Command = {
         return {
           content: `<strong>About Me:</strong>
 
-<strong>Name:</strong> ${profile.full_name}
-<strong>Title:</strong> ${profile.title} @ ${profile.company}
-<strong>Location:</strong> ${profile.location}
+<strong>Name:</strong> <span class="text-terminal-prompt">${profile.full_name}</span>
+<strong>Title:</strong> <span class="text-terminal-prompt">${profile.title}</span> @ <span class="text-terminal-prompt">${profile.company}</span>
+<strong>Location:</strong> <span class="text-terminal-prompt">${profile.location}</span>
 
 ${profile.summary}
 
