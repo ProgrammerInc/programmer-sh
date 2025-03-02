@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { CommandResult } from '../utils/commands/types';
 import { useTypingEffect } from '../utils/typingEffect';
@@ -256,7 +257,7 @@ const TerminalResponse: React.FC<TerminalResponseProps> = ({
       );
     }
     
-    // Otherwise use dangerouslySetInnerHTML
+    // Use dangerouslySetInnerHTML for HTML content
     return (
       <div
         className={cn(
