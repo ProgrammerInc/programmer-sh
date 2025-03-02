@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import CommandLine from './CommandLine';
 import TerminalResponse from './TerminalResponse';
@@ -22,6 +23,7 @@ const Terminal: React.FC<TerminalProps> = ({
 }) => {
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [isInitializing, setIsInitializing] = useState(true);
+  const [initialCommandsProcessed, setInitialCommandsProcessed] = useState(false);
   const terminalRef = useRef<HTMLDivElement>(null);
   
   const asciiArt = [
@@ -43,10 +45,13 @@ const Terminal: React.FC<TerminalProps> = ({
   
   // Process initial commands
   useEffect(() => {
-    if (isInitializing && isDone) {
+    if (isInitializing && isDone && !initialCommandsProcessed) {
       let timeout: NodeJS.Timeout;
       
       const processInitialCommands = async () => {
+        // Set initialCommandsProcessed to true immediately to prevent multiple executions
+        setInitialCommandsProcessed(true);
+        
         // Wait a bit after ASCII art is done
         await new Promise(resolve => setTimeout(resolve, 500));
         
@@ -67,7 +72,7 @@ const Terminal: React.FC<TerminalProps> = ({
       
       return () => clearTimeout(timeout);
     }
-  }, [initialCommands, isInitializing, isDone]);
+  }, [initialCommands, isInitializing, isDone, initialCommandsProcessed]);
   
   // Scroll to bottom when history changes
   useEffect(() => {
