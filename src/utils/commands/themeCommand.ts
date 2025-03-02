@@ -1,4 +1,3 @@
-
 import { Command, CommandResult } from './types';
 
 // Theme options
@@ -25,9 +24,9 @@ export const setTheme = (theme: ThemeOption): void => {
 // Process theme from URL parameter
 export const processThemeFromUrl = (themeParam: string): void => {
   if (!themeParam) return;
-  
+
   const normalizedTheme = themeParam.toLowerCase();
-  
+
   if (normalizedTheme === 'dark' || normalizedTheme === 'light') {
     setTheme(normalizedTheme as ThemeOption);
     console.log(`Theme set from URL parameter: ${normalizedTheme}`);
@@ -67,7 +66,7 @@ export const themeCommand: Command = {
 
     if (newTheme === currentTheme) {
       return {
-        content: `Theme is already set to ${currentTheme} mode`,
+        content: `Theme is already set to ${currentTheme} mode.`,
         isError: false,
       };
     }
@@ -75,7 +74,7 @@ export const themeCommand: Command = {
     setTheme(newTheme as ThemeOption);
 
     return {
-      content: `Theme switched to ${newTheme} mode`,
+      content: `Theme switched to ${newTheme} mode.`,
       isError: false,
     };
   },
