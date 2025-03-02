@@ -12,35 +12,55 @@ interface TerminalResponseProps {
 
 // Function to convert plain text URLs to clickable links
 const convertLinksToAnchors = (text: string): React.ReactNode => {
-  // Regex to match URLs, emails, and phone numbers
-  const urlRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)|([a-zA-Z0-9][\w.-]+\.(com|org|net|edu|io|sh|to|dev|me|app)(?:\/[^\s]*)?)/g;
+  // Regex to match URLs (including x.com/twitter.com), emails, and phone numbers
+  const urlRegex = /(https?:\/\/[^\s]+)|([a-zA-Z0-9][\w.-]+\.(com|org|net|edu|io|sh|to|dev|me|app)(?:\/[^\s]*)?)/g;
   const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
   const phoneRegex = /(\+\d{1,3}[-\s]?\(?\d{1,4}\)?[-\s]?\d{1,4}[-\s]?\d{1,4}[-\s]?\d{1,4})/g;
   
-  // Split the text into parts by URLs, emails, and phone numbers
+  // Split the text into parts
   const parts: React.ReactNode[] = [];
-  let remainingText = text;
-  
-  // Process URLs
   let lastIndex = 0;
-  let urlMatch;
   
-  // Using a copy of the text for URL processing
+  // Create a copy of the text for processing
   const textCopy = text;
   
-  while ((urlMatch = urlRegex.exec(textCopy)) !== null) {
+  // First, process URLs
+  const processedSegments: React.ReactNode[] = [];
+  
+  // Process the text segment by segment, looking for URLs, emails, and phone numbers
+  let currentText = textCopy;
+  let currentIndex = 0;
+  
+  // Process URLs first
+  while (currentIndex < currentText.length) {
+    const restOfText = currentText.substring(currentIndex);
+    const urlMatch = urlRegex.exec(restOfText);
+    
+    if (!urlMatch) {
+      // No more URLs, add the rest and break
+      if (currentIndex < currentText.length) {
+        processedSegments.push(processOtherTypes(currentText.substring(currentIndex)));
+      }
+      break;
+    }
+    
     // Add text before the URL
-    if (urlMatch.index > lastIndex) {
-      const beforeText = textCopy.substring(lastIndex, urlMatch.index);
-      parts.push(processEmailsAndPhones(beforeText));
+    if (urlMatch.index > 0) {
+      processedSegments.push(processOtherTypes(restOfText.substring(0, urlMatch.index)));
     }
     
     // Add the URL as a link
     const url = urlMatch[0];
-    const href = url.startsWith('http') ? url : `https://${url}`;
-    parts.push(
+    let href = url;
+    
+    // Handle different URL formats
+    if (!href.startsWith('http')) {
+      href = `https://${href}`;
+    }
+    
+    processedSegments.push(
       <a 
-        key={`link-${urlMatch.index}`} 
+        key={`link-${currentIndex + urlMatch.index}`} 
         href={href} 
         target="_blank" 
         rel="noopener noreferrer"
@@ -50,18 +70,13 @@ const convertLinksToAnchors = (text: string): React.ReactNode => {
       </a>
     );
     
-    lastIndex = urlMatch.index + url.length;
+    currentIndex += urlMatch.index + url.length;
   }
   
-  // Add any remaining text after the last URL
-  if (lastIndex < textCopy.length) {
-    parts.push(processEmailsAndPhones(textCopy.substring(lastIndex)));
-  }
-  
-  return parts;
+  return processedSegments;
   
   // Helper function to process emails and phones in text segments
-  function processEmailsAndPhones(text: string): React.ReactNode[] {
+  function processOtherTypes(text: string): React.ReactNode[] {
     const segments: React.ReactNode[] = [];
     let lastPos = 0;
     
@@ -69,7 +84,7 @@ const convertLinksToAnchors = (text: string): React.ReactNode => {
     let emailMatch;
     while ((emailMatch = emailRegex.exec(text)) !== null) {
       if (emailMatch.index > lastPos) {
-        segments.push(text.substring(lastPos, emailMatch.index));
+        segments.push(processPhones(text.substring(lastPos, emailMatch.index)));
       }
       
       const email = emailMatch[0];
@@ -89,22 +104,29 @@ const convertLinksToAnchors = (text: string): React.ReactNode => {
     }
     
     // Process remaining text for phone numbers
-    let phoneText = text.substring(lastPos);
+    if (lastPos < text.length) {
+      segments.push(processPhones(text.substring(lastPos)));
+    }
+    
+    return segments.flat();
+  }
+  
+  // Helper function to process phone numbers
+  function processPhones(text: string): React.ReactNode[] {
+    const segments: React.ReactNode[] = [];
+    let lastPos = 0;
+    
     let phoneMatch;
-    let phoneLastPos = 0;
-    
-    const phoneSegments: React.ReactNode[] = [];
-    
-    while ((phoneMatch = phoneRegex.exec(phoneText)) !== null) {
-      if (phoneMatch.index > phoneLastPos) {
-        phoneSegments.push(phoneText.substring(phoneLastPos, phoneMatch.index));
+    while ((phoneMatch = phoneRegex.exec(text)) !== null) {
+      if (phoneMatch.index > lastPos) {
+        segments.push(text.substring(lastPos, phoneMatch.index));
       }
       
       const phone = phoneMatch[0];
       // Clean up the phone number for tel: link
       const cleanPhone = phone.replace(/[-\s()]/g, '');
       
-      phoneSegments.push(
+      segments.push(
         <a 
           key={`phone-${phoneMatch.index}`} 
           href={`tel:${cleanPhone}`}
@@ -114,16 +136,10 @@ const convertLinksToAnchors = (text: string): React.ReactNode => {
         </a>
       );
       
-      phoneLastPos = phoneMatch.index + phone.length;
+      lastPos = phoneMatch.index + phone.length;
     }
     
-    if (phoneLastPos < phoneText.length) {
-      phoneSegments.push(phoneText.substring(phoneLastPos));
-    }
-    
-    if (phoneSegments.length > 0) {
-      segments.push(...phoneSegments);
-    } else if (lastPos < text.length) {
+    if (lastPos < text.length) {
       segments.push(text.substring(lastPos));
     }
     
