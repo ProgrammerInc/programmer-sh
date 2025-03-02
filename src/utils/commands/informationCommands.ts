@@ -1,4 +1,3 @@
-
 import { fetchProfile } from '../database/portfolioServices';
 import { Command, CommandResult } from './types';
 
@@ -158,7 +157,7 @@ END:VCARD`;
 
 <div class="flex justify-center w-full mt-4">
   <div id="qrcode-container">
-    <QRCode value="${encodeURIComponent(vCard)}" title="Scan to save contact information" />
+    <QRCode size={256} value="${encodeURIComponent(vCard)}" title="Scan to save contact information" />
   </div>
 </div>
 `,

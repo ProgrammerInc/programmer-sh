@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { cn } from '@/lib/utils';
@@ -12,19 +11,14 @@ interface QRCodeProps {
 
 const QRCodeComponent: React.FC<QRCodeProps> = ({
   value,
-  size = 128,
+  size = 256,
   className,
-  title = "Scan this QR code"
+  title = 'Scan this QR code',
 }) => {
   return (
     <div className={cn('flex flex-col items-center my-4', className)}>
       <div className="bg-white p-2 rounded">
-        <QRCodeSVG 
-          value={value} 
-          size={size} 
-          level="M"
-          includeMargin={true}
-        />
+        <QRCodeSVG value={value} size={size} level="M" includeMargin={true} />
       </div>
       {title && <p className="text-xs text-terminal-foreground mt-2">{title}</p>}
     </div>
