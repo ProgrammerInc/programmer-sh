@@ -9,6 +9,118 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      education: {
+        Row: {
+          created_at: string
+          degree: string
+          details: string | null
+          id: string
+          institution: string
+          year: string
+        }
+        Insert: {
+          created_at?: string
+          degree: string
+          details?: string | null
+          id?: string
+          institution: string
+          year: string
+        }
+        Update: {
+          created_at?: string
+          degree?: string
+          details?: string | null
+          id?: string
+          institution?: string
+          year?: string
+        }
+        Relationships: []
+      }
+      experience_achievements: {
+        Row: {
+          created_at: string
+          description: string
+          experience_id: string | null
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          experience_id?: string | null
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          experience_id?: string | null
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "experience_achievements_experience_id_fkey"
+            columns: ["experience_id"]
+            isOneToOne: false
+            referencedRelation: "experiences"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      experience_technologies: {
+        Row: {
+          created_at: string
+          experience_id: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          experience_id?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          experience_id?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "experience_technologies_experience_id_fkey"
+            columns: ["experience_id"]
+            isOneToOne: false
+            referencedRelation: "experiences"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      experiences: {
+        Row: {
+          company: string
+          created_at: string
+          description: string
+          duration: string
+          id: string
+          position: string
+        }
+        Insert: {
+          company: string
+          created_at?: string
+          description: string
+          duration: string
+          id?: string
+          position: string
+        }
+        Update: {
+          company?: string
+          created_at?: string
+          description?: string
+          duration?: string
+          id?: string
+          position?: string
+        }
+        Relationships: []
+      }
       messages: {
         Row: {
           content: string
@@ -30,6 +142,51 @@ export type Database = {
           id?: string
           updated_at?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      portfolio_profile: {
+        Row: {
+          created_at: string
+          email: string
+          github: string | null
+          id: string
+          linkedin: string | null
+          location: string
+          name: string
+          phone: string | null
+          summary: string
+          title: string
+          twitter: string | null
+          website: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          github?: string | null
+          id?: string
+          linkedin?: string | null
+          location: string
+          name: string
+          phone?: string | null
+          summary: string
+          title: string
+          twitter?: string | null
+          website?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          github?: string | null
+          id?: string
+          linkedin?: string | null
+          location?: string
+          name?: string
+          phone?: string | null
+          summary?: string
+          title?: string
+          twitter?: string | null
+          website?: string | null
         }
         Relationships: []
       }
@@ -93,6 +250,144 @@ export type Database = {
           id?: string
           updated_at?: string
           username?: string | null
+        }
+        Relationships: []
+      }
+      project_highlights: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          project_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: string
+          project_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          project_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_highlights_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_technologies: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          project_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          project_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          project_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_technologies_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      projects: {
+        Row: {
+          created_at: string
+          description: string
+          github: string | null
+          id: string
+          image: string | null
+          link: string | null
+          project_key: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          github?: string | null
+          id?: string
+          image?: string | null
+          link?: string | null
+          project_key: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          github?: string | null
+          id?: string
+          image?: string | null
+          link?: string | null
+          project_key?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      skill_items: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          skill_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          skill_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          skill_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "skill_items_skill_id_fkey"
+            columns: ["skill_id"]
+            isOneToOne: false
+            referencedRelation: "skills"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      skills: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
         }
         Relationships: []
       }

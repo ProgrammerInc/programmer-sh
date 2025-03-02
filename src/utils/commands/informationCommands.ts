@@ -1,5 +1,6 @@
-import portfolioData from '../../data/portfolioData';
-import { Command } from './types';
+
+import { Command, CommandResult } from './types';
+import { fetchProfile } from '../database/portfolioServices';
 
 // About command implementation
 export const aboutCommand: Command = {
@@ -7,19 +8,34 @@ export const aboutCommand: Command = {
   description: 'Display information about me',
   execute: () => {
     return {
-      content: `
-${portfolioData.name} - ${portfolioData.title}
-${portfolioData.location}
+      content: 'Fetching about information...',
+      isAsync: true,
+      asyncResolver: async (): Promise<CommandResult> => {
+        const profile = await fetchProfile();
+        
+        if (!profile) {
+          return {
+            content: 'Error: Could not fetch profile information.',
+            isError: true
+          };
+        }
 
-${portfolioData.summary}
+        return {
+          content: `
+${profile.name} - ${profile.title}
+${profile.location}
+
+${profile.summary}
 
 Contact:
-- Email: ${portfolioData.contact.email}
-${portfolioData.contact.github ? `- GitHub: ${portfolioData.contact.github}` : ''}
-${portfolioData.contact.linkedin ? `- LinkedIn: ${portfolioData.contact.linkedin}` : ''}
-${portfolioData.contact.twitter ? `- X/Twitter: ${portfolioData.contact.twitter}` : ''}
-${portfolioData.contact.website ? `- Website: ${portfolioData.contact.website}` : ''}
+- Email: ${profile.contact.email}
+${profile.contact.github ? `- GitHub: ${profile.contact.github}` : ''}
+${profile.contact.linkedin ? `- LinkedIn: ${profile.contact.linkedin}` : ''}
+${profile.contact.twitter ? `- X/Twitter: ${profile.contact.twitter}` : ''}
+${profile.contact.website ? `- Website: ${profile.contact.website}` : ''}
 `,
+        };
+      }
     };
   },
 };
@@ -30,10 +46,23 @@ export const skillsCommand: Command = {
   description: 'List my technical skills',
   execute: () => {
     return {
-      content: `
+      content: 'Fetching skills...',
+      isAsync: true,
+      asyncResolver: async (): Promise<CommandResult> => {
+        const profile = await fetchProfile();
+        
+        if (!profile || !profile.skills.length) {
+          return {
+            content: 'Error: Could not fetch skills information.',
+            isError: true
+          };
+        }
+
+        return {
+          content: `
 Skills:
 
-${portfolioData.skills
+${profile.skills
   .map(
     skillCategory => `
 ${skillCategory.category}:
@@ -42,6 +71,8 @@ ${skillCategory.items.map(skill => `- ${skill}`).join('\n')}
   )
   .join('\n')}
 `,
+        };
+      }
     };
   },
 };
@@ -52,16 +83,31 @@ export const contactCommand: Command = {
   description: 'Display my contact information',
   execute: () => {
     return {
-      content: `
+      content: 'Fetching contact information...',
+      isAsync: true,
+      asyncResolver: async (): Promise<CommandResult> => {
+        const profile = await fetchProfile();
+        
+        if (!profile) {
+          return {
+            content: 'Error: Could not fetch contact information.',
+            isError: true
+          };
+        }
+
+        return {
+          content: `
 Contact Information:
 
-Email: ${portfolioData.contact.email}
-${portfolioData.contact.phone ? `Phone: ${portfolioData.contact.phone}` : ''}
-${portfolioData.contact.linkedin ? `LinkedIn: ${portfolioData.contact.linkedin}` : ''}
-${portfolioData.contact.github ? `GitHub: ${portfolioData.contact.github}` : ''}
-${portfolioData.contact.twitter ? `X/Twitter: ${portfolioData.contact.twitter}` : ''}
-${portfolioData.contact.website ? `Website: ${portfolioData.contact.website}` : ''}
+Email: ${profile.contact.email}
+${profile.contact.phone ? `Phone: ${profile.contact.phone}` : ''}
+${profile.contact.linkedin ? `LinkedIn: ${profile.contact.linkedin}` : ''}
+${profile.contact.github ? `GitHub: ${profile.contact.github}` : ''}
+${profile.contact.twitter ? `X/Twitter: ${profile.contact.twitter}` : ''}
+${profile.contact.website ? `Website: ${profile.contact.website}` : ''}
 `,
+        };
+      }
     };
   },
 };

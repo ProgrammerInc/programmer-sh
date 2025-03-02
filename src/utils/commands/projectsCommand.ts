@@ -1,6 +1,6 @@
 
-import portfolioData from '../../data/portfolioData';
 import { Command, CommandResult } from './types';
+import { fetchProjects, fetchProjectById } from '../database/portfolioServices';
 
 export const projectsCommand: Command = {
   name: 'projects',
@@ -10,10 +10,23 @@ export const projectsCommand: Command = {
     if (!args) {
       // Show all projects
       return {
-        content: `
+        content: 'Fetching projects...',
+        isAsync: true,
+        asyncResolver: async (): Promise<CommandResult> => {
+          const projects = await fetchProjects();
+          
+          if (!projects || !projects.length) {
+            return {
+              content: 'Error: Could not fetch projects information.',
+              isError: true
+            };
+          }
+
+          return {
+            content: `
 Projects:
 
-${portfolioData.projects
+${projects
   .map(
     project => `
 - ${project.id}: ${project.title}
@@ -25,14 +38,27 @@ ${portfolioData.projects
   )
   .join('\n')}
 `,
+          };
+        }
       };
     }
 
     // Show a specific project
-    const project = portfolioData.projects.find(p => p.id === args);
-    if (project) {
-      return {
-        content: `
+    return {
+      content: `Fetching project ${args}...`,
+      isAsync: true,
+      asyncResolver: async (): Promise<CommandResult> => {
+        const project = await fetchProjectById(args);
+        
+        if (!project) {
+          return {
+            content: `Project '${args}' not found. Type 'projects' to see all projects.`,
+            isError: true
+          };
+        }
+
+        return {
+          content: `
 Project: ${project.title}
 
 ${project.description}
@@ -45,12 +71,8 @@ ${project.highlights.map(highlight => `- ${highlight}`).join('\n')}
 ${project.github ? `GitHub: ${project.github}` : ''}
 ${project.link ? `Live Demo: ${project.link}` : ''}
 `,
-      };
-    } else {
-      return {
-        content: `Project '${args}' not found. Type 'projects' to see all projects.`,
-        isError: true,
-      };
-    }
+        };
+      }
+    };
   },
 };

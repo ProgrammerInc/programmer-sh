@@ -1,15 +1,29 @@
-import portfolioData from '../../data/portfolioData';
-import { Command } from './types';
+
+import { Command, CommandResult } from './types';
+import { fetchExperience } from '../database/portfolioServices';
 
 export const experienceCommand: Command = {
   name: 'experience',
   description: 'Display my work experience',
   execute: () => {
     return {
-      content: `
+      content: 'Fetching experience...',
+      isAsync: true,
+      asyncResolver: async (): Promise<CommandResult> => {
+        const experience = await fetchExperience();
+        
+        if (!experience || !experience.length) {
+          return {
+            content: 'Error: Could not fetch experience information.',
+            isError: true
+          };
+        }
+
+        return {
+          content: `
 Work Experience:
 
-${portfolioData.experience
+${experience
   .map(
     exp => `
 ${exp.position} at ${exp.company}
@@ -25,6 +39,8 @@ ${exp.achievements.map(achievement => `- ${achievement}`).join('\n')}
   )
   .join('\n')}
 `,
+        };
+      }
     };
   },
 };

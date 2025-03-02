@@ -1,12 +1,26 @@
-import portfolioData from '../../data/portfolioData';
-import { Command } from './types';
+
+import { Command, CommandResult } from './types';
+import { fetchPortfolioData } from '../database/portfolioServices';
 
 export const resumeCommand: Command = {
   name: 'resume',
   description: 'Display my resume',
   execute: () => {
     return {
-      content: `
+      content: 'Fetching resume...',
+      isAsync: true,
+      asyncResolver: async (): Promise<CommandResult> => {
+        const portfolioData = await fetchPortfolioData();
+        
+        if (!portfolioData) {
+          return {
+            content: 'Error: Could not fetch resume information.',
+            isError: true
+          };
+        }
+
+        return {
+          content: `
 Resume - ${portfolioData.name}
 ${portfolioData.title}
 ${portfolioData.location}
@@ -47,12 +61,14 @@ ${skillCategory.category}: ${skillCategory.items.join(', ')}
 
 CONTACT
 Email: ${portfolioData.contact.email}
-Phone: +1 (347) 503-3967
-LinkedIn: ${portfolioData.contact.linkedin}
-GitHub: ${portfolioData.contact.github}
-X/Twitter: ${portfolioData.contact.twitter}
-Website: ${portfolioData.contact.website}
+Phone: ${portfolioData.contact.phone || 'N/A'}
+LinkedIn: ${portfolioData.contact.linkedin || 'N/A'}
+GitHub: ${portfolioData.contact.github || 'N/A'}
+X/Twitter: ${portfolioData.contact.twitter || 'N/A'}
+Website: ${portfolioData.contact.website || 'N/A'}
 `,
+        };
+      }
     };
   },
 };
