@@ -1,11 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import CommandLine from '../command-line';
-import TerminalResponse from '../terminal-response';
 import { HistoryItem } from '@/components/ui/terminal';
 import { useToast } from '@/hooks/use-toast';
 import AsciiArt from '../ascii-art/ascii-art';
 import TerminalHistory from '../terminal-history';
-import { QRCodeSVG } from 'qrcode.react';
 
 interface TerminalContentProps {
   history: HistoryItem[];
@@ -179,16 +177,18 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
                           value: decodedValue,
                           size: 256,
                           level: 'M',
-                          includeMargin: true,
+                          bgColor: '#1a1f2c',
+                          fgColor: '#ffffff',
+                          includeMargin: false,
                         })
                       );
                     } catch (renderErr) {
                       console.error('Error rendering QR code with React:', renderErr);
                       // Fallback to simple SVG
                       root.innerHTML = `<svg width="256" height="256" viewBox="0 0 256 256">
-                    <rect width="256" height="256" fill="white" />
-                    <text x="128" y="128" text-anchor="middle" dominant-baseline="middle" fill="black">QR Code</text>
-                    <text x="128" y="144" text-anchor="middle" dominant-baseline="middle" fill="black" font-size="16">${decodedValue}</text>
+                    <rect width="256" height="256" fill="#1a1f2c" />
+                    <text x="128" y="128" text-anchor="middle" dominant-baseline="middle" fill="#ffffff">QR Code</text>
+                    <text x="128" y="144" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="16">${decodedValue}</text>
                   </svg>`;
                     }
                   })
@@ -196,18 +196,18 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
                     console.error('Error loading ReactDOM:', domErr);
                     // Fallback if ReactDOM can't be loaded
                     qrContainer.innerHTML = `<svg width="256" height="256" viewBox="0 0 256 256">
-                  <rect width="256" height="256" fill="white" />
-                  <text x="128" y="128" text-anchor="middle" dominant-baseline="middle" fill="black">QR Code</text>
-                  <text x="128" y="144" text-anchor="middle" dominant-baseline="middle" fill="black" font-size="16">${decodedValue}</text>
+                  <rect width="256" height="256" fill="#1a1f2c" />
+                  <text x="128" y="128" text-anchor="middle" dominant-baseline="middle" fill="#ffffff">QR Code</text>
+                  <text x="128" y="144" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="16">${decodedValue}</text>
                 </svg>`;
                   });
               } catch (e) {
                 console.error('Error creating QR code:', e);
                 // Fallback method - create a basic SVG
                 qrContainer.innerHTML = `<svg width="256" height="256" viewBox="0 0 256 256">
-                <rect width="256" height="256" fill="white" />
-                <text x="128" y="128" text-anchor="middle" dominant-baseline="middle" fill="black">QR Code</text>
-                <text x="128" y="144" text-anchor="middle" dominant-baseline="middle" fill="black" font-size="16">${decodedValue}</text>
+                <rect width="256" height="256" fill="#1a1f2c" />
+                <text x="128" y="128" text-anchor="middle" dominant-baseline="middle" fill="#ffffff">QR Code</text>
+                <text x="128" y="144" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="16">${decodedValue}</text>
               </svg>`;
               }
             })

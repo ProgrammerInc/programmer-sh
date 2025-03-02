@@ -75,7 +75,7 @@ ${profile.summary}
 
 <div class="flex justify-center w-full mt-4">
   <div id="qrcode-container">
-    <QRCode size={256} value="${encodeURIComponent(vCard)}" title="Scan to save contact information" />
+    <QRCode size={256} bgColor="#1a1f2c" fgColor="#ffffff" includeMargin={false} value="${encodeURIComponent(vCard)}" title="Scan to save contact information" />
   </div>
 </div>`,
           isError: false,
@@ -156,7 +156,7 @@ END:VCARD`;
 
 <div class="flex justify-center w-full mt-4">
   <div id="qrcode-container">
-    <QRCode size={256} value="${encodeURIComponent(vCard)}" title="Scan to save contact information" />
+    <QRCode size={256} bgColor="#1a1f2c" fgColor="#ffffff" includeMargin={false} value="${encodeURIComponent(vCard)}" title="Scan to save contact information" />
   </div>
 </div>`,
           isError: false,
