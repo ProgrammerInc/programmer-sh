@@ -1,4 +1,5 @@
 
+
 // Helper function to create a dangerously set HTML component with proper typings
 export const createMarkup = (htmlContent: string) => {
   return { __html: htmlContent };
@@ -13,8 +14,8 @@ export const containsHtmlTags = (content: string): boolean => {
   }
   
   // Enhanced regex to better detect HTML tags including custom terminal styling
-  // This will detect <strong>, <a>, <span>, etc. but still detect terminal-specific classes
-  const htmlTagsRegex = /<(strong|a|span|em|ul|li|ol|p|div|h[1-6]|br|code|pre|h[1-6])[^>]*>|<\/(strong|a|span|em|ul|li|ol|p|div|h[1-6]|code|pre|h[1-6])>/;
+  // This will detect <strong>, <a>, <span>, <div>, <p>, etc. but still detect terminal-specific classes
+  const htmlTagsRegex = /<(strong|a|span|em|ul|li|ol|p|div|h[1-6]|br|code|pre|h[1-6])[^>]*>|<\/(strong|a|span|em|ul|li|ol|p|div|h[1-6]|code|pre|h[1-6])>|<(div|span) class="[^"]*-[^"]*">|<\/div>|<\/span>/;
   
   // Log for debugging
   console.log(`Checking HTML tags in: ${content.substring(0, 50)}...`);
