@@ -1,4 +1,3 @@
-
 import { Command, CommandResult } from './types';
 import { fetchExperience } from '../database/portfolioServices';
 
@@ -11,18 +10,17 @@ export const experienceCommand: Command = {
       isAsync: true,
       asyncResolver: async (): Promise<CommandResult> => {
         const experience = await fetchExperience();
-        
+
         if (!experience || !experience.length) {
           return {
             content: 'Error: Could not fetch experience information.',
-            isError: true
+            isError: true,
           };
         }
 
         return {
           content: `
 Work Experience:
-
 ${experience
   .map(
     exp => `
@@ -40,7 +38,7 @@ ${exp.achievements.map(achievement => `- ${achievement}`).join('\n')}
   .join('\n')}
 `,
         };
-      }
+      },
     };
   },
 };

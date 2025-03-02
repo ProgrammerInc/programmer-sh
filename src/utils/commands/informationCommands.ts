@@ -1,4 +1,3 @@
-
 import { Command, CommandResult } from './types';
 import { fetchProfile } from '../database/portfolioServices';
 
@@ -12,67 +11,34 @@ export const aboutCommand: Command = {
       isAsync: true,
       asyncResolver: async (): Promise<CommandResult> => {
         const profile = await fetchProfile();
-        
+
         if (!profile) {
           return {
             content: 'Error: Could not fetch profile information.',
-            isError: true
+            isError: true,
           };
         }
 
         return {
           content: `
-${profile.name} - ${profile.title}
-${profile.location}
+About Me:
+
+Name: ${profile.fullname}
+Title: ${profile.title} @ ${profile.company}
+Location: ${profile.location}
 
 ${profile.summary}
 
 Contact:
-- Email: ${profile.contact.email}
+- E-mail: ${profile.contact.email}
+- Phone: ${profile.contact.phone}
 ${profile.contact.github ? `- GitHub: ${profile.contact.github}` : ''}
 ${profile.contact.linkedin ? `- LinkedIn: ${profile.contact.linkedin}` : ''}
 ${profile.contact.twitter ? `- X/Twitter: ${profile.contact.twitter}` : ''}
 ${profile.contact.website ? `- Website: ${profile.contact.website}` : ''}
 `,
         };
-      }
-    };
-  },
-};
-
-// Skills command implementation
-export const skillsCommand: Command = {
-  name: 'skills',
-  description: 'List my technical skills',
-  execute: () => {
-    return {
-      content: 'Fetching skills...',
-      isAsync: true,
-      asyncResolver: async (): Promise<CommandResult> => {
-        const profile = await fetchProfile();
-        
-        if (!profile || !profile.skills.length) {
-          return {
-            content: 'Error: Could not fetch skills information.',
-            isError: true
-          };
-        }
-
-        return {
-          content: `
-Skills:
-
-${profile.skills
-  .map(
-    skillCategory => `
-${skillCategory.category}:
-${skillCategory.items.map(skill => `- ${skill}`).join('\n')}
-`
-  )
-  .join('\n')}
-`,
-        };
-      }
+      },
     };
   },
 };
@@ -87,11 +53,11 @@ export const contactCommand: Command = {
       isAsync: true,
       asyncResolver: async (): Promise<CommandResult> => {
         const profile = await fetchProfile();
-        
+
         if (!profile) {
           return {
             content: 'Error: Could not fetch contact information.',
-            isError: true
+            isError: true,
           };
         }
 
@@ -99,7 +65,7 @@ export const contactCommand: Command = {
           content: `
 Contact Information:
 
-Email: ${profile.contact.email}
+E-mail: ${profile.contact.email}
 ${profile.contact.phone ? `Phone: ${profile.contact.phone}` : ''}
 ${profile.contact.linkedin ? `LinkedIn: ${profile.contact.linkedin}` : ''}
 ${profile.contact.github ? `GitHub: ${profile.contact.github}` : ''}
@@ -107,7 +73,7 @@ ${profile.contact.twitter ? `X/Twitter: ${profile.contact.twitter}` : ''}
 ${profile.contact.website ? `Website: ${profile.contact.website}` : ''}
 `,
         };
-      }
+      },
     };
   },
 };

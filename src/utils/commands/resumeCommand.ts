@@ -13,14 +13,15 @@ export const resumeCommand: Command = {
 
         if (!portfolioData) {
           return {
-            content:
-              'Error: Could not fetch resume information.\nPlease try again later or contact the administrator.',
+            content: 'Error: Could not fetch resume information.',
             isError: true,
           };
         }
 
         return {
           content: `
+My Resume:
+
 Name: ${portfolioData.fullname}
 Title: ${portfolioData.title}
 Location: ${portfolioData.location}
@@ -52,22 +53,17 @@ ${edu.institution}, ${edu.year}
   .join('\n')}
 
 SKILLS
-${portfolioData.skills
-  .map(
-    skillCategory => `
-${skillCategory.category}: ${skillCategory.items.join(', ')}
-`
-  )
-  .join('\n')}
+
+${portfolioData.skills.map(skillCategory => `${skillCategory.category}: ${skillCategory.items.join(', ')}`).join('\n')}
 
 CONTACT
 
-Email: ${portfolioData.contact.email}
-Phone: ${portfolioData.contact.phone || 'N/A'}
-LinkedIn: ${portfolioData.contact.linkedin || 'N/A'}
-GitHub: ${portfolioData.contact.github || 'N/A'}
-X/Twitter: ${portfolioData.contact.twitter || 'N/A'}
-Website: ${portfolioData.contact.website || 'N/A'}
+E-mail: ${portfolioData.contact.email}
+Phone: ${portfolioData.contact.phone}
+LinkedIn: ${portfolioData.contact.linkedin}
+GitHub: ${portfolioData.contact.github}
+X/Twitter: ${portfolioData.contact.twitter}
+Website: ${portfolioData.contact.website}
 `,
         };
       },

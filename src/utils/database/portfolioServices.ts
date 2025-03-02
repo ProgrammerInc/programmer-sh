@@ -37,6 +37,7 @@ export const fetchProfile = async (): Promise<Profile | null> => {
       name: profileData.name,
       fullname: profileData.fullname,
       title: profileData.title,
+      company: profileData.company,
       summary: profileData.summary,
       location: profileData.location,
       contact: {

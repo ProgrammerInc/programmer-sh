@@ -43,6 +43,7 @@ export interface Profile {
   name: string;
   fullname: string;
   title: string;
+  company: string;
   summary: string;
   location: string;
   contact: Contact;

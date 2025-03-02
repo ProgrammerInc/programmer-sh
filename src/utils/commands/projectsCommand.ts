@@ -1,4 +1,3 @@
-
 import { Command, CommandResult } from './types';
 import { fetchProjects, fetchProjectById } from '../database/portfolioServices';
 
@@ -14,23 +13,22 @@ export const projectsCommand: Command = {
         isAsync: true,
         asyncResolver: async (): Promise<CommandResult> => {
           const projects = await fetchProjects();
-          
+
           if (!projects || !projects.length) {
             return {
               content: 'Error: Could not fetch projects information.',
-              isError: true
+              isError: true,
             };
           }
 
           return {
             content: `
 Projects:
-
 ${projects
   .map(
     project => `
-- ${project.id}: ${project.title}
-  ${project.description}
+- ${project.id}: ${project.title}\n
+  ${project.description}\n
   Technologies: ${project.technologies.join(', ')}
   
   Type 'projects ${project.id}' for more details.
@@ -39,7 +37,7 @@ ${projects
   .join('\n')}
 `,
           };
-        }
+        },
       };
     }
 
@@ -49,11 +47,11 @@ ${projects
       isAsync: true,
       asyncResolver: async (): Promise<CommandResult> => {
         const project = await fetchProjectById(args);
-        
+
         if (!project) {
           return {
             content: `Project '${args}' not found. Type 'projects' to see all projects.`,
-            isError: true
+            isError: true,
           };
         }
 
@@ -72,7 +70,7 @@ ${project.github ? `GitHub: ${project.github}` : ''}
 ${project.link ? `Live Demo: ${project.link}` : ''}
 `,
         };
-      }
+      },
     };
   },
 };

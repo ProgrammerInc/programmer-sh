@@ -1,4 +1,3 @@
-
 import { Command, CommandResult } from './types';
 import { fetchEducation } from '../database/portfolioServices';
 
@@ -11,18 +10,17 @@ export const educationCommand: Command = {
       isAsync: true,
       asyncResolver: async (): Promise<CommandResult> => {
         const education = await fetchEducation();
-        
+
         if (!education || !education.length) {
           return {
             content: 'Error: Could not fetch education information.',
-            isError: true
+            isError: true,
           };
         }
 
         return {
           content: `
 Education:
-
 ${education
   .map(
     edu => `
@@ -34,7 +32,7 @@ ${edu.details ? edu.details : ''}
   .join('\n')}
 `,
         };
-      }
+      },
     };
   },
 };

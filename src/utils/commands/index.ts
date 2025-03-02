@@ -7,17 +7,19 @@ export * from './educationCommand';
 export * from './projectsCommand';
 export * from './resumeCommand';
 export * from './messageCommands';
+export * from './skillsCommand';
 export * from './types';
 
 // Command processor
 import { CommandResult, Command } from './types';
 import { helpCommand } from './helpCommand';
 import { clearCommand, whoamiCommand } from './systemCommands';
-import { contactCommand, aboutCommand, skillsCommand } from './informationCommands';
+import { contactCommand, aboutCommand } from './informationCommands';
 import { experienceCommand } from './experienceCommand';
 import { educationCommand } from './educationCommand';
 import { projectsCommand } from './projectsCommand';
 import { resumeCommand } from './resumeCommand';
+import { skillsCommand } from './skillsCommand';
 import { saveMessage, getMessages } from './messageCommands';
 
 export const processCommand = (input: string): CommandResult => {
