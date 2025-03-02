@@ -13,15 +13,13 @@ interface TerminalHeaderProps {
   onClose?: () => void;
   onMinimize?: () => void;
   onMaximize?: () => void;
-  isMaximized?: boolean;
 }
 
 const TerminalHeader: React.FC<TerminalHeaderProps> = ({ 
-  lastCommand, 
-  onClose, 
-  onMinimize, 
-  onMaximize,
-  isMaximized 
+  lastCommand,
+  onClose,
+  onMinimize,
+  onMaximize 
 }) => {
   return (
     <div className="flex items-center p-2 bg-black/20 border-b border-white/10">
@@ -31,10 +29,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
             <TooltipTrigger asChild>
               <div 
                 className="w-3 h-3 rounded-full bg-terminal-error relative group cursor-pointer"
-                onClick={(e) => { 
-                  e.stopPropagation();
-                  onClose && onClose();
-                }}
+                onClick={onClose}
               >
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <X className="text-black w-2 h-2" />
@@ -52,10 +47,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
             <TooltipTrigger asChild>
               <div 
                 className="w-3 h-3 rounded-full bg-terminal-warning relative group cursor-pointer"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onMinimize && onMinimize();
-                }}
+                onClick={onMinimize}
               >
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <Minus className="text-black w-2 h-2" />
@@ -73,10 +65,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
             <TooltipTrigger asChild>
               <div 
                 className="w-3 h-3 rounded-full bg-terminal-success relative group cursor-pointer"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onMaximize && onMaximize();
-                }}
+                onClick={onMaximize}
               >
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <Maximize2 className="text-black w-2 h-2" />
@@ -84,7 +73,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
               </div>
             </TooltipTrigger>
             <TooltipContent side="bottom">
-              <p className="text-xs">{isMaximized ? 'Restore' : 'Maximize'}</p>
+              <p className="text-xs">Maximize</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>

@@ -1,10 +1,10 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import TerminalHeader from './TerminalHeader';
 import TerminalContent from './TerminalContent';
 import { processCommand } from '../utils/commands';
 import { CommandResult } from '../utils/commands/types';
 import { cn } from '@/lib/utils';
+import { useNavigate } from 'react-router-dom';
 
 interface TerminalProps {
   className?: string;
@@ -21,6 +21,7 @@ export interface HistoryItem {
 const HISTORY_STORAGE_KEY = 'terminal_command_history';
 
 const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welcome'] }) => {
+  const navigate = useNavigate();
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [isInitializing, setIsInitializing] = useState(true);
   const [initialCommandsProcessed, setInitialCommandsProcessed] = useState(false);
@@ -29,7 +30,6 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   const [commandsToProcess, setCommandsToProcess] = useState<string[]>([]);
   const [showAsciiArt, setShowAsciiArt] = useState(true);
   const [isTerminalVisible, setIsTerminalVisible] = useState(true);
-  const [isMaximized, setIsMaximized] = useState(false);
   const commandInputRef = useRef<HTMLInputElement>(null);
 
   // Initial commands to process
@@ -162,39 +162,25 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     }
   };
 
-  // Terminal window control handlers
+  // Handle closing the terminal
   const handleClose = () => {
     setIsTerminalVisible(false);
   };
 
-  const handleMinimize = () => {
-    // Placeholder for minimize functionality
-    console.log('Terminal minimized');
-  };
-
-  const handleMaximize = () => {
-    setIsMaximized(!isMaximized);
-  };
-
   if (!isTerminalVisible) {
-    return null;
+    return null; // Don't render the terminal if it's not visible
   }
 
   return (
     <div
-      className={cn(
-        'terminal-glass rounded-md overflow-hidden flex flex-col', 
-        isMaximized ? 'fixed inset-0 z-50 m-0 rounded-none' : 'h-full',
-        className
-      )}
+      className={cn('terminal-glass rounded-md overflow-hidden flex flex-col h-full', className)}
       onClick={handleTerminalClick}
     >
       <TerminalHeader 
         lastCommand={lastCommand} 
         onClose={handleClose}
-        onMinimize={handleMinimize}
-        onMaximize={handleMaximize}
-        isMaximized={isMaximized}
+        onMinimize={() => console.log('Minimize clicked')}
+        onMaximize={() => console.log('Maximize clicked')}
       />
       
       <TerminalContent
