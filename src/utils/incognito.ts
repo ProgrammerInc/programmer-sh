@@ -14,12 +14,11 @@ export const isIncognitoMode = (): boolean => {
   }
 
   // Additional detection for Safari private mode
-  if (
-    window.safari !== undefined ||
-    (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome'))
-  ) {
+  if (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
     try {
-      window.openDatabase(null, null, null, null);
+      // Use type assertion to access non-standard browser APIs
+      // Cast window to any to access the openDatabase method in Safari
+      (window as any).openDatabase(null, null, null, null);
     } catch (e) {
       return true;
     }
