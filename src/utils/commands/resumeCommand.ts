@@ -43,9 +43,9 @@ export const resumeCommand: Command = {
         return {
           content: `<strong>My Resume:</strong>
 <div class="resume-header">
-<span><strong>Name:</strong> ${portfolioData.full_name}</span>
-<span><strong>Title:</strong> ${portfolioData.title} @ ${portfolioData.company}</span>
-<span><strong>Location:</strong> ${portfolioData.location}</span>
+<strong>Name:</strong> <span class="text-terminal-prompt">${portfolioData.full_name}</span>
+<strong>Title:</strong> <span class="text-terminal-prompt">${portfolioData.title}</span> @ <span class="text-terminal-prompt">${portfolioData.company}</span>
+<strong>Location:</strong> <span class="text-terminal-prompt">${portfolioData.location}</span>
 </div>
 <div class="resume-summary"><strong>SUMMARY</strong>
 
@@ -55,7 +55,7 @@ export const resumeCommand: Command = {
 
 ${portfolioData.experience
   .map(
-    exp => `<div class="experience-item"><span class="position"><strong>${exp.position}</strong> at <strong>${exp.company}</strong> <span class="duration">(${exp.duration})</span></span>
+    exp => `<div class="experience-item"><span class="position"><strong><span class="text-terminal-prompt">${exp.position}</span></strong> @ <strong><span class="text-terminal-prompt">${exp.company}</span></strong> <span class="duration">(${exp.duration})</span></span>
 <span class="description">${exp.description}</span>
 
 <span class="achievements-title">Key achievements:</span><ul class="achievements-list">${exp.achievements.map(achievement => `<li>- ${achievement}</li>`).join('')}</ul>
@@ -66,7 +66,7 @@ ${portfolioData.experience
 
 ${portfolioData.education
   .map(
-    edu => `<div class="education-item"><span class="degree"><strong>${edu.degree}</strong></span>
+    edu => `<div class="education-item"><span class="text-terminal-prompt"><strong>${edu.degree}</strong></span>
 <span class="institution">${edu.institution}, ${edu.year}</span>
 ${edu.details ? `<span class="details">${edu.details}</span>` : ''}</div>`
   )
@@ -74,7 +74,7 @@ ${edu.details ? `<span class="details">${edu.details}</span>` : ''}</div>`
 
 <div class="resume-section"><strong>SKILLS</strong>
 
-<div class="skills-section">${portfolioData.skills.map(skillCategory => `<div class="skill-category"><span class="category"><strong>${skillCategory.category}:</strong> ${skillCategory.items.join(', ')}</span></div>`).join('')}</div></div>
+<div class="skills-section">${portfolioData.skills.map(skillCategory => `<div class="skill-category"><span class="category"><strong>${skillCategory.category}:</strong> ${skillCategory.items.map(skill => `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${skill}" target="_blank">${skill}</a>`).join(', ')}</span></div>`).join('')}</div></div>
 
 <div class="resume-section"><strong>CONTACT</strong>
 <div class="contact-section">
