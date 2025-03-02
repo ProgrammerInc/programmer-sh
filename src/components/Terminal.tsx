@@ -54,6 +54,17 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   }, [history, isInitializing]);
 
   useEffect(() => {
+    // Check for URL command in session storage
+    const urlCommand = sessionStorage.getItem('urlCommand');
+    
+    if (urlCommand) {
+      // Clear the session storage
+      sessionStorage.removeItem('urlCommand');
+      
+      // Add the URL command to our initial commands
+      initialCommands = [...initialCommands, urlCommand];
+    }
+    
     if (isInitializing && !initialCommandsProcessed) {
       setInitialCommandsProcessed(true);
       let i = 0;

@@ -1,5 +1,6 @@
 
 import { CommandResult } from './types';
+import { urlCommandsHelpText } from './urlCommandHandler';
 
 export const helpCommand = (): CommandResult => {
   const commandList = [
@@ -19,8 +20,11 @@ export const helpCommand = (): CommandResult => {
 
   const helpText = commandList.map(cmd => `  ${cmd.name.padEnd(20)} ${cmd.description}`).join('\n');
 
+  // Add URL command help information
+  const urlHelp = urlCommandsHelpText();
+
   return {
-    content: `Available commands:\n\n${helpText}`,
+    content: `Available commands:\n\n${helpText}\n${urlHelp}`,
     isError: false,
   };
 };
