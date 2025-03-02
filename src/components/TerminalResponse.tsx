@@ -11,140 +11,102 @@ interface TerminalResponseProps {
 }
 
 // Function to convert plain text URLs to clickable links
-const convertLinksToAnchors = (text: string): React.ReactNode => {
-  // Regex to match URLs (including x.com/twitter.com), emails, and phone numbers
-  const urlRegex = /(https?:\/\/[^\s]+)|([a-zA-Z0-9][\w.-]+\.(com|org|net|edu|io|sh|to|dev|me|app)(?:\/[^\s]*)?)/g;
+const convertLinksToAnchors = (text: string): React.ReactNode[] => {
+  // Regex patterns for URLs, emails, and phone numbers
+  const urlRegex = /(https?:\/\/[^\s]+)|((www\.)?[a-zA-Z0-9][\w.-]+\.(com|org|net|edu|io|sh|to|dev|me|app)\/?\S*)/g;
   const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
-  const phoneRegex = /(\+\d{1,3}[-\s]?\(?\d{1,4}\)?[-\s]?\d{1,4}[-\s]?\d{1,4}[-\s]?\d{1,4})/g;
+  const phoneRegex = /(\+\d{1,3}[-\s]?\(?\d{1,4}\)?[-\s]?\d{1,4}[-\s]?\d{1,9})/g;
   
-  // Split the text into parts
-  const parts: React.ReactNode[] = [];
+  // Process the text and return array of React nodes
+  const result: React.ReactNode[] = [];
   let lastIndex = 0;
+  const matches: Array<{index: number, length: number, content: React.ReactNode}> = [];
   
-  // Create a copy of the text for processing
-  const textCopy = text;
-  
-  // First, process URLs
-  const processedSegments: React.ReactNode[] = [];
-  
-  // Process the text segment by segment, looking for URLs, emails, and phone numbers
-  let currentText = textCopy;
-  let currentIndex = 0;
-  
-  // Process URLs first
-  while (currentIndex < currentText.length) {
-    const restOfText = currentText.substring(currentIndex);
-    const urlMatch = urlRegex.exec(restOfText);
-    
-    if (!urlMatch) {
-      // No more URLs, add the rest and break
-      if (currentIndex < currentText.length) {
-        processedSegments.push(processOtherTypes(currentText.substring(currentIndex)));
-      }
-      break;
-    }
-    
-    // Add text before the URL
-    if (urlMatch.index > 0) {
-      processedSegments.push(processOtherTypes(restOfText.substring(0, urlMatch.index)));
-    }
-    
-    // Add the URL as a link
-    const url = urlMatch[0];
+  // Find all URL matches
+  let match;
+  while ((match = urlRegex.exec(text)) !== null) {
+    const url = match[0];
     let href = url;
-    
-    // Handle different URL formats
-    if (!href.startsWith('http')) {
+    if (!href.startsWith('http') && !href.startsWith('www.')) {
+      href = `https://${href}`;
+    } else if (href.startsWith('www.')) {
       href = `https://${href}`;
     }
     
-    processedSegments.push(
-      <a 
-        key={`link-${currentIndex + urlMatch.index}`} 
-        href={href} 
-        target="_blank" 
-        rel="noopener noreferrer"
-        className="text-blue-400 hover:underline"
-      >
-        {url}
-      </a>
-    );
-    
-    currentIndex += urlMatch.index + url.length;
-  }
-  
-  return processedSegments;
-  
-  // Helper function to process emails and phones in text segments
-  function processOtherTypes(text: string): React.ReactNode[] {
-    const segments: React.ReactNode[] = [];
-    let lastPos = 0;
-    
-    // Process emails
-    let emailMatch;
-    while ((emailMatch = emailRegex.exec(text)) !== null) {
-      if (emailMatch.index > lastPos) {
-        segments.push(processPhones(text.substring(lastPos, emailMatch.index)));
-      }
-      
-      const email = emailMatch[0];
-      segments.push(
+    matches.push({
+      index: match.index,
+      length: url.length,
+      content: (
         <a 
-          key={`email-${emailMatch.index}`} 
-          href={`mailto:${email}?subject=Inquiry from Portfolio`} 
+          href={href}
           target="_blank" 
           rel="noopener noreferrer"
           className="text-blue-400 hover:underline"
         >
-          {email}
+          {url}
         </a>
-      );
-      
-      lastPos = emailMatch.index + email.length;
-    }
-    
-    // Process remaining text for phone numbers
-    if (lastPos < text.length) {
-      segments.push(processPhones(text.substring(lastPos)));
-    }
-    
-    return segments.flat();
+      )
+    });
   }
   
-  // Helper function to process phone numbers
-  function processPhones(text: string): React.ReactNode[] {
-    const segments: React.ReactNode[] = [];
-    let lastPos = 0;
-    
-    let phoneMatch;
-    while ((phoneMatch = phoneRegex.exec(text)) !== null) {
-      if (phoneMatch.index > lastPos) {
-        segments.push(text.substring(lastPos, phoneMatch.index));
-      }
-      
-      const phone = phoneMatch[0];
-      // Clean up the phone number for tel: link
-      const cleanPhone = phone.replace(/[-\s()]/g, '');
-      
-      segments.push(
+  // Find all email matches
+  while ((match = emailRegex.exec(text)) !== null) {
+    const email = match[0];
+    matches.push({
+      index: match.index,
+      length: email.length,
+      content: (
         <a 
-          key={`phone-${phoneMatch.index}`} 
+          href={`mailto:${email}?subject=Inquiry from Portfolio`}
+          className="text-blue-400 hover:underline"
+        >
+          {email}
+        </a>
+      )
+    });
+  }
+  
+  // Find all phone matches
+  while ((match = phoneRegex.exec(text)) !== null) {
+    const phone = match[0];
+    const cleanPhone = phone.replace(/[-\s()]/g, '');
+    matches.push({
+      index: match.index,
+      length: phone.length,
+      content: (
+        <a 
           href={`tel:${cleanPhone}`}
           className="text-blue-400 hover:underline"
         >
           {phone}
         </a>
-      );
-      
-      lastPos = phoneMatch.index + phone.length;
-    }
-    
-    if (lastPos < text.length) {
-      segments.push(text.substring(lastPos));
-    }
-    
-    return segments;
+      )
+    });
   }
+  
+  // Sort matches by their starting index
+  matches.sort((a, b) => a.index - b.index);
+  
+  // Build the result array
+  for (const match of matches) {
+    // Add text before this match if there's any
+    if (match.index > lastIndex) {
+      result.push(text.substring(lastIndex, match.index));
+    }
+    
+    // Add the match content (anchor tag)
+    result.push(match.content);
+    
+    // Update lastIndex to after this match
+    lastIndex = match.index + match.length;
+  }
+  
+  // Add any remaining text after the last match
+  if (lastIndex < text.length) {
+    result.push(text.substring(lastIndex));
+  }
+  
+  return result;
 };
 
 const TerminalResponse: React.FC<TerminalResponseProps> = ({
