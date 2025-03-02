@@ -82,7 +82,7 @@ ${edu.details ? `<span class="details">${edu.details}</span>` : ''}</div>`
 ${portfolioData.contact.phone ? `<span><strong>Phone:</strong> <a href="tel:${portfolioData.contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${portfolioData.contact.phone}</a></span>` : ''}
 ${linkedin ? `<span><strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${linkedin.replace(/^https?:\/\//, '')}</a></span>` : ''}
 ${github ? `<span><strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${github.replace(/^https?:\/\//, '')}</a></span>` : ''}
-${twitter ? `<span><strong>X/Twitter:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${twitter.replace(/^https?:\/\//, '')}</a></span>` : ''}
+${twitter ? `<span><strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${twitter.replace(/^https?:\/\//, '')}</a></span>` : ''}
 ${website ? `<span><strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${website.replace(/^https?:\/\//, '')}</a></span>` : ''}</div></div>`,
           isError: false,
         };
