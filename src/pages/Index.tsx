@@ -32,8 +32,8 @@ const Index = () => {
     // Prepare initial commands
     let commands: string[] = [];
 
-    // Show welcome command if there's no history
-    if (!savedHistory || savedHistory === '[]') {
+    // Always show welcome command if there's no history or we're at the root URL
+    if (!savedHistory || savedHistory === '[]' || location.pathname === '/') {
       commands.push('welcome');
     }
 
@@ -45,12 +45,12 @@ const Index = () => {
       console.log('Valid URL command found:', commandToExecute);
 
       // Either replace welcome or add after welcome
-      if (commands.length === 0 || (commands.length === 1 && commands[0] === 'welcome')) {
+      if (commands.length === 0) {
+        // If we're not already showing welcome, just use the URL command
+        commands = [commandToExecute];
+      } else {
         // If we're showing welcome, add the command after welcome
         commands = ['welcome', commandToExecute];
-      } else {
-        // Otherwise just use the URL command
-        commands = [commandToExecute];
       }
     }
 

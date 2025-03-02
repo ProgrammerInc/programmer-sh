@@ -3,6 +3,8 @@ export interface CommandResult {
   isError: boolean;
   isAsync?: boolean;
   asyncResolver?: () => Promise<CommandResult>;
+  rawHTML?: boolean;
+  runAfterClear?: CommandResult;
 }
 
 // Command interface

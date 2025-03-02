@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import TerminalHeader from '../terminal-header';
 import { TerminalContent } from '../terminal-content';
@@ -38,6 +37,8 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) 
     if (initialCommands && initialCommands.length > 0) {
       console.log('Setting initial commands:', initialCommands);
       setCommandsToProcess(initialCommands);
+    } else {
+      setCommandsToProcess(['welcome']);
     }
   }, [initialCommands]);
 
@@ -91,7 +92,6 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) 
     };
   }, []);
 
-  // Load social links
   useEffect(() => {
     const loadSocialLinks = async () => {
       try {
@@ -145,6 +145,15 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) 
       setHistory([]);
       localStorage.removeItem(HISTORY_STORAGE_KEY);
       setIsProcessingAsync(false);
+      
+      if (result.runAfterClear) {
+        const welcomeHistoryItem = {
+          command: 'welcome',
+          result: result.runAfterClear,
+          timestamp: new Date(),
+        };
+        setHistory([welcomeHistoryItem]);
+      }
       return;
     }
 
