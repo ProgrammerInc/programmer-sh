@@ -1,29 +1,50 @@
-
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Terminal from '@/components/Terminal';
+import { validUrlCommands } from '@/utils/commands/urlCommandHandler';
 
 const HISTORY_STORAGE_KEY = 'terminal_command_history';
 
 const Index = () => {
+  const { command: urlCommand } = useParams<{ command?: string }>();
   const [isLoading, setIsLoading] = useState(true);
   const [initialCommands, setInitialCommands] = useState<string[]>([]);
-
+  
   useEffect(() => {
     // Check if there's existing history
     const savedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);
     
-    // Show welcome command if there's no history (including after clear command)
+    // Prepare initial commands
+    let commands: string[] = [];
+    
+    // Show welcome command if there's no history
     if (!savedHistory || savedHistory === '[]') {
-      setInitialCommands(['welcome']);
+      commands.push('welcome');
     }
+    
+    // If we have a valid URL command, add it to our initial commands
+    if (urlCommand && validUrlCommands.includes(urlCommand)) {
+      console.log('Valid URL command found:', urlCommand);
+      
+      // Either replace welcome or add after welcome
+      if (commands.length === 0 || (commands.length === 1 && commands[0] === 'welcome')) {
+        // If we're showing welcome, add the command after welcome
+        commands = ['welcome', urlCommand];
+      } else {
+        // Otherwise just use the URL command
+        commands = [urlCommand];
+      }
+    }
+    
+    setInitialCommands(commands);
     
     // Simulate loading for smoother entrance
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 500);
+    }, 300);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [urlCommand]);
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4 overflow-hidden">

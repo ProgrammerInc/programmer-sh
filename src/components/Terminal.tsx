@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import TerminalHeader from './TerminalHeader';
 import TerminalContent from './TerminalContent';
@@ -11,6 +10,7 @@ interface TerminalProps {
   initialCommands?: string[];
 }
 
+// Define the history item type
 export interface HistoryItem {
   command: string;
   result: CommandResult;
@@ -25,29 +25,67 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   const [initialCommandsProcessed, setInitialCommandsProcessed] = useState(false);
   const [isProcessingAsync, setIsProcessingAsync] = useState(false);
   const [lastCommand, setLastCommand] = useState('welcome');
-  const [commandsToProcess, setCommandsToProcess] = useState<string[]>(initialCommands);
+  const [commandsToProcess, setCommandsToProcess] = useState<string[]>([]);
   const [showAsciiArt, setShowAsciiArt] = useState(true);
   const commandInputRef = useRef<HTMLInputElement>(null);
 
-  // Load saved history from localStorage
+  // Initial commands to process
   useEffect(() => {
-    const savedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);
-    if (savedHistory) {
-      try {
-        const parsedHistory = JSON.parse(savedHistory);
-        const formattedHistory = parsedHistory.map((item: Omit<HistoryItem, 'timestamp'> & { timestamp: string }) => ({
-          ...item,
-          timestamp: new Date(item.timestamp)
-        }));
-        setHistory(formattedHistory);
-        if (formattedHistory.length > 0) {
-          setLastCommand(formattedHistory[formattedHistory.length - 1].command);
+    if (initialCommands && initialCommands.length > 0) {
+      console.log('Setting initial commands:', initialCommands);
+      setCommandsToProcess(initialCommands);
+    }
+  }, [initialCommands]);
+
+  // Initialize command history
+  useEffect(() => {
+    if (isInitializing) {
+      // Load history from localStorage if exists
+      const savedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);
+      if (savedHistory) {
+        try {
+          const parsedHistory = JSON.parse(savedHistory);
+          if (Array.isArray(parsedHistory)) {
+            const formattedHistory = parsedHistory.map((item: Omit<HistoryItem, 'timestamp'> & { timestamp: string }) => ({
+              ...item,
+              timestamp: new Date(item.timestamp)
+            }));
+            setHistory(formattedHistory);
+            if (formattedHistory.length > 0) {
+              setLastCommand(formattedHistory[formattedHistory.length - 1].command);
+            }
+          }
+        } catch (e) {
+          console.error('Error parsing command history:', e);
         }
-      } catch (error) {
-        console.error('Error parsing saved history:', error);
       }
     }
-  }, []);
+  }, [isInitializing]);
+
+  // Process commands
+  useEffect(() => {
+    if (commandsToProcess.length > 0 && isInitializing && !initialCommandsProcessed) {
+      setInitialCommandsProcessed(true);
+      
+      console.log('Processing initial commands:', commandsToProcess);
+      
+      let i = 0;
+      const processNextCommand = () => {
+        if (i < commandsToProcess.length) {
+          const command = commandsToProcess[i++];
+          console.log('Processing command:', command);
+          processCommandWithHistory(command);
+          setTimeout(processNextCommand, 300); // Slightly longer delay for better readability
+        } else {
+          setIsInitializing(false);
+        }
+      };
+      processNextCommand();
+    } else if (isInitializing && commandsToProcess.length === 0) {
+      // If there are no commands to process, exit initializing state
+      setIsInitializing(false);
+    }
+  }, [commandsToProcess, isInitializing, initialCommandsProcessed]);
 
   // Save history to localStorage
   useEffect(() => {
@@ -56,46 +94,15 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     }
   }, [history, isInitializing]);
 
-  // Check for URL command
-  useEffect(() => {
-    const urlCommand = sessionStorage.getItem('urlCommand');
-    
-    if (urlCommand) {
-      console.log('Found URL command:', urlCommand);
-      // Clear the session storage to prevent re-execution
-      sessionStorage.removeItem('urlCommand');
-      
-      // Add command to our processing queue
-      setCommandsToProcess(prev => [...prev, urlCommand]);
-    }
-  }, []);
-
-  // Process commands in the queue
-  useEffect(() => {
-    if (isInitializing && !initialCommandsProcessed) {
-      setInitialCommandsProcessed(true);
-      let i = 0;
-      const processNextCommand = () => {
-        if (i < commandsToProcess.length) {
-          const command = commandsToProcess[i++];
-          console.log('Processing command:', command);
-          processCommandWithHistory(command);
-          setTimeout(processNextCommand, 200);
-        } else {
-          setIsInitializing(false);
-        }
-      };
-      processNextCommand();
-    }
-  }, [commandsToProcess, isInitializing, initialCommandsProcessed]);
-
   const processCommandWithHistory = async (commandString: string) => {
+    setIsProcessingAsync(true);
     setLastCommand(commandString);
     const result = processCommand(commandString);
 
     if (result.content === 'CLEAR_TERMINAL') {
       setHistory([]);
       localStorage.removeItem(HISTORY_STORAGE_KEY);
+      setIsProcessingAsync(false);
       return;
     }
 
@@ -108,7 +115,6 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     setHistory(prev => [...prev, historyItem]);
 
     if (result.isAsync && result.asyncResolver) {
-      setIsProcessingAsync(true);
       try {
         const asyncResult = await result.asyncResolver();
         setHistory(prev =>
@@ -132,6 +138,8 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
       } finally {
         setIsProcessingAsync(false);
       }
+    } else {
+      setIsProcessingAsync(false);
     }
   };
 
@@ -140,6 +148,14 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   const handleTerminalClick = () => {
     if (!isInitializing && commandInputRef.current) {
       commandInputRef.current.focus();
+    }
+  };
+
+  // Handle command submission
+  const handleCommandSubmit = (command: string) => {
+    if (command.trim()) {
+      processCommandWithHistory(command);
+      commandInputRef.current?.focus();
     }
   };
 
@@ -156,7 +172,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
         isProcessingAsync={isProcessingAsync}
         showAsciiArt={showAsciiArt}
         commandHistory={commandHistory}
-        onCommandSubmit={processCommandWithHistory}
+        onCommandSubmit={handleCommandSubmit}
         inputRef={commandInputRef}
       />
     </div>

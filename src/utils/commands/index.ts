@@ -1,4 +1,3 @@
-
 // Re-export all commands
 export * from './helpCommand';
 export * from './systemCommands';
@@ -11,6 +10,7 @@ export * from './messageCommands';
 export * from './skillsCommand';
 export * from './types';
 export * from './themeCommand';
+export * from './urlCommandHandler';
 
 // Command processor
 import { CommandResult, Command } from './types';
@@ -28,11 +28,8 @@ import { themeCommand, initializeTheme } from './themeCommand';
 // Initialize theme on load
 initializeTheme();
 
-export const processCommand = (input: string): CommandResult => {
-  // Trim input and convert to lowercase for easier comparison
+export function processCommand(input: string): CommandResult {
   const trimmedInput = input.trim();
-  
-  // For empty commands, return an error
   if (!trimmedInput) {
     return {
       content: 'Please enter a command. Type "help" for available commands.',
@@ -40,17 +37,17 @@ export const processCommand = (input: string): CommandResult => {
     };
   }
 
-  // Split the input into command and arguments
+  console.log(`Processing command: ${trimmedInput}`);
+
+  // Parse command and arguments
   const parts = trimmedInput.split(' ');
   const command = parts[0].toLowerCase();
   const args = parts.slice(1).join(' ');
 
-  console.log(`Processing command: "${command}" with args: "${args}"`);
-
-  // Process commands
+  // Execute appropriate command
   switch (command) {
     case 'help':
-      return helpCommand();
+      return helpCommand.execute();
     case 'clear':
       return clearCommand.execute();
     case 'whoami':
@@ -108,4 +105,4 @@ Try 'about' to learn more about me.
         isError: true,
       };
   }
-};
+}

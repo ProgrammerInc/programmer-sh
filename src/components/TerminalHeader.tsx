@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface TerminalHeaderProps {
@@ -19,7 +18,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand }) => {
         <span className="ml-2 mr-2">~</span>
         <span className="programmer-sh-page">{lastCommand}</span>
       </div>
-      <div className="w-10"></div>
+      <div className="w-10"></div> {/* Spacer for symmetry */}
     </div>
   );
 };
