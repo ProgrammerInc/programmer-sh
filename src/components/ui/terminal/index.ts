@@ -1,6 +1,5 @@
 
 import Terminal, { HistoryItem } from './Terminal';
 
-export { Terminal };
-export type { HistoryItem };
+export { Terminal, HistoryItem };
 export default Terminal;
