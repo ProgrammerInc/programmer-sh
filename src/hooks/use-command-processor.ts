@@ -1,3 +1,4 @@
+
 import { HistoryItem } from '@/components/ui/terminal';
 import { processCommand } from '@/utils/commands';
 import { useCallback, useEffect, useState } from 'react';
@@ -6,7 +7,7 @@ export const useCommandProcessor = (
   initialCommands: string[] = [],
   setHistory: React.Dispatch<React.SetStateAction<HistoryItem[]>>,
   setLastExecutedCommand: (command: string) => void,
-  commandHistory: string[] = [] // Add commandHistory parameter
+  commandHistory: string[] = []
 ) => {
   const [isInitializing, setIsInitializing] = useState(true);
   const [initialCommandsProcessed, setInitialCommandsProcessed] = useState(false);
@@ -59,6 +60,7 @@ export const useCommandProcessor = (
             timestamp: new Date(),
           };
           setHistory([welcomeHistoryItem]);
+          setLastExecutedCommand('welcome');
         }
         return;
       }
@@ -115,6 +117,12 @@ export const useCommandProcessor = (
           const command = commandsToProcess[i++];
           console.log('Processing command:', command);
           processCommandWithHistory(command);
+          
+          // Make sure the last command processed is set as the last executed command
+          if (i === commandsToProcess.length) {
+            setLastExecutedCommand(command);
+          }
+          
           setTimeout(processNextCommand, 300);
         } else {
           setIsInitializing(false);
@@ -124,7 +132,7 @@ export const useCommandProcessor = (
     } else if (isInitializing && commandsToProcess.length === 0) {
       setIsInitializing(false);
     }
-  }, [commandsToProcess, isInitializing, initialCommandsProcessed, processCommandWithHistory]);
+  }, [commandsToProcess, isInitializing, initialCommandsProcessed, processCommandWithHistory, setLastExecutedCommand]);
 
   return {
     isInitializing,

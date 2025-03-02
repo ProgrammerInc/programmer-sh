@@ -50,7 +50,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) 
     initialCommands, 
     setHistory, 
     setLastExecutedCommand,
-    commandHistory // Pass commandHistory to processor
+    commandHistory
   );
 
   const handleTerminalClick = () => {
