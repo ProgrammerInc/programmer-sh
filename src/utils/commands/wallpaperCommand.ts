@@ -1,4 +1,3 @@
-
 import { Command, CommandResult } from './types';
 
 // Predefined wallpapers
@@ -96,12 +95,12 @@ export const wallpaperCommand: Command = {
       const availableWallpapers = Object.entries(wallpapers)
         .map(
           ([id, wallpaper]) =>
-            `\n- <span class="command-link" data-command="wallpaper ${id}">${wallpaper.name}</span>: ${wallpaper.description}`
+            `\n  - <span class="command-link" data-command="wallpaper ${id}">${wallpaper.id}</span>: ${wallpaper.description}`
         )
         .join('');
 
       return {
-        content: `Current wallpaper: <span class="text-terminal-prompt">${wallpapers[currentWallpaper].name}</span>\n\nAvailable wallpapers:${availableWallpapers}\n\nUsage: wallpaper [name]`,
+        content: `Current wallpaper: <span class="text-terminal-prompt">${wallpapers[currentWallpaper].id}</span>\n\nAvailable wallpapers:\n${availableWallpapers}\n\nUsage: wallpaper [name]`,
         isError: false,
       };
     }
@@ -117,7 +116,7 @@ export const wallpaperCommand: Command = {
 
     if (requestedWallpaper === currentWallpaper) {
       return {
-        content: `Wallpaper is already set to <span class="text-terminal-prompt">${wallpapers[currentWallpaper].name}</span>.`,
+        content: `Wallpaper is already set to <span class="text-terminal-prompt">${wallpapers[currentWallpaper].id}</span>.`,
         isError: false,
       };
     }
@@ -125,7 +124,7 @@ export const wallpaperCommand: Command = {
     setWallpaper(requestedWallpaper);
 
     return {
-      content: `Wallpaper changed to <span class="text-terminal-prompt">${wallpapers[requestedWallpaper].name}</span>.`,
+      content: `Wallpaper changed to <span class="text-terminal-prompt">${wallpapers[requestedWallpaper].id}</span>.`,
       isError: false,
     };
   },
