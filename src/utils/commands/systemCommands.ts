@@ -1,5 +1,4 @@
-
-import { Command, CommandResult } from './types';
+import { Command } from './types';
 
 export const clearCommand: Command = {
   name: 'clear',
@@ -11,5 +10,3 @@ export const clearCommand: Command = {
     };
   },
 };
-
-// Remove the old whoami command since we've replaced it with a more advanced one in authCommands.ts

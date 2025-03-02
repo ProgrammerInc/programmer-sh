@@ -1,23 +1,13 @@
-
 import React from 'react';
-import { Github, Linkedin, Twitter, X, Plus, Minus, Mail, Globe } from 'lucide-react';
-
-interface SocialLink {
-  type: 'github' | 'linkedin' | 'twitter' | 'email' | 'website';
-  url: string;
-}
+import { Github, Linkedin, Twitter, X, Plus, Minus } from 'lucide-react';
+import { SocialLink } from '@/types/socialLinks';
 
 interface TerminalHeaderProps {
   lastCommand?: string;
-  userEmail?: string | null;
   socialLinks?: SocialLink[];
 }
 
-const TerminalHeader: React.FC<TerminalHeaderProps> = ({ 
-  lastCommand = '', 
-  userEmail, 
-  socialLinks = []
-}) => {
+const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socialLinks = [] }) => {
   // Function to render the appropriate icon based on link type
   const renderSocialIcon = (type: string) => {
     switch (type) {
@@ -27,10 +17,6 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
         return <Linkedin className="w-4 h-4" />;
       case 'twitter':
         return <Twitter className="w-4 h-4" />;
-      case 'email':
-        return <Mail className="w-4 h-4" />;
-      case 'website':
-        return <Globe className="w-4 h-4" />;
       default:
         return null;
     }

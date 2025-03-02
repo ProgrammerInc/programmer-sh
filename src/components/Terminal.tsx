@@ -47,10 +47,12 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) 
         try {
           const parsedHistory = JSON.parse(savedHistory);
           if (Array.isArray(parsedHistory)) {
-            const formattedHistory = parsedHistory.map((item: Omit<HistoryItem, 'timestamp'> & { timestamp: string }) => ({
-              ...item,
-              timestamp: new Date(item.timestamp)
-            }));
+            const formattedHistory = parsedHistory.map(
+              (item: Omit<HistoryItem, 'timestamp'> & { timestamp: string }) => ({
+                ...item,
+                timestamp: new Date(item.timestamp),
+              })
+            );
             setHistory(formattedHistory);
             if (formattedHistory.length > 0) {
               setLastExecutedCommand(formattedHistory[formattedHistory.length - 1].command);
@@ -71,7 +73,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) 
         console.log('User is logged in:', data.session.user.email);
       }
     };
-    
+
     checkSession();
 
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
@@ -97,16 +99,16 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) 
         console.error('Failed to load social links:', error);
       }
     };
-    
+
     loadSocialLinks();
   }, []);
 
   useEffect(() => {
     if (commandsToProcess.length > 0 && isInitializing && !initialCommandsProcessed) {
       setInitialCommandsProcessed(true);
-      
+
       console.log('Processing initial commands:', commandsToProcess);
-      
+
       let i = 0;
       const processNextCommand = () => {
         if (i < commandsToProcess.length) {
@@ -199,12 +201,8 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) 
       className={cn('terminal-glass rounded-md overflow-hidden flex flex-col h-full', className)}
       onClick={handleTerminalClick}
     >
-      <TerminalHeader 
-        lastCommand={lastExecutedCommand} 
-        userEmail={userEmail}
-        socialLinks={socialLinks}
-      />
-      
+      <TerminalHeader lastCommand={lastExecutedCommand} socialLinks={socialLinks} />
+
       <TerminalContent
         history={history}
         isInitializing={isInitializing}

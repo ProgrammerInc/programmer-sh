@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { CommandResult } from '../utils/commands/types';
 import { useTypingEffect } from '../utils/typingEffect';
@@ -22,7 +21,8 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
   // Process the text and return array of React nodes
   const result: React.ReactNode[] = [];
   let lastIndex = 0;
-  const matches: Array<{ index: number; length: number; content: React.ReactNode; type: string }> = [];
+  const matches: Array<{ index: number; length: number; content: React.ReactNode; type: string }> =
+    [];
 
   // Find all URL matches
   let match;
@@ -40,6 +40,7 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
       length: url.length,
       content: (
         <a
+          key={`url-${match.index}`}
           href={href}
           target="_blank"
           rel="noopener noreferrer"
@@ -48,7 +49,7 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
           {url}
         </a>
       ),
-      type: 'url'
+      type: 'url',
     });
   }
 
@@ -60,13 +61,14 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
       length: email.length,
       content: (
         <a
+          key={`email-${match.index}`}
           href={`mailto:${email}?subject=Inquiry from Portfolio`}
           className="text-blue-400 hover:underline"
         >
           {email}
         </a>
       ),
-      type: 'email'
+      type: 'email',
     });
   }
 
@@ -78,11 +80,15 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
       index: match.index,
       length: phone.length,
       content: (
-        <a href={`tel:${cleanPhone}`} className="text-blue-400 hover:underline">
+        <a
+          key={`phone-${match.index}`}
+          href={`tel:${cleanPhone}`}
+          className="text-blue-400 hover:underline"
+        >
           {phone}
         </a>
       ),
-      type: 'phone'
+      type: 'phone',
     });
   }
 
@@ -93,11 +99,11 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
       index: match.index,
       length: programmer.length,
       content: (
-        <span className="whitespace-nowrap">
+        <span key={`programmer-${match.index}`} className="whitespace-nowrap">
           &lt;programmer&gt;.<span className="animate-cursor-blink">_</span>
         </span>
       ),
-      type: 'programmer'
+      type: 'programmer',
     });
   }
 
@@ -109,12 +115,14 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
   for (let i = 0; i < matches.length; i++) {
     const current = matches[i];
     let overlapping = false;
-    
+
     // Check if this match overlaps with any previously accepted match
     for (const accepted of filteredMatches) {
       // If there's overlap and we're a URL that overlaps with an email, skip
-      if ((current.index >= accepted.index && current.index < accepted.index + accepted.length) || 
-          (current.index + current.length > accepted.index && current.index < accepted.index)) {
+      if (
+        (current.index >= accepted.index && current.index < accepted.index + accepted.length) ||
+        (current.index + current.length > accepted.index && current.index < accepted.index)
+      ) {
         // If we're a URL that overlaps with an email, skip
         if (current.type === 'url' && accepted.type === 'email') {
           overlapping = true;
@@ -122,7 +130,7 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
         }
       }
     }
-    
+
     if (!overlapping) {
       filteredMatches.push(current);
     }
