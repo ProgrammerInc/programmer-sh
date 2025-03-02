@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Linkedin, Twitter, X, Minus, Plus, Maximize2 } from 'lucide-react';
+import { Github, Linkedin, Twitter, X, Minus, Maximize2 } from 'lucide-react';
 
 interface TerminalHeaderProps {
   lastCommand?: string;
@@ -34,7 +34,12 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', userE
         <span>
           &lt;programmer&gt;.<span className="animate-cursor-blink">_</span>
         </span>
-        {lastCommand && <span className="text-terminal-muted ml-2">~ {lastCommand}</span>}
+        {lastCommand && (
+          <span>
+            <span className="text-terminal-muted">&nbsp;-&nbsp;</span>
+            <span className="text-terminal-prompt font-mono">~/{lastCommand}</span>
+          </span>
+        )}
       </div>
 
       <div className="flex space-x-2">
