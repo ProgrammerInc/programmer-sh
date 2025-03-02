@@ -19,11 +19,6 @@ const TerminalResponse: React.FC<TerminalResponseProps> = ({
     { speed: 1, delay: 0, cursor: false }
   );
 
-  // Check if content is HTML that needs to be rendered
-  const isHtmlContent = 
-    typeof response.content === 'string' && 
-    containsHtmlTags(response.content);
-
   // If content is not a string, render directly
   if (typeof response.content !== 'string') {
     return (
@@ -39,19 +34,7 @@ const TerminalResponse: React.FC<TerminalResponseProps> = ({
     );
   }
 
-  // For HTML content that should be rendered as actual HTML
-  if (isHtmlContent && !animate) {
-    return (
-      <HtmlContent 
-        content={response.content}
-        isError={response.isError}
-        className={className}
-        onCommandClick={onCommandClick}
-      />
-    );
-  }
-
-  // For animated or plain text content
+  // For animated content
   if (animate) {
     return (
       <AnimatedContent
@@ -65,17 +48,15 @@ const TerminalResponse: React.FC<TerminalResponseProps> = ({
     );
   }
 
-  // For non-animated plain text content
+  // For non-animated content, use HtmlContent component
+  // which will handle HTML tags, command links, or plain text appropriately
   return (
-    <div
-      className={cn(
-        'whitespace-pre-wrap font-mono text-sm mb-4',
-        response.isError ? 'text-terminal-error' : 'text-terminal-foreground',
-        className
-      )}
-    >
-      {convertLinksToAnchors(response.content, onCommandClick)}
-    </div>
+    <HtmlContent 
+      content={response.content}
+      isError={response.isError}
+      className={className}
+      onCommandClick={onCommandClick}
+    />
   );
 };
 

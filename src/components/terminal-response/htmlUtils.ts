@@ -4,9 +4,11 @@ export const createMarkup = (htmlContent: string) => {
   return { __html: htmlContent };
 };
 
-// Helper function to detect if content contains HTML tags but exclude command links
+// Helper function to detect if content contains actual HTML tags
+// Excludes command-link spans which are handled separately
 export const containsHtmlTags = (content: string): boolean => {
-  // Check for HTML tags but make an exception for command-link spans which are handled separately
-  const htmlTagsRegex = /<(?!span class="command-link")[a-z][\s\S]*?>|<\/[a-z]+>/i;
+  // This regex looks for standard HTML tags while excluding our command-link spans
+  // It matches opening tags like <tag> or <tag attr="value"> but excludes command-link spans
+  const htmlTagsRegex = /<(?!span class="command-link")[a-z][\s\S]*?>|<\/(?!span)[a-z]+>/i;
   return htmlTagsRegex.test(content);
 };
