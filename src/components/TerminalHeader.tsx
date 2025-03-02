@@ -11,13 +11,13 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', userE
   return (
     <div className="flex items-center justify-between bg-terminal-header p-2 border-b border-terminal-border">
       <div className="flex space-x-2">
-        <div className="w-3 h-3 rounded-full bg-terminal-close window-control flex items-center justify-center">
+        <div className="w-3 h-3 rounded-full bg-terminal-close window-control group flex items-center justify-center">
           <X className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100" strokeWidth={3} />
         </div>
-        <div className="w-3 h-3 rounded-full bg-terminal-minimize window-control flex items-center justify-center">
+        <div className="w-3 h-3 rounded-full bg-terminal-minimize window-control group flex items-center justify-center">
           <Minus className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100" strokeWidth={3} />
         </div>
-        <div className="w-3 h-3 rounded-full bg-terminal-maximize window-control flex items-center justify-center">
+        <div className="w-3 h-3 rounded-full bg-terminal-maximize window-control group flex items-center justify-center">
           <Maximize className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100" strokeWidth={3} />
         </div>
       </div>

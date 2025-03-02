@@ -152,7 +152,7 @@
   
   /* Window control hover effects */
   .window-control {
-    @apply transition-all duration-200 group;
+    @apply transition-all duration-200;
   }
   
   .window-control:hover {
