@@ -130,8 +130,8 @@ const Index = () => {
   return (
     <>
       <div className={getWallpaperClasses()}>
-        <div className="min-h-screen flex flex-col">
-          <div className="flex-grow flex items-center justify-center">
+        <div className="min-h-screen flex flex-col justify-between">
+          <div className="flex-grow flex items-center justify-center py-4">
             <div
               className={`w-full max-w-4xl h-[80vh] transition-all duration-1000 ease-out terminal-glow-shadow ${
                 isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
