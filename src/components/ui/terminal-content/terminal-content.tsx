@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState } from 'react';
 import CommandLine from '../command-line';
 import TerminalResponse from '../terminal-response';
@@ -154,7 +153,7 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
             try {
               // Create a simplified SVG QR code directly
               // This avoids using ReactDOMServer which isn't available on window
-              const svgElement = document.createElement('svg');
+              const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
               svgElement.setAttribute('width', '128');
               svgElement.setAttribute('height', '128');
               svgElement.setAttribute('viewBox', '0 0 128 128');
