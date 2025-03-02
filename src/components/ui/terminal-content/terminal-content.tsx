@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState } from 'react';
 import CommandLine from '../command-line';
 import TerminalResponse from '../terminal-response';
@@ -151,21 +150,18 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
           
           // Import and use qrcode.react
           import('qrcode.react').then(QRCodeModule => {
-            // Create a temporary DOM element
-            const tempDiv = document.createElement('div');
-            
             // Create QR code SVG string
-            const qrSvgString = new XMLSerializer().serializeToString(
-              QRCodeModule.QRCodeSVG({
+            const svgString = new XMLSerializer().serializeToString(
+              new QRCodeModule.QRCodeSVG({
                 value: decodedValue,
                 size: 128,
                 level: "M",
                 includeMargin: true
-              })
+              }) as unknown as SVGSVGElement
             );
             
             // Set the inner HTML with the SVG string
-            qrContainer.innerHTML = qrSvgString;
+            qrContainer.innerHTML = svgString;
           }).catch(err => {
             console.error('Failed to load QR code library:', err);
             qrContainer.textContent = 'QR Code failed to load';
