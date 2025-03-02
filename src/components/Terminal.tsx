@@ -27,7 +27,6 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   const terminalRef = useRef<HTMLDivElement>(null);
   const commandInputRef = useRef<HTMLInputElement>(null);
 
-  // Updated ASCII art for better readability of "Programmer.SH"
   const asciiArt = [
     '  ____                                                          ____  _   _   ',
     ' |  _ \\ _ __ ___   __ _ _ __ __ _ _ __ ___  ___ _ __   ___ _ __/ ___|| | | | ',
@@ -37,67 +36,51 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     '                  |___/                                                     ',
   ];
 
-  // Show ASCII art immediately without any delay
   const [showAsciiArt, setShowAsciiArt] = useState(true);
   const [asciiArtDone, setAsciiArtDone] = useState(true);
 
-  // Load command history from localStorage when component mounts
   useEffect(() => {
     const savedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);
     if (savedHistory) {
       try {
         const parsedHistory = JSON.parse(savedHistory);
-        // Convert string dates back to Date objects
         const formattedHistory = parsedHistory.map((item: Omit<HistoryItem, 'timestamp'> & { timestamp: string }) => ({
           ...item,
           timestamp: new Date(item.timestamp)
         }));
         setHistory(formattedHistory);
-        
-        // Set last command from history if available
         if (formattedHistory.length > 0) {
           setLastCommand(formattedHistory[formattedHistory.length - 1].command);
         }
       } catch (error) {
         console.error('Error parsing saved history:', error);
-        // If there's an error, proceed with empty history
       }
     }
   }, []);
 
-  // Save command history to localStorage whenever it changes
   useEffect(() => {
     if (history.length > 0 && !isInitializing) {
       localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
     }
   }, [history, isInitializing]);
 
-  // Process initial commands immediately
   useEffect(() => {
     if (isInitializing && !initialCommandsProcessed) {
-      // Initialize command processing immediately
       setInitialCommandsProcessed(true);
-
-      // Process each initial command with a small delay between them
       let i = 0;
       const processNextCommand = () => {
         if (i < initialCommands.length) {
           const command = initialCommands[i++];
           processCommandWithHistory(command);
-
-          // Process next command with a small delay
           setTimeout(processNextCommand, 200);
         } else {
           setIsInitializing(false);
         }
       };
-
-      // Start processing commands immediately
       processNextCommand();
     }
   }, [initialCommands, isInitializing, initialCommandsProcessed]);
 
-  // Scroll to bottom when history changes
   useEffect(() => {
     if (terminalRef.current) {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
@@ -105,19 +88,15 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   }, [history]);
 
   const processCommandWithHistory = async (commandString: string) => {
-    // Update the last command
     setLastCommand(commandString);
-    
     const result = processCommand(commandString);
 
     if (result.content === 'CLEAR_TERMINAL') {
       setHistory([]);
-      // Clear localStorage when terminal is cleared
       localStorage.removeItem(HISTORY_STORAGE_KEY);
       return;
     }
 
-    // Add the command and initial result to history
     const historyItem = {
       command: commandString,
       result,
@@ -126,20 +105,15 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
 
     setHistory(prev => [...prev, historyItem]);
 
-    // Process async commands
     if (result.isAsync && result.asyncResolver) {
       setIsProcessingAsync(true);
       try {
         const asyncResult = await result.asyncResolver();
-
-        // Update the history item with the async result
         setHistory(prev =>
           prev.map(item => (item === historyItem ? { ...item, result: asyncResult } : item))
         );
       } catch (error) {
         console.error('Error processing async command:', error);
-
-        // Update history with error
         setHistory(prev =>
           prev.map(item =>
             item === historyItem
@@ -159,10 +133,8 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     }
   };
 
-  // Extract command strings from history for the command line history feature
   const commandHistory = history.map(item => item.command);
 
-  // Handle click anywhere in the terminal
   const handleTerminalClick = () => {
     if (!isInitializing && commandInputRef.current) {
       commandInputRef.current.focus();
@@ -173,7 +145,6 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     <div
       className={cn('terminal-glass rounded-md overflow-hidden flex flex-col h-full', className)}
     >
-      {/* Terminal Header */}
       <div className="flex items-center p-2 bg-black/20 border-b border-white/10">
         <div className="flex space-x-2 mr-4">
           <div className="w-3 h-3 rounded-full bg-terminal-error" />
@@ -186,16 +157,14 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
           <span className="ml-2 mr-2">~</span>
           <span className="programmer-sh-page">{lastCommand}</span>
         </div>
-        <div className="w-10"></div> {/* Spacer for symmetry */}
+        <div className="w-10"></div>
       </div>
 
-      {/* Terminal Content */}
       <div
         ref={terminalRef}
         className="flex-1 p-4 overflow-y-auto terminal-scrollbar terminal-content-height"
         onClick={handleTerminalClick}
       >
-        {/* ASCII Art without animation */}
         <div className="mb-6 text-terminal-prompt font-mono text-xs md:text-sm">
           {showAsciiArt &&
             asciiArt.map((line, i) => (
@@ -205,7 +174,6 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
             ))}
         </div>
 
-        {/* Command History */}
         {history.map((item, index) => (
           <div key={index} className="mb-4">
             <div className="flex items-center mb-1">
@@ -216,7 +184,6 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
           </div>
         ))}
 
-        {/* Current Command Line */}
         {!isInitializing && (
           <CommandLine
             onSubmit={processCommandWithHistory}
