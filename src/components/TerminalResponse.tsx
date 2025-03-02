@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { CommandResult } from '../utils/terminalCommands';
+import { CommandResult } from '../utils/commands/types';
 import { useTypingEffect } from '../utils/typingEffect';
 import { cn } from '@/lib/utils';
 

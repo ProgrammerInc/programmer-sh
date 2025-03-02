@@ -2,7 +2,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import CommandLine from './CommandLine';
 import TerminalResponse from './TerminalResponse';
-import { processCommand, CommandResult } from '../utils/terminalCommands';
+import { processCommand } from '../utils/commands';
+import { CommandResult } from '../utils/commands/types';
 import { cn } from '@/lib/utils';
 
 interface TerminalProps {

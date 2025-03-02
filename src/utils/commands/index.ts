@@ -8,23 +8,18 @@ export * from './educationCommand';
 export * from './projectsCommand';
 export * from './resumeCommand';
 export * from './messageCommands';
+export * from './types';
 
 // Command processor
-import { CommandResult } from './types';
-import {
-  helpCommand,
-  clearCommand,
-  whoamiCommand,
-  contactCommand,
-  aboutCommand,
-  skillsCommand,
-  experienceCommand,
-  educationCommand,
-  projectsCommand,
-  resumeCommand,
-  saveMessage,
-  getMessages
-} from './';
+import { CommandResult, Command } from './types';
+import { helpCommand } from './helpCommand';
+import { clearCommand, whoamiCommand } from './systemCommands';
+import { contactCommand, aboutCommand, skillsCommand } from './informationCommands';
+import { experienceCommand } from './experienceCommand';
+import { educationCommand } from './educationCommand';
+import { projectsCommand } from './projectsCommand';
+import { resumeCommand } from './resumeCommand';
+import { saveMessage, getMessages } from './messageCommands';
 
 export const processCommand = (input: string): CommandResult => {
   // Trim input and convert to lowercase for easier comparison
@@ -40,23 +35,23 @@ export const processCommand = (input: string): CommandResult => {
     case 'help':
       return helpCommand();
     case 'clear':
-      return clearCommand();
+      return clearCommand.execute();
     case 'whoami':
-      return whoamiCommand();
+      return whoamiCommand.execute();
     case 'contact':
-      return contactCommand();
+      return contactCommand.execute();
     case 'about':
-      return aboutCommand();
+      return aboutCommand.execute();
     case 'skills':
-      return skillsCommand();
+      return skillsCommand.execute();
     case 'experience':
-      return experienceCommand();
+      return experienceCommand.execute();
     case 'education':
-      return educationCommand();
+      return educationCommand.execute();
     case 'projects':
-      return projectsCommand();
+      return projectsCommand.execute(args);
     case 'resume':
-      return resumeCommand();
+      return resumeCommand.execute();
     case 'welcome':
       return {
         content: "Welcome to my portfolio terminal. Type 'help' to see available commands.",

@@ -1,2 +1,4 @@
-// Re-export everything from the commands module
-export * from './commands';
+
+// This file re-exports from the commands directory for backward compatibility
+export { processCommand } from './commands';
+export { CommandResult } from './commands/types';

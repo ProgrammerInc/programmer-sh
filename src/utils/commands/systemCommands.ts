@@ -1,29 +1,24 @@
-import { Command } from './types';
 
-// Clear command implementation
+import { Command, CommandResult } from './types';
+
 export const clearCommand: Command = {
   name: 'clear',
-  description: 'Clear the terminal screen',
+  description: 'Clear the terminal',
   execute: () => {
     return {
       content: 'CLEAR_TERMINAL',
+      isError: false,
     };
   },
 };
 
-export const welcomeCommand: Command = {
-  name: 'welcome',
-  description: 'Display welcome message',
-  hidden: true,
+export const whoamiCommand: Command = {
+  name: 'whoami',
+  description: 'Display user information',
   execute: () => {
     return {
-      content: `
-Welcome to Programmer.SH Terminal Portfolio!
-======================================================
-
-Type 'help' to see available commands.
-Try 'about' to learn more about me.
-`,
+      content: 'James A. Black Jr. - Full Stack Developer @ Frisco, TX',
+      isError: false,
     };
   },
 };
