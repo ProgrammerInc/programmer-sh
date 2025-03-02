@@ -6,8 +6,7 @@ export const helpCommand: Command = {
   description: 'Display available commands and their descriptions',
   execute: () => {
     return {
-      content: `
-Available commands:
+      content: `Available commands:
 
 Authentication:
   login <email> <password>     - Log in to your account
@@ -28,8 +27,7 @@ Information:
 System:
   help           - Display this help message
   clear          - Clear the terminal
-  theme <theme>  - Change the terminal theme (dark/light)
-      `,
+  theme <theme>  - Change the terminal theme (dark/light)`,
       isError: false,
     };
   },
