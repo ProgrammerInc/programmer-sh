@@ -1,3 +1,4 @@
+
 // Re-export all commands
 export * from './helpCommand';
 export * from './systemCommands';
@@ -9,6 +10,7 @@ export * from './resumeCommand';
 export * from './messageCommands';
 export * from './skillsCommand';
 export * from './types';
+export * from './themeCommand';
 
 // Command processor
 import { CommandResult, Command } from './types';
@@ -21,6 +23,10 @@ import { projectsCommand } from './projectsCommand';
 import { resumeCommand } from './resumeCommand';
 import { skillsCommand } from './skillsCommand';
 import { saveMessage, getMessages } from './messageCommands';
+import { themeCommand, initializeTheme } from './themeCommand';
+
+// Initialize theme on load
+initializeTheme();
 
 export const processCommand = (input: string): CommandResult => {
   // Trim input and convert to lowercase for easier comparison
@@ -53,6 +59,8 @@ export const processCommand = (input: string): CommandResult => {
       return projectsCommand.execute(args);
     case 'resume':
       return resumeCommand.execute();
+    case 'theme':
+      return themeCommand.execute(args);
     case 'welcome':
       return {
         content: `Welcome to Programmer.SH Terminal Portfolio!

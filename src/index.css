@@ -1,3 +1,4 @@
+
 /* stylelint-disable at-rule-no-unknown */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap');
 
@@ -27,6 +28,50 @@
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
     --radius: 0.5rem;
+    
+    /* Terminal specific colors */
+    --terminal-background: #1A1F2C;
+    --terminal-foreground: #F1F1F1;
+    --terminal-prompt: #64FFDA;
+    --terminal-success: #A3BE8C;
+    --terminal-error: #BF616A;
+    --terminal-warning: #EBCB8B;
+    --terminal-command: #88C0D0;
+    --terminal-link: #81A1C1;
+    --terminal-muted: #4C566A;
+  }
+
+  .light-theme {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    
+    /* Terminal specific colors - light theme */
+    --terminal-background: #F5F5F5;
+    --terminal-foreground: #2E3440;
+    --terminal-prompt: #00A8A8;
+    --terminal-success: #4C9A52;
+    --terminal-error: #BF616A;
+    --terminal-warning: #D08770;
+    --terminal-command: #5E81AC;
+    --terminal-link: #5E81AC;
+    --terminal-muted: #9E9E9E;
   }
 }
 

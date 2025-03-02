@@ -26,15 +26,15 @@ export default {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         terminal: {
-          background: '#1A1F2C',
-          foreground: '#F1F1F1',
-          prompt: '#64FFDA',
-          success: '#A3BE8C',
-          error: '#BF616A',
-          warning: '#EBCB8B',
-          command: '#88C0D0',
-          link: '#81A1C1',
-          muted: '#4C566A'
+          background: 'var(--terminal-background)',
+          foreground: 'var(--terminal-foreground)',
+          prompt: 'var(--terminal-prompt)',
+          success: 'var(--terminal-success)',
+          error: 'var(--terminal-error)',
+          warning: 'var(--terminal-warning)',
+          command: 'var(--terminal-command)',
+          link: 'var(--terminal-link)',
+          muted: 'var(--terminal-muted)'
         },
         primary: {
           DEFAULT: 'hsl(var(--primary))',

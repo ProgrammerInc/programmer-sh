@@ -1,3 +1,4 @@
+
 import { CommandResult } from './types';
 
 export const helpCommand = (): CommandResult => {
@@ -10,6 +11,7 @@ export const helpCommand = (): CommandResult => {
     { name: 'projects', description: 'View notable projects' },
     { name: 'contact', description: 'Display contact information' },
     { name: 'resume', description: 'View or download resume' },
+    { name: 'theme [dark|light]', description: 'Switch terminal theme' },
     { name: 'clear', description: 'Clear the terminal' },
     { name: 'save [message]', description: 'Save a message to the database' },
     { name: 'messages', description: 'View all saved messages' },
