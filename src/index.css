@@ -31,6 +31,7 @@
     
     /* Terminal specific colors */
     --terminal-background: #1A1F2C;
+    --terminal-background-translucent: rgba(26, 31, 44, 0.9);
     --terminal-foreground: #F1F1F1;
     --terminal-prompt: #64FFDA;
     --terminal-success: #A3BE8C;
@@ -64,6 +65,7 @@
     
     /* Terminal specific colors - light theme */
     --terminal-background: #F5F5F5;
+    --terminal-background-translucent: rgba(245, 245, 245, 0.9);
     --terminal-foreground: #2E3440;
     --terminal-prompt: #00A8A8;
     --terminal-success: #4C9A52;
@@ -92,7 +94,8 @@
 
 @layer utilities {
   .terminal-glass {
-    @apply bg-terminal-background/90 backdrop-blur-md border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)];
+    background-color: var(--terminal-background-translucent);
+    @apply backdrop-blur-md border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)];
   }
 
   .typing-animation {
