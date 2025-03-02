@@ -53,6 +53,7 @@ export const contactCommand: Command = {
 Contact Information:
 
 Email: ${portfolioData.contact.email}
+Phone: +1 (347) 503-3967
 ${portfolioData.contact.linkedin ? `LinkedIn: ${portfolioData.contact.linkedin}` : ''}
 ${portfolioData.contact.github ? `GitHub: ${portfolioData.contact.github}` : ''}
 ${portfolioData.contact.twitter ? `Twitter: ${portfolioData.contact.twitter}` : ''}
