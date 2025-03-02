@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import CommandLine from './CommandLine';
 import TerminalResponse from './TerminalResponse';
@@ -56,6 +57,9 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
         console.error('Error parsing saved history:', error);
       }
     }
+    
+    // Even if history is loaded, ensure we still process initial commands
+    setIsInitializing(true);
   }, []);
 
   useEffect(() => {
@@ -65,7 +69,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   }, [history, isInitializing]);
 
   useEffect(() => {
-    if (isInitializing && !initialCommandsProcessed) {
+    if (isInitializing && !initialCommandsProcessed && initialCommands.length > 0) {
       setInitialCommandsProcessed(true);
       let i = 0;
       const processNextCommand = () => {
@@ -78,6 +82,9 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
         }
       };
       processNextCommand();
+    } else if (isInitializing && initialCommandsProcessed && initialCommands.length === 0) {
+      // If there are no initial commands to process, we can exit initialization mode
+      setIsInitializing(false);
     }
   }, [initialCommands, isInitializing, initialCommandsProcessed]);
 
