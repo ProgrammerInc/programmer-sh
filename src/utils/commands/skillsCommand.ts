@@ -1,3 +1,4 @@
+
 import { Command, CommandResult } from './types';
 import { fetchProfile } from '../database/portfolioServices';
 // Skills command implementation
@@ -8,6 +9,7 @@ export const skillsCommand: Command = {
     return {
       content: 'Fetching skills...',
       isAsync: true,
+      isError: false,
       asyncResolver: async (): Promise<CommandResult> => {
         const profile = await fetchProfile();
 
@@ -22,6 +24,7 @@ export const skillsCommand: Command = {
           content: `My Skills:
 
 ${profile.skills.map(skillCategory => `${skillCategory.category}:\n${skillCategory.items.map(skill => `- ${skill}`).join('\n')}`).join('\n\n')}`,
+          isError: false,
         };
       },
     };

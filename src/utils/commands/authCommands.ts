@@ -42,6 +42,7 @@ export const loginCommand: Command = {
     return {
       content: `Attempting to log in as ${email}...`,
       isAsync: true,
+      isError: false,
       asyncResolver: async (): Promise<CommandResult> => {
         try {
           const { data, error } = await supabase.auth.signInWithPassword({
@@ -119,6 +120,7 @@ export const signupCommand: Command = {
     return {
       content: `Creating account for ${email}...`,
       isAsync: true,
+      isError: false,
       asyncResolver: async (): Promise<CommandResult> => {
         try {
           const { data, error } = await supabase.auth.signUp({
@@ -173,6 +175,7 @@ export const logoutCommand: Command = {
     return {
       content: 'Logging out...',
       isAsync: true,
+      isError: false,
       asyncResolver: async (): Promise<CommandResult> => {
         try {
           const { error } = await supabase.auth.signOut();
@@ -207,6 +210,7 @@ export const whoamiCommand: Command = {
     return {
       content: 'Checking user session...',
       isAsync: true,
+      isError: false,
       asyncResolver: async (): Promise<CommandResult> => {
         try {
           const { data, error } = await supabase.auth.getUser();
@@ -297,6 +301,7 @@ Usage:
     return {
       content: `Updating your ${field}...`,
       isAsync: true,
+      isError: false,
       asyncResolver: async (): Promise<CommandResult> => {
         try {
           const { data: userData, error: userError } = await supabase.auth.getUser();

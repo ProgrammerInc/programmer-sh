@@ -1,3 +1,4 @@
+
 import { Command, CommandResult } from './types';
 import { fetchPortfolioData } from '../database/portfolioServices';
 
@@ -8,6 +9,7 @@ export const resumeCommand: Command = {
     return {
       content: 'Fetching resume...',
       isAsync: true,
+      isError: false,
       asyncResolver: async (): Promise<CommandResult> => {
         const portfolioData = await fetchPortfolioData();
 
@@ -65,6 +67,7 @@ GitHub: ${portfolioData.contact.github}
 X/Twitter: ${portfolioData.contact.twitter}
 Website: ${portfolioData.contact.website}
 `,
+          isError: false,
         };
       },
     };

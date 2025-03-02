@@ -1,3 +1,4 @@
+
 import { Command, CommandResult } from './types';
 import { fetchProjects, fetchProjectById } from '../database/portfolioServices';
 
@@ -11,6 +12,7 @@ export const projectsCommand: Command = {
       return {
         content: 'Fetching projects...',
         isAsync: true,
+        isError: false,
         asyncResolver: async (): Promise<CommandResult> => {
           const projects = await fetchProjects();
 
@@ -35,6 +37,7 @@ ${projects
   )
   .join('\n')}
 `,
+            isError: false,
           };
         },
       };
@@ -44,6 +47,7 @@ ${projects
     return {
       content: `Fetching project ${args}...`,
       isAsync: true,
+      isError: false,
       asyncResolver: async (): Promise<CommandResult> => {
         const project = await fetchProjectById(args);
 
@@ -68,6 +72,7 @@ ${project.highlights.map(highlight => `- ${highlight}`).join('\n')}
 ${project.github ? `GitHub: ${project.github}` : ''}
 ${project.link ? `Live Demo: ${project.link}` : ''}
 `,
+          isError: false,
         };
       },
     };

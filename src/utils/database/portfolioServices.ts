@@ -1,3 +1,4 @@
+
 import { supabase } from '../../integrations/supabase/client';
 import { Profile, Skill, Experience, Project, Education } from '../../data/portfolioData';
 
@@ -33,6 +34,37 @@ export const fetchProfile = async (): Promise<Profile | null> => {
       items: skillCategory.skill_items.map((item: { name: string }) => item.name),
     }));
 
+    // Create a contact object with only the properties that exist in profileData
+    const contact: Record<string, string> = {
+      email: profileData.email,
+      phone: profileData.phone,
+      bitbucket: profileData.bitbucket,
+      bluesky: profileData.bluesky,
+      cashapp: profileData.cashapp,
+      discord: profileData.discord,
+      facebook: profileData.facebook,
+      github: profileData.github,
+      gitlab: profileData.gitlab,
+      linkedin: profileData.linkedin,
+      loliapp: profileData.loliapp,
+      patreon: profileData.patreon,
+      paypal: profileData.paypal,
+      reddit: profileData.reddit,
+      threads: profileData.threads,
+      tiktok: profileData.tiktok,
+      twitter: profileData.twitter,
+      venmo: profileData.venmo,
+      youtube: profileData.youtube,
+      website: profileData.website,
+    };
+
+    // Clean up undefined values
+    Object.keys(contact).forEach(key => {
+      if (contact[key] === undefined) {
+        delete contact[key];
+      }
+    });
+
     return {
       name: profileData.name,
       full_name: profileData.full_name,
@@ -40,32 +72,7 @@ export const fetchProfile = async (): Promise<Profile | null> => {
       company: profileData.company,
       location: profileData.location,
       summary: profileData.summary,
-      contact: {
-        email: profileData.email,
-        phone: profileData.phone,
-        bitbucket: profileData.bitbucket,
-        bluesky: profileData.bluesky,
-        cashapp: profileData.cashapp,
-        discord: profileData.discord,
-        facebook: profileData.facebook,
-        github: profileData.github,
-        gitlab: profileData.gitlab,
-        instagram: profileData.instagram,
-        linkedin: profileData.linkedin,
-        loliapp: profileData.loliapp,
-        patreon: profileData.patreon,
-        paypal: profileData.paypal,
-        reddit: profileData.reddit,
-        slack: profileData.slack,
-        snapchat: profileData.snapchat,
-        telegram: profileData.telegram,
-        threads: profileData.threads,
-        tiktok: profileData.tiktok,
-        twitter: profileData.twitter,
-        venmo: profileData.venmo,
-        youtube: profileData.youtube,
-        website: profileData.website,
-      },
+      contact,
       skills,
       experience: [], // Will be filled by fetchExperience
       projects: [], // Will be filled by fetchProjects

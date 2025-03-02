@@ -1,3 +1,4 @@
+
 import { Command, CommandResult } from './types';
 import { fetchProfile } from '../database/portfolioServices';
 
@@ -9,6 +10,7 @@ export const aboutCommand: Command = {
     return {
       content: 'Fetching about information...',
       isAsync: true,
+      isError: false,
       asyncResolver: async (): Promise<CommandResult> => {
         const profile = await fetchProfile();
 
@@ -37,6 +39,7 @@ ${profile.contact.linkedin ? `- LinkedIn: ${profile.contact.linkedin}` : ''}
 ${profile.contact.twitter ? `- X/Twitter: ${profile.contact.twitter}` : ''}
 ${profile.contact.website ? `- Website: ${profile.contact.website}` : ''}
 `,
+          isError: false,
         };
       },
     };
@@ -51,6 +54,7 @@ export const contactCommand: Command = {
     return {
       content: 'Fetching contact information...',
       isAsync: true,
+      isError: false,
       asyncResolver: async (): Promise<CommandResult> => {
         const profile = await fetchProfile();
 
@@ -71,6 +75,7 @@ ${profile.contact.github ? `GitHub: ${profile.contact.github}` : ''}
 ${profile.contact.twitter ? `X/Twitter: ${profile.contact.twitter}` : ''}
 ${profile.contact.website ? `Website: ${profile.contact.website}` : ''}
 `,
+          isError: false,
         };
       },
     };
