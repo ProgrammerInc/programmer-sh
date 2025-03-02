@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import Terminal from '@/components/Terminal';
@@ -11,6 +12,7 @@ const Index = () => {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [initialCommands, setInitialCommands] = useState<string[]>([]);
+  const [showTerminal, setShowTerminal] = useState(true);
   
   useEffect(() => {
     // Process URL parameters
@@ -67,13 +69,15 @@ const Index = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(100,255,218,0.05),rgba(0,0,0,0))]"></div>
       </div>
 
-      <div
-        className={`w-full max-w-4xl h-[80vh] transition-all duration-1000 ease-out terminal-glow-shadow ${
-          isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
-        }`}
-      >
-        <Terminal initialCommands={initialCommands} />
-      </div>
+      {showTerminal && (
+        <div
+          className={`w-full max-w-4xl h-[80vh] transition-all duration-1000 ease-out terminal-glow-shadow ${
+            isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+          }`}
+        >
+          <Terminal initialCommands={initialCommands} />
+        </div>
+      )}
     </div>
   );
 };

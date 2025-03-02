@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import TerminalHeader from './TerminalHeader';
 import TerminalContent from './TerminalContent';
@@ -165,9 +164,6 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
 
   // Handle closing the terminal
   const handleClose = () => {
-    // Navigate to homepage or another appropriate page
-    navigate('/');
-    // Alternatively, set a state to hide the terminal
     setIsTerminalVisible(false);
   };
 
@@ -183,6 +179,8 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
       <TerminalHeader 
         lastCommand={lastCommand} 
         onClose={handleClose}
+        onMinimize={() => console.log('Minimize clicked')}
+        onMaximize={() => console.log('Maximize clicked')}
       />
       
       <TerminalContent
