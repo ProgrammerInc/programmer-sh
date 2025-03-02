@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import TerminalHeader from './TerminalHeader';
 import TerminalContent from './TerminalContent';
@@ -11,7 +10,7 @@ interface TerminalProps {
   initialCommands?: string[];
 }
 
-interface HistoryItem {
+export interface HistoryItem {
   command: string;
   result: CommandResult;
   timestamp: Date;
@@ -25,6 +24,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   const [initialCommandsProcessed, setInitialCommandsProcessed] = useState(false);
   const [isProcessingAsync, setIsProcessingAsync] = useState(false);
   const [lastCommand, setLastCommand] = useState('welcome');
+  const [commandsToProcess, setCommandsToProcess] = useState<string[]>(initialCommands);
   const [showAsciiArt, setShowAsciiArt] = useState(true);
   const commandInputRef = useRef<HTMLInputElement>(null);
 
@@ -61,16 +61,16 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
       // Clear the session storage
       sessionStorage.removeItem('urlCommand');
       
-      // Add the URL command to our initial commands
-      initialCommands = [...initialCommands, urlCommand];
+      // Update our local state with the new commands
+      setCommandsToProcess(prev => [...prev, urlCommand]);
     }
     
     if (isInitializing && !initialCommandsProcessed) {
       setInitialCommandsProcessed(true);
       let i = 0;
       const processNextCommand = () => {
-        if (i < initialCommands.length) {
-          const command = initialCommands[i++];
+        if (i < commandsToProcess.length) {
+          const command = commandsToProcess[i++];
           processCommandWithHistory(command);
           setTimeout(processNextCommand, 200);
         } else {
@@ -79,7 +79,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
       };
       processNextCommand();
     }
-  }, [initialCommands, isInitializing, initialCommandsProcessed]);
+  }, [commandsToProcess, isInitializing, initialCommandsProcessed]);
 
   const processCommandWithHistory = async (commandString: string) => {
     setLastCommand(commandString);
