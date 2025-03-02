@@ -1,4 +1,3 @@
-
 import { fetchProfile } from './portfolioServices';
 import type { SocialLink } from '../../types/socialLinks';
 
@@ -6,54 +5,54 @@ import type { SocialLink } from '../../types/socialLinks';
 export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
   try {
     const profile = await fetchProfile();
-    
+
     if (!profile) {
       console.error('Could not fetch profile for social links');
       return [];
     }
-    
+
     const socialLinks: SocialLink[] = [];
-    
+
     // Add GitHub if available
     if (profile.contact.github) {
       socialLinks.push({
         type: 'github',
-        url: profile.contact.github
+        url: profile.contact.github,
       });
     }
-    
+
     // Add LinkedIn if available
     if (profile.contact.linkedin) {
       socialLinks.push({
         type: 'linkedin',
-        url: profile.contact.linkedin
+        url: profile.contact.linkedin,
       });
     }
-    
+
     // Add Twitter if available
     if (profile.contact.twitter) {
       socialLinks.push({
         type: 'twitter',
-        url: profile.contact.twitter
+        url: profile.contact.twitter,
       });
     }
-    
+
     // Add email if available
-    if (profile.contact.email) {
-      socialLinks.push({
-        type: 'email',
-        url: `mailto:${profile.contact.email}`
-      });
-    }
-    
+    // if (profile.contact.email) {
+    //   socialLinks.push({
+    //     type: 'email',
+    //     url: `mailto:${profile.contact.email}`
+    //   });
+    // }
+
     // Add website if available
-    if (profile.contact.website) {
-      socialLinks.push({
-        type: 'website',
-        url: profile.contact.website
-      });
-    }
-    
+    // if (profile.contact.website) {
+    //   socialLinks.push({
+    //     type: 'website',
+    //     url: profile.contact.website
+    //   });
+    // }
+
     return socialLinks;
   } catch (error) {
     console.error('Error fetching social links:', error);
