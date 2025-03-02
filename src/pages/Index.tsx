@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import Terminal from '@/components/Terminal';
 
@@ -16,10 +17,18 @@ const Index = () => {
         const parsedHistory = JSON.parse(savedHistory);
         
         if (parsedHistory.length > 0) {
-          // If there are commands in the history, don't show welcome
-          setInitialCommands([]);
+          // Get the last command executed
+          const lastCommand = parsedHistory[parsedHistory.length - 1].command;
+          
+          // Only show welcome if it wasn't the last command
+          if (lastCommand !== 'welcome') {
+            setInitialCommands(['welcome']);
+          } else {
+            // Don't show welcome again if it was the last command
+            setInitialCommands([]);
+          }
         } else {
-          // Empty history array exists but has no items, show welcome
+          // Empty history (array exists but has no items), show welcome
           setInitialCommands(['welcome']);
         }
       } catch (error) {
