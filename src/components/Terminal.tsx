@@ -4,13 +4,13 @@ import TerminalContent from './TerminalContent';
 import { processCommand } from '../utils/commands';
 import { CommandResult } from '../utils/commands/types';
 import { cn } from '@/lib/utils';
+import { supabase } from '../integrations/supabase/client';
 
 interface TerminalProps {
   className?: string;
   initialCommands?: string[];
 }
 
-// Define the history item type
 export interface HistoryItem {
   command: string;
   result: CommandResult;
@@ -28,8 +28,8 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   const [commandsToProcess, setCommandsToProcess] = useState<string[]>([]);
   const [showAsciiArt, setShowAsciiArt] = useState(true);
   const commandInputRef = useRef<HTMLInputElement>(null);
+  const [userSession, setUserSession] = useState<any>(null);
 
-  // Initial commands to process
   useEffect(() => {
     if (initialCommands && initialCommands.length > 0) {
       console.log('Setting initial commands:', initialCommands);
@@ -37,10 +37,8 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     }
   }, [initialCommands]);
 
-  // Initialize command history
   useEffect(() => {
     if (isInitializing) {
-      // Load history from localStorage if exists
       const savedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);
       if (savedHistory) {
         try {
@@ -62,7 +60,31 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     }
   }, [isInitializing]);
 
-  // Process commands
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (!error && data.session) {
+        setUserSession(data.session);
+        console.log('User is logged in:', data.session.user.email);
+      }
+    };
+    
+    checkSession();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      setUserSession(session);
+      if (event === 'SIGNED_IN') {
+        console.log('User signed in:', session?.user.email);
+      } else if (event === 'SIGNED_OUT') {
+        console.log('User signed out');
+      }
+    });
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
+
   useEffect(() => {
     if (commandsToProcess.length > 0 && isInitializing && !initialCommandsProcessed) {
       setInitialCommandsProcessed(true);
@@ -75,19 +97,17 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
           const command = commandsToProcess[i++];
           console.log('Processing command:', command);
           processCommandWithHistory(command);
-          setTimeout(processNextCommand, 300); // Slightly longer delay for better readability
+          setTimeout(processNextCommand, 300);
         } else {
           setIsInitializing(false);
         }
       };
       processNextCommand();
     } else if (isInitializing && commandsToProcess.length === 0) {
-      // If there are no commands to process, exit initializing state
       setIsInitializing(false);
     }
   }, [commandsToProcess, isInitializing, initialCommandsProcessed]);
 
-  // Save history to localStorage
   useEffect(() => {
     if (history.length > 0 && !isInitializing) {
       localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
@@ -151,7 +171,6 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     }
   };
 
-  // Handle command submission
   const handleCommandSubmit = (command: string) => {
     if (command.trim()) {
       processCommandWithHistory(command);
@@ -164,7 +183,10 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
       className={cn('terminal-glass rounded-md overflow-hidden flex flex-col h-full', className)}
       onClick={handleTerminalClick}
     >
-      <TerminalHeader lastCommand={lastCommand} />
+      <TerminalHeader 
+        lastCommand={lastCommand} 
+        userEmail={userSession?.user?.email}
+      />
       
       <TerminalContent
         history={history}

@@ -1,73 +1,36 @@
 
 import React from 'react';
-import { X, Minus, Maximize2 } from 'lucide-react';
-import { 
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger 
-} from '@/components/ui/tooltip';
+import { MarkGithubIcon, X } from 'lucide-react';
 
 interface TerminalHeaderProps {
-  lastCommand: string;
+  lastCommand?: string;
+  userEmail?: string | null;
 }
 
-const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand }) => {
+const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', userEmail }) => {
   return (
-    <div className="flex items-center p-2 bg-black/20 border-b border-white/10">
-      <div className="flex space-x-2 mr-4">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="w-3 h-3 rounded-full bg-terminal-error relative group cursor-pointer">
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <X className="text-black w-2 h-2" />
-                </div>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent side="bottom">
-              <p className="text-xs">Close</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="w-3 h-3 rounded-full bg-terminal-warning relative group cursor-pointer">
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Minus className="text-black w-2 h-2" />
-                </div>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent side="bottom">
-              <p className="text-xs">Minimize</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="w-3 h-3 rounded-full bg-terminal-success relative group cursor-pointer">
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Maximize2 className="text-black w-2 h-2" />
-                </div>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent side="bottom">
-              <p className="text-xs">Maximize</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+    <div className="flex items-center justify-between bg-terminal-header p-2 border-b border-terminal-border">
+      <div className="flex space-x-2">
+        <div className="w-3 h-3 rounded-full bg-terminal-close" />
+        <div className="w-3 h-3 rounded-full bg-terminal-minimize" />
+        <div className="w-3 h-3 rounded-full bg-terminal-maximize" />
       </div>
-      <div className="text-terminal-foreground/70 text-sm font-mono flex-1 text-center">
-        <span className="programmer-sh-title">&lt;programmer&gt;.</span>
-        <span className="animate-cursor-blink">_</span>
-        <span className="ml-2 mr-2">~</span>
-        <span className="programmer-sh-page">{lastCommand}</span>
+      
+      <div className="flex-1 text-center text-terminal-title text-sm font-mono truncate px-4">
+        {userEmail ? `${userEmail} @ programmer.sh` : 'programmer.sh'}
       </div>
-      <div className="w-10"></div> {/* Spacer for symmetry */}
+      
+      <div className="flex space-x-2">
+        <a
+          href="https://github.com/ProgrammerInc"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-terminal-title hover:text-terminal-foreground transition-colors"
+          aria-label="GitHub Profile"
+        >
+          <MarkGithubIcon className="w-4 h-4" />
+        </a>
+      </div>
     </div>
   );
 };

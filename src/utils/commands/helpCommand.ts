@@ -1,28 +1,35 @@
-import { CommandResult } from './types';
+import { Command } from './types';
 
-export const helpCommand = {
-  execute(): CommandResult {
-    const commandList = [
-      { name: 'help', description: 'Shows this help menu' },
-      { name: 'about', description: 'About this awesome developer' },
-      { name: 'skills', description: 'View technical skills' },
-      { name: 'experience', description: 'View work experience' },
-      { name: 'education', description: 'View educational background' },
-      { name: 'projects', description: 'View notable projects' },
-      { name: 'contact', description: 'Display contact information' },
-      { name: 'resume', description: 'View or download resume' },
-      { name: 'theme [dark|light]', description: 'Switch terminal theme' },
-      { name: 'clear', description: 'Clear the terminal' },
-      { name: 'save [message]', description: 'Save a message to the database' },
-      { name: 'messages', description: 'View all saved messages' },
-    ];
-
-    const helpText = commandList
-      .map(cmd => `  ${cmd.name.padEnd(20)} ${cmd.description}`)
-      .join('\n');
-
+// Update the helpCommand to include auth commands
+export const helpCommand: Command = {
+  name: 'help',
+  description: 'Display available commands and their descriptions',
+  execute: () => {
     return {
-      content: `Available commands:\n\n${helpText}`,
+      content: `
+Available commands:
+
+Authentication:
+  login <email> <password>     - Log in to your account
+  signup <email> <password>    - Create a new account
+  logout                       - Log out of your account
+  whoami                       - Show current user information
+  profile set <field> <value>  - Update your profile information
+
+Information:
+  about          - Display information about me
+  contact        - Display my contact information
+  skills         - Display my skills and technologies
+  experience     - Display my work experience
+  projects       - Display my projects
+  project <id>   - Display details about a specific project
+  education      - Display my educational background
+
+System:
+  help           - Display this help message
+  clear          - Clear the terminal
+  theme <theme>  - Change the terminal theme (dark/light)
+      `,
       isError: false,
     };
   },

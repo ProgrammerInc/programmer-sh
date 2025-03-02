@@ -1,3 +1,4 @@
+
 import { Command, CommandResult } from './types';
 
 export const clearCommand: Command = {
@@ -11,13 +12,4 @@ export const clearCommand: Command = {
   },
 };
 
-export const whoamiCommand: Command = {
-  name: 'whoami',
-  description: 'Display user information',
-  execute: () => {
-    return {
-      content: 'James A. Black Jr. - Full Stack Developer @ Programmer Inc.',
-      isError: false,
-    };
-  },
-};
+// Remove the old whoami command since we've replaced it with a more advanced one in authCommands.ts
