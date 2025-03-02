@@ -16,8 +16,8 @@ const Index = () => {
       try {
         const parsedHistory = JSON.parse(savedHistory);
         
+        // Check if there's history and if the last command was NOT 'welcome'
         if (parsedHistory.length > 0) {
-          // Get the last command executed
           const lastCommand = parsedHistory[parsedHistory.length - 1].command;
           
           // Only show welcome if it wasn't the last command
@@ -28,7 +28,7 @@ const Index = () => {
             setInitialCommands([]);
           }
         } else {
-          // Empty history (array exists but has no items), show welcome
+          // Empty history, show welcome
           setInitialCommands(['welcome']);
         }
       } catch (error) {
@@ -37,7 +37,7 @@ const Index = () => {
         setInitialCommands(['welcome']);
       }
     } else {
-      // No history at all (null/undefined), show welcome
+      // No history at all, show welcome
       setInitialCommands(['welcome']);
     }
     
