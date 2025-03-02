@@ -9,6 +9,7 @@ interface CommandLineProps {
   autoFocus?: boolean;
   className?: string;
   showPrompt?: boolean;
+  inputRef?: React.RefObject<HTMLInputElement>;
 }
 
 const CommandLine: React.FC<CommandLineProps> = ({
@@ -17,10 +18,12 @@ const CommandLine: React.FC<CommandLineProps> = ({
   disabled = false,
   autoFocus = true,
   className,
-  showPrompt = true
+  showPrompt = true,
+  inputRef
 }) => {
   const [command, setCommand] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
+  const internalInputRef = useRef<HTMLInputElement>(null);
+  const actualInputRef = inputRef || internalInputRef;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,10 +34,10 @@ const CommandLine: React.FC<CommandLineProps> = ({
   };
 
   useEffect(() => {
-    if (autoFocus && inputRef.current) {
-      inputRef.current.focus();
+    if (autoFocus && actualInputRef.current) {
+      actualInputRef.current.focus();
     }
-  }, [autoFocus, disabled]);
+  }, [autoFocus, disabled, actualInputRef]);
 
   return (
     <form onSubmit={handleSubmit} className={cn('flex items-center', className)}>
@@ -42,7 +45,7 @@ const CommandLine: React.FC<CommandLineProps> = ({
         <span className="text-terminal-prompt font-mono mr-2">{prompt}</span>
       )}
       <input
-        ref={inputRef}
+        ref={actualInputRef}
         type="text"
         value={command}
         onChange={(e) => setCommand(e.target.value)}
@@ -54,7 +57,6 @@ const CommandLine: React.FC<CommandLineProps> = ({
         )}
         aria-label="Terminal command input"
       />
-      {/* Removed the extra cursor that was here */}
     </form>
   );
 };

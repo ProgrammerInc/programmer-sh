@@ -25,6 +25,7 @@ const Terminal: React.FC<TerminalProps> = ({
   const [isInitializing, setIsInitializing] = useState(true);
   const [initialCommandsProcessed, setInitialCommandsProcessed] = useState(false);
   const terminalRef = useRef<HTMLDivElement>(null);
+  const commandInputRef = useRef<HTMLInputElement>(null);
   
   const asciiArt = [
     " _____                                                         _____ _    _ ",
@@ -99,6 +100,13 @@ const Terminal: React.FC<TerminalProps> = ({
     ]);
   };
 
+  // Handle click anywhere in the terminal
+  const handleTerminalClick = () => {
+    if (!isInitializing && commandInputRef.current) {
+      commandInputRef.current.focus();
+    }
+  };
+
   return (
     <div className={cn('terminal-glass rounded-md overflow-hidden flex flex-col h-full', className)}>
       {/* Terminal Header */}
@@ -121,6 +129,7 @@ const Terminal: React.FC<TerminalProps> = ({
         ref={terminalRef}
         className="flex-1 p-4 overflow-y-auto terminal-scrollbar"
         style={{ maxHeight: 'calc(100% - 46px)' }}
+        onClick={handleTerminalClick}
       >
         {/* ASCII Art Animation */}
         <div className="mb-6 text-terminal-prompt font-mono text-xs md:text-sm">
@@ -146,6 +155,7 @@ const Terminal: React.FC<TerminalProps> = ({
           <CommandLine
             onSubmit={processCommandWithHistory}
             autoFocus
+            inputRef={commandInputRef}
           />
         )}
       </div>
