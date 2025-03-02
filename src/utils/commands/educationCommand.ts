@@ -20,7 +20,7 @@ export const educationCommand: Command = {
         }
 
         return {
-          content: `My Education:
+          content: `<strong>My Education:</strong>
 
 ${education
   .map(

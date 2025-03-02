@@ -58,7 +58,7 @@ export const themeCommand: Command = {
 
     if (!args) {
       return {
-        content: `Current theme: ${currentTheme}\nUsage: theme [dark|light]`,
+        content: `Current theme: <span class="text-terminal-prompt">${currentTheme}</span>\nUsage: theme [dark|light]`,
         isError: false,
       };
     }
@@ -67,14 +67,14 @@ export const themeCommand: Command = {
 
     if (newTheme !== 'dark' && newTheme !== 'light') {
       return {
-        content: `Invalid theme: ${newTheme}. Available themes: dark, light`,
+        content: `Invalid theme: <span class="text-terminal-prompt">${newTheme}</span>. Available themes: dark, light`,
         isError: true,
       };
     }
 
     if (newTheme === currentTheme) {
       return {
-        content: `Theme is already set to ${currentTheme} mode.`,
+        content: `Theme is already set to <span class="text-terminal-prompt">${currentTheme}</span> mode.`,
         isError: false,
       };
     }
@@ -82,7 +82,7 @@ export const themeCommand: Command = {
     setTheme(newTheme as ThemeOption);
 
     return {
-      content: `Theme switched to ${newTheme} mode.`,
+      content: `Theme switched to <span class="text-terminal-prompt">${newTheme}</span> mode.`,
       isError: false,
     };
   },

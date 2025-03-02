@@ -100,7 +100,7 @@ export const wallpaperCommand: Command = {
         .join('');
 
       return {
-        content: `Current wallpaper: ${wallpapers[currentWallpaper].name}\n\nAvailable wallpapers:${availableWallpapers}\n\nUsage: wallpaper [name]`,
+        content: `Current wallpaper: <span class="text-terminal-prompt">${wallpapers[currentWallpaper].name}</span>\n\nAvailable wallpapers:${availableWallpapers}\n\nUsage: wallpaper [name]`,
         isError: false,
       };
     }
@@ -109,14 +109,14 @@ export const wallpaperCommand: Command = {
 
     if (!Object.keys(wallpapers).includes(requestedWallpaper)) {
       return {
-        content: `Wallpaper "${requestedWallpaper}" not found. Use "wallpaper" to see available options.`,
+        content: `Wallpaper <span class="text-terminal-prompt">${requestedWallpaper}</span> not found. Use <span class="command-link" data-command="wallpaper">wallpaper</span> to see available options.`,
         isError: true,
       };
     }
 
     if (requestedWallpaper === currentWallpaper) {
       return {
-        content: `Wallpaper is already set to ${wallpapers[currentWallpaper].name}.`,
+        content: `Wallpaper is already set to <span class="text-terminal-prompt">${wallpapers[currentWallpaper].name}</span>.`,
         isError: false,
       };
     }
@@ -124,7 +124,7 @@ export const wallpaperCommand: Command = {
     setWallpaper(requestedWallpaper);
 
     return {
-      content: `Wallpaper changed to ${wallpapers[requestedWallpaper].name}.`,
+      content: `Wallpaper changed to <span class="text-terminal-prompt">${wallpapers[requestedWallpaper].name}</span>.`,
       isError: false,
     };
   },

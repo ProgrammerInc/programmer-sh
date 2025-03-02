@@ -20,7 +20,7 @@ export const skillsCommand: Command = {
         }
 
         return {
-          content: `My Skills:
+          content: `<strong>My Skills:</strong>
 
 ${profile.skills.map(skillCategory => `${skillCategory.category}:\n${skillCategory.items.map(skill => `- ${skill}`).join('\n')}`).join('\n\n')}`,
           isError: false,
