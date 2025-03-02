@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from 'react';
 
 export interface TypeOptions {
@@ -11,7 +10,7 @@ export function useTypingEffect(
   text: string,
   options: TypeOptions = {}
 ): { displayText: string; isTyping: boolean; isDone: boolean } {
-  const { speed = 40, delay = 0, cursor = true } = options;
+  const { speed = 100, delay = 0, cursor = true } = options;
   const [displayText, setDisplayText] = useState('');
   const [index, setIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
@@ -59,7 +58,7 @@ export function useMultiLineTypingEffect(
   lines: string[],
   options: TypeOptions & { lineDelay?: number } = {}
 ) {
-  const { lineDelay = 500, ...typeOptions } = options;
+  const { lineDelay = 250, ...typeOptions } = options;
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
   const [displayLines, setDisplayLines] = useState<string[]>([]);
   const [isDone, setIsDone] = useState(false);

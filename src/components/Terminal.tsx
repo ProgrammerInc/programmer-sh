@@ -3,7 +3,6 @@ import CommandLine from './CommandLine';
 import TerminalResponse from './TerminalResponse';
 import { processCommand, CommandResult } from '../utils/terminalCommands';
 import { cn } from '@/lib/utils';
-import { useMultiLineTypingEffect } from '@/utils/typingEffect';
 
 interface TerminalProps {
   className?: string;
@@ -25,25 +24,35 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
 
   // Updated ASCII art for better readability of "Programmer.SH"
   const asciiArt = [
-    '  _____                                                            ____  _   _ ',
-    ' |  __ \\                                                          / ___|| | | |',
-    ' | |__) | __ ___   __ _ _ __ __ _ _ __ ___  _ __ ___   ___ _ __  \\___ \\| |_| |',
-    ' |  ___/ \'__/ _ \\ / _` | \'__/ _` | \'_ ` _ \\| \'_ ` _ \\ / _ \\ \'__|  ___) |  _  |',
-    ' | |   | | | (_) | (_| | | | (_| | | | | | | | | | | |  __/ |    |____/|_| |_|',
-    ' |_|   |_|  \\___/ \\__, |_|  \\__,_|_| |_| |_|_| |_| |_|\\___|_|                 ',
-    '                   __/ |                                                       ',
-    '                  |___/                                                        ',
+    '  ____                                                          ____  _   _   ',
+    ' |  _ \\ _ __ ___   __ _ _ __ __ _ _ __ ___  ___ _ __   ___ _ __/ ___|| | | | ',
+    " | |_) | '__/ _ \\ / _` | '__/ _` | '_ ` _ \\| '_ ` _ \\ / _ \\ '__\\___ \\| |_| | ",
+    ' |  __/| | | (_) | (_| | | | (_| | | | | | | | | | | |  __/ |_  ___) |  _  | ',
+    ' |_|   |_|  \\___/ \\__, |_|  \\__,_|_| |_| |_|_| |_| |_|\\___|_(_)|____/|_| |_| ',
+    '                  |___/                                                     ',
   ];
 
-  const { displayLines, currentLineText, isDone } = useMultiLineTypingEffect(asciiArt, {
-    speed: 5,
-    delay: 300,
-    lineDelay: 50,
-  });
+  // Use a state to determine when ASCII art should be shown
+  const [showAsciiArt, setShowAsciiArt] = useState(false);
+  const [asciiArtDone, setAsciiArtDone] = useState(false);
+
+  // Show ASCII art after a small delay, no typing animation
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAsciiArt(true);
+
+      // Wait a bit longer to trigger the completion
+      setTimeout(() => {
+        setAsciiArtDone(true);
+      }, 300);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Process initial commands
   useEffect(() => {
-    if (isInitializing && isDone && !initialCommandsProcessed) {
+    if (isInitializing && asciiArtDone && !initialCommandsProcessed) {
       let timeout: NodeJS.Timeout;
 
       const processInitialCommands = async () => {
@@ -70,14 +79,14 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
 
       return () => clearTimeout(timeout);
     }
-  }, [initialCommands, isInitializing, isDone, initialCommandsProcessed]);
+  }, [initialCommands, isInitializing, asciiArtDone, initialCommandsProcessed]);
 
   // Scroll to bottom when history changes
   useEffect(() => {
     if (terminalRef.current) {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
     }
-  }, [history, currentLineText, displayLines]);
+  }, [history]);
 
   const processCommandWithHistory = (commandString: string) => {
     const result = processCommand(commandString);
@@ -118,7 +127,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
         <div className="text-terminal-foreground/70 text-sm font-mono flex-1 text-center">
           <span>&lt;programmer&gt;.</span>
           <span className="animate-cursor-blink">_</span>
-          <span>~ portfolio</span>
+          <span className="ml-1">~ portfolio</span>
         </div>
         <div className="w-10"></div> {/* Spacer for symmetry */}
       </div>
@@ -129,14 +138,14 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
         className="flex-1 p-4 overflow-y-auto terminal-scrollbar terminal-content-height"
         onClick={handleTerminalClick}
       >
-        {/* ASCII Art Animation */}
+        {/* ASCII Art without animation */}
         <div className="mb-6 text-terminal-prompt font-mono text-xs md:text-sm">
-          {displayLines.map((line, i) => (
-            <div key={i} className="whitespace-pre">
-              {line}
-            </div>
-          ))}
-          {currentLineText && <div className="whitespace-pre">{currentLineText}</div>}
+          {showAsciiArt &&
+            asciiArt.map((line, i) => (
+              <div key={i} className="whitespace-pre">
+                {line}
+              </div>
+            ))}
         </div>
 
         {/* Command History */}
