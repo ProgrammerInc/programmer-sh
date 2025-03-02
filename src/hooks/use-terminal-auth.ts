@@ -1,6 +1,5 @@
-
-import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { useEffect, useState } from 'react';
 
 export const useTerminalAuth = () => {
   const [userEmail, setUserEmail] = useState<string | null>(null);

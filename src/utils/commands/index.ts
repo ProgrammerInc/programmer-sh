@@ -1,4 +1,3 @@
-
 import {
   loginCommand,
   logoutCommand,
@@ -13,7 +12,7 @@ import { aboutCommand, contactCommand } from './informationCommands';
 import { projectsCommand } from './projectsCommand';
 import { resumeCommand } from './resumeCommand';
 import { skillsCommand } from './skillsCommand';
-import { clearCommand, echoCommand, dateCommand, historyCommand } from './systemCommands';
+import { clearCommand, dateCommand, echoCommand, historyCommand } from './systemCommands';
 import { initializeTheme, themeCommand } from './themeCommand';
 import { initializeWallpaper, wallpaperCommand } from './wallpaperCommand';
 import { welcomeCommand } from './welcomeCommand';

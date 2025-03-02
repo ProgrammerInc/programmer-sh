@@ -1,4 +1,3 @@
-
 import type { SocialLink } from '../../types/socialLinks';
 import { fetchProfile } from './portfolioServices';
 
@@ -48,7 +47,7 @@ export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
     if (profile.contact.email) {
       socialLinks.push({
         type: 'email',
-        url: `mailto:${profile.contact.email}`
+        url: `mailto:${profile.contact.email}`,
       });
     }
 
@@ -56,7 +55,7 @@ export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
     if (profile.contact.website) {
       socialLinks.push({
         type: 'website',
-        url: ensureHttps(profile.contact.website)
+        url: ensureHttps(profile.contact.website),
       });
     }
 

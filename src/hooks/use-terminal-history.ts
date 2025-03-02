@@ -1,6 +1,5 @@
-
-import { useState, useEffect } from 'react';
 import { HistoryItem } from '@/components/ui/terminal';
+import { useEffect, useState } from 'react';
 
 const HISTORY_STORAGE_KEY = 'terminal_command_history';
 

@@ -1,5 +1,4 @@
-
-import { Command, CommandResult } from './types';
+import { Command } from './types';
 import { welcomeCommand } from './welcomeCommand';
 
 export const clearCommand: Command = {

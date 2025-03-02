@@ -1,14 +1,12 @@
-
-import { useState, useEffect } from 'react';
-import { processCommand } from '@/utils/commands';
-import { CommandResult } from '@/utils/commands/types';
 import { HistoryItem } from '@/components/ui/terminal';
+import { processCommand } from '@/utils/commands';
+import { useCallback, useEffect, useState } from 'react';
 
 export const useCommandProcessor = (
   initialCommands: string[] = [],
   setHistory: React.Dispatch<React.SetStateAction<HistoryItem[]>>,
   setLastExecutedCommand: (command: string) => void,
-  commandHistory: string[] = []  // Add commandHistory parameter
+  commandHistory: string[] = [] // Add commandHistory parameter
 ) => {
   const [isInitializing, setIsInitializing] = useState(true);
   const [initialCommandsProcessed, setInitialCommandsProcessed] = useState(false);
@@ -24,6 +22,82 @@ export const useCommandProcessor = (
       setCommandsToProcess(['welcome']);
     }
   }, [initialCommands]);
+
+  const processCommandWithHistory = useCallback(
+    async (commandString: string) => {
+      setIsProcessingAsync(true);
+      setLastExecutedCommand(commandString);
+      let result = processCommand(commandString);
+
+      // Special handling for history command
+      if (commandString.trim().toLowerCase() === 'history') {
+        // Replace placeholder with actual history
+        const historyOutput = commandHistory
+          .map((cmd, index) => `  ${index + 1}  ${cmd}`)
+          .join('\n');
+
+        result = {
+          content:
+            historyOutput.length > 0
+              ? `Command History:\n${historyOutput}`
+              : 'No command history available.',
+          isError: false,
+        };
+      }
+
+      if (result.content === 'CLEAR_TERMINAL') {
+        setHistory([]);
+        setIsProcessingAsync(false);
+
+        if (result.runAfterClear) {
+          const welcomeHistoryItem = {
+            command: 'welcome',
+            result: result.runAfterClear,
+            timestamp: new Date(),
+          };
+          setHistory([welcomeHistoryItem]);
+        }
+        return;
+      }
+
+      const historyItem = {
+        command: commandString,
+        result,
+        timestamp: new Date(),
+      };
+
+      setHistory(prev => [...prev, historyItem]);
+
+      if (result.isAsync && result.asyncResolver) {
+        try {
+          const asyncResult = await result.asyncResolver();
+          setHistory(prev =>
+            prev.map(item => (item === historyItem ? { ...item, result: asyncResult } : item))
+          );
+        } catch (error) {
+          console.error('Error processing async command:', error);
+          setHistory(prev =>
+            prev.map(item =>
+              item === historyItem
+                ? {
+                    ...item,
+                    result: {
+                      content: `Error: ${error instanceof Error ? error.message : String(error)}`,
+                      isError: true,
+                    },
+                  }
+                : item
+            )
+          );
+        } finally {
+          setIsProcessingAsync(false);
+        }
+      } else {
+        setIsProcessingAsync(false);
+      }
+    },
+    [commandHistory, setHistory, setLastExecutedCommand, setIsProcessingAsync]
+  );
 
   // Process initial commands
   useEffect(() => {
@@ -47,79 +121,7 @@ export const useCommandProcessor = (
     } else if (isInitializing && commandsToProcess.length === 0) {
       setIsInitializing(false);
     }
-  }, [commandsToProcess, isInitializing, initialCommandsProcessed]);
-
-  const processCommandWithHistory = async (commandString: string) => {
-    setIsProcessingAsync(true);
-    setLastExecutedCommand(commandString);
-    let result = processCommand(commandString);
-
-    // Special handling for history command
-    if (commandString.trim().toLowerCase() === 'history') {
-      // Replace placeholder with actual history
-      const historyOutput = commandHistory
-        .map((cmd, index) => `  ${index + 1}  ${cmd}`)
-        .join('\n');
-      
-      result = {
-        content: historyOutput.length > 0 
-          ? `Command History:\n${historyOutput}` 
-          : 'No command history available.',
-        isError: false
-      };
-    }
-
-    if (result.content === 'CLEAR_TERMINAL') {
-      setHistory([]);
-      setIsProcessingAsync(false);
-      
-      if (result.runAfterClear) {
-        const welcomeHistoryItem = {
-          command: 'welcome',
-          result: result.runAfterClear,
-          timestamp: new Date(),
-        };
-        setHistory([welcomeHistoryItem]);
-      }
-      return;
-    }
-
-    const historyItem = {
-      command: commandString,
-      result,
-      timestamp: new Date(),
-    };
-
-    setHistory(prev => [...prev, historyItem]);
-
-    if (result.isAsync && result.asyncResolver) {
-      try {
-        const asyncResult = await result.asyncResolver();
-        setHistory(prev =>
-          prev.map(item => (item === historyItem ? { ...item, result: asyncResult } : item))
-        );
-      } catch (error) {
-        console.error('Error processing async command:', error);
-        setHistory(prev =>
-          prev.map(item =>
-            item === historyItem
-              ? {
-                  ...item,
-                  result: {
-                    content: `Error: ${error instanceof Error ? error.message : String(error)}`,
-                    isError: true,
-                  },
-                }
-              : item
-          )
-        );
-      } finally {
-        setIsProcessingAsync(false);
-      }
-    } else {
-      setIsProcessingAsync(false);
-    }
-  };
+  }, [commandsToProcess, isInitializing, initialCommandsProcessed, processCommandWithHistory]);
 
   return {
     isInitializing,

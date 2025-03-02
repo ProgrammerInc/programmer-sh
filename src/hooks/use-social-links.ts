@@ -1,7 +1,6 @@
-
-import { useState, useEffect } from 'react';
-import { fetchSocialLinks } from '@/utils/database/socialLinksService';
 import type { SocialLink } from '@/types/socialLinks';
+import { fetchSocialLinks } from '@/utils/database/socialLinksService';
+import { useEffect, useState } from 'react';
 
 export const useSocialLinks = () => {
   const [socialLinks, setSocialLinks] = useState<SocialLink[]>([]);
