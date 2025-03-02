@@ -6,8 +6,6 @@ import { Toaster } from '@/components/ui/toaster/toaster';
 import { validUrlCommands, extractUrlParameters } from '@/utils/commands/urlCommandHandler';
 import { processThemeFromUrl } from '@/utils/commands/themeCommand';
 import { getCurrentWallpaper, wallpapers } from '@/utils/commands/wallpaperCommand';
-import { useScreensaver } from '@/hooks/use-screensaver';
-import Screensaver from '@/components/ui/screensaver';
 import '@/styles/wallpaper.css';
 
 const HISTORY_STORAGE_KEY = 'terminal_command_history';
@@ -20,7 +18,6 @@ const Index = () => {
   const [initialCommands, setInitialCommands] = useState<string[]>([]);
   const [currentWallpaper, setCurrentWallpaper] = useState<string>(getCurrentWallpaper());
   const [currentCommand, setCurrentCommand] = useState<string>('portfolio');
-  const { isScreensaverActive, handleUserActivity } = useScreensaver();
 
   // Update the document title when the current command changes
   useEffect(() => {
@@ -125,34 +122,17 @@ const Index = () => {
     return classes.join(' ');
   };
 
-  const currentYear = new Date().getFullYear();
-
   return (
-    <>
-      <div className={getWallpaperClasses()}>
-        <div className="min-h-screen flex flex-col justify-between">
-          <div className="flex-grow flex items-center justify-center py-6">
-            <div
-              className={`w-full max-w-4xl h-[80vh] transition-all duration-1000 ease-out terminal-glow-shadow ${
-                isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
-              }`}
-            >
-              <Terminal initialCommands={initialCommands} />
-            </div>
-          </div>
-          <div className="py-4 text-center text-terminal-muted text-xs font-mono">
-            © {currentYear} Programmer Incorporated LLC. All rights reserved.
-          </div>
-        </div>
-        <Toaster />
+    <div className={getWallpaperClasses()}>
+      <div
+        className={`w-full max-w-4xl h-[80vh] transition-all duration-1000 ease-out terminal-glow-shadow ${
+          isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+        }`}
+      >
+        <Terminal initialCommands={initialCommands} />
       </div>
-
-      {/* Screensaver Component */}
-      <Screensaver 
-        isActive={isScreensaverActive} 
-        onActivity={handleUserActivity} 
-      />
-    </>
+      <Toaster />
+    </div>
   );
 };
 
