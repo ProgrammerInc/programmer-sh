@@ -12,6 +12,7 @@ export const getCurrentTheme = (): ThemeOption => {
 // Set theme in localStorage and apply to document
 export const setTheme = (theme: ThemeOption): void => {
   localStorage.setItem('terminal_theme', theme);
+  const isDark = theme === 'dark';
 
   // Apply theme to the document
   if (theme === 'light') {
@@ -19,6 +20,13 @@ export const setTheme = (theme: ThemeOption): void => {
   } else {
     document.documentElement.classList.remove('light-theme');
   }
+  
+  // Dispatch custom event for favicon and other theme-aware components
+  document.dispatchEvent(
+    new CustomEvent('themeChange', {
+      detail: { isDark, theme }
+    })
+  );
 };
 
 // Process theme from URL parameter
