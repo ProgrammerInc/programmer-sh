@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -34,7 +33,13 @@ export default {
           warning: 'var(--terminal-warning)',
           command: 'var(--terminal-command)',
           link: 'var(--terminal-link)',
-          muted: 'var(--terminal-muted)'
+          muted: 'var(--terminal-muted)',
+          header: 'var(--terminal-background)',
+          border: 'var(--terminal-muted-30)',
+          title: 'var(--terminal-foreground)',
+          close: '#FF5F56',
+          minimize: '#FFBD2E',
+          maximize: '#27C93F'
         },
         primary: {
           DEFAULT: 'hsl(var(--primary))',
@@ -119,6 +124,5 @@ export default {
       }
     }
   },
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
