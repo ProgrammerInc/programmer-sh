@@ -13,14 +13,14 @@ interface TerminalResponseProps {
 const convertLinksToAnchors = (text: string): React.ReactNode[] => {
   // Regex patterns for URLs, emails, and phone numbers
   const urlRegex =
-    /(https?:\/\/[^\s]+)|((www\.)?[a-zA-Z0-9][\w.-]+\.(com|org|net|edu|io|sh|to|dev|me|app)\/?\S*)/g;
+    /(https?:\/\/[^\s]+)|((www\.)?[a-zA-Z0-9][\w.-]+\.(com|org|net|edu|io|sh|to|dev|me|app)\/?\S*)|((www\.)?x\.com\/\S*)/g;
   const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
   const phoneRegex = /(\+\d{1,3}[-\s]?\(?\d{1,4}\)?[-\s]?\d{1,4}[-\s]?\d{1,9})/g;
 
   // Process the text and return array of React nodes
   const result: React.ReactNode[] = [];
   let lastIndex = 0;
-  const matches: Array<{ index: number; length: number; content: React.ReactNode }> = [];
+  const matches: Array<{ index: number; length: number; content: React.ReactNode; type: string }> = [];
 
   // Find all URL matches
   let match;
@@ -46,6 +46,7 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
           {url}
         </a>
       ),
+      type: 'url'
     });
   }
 
@@ -63,6 +64,7 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
           {email}
         </a>
       ),
+      type: 'email'
     });
   }
 
@@ -78,14 +80,39 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
           {phone}
         </a>
       ),
+      type: 'phone'
     });
   }
 
   // Sort matches by their starting index
   matches.sort((a, b) => a.index - b.index);
 
-  // Build the result array
-  for (const match of matches) {
+  // Filter out overlapping matches, prioritizing emails over URLs
+  const filteredMatches = [];
+  for (let i = 0; i < matches.length; i++) {
+    const current = matches[i];
+    let overlapping = false;
+    
+    // Check if this match overlaps with any previously accepted match
+    for (const accepted of filteredMatches) {
+      // If there's overlap and we're a URL that overlaps with an email, skip
+      if ((current.index >= accepted.index && current.index < accepted.index + accepted.length) || 
+          (current.index + current.length > accepted.index && current.index < accepted.index)) {
+        // If we're a URL that overlaps with an email, skip
+        if (current.type === 'url' && accepted.type === 'email') {
+          overlapping = true;
+          break;
+        }
+      }
+    }
+    
+    if (!overlapping) {
+      filteredMatches.push(current);
+    }
+  }
+
+  // Build the result array with the filtered matches
+  for (const match of filteredMatches) {
     // Add text before this match if there's any
     if (match.index > lastIndex) {
       result.push(text.substring(lastIndex, match.index));

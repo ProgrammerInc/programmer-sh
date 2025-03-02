@@ -31,6 +31,7 @@ export interface Education {
 }
 
 export interface Contact {
+  phone?: string;
   email: string;
   linkedin?: string;
   github?: string;
@@ -57,6 +58,7 @@ const portfolioData: Profile = {
     'Passionate software engineer with 25+ years of experience building web applications. Specialized in Angular and React front-end frameworks, working with both JavaScript/TypeScript languages, and well versed with many backend languages and frameworks from Node.JS to Python, Golang and more. Dedicated to creating elegant, efficient, and user-friendly solutions.',
   location: 'Frisco, TX',
   contact: {
+    phone: '+1 (347) 503-3967',
     email: 'james.black@programmer.sh',
     linkedin: 'linkedin.com/in/ProgrammerInc',
     github: 'github.com/ProgrammerInc',

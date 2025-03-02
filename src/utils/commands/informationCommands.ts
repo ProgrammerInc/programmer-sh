@@ -17,7 +17,7 @@ Contact:
 - Email: ${portfolioData.contact.email}
 ${portfolioData.contact.github ? `- GitHub: ${portfolioData.contact.github}` : ''}
 ${portfolioData.contact.linkedin ? `- LinkedIn: ${portfolioData.contact.linkedin}` : ''}
-${portfolioData.contact.twitter ? `- Twitter: ${portfolioData.contact.twitter}` : ''}
+${portfolioData.contact.twitter ? `- X/Twitter: ${portfolioData.contact.twitter}` : ''}
 ${portfolioData.contact.website ? `- Website: ${portfolioData.contact.website}` : ''}
 `,
     };
@@ -56,10 +56,10 @@ export const contactCommand: Command = {
 Contact Information:
 
 Email: ${portfolioData.contact.email}
-Phone: +1 (347) 503-3967
+${portfolioData.contact.phone ? `Phone: ${portfolioData.contact.phone}` : ''}
 ${portfolioData.contact.linkedin ? `LinkedIn: ${portfolioData.contact.linkedin}` : ''}
 ${portfolioData.contact.github ? `GitHub: ${portfolioData.contact.github}` : ''}
-${portfolioData.contact.twitter ? `Twitter: ${portfolioData.contact.twitter}` : ''}
+${portfolioData.contact.twitter ? `X/Twitter: ${portfolioData.contact.twitter}` : ''}
 ${portfolioData.contact.website ? `Website: ${portfolioData.contact.website}` : ''}
 `,
     };
