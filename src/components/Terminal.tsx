@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import CommandLine from './CommandLine';
 import TerminalResponse from './TerminalResponse';
@@ -34,7 +33,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     ' |  _ \\ _ __ ___   __ _ _ __ __ _ _ __ ___  ___ _ __   ___ _ __/ ___|| | | | ',
     " | |_) | '__/ _ \\ / _` | '__/ _` | '_ ` _ \\| '_ ` _ \\ / _ \\ '__\\___ \\| |_| | ",
     ' |  __/| | | (_) | (_| | | | (_| | | | | | | | | | | |  __/ |_  ___) |  _  | ',
-    ' |_|   |_|  \\___/ \\__, |_|  \\__,_|_| |_| |_|_| |_| |_|\\___|_(_)|____/|_| |_| ',
+    ' |_|   |_|  \\___/ \\__,_|_|  \\__,_|_| |_| |_|_| |_| |_|\\___|_(_)|____/|_| |_| ',
     '                  |___/                                                     ',
   ];
 
@@ -49,7 +48,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
       try {
         const parsedHistory = JSON.parse(savedHistory);
         // Convert string dates back to Date objects
-        const formattedHistory = parsedHistory.map((item: any) => ({
+        const formattedHistory = parsedHistory.map((item: Omit<HistoryItem, 'timestamp'> & { timestamp: string }) => ({
           ...item,
           timestamp: new Date(item.timestamp)
         }));

@@ -56,6 +56,7 @@ SKILLS
 
 ${portfolioData.skills.map(skillCategory => `${skillCategory.category}: ${skillCategory.items.join(', ')}`).join('\n')}
 
+
 CONTACT
 
 E-mail: ${portfolioData.contact.email}
