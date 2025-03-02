@@ -8,6 +8,7 @@ import { educationCommand } from './educationCommand';
 import { helpCommand } from './helpCommand';
 import { clearCommand } from './systemCommands';
 import { loginCommand, logoutCommand, signupCommand, whoamiCommand, profileCommand } from './authCommands';
+import { themeCommand } from './themeCommand';
 
 export const processCommand = (commandString: string) => {
   if (commandString.trim() === '') {
@@ -77,6 +78,9 @@ export const processCommand = (commandString: string) => {
   // System commands
   if (commandName === helpCommand.name) {
     return helpCommand.execute();
+  }
+  if (commandName === 'theme') {
+    return themeCommand.execute(args);
   }
 
   // Unknown command

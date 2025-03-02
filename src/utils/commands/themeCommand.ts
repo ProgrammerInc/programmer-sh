@@ -1,5 +1,5 @@
 
-import { CommandResult } from './types';
+import { Command, CommandResult } from './types';
 
 // Theme options
 export type ThemeOption = 'dark' | 'light';
@@ -43,7 +43,9 @@ export const initializeTheme = (): void => {
 };
 
 // Theme command
-export const themeCommand = {
+export const themeCommand: Command = {
+  name: 'theme',
+  description: 'Change the terminal theme (dark/light)',
   execute: (args?: string): CommandResult => {
     const currentTheme = getCurrentTheme();
 
