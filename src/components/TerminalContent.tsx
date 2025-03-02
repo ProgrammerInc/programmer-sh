@@ -3,6 +3,7 @@ import React, { useRef, useEffect } from 'react';
 import CommandLine from './CommandLine';
 import TerminalResponse from './TerminalResponse';
 import { HistoryItem } from '@/components/Terminal';
+import { useToast } from '@/hooks/use-toast';
 
 // Updated ASCII art for better readability of "Programmer.SH"
 const asciiArt = [
@@ -34,6 +35,7 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
   inputRef,
 }) => {
   const terminalRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
 
   // Scroll to bottom when history changes
   useEffect(() => {
@@ -52,12 +54,29 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
           navigator.clipboard.writeText(selection.toString())
             .then(() => {
               console.log('Text copied to clipboard');
+              toast({
+                title: "Copied to clipboard",
+                description: "The selected text has been copied to your clipboard.",
+                duration: 2000,
+              });
             })
             .catch(err => {
               console.error('Failed to copy text: ', err);
+              toast({
+                title: "Copy failed",
+                description: "Could not copy to clipboard. Please try again.",
+                variant: "destructive",
+                duration: 2000,
+              });
             });
         } catch (error) {
           console.error('Clipboard API not available: ', error);
+          toast({
+            title: "Copy failed",
+            description: "Clipboard functionality is not available in your browser.",
+            variant: "destructive",
+            duration: 2000,
+          });
         }
       }
     };
@@ -67,7 +86,7 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
     return () => {
       document.removeEventListener('selectionchange', handleSelectionChange);
     };
-  }, []);
+  }, [toast]);
 
   return (
     <div

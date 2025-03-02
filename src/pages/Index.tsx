@@ -1,6 +1,8 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import Terminal from '@/components/Terminal';
+import { Toaster } from '@/components/ui/toaster';
 import { validUrlCommands, extractUrlParameters } from '@/utils/commands/urlCommandHandler';
 import { processThemeFromUrl } from '@/utils/commands/themeCommand';
 
@@ -74,6 +76,7 @@ const Index = () => {
       >
         <Terminal initialCommands={initialCommands} />
       </div>
+      <Toaster />
     </div>
   );
 };
