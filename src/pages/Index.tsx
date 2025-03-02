@@ -18,6 +18,23 @@ const Index = () => {
   const [initialCommands, setInitialCommands] = useState<string[]>([]);
   const [currentWallpaper, setCurrentWallpaper] = useState<string>(getCurrentWallpaper());
   const [currentCommand, setCurrentCommand] = useState<string>('portfolio');
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  // Check if the device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    
+    // Initial check
+    checkMobile();
+    
+    // Add resize listener
+    window.addEventListener('resize', checkMobile);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Update the document title when the current command changes
   useEffect(() => {
@@ -124,15 +141,13 @@ const Index = () => {
 
   return (
     <div className={getWallpaperClasses()}>
-      <div
-        className={`w-full h-screen flex items-center justify-center px-4 sm:px-6 md:px-8`}
-      >
+      <div className="w-full h-screen flex items-center justify-center">
         <div
-          className={`w-full max-w-4xl h-[95vh] sm:h-[80vh] transition-all duration-1000 ease-out terminal-glow-shadow ${
-            isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
-          }`}
+          className={`${isMobile ? 'w-full h-full' : 'w-full max-w-4xl h-[95vh] sm:h-[80vh]'} transition-all duration-1000 ease-out ${
+            !isMobile ? 'terminal-glow-shadow' : ''
+          } ${isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}
         >
-          <Terminal initialCommands={initialCommands} />
+          <Terminal initialCommands={initialCommands} isMobile={isMobile} />
         </div>
       </div>
       <Toaster />

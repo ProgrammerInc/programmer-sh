@@ -24,9 +24,10 @@ export interface HistoryItem {
 interface TerminalProps {
   className?: string;
   initialCommands?: string[];
+  isMobile?: boolean;
 }
 
-const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) => {
+const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [], isMobile = false }) => {
   const [showAsciiArt, setShowAsciiArt] = useState(true);
   const commandInputRef = useRef<HTMLInputElement>(null);
   
@@ -77,7 +78,11 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) 
       className={cn('terminal-glass rounded-md overflow-hidden flex flex-col h-full', className)}
       onClick={handleTerminalClick}
     >
-      <TerminalHeader lastCommand={lastExecutedCommand} socialLinks={socialLinks} />
+      <TerminalHeader 
+        lastCommand={lastExecutedCommand} 
+        socialLinks={socialLinks} 
+        simplified={isMobile}
+      />
 
       <TerminalContent
         history={history}
@@ -87,6 +92,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) 
         commandHistory={commandHistory}
         onCommandSubmit={handleCommandSubmit}
         inputRef={commandInputRef}
+        fullscreen={isMobile}
       />
     </div>
   );
