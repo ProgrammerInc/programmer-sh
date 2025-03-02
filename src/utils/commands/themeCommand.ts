@@ -1,3 +1,4 @@
+
 import { CommandResult } from './types';
 
 // Theme options
@@ -18,6 +19,20 @@ export const setTheme = (theme: ThemeOption): void => {
     document.documentElement.classList.add('light-theme');
   } else {
     document.documentElement.classList.remove('light-theme');
+  }
+};
+
+// Process theme from URL parameter
+export const processThemeFromUrl = (themeParam: string): void => {
+  if (!themeParam) return;
+  
+  const normalizedTheme = themeParam.toLowerCase();
+  
+  if (normalizedTheme === 'dark' || normalizedTheme === 'light') {
+    setTheme(normalizedTheme as ThemeOption);
+    console.log(`Theme set from URL parameter: ${normalizedTheme}`);
+  } else {
+    console.warn(`Invalid theme parameter: ${themeParam}. Using current theme.`);
   }
 };
 
