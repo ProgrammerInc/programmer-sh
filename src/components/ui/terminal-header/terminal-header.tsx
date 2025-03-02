@@ -1,7 +1,11 @@
 
-import React from 'react';
-import { Github, Linkedin, Twitter, Mail, Globe, X, Plus, Minus } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { User, LogIn, LogOut, Settings, X, Plus, Minus, ChevronDown } from 'lucide-react';
 import { SocialLink } from '@/types/socialLinks';
+import { supabase } from '@/integrations/supabase/client';
+import { useTerminalAuth } from '@/hooks/use-terminal-auth';
+import { cn } from '@/lib/utils';
+import { isIncognitoMode } from '@/utils/incognito';
 
 interface TerminalHeaderProps {
   lastCommand?: string;
@@ -9,21 +13,45 @@ interface TerminalHeaderProps {
 }
 
 const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socialLinks = [] }) => {
-  // Function to render the appropriate icon based on link type
-  const renderSocialIcon = (type: string) => {
-    switch (type) {
-      case 'github':
-        return <Github className="w-4 h-4" />;
-      case 'linkedin':
-        return <Linkedin className="w-4 h-4" />;
-      case 'twitter':
-        return <Twitter className="w-4 h-4" />;
-      case 'email':
-        return <Mail className="w-4 h-4" />;
-      case 'website':
-        return <Globe className="w-4 h-4" />;
-      default:
-        return null;
+  const { userEmail } = useTerminalAuth();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isAnonymous, setIsAnonymous] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // Check for incognito mode
+  useEffect(() => {
+    setIsAnonymous(isIncognitoMode());
+  }, []);
+
+  // Determine display name
+  const getUserDisplayName = () => {
+    if (userEmail) {
+      return userEmail.split('@')[0];
+    }
+    
+    return isAnonymous ? 'Anonymous' : 'Guest';
+  };
+
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      setDropdownOpen(false);
+    } catch (error) {
+      console.error('Error logging out:', error);
     }
   };
 
@@ -63,64 +91,82 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socia
         )}
       </div>
 
-      <div className="flex space-x-2">
-        {socialLinks.length > 0 ? (
-          // Render dynamic social links
-          socialLinks.map((link, index) => (
-            <a
-              key={index}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-terminal-title hover:text-terminal-foreground transition-colors cursor-pointer"
-              aria-label={`${link.type} Profile`}
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent terminal focus
-              }}
-            >
-              {renderSocialIcon(link.type)}
-            </a>
-          ))
-        ) : (
-          // Fallback to static links if no dynamic links are provided
-          <>
-            <a
-              href="https://github.com/ProgrammerInc"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-terminal-title hover:text-terminal-foreground transition-colors cursor-pointer"
-              aria-label="GitHub Profile"
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent terminal focus
-              }}
-            >
-              <Github className="w-4 h-4" />
-            </a>
-            <a
-              href="https://linkedin.com/in/ProgrammerInc"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-terminal-title hover:text-terminal-foreground transition-colors cursor-pointer"
-              aria-label="LinkedIn Profile"
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent terminal focus
-              }}
-            >
-              <Linkedin className="w-4 h-4" />
-            </a>
-            <a
-              href="https://x.com/ProgrammerInc"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-terminal-title hover:text-terminal-foreground transition-colors cursor-pointer"
-              aria-label="X.com/Twitter Profile"
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent terminal focus
-              }}
-            >
-              <Twitter className="w-4 h-4" />
-            </a>
-          </>
+      <div className="relative" ref={dropdownRef}>
+        <button
+          onClick={() => setDropdownOpen(!dropdownOpen)}
+          className="flex items-center space-x-1 text-terminal-title hover:text-terminal-foreground transition-colors py-1 px-2 rounded"
+          aria-haspopup="true"
+          aria-expanded={dropdownOpen}
+        >
+          <User className="w-4 h-4" />
+          <span className="text-xs">{getUserDisplayName()}</span>
+          <ChevronDown className="w-3 h-3" />
+        </button>
+
+        {dropdownOpen && (
+          <div 
+            className="absolute right-0 mt-1 w-40 rounded-md shadow-lg bg-terminal-dropdown border border-terminal-border z-50"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="py-1 rounded-md bg-terminal-dropdown">
+              {userEmail ? (
+                <>
+                  <a
+                    href="#profile"
+                    className="flex items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-dropdown-hover"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setDropdownOpen(false);
+                      // You can add code to execute the profile command here
+                      console.log('Navigate to profile');
+                    }}
+                  >
+                    <User className="w-4 h-4 mr-2" />
+                    Profile
+                  </a>
+                  <a
+                    href="#settings"
+                    className="flex items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-dropdown-hover"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setDropdownOpen(false);
+                      // You can add code to execute the settings command here
+                      console.log('Navigate to settings');
+                    }}
+                  >
+                    <Settings className="w-4 h-4 mr-2" />
+                    Settings
+                  </a>
+                  <div className="border-t border-terminal-border my-1"></div>
+                  <a
+                    href="#logout"
+                    className="flex items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-dropdown-hover"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleLogout();
+                    }}
+                  >
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Logout
+                  </a>
+                </>
+              ) : (
+                <a
+                  href="#login"
+                  className="flex items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-dropdown-hover"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setDropdownOpen(false);
+                    // You can add code to execute the login command here
+                    console.log('Navigate to login');
+                  }}
+                >
+                  <LogIn className="w-4 h-4 mr-2" />
+                  Login
+                </a>
+              )}
+            </div>
+          </div>
         )}
       </div>
     </div>

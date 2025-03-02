@@ -41,6 +41,8 @@ export default {
           close: '#FF5F56',
           minimize: '#FFBD2E',
           maximize: '#27C93F',
+          dropdown: 'hsl(var(--terminal-dropdown))',
+          'dropdown-hover': 'hsl(var(--terminal-dropdown-hover))',
         },
         primary: {
           DEFAULT: 'hsl(var(--primary))',

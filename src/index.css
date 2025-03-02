@@ -42,6 +42,8 @@
     --terminal-muted-30: rgba(76, 86, 106, 0.3);
     --terminal-muted-50: rgba(76, 86, 106, 0.5);
     --terminal-prompt-50: rgba(100, 255, 218, 0.5);
+    --terminal-dropdown: 240 10% 3.9%;
+    --terminal-dropdown-hover: 240 10% 7%;
   }
 
   .light-theme {
