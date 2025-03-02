@@ -29,6 +29,12 @@ export const useCommandProcessor = (
       // Always update the last executed command first
       setLastExecutedCommand(commandString);
       
+      // Dispatch event for the command execution
+      const commandExecutedEvent = new CustomEvent('commandExecuted', {
+        detail: { command: commandString }
+      });
+      document.dispatchEvent(commandExecutedEvent);
+      
       setIsProcessingAsync(true);
       let result = processCommand(commandString);
 
@@ -63,6 +69,12 @@ export const useCommandProcessor = (
           };
           setHistory([welcomeHistoryItem]);
           setLastExecutedCommand('welcome');
+          
+          // Update page title for the welcome command
+          const welcomeEvent = new CustomEvent('commandExecuted', {
+            detail: { command: 'welcome' }
+          });
+          document.dispatchEvent(welcomeEvent);
         }
         return;
       }

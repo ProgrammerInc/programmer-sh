@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import Terminal from '@/components/ui/terminal';
@@ -8,6 +9,7 @@ import { getCurrentWallpaper, wallpapers } from '@/utils/commands/wallpaperComma
 import '@/styles/wallpaper.css';
 
 const HISTORY_STORAGE_KEY = 'terminal_command_history';
+const DEFAULT_TITLE = '~/portfolio - &lt;programmer&gt;._';
 
 const Index = () => {
   const { command: urlCommand } = useParams<{ command?: string }>();
@@ -15,6 +17,13 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [initialCommands, setInitialCommands] = useState<string[]>([]);
   const [currentWallpaper, setCurrentWallpaper] = useState<string>(getCurrentWallpaper());
+  const [currentCommand, setCurrentCommand] = useState<string>('portfolio');
+
+  // Update the document title when the current command changes
+  useEffect(() => {
+    const titleCommand = currentCommand || 'portfolio';
+    document.title = `~/${titleCommand} - &lt;programmer&gt;._`;
+  }, [currentCommand]);
 
   useEffect(() => {
     // Process URL parameters
@@ -35,6 +44,7 @@ const Index = () => {
     // Always show welcome command if there's no history or we're at the root URL
     if (!savedHistory || savedHistory === '[]' || location.pathname === '/') {
       commands.push('welcome');
+      setCurrentCommand('welcome');
     }
 
     // Determine valid command to execute
@@ -43,6 +53,7 @@ const Index = () => {
     // If we have a valid URL command, add it to our initial commands
     if (commandToExecute && validUrlCommands.includes(commandToExecute)) {
       console.log('Valid URL command found:', commandToExecute);
+      setCurrentCommand(commandToExecute);
 
       // Either replace welcome or add after welcome
       if (commands.length === 0) {
@@ -74,6 +85,21 @@ const Index = () => {
     document.addEventListener('wallpaperChange', handleWallpaperChange);
     return () => {
       document.removeEventListener('wallpaperChange', handleWallpaperChange);
+    };
+  }, []);
+
+  // Listen for command execution to update page title
+  useEffect(() => {
+    const handleCommandExecution = (event: Event) => {
+      const { command } = (event as CustomEvent).detail;
+      if (command && typeof command === 'string') {
+        setCurrentCommand(command);
+      }
+    };
+
+    document.addEventListener('commandExecuted', handleCommandExecution);
+    return () => {
+      document.removeEventListener('commandExecuted', handleCommandExecution);
     };
   }, []);
 

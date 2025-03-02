@@ -63,6 +63,12 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) 
     if (command.trim()) {
       processCommandWithHistory(command);
       commandInputRef.current?.focus();
+      
+      // Dispatch event to update page title
+      const commandExecutedEvent = new CustomEvent('commandExecuted', {
+        detail: { command }
+      });
+      document.dispatchEvent(commandExecutedEvent);
     }
   };
 
