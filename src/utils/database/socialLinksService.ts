@@ -2,6 +2,12 @@
 import type { SocialLink } from '../../types/socialLinks';
 import { fetchProfile } from './portfolioServices';
 
+// Helper to ensure URLs have https:// prefix
+const ensureHttps = (url: string): string => {
+  if (!url) return url;
+  return url.startsWith('http') ? url : `https://${url}`;
+};
+
 // Fetch social links from the profile
 export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
   try {
@@ -18,7 +24,7 @@ export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
     if (profile.contact.github) {
       socialLinks.push({
         type: 'github',
-        url: profile.contact.github,
+        url: ensureHttps(profile.contact.github),
       });
     }
 
@@ -26,7 +32,7 @@ export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
     if (profile.contact.linkedin) {
       socialLinks.push({
         type: 'linkedin',
-        url: profile.contact.linkedin,
+        url: ensureHttps(profile.contact.linkedin),
       });
     }
 
@@ -34,7 +40,7 @@ export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
     if (profile.contact.twitter) {
       socialLinks.push({
         type: 'twitter',
-        url: profile.contact.twitter,
+        url: ensureHttps(profile.contact.twitter),
       });
     }
 
@@ -50,7 +56,7 @@ export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
     if (profile.contact.website) {
       socialLinks.push({
         type: 'website',
-        url: profile.contact.website
+        url: ensureHttps(profile.contact.website)
       });
     }
 

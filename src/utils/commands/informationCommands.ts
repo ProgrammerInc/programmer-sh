@@ -21,6 +21,23 @@ export const aboutCommand: Command = {
           };
         }
 
+        // Ensure URLs have proper protocol for HTML anchors
+        const github = profile.contact.github && !profile.contact.github.startsWith('http') 
+          ? `https://${profile.contact.github}` 
+          : profile.contact.github;
+        
+        const linkedin = profile.contact.linkedin && !profile.contact.linkedin.startsWith('http') 
+          ? `https://${profile.contact.linkedin}` 
+          : profile.contact.linkedin;
+        
+        const twitter = profile.contact.twitter && !profile.contact.twitter.startsWith('http') 
+          ? `https://${profile.contact.twitter}` 
+          : profile.contact.twitter;
+        
+        const website = profile.contact.website && !profile.contact.website.startsWith('http') 
+          ? `https://${profile.contact.website}` 
+          : profile.contact.website;
+
         return {
           content: `About Me:
 
@@ -34,10 +51,10 @@ Contact:
 
 - E-mail: <a href="mailto:${profile.contact.email}" target="_blank">${profile.contact.email}</a>
 - Phone: ${profile.contact.phone}
-${profile.contact.github ? `- GitHub: <a href="${profile.contact.github}" target="_blank">${profile.contact.github}</a>` : ''}
-${profile.contact.linkedin ? `- LinkedIn: <a href="${profile.contact.linkedin}" target="_blank">${profile.contact.linkedin}</a>` : ''}
-${profile.contact.twitter ? `- X/Twitter: <a href="${profile.contact.twitter}" target="_blank">${profile.contact.twitter}</a>` : ''}
-${profile.contact.website ? `- Website: <a href="${profile.contact.website}" target="_blank">${profile.contact.website}</a>` : ''}
+${github ? `- GitHub: <a href="${github}" target="_blank">${profile.contact.github}</a>` : ''}
+${linkedin ? `- LinkedIn: <a href="${linkedin}" target="_blank">${profile.contact.linkedin}</a>` : ''}
+${twitter ? `- X/Twitter: <a href="${twitter}" target="_blank">${profile.contact.twitter}</a>` : ''}
+${website ? `- Website: <a href="${website}" target="_blank">${profile.contact.website}</a>` : ''}
 `,
           isError: false,
         };
@@ -65,15 +82,32 @@ export const contactCommand: Command = {
           };
         }
 
+        // Ensure URLs have proper protocol for HTML anchors
+        const github = profile.contact.github && !profile.contact.github.startsWith('http') 
+          ? `https://${profile.contact.github}` 
+          : profile.contact.github;
+        
+        const linkedin = profile.contact.linkedin && !profile.contact.linkedin.startsWith('http') 
+          ? `https://${profile.contact.linkedin}` 
+          : profile.contact.linkedin;
+        
+        const twitter = profile.contact.twitter && !profile.contact.twitter.startsWith('http') 
+          ? `https://${profile.contact.twitter}` 
+          : profile.contact.twitter;
+        
+        const website = profile.contact.website && !profile.contact.website.startsWith('http') 
+          ? `https://${profile.contact.website}` 
+          : profile.contact.website;
+
         return {
           content: `My Contact Information:
 
 E-mail: <a href="mailto:${profile.contact.email}" target="_blank">${profile.contact.email}</a>
 ${profile.contact.phone ? `Phone: ${profile.contact.phone}` : ''}
-${profile.contact.linkedin ? `LinkedIn: <a href="${profile.contact.linkedin}" target="_blank">${profile.contact.linkedin}</a>` : ''}
-${profile.contact.github ? `GitHub: <a href="${profile.contact.github}" target="_blank">${profile.contact.github}</a>` : ''}
-${profile.contact.twitter ? `X/Twitter: <a href="${profile.contact.twitter}" target="_blank">${profile.contact.twitter}</a>` : ''}
-${profile.contact.website ? `Website: <a href="${profile.contact.website}" target="_blank">${profile.contact.website}</a>` : ''}
+${linkedin ? `LinkedIn: <a href="${linkedin}" target="_blank">${profile.contact.linkedin}</a>` : ''}
+${github ? `GitHub: <a href="${github}" target="_blank">${profile.contact.github}</a>` : ''}
+${twitter ? `X/Twitter: <a href="${twitter}" target="_blank">${profile.contact.twitter}</a>` : ''}
+${website ? `Website: <a href="${website}" target="_blank">${profile.contact.website}</a>` : ''}
 `,
           isError: false,
         };

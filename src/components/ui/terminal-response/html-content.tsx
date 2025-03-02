@@ -33,7 +33,14 @@ const HtmlContent: React.FC<HtmlContentProps> = ({
           // Handle clicks on any links to ensure they open in a new tab
           const target = e.target as HTMLElement;
           if (target.tagName === 'A' && !target.classList.contains('command-link')) {
-            e.stopPropagation();
+            e.preventDefault(); // Prevent default navigation in case it's not properly set up
+            e.stopPropagation(); // Prevent terminal focus
+            
+            // Extract href and open in new tab
+            const href = target.getAttribute('href');
+            if (href && !href.startsWith('javascript:')) {
+              window.open(href, '_blank', 'noopener,noreferrer');
+            }
           }
         }}
       />
