@@ -125,11 +125,15 @@ const Index = () => {
   return (
     <div className={getWallpaperClasses()}>
       <div
-        className={`w-full max-w-4xl h-[80vh] transition-all duration-1000 ease-out terminal-glow-shadow ${
-          isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
-        }`}
+        className={`w-full h-screen flex items-center justify-center px-4 sm:px-6 md:px-8`}
       >
-        <Terminal initialCommands={initialCommands} />
+        <div
+          className={`w-full max-w-4xl h-[95vh] sm:h-[80vh] transition-all duration-1000 ease-out terminal-glow-shadow ${
+            isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+          }`}
+        >
+          <Terminal initialCommands={initialCommands} />
+        </div>
       </div>
       <Toaster />
     </div>
