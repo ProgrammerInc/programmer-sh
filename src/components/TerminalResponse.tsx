@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { CommandResult } from '../utils/commands/types';
 import { useTypingEffect } from '../utils/typingEffect';
@@ -8,16 +7,20 @@ interface TerminalResponseProps {
   response: CommandResult;
   animate?: boolean;
   className?: string;
+  onCommandClick?: (command: string) => void;
 }
 
 // Function to convert plain text URLs to clickable links
-const convertLinksToAnchors = (text: string): React.ReactNode[] => {
+const convertLinksToAnchors = (text: string, onCommandClick?: (command: string) => void): React.ReactNode[] => {
   // Regex patterns for URLs, emails, and phone numbers
   const urlRegex =
     /(https?:\/\/[^\s]+)|((www\.)?[a-zA-Z0-9][\w.-]+\.(com|org|net|edu|io|sh|to|dev|me|app)\/?\S*)|((www\.)?x\.com\/\S*)/g;
   const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
   const phoneRegex = /(\+\d{1,3}[-\s]?\(?\d{1,4}\)?[-\s]?\d{1,4}[-\s]?\d{1,9})/g;
   const programmerRegex = /(<programmer>\._)/g;
+  
+  // Command link pattern for elements with class "command-link" and data-command attribute
+  const commandLinkRegex = /<span class="command-link" data-command="([^"]+)">([^<]+)<\/span>/g;
 
   // Process the text and return array of React nodes
   const result: React.ReactNode[] = [];
@@ -108,6 +111,44 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
     });
   }
 
+  // Find and process command links
+  let htmlContent = text;
+  if (onCommandClick && commandLinkRegex.test(text)) {
+    const processedLinks: React.ReactNode[] = [];
+    let lastMatchEnd = 0;
+    
+    while ((match = commandLinkRegex.exec(text)) !== null) {
+      const [fullMatch, commandValue, displayText] = match;
+      
+      // Add text before this match
+      if (match.index > lastMatchEnd) {
+        processedLinks.push(text.substring(lastMatchEnd, match.index));
+      }
+      
+      // Replace with actual clickable span
+      processedLinks.push(
+        <span 
+          key={`cmd-${match.index}`}
+          className="text-blue-400 hover:underline cursor-pointer" 
+          onClick={() => onCommandClick(commandValue)}
+        >
+          {displayText}
+        </span>
+      );
+      
+      lastMatchEnd = match.index + fullMatch.length;
+    }
+    
+    // Add any remaining text
+    if (lastMatchEnd < text.length) {
+      processedLinks.push(text.substring(lastMatchEnd));
+    }
+    
+    if (processedLinks.length > 0) {
+      return processedLinks;
+    }
+  }
+
   // Sort matches by their starting index
   matches.sort((a, b) => a.index - b.index);
 
@@ -168,6 +209,7 @@ const TerminalResponse: React.FC<TerminalResponseProps> = ({
   response,
   animate = false,
   className,
+  onCommandClick,
 }) => {
   const { displayText, isDone } = useTypingEffect(
     typeof response.content === 'string' ? response.content : '',
@@ -197,8 +239,24 @@ const TerminalResponse: React.FC<TerminalResponseProps> = ({
     );
   }
 
-  // For HTML content that should be rendered as actual HTML
+  // For HTML content that should be rendered as actual HTML with command link support
   if (isHtmlContent && !animate) {
+    // If we have command links and an onCommandClick handler
+    if (onCommandClick && response.content.includes('command-link')) {
+      return (
+        <div
+          className={cn(
+            'whitespace-pre-wrap font-mono text-sm mb-4',
+            response.isError ? 'text-terminal-error' : 'text-terminal-foreground',
+            className
+          )}
+        >
+          {convertLinksToAnchors(response.content, onCommandClick)}
+        </div>
+      );
+    }
+    
+    // Otherwise use dangerouslySetInnerHTML
     return (
       <div
         className={cn(
@@ -216,7 +274,7 @@ const TerminalResponse: React.FC<TerminalResponseProps> = ({
   const content =
     animate && !isDone
       ? displayText
-      : convertLinksToAnchors(animate ? displayText : (response.content as string));
+      : convertLinksToAnchors(animate ? displayText : (response.content as string), onCommandClick);
 
   return (
     <div

@@ -37,6 +37,7 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
   const terminalRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const [isSelecting, setIsSelecting] = useState(false);
+  const [commandInput, setCommandInput] = useState('');
 
   // Scroll to bottom when history changes
   useEffect(() => {
@@ -99,6 +100,26 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
     };
   }, [isSelecting, toast]);
 
+  // Handle command link clicks
+  const handleCommandClick = (commandText: string) => {
+    // Check if command needs additional parameters
+    const hasPlaceholders = commandText.includes('[') && commandText.includes(']');
+    
+    if (hasPlaceholders) {
+      // Extract base command
+      const baseCommand = commandText.split(' ')[0];
+      setCommandInput(baseCommand + ' ');
+      
+      // Focus on input
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    } else {
+      // Command doesn't need parameters, run it directly
+      onCommandSubmit(commandText);
+    }
+  };
+
   return (
     <div
       ref={terminalRef}
@@ -122,7 +143,11 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
             <span className="text-terminal-prompt font-mono mr-2">~$</span>
             <span className="text-terminal-foreground font-mono">{item.command}</span>
           </div>
-          <TerminalResponse response={item.result} animate={false} />
+          <TerminalResponse 
+            response={item.result} 
+            animate={false} 
+            onCommandClick={handleCommandClick}
+          />
         </div>
       ))}
 
@@ -141,6 +166,8 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
           inputRef={inputRef}
           disabled={isProcessingAsync}
           history={commandHistory}
+          initialValue={commandInput}
+          onInputChange={setCommandInput}
         />
       )}
     </div>

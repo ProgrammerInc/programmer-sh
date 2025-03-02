@@ -11,6 +11,8 @@ interface CommandLineProps {
   showPrompt?: boolean;
   inputRef?: React.RefObject<HTMLInputElement>;
   history?: string[];
+  initialValue?: string;
+  onInputChange?: (value: string) => void;
 }
 
 const CommandLine: React.FC<CommandLineProps> = ({
@@ -22,11 +24,20 @@ const CommandLine: React.FC<CommandLineProps> = ({
   showPrompt = true,
   inputRef,
   history = [],
+  initialValue = '',
+  onInputChange,
 }) => {
-  const [command, setCommand] = useState('');
+  const [command, setCommand] = useState(initialValue);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const internalInputRef = useRef<HTMLInputElement>(null);
   const actualInputRef = inputRef || internalInputRef;
+
+  // Update command state when initialValue changes
+  useEffect(() => {
+    if (initialValue !== command) {
+      setCommand(initialValue);
+    }
+  }, [initialValue]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,6 +45,9 @@ const CommandLine: React.FC<CommandLineProps> = ({
       onSubmit(command);
       setCommand('');
       setHistoryIndex(-1);
+      if (onInputChange) {
+        onInputChange('');
+      }
     }
   };
 
@@ -44,7 +58,11 @@ const CommandLine: React.FC<CommandLineProps> = ({
         // Move back through history, but don't go past the beginning
         const newIndex = Math.min(historyIndex + 1, history.length - 1);
         setHistoryIndex(newIndex);
-        setCommand(history[history.length - 1 - newIndex]); // Access history in reverse order
+        const newCommand = history[history.length - 1 - newIndex];
+        setCommand(newCommand); // Access history in reverse order
+        if (onInputChange) {
+          onInputChange(newCommand);
+        }
       }
     } else if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -52,12 +70,27 @@ const CommandLine: React.FC<CommandLineProps> = ({
         // Move forward through history
         const newIndex = historyIndex - 1;
         setHistoryIndex(newIndex);
-        setCommand(history[history.length - 1 - newIndex]); // Access history in reverse order
+        const newCommand = history[history.length - 1 - newIndex];
+        setCommand(newCommand); // Access history in reverse order
+        if (onInputChange) {
+          onInputChange(newCommand);
+        }
       } else if (historyIndex === 0) {
         // Reached the most recent command, clear the input
         setHistoryIndex(-1);
         setCommand('');
+        if (onInputChange) {
+          onInputChange('');
+        }
       }
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setCommand(newValue);
+    if (onInputChange) {
+      onInputChange(newValue);
     }
   };
 
@@ -74,7 +107,7 @@ const CommandLine: React.FC<CommandLineProps> = ({
         ref={actualInputRef}
         type="text"
         value={command}
-        onChange={e => setCommand(e.target.value)}
+        onChange={handleChange}
         onKeyDown={handleKeyDown}
         disabled={disabled}
         className={cn(
@@ -83,6 +116,7 @@ const CommandLine: React.FC<CommandLineProps> = ({
           disabled ? 'opacity-50 cursor-not-allowed' : ''
         )}
         aria-label="Terminal command input"
+        placeholder={command.includes('[') && command.includes(']') ? '(Enter parameters)' : ''}
       />
     </form>
   );
