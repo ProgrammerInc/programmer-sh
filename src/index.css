@@ -40,6 +40,9 @@
     --terminal-command: #88C0D0;
     --terminal-link: #81A1C1;
     --terminal-muted: #4C566A;
+    --terminal-muted-30: rgba(76, 86, 106, 0.3);
+    --terminal-muted-50: rgba(76, 86, 106, 0.5);
+    --terminal-prompt-50: rgba(100, 255, 218, 0.5);
   }
 
   .light-theme {
@@ -74,6 +77,9 @@
     --terminal-command: #5E81AC;
     --terminal-link: #5E81AC;
     --terminal-muted: #9E9E9E;
+    --terminal-muted-30: rgba(158, 158, 158, 0.3);
+    --terminal-muted-50: rgba(158, 158, 158, 0.5);
+    --terminal-prompt-50: rgba(0, 168, 168, 0.5);
   }
 }
 
@@ -111,7 +117,8 @@
   }
 
   .command-button {
-    @apply px-3 py-1 bg-terminal-muted/30 text-terminal-foreground 
+    background-color: var(--terminal-muted-30);
+    @apply px-3 py-1 text-terminal-foreground 
            hover:bg-terminal-muted/50 rounded transition-all duration-200 
            border border-terminal-muted/20 hover:border-terminal-prompt/50;
   }
@@ -125,7 +132,12 @@
   }
 
   .terminal-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-terminal-muted/30 rounded-full hover:bg-terminal-muted/50 transition-colors duration-200;
+    background-color: var(--terminal-muted-30);
+    @apply rounded-full hover:bg-terminal-muted/50 transition-colors duration-200;
+  }
+
+  .terminal-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: var(--terminal-muted-50);
   }
 
   .terminal-content-height {
