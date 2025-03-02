@@ -1,0 +1,83 @@
+{
+  "cSpell.words": [
+    "Andale",
+    "autoprefixer",
+    "browserslist",
+    "castarray",
+    "clsx",
+    "Consolas",
+    "cssesc",
+    "csstype",
+    "didyoumean",
+    "dismissable",
+    "eabi",
+    "eastasianwidth",
+    "envify",
+    "esbenp",
+    "esbuild",
+    "eventemitter",
+    "fkey",
+    "frontends",
+    "gnueabihf",
+    "hookform",
+    "humanfs",
+    "internmap",
+    "isaacs",
+    "isplainobject",
+    "jackspeak",
+    "jiti",
+    "jridgewell",
+    "keyv",
+    "lightningcss",
+    "lilconfig",
+    "loong",
+    "loongarch",
+    "lucide",
+    "minipass",
+    "msvc",
+    "musleabihf",
+    "njsproj",
+    "ntvs",
+    "parseargs",
+    "picocolors",
+    "pkgjs",
+    "programmerinc",
+    "riscv",
+    "rollup",
+    "sugarss",
+    "sunos",
+    "tanstack",
+    "thenify",
+    "undici",
+    "vite",
+    "vitejs",
+    "XVCJ",
+    "ypsbxadldkiokgvlfxag"
+  ],
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "stylelint.validate": ["css", "postcss"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "prettier.requireConfig": true,
+  "prettier.useEditorConfig": false,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
