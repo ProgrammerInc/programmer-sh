@@ -1,3 +1,4 @@
+
 import { Command, CommandResult } from './types';
 
 // Predefined wallpapers
@@ -60,10 +61,10 @@ export interface Wallpaper {
 // Current wallpaper key in localStorage
 const WALLPAPER_STORAGE_KEY = 'terminal_wallpaper';
 
-// Get current wallpaper from localStorage or default to default
+// Get current wallpaper from localStorage or default to code wallpaper instead of default
 export const getCurrentWallpaper = (): string => {
   const savedWallpaper = localStorage.getItem(WALLPAPER_STORAGE_KEY);
-  return savedWallpaper || 'default';
+  return savedWallpaper || 'code';
 };
 
 // Set wallpaper in localStorage and dispatch event
