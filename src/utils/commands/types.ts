@@ -1,3 +1,4 @@
+
 export interface CommandResult {
   content: string;
   isError: boolean;

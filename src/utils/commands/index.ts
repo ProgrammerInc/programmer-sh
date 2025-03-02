@@ -1,3 +1,4 @@
+
 import {
   loginCommand,
   logoutCommand,
@@ -12,6 +13,7 @@ import { aboutCommand, contactCommand } from './informationCommands';
 import { projectsCommand } from './projectsCommand';
 import { resumeCommand } from './resumeCommand';
 import { skillsCommand } from './skillsCommand';
+import { socialCommand } from './socialCommand';
 import { clearCommand, dateCommand, echoCommand, historyCommand } from './systemCommands';
 import { initializeTheme, themeCommand } from './themeCommand';
 import { initializeWallpaper, wallpaperCommand } from './wallpaperCommand';
@@ -81,6 +83,9 @@ export const processCommand = (commandString: string) => {
   }
   if (commandName === educationCommand.name) {
     return educationCommand.execute();
+  }
+  if (commandName === socialCommand.name) {
+    return socialCommand.execute();
   }
 
   // System commands
