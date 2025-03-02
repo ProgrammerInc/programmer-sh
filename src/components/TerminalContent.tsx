@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect } from 'react';
 import CommandLine from './CommandLine';
 import TerminalResponse from './TerminalResponse';
@@ -40,6 +41,33 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
     }
   }, [history]);
+
+  // Handle text selection and auto-copy to clipboard
+  useEffect(() => {
+    const handleSelectionChange = () => {
+      const selection = window.getSelection();
+      if (selection && !selection.isCollapsed && selection.toString().trim() !== '') {
+        // Only copy if there's actual text selected
+        try {
+          navigator.clipboard.writeText(selection.toString())
+            .then(() => {
+              console.log('Text copied to clipboard');
+            })
+            .catch(err => {
+              console.error('Failed to copy text: ', err);
+            });
+        } catch (error) {
+          console.error('Clipboard API not available: ', error);
+        }
+      }
+    };
+
+    document.addEventListener('selectionchange', handleSelectionChange);
+    
+    return () => {
+      document.removeEventListener('selectionchange', handleSelectionChange);
+    };
+  }, []);
 
   return (
     <div
