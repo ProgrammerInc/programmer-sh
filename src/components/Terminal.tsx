@@ -1,9 +1,18 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import TerminalHeader from './TerminalHeader';
 import TerminalContent from './TerminalContent';
 import { processCommand } from '../utils/commands';
 import { CommandResult } from '../utils/commands/types';
 import { cn } from '@/lib/utils';
+import { 
+  WindowState, 
+  getWindowState, 
+  setWindowState, 
+  getWindowPosition, 
+  setWindowPosition,
+  WindowPosition
+} from '@/utils/windowControls';
 
 interface TerminalProps {
   className?: string;
@@ -27,7 +36,44 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   const [lastCommand, setLastCommand] = useState('welcome');
   const [commandsToProcess, setCommandsToProcess] = useState<string[]>([]);
   const [showAsciiArt, setShowAsciiArt] = useState(true);
+  const [windowState, setWindowState] = useState<WindowState>('normal');
   const commandInputRef = useRef<HTMLInputElement>(null);
+  const terminalRef = useRef<HTMLDivElement>(null);
+
+  // Load window state on mount
+  useEffect(() => {
+    const savedState = getWindowState();
+    setWindowState(savedState);
+    
+    // Don't show closed window on initial load
+    if (savedState === 'closed') {
+      setWindowState('normal');
+    }
+  }, []);
+
+  // Save window state when it changes
+  useEffect(() => {
+    if (!isInitializing && windowState !== 'closed') {
+      setWindowState(windowState);
+    }
+  }, [windowState, isInitializing]);
+
+  // Handle window control actions
+  const handleWindowControl = (action: WindowState) => {
+    if (action === 'closed') {
+      // Special handling for closed state
+      setWindowState('minimized');
+      // Then after animation completes, set to closed
+      setTimeout(() => {
+        setWindowState('closed');
+      }, 300);
+    } else if (action === windowState) {
+      // Toggle between maximized/minimized and normal
+      setWindowState('normal');
+    } else {
+      setWindowState(action);
+    }
+  };
 
   // Initial commands to process
   useEffect(() => {
@@ -159,22 +205,50 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     }
   };
 
+  // Determine terminal classes based on window state
+  const getTerminalClasses = () => {
+    const baseClasses = 'terminal-glass rounded-md overflow-hidden flex flex-col transition-all duration-300 ease-out terminal-glow-shadow';
+    
+    switch (windowState) {
+      case 'minimized':
+        return cn(baseClasses, 'h-10 max-h-10 opacity-70', className);
+      case 'maximized':
+        return cn(baseClasses, 'w-full h-full max-w-none', className);
+      case 'closed':
+        return cn(baseClasses, 'h-0 opacity-0 pointer-events-none', className);
+      default: // normal
+        return cn(baseClasses, 'h-[80vh] max-w-4xl', className);
+    }
+  };
+
+  // Skip rendering if closed
+  if (windowState === 'closed') {
+    return null;
+  }
+
   return (
     <div
-      className={cn('terminal-glass rounded-md overflow-hidden flex flex-col h-full', className)}
+      className={getTerminalClasses()}
       onClick={handleTerminalClick}
+      ref={terminalRef}
     >
-      <TerminalHeader lastCommand={lastCommand} />
-      
-      <TerminalContent
-        history={history}
-        isInitializing={isInitializing}
-        isProcessingAsync={isProcessingAsync}
-        showAsciiArt={showAsciiArt}
-        commandHistory={commandHistory}
-        onCommandSubmit={handleCommandSubmit}
-        inputRef={commandInputRef}
+      <TerminalHeader 
+        lastCommand={lastCommand} 
+        windowState={windowState} 
+        onWindowControlClick={handleWindowControl} 
       />
+      
+      {windowState !== 'minimized' && (
+        <TerminalContent
+          history={history}
+          isInitializing={isInitializing}
+          isProcessingAsync={isProcessingAsync}
+          showAsciiArt={showAsciiArt}
+          commandHistory={commandHistory}
+          onCommandSubmit={handleCommandSubmit}
+          inputRef={commandInputRef}
+        />
+      )}
     </div>
   );
 };
