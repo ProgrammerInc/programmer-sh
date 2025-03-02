@@ -126,7 +126,9 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
               {line}
             </div>
           ))}
-          {currentLineText && <div className="whitespace-pre">{currentLineText}</div>}
+          {currentLineText && !displayLines.includes(currentLineText) && (
+            <div className="whitespace-pre">{currentLineText}</div>
+          )}
         </div>
 
         {history.map((item, index) => (
