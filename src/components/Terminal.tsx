@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import TerminalHeader from './TerminalHeader';
 import TerminalContent from './TerminalContent';
@@ -27,6 +28,8 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   const [lastCommand, setLastCommand] = useState('welcome');
   const [commandsToProcess, setCommandsToProcess] = useState<string[]>([]);
   const [showAsciiArt, setShowAsciiArt] = useState(true);
+  const [isTerminalVisible, setIsTerminalVisible] = useState(true);
+  const [isMaximized, setIsMaximized] = useState(false);
   const commandInputRef = useRef<HTMLInputElement>(null);
 
   // Initial commands to process
@@ -159,12 +162,40 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     }
   };
 
+  // Terminal window control handlers
+  const handleClose = () => {
+    setIsTerminalVisible(false);
+  };
+
+  const handleMinimize = () => {
+    // Placeholder for minimize functionality
+    console.log('Terminal minimized');
+  };
+
+  const handleMaximize = () => {
+    setIsMaximized(!isMaximized);
+  };
+
+  if (!isTerminalVisible) {
+    return null;
+  }
+
   return (
     <div
-      className={cn('terminal-glass rounded-md overflow-hidden flex flex-col h-full', className)}
+      className={cn(
+        'terminal-glass rounded-md overflow-hidden flex flex-col', 
+        isMaximized ? 'fixed inset-0 z-50 m-0 rounded-none' : 'h-full',
+        className
+      )}
       onClick={handleTerminalClick}
     >
-      <TerminalHeader lastCommand={lastCommand} />
+      <TerminalHeader 
+        lastCommand={lastCommand} 
+        onClose={handleClose}
+        onMinimize={handleMinimize}
+        onMaximize={handleMaximize}
+        isMaximized={isMaximized}
+      />
       
       <TerminalContent
         history={history}

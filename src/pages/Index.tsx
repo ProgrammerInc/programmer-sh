@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import Terminal from '@/components/Terminal';
@@ -11,6 +12,7 @@ const Index = () => {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [initialCommands, setInitialCommands] = useState<string[]>([]);
+  const [isTerminalClosed, setIsTerminalClosed] = useState(false);
   
   useEffect(() => {
     // Process URL parameters
@@ -59,6 +61,17 @@ const Index = () => {
 
     return () => clearTimeout(timer);
   }, [urlCommand, location]);
+
+  // If terminal is closed, show alternative content or placeholder
+  if (isTerminalClosed) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center p-4">
+        <div className="text-terminal-foreground text-xl">
+          Terminal session ended.
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4 overflow-hidden">
