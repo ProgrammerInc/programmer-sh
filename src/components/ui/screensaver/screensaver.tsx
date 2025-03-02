@@ -1,6 +1,6 @@
 
-import React, { useEffect, useState } from 'react';
-import { cn } from '@/lib/utils';
+import React, { useEffect } from 'react';
+import './screensaver.css';
 
 interface ScreensaverProps {
   isActive: boolean;
@@ -8,87 +8,40 @@ interface ScreensaverProps {
 }
 
 const Screensaver: React.FC<ScreensaverProps> = ({ isActive, onActivity }) => {
-  const [matrixChars, setMatrixChars] = useState<string[][]>([]);
-  const columns = 50;
-  const rows = 30;
-
-  // Generate random matrix characters
+  // Handle user activity to dismiss the screensaver
   useEffect(() => {
-    if (isActive) {
-      const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-      const matrix: string[][] = [];
-      
-      for (let i = 0; i < columns; i++) {
-        const column: string[] = [];
-        for (let j = 0; j < rows; j++) {
-          column.push(chars[Math.floor(Math.random() * chars.length)]);
-        }
-        matrix.push(column);
-      }
-      
-      setMatrixChars(matrix);
-      
-      // Update matrix characters at intervals
-      const interval = setInterval(() => {
-        setMatrixChars(prevMatrix => {
-          const newMatrix = [...prevMatrix];
-          for (let i = 0; i < columns; i++) {
-            // Update a random position in each column
-            const randIndex = Math.floor(Math.random() * rows);
-            newMatrix[i][randIndex] = chars[Math.floor(Math.random() * chars.length)];
-          }
-          return newMatrix;
-        });
-      }, 100);
-      
-      return () => clearInterval(interval);
-    }
-  }, [isActive]);
+    if (!isActive) return;
+    
+    const handleActivity = () => {
+      onActivity();
+    };
+    
+    window.addEventListener('mousedown', handleActivity);
+    window.addEventListener('mousemove', handleActivity);
+    window.addEventListener('keydown', handleActivity);
+    window.addEventListener('touchstart', handleActivity);
+    
+    return () => {
+      window.removeEventListener('mousedown', handleActivity);
+      window.removeEventListener('mousemove', handleActivity);
+      window.removeEventListener('keydown', handleActivity);
+      window.removeEventListener('touchstart', handleActivity);
+    };
+  }, [isActive, onActivity]);
 
   if (!isActive) return null;
 
   return (
     <div 
-      className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center overflow-hidden"
+      className="fixed inset-0 z-50 bg-black flex items-center justify-center"
       onClick={onActivity}
-      onMouseMove={onActivity}
-      onKeyDown={onActivity}
-      tabIndex={0}
     >
-      <div className="absolute inset-0 overflow-hidden">
-        {matrixChars.map((column, colIndex) => (
-          <div 
-            key={colIndex} 
-            className="absolute top-0 inline-block whitespace-pre text-center"
-            style={{ 
-              left: `${(colIndex / columns) * 100}%`, 
-              width: `${100 / columns}%`,
-              transform: 'translateZ(0)',
-              willChange: 'contents'
-            }}
-          >
-            {column.map((char, charIndex) => (
-              <div
-                key={charIndex}
-                className={cn(
-                  "text-terminal-prompt font-mono text-opacity-0 animate-fade-in",
-                  charIndex % 3 === 0 && "text-terminal-success",
-                  charIndex % 5 === 0 && "text-terminal-warning",
-                  charIndex % 7 === 0 && "text-terminal-error"
-                )}
-                style={{ 
-                  animationDelay: `${(charIndex * 0.1) + (Math.random() * 2)}s`,
-                  animationDuration: '3s'
-                }}
-              >
-                {char}
-              </div>
-            ))}
-          </div>
-        ))}
+      <div className="matrix-rain" aria-label="Matrix-style screensaver">
+        <canvas id="matrix-canvas"></canvas>
       </div>
-      <div className="z-10 mt-8 text-terminal-prompt text-xl font-mono animate-pulse">
-        <span>Press any key or click to continue...</span>
+      <div className="absolute text-terminal-foreground text-center opacity-70 pointer-events-none">
+        <p className="text-lg mb-2">Screensaver Active</p>
+        <p className="text-sm">Click or press any key to continue</p>
       </div>
     </div>
   );
