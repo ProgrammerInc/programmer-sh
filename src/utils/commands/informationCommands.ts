@@ -1,4 +1,3 @@
-
 import portfolioData from '../../data/portfolioData';
 import { Command } from './types';
 
@@ -20,9 +19,9 @@ ${portfolioData.contact.github ? `- GitHub: ${portfolioData.contact.github}` : '
 ${portfolioData.contact.linkedin ? `- LinkedIn: ${portfolioData.contact.linkedin}` : ''}
 ${portfolioData.contact.twitter ? `- Twitter: ${portfolioData.contact.twitter}` : ''}
 ${portfolioData.contact.website ? `- Website: ${portfolioData.contact.website}` : ''}
-`
+`,
     };
-  }
+  },
 };
 
 // Skills command implementation
@@ -34,13 +33,17 @@ export const skillsCommand: Command = {
       content: `
 Skills:
 
-${portfolioData.skills.map(skillCategory => `
+${portfolioData.skills
+  .map(
+    skillCategory => `
 ${skillCategory.category}:
 ${skillCategory.items.map(skill => `- ${skill}`).join('\n')}
-`).join('\n')}
 `
+  )
+  .join('\n')}
+`,
     };
-  }
+  },
 };
 
 // Contact command implementation
@@ -58,7 +61,7 @@ ${portfolioData.contact.linkedin ? `LinkedIn: ${portfolioData.contact.linkedin}`
 ${portfolioData.contact.github ? `GitHub: ${portfolioData.contact.github}` : ''}
 ${portfolioData.contact.twitter ? `Twitter: ${portfolioData.contact.twitter}` : ''}
 ${portfolioData.contact.website ? `Website: ${portfolioData.contact.website}` : ''}
-`
+`,
     };
-  }
+  },
 };

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { CommandResult } from '../utils/terminalCommands';
 import { useTypingEffect } from '../utils/typingEffect';
@@ -13,15 +12,16 @@ interface TerminalResponseProps {
 // Function to convert plain text URLs to clickable links
 const convertLinksToAnchors = (text: string): React.ReactNode[] => {
   // Regex patterns for URLs, emails, and phone numbers
-  const urlRegex = /(https?:\/\/[^\s]+)|((www\.)?[a-zA-Z0-9][\w.-]+\.(com|org|net|edu|io|sh|to|dev|me|app)\/?\S*)/g;
+  const urlRegex =
+    /(https?:\/\/[^\s]+)|((www\.)?[a-zA-Z0-9][\w.-]+\.(com|org|net|edu|io|sh|to|dev|me|app)\/?\S*)/g;
   const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
   const phoneRegex = /(\+\d{1,3}[-\s]?\(?\d{1,4}\)?[-\s]?\d{1,4}[-\s]?\d{1,9})/g;
-  
+
   // Process the text and return array of React nodes
   const result: React.ReactNode[] = [];
   let lastIndex = 0;
-  const matches: Array<{index: number, length: number, content: React.ReactNode}> = [];
-  
+  const matches: Array<{ index: number; length: number; content: React.ReactNode }> = [];
+
   // Find all URL matches
   let match;
   while ((match = urlRegex.exec(text)) !== null) {
@@ -32,23 +32,23 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
     } else if (href.startsWith('www.')) {
       href = `https://${href}`;
     }
-    
+
     matches.push({
       index: match.index,
       length: url.length,
       content: (
-        <a 
+        <a
           href={href}
-          target="_blank" 
+          target="_blank"
           rel="noopener noreferrer"
           className="text-blue-400 hover:underline"
         >
           {url}
         </a>
-      )
+      ),
     });
   }
-  
+
   // Find all email matches
   while ((match = emailRegex.exec(text)) !== null) {
     const email = match[0];
@@ -56,16 +56,16 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
       index: match.index,
       length: email.length,
       content: (
-        <a 
+        <a
           href={`mailto:${email}?subject=Inquiry from Portfolio`}
           className="text-blue-400 hover:underline"
         >
           {email}
         </a>
-      )
+      ),
     });
   }
-  
+
   // Find all phone matches
   while ((match = phoneRegex.exec(text)) !== null) {
     const phone = match[0];
@@ -74,45 +74,42 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
       index: match.index,
       length: phone.length,
       content: (
-        <a 
-          href={`tel:${cleanPhone}`}
-          className="text-blue-400 hover:underline"
-        >
+        <a href={`tel:${cleanPhone}`} className="text-blue-400 hover:underline">
           {phone}
         </a>
-      )
+      ),
     });
   }
-  
+
   // Sort matches by their starting index
   matches.sort((a, b) => a.index - b.index);
-  
+
   // Build the result array
   for (const match of matches) {
     // Add text before this match if there's any
     if (match.index > lastIndex) {
       result.push(text.substring(lastIndex, match.index));
     }
-    
+
     // Add the match content (anchor tag)
     result.push(match.content);
-    
+
     // Update lastIndex to after this match
     lastIndex = match.index + match.length;
   }
-  
+
   // Add any remaining text after the last match
   if (lastIndex < text.length) {
     result.push(text.substring(lastIndex));
   }
-  
+
   return result;
 };
 
 const TerminalResponse: React.FC<TerminalResponseProps> = ({
   response,
   animate = false,
-  className
+  className,
 }) => {
   const { displayText, isDone } = useTypingEffect(
     typeof response.content === 'string' ? response.content : '',
@@ -122,7 +119,7 @@ const TerminalResponse: React.FC<TerminalResponseProps> = ({
   // If content is not a string, render directly
   if (typeof response.content !== 'string') {
     return (
-      <div 
+      <div
         className={cn(
           'whitespace-pre-wrap font-mono text-sm mb-4',
           response.isError ? 'text-terminal-error' : 'text-terminal-foreground',
@@ -136,12 +133,13 @@ const TerminalResponse: React.FC<TerminalResponseProps> = ({
 
   // For animated content, we can't easily make links clickable during animation
   // so we only apply link conversion when animation is done or animation is disabled
-  const content = (animate && !isDone) 
-    ? displayText 
-    : convertLinksToAnchors(animate ? displayText : response.content as string);
+  const content =
+    animate && !isDone
+      ? displayText
+      : convertLinksToAnchors(animate ? displayText : (response.content as string));
 
   return (
-    <div 
+    <div
       className={cn(
         'whitespace-pre-wrap font-mono text-sm mb-4',
         response.isError ? 'text-terminal-error' : 'text-terminal-foreground',

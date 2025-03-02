@@ -1,4 +1,3 @@
-
 import portfolioData from '../../data/portfolioData';
 import { Command } from './types';
 
@@ -10,12 +9,16 @@ export const educationCommand: Command = {
       content: `
 Education:
 
-${portfolioData.education.map(edu => `
+${portfolioData.education
+  .map(
+    edu => `
 ${edu.degree}
 ${edu.institution}, ${edu.year}
 ${edu.details ? edu.details : ''}
-`).join('\n')}
 `
+  )
+  .join('\n')}
+`,
     };
-  }
+  },
 };

@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
@@ -19,7 +18,7 @@ const CommandLine: React.FC<CommandLineProps> = ({
   autoFocus = true,
   className,
   showPrompt = true,
-  inputRef
+  inputRef,
 }) => {
   const [command, setCommand] = useState('');
   const internalInputRef = useRef<HTMLInputElement>(null);
@@ -41,14 +40,12 @@ const CommandLine: React.FC<CommandLineProps> = ({
 
   return (
     <form onSubmit={handleSubmit} className={cn('flex items-center', className)}>
-      {showPrompt && (
-        <span className="text-terminal-prompt font-mono mr-2">{prompt}</span>
-      )}
+      {showPrompt && <span className="text-terminal-prompt font-mono mr-2">{prompt}</span>}
       <input
         ref={actualInputRef}
         type="text"
         value={command}
-        onChange={(e) => setCommand(e.target.value)}
+        onChange={e => setCommand(e.target.value)}
         disabled={disabled}
         className={cn(
           'bg-transparent outline-none border-none text-terminal-foreground font-mono w-full',

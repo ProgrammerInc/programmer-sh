@@ -1,4 +1,4 @@
-
+/* stylelint-disable at-rule-no-unknown */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap');
 
 @tailwind base;
@@ -34,10 +34,10 @@
   * {
     @apply border-border selection:bg-terminal-muted selection:text-terminal-foreground;
   }
-  
+
   body {
     @apply bg-black text-foreground antialiased font-mono overflow-hidden;
-    font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
+    font-feature-settings: 'ss01', 'ss02', 'cv01', 'cv02', 'cv03';
   }
 
   html {
@@ -49,11 +49,11 @@
   .terminal-glass {
     @apply bg-terminal-background/90 backdrop-blur-md border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)];
   }
-  
+
   .typing-animation {
     @apply overflow-hidden whitespace-nowrap border-r-2 border-terminal-prompt animate-text-typing;
   }
-  
+
   .typing-cursor {
     @apply inline-block w-2 h-5 bg-terminal-prompt ml-1 animate-cursor-blink;
   }
@@ -61,7 +61,7 @@
   .command-link {
     @apply text-terminal-link hover:text-terminal-prompt transition-colors duration-200 cursor-pointer underline-offset-4 hover:underline;
   }
-  
+
   .command-button {
     @apply px-3 py-1 bg-terminal-muted/30 text-terminal-foreground 
            hover:bg-terminal-muted/50 rounded transition-all duration-200 
@@ -71,12 +71,22 @@
   .terminal-scrollbar::-webkit-scrollbar {
     @apply w-1.5;
   }
-  
+
   .terminal-scrollbar::-webkit-scrollbar-track {
     @apply bg-transparent;
   }
-  
+
   .terminal-scrollbar::-webkit-scrollbar-thumb {
     @apply bg-terminal-muted/30 rounded-full hover:bg-terminal-muted/50 transition-colors duration-200;
+  }
+
+  .terminal-content-height {
+    max-height: calc(100% - 46px);
+  }
+
+  .terminal-glow-shadow {
+    box-shadow:
+      0 0 80px rgba(100, 255, 218, 0.1),
+      0 0 32px rgba(0, 0, 0, 0.5);
   }
 }

@@ -1,4 +1,3 @@
-
 import { Command } from './types';
 
 // Clear command implementation
@@ -9,7 +8,7 @@ export const clearCommand: Command = {
     return {
       content: 'CLEAR_TERMINAL',
     };
-  }
+  },
 };
 
 export const welcomeCommand: Command = {
@@ -26,5 +25,5 @@ Type 'help' to see available commands.
 Try 'about' to learn more about me.
 `,
     };
-  }
+  },
 };

@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from 'react';
 
 export interface TypeOptions {
@@ -16,27 +15,25 @@ export function useTypingEffect(
   const [index, setIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [isDone, setIsDone] = useState(false);
-  
+
   useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
-    
     // Reset states when text changes
     setDisplayText('');
     setIndex(0);
     setIsTyping(false);
     setIsDone(false);
-    
+
     // Initial delay before typing starts
-    timeout = setTimeout(() => {
+    const timeout = setTimeout(() => {
       setIsTyping(true);
     }, delay);
-    
+
     return () => clearTimeout(timeout);
   }, [text, delay]);
-  
+
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
-    
+
     if (isTyping && index < text.length) {
       timeout = setTimeout(() => {
         setDisplayText(prev => prev + text.charAt(index));
@@ -46,14 +43,14 @@ export function useTypingEffect(
       setIsTyping(false);
       setIsDone(true);
     }
-    
+
     return () => clearTimeout(timeout);
   }, [isTyping, index, text, speed]);
-  
-  return { 
-    displayText: cursor && isDone ? `${displayText}` : displayText, 
-    isTyping, 
-    isDone 
+
+  return {
+    displayText: cursor && isDone ? `${displayText}` : displayText,
+    isTyping,
+    isDone,
   };
 }
 
@@ -65,34 +62,40 @@ export function useMultiLineTypingEffect(
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
   const [displayLines, setDisplayLines] = useState<string[]>([]);
   const [isDone, setIsDone] = useState(false);
-  
+
   const currentLine = lines[currentLineIndex] || '';
-  
-  const { displayText, isTyping, isDone: isLineDone } = useTypingEffect(
-    currentLine,
-    { ...typeOptions, delay: currentLineIndex === 0 ? typeOptions.delay : lineDelay }
-  );
-  
+
+  const {
+    displayText,
+    isTyping,
+    isDone: isLineDone,
+  } = useTypingEffect(currentLine, {
+    ...typeOptions,
+    delay: currentLineIndex === 0 ? typeOptions.delay : lineDelay,
+  });
+
   useEffect(() => {
     if (isLineDone) {
       // Add the completed line to displayLines
       setDisplayLines(prev => [...prev, displayText]);
-      
+
       // Move to the next line if there is one
       if (currentLineIndex < lines.length - 1) {
-        setTimeout(() => {
+        const nextLineTimeout = setTimeout(() => {
           setCurrentLineIndex(prev => prev + 1);
         }, lineDelay);
+
+        return () => clearTimeout(nextLineTimeout);
       } else {
         setIsDone(true);
       }
     }
   }, [isLineDone, displayText, currentLineIndex, lines.length, lineDelay]);
-  
+
   return {
     displayLines,
     currentLineText: !isLineDone ? displayText : '',
     isTyping,
-    isDone
+    isDone,
   };
 }

@@ -1,4 +1,3 @@
-
 import { Command } from './types';
 import { getAllCommands } from './index';
 
@@ -8,7 +7,7 @@ export const helpCommand: Command = {
   execute: (args: string[]) => {
     const commands = getAllCommands();
     const specificCommand = args[0];
-    
+
     if (specificCommand) {
       const command = commands.find(cmd => cmd.name === specificCommand && !cmd.hidden);
       if (command) {
@@ -17,16 +16,16 @@ export const helpCommand: Command = {
 Command: ${command.name}
 Description: ${command.description}
 ${command.usage ? `Usage: ${command.usage}` : ''}
-`
+`,
         };
       } else {
         return {
           content: `Command '${specificCommand}' not found. Type 'help' to see available commands.`,
-          isError: true
+          isError: true,
         };
       }
     }
-    
+
     return {
       content: `
 Available commands:
@@ -37,7 +36,7 @@ ${commands
   .join('\n')}
 
 Type 'help [command]' for more information about a specific command.
-`
+`,
     };
-  }
+  },
 };

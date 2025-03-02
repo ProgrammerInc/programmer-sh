@@ -1,4 +1,3 @@
-
 import { Command, CommandResult } from './types';
 import { helpCommand } from './helpCommand';
 import { aboutCommand, skillsCommand, contactCommand } from './informationCommands';
@@ -19,7 +18,7 @@ const commandsList: Command[] = [
   contactCommand,
   clearCommand,
   resumeCommand,
-  welcomeCommand
+  welcomeCommand,
 ];
 
 // Function to get all commands
@@ -31,23 +30,23 @@ export function processCommand(commandString: string): CommandResult {
   const parts = commandString.trim().split(/\s+/);
   const commandName = parts[0].toLowerCase();
   const args = parts.slice(1);
-  
+
   // Find the matching command
   const command = commandsList.find(cmd => cmd.name === commandName);
-  
+
   if (!command) {
     return {
       content: `Command not found: ${commandName}. Type 'help' to see available commands.`,
-      isError: true
+      isError: true,
     };
   }
-  
+
   try {
     return command.execute(args);
   } catch (error) {
     return {
       content: `Error executing command: ${error instanceof Error ? error.message : String(error)}`,
-      isError: true
+      isError: true,
     };
   }
 }

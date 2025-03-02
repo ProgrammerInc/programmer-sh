@@ -1,4 +1,3 @@
-
 import portfolioData from '../../data/portfolioData';
 import { Command } from './types';
 
@@ -16,23 +15,35 @@ SUMMARY
 ${portfolioData.summary}
 
 EXPERIENCE
-${portfolioData.experience.map(exp => `
+${portfolioData.experience
+  .map(
+    exp => `
 ${exp.position} at ${exp.company} (${exp.duration})
 ${exp.description}
 Key achievements:
 ${exp.achievements.map(achievement => `- ${achievement}`).join('\n')}
-`).join('\n')}
+`
+  )
+  .join('\n')}
 
 EDUCATION
-${portfolioData.education.map(edu => `
+${portfolioData.education
+  .map(
+    edu => `
 ${edu.degree}
 ${edu.institution}, ${edu.year}
-`).join('\n')}
+`
+  )
+  .join('\n')}
 
 SKILLS
-${portfolioData.skills.map(skillCategory => `
+${portfolioData.skills
+  .map(
+    skillCategory => `
 ${skillCategory.category}: ${skillCategory.items.join(', ')}
-`).join('\n')}
+`
+  )
+  .join('\n')}
 
 CONTACT
 Email: ${portfolioData.contact.email}
@@ -41,7 +52,7 @@ LinkedIn: ${portfolioData.contact.linkedin}
 GitHub: ${portfolioData.contact.github}
 X/Twitter: ${portfolioData.contact.twitter}
 Website: ${portfolioData.contact.website}
-`
+`,
     };
-  }
+  },
 };
