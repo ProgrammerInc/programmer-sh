@@ -1,4 +1,12 @@
+
 import React from 'react';
+import { X, Minimize, Maximize2 } from 'lucide-react';
+import { 
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger 
+} from '@/components/ui/tooltip';
 
 interface TerminalHeaderProps {
   lastCommand: string;
@@ -8,9 +16,50 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand }) => {
   return (
     <div className="flex items-center p-2 bg-black/20 border-b border-white/10">
       <div className="flex space-x-2 mr-4">
-        <div className="w-3 h-3 rounded-full bg-terminal-error" />
-        <div className="w-3 h-3 rounded-full bg-terminal-warning" />
-        <div className="w-3 h-3 rounded-full bg-terminal-success" />
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="w-3 h-3 rounded-full bg-terminal-error relative group cursor-pointer">
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <X className="text-black w-2 h-2" />
+                </div>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p className="text-xs">Close</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="w-3 h-3 rounded-full bg-terminal-warning relative group cursor-pointer">
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Minimize className="text-black w-2 h-2" />
+                </div>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p className="text-xs">Minimize</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="w-3 h-3 rounded-full bg-terminal-success relative group cursor-pointer">
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Maximize2 className="text-black w-2 h-2" />
+                </div>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p className="text-xs">Maximize</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       <div className="text-terminal-foreground/70 text-sm font-mono flex-1 text-center">
         <span className="programmer-sh-title">&lt;programmer&gt;.</span>

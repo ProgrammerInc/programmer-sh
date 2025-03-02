@@ -98,6 +98,10 @@ export default {
         'glow-pulse': {
           '0%, 100%': { boxShadow: '0 0 5px rgba(100, 255, 218, 0.5)' },
           '50%': { boxShadow: '0 0 20px rgba(100, 255, 218, 0.8)' }
+        },
+        'scale-up': {
+          '0%': { transform: 'scale(1)' },
+          '100%': { transform: 'scale(1.1)' }
         }
       },
       animation: {
@@ -107,7 +111,8 @@ export default {
         'text-typing': 'text-typing 3.5s steps(40, end)',
         'fade-in': 'fade-in 0.5s ease-out',
         'fade-out': 'fade-out 0.5s ease-out',
-        'glow-pulse': 'glow-pulse 2s infinite'
+        'glow-pulse': 'glow-pulse 2s infinite',
+        'scale-up': 'scale-up 0.2s ease-out'
       },
       fontFamily: {
         mono: ['JetBrains Mono', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', 'monospace']
