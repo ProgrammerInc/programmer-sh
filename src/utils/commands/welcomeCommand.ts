@@ -8,18 +8,18 @@ export const welcomeCommand: Command = {
     return {
       content: `Welcome to the <span class="text-terminal-prompt">&lt;programmer&gt;</span><span class="text-terminal-prompt">.</span><span class="text-terminal-prompt animate-cursor-blink">_</span> portfolio.
 
-This is an interactive terminal portfolio of James A. Black Jr.
+This is an interactive terminal portfolio of <strong>James A. Black Jr.</strong>
 
-Type 'help' to see available commands, or try one of these:
+Type <span class="command-link" data-command="help">help</span> to see available commands, or try one of these:
 
-- [[about]] to learn about me
-- [[contact]] for my contact information
-- [[education]] to see my educational background
-- [[experience]] to see my work experience
-- [[projects]] to view my portfolio
-- [[resume]] to view my resume
-- [[skills]] to see my technical skills
-- [[theme]] to change the terminal theme
+- <span class="command-link" data-command="about">about</span>: To learn about me
+- <span class="command-link" data-command="contact">contact</span>: For my contact information
+- <span class="command-link" data-command="education">education</span>: To see my educational background
+- <span class="command-link" data-command="experience">experience</span>: To see my work experience
+- <span class="command-link" data-command="projects">projects</span>: To view my portfolio
+- <span class="command-link" data-command="resume">resume</span>: To view my resume
+- <span class="command-link" data-command="skills">skills</span>: To see my technical skills
+- <span class="command-link" data-command="theme">theme</span>: To change the terminal theme
 
 Feel free to explore and get in touch!`,
       isError: false,

@@ -20,7 +20,7 @@ const HtmlContent: React.FC<HtmlContentProps> = ({
   console.log('Content contains command links:', hasCommandLinks);
   console.log('Content sample:', content.substring(0, 100));
   
-  if (hasHtmlTags) {
+  if (hasHtmlTags || hasCommandLinks) {
     // For content with HTML tags, use dangerouslySetInnerHTML
     return (
       <div
@@ -53,14 +53,23 @@ const HtmlContent: React.FC<HtmlContentProps> = ({
                 window.open(href, '_blank', 'noopener,noreferrer');
               }
             }
+          } else if (target.classList.contains('command-link')) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Extract command and execute it
+            const command = target.getAttribute('data-command') || target.textContent;
+            if (command && onCommandClick) {
+              onCommandClick(command);
+            }
           }
         }}
       />
     );
   }
 
-  // For content with only command links or other special links
-  if (hasCommandLinks || content.includes('http') || content.includes('@') || content.includes('+1')) {
+  // For content with only URLs or other special links that need to be converted
+  if (content.includes('http') || content.includes('@') || content.includes('+1')) {
     return (
       <div
         className={cn(

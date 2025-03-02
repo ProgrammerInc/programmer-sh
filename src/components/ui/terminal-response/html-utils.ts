@@ -12,9 +12,9 @@ export const containsHtmlTags = (content: string): boolean => {
     return false;
   }
   
-  // Enhanced regex to better detect HTML tags 
-  // This will detect <strong>, <a>, etc. but not command link patterns
-  const htmlTagsRegex = /<(?!span class="command-link")[a-zA-Z][^>]*>|<\/[a-zA-Z][^>]*>/;
+  // Enhanced regex to better detect HTML tags including custom terminal styling
+  // This will detect <strong>, <a>, <span>, etc. but still detect terminal-specific classes
+  const htmlTagsRegex = /<(strong|a|span|em|ul|li|ol|p|div|h[1-6]|br|code|pre)[^>]*>|<\/(strong|a|span|em|ul|li|ol|p|div|h[1-6]|code|pre)>/;
   
   // Log for debugging
   console.log(`Checking HTML tags in: ${content.substring(0, 50)}...`);
