@@ -10,16 +10,27 @@ import {
 
 interface TerminalHeaderProps {
   lastCommand: string;
+  onClose?: () => void;
+  onMinimize?: () => void;
+  onMaximize?: () => void;
 }
 
-const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand }) => {
+const TerminalHeader: React.FC<TerminalHeaderProps> = ({ 
+  lastCommand,
+  onClose,
+  onMinimize,
+  onMaximize 
+}) => {
   return (
     <div className="flex items-center p-2 bg-black/20 border-b border-white/10">
       <div className="flex space-x-2 mr-4">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="w-3 h-3 rounded-full bg-terminal-error relative group cursor-pointer">
+              <div 
+                className="w-3 h-3 rounded-full bg-terminal-error relative group cursor-pointer"
+                onClick={onClose}
+              >
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <X className="text-black w-2 h-2" />
                 </div>
@@ -34,7 +45,10 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand }) => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="w-3 h-3 rounded-full bg-terminal-warning relative group cursor-pointer">
+              <div 
+                className="w-3 h-3 rounded-full bg-terminal-warning relative group cursor-pointer"
+                onClick={onMinimize}
+              >
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <Minus className="text-black w-2 h-2" />
                 </div>
@@ -49,7 +63,10 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand }) => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="w-3 h-3 rounded-full bg-terminal-success relative group cursor-pointer">
+              <div 
+                className="w-3 h-3 rounded-full bg-terminal-success relative group cursor-pointer"
+                onClick={onMaximize}
+              >
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <Maximize2 className="text-black w-2 h-2" />
                 </div>
