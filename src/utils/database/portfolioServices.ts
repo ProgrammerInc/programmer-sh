@@ -8,7 +8,7 @@ export const fetchProfile = async (): Promise<Profile | null> => {
     const { data: profileData, error: profileError } = await supabase
       .from('portfolio_profile')
       .select('*')
-      .maybeSingle(); // Use maybeSingle instead of single to handle no results
+      .single();
 
     if (profileError) throw profileError;
     if (!profileData) {
@@ -203,13 +203,10 @@ export const fetchProjectById = async (projectId: string): Promise<Project | nul
       `
       )
       .eq('project_key', projectId)
-      .maybeSingle(); // Use maybeSingle instead of single
+      .single();
 
     if (projectError) throw projectError;
-    if (!projectData) {
-      console.error(`No project found with ID ${projectId}`);
-      return null;
-    }
+    if (!projectData) return null;
 
     return {
       id: projectData.project_key,
