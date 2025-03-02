@@ -158,4 +158,13 @@
   .window-control:hover {
     @apply animate-scale-up;
   }
+  
+  /* Mac-style maximize button */
+  .mac-maximize-icon {
+    @apply relative w-1.5 h-1.5 border border-terminal-background rounded-sm;
+  }
+  
+  .group:hover .mac-maximize-icon {
+    @apply opacity-100;
+  }
 }
