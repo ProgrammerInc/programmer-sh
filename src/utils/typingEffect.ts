@@ -76,9 +76,9 @@ export function useMultiLineTypingEffect(
   });
 
   useEffect(() => {
-    if (isLineDone && !displayLines.includes(currentLine)) {
-      // Add the completed line to displayLines only if it's not already there
-      setDisplayLines(prev => [...prev, currentLine]);
+    if (isLineDone) {
+      // Add the completed line to displayLines
+      setDisplayLines(prev => [...prev, displayText]);
 
       // Move to the next line if there is one
       if (currentLineIndex < lines.length - 1) {
@@ -91,7 +91,7 @@ export function useMultiLineTypingEffect(
         setIsDone(true);
       }
     }
-  }, [isLineDone, currentLine, currentLineIndex, lines.length, lineDelay, displayLines]);
+  }, [isLineDone, displayText, currentLineIndex, lines.length, lineDelay]);
 
   return {
     displayLines,
