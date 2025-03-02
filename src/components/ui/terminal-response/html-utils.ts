@@ -13,7 +13,7 @@ export const containsHtmlTags = (content: string): boolean => {
   }
   
   // Enhanced regex to better detect HTML tags 
-  // Excludes [[command]] format but includes <span class="command-link"> format
+  // This will detect <strong>, <a>, etc. but not command link patterns
   const htmlTagsRegex = /<(?!span class="command-link")[a-zA-Z][^>]*>|<\/[a-zA-Z][^>]*>/;
   
   // Log for debugging

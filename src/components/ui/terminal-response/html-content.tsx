@@ -18,6 +18,7 @@ const HtmlContent: React.FC<HtmlContentProps> = ({
   // Debug logs to help troubleshoot
   console.log('Content contains HTML tags:', hasHtmlTags);
   console.log('Content contains command links:', hasCommandLinks);
+  console.log('Content sample:', content.substring(0, 100));
   
   if (hasHtmlTags) {
     // For content with HTML tags, use dangerouslySetInnerHTML
@@ -32,14 +33,25 @@ const HtmlContent: React.FC<HtmlContentProps> = ({
         onClick={(e) => {
           // Handle clicks on any links to ensure they open in a new tab
           const target = e.target as HTMLElement;
-          if (target.tagName === 'A' && !target.classList.contains('command-link')) {
-            e.preventDefault(); // Prevent default navigation in case it's not properly set up
-            e.stopPropagation(); // Prevent terminal focus
-            
-            // Extract href and open in new tab
-            const href = target.getAttribute('href');
-            if (href && !href.startsWith('javascript:')) {
-              window.open(href, '_blank', 'noopener,noreferrer');
+          if (target.tagName === 'A') {
+            if (target.classList.contains('command-link')) {
+              e.preventDefault();
+              e.stopPropagation();
+              
+              // Extract command and execute it
+              const command = target.getAttribute('data-command') || target.textContent;
+              if (command && onCommandClick) {
+                onCommandClick(command);
+              }
+            } else {
+              e.preventDefault(); // Prevent default navigation in case it's not properly set up
+              e.stopPropagation(); // Prevent terminal focus
+              
+              // Extract href and open in new tab
+              const href = target.getAttribute('href');
+              if (href && !href.startsWith('javascript:')) {
+                window.open(href, '_blank', 'noopener,noreferrer');
+              }
             }
           }
         }}
