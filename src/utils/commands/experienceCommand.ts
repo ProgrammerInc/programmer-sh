@@ -34,8 +34,7 @@ Achievements:
 ${exp.achievements.map(achievement => `- ${achievement}`).join('\n')}
 `
   )
-  .join('\n')}
-`,
+  .join('\n')}`,
         };
       },
     };

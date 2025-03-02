@@ -19,17 +19,15 @@ export const educationCommand: Command = {
         }
 
         return {
-          content: `Education:
+          content: `My Education:
+
 ${education
   .map(
-    edu => `
-${edu.degree}
+    edu => `${edu.degree}
 ${edu.institution}, ${edu.year}
-${edu.details ? edu.details : ''}
-`
+${edu.details ? edu.details : ''}`
   )
-  .join('\n')}
-`,
+  .join('\n')}`,
         };
       },
     };
