@@ -1,10 +1,8 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { User, LogIn, LogOut, Settings, X, Plus, Minus, ChevronDown } from 'lucide-react';
 import { SocialLink } from '@/types/socialLinks';
 import { supabase } from '@/integrations/supabase/client';
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
-import { cn } from '@/lib/utils';
 import { isIncognitoMode } from '@/utils/incognito';
 
 interface TerminalHeaderProps {
@@ -20,7 +18,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socia
 
   // Close dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (event: globalThis.MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setDropdownOpen(false);
       }
@@ -42,7 +40,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socia
     if (userEmail) {
       return userEmail.split('@')[0];
     }
-    
+
     return isAnonymous ? 'Anonymous' : 'Guest';
   };
 
@@ -93,10 +91,16 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socia
 
       <div className="relative" ref={dropdownRef}>
         <button
-          onClick={() => setDropdownOpen(!dropdownOpen)}
+          id="userDropdown"
+          type="button"
+          onClick={e => {
+            e.preventDefault();
+            e.currentTarget.ariaExpanded = String(!dropdownOpen);
+            setDropdownOpen(!dropdownOpen);
+          }}
           className="flex items-center space-x-1 text-terminal-title hover:text-terminal-foreground transition-colors py-1 px-2 rounded"
           aria-haspopup="true"
-          aria-expanded={dropdownOpen}
+          aria-expanded="false"
         >
           <User className="w-4 h-4" />
           <span className="text-xs">{getUserDisplayName()}</span>
@@ -104,9 +108,9 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socia
         </button>
 
         {dropdownOpen && (
-          <div 
+          <div
             className="absolute right-0 mt-1 w-40 rounded-md shadow-lg bg-terminal-dropdown border border-terminal-border z-50"
-            onClick={(e) => e.stopPropagation()}
+            onClick={e => e.stopPropagation()}
           >
             <div className="py-1 rounded-md bg-terminal-dropdown">
               {userEmail ? (
@@ -114,7 +118,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socia
                   <a
                     href="#profile"
                     className="flex items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-dropdown-hover"
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault();
                       setDropdownOpen(false);
                       // You can add code to execute the profile command here
@@ -127,7 +131,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socia
                   <a
                     href="#settings"
                     className="flex items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-dropdown-hover"
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault();
                       setDropdownOpen(false);
                       // You can add code to execute the settings command here
@@ -141,7 +145,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socia
                   <a
                     href="#logout"
                     className="flex items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-dropdown-hover"
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault();
                       handleLogout();
                     }}
@@ -154,7 +158,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socia
                 <a
                   href="#login"
                   className="flex items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-dropdown-hover"
-                  onClick={(e) => {
+                  onClick={e => {
                     e.preventDefault();
                     setDropdownOpen(false);
                     // You can add code to execute the login command here
