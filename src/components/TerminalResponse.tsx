@@ -17,6 +17,7 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
     /(https?:\/\/[^\s]+)|((www\.)?[a-zA-Z0-9][\w.-]+\.(com|org|net|edu|io|sh|to|dev|me|app)\/?\S*)|((www\.)?x\.com\/\S*)/g;
   const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
   const phoneRegex = /(\+\d{1,3}[-\s]?\(?\d{1,4}\)?[-\s]?\d{1,4}[-\s]?\d{1,9})/g;
+  const programmerRegex = /(<programmer>\._)/g;
 
   // Process the text and return array of React nodes
   const result: React.ReactNode[] = [];
@@ -82,6 +83,22 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
         </a>
       ),
       type: 'phone'
+    });
+  }
+
+  // Find all <programmer>._ matches
+  while ((match = programmerRegex.exec(text)) !== null) {
+    const programmer = match[0];
+    matches.push({
+      index: match.index,
+      length: programmer.length,
+      content: (
+        <span className="whitespace-nowrap">
+          &lt;programmer&gt;.
+          <span className="inline-block w-2 h-4 bg-terminal-prompt animate-cursor-blink"></span>
+        </span>
+      ),
+      type: 'programmer'
     });
   }
 

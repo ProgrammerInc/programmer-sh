@@ -147,52 +147,97 @@ export type Database = {
       }
       portfolio_profile: {
         Row: {
+          bitbucket: string | null
+          bluesky: string | null
+          cashapp: string | null
           company: string | null
           created_at: string
+          discord: string | null
           email: string
-          fullname: string | null
+          facebook: string | null
+          full_name: string | null
           github: string | null
+          gitlab: string | null
           id: string
           linkedin: string | null
           location: string
+          loliapp: string | null
           name: string
+          patreon: string | null
+          paypal: string | null
           phone: string | null
+          pinterest: string | null
+          reddit: string | null
           summary: string
+          threads: string | null
+          tiktok: string | null
           title: string
           twitter: string | null
+          venmo: string | null
           website: string | null
+          youtube: string | null
         }
         Insert: {
+          bitbucket?: string | null
+          bluesky?: string | null
+          cashapp?: string | null
           company?: string | null
           created_at?: string
+          discord?: string | null
           email: string
-          fullname?: string | null
+          facebook?: string | null
+          full_name?: string | null
           github?: string | null
+          gitlab?: string | null
           id?: string
           linkedin?: string | null
           location: string
+          loliapp?: string | null
           name: string
+          patreon?: string | null
+          paypal?: string | null
           phone?: string | null
+          pinterest?: string | null
+          reddit?: string | null
           summary: string
+          threads?: string | null
+          tiktok?: string | null
           title: string
           twitter?: string | null
+          venmo?: string | null
           website?: string | null
+          youtube?: string | null
         }
         Update: {
+          bitbucket?: string | null
+          bluesky?: string | null
+          cashapp?: string | null
           company?: string | null
           created_at?: string
+          discord?: string | null
           email?: string
-          fullname?: string | null
+          facebook?: string | null
+          full_name?: string | null
           github?: string | null
+          gitlab?: string | null
           id?: string
           linkedin?: string | null
           location?: string
+          loliapp?: string | null
           name?: string
+          patreon?: string | null
+          paypal?: string | null
           phone?: string | null
+          pinterest?: string | null
+          reddit?: string | null
           summary?: string
+          threads?: string | null
+          tiktok?: string | null
           title?: string
           twitter?: string | null
+          venmo?: string | null
           website?: string | null
+          youtube?: string | null
         }
         Relationships: []
       }
