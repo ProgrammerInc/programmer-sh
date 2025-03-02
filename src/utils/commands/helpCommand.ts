@@ -1,42 +1,27 @@
-import { Command } from './types';
-import { getAllCommands } from './index';
 
-export const helpCommand: Command = {
-  name: 'help',
-  description: 'Display available commands',
-  execute: (args: string[]) => {
-    const commands = getAllCommands();
-    const specificCommand = args[0];
+import { CommandResult } from './types';
 
-    if (specificCommand) {
-      const command = commands.find(cmd => cmd.name === specificCommand && !cmd.hidden);
-      if (command) {
-        return {
-          content: `
-Command: ${command.name}
-Description: ${command.description}
-${command.usage ? `Usage: ${command.usage}` : ''}
-`,
-        };
-      } else {
-        return {
-          content: `Command '${specificCommand}' not found. Type 'help' to see available commands.`,
-          isError: true,
-        };
-      }
-    }
+export const helpCommand = (): CommandResult => {
+  const commandList = [
+    { name: 'help', description: 'Shows this help menu' },
+    { name: 'about', description: 'About James Black' },
+    { name: 'skills', description: 'View technical skills' },
+    { name: 'experience', description: 'View work experience' },
+    { name: 'education', description: 'View educational background' },
+    { name: 'projects', description: 'View notable projects' },
+    { name: 'contact', description: 'Display contact information' },
+    { name: 'resume', description: 'View or download resume' },
+    { name: 'clear', description: 'Clear the terminal' },
+    { name: 'save [message]', description: 'Save a message to the database' },
+    { name: 'messages', description: 'View all saved messages' },
+  ];
 
-    return {
-      content: `
-Available commands:
+  const helpText = commandList
+    .map(cmd => `  ${cmd.name.padEnd(20)} ${cmd.description}`)
+    .join('\n');
 
-${commands
-  .filter(cmd => !cmd.hidden)
-  .map(cmd => `- ${cmd.name}: ${cmd.description}`)
-  .join('\n')}
-
-Type 'help [command]' for more information about a specific command.
-`,
-    };
-  },
+  return {
+    content: `Available commands:\n\n${helpText}`,
+    isError: false,
+  };
 };

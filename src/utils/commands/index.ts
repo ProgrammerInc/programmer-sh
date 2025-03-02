@@ -1,55 +1,91 @@
-import { Command, CommandResult } from './types';
-import { helpCommand } from './helpCommand';
-import { aboutCommand, skillsCommand, contactCommand } from './informationCommands';
-import { projectsCommand } from './projectsCommand';
-import { experienceCommand } from './experienceCommand';
-import { educationCommand } from './educationCommand';
-import { clearCommand, welcomeCommand } from './systemCommands';
-import { resumeCommand } from './resumeCommand';
 
-// List of all available commands
-const commandsList: Command[] = [
+// Re-export all commands
+export * from './helpCommand';
+export * from './systemCommands';
+export * from './informationCommands';
+export * from './experienceCommand';
+export * from './educationCommand';
+export * from './projectsCommand';
+export * from './resumeCommand';
+export * from './messageCommands';
+
+// Command processor
+import { CommandResult } from './types';
+import {
   helpCommand,
+  clearCommand,
+  whoamiCommand,
+  contactCommand,
   aboutCommand,
   skillsCommand,
-  projectsCommand,
   experienceCommand,
   educationCommand,
-  contactCommand,
-  clearCommand,
+  projectsCommand,
   resumeCommand,
-  welcomeCommand,
-];
+  saveMessage,
+  getMessages
+} from './';
 
-// Function to get all commands
-export const getAllCommands = (): Command[] => commandsList;
+export const processCommand = (input: string): CommandResult => {
+  // Trim input and convert to lowercase for easier comparison
+  const trimmedInput = input.trim();
+  
+  // Split the input into command and arguments
+  const parts = trimmedInput.split(' ');
+  const command = parts[0].toLowerCase();
+  const args = parts.slice(1).join(' ');
 
-// Process a command string and return the result
-export function processCommand(commandString: string): CommandResult {
-  // Trim leading/trailing whitespace and split into command and args
-  const parts = commandString.trim().split(/\s+/);
-  const commandName = parts[0].toLowerCase();
-  const args = parts.slice(1);
-
-  // Find the matching command
-  const command = commandsList.find(cmd => cmd.name === commandName);
-
-  if (!command) {
-    return {
-      content: `Command not found: ${commandName}. Type 'help' to see available commands.`,
-      isError: true,
-    };
+  // Process commands
+  switch (command) {
+    case 'help':
+      return helpCommand();
+    case 'clear':
+      return clearCommand();
+    case 'whoami':
+      return whoamiCommand();
+    case 'contact':
+      return contactCommand();
+    case 'about':
+      return aboutCommand();
+    case 'skills':
+      return skillsCommand();
+    case 'experience':
+      return experienceCommand();
+    case 'education':
+      return educationCommand();
+    case 'projects':
+      return projectsCommand();
+    case 'resume':
+      return resumeCommand();
+    case 'welcome':
+      return {
+        content: "Welcome to my portfolio terminal. Type 'help' to see available commands.",
+        isError: false
+      };
+    case 'save':
+      if (!args) {
+        return {
+          content: "Usage: save [your message]",
+          isError: true
+        };
+      }
+      // This returns a Promise, so we need to handle it specially
+      return {
+        content: "Saving message...",
+        isAsync: true,
+        asyncResolver: () => saveMessage(args)
+      };
+    case 'messages':
+      // This returns a Promise, so we need to handle it specially
+      return {
+        content: "Fetching messages...",
+        isAsync: true,
+        asyncResolver: () => getMessages()
+      };
+    default:
+      return {
+        content: `Command not found: ${command}. Type 'help' to see available commands.`,
+        isError: true
+      };
   }
-
-  try {
-    return command.execute(args);
-  } catch (error) {
-    return {
-      content: `Error executing command: ${error instanceof Error ? error.message : String(error)}`,
-      isError: true,
-    };
-  }
-}
-
-// Re-export types
-export type { Command, CommandResult };
+};
