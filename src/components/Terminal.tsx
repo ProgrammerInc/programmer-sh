@@ -32,54 +32,34 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     '                  |___/                                                     ',
   ];
 
-  // Use a state to determine when ASCII art should be shown
-  const [showAsciiArt, setShowAsciiArt] = useState(false);
-  const [asciiArtDone, setAsciiArtDone] = useState(false);
+  // Show ASCII art immediately without any delay
+  const [showAsciiArt, setShowAsciiArt] = useState(true);
+  const [asciiArtDone, setAsciiArtDone] = useState(true);
 
-  // Show ASCII art after a small delay, no typing animation
+  // Process initial commands immediately
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowAsciiArt(true);
-
-      // Wait a bit longer to trigger the completion
-      setTimeout(() => {
-        setAsciiArtDone(true);
-      }, 300);
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Process initial commands
-  useEffect(() => {
-    if (isInitializing && asciiArtDone && !initialCommandsProcessed) {
-      let timeout: NodeJS.Timeout;
-
-      const processInitialCommands = async () => {
-        // Set initialCommandsProcessed to true immediately to prevent multiple executions
-        setInitialCommandsProcessed(true);
-
-        // Wait a bit after ASCII art is done
-        await new Promise(resolve => setTimeout(resolve, 500));
-
-        // Process each initial command with a delay
-        for (const cmd of initialCommands) {
-          await new Promise(resolve => {
-            timeout = setTimeout(() => {
-              processCommandWithHistory(cmd);
-              resolve(null);
-            }, 300);
-          });
+    if (isInitializing && !initialCommandsProcessed) {
+      // Initialize command processing immediately
+      setInitialCommandsProcessed(true);
+      
+      // Process each initial command with a small delay between them
+      let i = 0;
+      const processNextCommand = () => {
+        if (i < initialCommands.length) {
+          const command = initialCommands[i++];
+          processCommandWithHistory(command);
+          
+          // Process next command with a small delay
+          setTimeout(processNextCommand, 200);
+        } else {
+          setIsInitializing(false);
         }
-
-        setIsInitializing(false);
       };
-
-      processInitialCommands();
-
-      return () => clearTimeout(timeout);
+      
+      // Start processing commands immediately
+      processNextCommand();
     }
-  }, [initialCommands, isInitializing, asciiArtDone, initialCommandsProcessed]);
+  }, [initialCommands, isInitializing, initialCommandsProcessed]);
 
   // Scroll to bottom when history changes
   useEffect(() => {
