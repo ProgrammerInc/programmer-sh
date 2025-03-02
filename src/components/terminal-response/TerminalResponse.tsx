@@ -34,6 +34,10 @@ const TerminalResponse: React.FC<TerminalResponseProps> = ({
     );
   }
 
+  // Add debug log to check content
+  console.log('Response content type:', typeof response.content);
+  console.log('Has HTML:', containsHtmlTags(response.content));
+  
   // For animated content
   if (animate) {
     return (

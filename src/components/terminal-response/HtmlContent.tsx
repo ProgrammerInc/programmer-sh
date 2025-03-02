@@ -17,12 +17,33 @@ const HtmlContent: React.FC<HtmlContentProps> = ({
   className,
   onCommandClick 
 }) => {
-  // Check if content contains HTML tags and command links
-  const hasCommandLinks = content.includes('command-link');
+  // Determine content type - explicitly check for both conditions
+  const hasCommandLinks = content.includes('command-link') || content.includes('[[');
   const hasHtmlTags = containsHtmlTags(content);
   
-  // If content has command links, process them to make them clickable
-  if (onCommandClick && hasCommandLinks) {
+  // Debug logs to help troubleshoot
+  console.log('Content contains HTML tags:', hasHtmlTags);
+  console.log('Content contains command links:', hasCommandLinks);
+  console.log('Content sample:', content.substring(0, 100));
+  
+  // For content with both HTML and command links, prioritize HTML rendering
+  if (hasHtmlTags) {
+    console.log('Rendering as HTML');
+    return (
+      <div
+        className={cn(
+          'whitespace-pre-wrap font-mono text-sm mb-4',
+          isError ? 'text-terminal-error' : 'text-terminal-foreground',
+          className
+        )}
+        dangerouslySetInnerHTML={createMarkup(content)}
+      />
+    );
+  }
+  
+  // For content with only command links
+  if (hasCommandLinks && onCommandClick) {
+    console.log('Rendering with command links');
     return (
       <div
         className={cn(
@@ -36,21 +57,8 @@ const HtmlContent: React.FC<HtmlContentProps> = ({
     );
   }
   
-  // Use dangerouslySetInnerHTML for pure HTML content
-  if (hasHtmlTags) {
-    return (
-      <div
-        className={cn(
-          'whitespace-pre-wrap font-mono text-sm mb-4',
-          isError ? 'text-terminal-error' : 'text-terminal-foreground',
-          className
-        )}
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
-    );
-  }
-  
   // For plain text content
+  console.log('Rendering as plain text');
   return (
     <div
       className={cn(
