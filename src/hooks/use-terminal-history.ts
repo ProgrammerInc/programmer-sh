@@ -1,6 +1,5 @@
-
 import { HistoryItem } from '@/components/ui/terminal';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 const HISTORY_STORAGE_KEY = 'terminal_command_history';
 const LAST_COMMAND_KEY = 'terminal_last_command';
@@ -50,13 +49,13 @@ export const useTerminalHistory = (isInitializing: boolean) => {
   }, [isInitializing, historyLoaded]);
 
   // Custom setter for lastExecutedCommand that also updates localStorage
-  const updateLastCommand = (command: string) => {
+  const updateLastCommand = useCallback((command: string) => {
     if (command !== lastExecutedCommand) {
       console.log('Updating last command to:', command);
       setLastExecutedCommand(command);
       localStorage.setItem(LAST_COMMAND_KEY, command);
     }
-  };
+  }, [lastExecutedCommand]);
 
   // Save history to localStorage when it changes
   useEffect(() => {
@@ -71,7 +70,7 @@ export const useTerminalHistory = (isInitializing: boolean) => {
         }
       }
     }
-  }, [history, isInitializing, historyLoaded]);
+  }, [history, isInitializing, historyLoaded, updateLastCommand]);
 
   // Clear history
   const clearHistory = () => {
