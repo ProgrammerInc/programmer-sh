@@ -1,0 +1,58 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-recommended",
+    "stylelint-config-tailwindcss"
+  ],
+  "plugins": ["stylelint-order"],
+  "rules": {
+    "order/properties-alphabetical-order": null,
+    "selector-class-pattern": null,
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "tailwind",
+          "apply",
+          "variants",
+          "responsive",
+          "screen",
+          "layer"
+        ]
+      }
+    ],
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["global"]
+      }
+    ],
+    "at-rule-no-deprecated": null,
+    "property-no-unknown": [
+      true,
+      {
+        "ignoreProperties": ["ring", "border-opacity", "aspect-ratio", "inset-top", "inset-bottom"]
+      }
+    ],
+    "color-function-notation": "legacy",
+    "alpha-value-notation": "number",
+    "media-feature-range-notation": "prefix",
+    "declaration-empty-line-before": null,
+    "rule-empty-line-before": null,
+    "at-rule-empty-line-before": null,
+    "declaration-block-no-redundant-longhand-properties": null,
+    "no-descending-specificity": null,
+    "property-no-vendor-prefix": null,
+    "color-hex-length": null,
+    "declaration-property-value-no-unknown": null,
+    "no-duplicate-selectors": null
+  },
+  "ignoreFiles": [
+    "dist/**",
+    "node_modules/**",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.ts",
+    "**/*.tsx"
+  ]
+}
