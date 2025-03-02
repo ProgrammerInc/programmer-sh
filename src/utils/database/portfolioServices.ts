@@ -1,3 +1,4 @@
+
 import { supabase } from '../../integrations/supabase/client';
 import { Profile, Skill, Experience, Project, Education } from '../../data/portfolioData';
 
@@ -35,7 +36,7 @@ export const fetchProfile = async (): Promise<Profile | null> => {
 
     return {
       name: profileData.name,
-      fullname: profileData.fullname,
+      fullname: profileData.full_name, // Updated to use full_name instead of fullname
       title: profileData.title,
       company: profileData.company,
       summary: profileData.summary,
