@@ -94,8 +94,7 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
       length: programmer.length,
       content: (
         <span className="whitespace-nowrap">
-          &lt;programmer&gt;.
-          <span className="inline-block w-2 h-4 bg-terminal-prompt animate-cursor-blink"></span>
+          &lt;programmer&gt;.<span className="animate-cursor-blink">_</span>
         </span>
       ),
       type: 'programmer'
