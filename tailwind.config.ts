@@ -28,7 +28,7 @@ export default {
         terminal: {
           background: '#1A1F2C',
           foreground: '#F1F1F1',
-          prompt: '#64FFDA',
+          prompt: '#81A1C1',
           success: '#A3BE8C',
           error: '#BF616A',
           warning: '#EBCB8B',
@@ -96,8 +96,8 @@ export default {
           to: { opacity: '0' }
         },
         'glow-pulse': {
-          '0%, 100%': { boxShadow: '0 0 5px rgba(100, 255, 218, 0.5)' },
-          '50%': { boxShadow: '0 0 20px rgba(100, 255, 218, 0.8)' }
+          '0%, 100%': { boxShadow: '0 0 5px rgba(120, 120, 150, 0.5)' },
+          '50%': { boxShadow: '0 0 20px rgba(120, 120, 150, 0.8)' }
         }
       },
       animation: {

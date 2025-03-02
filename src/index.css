@@ -1,3 +1,4 @@
+
 /* stylelint-disable at-rule-no-unknown */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap');
 
@@ -86,7 +87,7 @@
 
   .terminal-glow-shadow {
     box-shadow:
-      0 0 80px rgba(100, 255, 218, 0.1),
+      0 0 80px rgba(120, 120, 150, 0.1),
       0 0 32px rgba(0, 0, 0, 0.5);
   }
 }
