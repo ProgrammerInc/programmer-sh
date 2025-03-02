@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import TerminalHeader from './TerminalHeader';
 import TerminalContent from './TerminalContent';
@@ -28,6 +29,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   const [showAsciiArt, setShowAsciiArt] = useState(true);
   const commandInputRef = useRef<HTMLInputElement>(null);
 
+  // Load saved history from localStorage
   useEffect(() => {
     const savedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);
     if (savedHistory) {
@@ -47,30 +49,36 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     }
   }, []);
 
+  // Save history to localStorage
   useEffect(() => {
     if (history.length > 0 && !isInitializing) {
       localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
     }
   }, [history, isInitializing]);
 
+  // Check for URL command
   useEffect(() => {
-    // Check for URL command in session storage
     const urlCommand = sessionStorage.getItem('urlCommand');
     
     if (urlCommand) {
-      // Clear the session storage
+      console.log('Found URL command:', urlCommand);
+      // Clear the session storage to prevent re-execution
       sessionStorage.removeItem('urlCommand');
       
-      // Update our local state with the new commands
+      // Add command to our processing queue
       setCommandsToProcess(prev => [...prev, urlCommand]);
     }
-    
+  }, []);
+
+  // Process commands in the queue
+  useEffect(() => {
     if (isInitializing && !initialCommandsProcessed) {
       setInitialCommandsProcessed(true);
       let i = 0;
       const processNextCommand = () => {
         if (i < commandsToProcess.length) {
           const command = commandsToProcess[i++];
+          console.log('Processing command:', command);
           processCommandWithHistory(command);
           setTimeout(processNextCommand, 200);
         } else {

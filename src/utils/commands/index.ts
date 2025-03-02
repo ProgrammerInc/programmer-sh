@@ -31,11 +31,21 @@ initializeTheme();
 export const processCommand = (input: string): CommandResult => {
   // Trim input and convert to lowercase for easier comparison
   const trimmedInput = input.trim();
+  
+  // For empty commands, return an error
+  if (!trimmedInput) {
+    return {
+      content: 'Please enter a command. Type "help" for available commands.',
+      isError: true,
+    };
+  }
 
   // Split the input into command and arguments
   const parts = trimmedInput.split(' ');
   const command = parts[0].toLowerCase();
   const args = parts.slice(1).join(' ');
+
+  console.log(`Processing command: "${command}" with args: "${args}"`);
 
   // Process commands
   switch (command) {

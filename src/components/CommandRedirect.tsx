@@ -2,7 +2,6 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
-import { processCommand } from '@/utils/commands';
 import { isValidCommand } from '@/utils/commands/urlCommandHandler';
 
 const CommandRedirect = () => {
@@ -23,7 +22,9 @@ const CommandRedirect = () => {
 
     // Store the command in session storage for the main page to execute
     sessionStorage.setItem('urlCommand', command);
-    navigate('/');
+    
+    // Navigate to home page which will process the command
+    navigate('/', { replace: true });
   }, [command, navigate, toast]);
 
   return <div className="flex items-center justify-center h-screen">Executing command: {command}...</div>;
