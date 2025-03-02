@@ -1,4 +1,3 @@
-
 import { Command } from './types';
 
 export const welcomeCommand: Command = {
@@ -8,12 +7,18 @@ export const welcomeCommand: Command = {
     return {
       content: `Welcome to <programmer>._
 
-This is the interactive terminal portfolio of James A. Black Jr.
+This is the interactive terminal portfolio of James Black.
+
 Type 'help' to see available commands, or try one of these:
+
 - 'about' to learn about me
-- 'skills' to see my technical skills
-- 'projects' to view my portfolio
 - 'contact' for my contact information
+- 'education' to see my educational background
+- 'experience' to see my work experience
+- 'projects' to view my portfolio
+- 'resume' to view my resume
+- 'skills' to see my technical skills
+- 'theme' to change the terminal theme
 
 Feel free to explore and get in touch!`,
       isError: false,
