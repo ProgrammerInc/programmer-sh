@@ -6,7 +6,7 @@ import { HistoryItem } from '@/components/ui/terminal';
 import { useToast } from '@/hooks/use-toast';
 import AsciiArt from '../ascii-art/ascii-art';
 import TerminalHistory from '../terminal-history';
-import QRCodeComponent from '../qr-code';
+import { QRCodeSVG } from 'qrcode.react';
 
 interface TerminalContentProps {
   history: HistoryItem[];
@@ -124,43 +124,51 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
         const value = qrElement.getAttribute('value') || '';
         const title = qrElement.getAttribute('title') || 'Scan this QR code';
         
-        // Create React element in the DOM
+        // Create container div
         const qrCodeDiv = document.createElement('div');
+        qrCodeDiv.className = 'flex flex-col items-center my-4';
         container.innerHTML = '';
         container.appendChild(qrCodeDiv);
         
-        // Render QR code component
+        // Create QR code container with white background
+        const qrBackground = document.createElement('div');
+        qrBackground.className = 'bg-white p-2 rounded';
+        qrCodeDiv.appendChild(qrBackground);
+        
+        // Create title paragraph
+        const titleParagraph = document.createElement('p');
+        titleParagraph.className = 'text-xs text-terminal-foreground mt-2';
+        titleParagraph.textContent = title;
+        qrCodeDiv.appendChild(titleParagraph);
+        
+        // If value exists, create the QR code using the library
         if (value) {
           const decodedValue = decodeURIComponent(value);
-          // We need to manually create the QR code since we can't use ReactDOM.render here
-          const qrCode = document.createElement('div');
-          qrCode.className = 'flex flex-col items-center my-4';
-          qrCode.innerHTML = `
-            <div class="bg-white p-2 rounded">
-              <div id="qr-svg-container-${Math.random().toString(36).substring(2, 9)}"></div>
-            </div>
-            <p class="text-xs text-terminal-foreground mt-2">${title}</p>
-          `;
-          container.appendChild(qrCode);
           
-          // Use qrcode.react script directly
-          import('qrcode.react').then(QRCode => {
-            const svgContainer = qrCode.querySelector('[id^="qr-svg-container-"]');
-            if (svgContainer) {
-              const qrSvg = QRCode.QRCodeSVG({
+          // Use qrcode.react to generate the QR code in a separate div
+          const qrContainer = document.createElement('div');
+          qrBackground.appendChild(qrContainer);
+          
+          // Import and use qrcode.react
+          import('qrcode.react').then(QRCodeModule => {
+            // Create a temporary DOM element
+            const tempDiv = document.createElement('div');
+            
+            // Create QR code SVG string
+            const qrSvgString = new XMLSerializer().serializeToString(
+              QRCodeModule.QRCodeSVG({
                 value: decodedValue,
                 size: 128,
                 level: "M",
                 includeMargin: true
-              });
-              
-              // Convert React element to string and insert
-              const tempDiv = document.createElement('div');
-              tempDiv.appendChild(qrSvg);
-              svgContainer.innerHTML = tempDiv.innerHTML;
-            }
+              })
+            );
+            
+            // Set the inner HTML with the SVG string
+            qrContainer.innerHTML = qrSvgString;
           }).catch(err => {
             console.error('Failed to load QR code library:', err);
+            qrContainer.textContent = 'QR Code failed to load';
           });
         }
       }
