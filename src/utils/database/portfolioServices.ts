@@ -1,6 +1,5 @@
-
-import { supabase } from "../../integrations/supabase/client";
-import { Profile, Skill, Experience, Project, Education } from "../../data/portfolioData";
+import { supabase } from '../../integrations/supabase/client';
+import { Profile, Skill, Experience, Project, Education } from '../../data/portfolioData';
 
 // Fetch profile data
 export const fetchProfile = async (): Promise<Profile | null> => {
@@ -13,14 +12,12 @@ export const fetchProfile = async (): Promise<Profile | null> => {
 
     if (profileError) throw profileError;
     if (!profileData) {
-      console.error("No profile data found in the database");
+      console.error('No profile data found in the database');
       return null;
     }
 
     // Fetch all skill categories
-    const { data: skillsData, error: skillsError } = await supabase
-      .from('skills')
-      .select(`
+    const { data: skillsData, error: skillsError } = await supabase.from('skills').select(`
         id,
         category,
         skill_items (
@@ -33,11 +30,12 @@ export const fetchProfile = async (): Promise<Profile | null> => {
     // Transform the data format
     const skills: Skill[] = skillsData.map(skillCategory => ({
       category: skillCategory.category,
-      items: skillCategory.skill_items.map((item: { name: string }) => item.name)
+      items: skillCategory.skill_items.map((item: { name: string }) => item.name),
     }));
 
     return {
       name: profileData.name,
+      fullname: profileData.fullname,
       title: profileData.title,
       summary: profileData.summary,
       location: profileData.location,
@@ -47,15 +45,15 @@ export const fetchProfile = async (): Promise<Profile | null> => {
         linkedin: profileData.linkedin,
         github: profileData.github,
         twitter: profileData.twitter,
-        website: profileData.website
+        website: profileData.website,
       },
       skills,
       experience: [], // Will be filled by fetchExperience
-      projects: [],   // Will be filled by fetchProjects
-      education: []   // Will be filled by fetchEducation
+      projects: [], // Will be filled by fetchProjects
+      education: [], // Will be filled by fetchEducation
     };
   } catch (error) {
-    console.error("Error fetching profile:", error);
+    console.error('Error fetching profile:', error);
     return null;
   }
 };
@@ -63,8 +61,7 @@ export const fetchProfile = async (): Promise<Profile | null> => {
 // Fetch experience data
 export const fetchExperience = async (): Promise<Experience[]> => {
   try {
-    const { data: experienceData, error: experienceError } = await supabase
-      .from('experiences')
+    const { data: experienceData, error: experienceError } = await supabase.from('experiences')
       .select(`
         id,
         company,
@@ -77,7 +74,7 @@ export const fetchExperience = async (): Promise<Experience[]> => {
 
     if (experienceError) throw experienceError;
     if (!experienceData || experienceData.length === 0) {
-      console.error("No experience data found in the database");
+      console.error('No experience data found in the database');
       return [];
     }
 
@@ -87,10 +84,12 @@ export const fetchExperience = async (): Promise<Experience[]> => {
       duration: exp.duration,
       description: exp.description,
       technologies: exp.experience_technologies.map((tech: { name: string }) => tech.name),
-      achievements: exp.experience_achievements.map((ach: { description: string }) => ach.description)
+      achievements: exp.experience_achievements.map(
+        (ach: { description: string }) => ach.description
+      ),
     }));
   } catch (error) {
-    console.error("Error fetching experience:", error);
+    console.error('Error fetching experience:', error);
     return [];
   }
 };
@@ -98,9 +97,7 @@ export const fetchExperience = async (): Promise<Experience[]> => {
 // Fetch projects data
 export const fetchProjects = async (): Promise<Project[]> => {
   try {
-    const { data: projectsData, error: projectsError } = await supabase
-      .from('projects')
-      .select(`
+    const { data: projectsData, error: projectsError } = await supabase.from('projects').select(`
         id,
         project_key,
         title,
@@ -114,7 +111,7 @@ export const fetchProjects = async (): Promise<Project[]> => {
 
     if (projectsError) throw projectsError;
     if (!projectsData || projectsData.length === 0) {
-      console.error("No projects data found in the database");
+      console.error('No projects data found in the database');
       return [];
     }
 
@@ -126,10 +123,12 @@ export const fetchProjects = async (): Promise<Project[]> => {
       github: project.github,
       image: project.image,
       technologies: project.project_technologies.map((tech: { name: string }) => tech.name),
-      highlights: project.project_highlights.map((highlight: { description: string }) => highlight.description)
+      highlights: project.project_highlights.map(
+        (highlight: { description: string }) => highlight.description
+      ),
     }));
   } catch (error) {
-    console.error("Error fetching projects:", error);
+    console.error('Error fetching projects:', error);
     return [];
   }
 };
@@ -143,7 +142,7 @@ export const fetchEducation = async (): Promise<Education[]> => {
 
     if (educationError) throw educationError;
     if (!educationData || educationData.length === 0) {
-      console.error("No education data found in the database");
+      console.error('No education data found in the database');
       return [];
     }
 
@@ -151,10 +150,10 @@ export const fetchEducation = async (): Promise<Education[]> => {
       degree: edu.degree,
       institution: edu.institution,
       year: edu.year,
-      details: edu.details
+      details: edu.details,
     }));
   } catch (error) {
-    console.error("Error fetching education:", error);
+    console.error('Error fetching education:', error);
     return [];
   }
 };
@@ -164,14 +163,14 @@ export const fetchPortfolioData = async (): Promise<Profile | null> => {
   try {
     const profile = await fetchProfile();
     if (!profile) {
-      console.error("Could not fetch profile data");
+      console.error('Could not fetch profile data');
       return null;
     }
-    
+
     const [experience, projects, education] = await Promise.all([
       fetchExperience(),
       fetchProjects(),
-      fetchEducation()
+      fetchEducation(),
     ]);
 
     profile.experience = experience;
@@ -180,7 +179,7 @@ export const fetchPortfolioData = async (): Promise<Profile | null> => {
 
     return profile;
   } catch (error) {
-    console.error("Error fetching complete portfolio data:", error);
+    console.error('Error fetching complete portfolio data:', error);
     return null;
   }
 };
@@ -190,7 +189,8 @@ export const fetchProjectById = async (projectId: string): Promise<Project | nul
   try {
     const { data: projectData, error: projectError } = await supabase
       .from('projects')
-      .select(`
+      .select(
+        `
         id,
         project_key,
         title,
@@ -200,7 +200,8 @@ export const fetchProjectById = async (projectId: string): Promise<Project | nul
         image,
         project_technologies (name),
         project_highlights (description)
-      `)
+      `
+      )
       .eq('project_key', projectId)
       .maybeSingle(); // Use maybeSingle instead of single
 
@@ -218,7 +219,9 @@ export const fetchProjectById = async (projectId: string): Promise<Project | nul
       github: projectData.github,
       image: projectData.image,
       technologies: projectData.project_technologies.map((tech: { name: string }) => tech.name),
-      highlights: projectData.project_highlights.map((highlight: { description: string }) => highlight.description)
+      highlights: projectData.project_highlights.map(
+        (highlight: { description: string }) => highlight.description
+      ),
     };
   } catch (error) {
     console.error(`Error fetching project with ID ${projectId}:`, error);

@@ -41,6 +41,7 @@ export interface Contact {
 
 export interface Profile {
   name: string;
+  fullname: string;
   title: string;
   summary: string;
   location: string;
@@ -50,6 +51,3 @@ export interface Profile {
   projects: Project[];
   education: Education[];
 }
-
-// The actual data has been moved to the Supabase database
-// Use the fetchPortfolioData utility to get the data from the database

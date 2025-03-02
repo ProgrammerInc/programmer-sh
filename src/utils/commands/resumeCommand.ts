@@ -1,4 +1,3 @@
-
 import { Command, CommandResult } from './types';
 import { fetchPortfolioData } from '../database/portfolioServices';
 
@@ -11,64 +10,67 @@ export const resumeCommand: Command = {
       isAsync: true,
       asyncResolver: async (): Promise<CommandResult> => {
         const portfolioData = await fetchPortfolioData();
-        
+
         if (!portfolioData) {
           return {
-            content: 'Error: Could not fetch resume information.\nPlease try again later or contact the administrator.',
-            isError: true
+            content:
+              'Error: Could not fetch resume information.\nPlease try again later or contact the administrator.',
+            isError: true,
           };
         }
 
         return {
           content: `
-Resume - ${portfolioData.name}
-${portfolioData.title}
-${portfolioData.location}
+Name: ${portfolioData.fullname}
+Title: ${portfolioData.title}
+Location: ${portfolioData.location}
 
 SUMMARY
+
 ${portfolioData.summary}
 
 EXPERIENCE
-${portfolioData.experience.length > 0 
-  ? portfolioData.experience
-    .map(
-      exp => `
+${
+  portfolioData.experience.length > 0
+    ? portfolioData.experience
+        .map(
+          exp => `
 ${exp.position} at ${exp.company} (${exp.duration})
-${exp.description}
+${exp.description}\n
 Key achievements:
 ${exp.achievements.map(achievement => `- ${achievement}`).join('\n')}
 `
-    )
-    .join('\n')
-  : 'No experience data available.'
+        )
+        .join('\n')
+    : 'No experience data available.'
 }
 
 EDUCATION
-${portfolioData.education.length > 0
-  ? portfolioData.education
-    .map(
-      edu => `
+${
+  portfolioData.education.length > 0
+    ? portfolioData.education
+        .map(
+          edu => `
 ${edu.degree}
 ${edu.institution}, ${edu.year}
 `
-    )
-    .join('\n')
-  : 'No education data available.'
+        )
+        .join('\n')
+    : 'No education data available.'
 }
 
 SKILLS
-${portfolioData.skills.length > 0
-  ? portfolioData.skills
-    .map(
-      skillCategory => `
-${skillCategory.category}: ${skillCategory.items.join(', ')}
-`
-    )
-    .join('\n')
-  : 'No skills data available.'
+
+${
+  portfolioData.skills.length > 0
+    ? portfolioData.skills
+        .map(skillCategory => `${skillCategory.category}: ${skillCategory.items.join(', ')}`)
+        .join('\n')
+    : 'No skills data available.'
 }
 
 CONTACT
+
 Email: ${portfolioData.contact.email}
 Phone: ${portfolioData.contact.phone || 'N/A'}
 LinkedIn: ${portfolioData.contact.linkedin || 'N/A'}
@@ -77,7 +79,7 @@ X/Twitter: ${portfolioData.contact.twitter || 'N/A'}
 Website: ${portfolioData.contact.website || 'N/A'}
 `,
         };
-      }
+      },
     };
   },
 };
