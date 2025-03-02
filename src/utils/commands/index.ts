@@ -1,3 +1,4 @@
+
 import {
   loginCommand,
   logoutCommand,
@@ -10,6 +11,7 @@ import { experienceCommand } from './experienceCommand';
 import { helpCommand } from './helpCommand';
 import { aboutCommand, contactCommand } from './informationCommands';
 import { projectsCommand } from './projectsCommand';
+import { resumeCommand } from './resumeCommand';
 import { skillsCommand } from './skillsCommand';
 import { clearCommand } from './systemCommands';
 import { initializeTheme, themeCommand } from './themeCommand';
@@ -74,6 +76,9 @@ export const processCommand = (commandString: string) => {
   }
   if (commandName === projectsCommand.name) {
     return projectsCommand.execute();
+  }
+  if (commandName === resumeCommand.name) {
+    return resumeCommand.execute();
   }
   // Handle project command - this needs to be fixed since projectCommand doesn't exist
   if (commandName === 'project') {

@@ -1,3 +1,4 @@
+
 import { fetchPortfolioData } from '../database/portfolioServices';
 import { Command, CommandResult } from './types';
 
@@ -20,52 +21,58 @@ export const resumeCommand: Command = {
         }
 
         return {
-          content: `My Resume:
+          content: `<div class="resume">
+  <h2>${portfolioData.full_name}</h2>
+  <p class="title">${portfolioData.title}</p>
+  <p class="location">${portfolioData.location}</p>
 
-Name: ${portfolioData.full_name}
-Title: ${portfolioData.title}
-Location: ${portfolioData.location}
+  <h3>SUMMARY</h3>
+  <p>${portfolioData.summary}</p>
 
-SUMMARY
+  <h3>EXPERIENCE</h3>
+  ${portfolioData.experience
+    .map(
+      exp => `<div class="experience-item">
+    <p class="position"><strong>${exp.position}</strong> at <strong>${exp.company}</strong> <span class="duration">(${exp.duration})</span></p>
+    <p class="description">${exp.description}</p>
+    <p class="achievements-title">Key achievements:</p>
+    <ul>
+      ${exp.achievements.map(achievement => `<li>${achievement}</li>`).join('')}
+    </ul>
+  </div>`
+    )
+    .join('')}
 
-${portfolioData.summary}
+  <h3>EDUCATION</h3>
+  ${portfolioData.education
+    .map(
+      edu => `<div class="education-item">
+    <p class="degree"><strong>${edu.degree}</strong></p>
+    <p class="institution">${edu.institution}, ${edu.year}</p>
+    ${edu.details ? `<p class="details">${edu.details}</p>` : ''}
+  </div>`
+    )
+    .join('')}
 
-EXPERIENCE
-${portfolioData.experience
-  .map(
-    exp => `
-${exp.position} at ${exp.company} (${exp.duration})
-${exp.description}\n
-Key achievements:
-${exp.achievements.map(achievement => `- ${achievement}`).join('\n')}
-`
-  )
-  .join('\n')}
+  <h3>SKILLS</h3>
+  <div class="skills-section">
+    ${portfolioData.skills.map(skillCategory => `
+      <div class="skill-category">
+        <p class="category"><strong>${skillCategory.category}:</strong> ${skillCategory.items.join(', ')}</p>
+      </div>
+    `).join('')}
+  </div>
 
-EDUCATION
-${portfolioData.education
-  .map(
-    edu => `
-${edu.degree}
-${edu.institution}, ${edu.year}
-`
-  )
-  .join('\n')}
-
-SKILLS
-
-${portfolioData.skills.map(skillCategory => `${skillCategory.category}: ${skillCategory.items.join(', ')}`).join('\n')}
-
-
-CONTACT
-
-E-mail: ${portfolioData.contact.email}
-Phone: ${portfolioData.contact.phone}
-LinkedIn: ${portfolioData.contact.linkedin}
-GitHub: ${portfolioData.contact.github}
-X/Twitter: ${portfolioData.contact.twitter}
-Website: ${portfolioData.contact.website}
-`,
+  <h3>CONTACT</h3>
+  <div class="contact-section">
+    <p><strong>E-mail:</strong> <a href="mailto:${portfolioData.contact.email}" target="_blank">${portfolioData.contact.email}</a></p>
+    ${portfolioData.contact.phone ? `<p><strong>Phone:</strong> <a href="tel:${portfolioData.contact.phone}">${portfolioData.contact.phone}</a></p>` : ''}
+    ${portfolioData.contact.linkedin ? `<p><strong>LinkedIn:</strong> <a href="${portfolioData.contact.linkedin.startsWith('http') ? portfolioData.contact.linkedin : 'https://' + portfolioData.contact.linkedin}" target="_blank">LinkedIn Profile</a></p>` : ''}
+    ${portfolioData.contact.github ? `<p><strong>GitHub:</strong> <a href="${portfolioData.contact.github.startsWith('http') ? portfolioData.contact.github : 'https://' + portfolioData.contact.github}" target="_blank">GitHub Profile</a></p>` : ''}
+    ${portfolioData.contact.twitter ? `<p><strong>X/Twitter:</strong> <a href="${portfolioData.contact.twitter.startsWith('http') ? portfolioData.contact.twitter : 'https://' + portfolioData.contact.twitter}" target="_blank">Twitter Profile</a></p>` : ''}
+    ${portfolioData.contact.website ? `<p><strong>Website:</strong> <a href="${portfolioData.contact.website.startsWith('http') ? portfolioData.contact.website : 'https://' + portfolioData.contact.website}" target="_blank">${portfolioData.contact.website.replace(/^https?:\/\//, '')}</a></p>` : ''}
+  </div>
+</div>`,
           isError: false,
         };
       },
