@@ -6,15 +6,35 @@ const HISTORY_STORAGE_KEY = 'terminal_command_history';
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [initialCommands, setInitialCommands] = useState<string[]>(['welcome']);
+  const [initialCommands, setInitialCommands] = useState<string[]>([]);
 
   useEffect(() => {
     // Check if there's existing history
     const savedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);
     
-    // Only show welcome message if there's no existing history
     if (savedHistory) {
-      setInitialCommands([]);
+      try {
+        const parsedHistory = JSON.parse(savedHistory);
+        
+        // Check if there's history and if the last command was NOT 'welcome'
+        if (parsedHistory.length > 0) {
+          const lastCommand = parsedHistory[parsedHistory.length - 1].command;
+          
+          // Only show welcome if it wasn't the last command
+          if (lastCommand !== 'welcome') {
+            setInitialCommands(['welcome']);
+          }
+        } else {
+          // Empty history, show welcome
+          setInitialCommands(['welcome']);
+        }
+      } catch (error) {
+        // Error parsing history, show welcome as fallback
+        setInitialCommands(['welcome']);
+      }
+    } else {
+      // No history at all, show welcome
+      setInitialCommands(['welcome']);
     }
     
     // Simulate loading for smoother entrance
