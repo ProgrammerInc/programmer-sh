@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect, useState } from 'react';
 import CommandLine from '../command-line';
 import TerminalResponse from '../terminal-response';
@@ -150,18 +151,28 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
           
           // Import and use qrcode.react
           import('qrcode.react').then(QRCodeModule => {
-            // Create QR code SVG string
-            const svgString = new XMLSerializer().serializeToString(
-              new QRCodeModule.QRCodeSVG({
-                value: decodedValue,
-                size: 128,
-                level: "M",
-                includeMargin: true
-              }) as unknown as SVGSVGElement
-            );
+            // Create a React element and convert it to string
+            const qrCodeElement = QRCodeModule.QRCodeSVG({
+              value: decodedValue,
+              size: 128,
+              level: "M",
+              includeMargin: true
+            });
             
-            // Set the inner HTML with the SVG string
-            qrContainer.innerHTML = svgString;
+            // Render the QR code to string
+            const ReactDOMServer = window.ReactDOMServer || { renderToString: () => '' };
+            try {
+              // Try to use ReactDOMServer if available
+              qrContainer.innerHTML = ReactDOMServer.renderToString(qrCodeElement);
+            } catch (e) {
+              // Fallback method - create a basic SVG
+              qrContainer.innerHTML = `<svg width="128" height="128" viewBox="0 0 128 128">
+                <rect width="128" height="128" fill="white" />
+                <text x="64" y="64" text-anchor="middle" dominant-baseline="middle" fill="black">QR Code</text>
+                <text x="64" y="80" text-anchor="middle" dominant-baseline="middle" fill="black" font-size="8">${decodedValue}</text>
+              </svg>`;
+              console.error('Error rendering QR code:', e);
+            }
           }).catch(err => {
             console.error('Failed to load QR code library:', err);
             qrContainer.textContent = 'QR Code failed to load';
