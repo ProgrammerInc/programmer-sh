@@ -1,3 +1,4 @@
+
 import { fetchPortfolioData } from '../database/portfolioServices';
 import { Command, CommandResult } from './types';
 
@@ -39,6 +40,20 @@ export const resumeCommand: Command = {
           portfolioData.contact.website && !portfolioData.contact.website.startsWith('http')
             ? `https://${portfolioData.contact.website}`
             : portfolioData.contact.website;
+
+        // Create a vCard for the QR code
+        const vCard = `BEGIN:VCARD
+VERSION:3.0
+FN:${portfolioData.full_name}
+TITLE:${portfolioData.title}
+ORG:${portfolioData.company}
+EMAIL:${portfolioData.contact.email}
+${portfolioData.contact.phone ? `TEL:${portfolioData.contact.phone}` : ''}
+${website ? `URL:${website}` : ''}
+${github ? `X-SOCIALPROFILE;TYPE=github:${github}` : ''}
+${linkedin ? `X-SOCIALPROFILE;TYPE=linkedin:${linkedin}` : ''}
+${twitter ? `X-SOCIALPROFILE;TYPE=twitter:${twitter}` : ''}
+END:VCARD`;
 
         return {
           content: `<strong>My Resume:</strong>
@@ -83,8 +98,15 @@ ${portfolioData.contact.phone ? `<span><strong>Phone:</strong> <a href="tel:${po
 ${linkedin ? `<span><strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${linkedin.replace(/^https?:\/\//, '')}</a></span>` : ''}
 ${github ? `<span><strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${github.replace(/^https?:\/\//, '')}</a></span>` : ''}
 ${twitter ? `<span><strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${twitter.replace(/^https?:\/\//, '')}</a></span>` : ''}
-${website ? `<span><strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${website.replace(/^https?:\/\//, '')}</a></span>` : ''}</div></div>`,
+${website ? `<span><strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${website.replace(/^https?:\/\//, '')}</a></span>` : ''}</div></div>
+
+<div class="flex justify-center w-full mt-4">
+  <div id="qrcode-container">
+    <QRCode value="${encodeURIComponent(vCard)}" title="Scan to save contact information" />
+  </div>
+</div>`,
           isError: false,
+          rawHTML: true,
         };
       },
     };

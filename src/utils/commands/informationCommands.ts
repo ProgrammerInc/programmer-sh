@@ -1,3 +1,4 @@
+
 import { fetchProfile } from '../database/portfolioServices';
 import { Command, CommandResult } from './types';
 
@@ -41,6 +42,20 @@ export const aboutCommand: Command = {
             ? `https://${profile.contact.website}`
             : profile.contact.website;
 
+        // Create a vCard for the QR code
+        const vCard = `BEGIN:VCARD
+VERSION:3.0
+FN:${profile.full_name}
+TITLE:${profile.title}
+ORG:${profile.company}
+EMAIL:${profile.contact.email}
+${profile.contact.phone ? `TEL:${profile.contact.phone}` : ''}
+${website ? `URL:${website}` : ''}
+${github ? `X-SOCIALPROFILE;TYPE=github:${github}` : ''}
+${linkedin ? `X-SOCIALPROFILE;TYPE=linkedin:${linkedin}` : ''}
+${twitter ? `X-SOCIALPROFILE;TYPE=twitter:${twitter}` : ''}
+END:VCARD`;
+
         return {
           content: `<strong>About Me:</strong>
 
@@ -58,8 +73,15 @@ ${profile.summary}
   ${linkedin ? `- <strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin}</a>` : ''}
   ${twitter ? `- <strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter}</a>` : ''}
   ${website ? `- <strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website}</a>` : ''}
+
+<div class="flex justify-center w-full mt-4">
+  <div id="qrcode-container">
+    <QRCode value="${encodeURIComponent(vCard)}" title="Scan to save contact information" />
+  </div>
+</div>
 `,
           isError: false,
+          rawHTML: true,
         };
       },
     };
@@ -106,6 +128,20 @@ export const contactCommand: Command = {
             ? `https://${profile.contact.website}`
             : profile.contact.website;
 
+        // Create a vCard for the QR code
+        const vCard = `BEGIN:VCARD
+VERSION:3.0
+FN:${profile.full_name}
+TITLE:${profile.title}
+ORG:${profile.company}
+EMAIL:${profile.contact.email}
+${profile.contact.phone ? `TEL:${profile.contact.phone}` : ''}
+${website ? `URL:${website}` : ''}
+${github ? `X-SOCIALPROFILE;TYPE=github:${github}` : ''}
+${linkedin ? `X-SOCIALPROFILE;TYPE=linkedin:${linkedin}` : ''}
+${twitter ? `X-SOCIALPROFILE;TYPE=twitter:${twitter}` : ''}
+END:VCARD`;
+
         return {
           content: `<strong>My Contact Information:</strong>
 
@@ -119,8 +155,15 @@ export const contactCommand: Command = {
   ${github ? `- <strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github}</a>` : ''}
   ${twitter ? `- <strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter}</a>` : ''}
   ${website ? `- <strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website}</a>` : ''}
+
+<div class="flex justify-center w-full mt-4">
+  <div id="qrcode-container">
+    <QRCode value="${encodeURIComponent(vCard)}" title="Scan to save contact information" />
+  </div>
+</div>
 `,
           isError: false,
+          rawHTML: true,
         };
       },
     };
