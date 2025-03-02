@@ -1,18 +1,9 @@
 
 import React from 'react';
-import { CommandResult } from '../utils/commands/types';
-import { useTypingEffect } from '../utils/typingEffect';
-import { cn } from '@/lib/utils';
-
-interface TerminalResponseProps {
-  response: CommandResult;
-  animate?: boolean;
-  className?: string;
-  onCommandClick?: (command: string) => void;
-}
+import { LinkMatch } from './types';
 
 // Function to convert plain text URLs to clickable links
-const convertLinksToAnchors = (text: string, onCommandClick?: (command: string) => void): React.ReactNode[] => {
+export const convertLinksToAnchors = (text: string, onCommandClick?: (command: string) => void): React.ReactNode[] => {
   // Regex patterns for URLs, emails, and phone numbers
   const urlRegex =
     /(https?:\/\/[^\s]+)|((www\.)?[a-zA-Z0-9][\w.-]+\.(com|org|net|edu|io|sh|to|dev|me|app)\/?\S*)|((www\.)?x\.com\/\S*)/g;
@@ -26,8 +17,7 @@ const convertLinksToAnchors = (text: string, onCommandClick?: (command: string) 
   // Process the text and return array of React nodes
   const result: React.ReactNode[] = [];
   let lastIndex = 0;
-  const matches: Array<{ index: number; length: number; content: React.ReactNode; type: string }> =
-    [];
+  const matches: LinkMatch[] = [];
 
   // Find all URL matches
   let match;
@@ -200,99 +190,3 @@ const convertLinksToAnchors = (text: string, onCommandClick?: (command: string) 
 
   return result;
 };
-
-// Helper function to create a dangerously set HTML component with proper typings
-const createMarkup = (htmlContent: string) => {
-  return { __html: htmlContent };
-};
-
-// Helper function to detect if content contains HTML tags but exclude command links
-const containsHtmlTags = (content: string): boolean => {
-  // Check for HTML tags but make an exception for command-link spans which are handled separately
-  const htmlTagsRegex = /<(?!span class="command-link")[a-z][\s\S]*?>|<\/[a-z]+>/i;
-  return htmlTagsRegex.test(content);
-};
-
-const TerminalResponse: React.FC<TerminalResponseProps> = ({
-  response,
-  animate = false,
-  className,
-  onCommandClick,
-}) => {
-  const { displayText, isDone } = useTypingEffect(
-    typeof response.content === 'string' ? response.content : '',
-    { speed: 1, delay: 0, cursor: false }
-  );
-
-  // Check if content is HTML that needs to be rendered
-  const isHtmlContent = 
-    typeof response.content === 'string' && 
-    containsHtmlTags(response.content);
-
-  // If content is not a string, render directly
-  if (typeof response.content !== 'string') {
-    return (
-      <div
-        className={cn(
-          'whitespace-pre-wrap font-mono text-sm mb-4',
-          response.isError ? 'text-terminal-error' : 'text-terminal-foreground',
-          className
-        )}
-      >
-        {response.content}
-      </div>
-    );
-  }
-
-  // For HTML content that should be rendered as actual HTML with command link support
-  if (isHtmlContent && !animate) {
-    // If we have command links and an onCommandClick handler
-    if (onCommandClick && response.content.includes('command-link')) {
-      return (
-        <div
-          className={cn(
-            'whitespace-pre-wrap font-mono text-sm mb-4',
-            response.isError ? 'text-terminal-error' : 'text-terminal-foreground',
-            className
-          )}
-        >
-          {convertLinksToAnchors(response.content, onCommandClick)}
-        </div>
-      );
-    }
-    
-    // Use dangerouslySetInnerHTML for HTML content
-    return (
-      <div
-        className={cn(
-          'whitespace-pre-wrap font-mono text-sm mb-4',
-          response.isError ? 'text-terminal-error' : 'text-terminal-foreground',
-          className
-        )}
-        dangerouslySetInnerHTML={createMarkup(response.content)}
-      />
-    );
-  }
-
-  // For animated content, we can't easily make links clickable during animation
-  // so we only apply link conversion when animation is done or animation is disabled
-  const content =
-    animate && !isDone
-      ? displayText
-      : convertLinksToAnchors(animate ? displayText : (response.content as string), onCommandClick);
-
-  return (
-    <div
-      className={cn(
-        'whitespace-pre-wrap font-mono text-sm mb-4',
-        response.isError ? 'text-terminal-error' : 'text-terminal-foreground',
-        animate && !isDone ? 'animate-pulse' : '',
-        className
-      )}
-    >
-      {content}
-    </div>
-  );
-};
-
-export default TerminalResponse;

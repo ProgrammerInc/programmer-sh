@@ -1,7 +1,7 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import CommandLine from './CommandLine';
-import TerminalResponse from './TerminalResponse';
+import TerminalResponse from './terminal-response';
 import { HistoryItem } from '@/components/Terminal';
 import { useToast } from '@/hooks/use-toast';
 
