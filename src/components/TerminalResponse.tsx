@@ -202,7 +202,7 @@ const TerminalResponse: React.FC<TerminalResponseProps> = ({
     return (
       <div
         className={cn(
-          'font-mono text-sm mb-4',
+          'whitespace-pre-wrap font-mono text-sm mb-4',
           response.isError ? 'text-terminal-error' : 'text-terminal-foreground',
           className
         )}
