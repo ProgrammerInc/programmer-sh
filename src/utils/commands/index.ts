@@ -1,3 +1,4 @@
+
 import { CommandResult } from './types';
 import { aboutCommand, contactCommand } from './informationCommands';
 import { skillsCommand } from './skillsCommand';

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { CommandResult } from '../utils/commands/types';
 import { useTypingEffect } from '../utils/typingEffect';
@@ -158,6 +159,11 @@ const convertLinksToAnchors = (text: string): React.ReactNode[] => {
   return result;
 };
 
+// Helper function to create a dangerously set HTML component with proper typings
+const createMarkup = (htmlContent: string) => {
+  return { __html: htmlContent };
+};
+
 const TerminalResponse: React.FC<TerminalResponseProps> = ({
   response,
   animate = false,
@@ -167,6 +173,14 @@ const TerminalResponse: React.FC<TerminalResponseProps> = ({
     typeof response.content === 'string' ? response.content : '',
     { speed: 1, delay: 0, cursor: false }
   );
+
+  // Check if content is HTML that needs to be rendered
+  const isHtmlContent = 
+    typeof response.content === 'string' && 
+    (response.content.includes('<div') || 
+     response.content.includes('<p') || 
+     response.content.includes('<span') || 
+     response.content.includes('<a '));
 
   // If content is not a string, render directly
   if (typeof response.content !== 'string') {
@@ -180,6 +194,20 @@ const TerminalResponse: React.FC<TerminalResponseProps> = ({
       >
         {response.content}
       </div>
+    );
+  }
+
+  // For HTML content that should be rendered as actual HTML
+  if (isHtmlContent && !animate) {
+    return (
+      <div
+        className={cn(
+          'font-mono text-sm mb-4',
+          response.isError ? 'text-terminal-error' : 'text-terminal-foreground',
+          className
+        )}
+        dangerouslySetInnerHTML={createMarkup(response.content)}
+      />
     );
   }
 
