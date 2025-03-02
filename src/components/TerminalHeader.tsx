@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Github, X } from 'lucide-react';
+import { Github, Linkedin, Twitter } from 'lucide-react';
 
 interface TerminalHeaderProps {
   lastCommand?: string;
@@ -29,6 +29,24 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', userE
           aria-label="GitHub Profile"
         >
           <Github className="w-4 h-4" />
+        </a>
+        <a
+          href="https://linkedin.com/in/ProgrammerInc"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-terminal-title hover:text-terminal-foreground transition-colors"
+          aria-label="LinkedIn Profile"
+        >
+          <Linkedin className="w-4 h-4" />
+        </a>
+        <a
+          href="https://x.com/ProgrammerInc"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-terminal-title hover:text-terminal-foreground transition-colors"
+          aria-label="X/Twitter Profile"
+        >
+          <Twitter className="w-4 h-4" />
         </a>
       </div>
     </div>
