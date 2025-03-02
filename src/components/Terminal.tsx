@@ -5,6 +5,8 @@ import { processCommand } from '../utils/commands';
 import { CommandResult } from '../utils/commands/types';
 import { cn } from '@/lib/utils';
 import { supabase } from '../integrations/supabase/client';
+import { fetchSocialLinks } from '../utils/database/socialLinksService';
+import type { SocialLink } from '../types/socialLinks';
 
 interface TerminalProps {
   className?: string;
@@ -19,16 +21,17 @@ export interface HistoryItem {
 
 const HISTORY_STORAGE_KEY = 'terminal_command_history';
 
-const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welcome'] }) => {
+const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) => {
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [isInitializing, setIsInitializing] = useState(true);
   const [initialCommandsProcessed, setInitialCommandsProcessed] = useState(false);
   const [isProcessingAsync, setIsProcessingAsync] = useState(false);
-  const [lastCommand, setLastCommand] = useState('welcome');
+  const [lastExecutedCommand, setLastExecutedCommand] = useState('welcome');
   const [commandsToProcess, setCommandsToProcess] = useState<string[]>([]);
   const [showAsciiArt, setShowAsciiArt] = useState(true);
   const commandInputRef = useRef<HTMLInputElement>(null);
-  const [userSession, setUserSession] = useState<any>(null);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [socialLinks, setSocialLinks] = useState<SocialLink[]>([]);
 
   useEffect(() => {
     if (initialCommands && initialCommands.length > 0) {
@@ -50,7 +53,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
             }));
             setHistory(formattedHistory);
             if (formattedHistory.length > 0) {
-              setLastCommand(formattedHistory[formattedHistory.length - 1].command);
+              setLastExecutedCommand(formattedHistory[formattedHistory.length - 1].command);
             }
           }
         } catch (e) {
@@ -64,7 +67,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     const checkSession = async () => {
       const { data, error } = await supabase.auth.getSession();
       if (!error && data.session) {
-        setUserSession(data.session);
+        setUserEmail(data.session.user.email);
         console.log('User is logged in:', data.session.user.email);
       }
     };
@@ -72,7 +75,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     checkSession();
 
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-      setUserSession(session);
+      setUserEmail(session?.user?.email);
       if (event === 'SIGNED_IN') {
         console.log('User signed in:', session?.user.email);
       } else if (event === 'SIGNED_OUT') {
@@ -83,6 +86,19 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     return () => {
       authListener.subscription.unsubscribe();
     };
+  }, []);
+
+  useEffect(() => {
+    const loadSocialLinks = async () => {
+      try {
+        const links = await fetchSocialLinks();
+        setSocialLinks(links);
+      } catch (error) {
+        console.error('Failed to load social links:', error);
+      }
+    };
+    
+    loadSocialLinks();
   }, []);
 
   useEffect(() => {
@@ -116,7 +132,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
 
   const processCommandWithHistory = async (commandString: string) => {
     setIsProcessingAsync(true);
-    setLastCommand(commandString);
+    setLastExecutedCommand(commandString);
     const result = processCommand(commandString);
 
     if (result.content === 'CLEAR_TERMINAL') {
@@ -184,8 +200,9 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
       onClick={handleTerminalClick}
     >
       <TerminalHeader 
-        lastCommand={lastCommand} 
-        userEmail={userSession?.user?.email}
+        lastCommand={lastExecutedCommand} 
+        userEmail={userEmail}
+        socialLinks={socialLinks}
       />
       
       <TerminalContent

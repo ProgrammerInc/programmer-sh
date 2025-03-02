@@ -1,12 +1,41 @@
+
 import React from 'react';
-import { Github, Linkedin, Twitter, X, Minus, Maximize2 } from 'lucide-react';
+import { Github, Linkedin, Twitter, X, Plus, Minus, Mail, Globe } from 'lucide-react';
+
+interface SocialLink {
+  type: 'github' | 'linkedin' | 'twitter' | 'email' | 'website';
+  url: string;
+}
 
 interface TerminalHeaderProps {
   lastCommand?: string;
   userEmail?: string | null;
+  socialLinks?: SocialLink[];
 }
 
-const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', userEmail }) => {
+const TerminalHeader: React.FC<TerminalHeaderProps> = ({ 
+  lastCommand = '', 
+  userEmail, 
+  socialLinks = []
+}) => {
+  // Function to render the appropriate icon based on link type
+  const renderSocialIcon = (type: string) => {
+    switch (type) {
+      case 'github':
+        return <Github className="w-4 h-4" />;
+      case 'linkedin':
+        return <Linkedin className="w-4 h-4" />;
+      case 'twitter':
+        return <Twitter className="w-4 h-4" />;
+      case 'email':
+        return <Mail className="w-4 h-4" />;
+      case 'website':
+        return <Globe className="w-4 h-4" />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="flex items-center justify-between bg-terminal-header p-2 border-b border-terminal-border">
       <div className="flex space-x-2">
@@ -23,7 +52,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', userE
           />
         </div>
         <div className="w-3 h-3 rounded-full bg-terminal-maximize window-control group flex items-center justify-center">
-          <Maximize2
+          <Plus
             className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100"
             strokeWidth={3}
           />
@@ -43,33 +72,52 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', userE
       </div>
 
       <div className="flex space-x-2">
-        <a
-          href="https://github.com/ProgrammerInc"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-terminal-title hover:text-terminal-foreground transition-colors"
-          aria-label="GitHub Profile"
-        >
-          <Github className="w-4 h-4" />
-        </a>
-        <a
-          href="https://linkedin.com/in/ProgrammerInc"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-terminal-title hover:text-terminal-foreground transition-colors"
-          aria-label="LinkedIn Profile"
-        >
-          <Linkedin className="w-4 h-4" />
-        </a>
-        <a
-          href="https://x.com/ProgrammerInc"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-terminal-title hover:text-terminal-foreground transition-colors"
-          aria-label="X/Twitter Profile"
-        >
-          <Twitter className="w-4 h-4" />
-        </a>
+        {socialLinks.length > 0 ? (
+          // Render dynamic social links
+          socialLinks.map((link, index) => (
+            <a
+              key={index}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-terminal-title hover:text-terminal-foreground transition-colors"
+              aria-label={`${link.type} Profile`}
+            >
+              {renderSocialIcon(link.type)}
+            </a>
+          ))
+        ) : (
+          // Fallback to static links if no dynamic links are provided
+          <>
+            <a
+              href="https://github.com/ProgrammerInc"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-terminal-title hover:text-terminal-foreground transition-colors"
+              aria-label="GitHub Profile"
+            >
+              <Github className="w-4 h-4" />
+            </a>
+            <a
+              href="https://linkedin.com/in/ProgrammerInc"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-terminal-title hover:text-terminal-foreground transition-colors"
+              aria-label="LinkedIn Profile"
+            >
+              <Linkedin className="w-4 h-4" />
+            </a>
+            <a
+              href="https://x.com/ProgrammerInc"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-terminal-title hover:text-terminal-foreground transition-colors"
+              aria-label="X/Twitter Profile"
+            >
+              <Twitter className="w-4 h-4" />
+            </a>
+          </>
+        )}
       </div>
     </div>
   );
