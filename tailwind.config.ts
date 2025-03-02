@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -125,4 +126,5 @@ export default {
     }
   },
   plugins: [require("tailwindcss-animate")],
+  safelist: ['group', 'group-hover:opacity-100']
 } satisfies Config;
