@@ -3,7 +3,6 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { createMarkup, containsHtmlTags } from './htmlUtils';
 import { convertLinksToAnchors } from './linkUtils';
-import { CommandResult } from '../../utils/commands/types';
 
 interface HtmlContentProps {
   content: string;
@@ -41,7 +40,7 @@ const HtmlContent: React.FC<HtmlContentProps> = ({
         isError ? 'text-terminal-error' : 'text-terminal-foreground',
         className
       )}
-      dangerouslySetInnerHTML={createMarkup(content)}
+      dangerouslySetInnerHTML={{ __html: content }}
     />
   );
 };
