@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { CommandResult } from '../utils/terminalCommands';
 import { useTypingEffect } from '../utils/typingEffect';
@@ -12,31 +11,45 @@ interface TerminalResponseProps {
 
 // Function to convert plain text URLs to clickable links
 const convertLinksToAnchors = (text: string): React.ReactNode => {
-  // Regex to match URLs
-  const urlRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)|([\w.-]+\.(com|org|net|edu|io|sh|to|dev|me|app)\/[^\s]*)/g;
+  // Regex to match URLs - updated to consume the entire URL in one match
+  const urlRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)|([a-zA-Z0-9][\w.-]+\.(com|org|net|edu|io|sh|to|dev|me|app)(?:\/[^\s]*)?)/g;
   
-  // Split text by URLs and map each part
-  const parts = text.split(urlRegex);
+  // Split the text into parts by URLs and non-URL text
+  const parts = [];
+  let lastIndex = 0;
+  let match;
   
-  return parts.filter(Boolean).map((part, index) => {
-    // Check if this part is a URL
-    if (part.match(urlRegex)) {
-      // Make sure URL has protocol
-      const href = part.startsWith('http') ? part : `https://${part}`;
-      return (
-        <a 
-          key={index} 
-          href={href} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="text-blue-400 hover:underline"
-        >
-          {part}
-        </a>
-      );
+  // Using exec() to iterate through all matches while keeping track of indices
+  while ((match = urlRegex.exec(text)) !== null) {
+    // Add text before the URL
+    if (match.index > lastIndex) {
+      parts.push(text.substring(lastIndex, match.index));
     }
-    return part;
-  });
+    
+    // Add the URL as a link
+    const url = match[0];
+    const href = url.startsWith('http') ? url : `https://${url}`;
+    parts.push(
+      <a 
+        key={`link-${match.index}`} 
+        href={href} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="text-blue-400 hover:underline"
+      >
+        {url}
+      </a>
+    );
+    
+    lastIndex = match.index + url.length;
+  }
+  
+  // Add any remaining text after the last URL
+  if (lastIndex < text.length) {
+    parts.push(text.substring(lastIndex));
+  }
+  
+  return parts;
 };
 
 const TerminalResponse: React.FC<TerminalResponseProps> = ({
