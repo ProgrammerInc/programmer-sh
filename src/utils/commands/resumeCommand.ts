@@ -21,7 +21,7 @@ export const resumeCommand: Command = {
         return {
           content: `My Resume:
 
-Name: ${portfolioData.fullname}
+Name: ${portfolioData.full_name}
 Title: ${portfolioData.title}
 Location: ${portfolioData.location}
 

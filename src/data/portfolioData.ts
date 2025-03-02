@@ -31,24 +31,44 @@ export interface Education {
 }
 
 export interface Contact {
-  phone?: string;
+  bitbucket?: string;
+  bluesky?: string;
+  cashapp?: string;
+  discord?: string;
   email: string;
-  linkedin?: string;
+  facebook?: string;
+  gitlab?: string;
   github?: string;
+  instagram?: string;
+  linkedin?: string;
+  loliapp?: string;
+  mastodon?: string;
+  patreon?: string;
+  paypal?: string;
+  phone?: string;
+  pinterest?: string;
+  reddit?: string;
+  slack?: string;
+  snapchat?: string;
+  telegram?: string;
+  threads?: string;
+  tiktok?: string;
   twitter?: string;
+  venmo?: string;
   website?: string;
+  youtube?: string;
 }
 
 export interface Profile {
   name: string;
-  fullname: string;
+  full_name: string;
   title: string;
   company: string;
-  summary: string;
   location: string;
+  summary: string;
   contact: Contact;
-  skills: Skill[];
+  education: Education[];
   experience: Experience[];
   projects: Project[];
-  education: Education[];
+  skills: Skill[];
 }

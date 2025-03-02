@@ -22,13 +22,14 @@ export const aboutCommand: Command = {
         return {
           content: `About Me:
 
-Name: ${profile.fullname}
+Name: ${profile.full_name}
 Title: ${profile.title} @ ${profile.company}
 Location: ${profile.location}
 
 ${profile.summary}
 
 Contact:
+
 - E-mail: ${profile.contact.email}
 - Phone: ${profile.contact.phone}
 ${profile.contact.github ? `- GitHub: ${profile.contact.github}` : ''}
@@ -61,8 +62,7 @@ export const contactCommand: Command = {
         }
 
         return {
-          content: `
-Contact Information:
+          content: `My Contact Information:
 
 E-mail: ${profile.contact.email}
 ${profile.contact.phone ? `Phone: ${profile.contact.phone}` : ''}

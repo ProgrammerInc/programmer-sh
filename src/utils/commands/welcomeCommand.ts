@@ -1,4 +1,3 @@
-
 import { Command } from './types';
 
 export const welcomeCommand: Command = {
@@ -6,9 +5,9 @@ export const welcomeCommand: Command = {
   description: 'Display the welcome message',
   execute: () => {
     return {
-      content: `Welcome to <programmer>._
+      content: `Welcome to the <programmer>._ portfolio.
 
-This is the interactive terminal portfolio of James Black.
+This is an interactive terminal portfolio of James A. Black Jr.
 
 Type 'help' to see available commands, or try one of these:
 

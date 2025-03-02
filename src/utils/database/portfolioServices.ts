@@ -1,4 +1,3 @@
-
 import { supabase } from '../../integrations/supabase/client';
 import { Profile, Skill, Experience, Project, Education } from '../../data/portfolioData';
 
@@ -36,17 +35,35 @@ export const fetchProfile = async (): Promise<Profile | null> => {
 
     return {
       name: profileData.name,
-      fullname: profileData.full_name, // Updated to use full_name instead of fullname
+      full_name: profileData.full_name,
       title: profileData.title,
       company: profileData.company,
-      summary: profileData.summary,
       location: profileData.location,
+      summary: profileData.summary,
       contact: {
-        phone: profileData.phone,
         email: profileData.email,
-        linkedin: profileData.linkedin,
+        phone: profileData.phone,
+        bitbucket: profileData.bitbucket,
+        bluesky: profileData.bluesky,
+        cashapp: profileData.cashapp,
+        discord: profileData.discord,
+        facebook: profileData.facebook,
         github: profileData.github,
+        gitlab: profileData.gitlab,
+        instagram: profileData.instagram,
+        linkedin: profileData.linkedin,
+        loliapp: profileData.loliapp,
+        patreon: profileData.patreon,
+        paypal: profileData.paypal,
+        reddit: profileData.reddit,
+        slack: profileData.slack,
+        snapchat: profileData.snapchat,
+        telegram: profileData.telegram,
+        threads: profileData.threads,
+        tiktok: profileData.tiktok,
         twitter: profileData.twitter,
+        venmo: profileData.venmo,
+        youtube: profileData.youtube,
         website: profileData.website,
       },
       skills,
