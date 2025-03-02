@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Github, Linkedin, Twitter, X, Minus, Maximize } from 'lucide-react';
+import { Github, Linkedin, Twitter, X, Minus, Square } from 'lucide-react';
 
 interface TerminalHeaderProps {
   lastCommand?: string;
@@ -18,7 +18,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', userE
           <Minus className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100" strokeWidth={3} />
         </div>
         <div className="w-3 h-3 rounded-full bg-terminal-maximize window-control group flex items-center justify-center">
-          <Maximize className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100" strokeWidth={3} />
+          <Square className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100" strokeWidth={3} />
         </div>
       </div>
       
