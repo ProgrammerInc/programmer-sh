@@ -17,9 +17,8 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', userE
       </div>
       
       <div className="flex-1 text-center text-terminal-title text-sm font-mono truncate px-4">
-        <span>&lt;programmer&gt;._</span>
-        <span className="inline-block w-2 h-4 bg-terminal-prompt animate-cursor-blink ml-px"></span>
-        {lastCommand && <span className="text-terminal-muted ml-2">~ {lastCommand}</span>}
+        <span>&lt;programmer&gt;._ <span className="inline-block w-2 h-4 bg-terminal-prompt animate-cursor-blink ml-px"></span></span>
+        {lastCommand && <span className="text-terminal-muted ml-2">- {lastCommand}</span>}
       </div>
       
       <div className="flex space-x-2">
