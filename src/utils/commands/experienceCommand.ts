@@ -24,14 +24,13 @@ export const experienceCommand: Command = {
 ${experience
   .map(
     exp => `
-${exp.position} at ${exp.company}
-${exp.duration}
+<strong>Position:</strong> <span class="text-terminal-prompt">${exp.position}</span> at <span class="text-terminal-prompt">${exp.company}</span>
+<strong>Duration:</strong> ${exp.duration}
 
-${exp.description}
+<strong>Description:</strong> ${exp.description}
+<strong>Technologies:</strong> ${exp.technologies.map(tech => `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${tech}" target="_blank">${tech}</a>`).join(', ')}
 
-Technologies: ${exp.technologies.join(', ')}
-
-Achievements:
+<strong>Achievements:</strong>
 ${exp.achievements.map(achievement => `- ${achievement}`).join('\n')}
 `
   )

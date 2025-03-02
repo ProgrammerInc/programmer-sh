@@ -1,4 +1,3 @@
-
 import { fetchProfile } from '../database/portfolioServices';
 import { Command, CommandResult } from './types';
 
@@ -22,21 +21,25 @@ export const aboutCommand: Command = {
         }
 
         // Ensure URLs have proper protocol for HTML anchors
-        const github = profile.contact.github && !profile.contact.github.startsWith('http') 
-          ? `https://${profile.contact.github}` 
-          : profile.contact.github;
-        
-        const linkedin = profile.contact.linkedin && !profile.contact.linkedin.startsWith('http') 
-          ? `https://${profile.contact.linkedin}` 
-          : profile.contact.linkedin;
-        
-        const twitter = profile.contact.twitter && !profile.contact.twitter.startsWith('http') 
-          ? `https://${profile.contact.twitter}` 
-          : profile.contact.twitter;
-        
-        const website = profile.contact.website && !profile.contact.website.startsWith('http') 
-          ? `https://${profile.contact.website}` 
-          : profile.contact.website;
+        const github =
+          profile.contact.github && !profile.contact.github.startsWith('http')
+            ? `https://${profile.contact.github}`
+            : profile.contact.github;
+
+        const linkedin =
+          profile.contact.linkedin && !profile.contact.linkedin.startsWith('http')
+            ? `https://${profile.contact.linkedin}`
+            : profile.contact.linkedin;
+
+        const twitter =
+          profile.contact.twitter && !profile.contact.twitter.startsWith('http')
+            ? `https://${profile.contact.twitter}`
+            : profile.contact.twitter;
+
+        const website =
+          profile.contact.website && !profile.contact.website.startsWith('http')
+            ? `https://${profile.contact.website}`
+            : profile.contact.website;
 
         return {
           content: `<strong>About Me:</strong>
@@ -83,21 +86,25 @@ export const contactCommand: Command = {
         }
 
         // Ensure URLs have proper protocol for HTML anchors
-        const github = profile.contact.github && !profile.contact.github.startsWith('http') 
-          ? `https://${profile.contact.github}` 
-          : profile.contact.github;
-        
-        const linkedin = profile.contact.linkedin && !profile.contact.linkedin.startsWith('http') 
-          ? `https://${profile.contact.linkedin}` 
-          : profile.contact.linkedin;
-        
-        const twitter = profile.contact.twitter && !profile.contact.twitter.startsWith('http') 
-          ? `https://${profile.contact.twitter}` 
-          : profile.contact.twitter;
-        
-        const website = profile.contact.website && !profile.contact.website.startsWith('http') 
-          ? `https://${profile.contact.website}` 
-          : profile.contact.website;
+        const github =
+          profile.contact.github && !profile.contact.github.startsWith('http')
+            ? `https://${profile.contact.github}`
+            : profile.contact.github;
+
+        const linkedin =
+          profile.contact.linkedin && !profile.contact.linkedin.startsWith('http')
+            ? `https://${profile.contact.linkedin}`
+            : profile.contact.linkedin;
+
+        const twitter =
+          profile.contact.twitter && !profile.contact.twitter.startsWith('http')
+            ? `https://${profile.contact.twitter}`
+            : profile.contact.twitter;
+
+        const website =
+          profile.contact.website && !profile.contact.website.startsWith('http')
+            ? `https://${profile.contact.website}`
+            : profile.contact.website;
 
         return {
           content: `<strong>My Contact Information:</strong>

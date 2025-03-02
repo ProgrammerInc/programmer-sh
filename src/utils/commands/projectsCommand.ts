@@ -27,11 +27,13 @@ export const projectsCommand: Command = {
 ${projects
   .map(
     project => `
-- ${project.id}: ${project.title}\n
-  ${project.description}\n
-  Technologies: ${project.technologies.join(', ')}
+  - <strong>Project:</strong> <span class="text-terminal-prompt">${project.title}</span>
   
-  Type 'projects ${project.id}' for more details.
+    <strong>Description:</strong> ${project.description}
+
+    <strong>Technologies:</strong> ${project.technologies.map(tech => `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${tech}" target="_blank">${tech}</a>`).join(', ')}
+  
+    Type <span class="command-link" data-command="project ${project.id}">project ${project.id}</span> for more details.
 `
   )
   .join('\n')}
@@ -59,17 +61,17 @@ ${projects
 
         return {
           content: `
-Project: ${project.title}
+<strong>Project:</strong> <span class="text-terminal-prompt">${project.title}</span>
 
-${project.description}
+<strong>Description:</strong> ${project.description}
 
-Technologies: ${project.technologies.join(', ')}
+<strong>Technologies:</strong> ${project.technologies.map(tech => `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${tech}" target="_blank">${tech}</a>`).join(', ')}
 
-Highlights:
-${project.highlights.map(highlight => `- ${highlight}`).join('\n')}
+<strong>Highlights:</strong>
+${project.highlights.map(highlight => `  - ${highlight}`).join('\n')}
 
-${project.github ? `GitHub: ${project.github}` : ''}
-${project.link ? `Live Demo: ${project.link}` : ''}
+${project.github ? `<strong>GitHub:</strong> ${project.github}` : ''}
+${project.link ? `<strong>Live Demo:</strong> ${project.link}` : ''}
 `,
           isError: false,
         };
