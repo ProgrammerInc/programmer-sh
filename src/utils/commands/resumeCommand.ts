@@ -14,7 +14,7 @@ export const resumeCommand: Command = {
         
         if (!portfolioData) {
           return {
-            content: 'Error: Could not fetch resume information.\nPlease try again later or contact the administrator.',
+            content: 'Error: Could not fetch resume information.',
             isError: true
           };
         }
@@ -29,44 +29,35 @@ SUMMARY
 ${portfolioData.summary}
 
 EXPERIENCE
-${portfolioData.experience.length > 0 
-  ? portfolioData.experience
-    .map(
-      exp => `
+${portfolioData.experience
+  .map(
+    exp => `
 ${exp.position} at ${exp.company} (${exp.duration})
 ${exp.description}
 Key achievements:
 ${exp.achievements.map(achievement => `- ${achievement}`).join('\n')}
 `
-    )
-    .join('\n')
-  : 'No experience data available.'
-}
+  )
+  .join('\n')}
 
 EDUCATION
-${portfolioData.education.length > 0
-  ? portfolioData.education
-    .map(
-      edu => `
+${portfolioData.education
+  .map(
+    edu => `
 ${edu.degree}
 ${edu.institution}, ${edu.year}
 `
-    )
-    .join('\n')
-  : 'No education data available.'
-}
+  )
+  .join('\n')}
 
 SKILLS
-${portfolioData.skills.length > 0
-  ? portfolioData.skills
-    .map(
-      skillCategory => `
+${portfolioData.skills
+  .map(
+    skillCategory => `
 ${skillCategory.category}: ${skillCategory.items.join(', ')}
 `
-    )
-    .join('\n')
-  : 'No skills data available.'
-}
+  )
+  .join('\n')}
 
 CONTACT
 Email: ${portfolioData.contact.email}

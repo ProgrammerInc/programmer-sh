@@ -9,13 +9,10 @@ export const fetchProfile = async (): Promise<Profile | null> => {
     const { data: profileData, error: profileError } = await supabase
       .from('portfolio_profile')
       .select('*')
-      .maybeSingle(); // Use maybeSingle instead of single to handle no results
+      .single();
 
     if (profileError) throw profileError;
-    if (!profileData) {
-      console.error("No profile data found in the database");
-      return null;
-    }
+    if (!profileData) return null;
 
     // Fetch all skill categories
     const { data: skillsData, error: skillsError } = await supabase
@@ -76,10 +73,7 @@ export const fetchExperience = async (): Promise<Experience[]> => {
       `);
 
     if (experienceError) throw experienceError;
-    if (!experienceData || experienceData.length === 0) {
-      console.error("No experience data found in the database");
-      return [];
-    }
+    if (!experienceData) return [];
 
     return experienceData.map(exp => ({
       company: exp.company,
@@ -113,10 +107,7 @@ export const fetchProjects = async (): Promise<Project[]> => {
       `);
 
     if (projectsError) throw projectsError;
-    if (!projectsData || projectsData.length === 0) {
-      console.error("No projects data found in the database");
-      return [];
-    }
+    if (!projectsData) return [];
 
     return projectsData.map(project => ({
       id: project.project_key, // Using project_key as the id for backward compatibility
@@ -142,10 +133,7 @@ export const fetchEducation = async (): Promise<Education[]> => {
       .select('*');
 
     if (educationError) throw educationError;
-    if (!educationData || educationData.length === 0) {
-      console.error("No education data found in the database");
-      return [];
-    }
+    if (!educationData) return [];
 
     return educationData.map(edu => ({
       degree: edu.degree,
@@ -163,10 +151,7 @@ export const fetchEducation = async (): Promise<Education[]> => {
 export const fetchPortfolioData = async (): Promise<Profile | null> => {
   try {
     const profile = await fetchProfile();
-    if (!profile) {
-      console.error("Could not fetch profile data");
-      return null;
-    }
+    if (!profile) return null;
     
     const [experience, projects, education] = await Promise.all([
       fetchExperience(),
@@ -202,13 +187,10 @@ export const fetchProjectById = async (projectId: string): Promise<Project | nul
         project_highlights (description)
       `)
       .eq('project_key', projectId)
-      .maybeSingle(); // Use maybeSingle instead of single
+      .single();
 
     if (projectError) throw projectError;
-    if (!projectData) {
-      console.error(`No project found with ID ${projectId}`);
-      return null;
-    }
+    if (!projectData) return null;
 
     return {
       id: projectData.project_key,
