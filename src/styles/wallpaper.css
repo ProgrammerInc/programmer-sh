@@ -1,0 +1,42 @@
+/* Wallpaper styles for the terminal application */
+
+.wallpaper-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.wallpaper-gradient {
+  background: black;
+  background-image:
+    radial-gradient(circle at 30% 30%, rgba(100, 255, 218, 0.05), rgba(0, 0, 0, 0)),
+    radial-gradient(circle at 70% 70%, rgba(100, 255, 218, 0.05), rgba(0, 0, 0, 0));
+}
+
+.wallpaper-image {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Predefined wallpaper backgrounds */
+.wallpaper-code {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url('https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80');
+}
+
+.wallpaper-workspace {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url('https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&q=80');
+}
+
+.wallpaper-mountains {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url('https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=80');
+}

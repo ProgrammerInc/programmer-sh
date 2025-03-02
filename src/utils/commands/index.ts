@@ -1,17 +1,20 @@
-
-import { CommandResult } from './types';
-import { aboutCommand, contactCommand } from './informationCommands';
-import { skillsCommand } from './skillsCommand';
-import { experienceCommand } from './experienceCommand';
-import { projectsCommand } from './projectsCommand';
+import {
+  loginCommand,
+  logoutCommand,
+  profileCommand,
+  signupCommand,
+  whoamiCommand,
+} from './authCommands';
 import { educationCommand } from './educationCommand';
+import { experienceCommand } from './experienceCommand';
 import { helpCommand } from './helpCommand';
+import { aboutCommand, contactCommand } from './informationCommands';
+import { projectsCommand } from './projectsCommand';
+import { skillsCommand } from './skillsCommand';
 import { clearCommand } from './systemCommands';
-import { loginCommand, logoutCommand, signupCommand, whoamiCommand, profileCommand } from './authCommands';
-import { themeCommand } from './themeCommand';
+import { initializeTheme, themeCommand } from './themeCommand';
+import { initializeWallpaper, wallpaperCommand } from './wallpaperCommand';
 import { welcomeCommand } from './welcomeCommand';
-import { wallpaperCommand, initializeWallpaper } from './wallpaperCommand';
-import { initializeTheme } from './themeCommand';
 
 // Initialize settings
 initializeTheme();
@@ -76,7 +79,7 @@ export const processCommand = (commandString: string) => {
   if (commandName === 'project') {
     if (args.length === 0) {
       return {
-        content: "Usage: project <id>",
+        content: 'Usage: project <id>',
         isError: true,
       };
     }

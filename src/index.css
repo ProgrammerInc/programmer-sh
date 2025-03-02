@@ -27,18 +27,18 @@
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
     --radius: 0.5rem;
-    
+
     /* Terminal specific colors */
-    --terminal-background: #1A1F2C;
+    --terminal-background: #1a1f2c;
     --terminal-background-translucent: rgba(26, 31, 44, 0.9);
-    --terminal-foreground: #F1F1F1;
-    --terminal-prompt: #64FFDA;
-    --terminal-success: #A3BE8C;
-    --terminal-error: #BF616A;
-    --terminal-warning: #EBCB8B;
-    --terminal-command: #88C0D0;
-    --terminal-link: #81A1C1;
-    --terminal-muted: #4C566A;
+    --terminal-foreground: #f1f1f1;
+    --terminal-prompt: #64ffda;
+    --terminal-success: #a3be8c;
+    --terminal-error: #bf616a;
+    --terminal-warning: #ebcb8b;
+    --terminal-command: #88c0d0;
+    --terminal-link: #81a1c1;
+    --terminal-muted: #4c566a;
     --terminal-muted-30: rgba(76, 86, 106, 0.3);
     --terminal-muted-50: rgba(76, 86, 106, 0.5);
     --terminal-prompt-50: rgba(100, 255, 218, 0.5);
@@ -64,18 +64,18 @@
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
-    
+
     /* Terminal specific colors - light theme */
-    --terminal-background: #F5F5F5;
+    --terminal-background: #f5f5f5;
     --terminal-background-translucent: rgba(245, 245, 245, 0.9);
-    --terminal-foreground: #2E3440;
-    --terminal-prompt: #00A8A8;
-    --terminal-success: #4C9A52;
-    --terminal-error: #BF616A;
-    --terminal-warning: #D08770;
-    --terminal-command: #5E81AC;
-    --terminal-link: #5E81AC;
-    --terminal-muted: #9E9E9E;
+    --terminal-foreground: #2e3440;
+    --terminal-prompt: #00a8a8;
+    --terminal-success: #4c9a52;
+    --terminal-error: #bf616a;
+    --terminal-warning: #d08770;
+    --terminal-command: #5e81ac;
+    --terminal-link: #5e81ac;
+    --terminal-muted: #9e9e9e;
     --terminal-muted-30: rgba(158, 158, 158, 0.3);
     --terminal-muted-50: rgba(158, 158, 158, 0.5);
     --terminal-prompt-50: rgba(0, 168, 168, 0.5);
@@ -148,12 +148,12 @@
       0 0 80px rgba(100, 255, 218, 0.1),
       0 0 32px rgba(0, 0, 0, 0.5);
   }
-  
+
   /* Window control hover effects */
   .window-control {
     @apply transition-all duration-200;
   }
-  
+
   .window-control:hover {
     @apply animate-scale-up;
   }

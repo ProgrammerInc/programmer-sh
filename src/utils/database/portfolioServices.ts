@@ -1,6 +1,5 @@
-
 import { supabase } from '../../integrations/supabase/client';
-import { Profile, Skill, Experience, Project, Education, Contact } from '../../data/portfolioData';
+import { Contact, Education, Experience, Profile, Project, Skill } from '../../types/portfolioData';
 
 // Fetch profile data
 export const fetchProfile = async (): Promise<Profile | null> => {

@@ -1,6 +1,5 @@
-
-import { supabase } from "@/integrations/supabase/client";
-import { CommandResult } from "./types";
+import { supabase } from '@/integrations/supabase/client';
+import { CommandResult } from './types';
 
 // Define message types
 export interface Message {
@@ -15,11 +14,11 @@ export interface Message {
 export const saveMessage = async (content: string): Promise<CommandResult> => {
   try {
     const session = await supabase.auth.getSession();
-    
+
     if (!session.data.session) {
       return {
-        content: "Error: You must be logged in to save messages.",
-        isError: true
+        content: 'Error: You must be logged in to save messages.',
+        isError: true,
       };
     }
 
@@ -28,22 +27,22 @@ export const saveMessage = async (content: string): Promise<CommandResult> => {
       .insert({ content, user_id: session.data.session.user.id });
 
     if (error) {
-      console.error("Error saving message:", error);
+      console.error('Error saving message:', error);
       return {
         content: `Error saving message: ${error.message}`,
-        isError: true
+        isError: true,
       };
     }
 
     return {
-      content: "Message saved successfully!",
-      isError: false
+      content: 'Message saved successfully!',
+      isError: false,
     };
   } catch (error) {
-    console.error("Error in saveMessage:", error);
+    console.error('Error in saveMessage:', error);
     return {
       content: `An unexpected error occurred: ${error instanceof Error ? error.message : String(error)}`,
-      isError: true
+      isError: true,
     };
   }
 };
@@ -57,34 +56,36 @@ export const getMessages = async (): Promise<CommandResult> => {
       .order('created_at', { ascending: false });
 
     if (error) {
-      console.error("Error fetching messages:", error);
+      console.error('Error fetching messages:', error);
       return {
         content: `Error fetching messages: ${error.message}`,
-        isError: true
+        isError: true,
       };
     }
 
     if (!data || data.length === 0) {
       return {
-        content: "No messages found.",
-        isError: false
+        content: 'No messages found.',
+        isError: false,
       };
     }
 
-    const formattedMessages = data.map((msg: Message) => {
-      const date = new Date(msg.created_at).toLocaleString();
-      return `[${date}] ${msg.content}`;
-    }).join('\n');
+    const formattedMessages = data
+      .map((msg: Message) => {
+        const date = new Date(msg.created_at).toLocaleString();
+        return `[${date}] ${msg.content}`;
+      })
+      .join('\n');
 
     return {
-      content: "Messages:\n" + formattedMessages,
-      isError: false
+      content: 'Messages:\n' + formattedMessages,
+      isError: false,
     };
   } catch (error) {
-    console.error("Error in getMessages:", error);
+    console.error('Error in getMessages:', error);
     return {
       content: `An unexpected error occurred: ${error instanceof Error ? error.message : String(error)}`,
-      isError: true
+      isError: true,
     };
   }
 };

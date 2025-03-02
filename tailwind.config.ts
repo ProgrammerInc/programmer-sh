@@ -1,22 +1,22 @@
-import type { Config } from "tailwindcss";
-import tailwindcssAnimate from "tailwindcss-animate";
+import type { Config } from 'tailwindcss';
+import tailwindcssAnimate from 'tailwindcss-animate';
 
 export default {
-  darkMode: ["class"],
+  darkMode: ['class'],
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
   ],
-  prefix: "",
+  prefix: '',
   theme: {
     container: {
       center: true,
       padding: '2rem',
       screens: {
-        '2xl': '1400px'
-      }
+        '2xl': '1400px',
+      },
     },
     extend: {
       colors: {
@@ -40,75 +40,75 @@ export default {
           title: 'var(--terminal-foreground)',
           close: '#FF5F56',
           minimize: '#FFBD2E',
-          maximize: '#27C93F'
+          maximize: '#27C93F',
         },
         primary: {
           DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))'
+          foreground: 'hsl(var(--primary-foreground))',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))'
+          foreground: 'hsl(var(--secondary-foreground))',
         },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))'
+          foreground: 'hsl(var(--destructive-foreground))',
         },
         muted: {
           DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))'
+          foreground: 'hsl(var(--muted-foreground))',
         },
         accent: {
           DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))'
+          foreground: 'hsl(var(--accent-foreground))',
         },
         popover: {
           DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))'
+          foreground: 'hsl(var(--popover-foreground))',
         },
         card: {
           DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))'
+          foreground: 'hsl(var(--card-foreground))',
         },
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)'
+        sm: 'calc(var(--radius) - 4px)',
       },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' }
+          to: { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' }
+          to: { height: '0' },
         },
         'cursor-blink': {
           '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0' }
+          '50%': { opacity: '0' },
         },
         'text-typing': {
           from: { width: '0' },
-          to: { width: '100%' }
+          to: { width: '100%' },
         },
         'fade-in': {
           from: { opacity: '0', transform: 'translateY(10px)' },
-          to: { opacity: '1', transform: 'translateY(0)' }
+          to: { opacity: '1', transform: 'translateY(0)' },
         },
         'fade-out': {
           from: { opacity: '1' },
-          to: { opacity: '0' }
+          to: { opacity: '0' },
         },
         'glow-pulse': {
           '0%, 100%': { boxShadow: '0 0 5px rgba(100, 255, 218, 0.5)' },
-          '50%': { boxShadow: '0 0 20px rgba(100, 255, 218, 0.8)' }
+          '50%': { boxShadow: '0 0 20px rgba(100, 255, 218, 0.8)' },
         },
         'scale-up': {
           '0%': { transform: 'scale(1)' },
-          '100%': { transform: 'scale(1.1)' }
-        }
+          '100%': { transform: 'scale(1.1)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -118,13 +118,13 @@ export default {
         'fade-in': 'fade-in 0.5s ease-out',
         'fade-out': 'fade-out 0.5s ease-out',
         'glow-pulse': 'glow-pulse 2s infinite',
-        'scale-up': 'scale-up 0.2s ease-out'
+        'scale-up': 'scale-up 0.2s ease-out',
       },
       fontFamily: {
-        mono: ['JetBrains Mono', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', 'monospace']
-      }
-    }
+        mono: ['JetBrains Mono', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', 'monospace'],
+      },
+    },
   },
   plugins: [tailwindcssAnimate],
-  safelist: ['group', 'group-hover:opacity-100']
+  safelist: ['group', 'group-hover:opacity-100'],
 } satisfies Config;

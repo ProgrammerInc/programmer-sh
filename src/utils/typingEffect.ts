@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 
 export interface TypeOptions {
   speed?: number; // typing speed in milliseconds per character

@@ -1,6 +1,5 @@
-
-import { Command, CommandResult } from './types';
 import { fetchPortfolioData } from '../database/portfolioServices';
+import { Command, CommandResult } from './types';
 
 export const resumeCommand: Command = {
   name: 'resume',

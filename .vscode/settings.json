@@ -41,6 +41,8 @@
     "msvc",
     "musleabihf",
     "njsproj",
+    "noopener",
+    "noreferrer",
     "ntvs",
     "nums",
     "parseargs",
@@ -62,8 +64,7 @@
     "vitejs",
     "webidl",
     "whatwg",
-    "XVCJ",
-    "ypsbxadldkiokgvlfxag"
+    "XVCJ"
   ],
   "css.validate": false,
   "less.validate": false,
@@ -78,8 +79,11 @@
     "strings": true
   },
   "prettier.requireConfig": true,
-  "prettier.useEditorConfig": false,
+  "prettier.useEditorConfig": true,
   "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescriptreact]": {
@@ -90,5 +94,16 @@
   },
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.singleQuote": true,
+  "notebook.defaultFormatter": "esbenp.prettier-vscode",
+  "bookmarks.useWorkaroundForFormatters": true,
+  "notebook.formatOnSave.enabled": true,
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.referencesCodeLens.showOnAllFunctions": true,
+  "typescript.implementationsCodeLens.enabled": true,
+  "typescript.implementationsCodeLens.showOnInterfaceMethods": true,
+  "typescript.preferences.organizeImports": {
+    "sortImports": true
   }
 }

@@ -1,5 +1,5 @@
-import { fetchProfile } from './portfolioServices';
 import type { SocialLink } from '../../types/socialLinks';
+import { fetchProfile } from './portfolioServices';
 
 // Fetch social links from the profile
 export const fetchSocialLinks = async (): Promise<SocialLink[]> => {

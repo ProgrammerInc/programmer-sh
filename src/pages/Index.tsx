@@ -1,11 +1,11 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import Terminal from '@/components/Terminal';
-import { Toaster } from '@/components/ui/toaster';
+import Terminal from '@/components/ui/terminal';
+import { Toaster } from '@/components/ui/toaster/toaster';
 import { validUrlCommands, extractUrlParameters } from '@/utils/commands/urlCommandHandler';
 import { processThemeFromUrl } from '@/utils/commands/themeCommand';
 import { getCurrentWallpaper, wallpapers } from '@/utils/commands/wallpaperCommand';
+import '@/styles/wallpaper.css';
 
 const HISTORY_STORAGE_KEY = 'terminal_command_history';
 
@@ -77,32 +77,27 @@ const Index = () => {
     };
   }, []);
 
-  // Prepare wallpaper style
-  const getWallpaperStyle = () => {
+  // Get wallpaper class names
+  const getWallpaperClasses = () => {
     const wallpaper = wallpapers[currentWallpaper];
-    
+    const classes = ['wallpaper-container'];
+
     if (wallpaper.type === 'gradient') {
-      return {
-        background: 'black',
-        backgroundImage: `
-          radial-gradient(circle at 30% 30%, rgba(100, 255, 218, 0.05), rgba(0, 0, 0, 0)),
-          radial-gradient(circle at 70% 70%, rgba(100, 255, 218, 0.05), rgba(0, 0, 0, 0))
-        `
-      };
-    } else if (wallpaper.type === 'image' && wallpaper.url) {
-      return {
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${wallpaper.url})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      };
+      classes.push('wallpaper-gradient');
+    } else if (wallpaper.type === 'image') {
+      classes.push('wallpaper-image');
+
+      // Add specific wallpaper class based on ID
+      if (wallpaper.id) {
+        classes.push(`wallpaper-${wallpaper.id}`);
+      }
     }
-    
-    return {};
+
+    return classes.join(' ');
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 overflow-hidden" style={getWallpaperStyle()}>
+    <div className={getWallpaperClasses()}>
       <div
         className={`w-full max-w-4xl h-[80vh] transition-all duration-1000 ease-out terminal-glow-shadow ${
           isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'

@@ -20,11 +20,11 @@ export const setTheme = (theme: ThemeOption): void => {
   } else {
     document.documentElement.classList.remove('light-theme');
   }
-  
+
   // Dispatch custom event for favicon and other theme-aware components
   document.dispatchEvent(
     new CustomEvent('themeChange', {
-      detail: { isDark, theme }
+      detail: { isDark, theme },
     })
   );
 };

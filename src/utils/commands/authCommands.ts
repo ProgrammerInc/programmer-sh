@@ -1,6 +1,5 @@
-
-import { Command, CommandResult } from './types';
 import { supabase } from '../../integrations/supabase/client';
+import { Command, CommandResult } from './types';
 
 // Helper function to validate email
 const isValidEmail = (email: string): boolean => {
@@ -263,7 +262,8 @@ Last Sign In: ${new Date(data.user.last_sign_in_at || '').toLocaleString() || 'N
 // Update profile command
 export const profileCommand: Command = {
   name: 'profile',
-  description: 'Update your profile information (usage: profile set username <value> | fullname <value>)',
+  description:
+    'Update your profile information (usage: profile set username <value> | fullname <value>)',
   execute: (args?: string) => {
     if (!args || args.trim() === '') {
       return {
@@ -315,7 +315,7 @@ Usage:
 
           const userId = userData.user.id;
           const updateData: Record<string, string> = {};
-          
+
           // Map field names to database column names
           if (field === 'username') {
             updateData.username = value;

@@ -147,8 +147,7 @@ const getSpecificCommandHelp = (commandName: string): string | undefined => {
 
 // Update getCommandHelp to include the wallpaper command
 export const getCommandHelp = () => {
-  return `
-  <strong class="text-terminal-prompt">Available Commands:</strong>
+  return `<strong>Available Commands:</strong>
 
   <strong>Basic Commands:</strong>
   - <span class="command-link" data-command="help">help</span>: Display this help message
@@ -179,6 +178,5 @@ export const getCommandHelp = () => {
   - <span class="command-link" data-command="login">login</span>: Log in to access exclusive content
   - <span class="command-link" data-command="logout">logout</span>: Log out from the current session
 
-  Type <span class="command-link" data-command="help [command]">help [command]</span> for more information about a specific command.
-  `;
+  Type <span class="command-link" data-command="help [command]">help [command]</span> for more information about a specific command.`;
 };
