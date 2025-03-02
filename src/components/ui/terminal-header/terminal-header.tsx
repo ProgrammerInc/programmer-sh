@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { User, LogIn, LogOut, Settings, X, Plus, Minus, ChevronDown } from 'lucide-react';
 import { SocialLink } from '@/types/socialLinks';
@@ -9,14 +8,9 @@ import { isIncognitoMode } from '@/utils/incognito';
 interface TerminalHeaderProps {
   lastCommand?: string;
   socialLinks?: SocialLink[];
-  simplified?: boolean;
 }
 
-const TerminalHeader: React.FC<TerminalHeaderProps> = ({ 
-  lastCommand = '', 
-  socialLinks = [],
-  simplified = false
-}) => {
+const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socialLinks = [] }) => {
   const { userEmail } = useTerminalAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isAnonymous, setIsAnonymous] = useState(false);
@@ -60,31 +54,29 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
   };
 
   return (
-    <div className={`flex items-center justify-between ${simplified ? 'bg-transparent py-2 px-3' : 'bg-terminal-header p-2'} border-b border-terminal-border`}>
-      {!simplified && (
-        <div className="flex space-x-2">
-          <div className="w-3 h-3 rounded-full bg-terminal-close window-control group flex items-center justify-center">
-            <X
-              className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100"
-              strokeWidth={3}
-            />
-          </div>
-          <div className="w-3 h-3 rounded-full bg-terminal-minimize window-control group flex items-center justify-center">
-            <Minus
-              className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100"
-              strokeWidth={3}
-            />
-          </div>
-          <div className="w-3 h-3 rounded-full bg-terminal-maximize window-control group flex items-center justify-center">
-            <Plus
-              className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100"
-              strokeWidth={3}
-            />
-          </div>
+    <div className="flex items-center justify-between bg-terminal-header p-2 border-b border-terminal-border">
+      <div className="flex space-x-2">
+        <div className="w-3 h-3 rounded-full bg-terminal-close window-control group flex items-center justify-center">
+          <X
+            className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100"
+            strokeWidth={3}
+          />
         </div>
-      )}
+        <div className="w-3 h-3 rounded-full bg-terminal-minimize window-control group flex items-center justify-center">
+          <Minus
+            className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100"
+            strokeWidth={3}
+          />
+        </div>
+        <div className="w-3 h-3 rounded-full bg-terminal-maximize window-control group flex items-center justify-center">
+          <Plus
+            className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100"
+            strokeWidth={3}
+          />
+        </div>
+      </div>
 
-      <div className={`flex-1 text-center text-terminal-title text-sm font-mono truncate px-4 ${simplified ? 'text-left' : ''}`}>
+      <div className="flex-1 text-center text-terminal-title text-sm font-mono truncate px-4">
         <span>
           <span className="font-mono">&lt;programmer&gt;</span>.
           <span className="animate-cursor-blink font-mono">_</span>

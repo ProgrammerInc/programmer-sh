@@ -1,12 +1,8 @@
-
-import { HistoryItem } from '@/components/ui/terminal/Terminal';
+import { HistoryItem } from '@/components/ui/terminal';
 import { useEffect, useState, useCallback } from 'react';
 
 const HISTORY_STORAGE_KEY = 'terminal_command_history';
 const LAST_COMMAND_KEY = 'terminal_last_command';
-
-// Export the CommandHistoryType
-export type CommandHistoryType = string[];
 
 export const useTerminalHistory = (isInitializing: boolean) => {
   const [history, setHistory] = useState<HistoryItem[]>([]);
