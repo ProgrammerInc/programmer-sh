@@ -17,6 +17,8 @@ interface HistoryItem {
   timestamp: Date;
 }
 
+const HISTORY_STORAGE_KEY = 'terminal_command_history';
+
 const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welcome'] }) => {
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [isInitializing, setIsInitializing] = useState(true);
@@ -39,6 +41,37 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   // Show ASCII art immediately without any delay
   const [showAsciiArt, setShowAsciiArt] = useState(true);
   const [asciiArtDone, setAsciiArtDone] = useState(true);
+
+  // Load command history from localStorage when component mounts
+  useEffect(() => {
+    const savedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);
+    if (savedHistory) {
+      try {
+        const parsedHistory = JSON.parse(savedHistory);
+        // Convert string dates back to Date objects
+        const formattedHistory = parsedHistory.map((item: any) => ({
+          ...item,
+          timestamp: new Date(item.timestamp)
+        }));
+        setHistory(formattedHistory);
+        
+        // Set last command from history if available
+        if (formattedHistory.length > 0) {
+          setLastCommand(formattedHistory[formattedHistory.length - 1].command);
+        }
+      } catch (error) {
+        console.error('Error parsing saved history:', error);
+        // If there's an error, proceed with empty history
+      }
+    }
+  }, []);
+
+  // Save command history to localStorage whenever it changes
+  useEffect(() => {
+    if (history.length > 0 && !isInitializing) {
+      localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
+    }
+  }, [history, isInitializing]);
 
   // Process initial commands immediately
   useEffect(() => {
@@ -80,6 +113,8 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
 
     if (result.content === 'CLEAR_TERMINAL') {
       setHistory([]);
+      // Clear localStorage when terminal is cleared
+      localStorage.removeItem(HISTORY_STORAGE_KEY);
       return;
     }
 

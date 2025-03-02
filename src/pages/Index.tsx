@@ -2,10 +2,21 @@
 import { useState, useEffect } from 'react';
 import Terminal from '@/components/Terminal';
 
+const HISTORY_STORAGE_KEY = 'terminal_command_history';
+
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [initialCommands, setInitialCommands] = useState<string[]>(['welcome']);
 
   useEffect(() => {
+    // Check if there's existing history
+    const savedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);
+    
+    // Only show welcome message if there's no existing history
+    if (savedHistory) {
+      setInitialCommands([]);
+    }
+    
     // Simulate loading for smoother entrance
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -26,7 +37,7 @@ const Index = () => {
           isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
         }`}
       >
-        <Terminal />
+        <Terminal initialCommands={initialCommands} />
       </div>
     </div>
   );
