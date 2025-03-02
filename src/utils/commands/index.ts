@@ -13,7 +13,7 @@ import { aboutCommand, contactCommand } from './informationCommands';
 import { projectsCommand } from './projectsCommand';
 import { resumeCommand } from './resumeCommand';
 import { skillsCommand } from './skillsCommand';
-import { clearCommand } from './systemCommands';
+import { clearCommand, echoCommand, dateCommand, historyCommand } from './systemCommands';
 import { initializeTheme, themeCommand } from './themeCommand';
 import { initializeWallpaper, wallpaperCommand } from './wallpaperCommand';
 import { welcomeCommand } from './welcomeCommand';
@@ -80,17 +80,6 @@ export const processCommand = (commandString: string) => {
   if (commandName === resumeCommand.name) {
     return resumeCommand.execute();
   }
-  // Handle project command - this needs to be fixed since projectCommand doesn't exist
-  if (commandName === 'project') {
-    if (args.length === 0) {
-      return {
-        content: 'Usage: project <id>',
-        isError: true,
-      };
-    }
-    // Use projectsCommand for now or implement a separate project command
-    return projectsCommand.execute(args);
-  }
   if (commandName === educationCommand.name) {
     return educationCommand.execute();
   }
@@ -102,10 +91,31 @@ export const processCommand = (commandString: string) => {
   if (commandName === 'theme') {
     return themeCommand.execute(args);
   }
+  if (commandName === 'echo') {
+    return echoCommand.execute(args);
+  }
+  if (commandName === 'date') {
+    return dateCommand.execute();
+  }
+  if (commandName === 'history') {
+    return historyCommand.execute();
+  }
 
   // Add wallpaperCommand to commands object
   if (commandName === 'wallpaper') {
     return wallpaperCommand.execute(args);
+  }
+
+  // Handle project command - this needs to be fixed since projectCommand doesn't exist
+  if (commandName === 'project') {
+    if (args.length === 0) {
+      return {
+        content: 'Usage: project <id>',
+        isError: true,
+      };
+    }
+    // Use projectsCommand for now or implement a separate project command
+    return projectsCommand.execute(args);
   }
 
   // Unknown command

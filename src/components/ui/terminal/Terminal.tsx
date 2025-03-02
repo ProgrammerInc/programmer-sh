@@ -46,7 +46,12 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) 
     isInitializing, 
     isProcessingAsync, 
     processCommandWithHistory 
-  } = useCommandProcessor(initialCommands, setHistory, setLastExecutedCommand);
+  } = useCommandProcessor(
+    initialCommands, 
+    setHistory, 
+    setLastExecutedCommand,
+    commandHistory // Pass commandHistory to processor
+  );
 
   const handleTerminalClick = () => {
     if (!isInitializing && commandInputRef.current) {

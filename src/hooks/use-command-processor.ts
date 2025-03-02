@@ -7,7 +7,8 @@ import { HistoryItem } from '@/components/ui/terminal';
 export const useCommandProcessor = (
   initialCommands: string[] = [],
   setHistory: React.Dispatch<React.SetStateAction<HistoryItem[]>>,
-  setLastExecutedCommand: (command: string) => void
+  setLastExecutedCommand: (command: string) => void,
+  commandHistory: string[] = []  // Add commandHistory parameter
 ) => {
   const [isInitializing, setIsInitializing] = useState(true);
   const [initialCommandsProcessed, setInitialCommandsProcessed] = useState(false);
@@ -51,7 +52,22 @@ export const useCommandProcessor = (
   const processCommandWithHistory = async (commandString: string) => {
     setIsProcessingAsync(true);
     setLastExecutedCommand(commandString);
-    const result = processCommand(commandString);
+    let result = processCommand(commandString);
+
+    // Special handling for history command
+    if (commandString.trim().toLowerCase() === 'history') {
+      // Replace placeholder with actual history
+      const historyOutput = commandHistory
+        .map((cmd, index) => `  ${index + 1}  ${cmd}`)
+        .join('\n');
+      
+      result = {
+        content: historyOutput.length > 0 
+          ? `Command History:\n${historyOutput}` 
+          : 'No command history available.',
+        isError: false
+      };
+    }
 
     if (result.content === 'CLEAR_TERMINAL') {
       setHistory([]);
