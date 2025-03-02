@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import CommandLine from './CommandLine';
 import TerminalResponse from './TerminalResponse';
@@ -21,6 +22,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   const [isInitializing, setIsInitializing] = useState(true);
   const [initialCommandsProcessed, setInitialCommandsProcessed] = useState(false);
   const [isProcessingAsync, setIsProcessingAsync] = useState(false);
+  const [lastCommand, setLastCommand] = useState('welcome');
   const terminalRef = useRef<HTMLDivElement>(null);
   const commandInputRef = useRef<HTMLInputElement>(null);
 
@@ -71,6 +73,9 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   }, [history]);
 
   const processCommandWithHistory = async (commandString: string) => {
+    // Update the last command
+    setLastCommand(commandString);
+    
     const result = processCommand(commandString);
 
     if (result.content === 'CLEAR_TERMINAL') {
@@ -145,7 +150,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
           <span className="programmer-sh-title">&lt;programmer&gt;.</span>
           <span className="animate-cursor-blink">_</span>
           <span className="ml-2 mr-2">~</span>
-          <span className="programmer-sh-page">portfolio</span>
+          <span className="programmer-sh-page">{lastCommand}</span>
         </div>
         <div className="w-10"></div> {/* Spacer for symmetry */}
       </div>
