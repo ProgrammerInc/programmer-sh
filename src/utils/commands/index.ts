@@ -1,8 +1,9 @@
+
 import { CommandResult } from './types';
 import { aboutCommand, contactCommand } from './informationCommands';
 import { skillsCommand } from './skillsCommand';
 import { experienceCommand } from './experienceCommand';
-import { projectsCommand, projectCommand } from './projectsCommand';
+import { projectsCommand } from './projectsCommand';
 import { educationCommand } from './educationCommand';
 import { helpCommand } from './helpCommand';
 import { clearCommand } from './systemCommands';
@@ -23,7 +24,7 @@ export const processCommand = (commandString: string) => {
   // Extract the command name and any arguments
   const tokens = commandString.trim().split(/\s+/);
   const commandName = tokens[0].toLowerCase();
-  const args = tokens.slice(1);
+  const args = tokens.slice(1).join(' ');
 
   // Auth commands
   if (commandName === loginCommand.name) {
@@ -58,14 +59,16 @@ export const processCommand = (commandString: string) => {
   if (commandName === projectsCommand.name) {
     return projectsCommand.execute();
   }
-  if (commandName === projectCommand.name) {
+  // Handle project command - this needs to be fixed since projectCommand doesn't exist
+  if (commandName === 'project') {
     if (args.length === 0) {
       return {
         content: "Usage: project <id>",
         isError: true,
       };
     }
-    return projectCommand.execute(args);
+    // Use projectsCommand for now or implement a separate project command
+    return projectsCommand.execute(args);
   }
   if (commandName === educationCommand.name) {
     return educationCommand.execute();

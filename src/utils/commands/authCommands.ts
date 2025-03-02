@@ -12,16 +12,25 @@ const isValidEmail = (email: string): boolean => {
 export const loginCommand: Command = {
   name: 'login',
   description: 'Log in to your account (usage: login <email> <password>)',
-  execute: (args: string[]) => {
-    if (args.length < 2) {
+  execute: (args?: string) => {
+    // Check if args is undefined or empty
+    if (!args || args.trim() === '') {
       return {
         content: 'Usage: login <email> <password>',
         isError: true,
       };
     }
 
-    const email = args[0];
-    const password = args.slice(1).join(' '); // Allow spaces in password
+    const argArray = args.trim().split(/\s+/);
+    if (argArray.length < 2) {
+      return {
+        content: 'Usage: login <email> <password>',
+        isError: true,
+      };
+    }
+
+    const email = argArray[0];
+    const password = argArray.slice(1).join(' '); // Allow spaces in password
 
     if (!isValidEmail(email)) {
       return {
@@ -73,16 +82,25 @@ export const loginCommand: Command = {
 export const signupCommand: Command = {
   name: 'signup',
   description: 'Create a new account (usage: signup <email> <password>)',
-  execute: (args: string[]) => {
-    if (args.length < 2) {
+  execute: (args?: string) => {
+    // Check if args is undefined or empty
+    if (!args || args.trim() === '') {
       return {
         content: 'Usage: signup <email> <password>',
         isError: true,
       };
     }
 
-    const email = args[0];
-    const password = args.slice(1).join(' '); // Allow spaces in password
+    const argArray = args.trim().split(/\s+/);
+    if (argArray.length < 2) {
+      return {
+        content: 'Usage: signup <email> <password>',
+        isError: true,
+      };
+    }
+
+    const email = argArray[0];
+    const password = argArray.slice(1).join(' '); // Allow spaces in password
 
     if (!isValidEmail(email)) {
       return {
@@ -242,8 +260,8 @@ Last Sign In: ${new Date(data.user.last_sign_in_at || '').toLocaleString() || 'N
 export const profileCommand: Command = {
   name: 'profile',
   description: 'Update your profile information (usage: profile set username <value> | fullname <value>)',
-  execute: (args: string[]) => {
-    if (args.length < 3 || args[0] !== 'set') {
+  execute: (args?: string) => {
+    if (!args || args.trim() === '') {
       return {
         content: `
 Usage:
@@ -254,8 +272,20 @@ Usage:
       };
     }
 
-    const field = args[1];
-    const value = args.slice(2).join(' ');
+    const argArray = args.trim().split(/\s+/);
+    if (argArray.length < 3 || argArray[0] !== 'set') {
+      return {
+        content: `
+Usage:
+  profile set username <value>  - Set your username
+  profile set fullname <value>  - Set your full name
+        `,
+        isError: true,
+      };
+    }
+
+    const field = argArray[1];
+    const value = argArray.slice(2).join(' ');
 
     if (!['username', 'fullname'].includes(field)) {
       return {

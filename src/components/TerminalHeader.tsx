@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { MarkGithubIcon, X } from 'lucide-react';
+import { Github, X } from 'lucide-react';
 
 interface TerminalHeaderProps {
   lastCommand?: string;
@@ -28,7 +28,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', userE
           className="text-terminal-title hover:text-terminal-foreground transition-colors"
           aria-label="GitHub Profile"
         >
-          <MarkGithubIcon className="w-4 h-4" />
+          <Github className="w-4 h-4" />
         </a>
       </div>
     </div>
