@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Github, Linkedin, Twitter, X, Plus, Minus } from 'lucide-react';
 import { SocialLink } from '@/types/socialLinks';
@@ -47,7 +48,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socia
 
       <div className="flex-1 text-center text-terminal-title text-sm font-mono truncate px-4">
         <span>
-          &lt;programmer&gt;.<span className="animate-cursor-blink">_</span>
+          <span className="text-terminal-prompt">&lt;programmer&gt;</span>.<span className="text-terminal-prompt animate-cursor-blink">_</span>
         </span>
         {lastCommand && (
           <span>
