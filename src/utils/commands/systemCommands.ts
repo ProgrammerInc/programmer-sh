@@ -1,4 +1,3 @@
-
 import { Command, CommandResult } from './types';
 
 export const clearCommand: Command = {
@@ -17,7 +16,7 @@ export const whoamiCommand: Command = {
   description: 'Display user information',
   execute: () => {
     return {
-      content: 'James A. Black Jr. - Full Stack Developer @ Frisco, TX',
+      content: 'James A. Black Jr. - Full Stack Developer @ Programmer Inc.',
       isError: false,
     };
   },

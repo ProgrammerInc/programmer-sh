@@ -22,8 +22,7 @@ export const projectsCommand: Command = {
           }
 
           return {
-            content: `
-Projects:
+            content: `My Projects:
 ${projects
   .map(
     project => `

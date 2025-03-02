@@ -1,5 +1,4 @@
 import { CommandResult } from './types';
-import { urlCommandsHelpText } from './urlCommandHandler';
 
 export const helpCommand = {
   execute(): CommandResult {
@@ -18,14 +17,13 @@ export const helpCommand = {
       { name: 'messages', description: 'View all saved messages' },
     ];
 
-    const helpText = commandList.map(cmd => `  ${cmd.name.padEnd(20)} ${cmd.description}`).join('\n');
-
-    // Add URL command help information
-    const urlHelp = urlCommandsHelpText();
+    const helpText = commandList
+      .map(cmd => `  ${cmd.name.padEnd(20)} ${cmd.description}`)
+      .join('\n');
 
     return {
-      content: `Available commands:\n\n${helpText}\n\n${urlHelp}`,
+      content: `Available commands:\n\n${helpText}`,
       isError: false,
     };
-  }
+  },
 };

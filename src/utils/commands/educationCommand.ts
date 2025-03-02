@@ -19,8 +19,7 @@ export const educationCommand: Command = {
         }
 
         return {
-          content: `
-Education:
+          content: `Education:
 ${education
   .map(
     edu => `

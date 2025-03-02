@@ -19,8 +19,7 @@ export const resumeCommand: Command = {
         }
 
         return {
-          content: `
-My Resume:
+          content: `My Resume:
 
 Name: ${portfolioData.fullname}
 Title: ${portfolioData.title}

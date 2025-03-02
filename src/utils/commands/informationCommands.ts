@@ -20,8 +20,7 @@ export const aboutCommand: Command = {
         }
 
         return {
-          content: `
-About Me:
+          content: `About Me:
 
 Name: ${profile.fullname}
 Title: ${profile.title} @ ${profile.company}
