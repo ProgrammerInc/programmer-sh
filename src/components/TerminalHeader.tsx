@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { X, Minimize, Maximize2 } from 'lucide-react';
+import { X, Minus, Maximize2 } from 'lucide-react';
 import { 
   Tooltip,
   TooltipContent,
@@ -36,7 +36,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand }) => {
             <TooltipTrigger asChild>
               <div className="w-3 h-3 rounded-full bg-terminal-warning relative group cursor-pointer">
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Minimize className="text-black w-2 h-2" />
+                  <Minus className="text-black w-2 h-2" />
                 </div>
               </div>
             </TooltipTrigger>
