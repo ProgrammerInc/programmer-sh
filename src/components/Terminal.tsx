@@ -122,6 +122,9 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     }
   };
 
+  // Extract command strings from history for the command line history feature
+  const commandHistory = history.map(item => item.command);
+
   // Handle click anywhere in the terminal
   const handleTerminalClick = () => {
     if (!isInitializing && commandInputRef.current) {
@@ -182,6 +185,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
             autoFocus 
             inputRef={commandInputRef}
             disabled={isProcessingAsync} 
+            history={commandHistory}
           />
         )}
       </div>
