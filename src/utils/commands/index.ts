@@ -1,4 +1,3 @@
-
 import { CommandResult } from './types';
 import { aboutCommand, contactCommand } from './informationCommands';
 import { skillsCommand } from './skillsCommand';
@@ -10,6 +9,12 @@ import { clearCommand } from './systemCommands';
 import { loginCommand, logoutCommand, signupCommand, whoamiCommand, profileCommand } from './authCommands';
 import { themeCommand } from './themeCommand';
 import { welcomeCommand } from './welcomeCommand';
+import { wallpaperCommand, initializeWallpaper } from './wallpaperCommand';
+import { initializeTheme } from './themeCommand';
+
+// Initialize settings
+initializeTheme();
+initializeWallpaper();
 
 export const processCommand = (commandString: string) => {
   if (commandString.trim() === '') {
@@ -87,6 +92,11 @@ export const processCommand = (commandString: string) => {
   }
   if (commandName === 'theme') {
     return themeCommand.execute(args);
+  }
+
+  // Add wallpaperCommand to commands object
+  if (commandName === 'wallpaper') {
+    return wallpaperCommand.execute(args);
   }
 
   // Unknown command
