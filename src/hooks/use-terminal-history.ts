@@ -51,19 +51,24 @@ export const useTerminalHistory = (isInitializing: boolean) => {
 
   // Custom setter for lastExecutedCommand that also updates localStorage
   const updateLastCommand = (command: string) => {
-    setLastExecutedCommand(command);
-    localStorage.setItem(LAST_COMMAND_KEY, command);
+    if (command !== lastExecutedCommand) {
+      console.log('Updating last command to:', command);
+      setLastExecutedCommand(command);
+      localStorage.setItem(LAST_COMMAND_KEY, command);
+    }
   };
 
   // Save history to localStorage when it changes
   useEffect(() => {
-    if (history.length > 0 && !isInitializing && historyLoaded) {
+    if (history.length > 0 && historyLoaded) {
       localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
       
-      // Update last executed command whenever history changes
-      const lastItem = history[history.length - 1];
-      if (lastItem && lastItem.command) {
-        updateLastCommand(lastItem.command);
+      // Update last executed command whenever history changes if we're not initializing
+      if (!isInitializing) {
+        const lastItem = history[history.length - 1];
+        if (lastItem && lastItem.command) {
+          updateLastCommand(lastItem.command);
+        }
       }
     }
   }, [history, isInitializing, historyLoaded]);

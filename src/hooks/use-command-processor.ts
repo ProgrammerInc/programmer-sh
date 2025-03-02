@@ -116,15 +116,17 @@ export const useCommandProcessor = (
       let i = 0;
       const processNextCommand = () => {
         if (i < commandsToProcess.length) {
-          const command = commandsToProcess[i++];
+          const command = commandsToProcess[i];
           console.log('Processing command:', command);
           processCommandWithHistory(command);
           
-          // Make sure the last command processed is set as the last executed command
-          if (i === commandsToProcess.length) {
+          // Set last executed command to be the very last command in the queue
+          if (i === commandsToProcess.length - 1) {
+            console.log('Setting final command as last executed:', command);
             setLastExecutedCommand(command);
           }
           
+          i++;
           setTimeout(processNextCommand, 300);
         } else {
           setIsInitializing(false);
