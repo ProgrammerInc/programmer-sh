@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { createMarkup, containsHtmlTags } from './html-utils';
@@ -10,18 +11,17 @@ const HtmlContent: React.FC<HtmlContentProps> = ({
   className,
   onCommandClick,
 }) => {
-  // Determine content type - explicitly check for both conditions
-  const hasCommandLinks = content.includes('command-link') || content.includes('[[');
+  // Check for HTML tags and command links
   const hasHtmlTags = containsHtmlTags(content);
-
+  const hasCommandLinks = content.includes('command-link') || content.includes('[[');
+  
   // Debug logs to help troubleshoot
   console.log('Content contains HTML tags:', hasHtmlTags);
   console.log('Content contains command links:', hasCommandLinks);
-  console.log('Content sample:', content.substring(0, 100));
-
-  // For content with both HTML and command links, prioritize HTML rendering
+  
   if (hasHtmlTags) {
-    console.log('Rendering as HTML');
+    // For content with HTML tags, use dangerouslySetInnerHTML
+    // This will lose interactivity for command links, but that's okay for HTML-rich content
     return (
       <div
         className={cn(
@@ -34,9 +34,8 @@ const HtmlContent: React.FC<HtmlContentProps> = ({
     );
   }
 
-  // For content with only command links
-  if (hasCommandLinks && onCommandClick) {
-    console.log('Rendering with command links');
+  // For content with only command links or other special links
+  if (hasCommandLinks || content.includes('http') || content.includes('@') || content.includes('+1')) {
     return (
       <div
         className={cn(
@@ -51,7 +50,6 @@ const HtmlContent: React.FC<HtmlContentProps> = ({
   }
 
   // For plain text content
-  console.log('Rendering as plain text');
   return (
     <div
       className={cn(

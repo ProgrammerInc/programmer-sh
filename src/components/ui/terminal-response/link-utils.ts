@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { LinkMatch } from './types';
 
@@ -57,7 +58,7 @@ export function processEmailLinks(text: string): LinkMatch[] {
   return matches;
 }
 
-// Process command links (any text surrounded by [[command]])
+// Process command links (any text surrounded by [[command]] or with class="command-link")
 export function processCommandLinks(
   text: string,
   onCommandClick?: (command: string) => void
@@ -81,6 +82,27 @@ export function processCommandLinks(
           className: 'command-link text-terminal-command cursor-pointer hover:underline',
         },
         command
+      ),
+      type: 'command',
+    });
+  }
+
+  // Also detect HTML command links like <span class="command-link" data-command="help">help</span>
+  const htmlCommandLinkRegex = /<span class="command-link"(?: data-command="(.*?)")?>([^<]+)<\/span>/g;
+  
+  while ((match = htmlCommandLinkRegex.exec(text)) !== null) {
+    const command = match[1] || match[2]; // Use data-command if available, otherwise use the text content
+    
+    matches.push({
+      index: match.index,
+      length: match[0].length,
+      content: React.createElement(
+        'span',
+        {
+          onClick: () => onCommandClick && onCommandClick(command),
+          className: 'command-link text-terminal-command cursor-pointer hover:underline',
+        },
+        match[2] // Use the text content for display
       ),
       type: 'command',
     });

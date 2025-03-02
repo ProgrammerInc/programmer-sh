@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { useTypingEffect } from '@/utils/typingEffect';
@@ -32,10 +33,6 @@ const TerminalResponse: React.FC<TerminalResponseProps> = ({
     );
   }
 
-  // Add debug log to check content
-  console.log('Response content type:', typeof response.content);
-  console.log('Has HTML:', containsHtmlTags(response.content));
-
   // For animated content
   if (animate) {
     return (
@@ -51,7 +48,6 @@ const TerminalResponse: React.FC<TerminalResponseProps> = ({
   }
 
   // For non-animated content, use HtmlContent component
-  // which will handle HTML tags, command links, or plain text appropriately
   return (
     <HtmlContent
       content={response.content}
