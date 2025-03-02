@@ -24,9 +24,10 @@ export const educationCommand: Command = {
 
 ${education
   .map(
-    edu => `<strong>Degree/Major:</strong> ${edu.degree}
-<strong>Institution:</strong> ${edu.institution}, ${edu.year}
-${edu.details ? `<strong>Details:</strong> ${edu.details}` : ''}`
+    edu => `<strong>Degree/Major:</strong> <span class="text-terminal-prompt">${edu.degree}</span>
+<strong>Institution:</strong> <span class="institution"><span class="text-terminal-prompt">${edu.institution}</span> (${edu.duration})</span>
+
+${edu.details ? `<strong>Details:</strong> <span class="details">${edu.details}</span>` : ''}`
   )
   .join('\n')}`,
           isError: false,

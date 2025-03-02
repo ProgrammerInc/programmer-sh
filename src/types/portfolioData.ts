@@ -26,7 +26,7 @@ export interface Skill {
 export interface Education {
   degree: string;
   institution: string;
-  year: string;
+  duration: string;
   details?: string;
 }
 

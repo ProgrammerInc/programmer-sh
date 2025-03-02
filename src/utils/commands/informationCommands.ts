@@ -59,7 +59,7 @@ END:VCARD`;
           content: `<strong>About Me:</strong>
 
 <strong>Name:</strong> <span class="text-terminal-prompt">${profile.full_name}</span>
-<strong>Title:</strong> <span class="text-terminal-prompt">${profile.title}</span> @ <span class="text-terminal-prompt">${profile.company}</span>
+<strong>Title:</strong> <span class="text-terminal-prompt">${profile.title}</span> &amp; <span class="text-terminal-prompt">${profile.company}</span>
 <strong>Location:</strong> <span class="text-terminal-prompt">${profile.location}</span>
 
 ${profile.summary}
@@ -75,7 +75,7 @@ ${profile.summary}
 
 <div class="flex justify-center w-full mt-4">
   <div id="qrcode-container">
-    <QRCode size={256} bgColor="#1a1f2c" fgColor="#ffffff" includeMargin={false} value="${encodeURIComponent(vCard)}" title="Scan to save contact information" />
+    <QRCode size={256} bgColor="#1a1f2c" fgColor="#ffffff" includeMargin={true} value="${encodeURIComponent(vCard)}" title="Scan to save contact information" />
   </div>
 </div>`,
           isError: false,
@@ -144,7 +144,7 @@ END:VCARD`;
           content: `<strong>My Contact Information:</strong>
 
 <strong>Name:</strong> <span class="text-terminal-prompt">${profile.full_name}</span>
-<strong>Title:</strong> <span class="text-terminal-prompt">${profile.title}</span> @ <span class="text-terminal-prompt">${profile.company}</span>
+<strong>Title:</strong> <span class="text-terminal-prompt">${profile.title}</span> &amp; <span class="text-terminal-prompt">${profile.company}</span>
 <strong>Location:</strong> <span class="text-terminal-prompt">${profile.location}</span>
 
   - <strong>E-mail:</strong> <a href="mailto:${profile.contact.email}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.email}</a>
@@ -156,7 +156,7 @@ END:VCARD`;
 
 <div class="flex justify-center w-full mt-4">
   <div id="qrcode-container">
-    <QRCode size={256} bgColor="#1a1f2c" fgColor="#ffffff" includeMargin={false} value="${encodeURIComponent(vCard)}" title="Scan to save contact information" />
+    <QRCode size={256} bgColor="#1a1f2c" fgColor="#ffffff" includeMargin={true} value="${encodeURIComponent(vCard)}" title="Scan to save contact information" />
   </div>
 </div>`,
           isError: false,

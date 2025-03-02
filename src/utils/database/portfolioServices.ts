@@ -180,7 +180,7 @@ export const fetchEducation = async (): Promise<Education[]> => {
     return educationData.map(edu => ({
       degree: edu.degree,
       institution: edu.institution,
-      year: edu.year,
+      duration: edu.duration,
       details: edu.details,
     }));
   } catch (error) {

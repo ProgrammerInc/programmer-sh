@@ -23,7 +23,7 @@ const QRCodeComponent: React.FC<QRCodeProps> = ({
 }) => {
   return (
     <div className={cn('flex flex-col items-center my-4', className)}>
-      <div className="bg-white p-2 rounded">
+      <div className="p-2 rounded">
         <QRCodeSVG
           value={value}
           size={size}

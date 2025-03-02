@@ -58,7 +58,7 @@ END:VCARD`;
           content: `<strong>My Resume:</strong>
 <div class="resume-header">
 <strong>Name:</strong> <span class="text-terminal-prompt">${portfolioData.full_name}</span>
-<strong>Title:</strong> <span class="text-terminal-prompt">${portfolioData.title}</span> @ <span class="text-terminal-prompt">${portfolioData.company}</span>
+<strong>Title:</strong> <span class="text-terminal-prompt">${portfolioData.title}</span> &amp; <span class="text-terminal-prompt">${portfolioData.company}</span>
 <strong>Location:</strong> <span class="text-terminal-prompt">${portfolioData.location}</span>
 </div>
 <div class="resume-summary"><strong>SUMMARY</strong>
@@ -69,7 +69,7 @@ END:VCARD`;
 
 ${portfolioData.experience
   .map(
-    exp => `<div class="experience-item"><span class="position"><strong><span class="text-terminal-prompt">${exp.position}</span></strong> @ <strong><span class="text-terminal-prompt">${exp.company}</span></strong> <span class="duration">(${exp.duration})</span></span>
+    exp => `<div class="experience-item"><span class="position"><strong><span class="text-terminal-prompt">${exp.position}</span></strong> &amp; <strong><span class="text-terminal-prompt">${exp.company}</span></strong> <span class="duration">(${exp.duration})</span></span>
 <span class="description">${exp.description}</span>
 
 <span class="achievements-title">Key achievements:</span><ul class="achievements-list">${exp.achievements.map(achievement => `<li>- ${achievement}</li>`).join('')}</ul>
@@ -80,9 +80,10 @@ ${portfolioData.experience
 
 ${portfolioData.education
   .map(
-    edu => `<div class="education-item"><span class="text-terminal-prompt"><strong>${edu.degree}</strong></span>
-<span class="institution">${edu.institution}, ${edu.year}</span>
-${edu.details ? `<span class="details">${edu.details}</span>` : ''}</div>`
+    edu => `<div class="education-item"><strong>Degree/Major:</strong> <span class="text-terminal-prompt">${edu.degree}</span>
+<strong>Institution:</strong> <span class="institution"><span class="text-terminal-prompt">${edu.institution}</span> (${edu.duration})</span>
+
+${edu.details ? `<strong>Details:</strong> <span class="details">${edu.details}</span>` : ''}</div>`
   )
   .join('')}</div>
 
@@ -98,7 +99,6 @@ ${linkedin ? `<span><strong>LinkedIn:</strong> <a href="${linkedin}" target="_bl
 ${github ? `<span><strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${github.replace(/^https?:\/\//, '')}</a></span>` : ''}
 ${twitter ? `<span><strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${twitter.replace(/^https?:\/\//, '')}</a></span>` : ''}
 ${website ? `<span><strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${website.replace(/^https?:\/\//, '')}</a></span>` : ''}</div></div>
-
 <div class="flex justify-center w-full mt-4">
   <div id="qrcode-container">
     <QRCode size={256} bgColor="ffffff" fgColor="1a1f2c" includeMargin={false} value="${encodeURIComponent(vCard)}" title="Scan to save contact information" />

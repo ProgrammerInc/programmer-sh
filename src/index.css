@@ -5,6 +5,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Setting Default Background and Foreground Colors */
+html,
+body {
+  background: #1a1f2c;
+  color: #ffffff;
+}
+
 @layer base {
   :root {
     --background: 240 10% 3.9%;
