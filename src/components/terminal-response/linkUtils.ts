@@ -161,3 +161,8 @@ export function processLinks(text: string, onCommandClick?: (command: string) =>
   
   return result;
 }
+
+// Utility function to convert text with links to React elements
+export function convertLinksToAnchors(text: string, onCommandClick?: (command: string) => void): React.ReactNode[] {
+  return processLinks(text, onCommandClick);
+}
