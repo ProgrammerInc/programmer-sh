@@ -14,7 +14,7 @@ export const educationCommand: Command = {
         
         if (!education || !education.length) {
           return {
-            content: 'Error: Could not fetch education information.',
+            content: 'Error: Could not fetch education information.\nPlease try again later or contact the administrator.',
             isError: true
           };
         }

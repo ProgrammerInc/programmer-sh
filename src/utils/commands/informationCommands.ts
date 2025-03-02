@@ -15,7 +15,7 @@ export const aboutCommand: Command = {
         
         if (!profile) {
           return {
-            content: 'Error: Could not fetch profile information.',
+            content: 'Error: Could not fetch profile information.\nPlease try again later or contact the administrator.',
             isError: true
           };
         }
@@ -53,7 +53,7 @@ export const skillsCommand: Command = {
         
         if (!profile || !profile.skills.length) {
           return {
-            content: 'Error: Could not fetch skills information.',
+            content: 'Error: Could not fetch skills information.\nPlease try again later or contact the administrator.',
             isError: true
           };
         }
@@ -90,7 +90,7 @@ export const contactCommand: Command = {
         
         if (!profile) {
           return {
-            content: 'Error: Could not fetch contact information.',
+            content: 'Error: Could not fetch contact information.\nPlease try again later or contact the administrator.',
             isError: true
           };
         }
