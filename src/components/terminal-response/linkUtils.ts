@@ -14,15 +14,15 @@ export function processUrlLinks(text: string): LinkMatch[] {
     matches.push({
       index: match.index,
       length: match[0].length,
-      content: (
-        <a 
-          href={match[0]} 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="text-terminal-link hover:underline"
-        >
-          {match[0]}
-        </a>
+      content: React.createElement(
+        'a',
+        { 
+          href: match[0], 
+          target: "_blank", 
+          rel: "noopener noreferrer", 
+          className: "text-terminal-link hover:underline" 
+        },
+        match[0]
       ),
       type: 'url'
     });
@@ -43,13 +43,13 @@ export function processEmailLinks(text: string): LinkMatch[] {
     matches.push({
       index: match.index,
       length: match[0].length,
-      content: (
-        <a 
-          href={`mailto:${match[0]}`} 
-          className="text-terminal-link hover:underline"
-        >
-          {match[0]}
-        </a>
+      content: React.createElement(
+        'a',
+        { 
+          href: `mailto:${match[0]}`, 
+          className: "text-terminal-link hover:underline" 
+        },
+        match[0]
       ),
       type: 'email'
     });
@@ -72,13 +72,13 @@ export function processCommandLinks(text: string, onCommandClick?: (command: str
     matches.push({
       index: match.index,
       length: match[0].length,
-      content: (
-        <span 
-          onClick={() => onCommandClick && onCommandClick(command)}
-          className="command-link text-terminal-command cursor-pointer hover:underline"
-        >
-          {command}
-        </span>
+      content: React.createElement(
+        'span',
+        { 
+          onClick: () => onCommandClick && onCommandClick(command),
+          className: "command-link text-terminal-command cursor-pointer hover:underline" 
+        },
+        command
       ),
       type: 'command'
     });
@@ -103,13 +103,13 @@ export function processPhoneLinks(text: string): LinkMatch[] {
     matches.push({
       index: match.index,
       length: match[0].length,
-      content: (
-        <a 
-          href={`tel:${phoneForLink}`} 
-          className="text-terminal-link hover:underline"
-        >
-          {match[0]}
-        </a>
+      content: React.createElement(
+        'a',
+        { 
+          href: `tel:${phoneForLink}`, 
+          className: "text-terminal-link hover:underline" 
+        },
+        match[0]
       ),
       type: 'phone'
     });
@@ -147,8 +147,9 @@ export function processLinks(text: string, onCommandClick?: (command: string) =>
       result.push(text.substring(lastIndex, match.index));
     }
     
-    // Add the link component
-    result.push(React.cloneElement(match.content as React.ReactElement, { key: `link-${i}` }));
+    // Add the link component with a key
+    const element = match.content as React.ReactElement;
+    result.push(React.cloneElement(element, { key: `link-${i}` }));
     
     // Update last index
     lastIndex = match.index + match.length;
