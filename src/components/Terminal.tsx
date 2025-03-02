@@ -4,7 +4,6 @@ import TerminalContent from './TerminalContent';
 import { processCommand } from '../utils/commands';
 import { CommandResult } from '../utils/commands/types';
 import { cn } from '@/lib/utils';
-import { useNavigate } from 'react-router-dom';
 
 interface TerminalProps {
   className?: string;
@@ -21,7 +20,6 @@ export interface HistoryItem {
 const HISTORY_STORAGE_KEY = 'terminal_command_history';
 
 const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welcome'] }) => {
-  const navigate = useNavigate();
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [isInitializing, setIsInitializing] = useState(true);
   const [initialCommandsProcessed, setInitialCommandsProcessed] = useState(false);
@@ -29,7 +27,6 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   const [lastCommand, setLastCommand] = useState('welcome');
   const [commandsToProcess, setCommandsToProcess] = useState<string[]>([]);
   const [showAsciiArt, setShowAsciiArt] = useState(true);
-  const [isTerminalVisible, setIsTerminalVisible] = useState(true);
   const commandInputRef = useRef<HTMLInputElement>(null);
 
   // Initial commands to process
@@ -162,26 +159,12 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     }
   };
 
-  // Handle closing the terminal
-  const handleClose = () => {
-    setIsTerminalVisible(false);
-  };
-
-  if (!isTerminalVisible) {
-    return null; // Don't render the terminal if it's not visible
-  }
-
   return (
     <div
       className={cn('terminal-glass rounded-md overflow-hidden flex flex-col h-full', className)}
       onClick={handleTerminalClick}
     >
-      <TerminalHeader 
-        lastCommand={lastCommand} 
-        onClose={handleClose}
-        onMinimize={() => console.log('Minimize clicked')}
-        onMaximize={() => console.log('Maximize clicked')}
-      />
+      <TerminalHeader lastCommand={lastCommand} />
       
       <TerminalContent
         history={history}
