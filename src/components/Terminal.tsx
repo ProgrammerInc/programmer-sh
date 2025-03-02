@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import CommandLine from './CommandLine';
 import TerminalResponse from './TerminalResponse';
@@ -44,21 +43,21 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     if (isInitializing && !initialCommandsProcessed) {
       // Initialize command processing immediately
       setInitialCommandsProcessed(true);
-      
+
       // Process each initial command with a small delay between them
       let i = 0;
       const processNextCommand = () => {
         if (i < initialCommands.length) {
           const command = initialCommands[i++];
           processCommandWithHistory(command);
-          
+
           // Process next command with a small delay
           setTimeout(processNextCommand, 200);
         } else {
           setIsInitializing(false);
         }
       };
-      
+
       // Start processing commands immediately
       processNextCommand();
     }
@@ -93,27 +92,26 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
       setIsProcessingAsync(true);
       try {
         const asyncResult = await result.asyncResolver();
-        
+
         // Update the history item with the async result
-        setHistory(prev => 
-          prev.map(item => 
-            item === historyItem ? { ...item, result: asyncResult } : item
-          )
+        setHistory(prev =>
+          prev.map(item => (item === historyItem ? { ...item, result: asyncResult } : item))
         );
       } catch (error) {
-        console.error("Error processing async command:", error);
-        
+        console.error('Error processing async command:', error);
+
         // Update history with error
-        setHistory(prev => 
-          prev.map(item => 
-            item === historyItem ? 
-            { 
-              ...item, 
-              result: {
-                content: `Error: ${error instanceof Error ? error.message : String(error)}`,
-                isError: true
-              } 
-            } : item
+        setHistory(prev =>
+          prev.map(item =>
+            item === historyItem
+              ? {
+                  ...item,
+                  result: {
+                    content: `Error: ${error instanceof Error ? error.message : String(error)}`,
+                    isError: true,
+                  },
+                }
+              : item
           )
         );
       } finally {
@@ -144,9 +142,10 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
           <div className="w-3 h-3 rounded-full bg-terminal-success" />
         </div>
         <div className="text-terminal-foreground/70 text-sm font-mono flex-1 text-center">
-          <span>&lt;programmer&gt;.</span>
+          <span className="programmer-sh-title">&lt;programmer&gt;.</span>
           <span className="animate-cursor-blink">_</span>
-          <span className="ml-1">~ portfolio</span>
+          <span className="ml-2 mr-2">~</span>
+          <span className="programmer-sh-page">portfolio</span>
         </div>
         <div className="w-10"></div> {/* Spacer for symmetry */}
       </div>
@@ -180,11 +179,11 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
 
         {/* Current Command Line */}
         {!isInitializing && (
-          <CommandLine 
-            onSubmit={processCommandWithHistory} 
-            autoFocus 
+          <CommandLine
+            onSubmit={processCommandWithHistory}
+            autoFocus
             inputRef={commandInputRef}
-            disabled={isProcessingAsync} 
+            disabled={isProcessingAsync}
             history={commandHistory}
           />
         )}
