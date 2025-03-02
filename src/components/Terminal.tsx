@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect, useRef } from 'react';
-import CommandLine from './CommandLine';
-import TerminalResponse from './TerminalResponse';
+import TerminalHeader from './TerminalHeader';
+import TerminalContent from './TerminalContent';
 import { processCommand } from '../utils/commands';
 import { CommandResult } from '../utils/commands/types';
 import { cn } from '@/lib/utils';
@@ -24,20 +25,8 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   const [initialCommandsProcessed, setInitialCommandsProcessed] = useState(false);
   const [isProcessingAsync, setIsProcessingAsync] = useState(false);
   const [lastCommand, setLastCommand] = useState('welcome');
-  const terminalRef = useRef<HTMLDivElement>(null);
-  const commandInputRef = useRef<HTMLInputElement>(null);
-
-  const asciiArt = [
-    '  ____                                                          ____  _   _   ',
-    ' |  _ \\ _ __ ___   __ _ _ __ __ _ _ __ ___  ___ _ __   ___ _ __/ ___|| | | | ',
-    " | |_) | '__/ _ \\ / _` | '__/ _` | '_ ` _ \\| '_ ` _ \\ / _ \\ '__\\___ \\| |_| | ",
-    ' |  __/| | | (_) | (_| | | | (_| | | | | | | | | | | |  __/ |_  ___) |  _  | ',
-    ' |_|   |_|  \\___/ \\__,_|_|  \\__,_|_| |_| |_|_| |_| |_|\\___|_(_)|____/|_| |_| ',
-    '                  |___/                                                     ',
-  ];
-
   const [showAsciiArt, setShowAsciiArt] = useState(true);
-  const [asciiArtDone, setAsciiArtDone] = useState(true);
+  const commandInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const savedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);
@@ -80,12 +69,6 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
       processNextCommand();
     }
   }, [initialCommands, isInitializing, initialCommandsProcessed]);
-
-  useEffect(() => {
-    if (terminalRef.current) {
-      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
-    }
-  }, [history]);
 
   const processCommandWithHistory = async (commandString: string) => {
     setLastCommand(commandString);
@@ -144,56 +127,19 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   return (
     <div
       className={cn('terminal-glass rounded-md overflow-hidden flex flex-col h-full', className)}
+      onClick={handleTerminalClick}
     >
-      <div className="flex items-center p-2 bg-black/20 border-b border-white/10">
-        <div className="flex space-x-2 mr-4">
-          <div className="w-3 h-3 rounded-full bg-terminal-error" />
-          <div className="w-3 h-3 rounded-full bg-terminal-warning" />
-          <div className="w-3 h-3 rounded-full bg-terminal-success" />
-        </div>
-        <div className="text-terminal-foreground/70 text-sm font-mono flex-1 text-center">
-          <span className="programmer-sh-title">&lt;programmer&gt;.</span>
-          <span className="animate-cursor-blink">_</span>
-          <span className="ml-2 mr-2">~</span>
-          <span className="programmer-sh-page">{lastCommand}</span>
-        </div>
-        <div className="w-10"></div>
-      </div>
-
-      <div
-        ref={terminalRef}
-        className="flex-1 p-4 overflow-y-auto terminal-scrollbar terminal-content-height"
-        onClick={handleTerminalClick}
-      >
-        <div className="mb-6 text-terminal-prompt font-mono text-xs md:text-sm">
-          {showAsciiArt &&
-            asciiArt.map((line, i) => (
-              <div key={i} className="whitespace-pre">
-                {line}
-              </div>
-            ))}
-        </div>
-
-        {history.map((item, index) => (
-          <div key={index} className="mb-4">
-            <div className="flex items-center mb-1">
-              <span className="text-terminal-prompt font-mono mr-2">~$</span>
-              <span className="text-terminal-foreground font-mono">{item.command}</span>
-            </div>
-            <TerminalResponse response={item.result} animate={false} />
-          </div>
-        ))}
-
-        {!isInitializing && (
-          <CommandLine
-            onSubmit={processCommandWithHistory}
-            autoFocus
-            inputRef={commandInputRef}
-            disabled={isProcessingAsync}
-            history={commandHistory}
-          />
-        )}
-      </div>
+      <TerminalHeader lastCommand={lastCommand} />
+      
+      <TerminalContent
+        history={history}
+        isInitializing={isInitializing}
+        isProcessingAsync={isProcessingAsync}
+        showAsciiArt={showAsciiArt}
+        commandHistory={commandHistory}
+        onCommandSubmit={processCommandWithHistory}
+        inputRef={commandInputRef}
+      />
     </div>
   );
 };
