@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import Terminal from '@/components/Terminal';

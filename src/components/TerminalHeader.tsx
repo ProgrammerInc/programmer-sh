@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { X, Minus, Maximize2 } from 'lucide-react';
+import { X, Minus, Maximize2, Minimize2 } from 'lucide-react';
 import { 
   Tooltip,
   TooltipContent,
@@ -13,13 +13,15 @@ interface TerminalHeaderProps {
   onClose?: () => void;
   onMinimize?: () => void;
   onMaximize?: () => void;
+  isFullscreen?: boolean;
 }
 
 const TerminalHeader: React.FC<TerminalHeaderProps> = ({ 
   lastCommand,
   onClose,
   onMinimize,
-  onMaximize 
+  onMaximize,
+  isFullscreen = false
 }) => {
   return (
     <div className="flex items-center p-2 bg-black/20 border-b border-white/10">
@@ -68,12 +70,16 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
                 onClick={onMaximize}
               >
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Maximize2 className="text-black w-2 h-2" />
+                  {isFullscreen ? (
+                    <Minimize2 className="text-black w-2 h-2" />
+                  ) : (
+                    <Maximize2 className="text-black w-2 h-2" />
+                  )}
                 </div>
               </div>
             </TooltipTrigger>
             <TooltipContent side="bottom">
-              <p className="text-xs">Maximize</p>
+              <p className="text-xs">{isFullscreen ? 'Restore' : 'Maximize'}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>

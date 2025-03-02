@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import TerminalHeader from './TerminalHeader';
 import TerminalContent from './TerminalContent';
@@ -30,6 +31,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   const [commandsToProcess, setCommandsToProcess] = useState<string[]>([]);
   const [showAsciiArt, setShowAsciiArt] = useState(true);
   const [isTerminalVisible, setIsTerminalVisible] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const commandInputRef = useRef<HTMLInputElement>(null);
 
   // Initial commands to process
@@ -167,20 +169,30 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
     setIsTerminalVisible(false);
   };
 
+  // Handle toggling fullscreen mode
+  const handleMaximize = () => {
+    setIsFullscreen(!isFullscreen);
+  };
+
   if (!isTerminalVisible) {
     return null; // Don't render the terminal if it's not visible
   }
 
   return (
     <div
-      className={cn('terminal-glass rounded-md overflow-hidden flex flex-col h-full', className)}
+      className={cn(
+        'terminal-glass rounded-md overflow-hidden flex flex-col',
+        isFullscreen ? 'fixed inset-0 z-50 rounded-none' : 'h-full',
+        className
+      )}
       onClick={handleTerminalClick}
     >
       <TerminalHeader 
         lastCommand={lastCommand} 
         onClose={handleClose}
         onMinimize={() => console.log('Minimize clicked')}
-        onMaximize={() => console.log('Maximize clicked')}
+        onMaximize={handleMaximize}
+        isFullscreen={isFullscreen}
       />
       
       <TerminalContent
