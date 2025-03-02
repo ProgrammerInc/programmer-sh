@@ -4,7 +4,6 @@ import { convertLinksToAnchors } from './link-utils';
 import { AnimatedContentProps } from './types';
 
 const AnimatedContent: React.FC<AnimatedContentProps> = ({
-  content,
   displayText,
   isDone,
   isError,

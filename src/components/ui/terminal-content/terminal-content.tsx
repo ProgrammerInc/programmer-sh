@@ -3,16 +3,7 @@ import CommandLine from '../command-line';
 import TerminalResponse from '../terminal-response';
 import { HistoryItem } from '@/components/ui/terminal';
 import { useToast } from '@/hooks/use-toast';
-
-// Updated ASCII art for better readability of "Programmer.SH"
-const asciiArt = [
-  '  ____                                                          ____  _   _   ',
-  ' |  _ \\ _ __ ___   __ _ _ __ __ _ _ __ ___  ___ _ __   ___ _ __/ ___|| | | | ',
-  " | |_) | '__/ _ \\ / _` | '__/ _` | '_ ` _ \\| '_ ` _ \\ / _ \\ '__\\___ \\| |_| | ",
-  ' |  __/| | | (_) | (_| | | | (_| | | | | | | | | | | |  __/ |_  ___) |  _  | ',
-  ' |_|   |_|  \\___/ \\__,_|_|  \\__,_|_| |_| |_|_| |_| |_|\\___|_(_)|____/|_| |_| ',
-  '                  |___/                                                     ',
-];
+import AsciiArt from '../ascii-art/ascii-art';
 
 interface TerminalContentProps {
   history: HistoryItem[];
@@ -125,16 +116,7 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
       ref={terminalRef}
       className="flex-1 p-4 overflow-y-auto terminal-scrollbar terminal-content-height"
     >
-      {/* ASCII Art without animation */}
-      {showAsciiArt && (
-        <div className="mb-6 text-terminal-prompt font-mono text-xs md:text-sm">
-          {asciiArt.map((line, i) => (
-            <div key={i} className="whitespace-pre">
-              {line}
-            </div>
-          ))}
-        </div>
-      )}
+      {showAsciiArt && <AsciiArt />}
 
       {/* Command History */}
       {history.map((item, index) => (
