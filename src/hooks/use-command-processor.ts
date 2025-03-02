@@ -33,13 +33,16 @@ export const useCommandProcessor = (
       if (commandString.trim().toLowerCase() === 'history') {
         // Replace placeholder with actual history
         const historyOutput = commandHistory
-          .map((cmd, index) => `  ${index + 1}  ${cmd}`)
+          .map(
+            (cmd, index) =>
+              `  ${index + 1}.  <span class="command-link" data-command="${cmd}">${cmd}</span>`
+          )
           .join('\n');
 
         result = {
           content:
             historyOutput.length > 0
-              ? `Command History:\n${historyOutput}`
+              ? `Command History:\n\n${historyOutput}`
               : 'No command history available.',
           isError: false,
         };
