@@ -26,8 +26,10 @@ export const useCommandProcessor = (
 
   const processCommandWithHistory = useCallback(
     async (commandString: string) => {
-      setIsProcessingAsync(true);
+      // Always update the last executed command first
       setLastExecutedCommand(commandString);
+      
+      setIsProcessingAsync(true);
       let result = processCommand(commandString);
 
       // Special handling for history command
