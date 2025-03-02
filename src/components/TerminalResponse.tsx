@@ -206,6 +206,13 @@ const createMarkup = (htmlContent: string) => {
   return { __html: htmlContent };
 };
 
+// Helper function to detect if content contains HTML tags but exclude command links
+const containsHtmlTags = (content: string): boolean => {
+  // Check for HTML tags but make an exception for command-link spans which are handled separately
+  const htmlTagsRegex = /<(?!span class="command-link")[a-z][\s\S]*?>|<\/[a-z]+>/i;
+  return htmlTagsRegex.test(content);
+};
+
 const TerminalResponse: React.FC<TerminalResponseProps> = ({
   response,
   animate = false,
@@ -220,10 +227,7 @@ const TerminalResponse: React.FC<TerminalResponseProps> = ({
   // Check if content is HTML that needs to be rendered
   const isHtmlContent = 
     typeof response.content === 'string' && 
-    (response.content.includes('<div') || 
-     response.content.includes('<p') || 
-     response.content.includes('<span') || 
-     response.content.includes('<a '));
+    containsHtmlTags(response.content);
 
   // If content is not a string, render directly
   if (typeof response.content !== 'string') {
