@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import CommandLine from './CommandLine';
 import TerminalResponse from './TerminalResponse';
@@ -23,15 +24,16 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = ['welc
   const terminalRef = useRef<HTMLDivElement>(null);
   const commandInputRef = useRef<HTMLInputElement>(null);
 
+  // Updated ASCII art to match the provided image
   const asciiArt = [
-    ' _____                                                         _____ _    _ ',
-    '|  __ \\                                                       / ____| |  | |',
-    '| |__) | __ ___   __ _ _ __ __ _ _ __ ___  _ __ ___   ___ _ _| (___ | |__| |',
-    "|  ___/ '__/ _ \\ / _` | '__/ _` | '_ ` _ \\| '_ ` _ \\ / _ \\ '__\\___ \\|  __  |",
-    '| |   | | | (_) | (_| | | | (_| | | | | | | | | | | |  __/ |  ____) | |  | |',
-    '|_|   |_|  \\___/ \\__, |_|  \\__,_|_| |_| |_|_| |_| |_|\\___|_| |_____/|_|  |_|',
-    '                  __/ |                                                      ',
-    '                 |___/                                                       ',
+    '     _____                                                _____  _      _   ',
+    '    |  __ \\                                              / ____|| |    | |  ',
+    '    | |__) |_ __  ___   __ _  _ __  __ _  _ __ ___  _ __| (___ | |__  | |_ ',
+    '    |  ___/| \'__|/ _ \\ / _` || \'__|/ _` || \'_ ` _ \\| \'__|\\___ \\| \'_ \\ | __|',
+    '    | |    | |  | (_) | (_| || |  | (_| || | | | | | |   ____) | | | || |_ ',
+    '    |_|    |_|   \\___/ \\__, ||_|   \\__,_||_| |_| |_|_|  |_____/|_| |_| \\__|',
+    '                        __/ |                                               ',
+    '                       |___/                                                ',
   ];
 
   const { displayLines, currentLineText, isDone } = useMultiLineTypingEffect(asciiArt, {
