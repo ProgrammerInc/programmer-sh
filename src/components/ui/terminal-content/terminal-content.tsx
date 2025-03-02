@@ -2,15 +2,15 @@
 import React, { useEffect, useRef } from 'react';
 import { TerminalHistory } from '../terminal-history';
 import { CommandLine } from '../command-line';
-import { CommandHistoryType } from '@/hooks/use-terminal-history';
 import { HistoryItem } from '../terminal/Terminal';
 
+// Use string[] for commandHistory type since CommandHistoryType isn't exported
 interface TerminalContentProps {
   history: HistoryItem[];
   isInitializing: boolean;
   isProcessingAsync: boolean;
   showAsciiArt: boolean;
-  commandHistory: CommandHistoryType;
+  commandHistory: string[];
   onCommandSubmit: (command: string) => void;
   inputRef: React.RefObject<HTMLInputElement>;
   fullscreen?: boolean;
@@ -36,13 +36,17 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
 
   return (
     <div className={`flex-1 p-4 overflow-y-auto terminal-content-height terminal-scrollbar ${fullscreen ? 'h-[calc(100vh-46px)]' : ''}`} ref={contentRef}>
-      <TerminalHistory history={history} showAsciiArt={showAsciiArt} isProcessingAsync={isProcessingAsync} />
+      <TerminalHistory 
+        history={history} 
+        showAsciiArt={showAsciiArt} 
+        isProcessingAsync={isProcessingAsync} 
+      />
       
       {!isInitializing && (
         <CommandLine
-          onCommand={onCommandSubmit}
-          isDisabled={isProcessingAsync}
-          commandHistory={commandHistory}
+          onSubmit={onCommandSubmit}
+          disabled={isProcessingAsync}
+          history={commandHistory}
           inputRef={inputRef}
         />
       )}

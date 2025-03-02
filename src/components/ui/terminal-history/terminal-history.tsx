@@ -1,18 +1,19 @@
-import { CommandResult } from '@/utils/terminalCommands';
+
 import React from 'react';
 import TerminalResponse from '../terminal-response';
-
-interface HistoryItem {
-  command: string;
-  result: CommandResult;
-  timestamp: Date;
-}
+import { HistoryItem } from '../terminal/Terminal';
 
 interface TerminalHistoryProps {
   history: HistoryItem[];
+  showAsciiArt?: boolean;
+  isProcessingAsync?: boolean;
 }
 
-const TerminalHistory: React.FC<TerminalHistoryProps> = ({ history }) => {
+const TerminalHistory: React.FC<TerminalHistoryProps> = ({ 
+  history, 
+  showAsciiArt = true,
+  isProcessingAsync = false
+}) => {
   return (
     <>
       {history.map((item, index) => (
@@ -21,7 +22,10 @@ const TerminalHistory: React.FC<TerminalHistoryProps> = ({ history }) => {
             <span className="text-terminal-prompt font-mono mr-2">~$</span>
             <span className="text-terminal-foreground font-mono">{item.command}</span>
           </div>
-          <TerminalResponse response={item.result} animate={false} />
+          <TerminalResponse 
+            response={item.result} 
+            animate={false} 
+          />
         </div>
       ))}
     </>
