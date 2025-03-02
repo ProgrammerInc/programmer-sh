@@ -1,10 +1,9 @@
-
 import { CommandResult } from './types';
 
 export const helpCommand = (): CommandResult => {
   const commandList = [
     { name: 'help', description: 'Shows this help menu' },
-    { name: 'about', description: 'About James Black' },
+    { name: 'about', description: 'About this awesome developer' },
     { name: 'skills', description: 'View technical skills' },
     { name: 'experience', description: 'View work experience' },
     { name: 'education', description: 'View educational background' },
@@ -16,9 +15,7 @@ export const helpCommand = (): CommandResult => {
     { name: 'messages', description: 'View all saved messages' },
   ];
 
-  const helpText = commandList
-    .map(cmd => `  ${cmd.name.padEnd(20)} ${cmd.description}`)
-    .join('\n');
+  const helpText = commandList.map(cmd => `  ${cmd.name.padEnd(20)} ${cmd.description}`).join('\n');
 
   return {
     content: `Available commands:\n\n${helpText}`,

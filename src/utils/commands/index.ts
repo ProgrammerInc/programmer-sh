@@ -1,4 +1,3 @@
-
 // Re-export all commands
 export * from './helpCommand';
 export * from './systemCommands';
@@ -24,7 +23,7 @@ import { saveMessage, getMessages } from './messageCommands';
 export const processCommand = (input: string): CommandResult => {
   // Trim input and convert to lowercase for easier comparison
   const trimmedInput = input.trim();
-  
+
   // Split the input into command and arguments
   const parts = trimmedInput.split(' ');
   const command = parts[0].toLowerCase();
@@ -54,33 +53,39 @@ export const processCommand = (input: string): CommandResult => {
       return resumeCommand.execute();
     case 'welcome':
       return {
-        content: "Welcome to my portfolio terminal. Type 'help' to see available commands.",
-        isError: false
+        content: `Welcome to Programmer.SH Terminal Portfolio!
+      
+======================================================
+ 
+Type 'help' to see available commands.
+Try 'about' to learn more about me.
+`,
+        isError: false,
       };
     case 'save':
       if (!args) {
         return {
-          content: "Usage: save [your message]",
-          isError: true
+          content: 'Usage: save [your message]',
+          isError: true,
         };
       }
       // This returns a Promise, so we need to handle it specially
       return {
-        content: "Saving message...",
+        content: 'Saving message...',
         isAsync: true,
-        asyncResolver: () => saveMessage(args)
+        asyncResolver: () => saveMessage(args),
       };
     case 'messages':
       // This returns a Promise, so we need to handle it specially
       return {
-        content: "Fetching messages...",
+        content: 'Fetching messages...',
         isAsync: true,
-        asyncResolver: () => getMessages()
+        asyncResolver: () => getMessages(),
       };
     default:
       return {
         content: `Command not found: ${command}. Type 'help' to see available commands.`,
-        isError: true
+        isError: true,
       };
   }
 };
