@@ -1,6 +1,6 @@
 
 import { supabase } from '../../integrations/supabase/client';
-import { Profile, Skill, Experience, Project, Education } from '../../data/portfolioData';
+import { Profile, Skill, Experience, Project, Education, Contact } from '../../data/portfolioData';
 
 // Fetch profile data
 export const fetchProfile = async (): Promise<Profile | null> => {
@@ -34,9 +34,9 @@ export const fetchProfile = async (): Promise<Profile | null> => {
       items: skillCategory.skill_items.map((item: { name: string }) => item.name),
     }));
 
-    // Create a contact object with only the properties that exist in profileData
-    const contact: Record<string, string> = {
-      email: profileData.email,
+    // Create a contact object explicitly with the Contact interface to ensure all required properties are present
+    const contact: Contact = {
+      email: profileData.email, // Make sure this is always assigned
       phone: profileData.phone,
       bitbucket: profileData.bitbucket,
       bluesky: profileData.bluesky,
@@ -60,10 +60,16 @@ export const fetchProfile = async (): Promise<Profile | null> => {
 
     // Clean up undefined values
     Object.keys(contact).forEach(key => {
-      if (contact[key] === undefined) {
-        delete contact[key];
+      if (contact[key as keyof Contact] === undefined) {
+        delete contact[key as keyof Contact];
       }
     });
+
+    // Make sure email is always present
+    if (!contact.email) {
+      console.error('Email is required but not found in the database');
+      contact.email = 'missing@email.com'; // Fallback value
+    }
 
     return {
       name: profileData.name,
