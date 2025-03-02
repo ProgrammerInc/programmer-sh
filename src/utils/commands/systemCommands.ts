@@ -39,19 +39,30 @@ export const dateCommand: Command = {
   description: 'Display the current date and time',
   execute: () => {
     const now = new Date();
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      timeZoneName: 'short',
-    };
+    
+    // Format the date in the specified format: Sun Mar  2 12:15:17 CST 2025
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    
+    const day = days[now.getDay()];
+    const month = months[now.getMonth()];
+    const date = now.getDate();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const year = now.getFullYear();
+    
+    // Get timezone abbreviation
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const timezoneParts = timezone.split('/');
+    const timezoneAbbr = timezoneParts[timezoneParts.length - 1]
+      .slice(0, 3)
+      .toUpperCase();
+    
+    const formattedDate = `${day} ${month} ${date < 10 ? ' ' : ''}${date} ${hours}:${minutes}:${seconds} ${timezoneAbbr} ${year}`;
 
     return {
-      content: `Current Date and Time: ${now.toLocaleString('en-US', options)}`,
+      content: formattedDate,
       isError: false,
     };
   },
