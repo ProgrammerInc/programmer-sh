@@ -23,9 +23,6 @@ const Index = () => {
           // Only show welcome if it wasn't the last command
           if (lastCommand !== 'welcome') {
             setInitialCommands(['welcome']);
-          } else {
-            // Don't show welcome again if it was the last command
-            setInitialCommands([]);
           }
         } else {
           // Empty history, show welcome
@@ -33,7 +30,6 @@ const Index = () => {
         }
       } catch (error) {
         // Error parsing history, show welcome as fallback
-        console.error('Error parsing history:', error);
         setInitialCommands(['welcome']);
       }
     } else {
