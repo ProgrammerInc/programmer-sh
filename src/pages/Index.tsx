@@ -12,28 +12,8 @@ const Index = () => {
     // Check if there's existing history
     const savedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);
     
-    if (savedHistory) {
-      try {
-        const parsedHistory = JSON.parse(savedHistory);
-        
-        // Check if there's history and if the last command was NOT 'welcome'
-        if (parsedHistory.length > 0) {
-          const lastCommand = parsedHistory[parsedHistory.length - 1].command;
-          
-          // Only show welcome if it wasn't the last command
-          if (lastCommand !== 'welcome') {
-            setInitialCommands(['welcome']);
-          }
-        } else {
-          // Empty history, show welcome
-          setInitialCommands(['welcome']);
-        }
-      } catch (error) {
-        // Error parsing history, show welcome as fallback
-        setInitialCommands(['welcome']);
-      }
-    } else {
-      // No history at all, show welcome
+    // Show welcome command if there's no history (including after clear command)
+    if (!savedHistory || savedHistory === '[]') {
       setInitialCommands(['welcome']);
     }
     
