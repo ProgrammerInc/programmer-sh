@@ -21,7 +21,6 @@ const HtmlContent: React.FC<HtmlContentProps> = ({
   
   if (hasHtmlTags) {
     // For content with HTML tags, use dangerouslySetInnerHTML
-    // This will lose interactivity for command links, but that's okay for HTML-rich content
     return (
       <div
         className={cn(
@@ -30,6 +29,13 @@ const HtmlContent: React.FC<HtmlContentProps> = ({
           className
         )}
         dangerouslySetInnerHTML={createMarkup(content)}
+        onClick={(e) => {
+          // Handle clicks on any links to ensure they open in a new tab
+          const target = e.target as HTMLElement;
+          if (target.tagName === 'A' && !target.classList.contains('command-link')) {
+            e.stopPropagation();
+          }
+        }}
       />
     );
   }

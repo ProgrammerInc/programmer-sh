@@ -54,6 +54,7 @@ export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
       });
     }
 
+    console.log('Fetched social links:', socialLinks); // Debug log
     return socialLinks;
   } catch (error) {
     console.error('Error fetching social links:', error);

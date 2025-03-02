@@ -72,8 +72,11 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socia
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-terminal-title hover:text-terminal-foreground transition-colors"
+              className="text-terminal-title hover:text-terminal-foreground transition-colors cursor-pointer"
               aria-label={`${link.type} Profile`}
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent terminal focus
+              }}
             >
               {renderSocialIcon(link.type)}
             </a>
@@ -85,8 +88,11 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socia
               href="https://github.com/ProgrammerInc"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-terminal-title hover:text-terminal-foreground transition-colors"
+              className="text-terminal-title hover:text-terminal-foreground transition-colors cursor-pointer"
               aria-label="GitHub Profile"
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent terminal focus
+              }}
             >
               <Github className="w-4 h-4" />
             </a>
@@ -94,8 +100,11 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socia
               href="https://linkedin.com/in/ProgrammerInc"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-terminal-title hover:text-terminal-foreground transition-colors"
+              className="text-terminal-title hover:text-terminal-foreground transition-colors cursor-pointer"
               aria-label="LinkedIn Profile"
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent terminal focus
+              }}
             >
               <Linkedin className="w-4 h-4" />
             </a>
@@ -103,8 +112,11 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socia
               href="https://x.com/ProgrammerInc"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-terminal-title hover:text-terminal-foreground transition-colors"
+              className="text-terminal-title hover:text-terminal-foreground transition-colors cursor-pointer"
               aria-label="X.com/Twitter Profile"
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent terminal focus
+              }}
             >
               <Twitter className="w-4 h-4" />
             </a>

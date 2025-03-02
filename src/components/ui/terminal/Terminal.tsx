@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import TerminalHeader from '../terminal-header';
 import { TerminalContent } from '../terminal-content';
@@ -90,10 +91,13 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) 
     };
   }, []);
 
+  // Load social links
   useEffect(() => {
     const loadSocialLinks = async () => {
       try {
+        console.log('Fetching social links...');
         const links = await fetchSocialLinks();
+        console.log('Social links loaded:', links);
         setSocialLinks(links);
       } catch (error) {
         console.error('Failed to load social links:', error);
