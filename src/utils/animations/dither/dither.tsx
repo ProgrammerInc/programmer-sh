@@ -242,7 +242,10 @@ function DitheredWaves({
       effect.current.uniforms.get('resolution')
     ) {
       const resolutionUniform = effect.current.uniforms.get('resolution');
-      if (resolutionUniform && resolutionUniform.value instanceof THREE.Vector2) {
+      // Fix: Check if resolutionUniform.value is defined before using instanceof
+      if (resolutionUniform && resolutionUniform.value && 
+          typeof resolutionUniform.value === 'object' && 
+          'set' in resolutionUniform.value) {
         resolutionUniform.value.set(newWidth, newHeight);
       }
     }

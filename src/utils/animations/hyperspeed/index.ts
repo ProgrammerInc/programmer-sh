@@ -1,2 +1,5 @@
-export * from './hyperspeed';
-export * from './hyperspeed.presets';
+
+import Hyperspeed from './hyperspeed';
+
+export default Hyperspeed;
+export { Hyperspeed };

@@ -1,11 +1,11 @@
 
-import { Aurora } from './aurora';
-// import { Balatro } from './balatro'; // Uncomment when this module is available 
+import Aurora from './aurora';
+// import Balatro from './balatro'; // Uncomment when this module is available 
 import Dither from './dither';
 import Hyperspeed from './hyperspeed';
 import { LetterGlitch } from './letter-glitch';
 import { Lightning } from './lightning';
-import { Threads } from './threads';
+import Threads from './threads';
 
 export {
   Aurora,
