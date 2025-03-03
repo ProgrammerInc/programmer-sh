@@ -24,7 +24,7 @@ export const experienceCommand: Command = {
 ${experience
   .map(
     exp => `
-<strong>Position:</strong> <span class="text-terminal-prompt">${exp.position}</span> &amp; <span class="text-terminal-prompt">${exp.company}</span>
+<strong>Position:</strong> <span class="text-terminal-prompt">${exp.position}</span> @ <span class="text-terminal-prompt">${exp.company}</span>
 <strong>Duration:</strong> ${exp.duration}
 
 <strong>Description:</strong> ${exp.description}
