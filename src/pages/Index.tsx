@@ -2,8 +2,10 @@ import Terminal from '@/components/ui/terminal';
 import { Toaster } from '@/components/ui/toaster';
 import Aurora from '@/utils/animations/aurora/aurora';
 import Balatro from '@/utils/animations/balatro/balatro';
+import Dither from '@/utils/animations/dither/dither';
 import { LetterGlitch } from '@/utils/animations/letter-glitch';
 import { Lightning } from '@/utils/animations/lightning';
+import Threads from '@/utils/animations/threads/threads';
 import { processThemeFromUrl } from '@/utils/commands/themeCommand';
 import { extractUrlParameters, validUrlCommands } from '@/utils/commands/urlCommandHandler';
 import { getCurrentWallpaper, wallpapers } from '@/utils/commands/wallpaperCommand';
@@ -140,6 +142,20 @@ const Index = () => {
       {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'balatro' && (
         <Balatro isRotate={false} mouseInteraction={true} pixelFilter={700} />
       )}
+      {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'dither' && (
+        <div id="ditherContainer" className="dither-container">
+          <Dither
+            waveColor={[0.5, 0.5, 0.5]}
+            disableAnimation={false}
+            enableMouseInteraction={true}
+            mouseRadius={0.3}
+            colorNum={4}
+            waveAmplitude={0.3}
+            waveFrequency={3}
+            waveSpeed={0.05}
+          />
+        </div>
+      )}
       {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'letter-glitch' && (
         <LetterGlitch
           glitchColors={['#2b4539', '#61dca3', '#61b3dc']}
@@ -150,8 +166,13 @@ const Index = () => {
         />
       )}
       {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'lightning' && (
-        <div id="LightningContainer" className="lightning-container">
+        <div id="lightningContainer" className="lightning-container">
           <Lightning hue={220} xOffset={0} speed={1} intensity={1} size={1} />
+        </div>
+      )}
+      {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'threads' && (
+        <div id="threadsContainer" className="threads-container">
+          <Threads amplitude={1} distance={0} enableMouseInteraction={true} />
         </div>
       )}
       <div id="terminalContainer" className="terminal-container">

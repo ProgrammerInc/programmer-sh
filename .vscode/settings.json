@@ -48,6 +48,7 @@
     "cashapp",
     "castarray",
     "clsx",
+    "cnoise",
     "colord",
     "Consolas",
     "cosmiconfig",
@@ -103,6 +104,9 @@
     "ntvs",
     "nums",
     "parseargs",
+    "perc",
+    "Perlin",
+    "Pfmin",
     "picocolors",
     "pinterest",
     "pkgjs",
@@ -127,8 +131,13 @@
     "vitejs",
     "webidl",
     "whatwg",
+    "wwyy",
+    "xnoise",
     "XVCJ",
     "xxzz",
-    "xyxy"
+    "xyxy",
+    "xzxz",
+    "yyww",
+    "zxzx"
   ]
 }

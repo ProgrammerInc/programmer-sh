@@ -197,6 +197,14 @@ body {
     z-index: 1;
   }
 
+  .threads-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
   @keyframes star-movement-bottom {
     0% {
       transform: translate(0%, 0%);
