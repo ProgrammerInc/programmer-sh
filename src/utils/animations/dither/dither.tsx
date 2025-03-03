@@ -1,3 +1,4 @@
+
 import { Canvas, ThreeEvent, useFrame, useThree } from '@react-three/fiber';
 import { EffectComposer, wrapEffect } from '@react-three/postprocessing';
 import { Effect } from 'postprocessing';
@@ -236,10 +237,12 @@ function DitheredWaves({
       currentRes.set(newWidth, newHeight);
       if (
         effect.current &&
-        effect.current.uniforms.get('resolution') &&
-        effect.current.uniforms.get('resolution')!.value
+        effect.current.uniforms.get('resolution')
       ) {
-        effect.current.uniforms.get('resolution')!.value.set(newWidth, newHeight);
+        const resolutionUniform = effect.current.uniforms.get('resolution');
+        if (resolutionUniform && resolutionUniform.value instanceof THREE.Vector2) {
+          resolutionUniform.value.set(newWidth, newHeight);
+        }
       }
     }
   }, [size, gl]);
