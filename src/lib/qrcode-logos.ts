@@ -5,8 +5,8 @@ export const programmerIcon: ImageSettings = {
   height: 69,
   width: 69,
   excavate: true,
-  logoPadding: 100,
-  logoPaddingStyle: 'circle',
+  // logoPadding: 100,
+  // logoPaddingStyle: 'circle',
   opacity: 1,
   quietZone: 10,
   removeQrCodeBehindLogo: true
