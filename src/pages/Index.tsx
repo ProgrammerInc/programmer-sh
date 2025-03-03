@@ -131,7 +131,7 @@ const Index = () => {
           glitchColors={['#2b4539', '#61dca3', '#61b3dc']}
           glitchSpeed={50}
           centerVignette={false}
-          outerVignette={false}
+          outerVignette={true}
           smooth={true}
         />
       )}
