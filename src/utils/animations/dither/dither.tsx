@@ -1,4 +1,3 @@
-
 import { Canvas, ThreeEvent, useFrame, useThree } from '@react-three/fiber';
 import { EffectComposer, wrapEffect } from '@react-three/postprocessing';
 import { Effect } from 'postprocessing';
@@ -242,13 +241,16 @@ function DitheredWaves({
       effect.current.uniforms.get('resolution')
     ) {
       const resolutionUniform = effect.current.uniforms.get('resolution');
-      // Fix: Check if resolutionUniform.value is defined and has the set method
-      if (resolutionUniform && 
-          resolutionUniform.value && 
-          typeof resolutionUniform.value === 'object' && 
-          'set' in resolutionUniform.value) {
-        // Use non-null assertion operator to tell TypeScript we're sure it's not null
-        (resolutionUniform.value as THREE.Vector2).set(newWidth, newHeight);
+      // Fix: Using type guard and assertion pattern
+      if (resolutionUniform && resolutionUniform.value) {
+        // First check that the value exists, then assert its type for TypeScript
+        const value = resolutionUniform.value as unknown;
+        
+        // Now check if the value is an object with a set method
+        if (typeof value === 'object' && value !== null && 'set' in value) {
+          // Safe to use set method now
+          (value as THREE.Vector2).set(newWidth, newHeight);
+        }
       }
     }
   }, [size, gl]);
