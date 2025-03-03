@@ -1,5 +1,5 @@
-import type { HistoryItem } from './terminal2';
-import Terminal from './terminal2';
+import type { HistoryItem } from './terminal';
+import Terminal from './terminal';
 
 export { Terminal };
 export type { HistoryItem };
