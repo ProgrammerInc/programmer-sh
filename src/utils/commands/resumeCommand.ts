@@ -52,6 +52,7 @@ ${website ? `URL:${website}` : ''}
 ${github ? `X-SOCIALPROFILE;TYPE=github:${github}` : ''}
 ${linkedin ? `X-SOCIALPROFILE;TYPE=linkedin:${linkedin}` : ''}
 ${twitter ? `X-SOCIALPROFILE;TYPE=twitter:${twitter}` : ''}
+PHOTO;VALUE=uri:https://programmer.sh/images/programmer-icon-dark-medium.png
 END:VCARD`;
 
         return {

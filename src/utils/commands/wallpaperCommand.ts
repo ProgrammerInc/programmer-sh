@@ -8,6 +8,24 @@ export const wallpapers = {
     description: 'Default gradient background',
     type: 'gradient'
   },
+  aurora: {
+    id: 'aurora',
+    name: 'Aurora',
+    description: 'Northern Lights in the night sky',
+    type: 'animation'
+  },
+  balatro: {
+    id: 'balatro',
+    name: 'Balatro',
+    description: 'Balatro - a rainbow of colors',
+    type: 'animation'
+  },
+  ballpit: {
+    id: 'ballpit',
+    name: 'Ballpit',
+    description: 'A ball pit of many colorful balls',
+    type: 'animation'
+  },
   code: {
     id: 'code',
     name: 'Code',
@@ -15,19 +33,11 @@ export const wallpapers = {
     type: 'image',
     url: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80'
   },
-  workspace: {
-    id: 'workspace',
-    name: 'Workspace',
-    description: 'Clean workspace with iMac',
-    type: 'image',
-    url: 'https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&q=80'
-  },
-  mountains: {
-    id: 'mountains',
-    name: 'Mountains',
-    description: "Bird's eye view of green mountains",
-    type: 'image',
-    url: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=80'
+  dither: {
+    id: 'dither',
+    name: 'Dither',
+    description: 'Dithered animation wallpaper',
+    type: 'animation'
   },
   fog: {
     id: 'fog',
@@ -36,12 +46,92 @@ export const wallpapers = {
     type: 'image',
     url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80'
   },
+  'grid-distortion': {
+    id: 'grid-distortion',
+    name: 'Grid Distortion',
+    description: 'Grid Distortion - a twisted grid of tiles flipping and rotating',
+    type: 'animation'
+  },
+  hyperspeed: {
+    id: 'hyperspeed',
+    name: 'Hyperspeed',
+    description: 'Hyperspeed - streams of light race across the screen',
+    type: 'animation'
+  },
+  iridescence: {
+    id: 'iridescence',
+    name: 'Iridescence',
+    description: 'Iridescence - waves of iridescence',
+    type: 'animation'
+  },
+  'letter-glitch': {
+    id: 'letter-glitch',
+    name: 'Letter Glitch',
+    description: "There's a glitch in the matrix",
+    type: 'animation'
+  },
+  lightning: {
+    id: 'lightning',
+    name: 'Lightning',
+    description: 'Lightning across in the sky',
+    type: 'animation'
+  },
+  'liquid-chrome': {
+    id: 'liquid-chrome',
+    name: 'Liquid Chrome',
+    description: 'Liquid Chrome - monochrome waves of liquid metal',
+    type: 'animation'
+  },
+  'magnetic-lines': {
+    id: 'magnetic-lines',
+    name: 'Magnetic Lines',
+    description: 'Magnetic Lines - magnetic lines follows the cursor across the screen',
+    type: 'animation'
+  },
+  'meta-balls': {
+    id: 'meta-balls',
+    name: 'Meta Balls',
+    description: 'Meta Balls - reactivate balls on cursor hover',
+    type: 'animation'
+  },
+  mountains: {
+    id: 'mountains',
+    name: 'Mountains',
+    description: "Bird's eye view of green mountains",
+    type: 'image',
+    url: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=80'
+  },
   ocean: {
     id: 'ocean',
     name: 'Ocean',
     description: 'Ocean wave at beach',
     type: 'image',
     url: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&q=80'
+  },
+  particles: {
+    id: 'particles',
+    name: 'Particles',
+    description: 'Particles - lucy in the sky with diamonds',
+    type: 'animation'
+  },
+  threads: {
+    id: 'threads',
+    name: 'Threads',
+    description: 'The threads of fate on your desktop',
+    type: 'animation'
+  },
+  waves: {
+    id: 'waves',
+    name: 'Waves',
+    description: 'Waves - trippy psychedelic liquid animation wallpaper',
+    type: 'animation'
+  },
+  workspace: {
+    id: 'workspace',
+    name: 'Workspace',
+    description: 'Clean workspace with iMac',
+    type: 'image',
+    url: 'https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&q=80'
   }
 };
 
@@ -58,7 +148,7 @@ export interface Wallpaper {
 }
 
 // Current wallpaper key in localStorage
-const WALLPAPER_STORAGE_KEY = 'terminal_wallpaper';
+export const WALLPAPER_STORAGE_KEY = 'terminal_wallpaper';
 
 // Get current wallpaper from localStorage or default to code wallpaper instead of default
 export const getCurrentWallpaper = (): string => {

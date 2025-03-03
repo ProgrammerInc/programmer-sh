@@ -2,18 +2,18 @@ import { CommandResult } from '@/utils/terminalCommands';
 import React from 'react';
 import TerminalResponse from '../terminal-response';
 
-interface HistoryItem {
+export interface HistoryItem {
   command: string;
   result: CommandResult;
   timestamp: Date;
 }
 
-interface TerminalHistoryProps {
+export interface TerminalHistoryProps {
   history: HistoryItem[];
   onCommandClick?: (command: string) => void;
 }
 
-const TerminalHistory: React.FC<TerminalHistoryProps> = ({ history, onCommandClick }) => {
+export const TerminalHistory: React.FC<TerminalHistoryProps> = ({ history, onCommandClick }) => {
   return (
     <>
       {history.map((item, index) => (

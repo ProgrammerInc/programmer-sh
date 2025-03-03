@@ -5,12 +5,15 @@ import { isIncognitoMode } from '@/utils/incognito';
 import { ChevronDown, LogIn, LogOut, Minus, Plus, Settings, User, X } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 
-interface TerminalHeaderProps {
+export interface TerminalHeaderProps {
   lastCommand?: string;
   socialLinks?: SocialLink[];
 }
 
-const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '', socialLinks = [] }) => {
+export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
+  lastCommand = '',
+  socialLinks = []
+}) => {
   const { userEmail } = useTerminalAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isAnonymous, setIsAnonymous] = useState(false);

@@ -1,11 +1,6 @@
+import { ensureHttps } from '@/lib/utils';
 import type { SocialLink } from '../../types/socialLinks';
 import { fetchProfile } from './portfolioServices';
-
-// Helper to ensure URLs have https:// prefix
-const ensureHttps = (url: string): string => {
-  if (!url) return url;
-  return url.startsWith('http') ? url : `https://${url}`;
-};
 
 // Fetch social links from the profile
 export const fetchSocialLinks = async (): Promise<SocialLink[]> => {

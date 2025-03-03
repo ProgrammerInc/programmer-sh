@@ -21,12 +21,12 @@ export interface HistoryItem {
   timestamp: Date;
 }
 
-interface TerminalProps {
+export interface TerminalProps {
   className?: string;
   initialCommands?: string[];
 }
 
-const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) => {
+export const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) => {
   const [showAsciiArt, setShowAsciiArt] = useState(true);
   const commandInputRef = useRef<HTMLInputElement>(null);
 

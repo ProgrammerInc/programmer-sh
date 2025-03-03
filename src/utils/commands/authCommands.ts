@@ -1,11 +1,6 @@
+import { isValidEmail } from '@/lib/utils';
 import { supabase } from '../../integrations/supabase/client';
 import { Command, CommandResult } from './types';
-
-// Helper function to validate email
-const isValidEmail = (email: string): boolean => {
-  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return pattern.test(email);
-};
 
 // Login command implementation
 export const loginCommand: Command = {

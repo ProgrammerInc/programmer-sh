@@ -110,6 +110,14 @@ export default {
         'scale-up': {
           '0%': { transform: 'scale(1)' },
           '100%': { transform: 'scale(1.1)' }
+        },
+        'star-movement-bottom': {
+          '0%': { transform: 'translateX(0) rotate(0)' },
+          '100%': { transform: 'translateX(-100vw) rotate(360deg)' }
+        },
+        'star-movement-top': {
+          '0%': { transform: 'translateX(0) rotate(0)' },
+          '100%': { transform: 'translateX(100vw) rotate(360deg)' }
         }
       },
       animation: {
@@ -120,7 +128,9 @@ export default {
         'fade-in': 'fade-in 0.5s ease-out',
         'fade-out': 'fade-out 0.5s ease-out',
         'glow-pulse': 'glow-pulse 2s infinite',
-        'scale-up': 'scale-up 0.2s ease-out'
+        'scale-up': 'scale-up 0.2s ease-out',
+        'star-movement-bottom': 'star-movement-bottom 6s linear infinite',
+        'star-movement-top': 'star-movement-top 6s linear infinite'
       },
       fontFamily: {
         mono: ['JetBrains Mono', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', 'monospace']

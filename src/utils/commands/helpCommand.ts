@@ -31,7 +31,7 @@ export const helpCommand: Command = {
 };
 
 // Get help for a specific command
-const getSpecificCommandHelp = (commandName: string): string | undefined => {
+export const getSpecificCommandHelp = (commandName: string): string | undefined => {
   switch (commandName) {
     case 'help':
       return `

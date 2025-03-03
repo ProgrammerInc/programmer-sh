@@ -1,5 +1,6 @@
 import Terminal from '@/components/ui/terminal';
-import { Toaster } from '@/components/ui/toaster/toaster';
+import { Toaster } from '@/components/ui/toaster';
+import { LetterGlitch } from '@/utils/animations/letter-glitch';
 import { processThemeFromUrl } from '@/utils/commands/themeCommand';
 import { extractUrlParameters, validUrlCommands } from '@/utils/commands/urlCommandHandler';
 import { getCurrentWallpaper, wallpapers } from '@/utils/commands/wallpaperCommand';
@@ -105,7 +106,9 @@ const Index = () => {
     const wallpaper = wallpapers[currentWallpaper];
     const classes = ['wallpaper-container'];
 
-    if (wallpaper.type === 'gradient') {
+    if (wallpaper.type === 'animation') {
+      classes.push('wallpaper-animation');
+    } else if (wallpaper.type === 'gradient') {
       classes.push('wallpaper-gradient');
     } else if (wallpaper.type === 'image') {
       classes.push('wallpaper-image');
@@ -119,16 +122,29 @@ const Index = () => {
     return classes.join(' ');
   };
 
+  const wallpaperClasses = getWallpaperClasses();
+
   return (
-    <div className={getWallpaperClasses()}>
-      <div
-        className={`w-full max-w-4xl h-[80vh] transition-all duration-1000 ease-out terminal-glow-shadow ${
-          isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
-        }`}
-      >
-        <Terminal initialCommands={initialCommands} />
+    <div className={wallpaperClasses}>
+      {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'letter-glitch' && (
+        <LetterGlitch
+          glitchColors={['#2b4539', '#61dca3', '#61b3dc']}
+          glitchSpeed={50}
+          centerVignette={true}
+          outerVignette={false}
+          smooth={true}
+        />
+      )}
+      <div id="terminalContainer" className="terminal-container">
+        <div
+          className={`h-[80vh] w-[80vw] max-w-4xl transition-all duration-1000 ease-out terminal-glow-shadow ${
+            isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+          }`}
+        >
+          <Terminal initialCommands={initialCommands} />
+        </div>
+        <Toaster />
       </div>
-      <Toaster />
     </div>
   );
 };

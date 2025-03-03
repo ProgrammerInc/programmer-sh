@@ -44,7 +44,7 @@ export interface QRCodeProps {
   imageSettings?: ImageSettings;
 }
 
-const QRCodeComponent: React.FC<QRCodeProps> = ({
+export const QRCodeComponent: React.FC<QRCodeProps> = ({
   value,
   bgColor = '#31373F',
   fgColor = '#f1f1f1',
