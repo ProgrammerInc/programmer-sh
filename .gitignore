@@ -12,6 +12,15 @@ dist
 dist-ssr
 *.local
 
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+.env.development.local
+.env.production.local
+!.env.example
+
 # Editor directories and files
 .idea
 .DS_Store
