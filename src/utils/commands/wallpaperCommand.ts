@@ -1,3 +1,4 @@
+
 import { Command, CommandResult } from './types';
 
 // Predefined wallpapers
@@ -136,7 +137,7 @@ export const wallpapers = {
 };
 
 // Wallpaper types
-export type WallpaperType = 'gradient' | 'image';
+export type WallpaperType = 'gradient' | 'image' | 'animation';
 
 // Wallpaper definition
 export interface Wallpaper {
@@ -185,7 +186,7 @@ export const wallpaperCommand: Command = {
       const availableWallpapers = Object.entries(wallpapers)
         .map(
           ([id, wallpaper]) =>
-            `\n  - <span class="command-link" data-command="wallpaper ${id}">${wallpaper.id}</span>: ${wallpaper.description}`
+            `\n  - <span class="command-link" data-command="wallpaper ${wallpaper.id}">${wallpaper.id}</span>: ${wallpaper.description}`
         )
         .join('');
 

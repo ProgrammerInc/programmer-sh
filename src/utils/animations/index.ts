@@ -1,11 +1,18 @@
 
-export { default as Aurora } from './aurora';
-// We can either recreate the missing modules or comment them out
-// Let's comment them out for now since they appear to be missing
-// export { default as Balatro } from './balatro';
-// export { default as Dither } from './dither';
-export { default as LetterGlitch } from './letter-glitch';
-export { default as Lightning } from './lightning';
-// Using relative path for Hyperspeed to ensure it's found
-export { default as Hyperspeed } from './hyperspeed/hyperspeed';
-export { default as Threads } from './threads';
+import { Aurora } from './aurora';
+// import { Balatro } from './balatro'; // Uncomment when this module is available 
+import Dither from './dither';
+import Hyperspeed from './hyperspeed';
+import { LetterGlitch } from './letter-glitch';
+import { Lightning } from './lightning';
+import { Threads } from './threads';
+
+export {
+  Aurora,
+  // Balatro, // Uncomment when this module is available
+  Dither,
+  Hyperspeed,
+  LetterGlitch,
+  Lightning,
+  Threads
+};

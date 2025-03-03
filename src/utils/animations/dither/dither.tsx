@@ -233,16 +233,17 @@ function DitheredWaves({
     const newWidth = Math.floor(size.width * dpr);
     const newHeight = Math.floor(size.height * dpr);
     const currentRes = waveUniformsRef.current.resolution.value;
-    if (currentRes.x !== newWidth || currentRes.y !== newHeight) {
-      currentRes.set(newWidth, newHeight);
-      if (
-        effect.current &&
-        effect.current.uniforms.get('resolution')
-      ) {
-        const resolutionUniform = effect.current.uniforms.get('resolution');
-        if (resolutionUniform && resolutionUniform.value instanceof THREE.Vector2) {
-          resolutionUniform.value.set(newWidth, newHeight);
-        }
+    
+    // Fix: Using Vector2's set method
+    currentRes.set(newWidth, newHeight);
+    
+    if (
+      effect.current &&
+      effect.current.uniforms.get('resolution')
+    ) {
+      const resolutionUniform = effect.current.uniforms.get('resolution');
+      if (resolutionUniform && resolutionUniform.value instanceof THREE.Vector2) {
+        resolutionUniform.value.set(newWidth, newHeight);
       }
     }
   }, [size, gl]);
