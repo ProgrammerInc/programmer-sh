@@ -1,4 +1,3 @@
-
 import { HistoryItem } from '@/components/ui/terminal';
 import { useToast } from '@/hooks/use-toast';
 import React, { useEffect, useRef, useState } from 'react';
@@ -32,46 +31,12 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
   const [isSelecting, setIsSelecting] = useState(false);
   const [commandInput, setCommandInput] = useState('');
 
-  // Enhanced scroll to bottom functionality
-  const scrollToBottom = () => {
+  // Scroll to bottom when history changes
+  useEffect(() => {
     if (terminalRef.current) {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
     }
-  };
-
-  // Scroll to bottom when history changes, when command processing starts/ends,
-  // and when the component mounts (page load)
-  useEffect(() => {
-    scrollToBottom();
-  }, [history, isProcessingAsync]);
-
-  // Initial scroll on mount (page load)
-  useEffect(() => {
-    scrollToBottom();
-    
-    // Also listen for terminal content changes
-    const handleTerminalContentChanged = () => {
-      setTimeout(scrollToBottom, 0);
-    };
-    
-    document.addEventListener('terminalContentChanged', handleTerminalContentChanged);
-    return () => {
-      document.removeEventListener('terminalContentChanged', handleTerminalContentChanged);
-    };
-  }, []);
-
-  // Listen for command execution to scroll to bottom
-  useEffect(() => {
-    const handleCommandExecution = () => {
-      // Use setTimeout to ensure this happens after the DOM is updated
-      setTimeout(scrollToBottom, 0);
-    };
-
-    document.addEventListener('commandExecuted', handleCommandExecution);
-    return () => {
-      document.removeEventListener('commandExecuted', handleCommandExecution);
-    };
-  }, []);
+  }, [history]);
 
   // Handle text selection and auto-copy to clipboard
   useEffect(() => {

@@ -1,4 +1,3 @@
-
 import { HistoryItem } from '@/components/ui/terminal';
 import { processCommand } from '@/utils/commands';
 import { useCallback, useEffect, useState } from 'react';
@@ -76,10 +75,6 @@ export const useCommandProcessor = (
           });
           document.dispatchEvent(welcomeEvent);
         }
-        
-        // Dispatch event to ensure scroll happens after clearing terminal
-        const scrollEvent = new CustomEvent('terminalContentChanged');
-        document.dispatchEvent(scrollEvent);
         return;
       }
 
@@ -114,17 +109,9 @@ export const useCommandProcessor = (
           );
         } finally {
           setIsProcessingAsync(false);
-          
-          // After async processing is complete, dispatch an event to scroll
-          const scrollEvent = new CustomEvent('terminalContentChanged');
-          document.dispatchEvent(scrollEvent);
         }
       } else {
         setIsProcessingAsync(false);
-        
-        // Dispatch an event to ensure scroll after command is processed
-        const scrollEvent = new CustomEvent('terminalContentChanged');
-        document.dispatchEvent(scrollEvent);
       }
     },
     [commandHistory, setHistory, setLastExecutedCommand, setIsProcessingAsync]
@@ -154,10 +141,6 @@ export const useCommandProcessor = (
           setTimeout(processNextCommand, 300);
         } else {
           setIsInitializing(false);
-          
-          // Dispatch a final scroll event after initialization is complete
-          const scrollEvent = new CustomEvent('terminalContentChanged');
-          document.dispatchEvent(scrollEvent);
         }
       };
       processNextCommand();
