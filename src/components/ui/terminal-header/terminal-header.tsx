@@ -10,10 +10,7 @@ export interface TerminalHeaderProps {
   socialLinks?: SocialLink[];
 }
 
-export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
-  lastCommand = '',
-  socialLinks = []
-}) => {
+export const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '' }) => {
   const { userEmail } = useTerminalAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isAnonymous, setIsAnonymous] = useState(false);

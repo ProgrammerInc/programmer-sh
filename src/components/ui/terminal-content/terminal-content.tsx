@@ -2,6 +2,7 @@ import { HistoryItem } from '@/components/ui/terminal';
 import { useToast } from '@/hooks/use-toast';
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { programmerIcon } from '../../../lib/qrcode-logos';
 import AsciiArt from '../ascii-art/ascii-art';
 import CommandLine from '../command-line';
 import TerminalHistory from '../terminal-history';
@@ -188,13 +189,13 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
                       bgColor,
                       fgColor,
                       ecLevel,
-                      // eyeColor,
-                      // eyeRadius,
-                      // logoImage: programmerIcon.src,
-                      // logoWidth: programmerIcon.width,
-                      // logoHeight: programmerIcon.height,
-                      // logoPadding: programmerIcon.logoPadding,
-                      // logoPaddingStyle: programmerIcon.logoPaddingStyle,
+                      eyeColor,
+                      eyeRadius,
+                      logoImage: programmerIcon.src,
+                      logoWidth: programmerIcon.width,
+                      logoHeight: programmerIcon.height,
+                      logoPadding: programmerIcon.logoPadding,
+                      logoPaddingStyle: programmerIcon.logoPaddingStyle,
                       qrStyle,
                       removeQrCodeBehindLogo: false,
                       size,
