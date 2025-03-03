@@ -1,4 +1,3 @@
-
 import { HistoryItem } from '@/components/ui/terminal';
 import { processCommand } from '@/utils/commands';
 import { useCallback, useEffect, useState } from 'react';
@@ -28,13 +27,13 @@ export const useCommandProcessor = (
     async (commandString: string) => {
       // Always update the last executed command first
       setLastExecutedCommand(commandString);
-      
+
       // Dispatch event for the command execution
       const commandExecutedEvent = new CustomEvent('commandExecuted', {
         detail: { command: commandString }
       });
       document.dispatchEvent(commandExecutedEvent);
-      
+
       setIsProcessingAsync(true);
       let result = processCommand(commandString);
 
@@ -53,7 +52,7 @@ export const useCommandProcessor = (
             historyOutput.length > 0
               ? `Command History:\n\n${historyOutput}`
               : 'No command history available.',
-          isError: false,
+          isError: false
         };
       }
 
@@ -65,11 +64,11 @@ export const useCommandProcessor = (
           const welcomeHistoryItem = {
             command: 'welcome',
             result: result.runAfterClear,
-            timestamp: new Date(),
+            timestamp: new Date()
           };
           setHistory([welcomeHistoryItem]);
           setLastExecutedCommand('welcome');
-          
+
           // Update page title for the welcome command
           const welcomeEvent = new CustomEvent('commandExecuted', {
             detail: { command: 'welcome' }
@@ -82,7 +81,7 @@ export const useCommandProcessor = (
       const historyItem = {
         command: commandString,
         result,
-        timestamp: new Date(),
+        timestamp: new Date()
       };
 
       setHistory(prev => [...prev, historyItem]);
@@ -102,8 +101,8 @@ export const useCommandProcessor = (
                     ...item,
                     result: {
                       content: `Error: ${error instanceof Error ? error.message : String(error)}`,
-                      isError: true,
-                    },
+                      isError: true
+                    }
                   }
                 : item
             )
@@ -131,13 +130,13 @@ export const useCommandProcessor = (
           const command = commandsToProcess[i];
           console.log('Processing command:', command);
           processCommandWithHistory(command);
-          
+
           // Set last executed command to be the very last command in the queue
           if (i === commandsToProcess.length - 1) {
             console.log('Setting final command as last executed:', command);
             setLastExecutedCommand(command);
           }
-          
+
           i++;
           setTimeout(processNextCommand, 300);
         } else {
@@ -148,11 +147,17 @@ export const useCommandProcessor = (
     } else if (isInitializing && commandsToProcess.length === 0) {
       setIsInitializing(false);
     }
-  }, [commandsToProcess, isInitializing, initialCommandsProcessed, processCommandWithHistory, setLastExecutedCommand]);
+  }, [
+    commandsToProcess,
+    isInitializing,
+    initialCommandsProcessed,
+    processCommandWithHistory,
+    setLastExecutedCommand
+  ]);
 
   return {
     isInitializing,
     isProcessingAsync,
-    processCommandWithHistory,
+    processCommandWithHistory
   };
 };

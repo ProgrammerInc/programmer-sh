@@ -23,7 +23,7 @@ export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
     if (profile.contact.github) {
       socialLinks.push({
         type: 'github',
-        url: ensureHttps(profile.contact.github),
+        url: ensureHttps(profile.contact.github)
       });
     }
 
@@ -31,7 +31,7 @@ export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
     if (profile.contact.linkedin) {
       socialLinks.push({
         type: 'linkedin',
-        url: ensureHttps(profile.contact.linkedin),
+        url: ensureHttps(profile.contact.linkedin)
       });
     }
 
@@ -39,7 +39,7 @@ export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
     if (profile.contact.twitter) {
       socialLinks.push({
         type: 'twitter',
-        url: ensureHttps(profile.contact.twitter),
+        url: ensureHttps(profile.contact.twitter)
       });
     }
 
@@ -47,7 +47,7 @@ export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
     if (profile.contact.email) {
       socialLinks.push({
         type: 'email',
-        url: `mailto:${profile.contact.email}`,
+        url: `mailto:${profile.contact.email}`
       });
     }
 
@@ -55,7 +55,7 @@ export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
     if (profile.contact.website) {
       socialLinks.push({
         type: 'website',
-        url: ensureHttps(profile.contact.website),
+        url: ensureHttps(profile.contact.website)
       });
     }
 

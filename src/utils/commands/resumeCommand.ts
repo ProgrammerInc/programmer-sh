@@ -15,7 +15,7 @@ export const resumeCommand: Command = {
         if (!portfolioData) {
           return {
             content: 'Error: Could not fetch resume information.',
-            isError: true,
+            isError: true
           };
         }
 
@@ -105,9 +105,9 @@ ${website ? `<span><strong>Website:</strong> <a href="${website}" target="_blank
   </div>
 </div>`,
           isError: false,
-          rawHTML: true,
+          rawHTML: true
         };
-      },
+      }
     };
-  },
+  }
 };

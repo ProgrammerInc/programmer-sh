@@ -1,6 +1,6 @@
-import React from 'react';
-import { QRCodeSVG } from 'qrcode.react';
 import { cn } from '@/lib/utils';
+import { QRCodeSVG } from 'qrcode.react';
+import React from 'react';
 
 interface QRCodeProps {
   value: string;
@@ -19,7 +19,7 @@ const QRCodeComponent: React.FC<QRCodeProps> = ({
   fgColor = '#ffffff',
   includeMargin = true,
   className,
-  title = 'Scan this QR code',
+  title = 'Scan this QR code'
 }) => {
   return (
     <div className={cn('flex flex-col items-center my-4', className)}>

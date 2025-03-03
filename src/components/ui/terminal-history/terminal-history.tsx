@@ -1,4 +1,3 @@
-
 import { CommandResult } from '@/utils/terminalCommands';
 import React from 'react';
 import TerminalResponse from '../terminal-response';
@@ -23,7 +22,11 @@ const TerminalHistory: React.FC<TerminalHistoryProps> = ({ history, onCommandCli
             <span className="text-terminal-prompt font-mono mr-2">~$</span>
             <span className="text-terminal-foreground font-mono">{item.command}</span>
           </div>
-          <TerminalResponse response={item.result} animate={false} onCommandClick={onCommandClick} />
+          <TerminalResponse
+            response={item.result}
+            animate={false}
+            onCommandClick={onCommandClick}
+          />
         </div>
       ))}
     </>

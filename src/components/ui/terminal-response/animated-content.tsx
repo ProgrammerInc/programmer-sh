@@ -1,5 +1,5 @@
-import React from 'react';
 import { cn } from '@/lib/utils';
+import React from 'react';
 import { convertLinksToAnchors } from './link-utils';
 import { AnimatedContentProps } from './types';
 
@@ -8,7 +8,7 @@ const AnimatedContent: React.FC<AnimatedContentProps> = ({
   isDone,
   isError,
   className,
-  onCommandClick,
+  onCommandClick
 }) => {
   // For animated content, we can't easily make links clickable during animation
   // so we only apply link conversion when animation is done

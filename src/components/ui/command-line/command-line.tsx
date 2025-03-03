@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface CommandLineProps {
   prompt?: string;
@@ -24,7 +24,7 @@ const CommandLine: React.FC<CommandLineProps> = ({
   inputRef,
   history = [],
   initialValue = '',
-  onInputChange,
+  onInputChange
 }) => {
   const [command, setCommand] = useState(initialValue);
   const [historyIndex, setHistoryIndex] = useState(-1);

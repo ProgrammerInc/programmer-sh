@@ -1,10 +1,9 @@
-
 import {
   loginCommand,
   logoutCommand,
   profileCommand,
   signupCommand,
-  whoamiCommand,
+  whoamiCommand
 } from './authCommands';
 import { educationCommand } from './educationCommand';
 import { experienceCommand } from './experienceCommand';
@@ -27,7 +26,7 @@ export const processCommand = (commandString: string) => {
   if (commandString.trim() === '') {
     return {
       content: '',
-      isError: false,
+      isError: false
     };
   }
 
@@ -115,7 +114,7 @@ export const processCommand = (commandString: string) => {
     if (args.length === 0) {
       return {
         content: 'Usage: project <id>',
-        isError: true,
+        isError: true
       };
     }
     // Use projectsCommand for now or implement a separate project command
@@ -125,6 +124,6 @@ export const processCommand = (commandString: string) => {
   // Unknown command
   return {
     content: `Unknown command: ${commandName}. Type 'help' to see available commands.`,
-    isError: true,
+    isError: true
   };
 };

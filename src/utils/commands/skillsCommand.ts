@@ -15,7 +15,7 @@ export const skillsCommand: Command = {
         if (!profile || !profile.skills.length) {
           return {
             content: 'Error: Could not fetch skills information.',
-            isError: true,
+            isError: true
           };
         }
 
@@ -23,9 +23,9 @@ export const skillsCommand: Command = {
           content: `<strong>My Skills:</strong>
 
 ${profile.skills.map(skillCategory => `<strong>${skillCategory.category}:</strong>\n${skillCategory.items.map(skill => `  - <a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${skill}" target="_blank">${skill}</a>`).join('\n')}`).join('\n\n')}`,
-          isError: false,
+          isError: false
         };
-      },
+      }
     };
-  },
+  }
 };

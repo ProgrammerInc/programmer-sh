@@ -72,8 +72,8 @@
 /* Sidebar inner */
 .sidebarInner {
   position: fixed;
-  inset-top: 0;
-  inset-bottom: 0;
+  top: 0;
+  bottom: 0;
   z-index: 10;
   display: none;
   height: 100svh;
@@ -136,8 +136,8 @@
 /* Sidebar rail */
 .rail {
   position: absolute;
-  inset-top: 0;
-  inset-bottom: 0;
+  top: 0;
+  bottom: 0;
   z-index: 20;
   display: none;
   width: 1rem;
@@ -147,8 +147,8 @@
 
 .rail::after {
   position: absolute;
-  inset-top: 0;
-  inset-bottom: 0;
+  top: 0;
+  bottom: 0;
   left: 50%;
   width: 2px;
 }
@@ -246,7 +246,7 @@
 
 .input:focus-visible {
   outline: none;
-  ring: 2px solid var(--sidebar-ring);
+  box-shadow: 0 0 0 2px var(--sidebar-ring);
 }
 
 /* Sidebar header */
@@ -316,7 +316,7 @@
 }
 
 .groupLabel:focus-visible {
-  ring: 2px solid var(--sidebar-ring);
+  box-shadow: 0 0 0 2px var(--sidebar-ring);
 }
 
 .groupLabel > svg {
@@ -364,7 +364,7 @@
 }
 
 .groupAction:focus-visible {
-  ring: 2px solid var(--sidebar-ring);
+  box-shadow: 0 0 0 2px var(--sidebar-ring);
 }
 
 .groupAction > svg {
@@ -431,7 +431,7 @@
 }
 
 .menuAction:focus-visible {
-  ring: 2px solid var(--sidebar-ring);
+  box-shadow: 0 0 0 2px var(--sidebar-ring);
 }
 
 .menuAction > svg {
@@ -574,7 +574,7 @@
 }
 
 .menuSubButton:focus-visible {
-  ring: 2px solid var(--sidebar-ring);
+  box-shadow: 0 0 0 2px var(--sidebar-ring);
 }
 
 .menuSubButton:active {

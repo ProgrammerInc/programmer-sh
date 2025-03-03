@@ -50,7 +50,7 @@ export function useTypingEffect(
   return {
     displayText: cursor && isDone ? `${displayText}` : displayText,
     isTyping,
-    isDone,
+    isDone
   };
 }
 
@@ -68,10 +68,10 @@ export function useMultiLineTypingEffect(
   const {
     displayText,
     isTyping,
-    isDone: isLineDone,
+    isDone: isLineDone
   } = useTypingEffect(currentLine, {
     ...typeOptions,
-    delay: currentLineIndex === 0 ? typeOptions.delay : lineDelay,
+    delay: currentLineIndex === 0 ? typeOptions.delay : lineDelay
   });
 
   useEffect(() => {
@@ -96,6 +96,6 @@ export function useMultiLineTypingEffect(
     displayLines,
     currentLineText: !isLineDone ? displayText : '',
     isTyping,
-    isDone,
+    isDone
   };
 }

@@ -10,9 +10,9 @@ export const clearCommand: Command = {
     return {
       content: 'CLEAR_TERMINAL',
       isError: false,
-      runAfterClear: welcomeCommand.execute(),
+      runAfterClear: welcomeCommand.execute()
     };
-  },
+  }
 };
 
 export const echoCommand: Command = {
@@ -23,14 +23,14 @@ export const echoCommand: Command = {
     if (!args || args.trim() === '') {
       return {
         content: '',
-        isError: false,
+        isError: false
       };
     }
     return {
       content: args,
-      isError: false,
+      isError: false
     };
-  },
+  }
 };
 
 export const dateCommand: Command = {
@@ -46,14 +46,14 @@ export const dateCommand: Command = {
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
-      timeZoneName: 'short',
+      timeZoneName: 'short'
     };
 
     return {
       content: `Current Date and Time: ${now.toLocaleString('en-US', options)}`,
-      isError: false,
+      isError: false
     };
-  },
+  }
 };
 
 export const historyCommand: Command = {
@@ -63,7 +63,7 @@ export const historyCommand: Command = {
     // This is a placeholder - the actual implementation happens in the hook
     return {
       content: '<HISTORY_PLACEHOLDER>',
-      isError: false,
+      isError: false
     };
-  },
+  }
 };

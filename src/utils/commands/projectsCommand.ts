@@ -18,7 +18,7 @@ export const projectsCommand: Command = {
           if (!projects || !projects.length) {
             return {
               content: 'Error: Could not fetch projects information.',
-              isError: true,
+              isError: true
             };
           }
 
@@ -36,9 +36,9 @@ ${projects
   )
   .join('\n')}
 `,
-            isError: false,
+            isError: false
           };
-        },
+        }
       };
     }
 
@@ -53,7 +53,7 @@ ${projects
         if (!project) {
           return {
             content: `Project '${args}' not found. Type 'projects' to see all projects.`,
-            isError: true,
+            isError: true
           };
         }
 
@@ -71,9 +71,9 @@ ${project.highlights.map(highlight => `  - ${highlight}`).join('\n')}
 ${project.github ? `<strong>GitHub:</strong> ${project.github}` : ''}
 ${project.link ? `<strong>Live Demo:</strong> ${project.link}` : ''}
 `,
-          isError: false,
+          isError: false
         };
-      },
+      }
     };
-  },
+  }
 };

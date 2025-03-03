@@ -18,7 +18,7 @@ export const saveMessage = async (content: string): Promise<CommandResult> => {
     if (!session.data.session) {
       return {
         content: 'Error: You must be logged in to save messages.',
-        isError: true,
+        isError: true
       };
     }
 
@@ -30,19 +30,19 @@ export const saveMessage = async (content: string): Promise<CommandResult> => {
       console.error('Error saving message:', error);
       return {
         content: `Error saving message: ${error.message}`,
-        isError: true,
+        isError: true
       };
     }
 
     return {
       content: 'Message saved successfully!',
-      isError: false,
+      isError: false
     };
   } catch (error) {
     console.error('Error in saveMessage:', error);
     return {
       content: `An unexpected error occurred: ${error instanceof Error ? error.message : String(error)}`,
-      isError: true,
+      isError: true
     };
   }
 };
@@ -59,14 +59,14 @@ export const getMessages = async (): Promise<CommandResult> => {
       console.error('Error fetching messages:', error);
       return {
         content: `Error fetching messages: ${error.message}`,
-        isError: true,
+        isError: true
       };
     }
 
     if (!data || data.length === 0) {
       return {
         content: 'No messages found.',
-        isError: false,
+        isError: false
       };
     }
 
@@ -79,13 +79,13 @@ export const getMessages = async (): Promise<CommandResult> => {
 
     return {
       content: 'Messages:\n' + formattedMessages,
-      isError: false,
+      isError: false
     };
   } catch (error) {
     console.error('Error in getMessages:', error);
     return {
       content: `An unexpected error occurred: ${error instanceof Error ? error.message : String(error)}`,
-      isError: true,
+      isError: true
     };
   }
 };

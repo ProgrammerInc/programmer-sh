@@ -30,7 +30,7 @@ export const fetchProfile = async (): Promise<Profile | null> => {
     // Transform the data format
     const skills: Skill[] = skillsData.map(skillCategory => ({
       category: skillCategory.category,
-      items: skillCategory.skill_items.map((item: { name: string }) => item.name),
+      items: skillCategory.skill_items.map((item: { name: string }) => item.name)
     }));
 
     // Create a contact object explicitly with the Contact interface to ensure all required properties are present
@@ -54,7 +54,7 @@ export const fetchProfile = async (): Promise<Profile | null> => {
       twitter: profileData.twitter,
       venmo: profileData.venmo,
       youtube: profileData.youtube,
-      website: profileData.website,
+      website: profileData.website
     };
 
     // Clean up undefined values
@@ -81,7 +81,7 @@ export const fetchProfile = async (): Promise<Profile | null> => {
       skills,
       experience: [], // Will be filled by fetchExperience
       projects: [], // Will be filled by fetchProjects
-      education: [], // Will be filled by fetchEducation
+      education: [] // Will be filled by fetchEducation
     };
   } catch (error) {
     console.error('Error fetching profile:', error);
@@ -117,7 +117,7 @@ export const fetchExperience = async (): Promise<Experience[]> => {
       technologies: exp.experience_technologies.map((tech: { name: string }) => tech.name),
       achievements: exp.experience_achievements.map(
         (ach: { description: string }) => ach.description
-      ),
+      )
     }));
   } catch (error) {
     console.error('Error fetching experience:', error);
@@ -156,7 +156,7 @@ export const fetchProjects = async (): Promise<Project[]> => {
       technologies: project.project_technologies.map((tech: { name: string }) => tech.name),
       highlights: project.project_highlights.map(
         (highlight: { description: string }) => highlight.description
-      ),
+      )
     }));
   } catch (error) {
     console.error('Error fetching projects:', error);
@@ -181,7 +181,7 @@ export const fetchEducation = async (): Promise<Education[]> => {
       degree: edu.degree,
       institution: edu.institution,
       duration: edu.duration,
-      details: edu.details,
+      details: edu.details
     }));
   } catch (error) {
     console.error('Error fetching education:', error);
@@ -201,7 +201,7 @@ export const fetchPortfolioData = async (): Promise<Profile | null> => {
     const [experience, projects, education] = await Promise.all([
       fetchExperience(),
       fetchProjects(),
-      fetchEducation(),
+      fetchEducation()
     ]);
 
     profile.experience = experience;
@@ -249,7 +249,7 @@ export const fetchProjectById = async (projectId: string): Promise<Project | nul
       technologies: projectData.project_technologies.map((tech: { name: string }) => tech.name),
       highlights: projectData.project_highlights.map(
         (highlight: { description: string }) => highlight.description
-      ),
+      )
     };
   } catch (error) {
     console.error(`Error fetching project with ID ${projectId}:`, error);

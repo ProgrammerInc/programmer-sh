@@ -77,7 +77,7 @@ ${colorConfig
 }
 `
           )
-          .join('\n'),
+          .join('\n')
       }}
     />
   );
@@ -110,7 +110,7 @@ const ChartTooltipContent = React.forwardRef<
       formatter,
       color,
       nameKey,
-      labelKey,
+      labelKey
     },
     ref
   ) => {
@@ -182,7 +182,7 @@ const ChartTooltipContent = React.forwardRef<
                             [styles.indicatorLine]: indicator === 'line',
                             [styles.indicatorDashed]: indicator === 'dashed',
                             [styles.indicatorDashedWithNestLabel]:
-                              nestLabel && indicator === 'dashed',
+                              nestLabel && indicator === 'dashed'
                           })}
                         />
                       )
@@ -298,9 +298,9 @@ function getPayloadConfigFromPayload(config: ChartConfig, payload: unknown, key:
 
 export {
   ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
   ChartStyle,
+  ChartTooltip,
+  ChartTooltipContent
 };

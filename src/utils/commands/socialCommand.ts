@@ -18,7 +18,7 @@ export const socialCommand: Command = {
           if (!links || links.length === 0) {
             return {
               content: 'No social links available.',
-              isError: false,
+              isError: false
             };
           }
 
@@ -50,16 +50,16 @@ export const socialCommand: Command = {
 
           return {
             content: `<strong>Social Links:</strong>\n\n${formattedLinks}`,
-            isError: false,
+            isError: false
           };
         } catch (error) {
           console.error('Error executing social command:', error);
           return {
             content: `Error fetching social links: ${error instanceof Error ? error.message : 'Unknown error'}`,
-            isError: true,
+            isError: true
           };
         }
-      },
+      }
     };
-  },
+  }
 };

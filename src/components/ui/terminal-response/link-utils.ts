@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { LinkMatch } from './types';
 
@@ -20,11 +19,11 @@ export function processUrlLinks(text: string): LinkMatch[] {
           href: match[0],
           target: '_blank',
           rel: 'noopener noreferrer',
-          className: 'text-terminal-link hover:underline',
+          className: 'text-terminal-link hover:underline'
         },
         match[0]
       ),
-      type: 'url',
+      type: 'url'
     });
   }
 
@@ -47,11 +46,11 @@ export function processEmailLinks(text: string): LinkMatch[] {
         'a',
         {
           href: `mailto:${match[0]}`,
-          className: 'text-terminal-link hover:underline',
+          className: 'text-terminal-link hover:underline'
         },
         match[0]
       ),
-      type: 'email',
+      type: 'email'
     });
   }
 
@@ -79,20 +78,21 @@ export function processCommandLinks(
         'span',
         {
           onClick: () => onCommandClick && onCommandClick(command),
-          className: 'command-link text-terminal-command cursor-pointer hover:underline',
+          className: 'command-link text-terminal-command cursor-pointer hover:underline'
         },
         command
       ),
-      type: 'command',
+      type: 'command'
     });
   }
 
   // Also detect HTML command links like <span class="command-link" data-command="help">help</span>
-  const htmlCommandLinkRegex = /<span class="command-link"(?: data-command="(.*?)")?>([^<]+)<\/span>/g;
-  
+  const htmlCommandLinkRegex =
+    /<span class="command-link"(?: data-command="(.*?)")?>([^<]+)<\/span>/g;
+
   while ((match = htmlCommandLinkRegex.exec(text)) !== null) {
     const command = match[1] || match[2]; // Use data-command if available, otherwise use the text content
-    
+
     matches.push({
       index: match.index,
       length: match[0].length,
@@ -100,11 +100,11 @@ export function processCommandLinks(
         'span',
         {
           onClick: () => onCommandClick && onCommandClick(command),
-          className: 'command-link text-terminal-command cursor-pointer hover:underline',
+          className: 'command-link text-terminal-command cursor-pointer hover:underline'
         },
         match[2] // Use the text content for display
       ),
-      type: 'command',
+      type: 'command'
     });
   }
 
@@ -131,11 +131,11 @@ export function processPhoneLinks(text: string): LinkMatch[] {
         'a',
         {
           href: `tel:${phoneForLink}`,
-          className: 'text-terminal-link hover:underline',
+          className: 'text-terminal-link hover:underline'
         },
         match[0]
       ),
-      type: 'phone',
+      type: 'phone'
     });
   }
 

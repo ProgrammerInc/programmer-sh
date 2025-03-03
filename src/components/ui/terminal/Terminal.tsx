@@ -1,12 +1,12 @@
-
-import React, { useRef, useState } from 'react';
-import TerminalHeader from '../terminal-header';
-import { TerminalContent } from '../terminal-content';
-import { cn } from '@/lib/utils';
-import { useTerminalHistory } from '@/hooks/use-terminal-history';
-import { useTerminalAuth } from '@/hooks/use-terminal-auth';
-import { useSocialLinks } from '@/hooks/use-social-links';
 import { useCommandProcessor } from '@/hooks/use-command-processor';
+import { useSocialLinks } from '@/hooks/use-social-links';
+import { useTerminalAuth } from '@/hooks/use-terminal-auth';
+import { useTerminalHistory } from '@/hooks/use-terminal-history';
+import { CommandResult } from '@/utils/commands/types';
+import { cn } from '@/lib/utils';
+import React, { useRef, useState } from 'react';
+import { TerminalContent } from '../terminal-content';
+import TerminalHeader from '../terminal-header';
 
 export interface HistoryItem {
   command: string;
@@ -14,9 +14,9 @@ export interface HistoryItem {
     content: string;
     isError: boolean;
     isAsync?: boolean;
-    asyncResolver?: () => Promise<any>;
+    asyncResolver?: () => Promise<CommandResult>;
     rawHTML?: boolean;
-    runAfterClear?: any;
+    runAfterClear?: CommandResult;
   };
   timestamp: Date;
 }
@@ -29,26 +29,17 @@ interface TerminalProps {
 const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) => {
   const [showAsciiArt, setShowAsciiArt] = useState(true);
   const commandInputRef = useRef<HTMLInputElement>(null);
-  
+
   // Use custom hooks
   const { userEmail } = useTerminalAuth();
   const { socialLinks } = useSocialLinks();
-  
-  const {
-    history, 
-    setHistory, 
-    lastExecutedCommand, 
-    setLastExecutedCommand,
-    commandHistory
-  } = useTerminalHistory(true);
-  
-  const { 
-    isInitializing, 
-    isProcessingAsync, 
-    processCommandWithHistory 
-  } = useCommandProcessor(
-    initialCommands, 
-    setHistory, 
+
+  const { history, setHistory, lastExecutedCommand, setLastExecutedCommand, commandHistory } =
+    useTerminalHistory(true);
+
+  const { isInitializing, isProcessingAsync, processCommandWithHistory } = useCommandProcessor(
+    initialCommands,
+    setHistory,
     setLastExecutedCommand,
     commandHistory
   );
@@ -63,7 +54,7 @@ const Terminal: React.FC<TerminalProps> = ({ className, initialCommands = [] }) 
     if (command.trim()) {
       processCommandWithHistory(command);
       commandInputRef.current?.focus();
-      
+
       // Dispatch event to update page title
       const commandExecutedEvent = new CustomEvent('commandExecuted', {
         detail: { command }

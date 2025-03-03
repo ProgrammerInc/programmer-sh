@@ -15,7 +15,7 @@ export const educationCommand: Command = {
         if (!education || !education.length) {
           return {
             content: 'Error: Could not fetch education information.',
-            isError: true,
+            isError: true
           };
         }
 
@@ -30,9 +30,9 @@ ${education
 ${edu.details ? `<strong>Details:</strong> <span class="details">${edu.details}</span>` : ''}`
   )
   .join('\n')}`,
-          isError: false,
+          isError: false
         };
-      },
+      }
     };
-  },
+  }
 };

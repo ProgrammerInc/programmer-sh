@@ -1,4 +1,3 @@
-
 import QRCodeComponent from './qr-code';
 
 export { QRCodeComponent };

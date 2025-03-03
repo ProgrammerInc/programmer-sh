@@ -8,7 +8,7 @@ export const validUrlCommands = [
   'projects',
   'resume',
   'contact',
-  'help',
+  'help'
 ];
 
 // Extract command and theme from URL
@@ -16,7 +16,7 @@ export const extractUrlParameters = (url: string) => {
   // Default values
   const result = {
     command: '',
-    theme: '',
+    theme: ''
   };
 
   // Check if URL has a path component
@@ -37,7 +37,7 @@ export const extractUrlParameters = (url: string) => {
 
     return {
       command: command || '',
-      theme: theme || '',
+      theme: theme || ''
     };
   } catch (error) {
     console.error('Error parsing URL:', error);

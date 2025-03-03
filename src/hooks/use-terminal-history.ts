@@ -1,5 +1,5 @@
 import { HistoryItem } from '@/components/ui/terminal';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const HISTORY_STORAGE_KEY = 'terminal_command_history';
 const LAST_COMMAND_KEY = 'terminal_last_command';
@@ -27,11 +27,11 @@ export const useTerminalHistory = (isInitializing: boolean) => {
             const formattedHistory = parsedHistory.map(
               (item: Omit<HistoryItem, 'timestamp'> & { timestamp: string }) => ({
                 ...item,
-                timestamp: new Date(item.timestamp),
+                timestamp: new Date(item.timestamp)
               })
             );
             setHistory(formattedHistory);
-            
+
             // Set the last command from history only if we didn't already get it from storage
             if (!savedLastCommand) {
               const lastItem = formattedHistory[formattedHistory.length - 1];
@@ -49,19 +49,22 @@ export const useTerminalHistory = (isInitializing: boolean) => {
   }, [isInitializing, historyLoaded]);
 
   // Custom setter for lastExecutedCommand that also updates localStorage
-  const updateLastCommand = useCallback((command: string) => {
-    if (command !== lastExecutedCommand) {
-      console.log('Updating last command to:', command);
-      setLastExecutedCommand(command);
-      localStorage.setItem(LAST_COMMAND_KEY, command);
-    }
-  }, [lastExecutedCommand]);
+  const updateLastCommand = useCallback(
+    (command: string) => {
+      if (command !== lastExecutedCommand) {
+        console.log('Updating last command to:', command);
+        setLastExecutedCommand(command);
+        localStorage.setItem(LAST_COMMAND_KEY, command);
+      }
+    },
+    [lastExecutedCommand]
+  );
 
   // Save history to localStorage when it changes
   useEffect(() => {
     if (history.length > 0 && historyLoaded) {
       localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
-      
+
       // Update last executed command whenever history changes if we're not initializing
       if (!isInitializing) {
         const lastItem = history[history.length - 1];
@@ -85,6 +88,6 @@ export const useTerminalHistory = (isInitializing: boolean) => {
     lastExecutedCommand,
     setLastExecutedCommand: updateLastCommand,
     clearHistory,
-    commandHistory: history.map(item => item.command),
+    commandHistory: history.map(item => item.command)
   };
 };

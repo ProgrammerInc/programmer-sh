@@ -6,43 +6,43 @@ export const wallpapers = {
     id: 'default',
     name: 'Default',
     description: 'Default gradient background',
-    type: 'gradient',
+    type: 'gradient'
   },
   code: {
     id: 'code',
     name: 'Code',
     description: 'Colorful code on a computer monitor',
     type: 'image',
-    url: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80',
+    url: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80'
   },
   workspace: {
     id: 'workspace',
     name: 'Workspace',
     description: 'Clean workspace with iMac',
     type: 'image',
-    url: 'https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&q=80',
+    url: 'https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&q=80'
   },
   mountains: {
     id: 'mountains',
     name: 'Mountains',
     description: "Bird's eye view of green mountains",
     type: 'image',
-    url: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=80',
+    url: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=80'
   },
   fog: {
     id: 'fog',
     name: 'Fog',
     description: 'Foggy mountain summit',
     type: 'image',
-    url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80',
+    url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80'
   },
   ocean: {
     id: 'ocean',
     name: 'Ocean',
     description: 'Ocean wave at beach',
     type: 'image',
-    url: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&q=80',
-  },
+    url: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&q=80'
+  }
 };
 
 // Wallpaper types
@@ -73,7 +73,7 @@ export const setWallpaper = (id: string): void => {
   // Dispatch custom event for components to respond to wallpaper change
   document.dispatchEvent(
     new CustomEvent('wallpaperChange', {
-      detail: { wallpaperId: id, wallpaper: wallpapers[id] },
+      detail: { wallpaperId: id, wallpaper: wallpapers[id] }
     })
   );
 };
@@ -101,7 +101,7 @@ export const wallpaperCommand: Command = {
 
       return {
         content: `Current wallpaper: <span class="text-terminal-prompt">${wallpapers[currentWallpaper].id}</span>\n\nAvailable wallpapers:\n${availableWallpapers}\n\nUsage: wallpaper [name]`,
-        isError: false,
+        isError: false
       };
     }
 
@@ -110,14 +110,14 @@ export const wallpaperCommand: Command = {
     if (!Object.keys(wallpapers).includes(requestedWallpaper)) {
       return {
         content: `Wallpaper <span class="text-terminal-prompt">${requestedWallpaper}</span> not found. Use <span class="command-link" data-command="wallpaper">wallpaper</span> to see available options.`,
-        isError: true,
+        isError: true
       };
     }
 
     if (requestedWallpaper === currentWallpaper) {
       return {
         content: `Wallpaper is already set to <span class="text-terminal-prompt">${wallpapers[currentWallpaper].id}</span>.`,
-        isError: false,
+        isError: false
       };
     }
 
@@ -125,7 +125,7 @@ export const wallpaperCommand: Command = {
 
     return {
       content: `Wallpaper changed to <span class="text-terminal-prompt">${wallpapers[requestedWallpaper].id}</span>.`,
-      isError: false,
+      isError: false
     };
-  },
+  }
 };

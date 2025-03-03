@@ -21,7 +21,7 @@ Type <span class="command-link" data-command="help">help</span> to see available
   - <span class="command-link" data-command="theme">theme</span>: To change the terminal theme
 
 Feel free to explore and get in touch!`,
-      isError: false,
+      isError: false
     };
-  },
+  }
 };

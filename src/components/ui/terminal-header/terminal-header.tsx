@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { User, LogIn, LogOut, Settings, X, Plus, Minus, ChevronDown } from 'lucide-react';
-import { SocialLink } from '@/types/socialLinks';
-import { supabase } from '@/integrations/supabase/client';
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
+import { supabase } from '@/integrations/supabase/client';
+import { SocialLink } from '@/types/socialLinks';
 import { isIncognitoMode } from '@/utils/incognito';
+import { ChevronDown, LogIn, LogOut, Minus, Plus, Settings, User, X } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface TerminalHeaderProps {
   lastCommand?: string;

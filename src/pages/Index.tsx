@@ -1,12 +1,11 @@
-
-import { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
 import Terminal from '@/components/ui/terminal';
 import { Toaster } from '@/components/ui/toaster/toaster';
-import { validUrlCommands, extractUrlParameters } from '@/utils/commands/urlCommandHandler';
-import { processThemeFromUrl } from '@/utils/commands/themeCommand';
-import { getCurrentWallpaper, wallpapers } from '@/utils/commands/wallpaperCommand';
 import '@/styles/wallpaper.css';
+import { processThemeFromUrl } from '@/utils/commands/themeCommand';
+import { extractUrlParameters, validUrlCommands } from '@/utils/commands/urlCommandHandler';
+import { getCurrentWallpaper, wallpapers } from '@/utils/commands/wallpaperCommand';
+import { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 
 const HISTORY_STORAGE_KEY = 'terminal_command_history';
 const DEFAULT_TITLE = '~/portfolio - &lt;programmer&gt;._';

@@ -16,7 +16,7 @@ export const aboutCommand: Command = {
         if (!profile) {
           return {
             content: 'Error: Could not fetch profile information.',
-            isError: true,
+            isError: true
           };
         }
 
@@ -79,11 +79,11 @@ ${profile.summary}
   </div>
 </div>`,
           isError: false,
-          rawHTML: true,
+          rawHTML: true
         };
-      },
+      }
     };
-  },
+  }
 };
 
 // Contact command implementation
@@ -101,7 +101,7 @@ export const contactCommand: Command = {
         if (!profile) {
           return {
             content: 'Error: Could not fetch contact information.',
-            isError: true,
+            isError: true
           };
         }
 
@@ -160,9 +160,9 @@ END:VCARD`;
   </div>
 </div>`,
           isError: false,
-          rawHTML: true,
+          rawHTML: true
         };
-      },
+      }
     };
-  },
+  }
 };

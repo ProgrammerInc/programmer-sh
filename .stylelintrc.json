@@ -11,14 +11,7 @@
     "at-rule-no-unknown": [
       true,
       {
-        "ignoreAtRules": [
-          "tailwind",
-          "apply",
-          "variants",
-          "responsive",
-          "screen",
-          "layer"
-        ]
+        "ignoreAtRules": ["tailwind", "apply", "variants", "responsive", "screen", "layer"]
       }
     ],
     "selector-pseudo-class-no-unknown": [
@@ -47,12 +40,5 @@
     "declaration-property-value-no-unknown": null,
     "no-duplicate-selectors": null
   },
-  "ignoreFiles": [
-    "dist/**",
-    "node_modules/**",
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+  "ignoreFiles": ["dist/**", "node_modules/**", "**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
 }

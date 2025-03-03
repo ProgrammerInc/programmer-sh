@@ -1,17 +1,15 @@
-
-import React from 'react';
 import { cn } from '@/lib/utils';
 import { useTypingEffect } from '@/utils/typingEffect';
-import { TerminalResponseProps } from './types';
-import { containsHtmlTags } from './html-utils';
-import HtmlContent from './html-content';
+import React from 'react';
 import AnimatedContent from './animated-content';
+import HtmlContent from './html-content';
+import { TerminalResponseProps } from './types';
 
 const TerminalResponse: React.FC<TerminalResponseProps> = ({
   response,
   animate = false,
   className,
-  onCommandClick,
+  onCommandClick
 }) => {
   const { displayText, isDone } = useTypingEffect(
     typeof response.content === 'string' ? response.content : '',

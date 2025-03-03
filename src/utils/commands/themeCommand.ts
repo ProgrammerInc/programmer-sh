@@ -24,7 +24,7 @@ export const setTheme = (theme: ThemeOption): void => {
   // Dispatch custom event for favicon and other theme-aware components
   document.dispatchEvent(
     new CustomEvent('themeChange', {
-      detail: { isDark, theme },
+      detail: { isDark, theme }
     })
   );
 };
@@ -59,7 +59,7 @@ export const themeCommand: Command = {
     if (!args) {
       return {
         content: `Current theme: <span class="text-terminal-prompt">${currentTheme}</span>\nUsage: theme [dark|light]`,
-        isError: false,
+        isError: false
       };
     }
 
@@ -68,14 +68,14 @@ export const themeCommand: Command = {
     if (newTheme !== 'dark' && newTheme !== 'light') {
       return {
         content: `Invalid theme: <span class="text-terminal-prompt">${newTheme}</span>. Available themes: dark, light`,
-        isError: true,
+        isError: true
       };
     }
 
     if (newTheme === currentTheme) {
       return {
         content: `Theme is already set to <span class="text-terminal-prompt">${currentTheme}</span> mode.`,
-        isError: false,
+        isError: false
       };
     }
 
@@ -83,7 +83,7 @@ export const themeCommand: Command = {
 
     return {
       content: `Theme switched to <span class="text-terminal-prompt">${newTheme}</span> mode.`,
-      isError: false,
+      isError: false
     };
-  },
+  }
 };

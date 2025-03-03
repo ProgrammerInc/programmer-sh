@@ -1,4 +1,3 @@
-
 /**
  * Detects if the user is browsing in incognito/private mode
  * This is a best-effort detection and may not work in all browsers
@@ -16,9 +15,19 @@ export const isIncognitoMode = (): boolean => {
   // Additional detection for Safari private mode
   if (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
     try {
-      // Use type assertion to access non-standard browser APIs
-      // Cast window to any to access the openDatabase method in Safari
-      (window as any).openDatabase(null, null, null, null);
+      // Define the interface for Safari's non-standard openDatabase method
+      interface SafariWindow {
+        openDatabase(
+          name: string | null,
+          version: string | null,
+          displayName: string | null,
+          estimatedSize: number | null
+        ): unknown;
+      }
+      
+      // Use a two-step casting approach as recommended by TypeScript
+      // First cast to unknown, then to SafariWindow
+      ((window as unknown) as SafariWindow).openDatabase(null, null, null, null);
     } catch (e) {
       return true;
     }

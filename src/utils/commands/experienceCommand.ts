@@ -15,7 +15,7 @@ export const experienceCommand: Command = {
         if (!experience || !experience.length) {
           return {
             content: 'Error: Could not fetch experience information.',
-            isError: true,
+            isError: true
           };
         }
 
@@ -35,9 +35,9 @@ ${exp.achievements.map(achievement => `- ${achievement}`).join('\n')}
 `
   )
   .join('\n')}`,
-          isError: false,
+          isError: false
         };
-      },
+      }
     };
-  },
+  }
 };

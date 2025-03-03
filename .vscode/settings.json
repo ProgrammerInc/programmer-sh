@@ -1,4 +1,43 @@
 {
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "bookmarks.useWorkaroundForFormatters": true,
+  "css.lint.unknownAtRules": "ignore",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.format": "explicit",
+    "source.organizeImports": "explicit",
+    "source.reorderImports": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "notebook.defaultFormatter": "esbenp.prettier-vscode",
+  "notebook.formatOnSave.enabled": true,
+  "prettier.requireConfig": true,
+  "prettier.useEditorConfig": true,
+  "stylelint.validate": ["css", "less", "postcss", "scss"],
+  "typescript.implementationsCodeLens.enabled": true,
+  "typescript.implementationsCodeLens.showOnInterfaceMethods": true,
+  "typescript.preferences.organizeImports": {
+    "alwaysGroup": true,
+    "groupImportsBy": "module",
+    "sortImports": true
+  },
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.referencesCodeLens.showOnAllFunctions": true,
   "cSpell.words": [
     "Andale",
     "autoprefixer",
@@ -7,11 +46,17 @@
     "cashapp",
     "castarray",
     "clsx",
+    "colord",
     "Consolas",
+    "cosmiconfig",
     "cssesc",
+    "csstools",
     "csstype",
     "didyoumean",
     "dismissable",
+    "domelementtype",
+    "domhandler",
+    "domutils",
     "eabi",
     "eastasianwidth",
     "Elipssis",
@@ -21,8 +66,11 @@
     "eventemitter",
     "fkey",
     "frontends",
+    "globjoin",
     "gnueabihf",
     "hookform",
+    "hookified",
+    "htmlparser",
     "humanfs",
     "internmap",
     "isaacs",
@@ -37,12 +85,14 @@
     "loong",
     "loongarch",
     "lucide",
+    "mathml",
     "minipass",
     "msvc",
     "musleabihf",
     "njsproj",
     "noopener",
     "noreferrer",
+    "nowrap",
     "ntvs",
     "nums",
     "parseargs",
@@ -52,6 +102,7 @@
     "postgrest",
     "programmerinc",
     "qrcode",
+    "rgba",
     "riscv",
     "rollup",
     "SOCIALPROFILE",
@@ -68,45 +119,5 @@
     "webidl",
     "whatwg",
     "XVCJ"
-  ],
-  "css.validate": false,
-  "less.validate": false,
-  "scss.validate": false,
-  "stylelint.validate": ["css", "postcss"],
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
-  },
-  "editor.quickSuggestions": {
-    "strings": true
-  },
-  "prettier.requireConfig": true,
-  "prettier.useEditorConfig": true,
-  "[typescript]": {
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "explicit"
-    },
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "prettier.singleQuote": true,
-  "notebook.defaultFormatter": "esbenp.prettier-vscode",
-  "bookmarks.useWorkaroundForFormatters": true,
-  "notebook.formatOnSave.enabled": true,
-  "typescript.referencesCodeLens.enabled": true,
-  "typescript.referencesCodeLens.showOnAllFunctions": true,
-  "typescript.implementationsCodeLens.enabled": true,
-  "typescript.implementationsCodeLens.showOnInterfaceMethods": true,
-  "typescript.preferences.organizeImports": {
-    "sortImports": true
-  }
+  ]
 }

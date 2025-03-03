@@ -16,7 +16,7 @@ export const loginCommand: Command = {
     if (!args || args.trim() === '') {
       return {
         content: 'Usage: login <email> <password>',
-        isError: true,
+        isError: true
       };
     }
 
@@ -24,7 +24,7 @@ export const loginCommand: Command = {
     if (argArray.length < 2) {
       return {
         content: 'Usage: login <email> <password>',
-        isError: true,
+        isError: true
       };
     }
 
@@ -34,7 +34,7 @@ export const loginCommand: Command = {
     if (!isValidEmail(email)) {
       return {
         content: 'Error: Please provide a valid email address.',
-        isError: true,
+        isError: true
       };
     }
 
@@ -46,36 +46,36 @@ export const loginCommand: Command = {
         try {
           const { data, error } = await supabase.auth.signInWithPassword({
             email,
-            password,
+            password
           });
 
           if (error) {
             return {
               content: `Login failed: ${error.message}`,
-              isError: true,
+              isError: true
             };
           }
 
           if (data.user) {
             return {
               content: `Successfully logged in as ${data.user.email}. Welcome back!`,
-              isError: false,
+              isError: false
             };
           } else {
             return {
               content: 'Login failed: Unknown error',
-              isError: true,
+              isError: true
             };
           }
         } catch (error) {
           return {
             content: `Login failed: ${error instanceof Error ? error.message : String(error)}`,
-            isError: true,
+            isError: true
           };
         }
-      },
+      }
     };
-  },
+  }
 };
 
 // Signup command implementation
@@ -87,7 +87,7 @@ export const signupCommand: Command = {
     if (!args || args.trim() === '') {
       return {
         content: 'Usage: signup <email> <password>',
-        isError: true,
+        isError: true
       };
     }
 
@@ -95,7 +95,7 @@ export const signupCommand: Command = {
     if (argArray.length < 2) {
       return {
         content: 'Usage: signup <email> <password>',
-        isError: true,
+        isError: true
       };
     }
 
@@ -105,14 +105,14 @@ export const signupCommand: Command = {
     if (!isValidEmail(email)) {
       return {
         content: 'Error: Please provide a valid email address.',
-        isError: true,
+        isError: true
       };
     }
 
     if (password.length < 6) {
       return {
         content: 'Error: Password must be at least 6 characters long.',
-        isError: true,
+        isError: true
       };
     }
 
@@ -124,13 +124,13 @@ export const signupCommand: Command = {
         try {
           const { data, error } = await supabase.auth.signUp({
             email,
-            password,
+            password
           });
 
           if (error) {
             return {
               content: `Account creation failed: ${error.message}`,
-              isError: true,
+              isError: true
             };
           }
 
@@ -147,23 +147,23 @@ You might need to check your spam folder.
 
 Note: For testing purposes, you can disable email confirmation in Supabase.
               `,
-              isError: false,
+              isError: false
             };
           } else {
             return {
               content: 'Account creation failed: Unknown error',
-              isError: true,
+              isError: true
             };
           }
         } catch (error) {
           return {
             content: `Account creation failed: ${error instanceof Error ? error.message : String(error)}`,
-            isError: true,
+            isError: true
           };
         }
-      },
+      }
     };
-  },
+  }
 };
 
 // Logout command implementation
@@ -182,23 +182,23 @@ export const logoutCommand: Command = {
           if (error) {
             return {
               content: `Logout failed: ${error.message}`,
-              isError: true,
+              isError: true
             };
           }
 
           return {
             content: 'You have been logged out successfully.',
-            isError: false,
+            isError: false
           };
         } catch (error) {
           return {
             content: `Logout failed: ${error instanceof Error ? error.message : String(error)}`,
-            isError: true,
+            isError: true
           };
         }
-      },
+      }
     };
-  },
+  }
 };
 
 // Whoami command to show current user
@@ -217,7 +217,7 @@ export const whoamiCommand: Command = {
           if (error) {
             return {
               content: `Error checking user session: ${error.message}`,
-              isError: true,
+              isError: true
             };
           }
 
@@ -240,23 +240,23 @@ Username: ${username}
 Full Name: ${fullName}
 Last Sign In: ${new Date(data.user.last_sign_in_at || '').toLocaleString() || 'Never'}
               `,
-              isError: false,
+              isError: false
             };
           } else {
             return {
               content: 'You are not logged in.',
-              isError: false,
+              isError: false
             };
           }
         } catch (error) {
           return {
             content: `Error checking user session: ${error instanceof Error ? error.message : String(error)}`,
-            isError: true,
+            isError: true
           };
         }
-      },
+      }
     };
-  },
+  }
 };
 
 // Update profile command
@@ -272,7 +272,7 @@ Usage:
   profile set username <value>  - Set your username
   profile set fullname <value>  - Set your full name
         `,
-        isError: true,
+        isError: true
       };
     }
 
@@ -284,7 +284,7 @@ Usage:
   profile set username <value>  - Set your username
   profile set fullname <value>  - Set your full name
         `,
-        isError: true,
+        isError: true
       };
     }
 
@@ -294,7 +294,7 @@ Usage:
     if (!['username', 'fullname'].includes(field)) {
       return {
         content: 'Error: You can only update "username" or "fullname"',
-        isError: true,
+        isError: true
       };
     }
 
@@ -309,7 +309,7 @@ Usage:
           if (userError || !userData.user) {
             return {
               content: 'Error: You must be logged in to update your profile.',
-              isError: true,
+              isError: true
             };
           }
 
@@ -331,21 +331,21 @@ Usage:
           if (updateError) {
             return {
               content: `Failed to update profile: ${updateError.message}`,
-              isError: true,
+              isError: true
             };
           }
 
           return {
             content: `Your ${field} has been updated to "${value}"`,
-            isError: false,
+            isError: false
           };
         } catch (error) {
           return {
             content: `Error updating profile: ${error instanceof Error ? error.message : String(error)}`,
-            isError: true,
+            isError: true
           };
         }
-      },
+      }
     };
-  },
+  }
 };

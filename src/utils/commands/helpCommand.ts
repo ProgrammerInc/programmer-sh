@@ -9,7 +9,7 @@ export const helpCommand: Command = {
     if (!args) {
       return {
         content: getCommandHelp(),
-        isError: false,
+        isError: false
       };
     }
 
@@ -19,15 +19,15 @@ export const helpCommand: Command = {
     if (commandHelp) {
       return {
         content: commandHelp,
-        isError: false,
+        isError: false
       };
     } else {
       return {
         content: `No help available for command: ${commandName}`,
-        isError: true,
+        isError: true
       };
     }
-  },
+  }
 };
 
 // Get help for a specific command

@@ -1,8 +1,8 @@
-import React, { useRef, useEffect, useState } from 'react';
-import CommandLine from '../command-line';
 import { HistoryItem } from '@/components/ui/terminal';
 import { useToast } from '@/hooks/use-toast';
+import React, { useEffect, useRef, useState } from 'react';
 import AsciiArt from '../ascii-art/ascii-art';
+import CommandLine from '../command-line';
 import TerminalHistory from '../terminal-history';
 
 interface TerminalContentProps {
@@ -22,7 +22,7 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
   showAsciiArt,
   commandHistory,
   onCommandSubmit,
-  inputRef,
+  inputRef
 }) => {
   const terminalRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
@@ -57,7 +57,7 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
                 toast({
                   title: 'Copied to clipboard',
                   description: 'The selected text has been copied to your clipboard.',
-                  duration: 2000,
+                  duration: 2000
                 });
               })
               .catch(err => {
@@ -66,7 +66,7 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
                   title: 'Copy failed',
                   description: 'Could not copy to clipboard. Please try again.',
                   variant: 'destructive',
-                  duration: 2000,
+                  duration: 2000
                 });
               });
           } catch (error) {
@@ -75,7 +75,7 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
               title: 'Copy failed',
               description: 'Clipboard functionality is not available in your browser.',
               variant: 'destructive',
-              duration: 2000,
+              duration: 2000
             });
           }
         }
@@ -179,7 +179,7 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
                           level: 'M',
                           bgColor: '#1a1f2c',
                           fgColor: '#ffffff',
-                          includeMargin: false,
+                          includeMargin: false
                         })
                       );
                     } catch (renderErr) {
