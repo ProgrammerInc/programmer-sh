@@ -242,11 +242,13 @@ function DitheredWaves({
       effect.current.uniforms.get('resolution')
     ) {
       const resolutionUniform = effect.current.uniforms.get('resolution');
-      // Fix: Check if resolutionUniform.value is defined before using instanceof
-      if (resolutionUniform && resolutionUniform.value && 
+      // Fix: Check if resolutionUniform.value is defined and has the set method
+      if (resolutionUniform && 
+          resolutionUniform.value && 
           typeof resolutionUniform.value === 'object' && 
           'set' in resolutionUniform.value) {
-        resolutionUniform.value.set(newWidth, newHeight);
+        // Use non-null assertion operator to tell TypeScript we're sure it's not null
+        (resolutionUniform.value as THREE.Vector2).set(newWidth, newHeight);
       }
     }
   }, [size, gl]);
