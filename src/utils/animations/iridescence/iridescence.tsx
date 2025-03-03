@@ -1,7 +1,7 @@
 import { Color, Mesh, Program, Renderer, Triangle } from 'ogl';
 import { useEffect, useRef } from 'react';
 
-const vertexShader = `
+export const vertexShader = `
 attribute vec2 uv;
 attribute vec2 position;
 
@@ -13,7 +13,7 @@ void main() {
 }
 `;
 
-const fragmentShader = `
+export const fragmentShader = `
 precision highp float;
 
 uniform float uTime;
@@ -45,7 +45,7 @@ void main() {
 }
 `;
 
-interface IridescenceProps {
+export interface IridescenceProps {
   color?: [number, number, number];
   speed?: number;
   amplitude?: number;

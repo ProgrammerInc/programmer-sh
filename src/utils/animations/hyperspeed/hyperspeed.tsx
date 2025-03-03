@@ -1,28 +1,31 @@
-
-import {
-  BloomEffect,
-  EffectComposer,
-  EffectPass,
-  RenderPass,
-  SMAAEffect,
-  SMAAPreset
-} from 'postprocessing';
-import { FC, useEffect, useRef } from 'react';
+import { FC } from 'react';
 import * as THREE from 'three';
 
-interface Distortion {
-  uniforms: Record<string, { 
-    value: number | boolean | THREE.Color | THREE.Vector2 | THREE.Vector3 | THREE.Vector4 | THREE.Matrix3 | THREE.Matrix4 | THREE.Texture 
-  }>;
+export interface Distortion {
+  uniforms: Record<
+    string,
+    {
+      value:
+        | number
+        | boolean
+        | THREE.Color
+        | THREE.Vector2
+        | THREE.Vector3
+        | THREE.Vector4
+        | THREE.Matrix3
+        | THREE.Matrix4
+        | THREE.Texture;
+    }
+  >;
   getDistortion: string;
   getJS?: (progress: number, time: number) => THREE.Vector3;
 }
 
-interface Distortions {
+export interface Distortions {
   [key: string]: Distortion;
 }
 
-interface Colors {
+export interface Colors {
   roadColor: number;
   islandColor: number;
   background: number;
@@ -33,7 +36,7 @@ interface Colors {
   sticks: number;
 }
 
-interface HyperspeedOptions {
+export interface HyperspeedOptions {
   onSpeedUp?: (ev: MouseEvent) => void;
   onSlowDown?: (ev: MouseEvent) => void;
   distortion?: string | Distortion;
@@ -63,7 +66,7 @@ interface HyperspeedOptions {
   isHyper?: boolean;
 }
 
-interface HyperspeedProps {
+export interface HyperspeedProps {
   effectOptions?: Partial<HyperspeedOptions>;
 }
 
@@ -443,7 +446,21 @@ function lerp(current: number, target: number, speed = 0.1, limit = 0.001): numb
 // Need to define the App class to fix TypeScript errors
 class App {
   scene: THREE.Scene;
-  fogUniforms: { [key: string]: { value: any } };
+  fogUniforms: Record<
+    string,
+    {
+      value:
+        | number
+        | boolean
+        | THREE.Color
+        | THREE.Vector2
+        | THREE.Vector3
+        | THREE.Vector4
+        | THREE.Matrix3
+        | THREE.Matrix4
+        | THREE.Texture;
+    }
+  >;
 
   constructor() {
     this.scene = new THREE.Scene();
@@ -652,7 +669,7 @@ class LightsSticks {
   init() {
     const options = this.options;
     const geometry = new THREE.PlaneGeometry(1, 1);
-    
+
     // Create a new InstancedBufferGeometry
     const instanced = new THREE.InstancedBufferGeometry();
     // Copy attributes from the original geometry

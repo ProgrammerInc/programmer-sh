@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-interface GridDistortionProps {
+export interface GridDistortionProps {
   grid?: number;
   mouse?: number;
   strength?: number;
@@ -10,7 +10,7 @@ interface GridDistortionProps {
   className?: string;
 }
 
-const vertexShader = `
+export const vertexShader = `
 uniform float time;
 varying vec2 vUv;
 varying vec3 vPosition;
@@ -22,7 +22,7 @@ void main() {
 }
 `;
 
-const fragmentShader = `
+export const fragmentShader = `
 uniform sampler2D uDataTexture;
 uniform sampler2D uTexture;
 uniform vec4 resolution;
@@ -35,7 +35,7 @@ void main() {
 }
 `;
 
-const GridDistortion: React.FC<GridDistortionProps> = ({
+export const GridDistortion: React.FC<GridDistortionProps> = ({
   grid = 15,
   mouse = 0.1,
   strength = 0.15,

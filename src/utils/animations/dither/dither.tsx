@@ -95,7 +95,7 @@ void main() {
 }
 `;
 
-const ditherFragmentShader = `
+export const ditherFragmentShader = `
 precision highp float;
 uniform float colorNum;
 uniform float pixelSize;
@@ -127,7 +127,7 @@ void mainImage(in vec4 inputColor, in vec2 uv, out vec4 outputColor) {
 }
 `;
 
-class RetroEffectImpl extends Effect {
+export class RetroEffectImpl extends Effect {
   private _colorNum: number;
   private _pixelSize: number;
 
@@ -159,11 +159,11 @@ class RetroEffectImpl extends Effect {
   }
 }
 
-const RetroEffect = wrapEffect(RetroEffectImpl) as React.ForwardRefExoticComponent<
+export const RetroEffect = wrapEffect(RetroEffectImpl) as React.ForwardRefExoticComponent<
   React.RefAttributes<RetroEffectImpl>
 >;
 
-interface WaveUniforms {
+export interface WaveUniforms {
   [key: string]: THREE.Uniform<
     | number
     | THREE.Vector2
@@ -184,7 +184,7 @@ interface WaveUniforms {
   mouseRadius: THREE.Uniform<number>;
 }
 
-interface DitheredWavesProps {
+export interface DitheredWavesProps {
   waveSpeed: number;
   waveFrequency: number;
   waveAmplitude: number;
@@ -196,7 +196,7 @@ interface DitheredWavesProps {
   mouseRadius: number;
 }
 
-function DitheredWaves({
+export function DitheredWaves({
   waveSpeed,
   waveFrequency,
   waveAmplitude,
@@ -232,20 +232,17 @@ function DitheredWaves({
     const newWidth = Math.floor(size.width * dpr);
     const newHeight = Math.floor(size.height * dpr);
     const currentRes = waveUniformsRef.current.resolution.value;
-    
+
     // Fix: Using Vector2's set method
     currentRes.set(newWidth, newHeight);
-    
-    if (
-      effect.current &&
-      effect.current.uniforms.get('resolution')
-    ) {
+
+    if (effect.current && effect.current.uniforms.get('resolution')) {
       const resolutionUniform = effect.current.uniforms.get('resolution');
       // Fix: Using type guard and assertion pattern
       if (resolutionUniform && resolutionUniform.value) {
         // First check that the value exists, then assert its type for TypeScript
         const value = resolutionUniform.value as unknown;
-        
+
         // Now check if the value is an object with a set method
         if (typeof value === 'object' && value !== null && 'set' in value) {
           // Safe to use set method now
@@ -309,7 +306,7 @@ function DitheredWaves({
   );
 }
 
-interface DitherProps {
+export interface DitherProps {
   waveSpeed?: number;
   waveFrequency?: number;
   waveAmplitude?: number;
@@ -321,7 +318,7 @@ interface DitherProps {
   mouseRadius?: number;
 }
 
-interface NavigatorWithUserAgentData extends Navigator {
+export interface NavigatorWithUserAgentData extends Navigator {
   userAgentData?: {
     platform: string;
     brands: Array<{ brand: string; version: string }>;

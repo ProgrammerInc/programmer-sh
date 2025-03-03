@@ -1,7 +1,7 @@
 import React, { CSSProperties, useEffect, useRef } from 'react';
 import styles from './waves.module.css';
 
-class Grad {
+export class Grad {
   x: number;
   y: number;
   z: number;
@@ -15,7 +15,7 @@ class Grad {
   }
 }
 
-class Noise {
+export class Noise {
   grad3: Grad[];
   p: number[];
   perm: number[];
@@ -87,14 +87,14 @@ class Noise {
   }
 }
 
-interface Point {
+export interface Point {
   x: number;
   y: number;
   wave: { x: number; y: number };
   cursor: { x: number; y: number; vx: number; vy: number };
 }
 
-interface Mouse {
+export interface Mouse {
   x: number;
   y: number;
   lx: number;
@@ -107,7 +107,7 @@ interface Mouse {
   set: boolean;
 }
 
-interface Config {
+export interface Config {
   lineColor: string;
   waveSpeedX: number;
   waveSpeedY: number;
@@ -120,7 +120,7 @@ interface Config {
   yGap: number;
 }
 
-interface WavesProps {
+export interface WavesProps {
   lineColor?: string;
   backgroundColor?: string;
   waveSpeedX?: number;
@@ -136,7 +136,7 @@ interface WavesProps {
   className?: string;
 }
 
-const Waves: React.FC<WavesProps> = ({
+export const Waves: React.FC<WavesProps> = ({
   lineColor = 'black',
   backgroundColor = 'transparent',
   waveSpeedX = 0.0125,
@@ -224,12 +224,12 @@ const Waves: React.FC<WavesProps> = ({
   useEffect(() => {
     document.documentElement.style.setProperty('--waves-background-color', backgroundColor);
     document.documentElement.style.setProperty('--waves-line-color', lineColor);
-    
+
     // Apply any custom styles from the style prop
     const container = containerRef.current;
     if (container && style) {
       Object.entries(style).forEach(([key, value]) => {
-        const cssKey = key.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
+        const cssKey = key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`);
         document.documentElement.style.setProperty(`--waves-custom-${cssKey}`, value as string);
       });
     }
@@ -407,13 +407,8 @@ const Waves: React.FC<WavesProps> = ({
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className={`${styles['waves-container']} ${className}`}
-    >
-      <div
-        className={styles['waves-cursor']}
-      />
+    <div ref={containerRef} className={`${styles['waves-container']} ${className}`}>
+      <div className={styles['waves-cursor']} />
       <canvas ref={canvasRef} className={styles['waves-canvas']} />
     </div>
   );

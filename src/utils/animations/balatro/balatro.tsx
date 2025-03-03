@@ -1,7 +1,7 @@
 import { Mesh, Program, Renderer, Triangle } from 'ogl';
 import { useEffect, useRef } from 'react';
 
-interface BalatroProps {
+export interface BalatroProps {
   spinRotation?: number;
   spinSpeed?: number;
   offset?: [number, number];
@@ -36,7 +36,7 @@ function hexToVec4(hex: string): [number, number, number, number] {
   return [r, g, b, a];
 }
 
-const vertexShader = `
+export const vertexShader = `
 attribute vec2 uv;
 attribute vec2 position;
 varying vec2 vUv;
@@ -46,7 +46,7 @@ void main() {
 }
 `;
 
-const fragmentShader = `
+export const fragmentShader = `
 precision highp float;
 
 #define PI 3.14159265359

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-class Pixel {
+export class Pixel {
   width: number;
   height: number;
   ctx: CanvasRenderingContext2D;
@@ -151,7 +151,7 @@ const VARIANTS = {
   }
 };
 
-interface PixelCardProps {
+export interface PixelCardProps {
   variant?: 'default' | 'blue' | 'yellow' | 'pink';
   gap?: number;
   speed?: number;
@@ -161,7 +161,7 @@ interface PixelCardProps {
   children: React.ReactNode;
 }
 
-interface VariantConfig {
+export interface VariantConfig {
   activeColor: string | null;
   gap: number;
   speed: number;

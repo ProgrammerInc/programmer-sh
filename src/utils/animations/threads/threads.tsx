@@ -1,14 +1,14 @@
 import { Color, Mesh, Program, Renderer, Triangle } from 'ogl';
 import React, { useEffect, useRef } from 'react';
 
-interface ThreadsProps {
+export interface ThreadsProps {
   color?: [number, number, number];
   amplitude?: number;
   distance?: number;
   enableMouseInteraction?: boolean;
 }
 
-const vertexShader = `
+export const vertexShader = `
 attribute vec2 position;
 attribute vec2 uv;
 varying vec2 vUv;
@@ -18,7 +18,7 @@ void main() {
 }
 `;
 
-const fragmentShader = `
+export const fragmentShader = `
 precision highp float;
 uniform float iTime;
 uniform vec3 iResolution;
@@ -122,7 +122,14 @@ void main() {
 }
 `;
 
-const Threads: React.FC<ThreadsProps> = ({
+export interface ThreadsProps {
+  color?: [number, number, number];
+  amplitude?: number;
+  distance?: number;
+  enableMouseInteraction?: boolean;
+}
+
+export const Threads: React.FC<ThreadsProps> = ({
   color = [1, 1, 1],
   amplitude = 1,
   distance = 0,

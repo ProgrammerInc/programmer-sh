@@ -1,16 +1,17 @@
 import { gsap } from 'gsap';
 import { Observer } from 'gsap/Observer';
+import { EffectComposer } from 'postprocessing';
 import React, { useEffect, useRef } from 'react';
 import {
   ACESFilmicToneMapping,
   AmbientLight,
-  BufferGeometry,
   Clock,
   Color,
   InstancedBufferAttribute,
   InstancedMesh,
   Material,
   MathUtils,
+  Matrix4,
   Mesh,
   MeshPhysicalMaterial,
   MeshPhysicalMaterialParameters,
@@ -30,25 +31,23 @@ import {
   Vector3,
   Vector4,
   WebGLRenderer,
-  WebGLRendererParameters,
-  Matrix4
+  WebGLRendererParameters
 } from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
-import { EffectComposer } from 'postprocessing';
 
 gsap.registerPlugin(Observer);
 
 /* =========================================================
    Class X – Main Three.js Setup
    ========================================================= */
-interface XConfig {
+export interface XConfig {
   canvas?: HTMLCanvasElement;
   id?: string;
   rendererOptions?: Partial<WebGLRendererParameters>;
   size?: 'parent' | { width: number; height: number };
 }
 
-interface SizeData {
+export interface SizeData {
   width: number;
   height: number;
   wWidth: number;
@@ -57,7 +56,7 @@ interface SizeData {
   pixelRatio: number;
 }
 
-class X {
+export class X {
   // Private fields
   #config: XConfig;
   #postprocessing?: EffectComposer;
@@ -279,11 +278,7 @@ class X {
 
   clear() {
     this.scene.traverse(obj => {
-      if (
-        (obj instanceof Mesh) &&
-        typeof obj.material === 'object' &&
-        obj.material !== null
-      ) {
+      if (obj instanceof Mesh && typeof obj.material === 'object' && obj.material !== null) {
         const material = obj.material as Material;
         if (material.dispose) {
           material.dispose();
@@ -317,7 +312,7 @@ class X {
    Class W – Physics for Ballpit
    (Assumed to be defined in the code below)
    ========================================================= */
-interface WConfig {
+export interface WConfig {
   count: number;
   maxX: number;
   maxY: number;
@@ -333,7 +328,7 @@ interface WConfig {
   followCursor?: boolean;
 }
 
-class W {
+export class W {
   config: WConfig;
   positionData: Float32Array;
   velocityData: Float32Array;
@@ -453,24 +448,29 @@ class W {
 /* =========================================================
    Class Y – Custom Shader Material
    ========================================================= */
-class Y extends MeshPhysicalMaterial {
-  uniforms: { [key: string]: { value: number | boolean | Color | Vector2 | Vector3 | Vector4 | Texture } } = {
+export class Y extends MeshPhysicalMaterial {
+  uniforms: {
+    [key: string]: { value: number | boolean | Color | Vector2 | Vector3 | Vector4 | Texture };
+  } = {
     thicknessDistortion: { value: 0.1 },
     thicknessAmbient: { value: 0 },
     thicknessAttenuation: { value: 0.1 },
     thicknessPower: { value: 2 },
     thicknessScale: { value: 10 }
   };
-  
+
   defines: { [key: string]: string | number | boolean } = {};
 
   // Add the envMapRotation property
   envMapRotation: Vector3 = new Vector3();
 
   onBeforeCompile: (shader: {
-    uniforms: Record<string, { 
-      value: number | boolean | Color | Vector2 | Vector3 | Vector4 | Texture 
-    }>;
+    uniforms: Record<
+      string,
+      {
+        value: number | boolean | Color | Vector2 | Vector3 | Vector4 | Texture;
+      }
+    >;
     fragmentShader: string;
     vertexShader: string;
   }) => void = () => {};
@@ -520,9 +520,12 @@ class Y extends MeshPhysicalMaterial {
     };
   }
   onBeforeCompile2?: (shader: {
-    uniforms: Record<string, { 
-      value: number | boolean | Color | Vector2 | Vector3 | Vector4 | Texture 
-    }>;
+    uniforms: Record<
+      string,
+      {
+        value: number | boolean | Color | Vector2 | Vector3 | Vector4 | Texture;
+      }
+    >;
     fragmentShader: string;
     vertexShader: string;
   }) => void;
@@ -562,7 +565,7 @@ const U = new Object3D();
 let globalPointerActive = false;
 const pointerPosition = new Vector2();
 
-interface PointerData {
+export interface PointerData {
   position: Vector2;
   nPosition: Vector2;
   hover: boolean;
@@ -677,7 +680,7 @@ const T = new Vector3();
 /* =========================================================
    Class Z – Instanced Mesh for Spheres
    ========================================================= */
-class Z extends InstancedMesh {
+export class Z extends InstancedMesh {
   config: typeof XConfig;
   physics: W;
   ambientLight: AmbientLight | undefined;
@@ -776,7 +779,7 @@ class Z extends InstancedMesh {
 /* =========================================================
    createBallpit Utility
    ========================================================= */
-interface CreateBallpitReturn {
+export interface CreateBallpitReturn {
   three: X;
   spheres: Z;
   setCount: (count: number) => void;
@@ -853,7 +856,7 @@ function createBallpit(
 /* =========================================================
    Ballpit Component
    ========================================================= */
-interface BallpitProps {
+export interface BallpitProps {
   className?: string;
   followCursor?: boolean;
   count?: number;
@@ -880,7 +883,11 @@ interface BallpitProps {
   controlSphere0?: boolean;
 }
 
-const Ballpit: React.FC<BallpitProps> = ({ className = '', followCursor = true, ...props }) => {
+export const Ballpit: React.FC<BallpitProps> = ({
+  className = '',
+  followCursor = true,
+  ...props
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const spheresInstanceRef = useRef<CreateBallpitReturn | null>(null);
 

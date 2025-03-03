@@ -1,7 +1,7 @@
 import { Camera, Geometry, Mesh, Program, Renderer } from 'ogl';
 import React, { useEffect, useRef } from 'react';
 
-interface ParticlesProps {
+export interface ParticlesProps {
   particleCount?: number;
   particleSpread?: number;
   speed?: number;
@@ -30,6 +30,7 @@ const hexToRgb = (hex: string): [number, number, number] => {
   const r = ((int >> 16) & 255) / 255;
   const g = ((int >> 8) & 255) / 255;
   const b = (int & 255) / 255;
+
   return [r, g, b];
 };
 
