@@ -1,6 +1,7 @@
 import { HistoryItem } from '@/components/ui/terminal';
 import { useToast } from '@/hooks/use-toast';
 import React, { useEffect, useRef, useState } from 'react';
+import { createRoot } from 'react-dom/client';
 import AsciiArt from '../ascii-art/ascii-art';
 import CommandLine from '../command-line';
 import TerminalHistory from '../terminal-history';
@@ -167,40 +168,28 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
                 const root = document.createElement('div');
                 qrContainer.appendChild(root);
 
-                // Use dynamic import of ReactDOM to render QR code
-                import('react-dom/client')
-                  .then(ReactDOM => {
-                    try {
-                      const reactRoot = ReactDOM.createRoot(root);
-                      reactRoot.render(
-                        React.createElement(QRCodeModule.QRCodeSVG, {
-                          value: decodedValue,
-                          size: 256,
-                          level: 'M',
-                          bgColor: '#1a1f2c',
-                          fgColor: '#ffffff',
-                          includeMargin: false
-                        })
-                      );
-                    } catch (renderErr) {
-                      console.error('Error rendering QR code with React:', renderErr);
-                      // Fallback to simple SVG
-                      root.innerHTML = `<svg width="256" height="256" viewBox="0 0 256 256">
-                    <rect width="256" height="256" fill="#1a1f2c" />
-                    <text x="128" y="128" text-anchor="middle" dominant-baseline="middle" fill="#ffffff">QR Code</text>
-                    <text x="128" y="144" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="16">${decodedValue}</text>
-                  </svg>`;
-                    }
-                  })
-                  .catch(domErr => {
-                    console.error('Error loading ReactDOM:', domErr);
-                    // Fallback if ReactDOM can't be loaded
-                    qrContainer.innerHTML = `<svg width="256" height="256" viewBox="0 0 256 256">
-                  <rect width="256" height="256" fill="#1a1f2c" />
-                  <text x="128" y="128" text-anchor="middle" dominant-baseline="middle" fill="#ffffff">QR Code</text>
-                  <text x="128" y="144" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="16">${decodedValue}</text>
-                </svg>`;
-                  });
+                // Use static import of ReactDOM to render QR code
+                try {
+                  const reactRoot = createRoot(root);
+                  reactRoot.render(
+                    React.createElement(QRCodeModule.QRCodeSVG, {
+                      value: decodedValue,
+                      size: 256,
+                      level: 'M',
+                      bgColor: '#1a1f2c',
+                      fgColor: '#ffffff',
+                      includeMargin: false
+                    })
+                  );
+                } catch (renderErr) {
+                  console.error('Error rendering QR code with React:', renderErr);
+                  // Fallback to simple SVG
+                  root.innerHTML = `<svg width="256" height="256" viewBox="0 0 256 256">
+                <rect width="256" height="256" fill="#1a1f2c" />
+                <text x="128" y="128" text-anchor="middle" dominant-baseline="middle" fill="#ffffff">QR Code</text>
+                <text x="128" y="144" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="16">${decodedValue}</text>
+              </svg>`;
+                }
               } catch (e) {
                 console.error('Error creating QR code:', e);
                 // Fallback method - create a basic SVG
