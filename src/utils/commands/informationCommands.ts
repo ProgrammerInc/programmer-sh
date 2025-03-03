@@ -1,4 +1,3 @@
-import programmerIcon from '@/lib/qrcode-logos';
 import { fetchProfile } from '../database/portfolioServices';
 import { Command, CommandResult } from './types';
 
@@ -73,12 +72,7 @@ ${profile.summary}
   ${linkedin ? `- <strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin}</a>` : ''}
   ${twitter ? `- <strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter}</a>` : ''}
   ${website ? `- <strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website}</a>` : ''}
-
-<div class="flex justify-center w-full mt-4">
-  <div id="qrcodeContainer" class="qrcode-container">
-    <QRCode size={256} bgColor="#f1f1f1" fgColor="#1a1f2c" imageSettings={${programmerIcon}} includeMargin={false} value="${encodeURIComponent(vCard)}" title="Scan QR Code to Save My Contact Information" />
-  </div>
-</div>`,
+<div class="flex justify-center w-full mt-4"><div id="qrcodeContainer" class="qrcode-container"><QRCode value="${encodeURIComponent(vCard)}" title="Scan QR Code to Save My Contact Information" /></div></div>`,
           isError: false,
           rawHTML: true
         };
@@ -154,12 +148,7 @@ END:VCARD`;
   ${github ? `- <strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github}</a>` : ''}
   ${twitter ? `- <strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter}</a>` : ''}
   ${website ? `- <strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website}</a>` : ''}
-
-<div class="flex justify-center w-full mt-4">
-  <div id="qrcodeContainer" class="qrcode-container">
-    <QRCode size={256} bgColor="#f1f1f1" fgColor="#1a1f2c" imageSettings={${programmerIcon}} includeMargin={false} value="${encodeURIComponent(vCard)}" title="Scan QR Code to Save My Contact Information" />
-  </div>
-</div>`,
+<div class="flex justify-center w-full mt-4"><div id="qrcodeContainer" class="qrcode-container"><QRCode value="${encodeURIComponent(vCard)}" title="Scan QR Code to Save My Contact Information" /></div></div>`,
           isError: false,
           rawHTML: true
         };

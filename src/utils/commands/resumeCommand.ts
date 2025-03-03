@@ -1,4 +1,3 @@
-import { programmerIcon } from '../../lib/qrcode-logos';
 import { fetchPortfolioData } from '../database/portfolioServices';
 import { Command, CommandResult } from './types';
 
@@ -100,11 +99,7 @@ ${linkedin ? `<span><strong>LinkedIn:</strong> <a href="${linkedin}" target="_bl
 ${github ? `<span><strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${github.replace(/^https?:\/\//, '')}</a></span>` : ''}
 ${twitter ? `<span><strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${twitter.replace(/^https?:\/\//, '')}</a></span>` : ''}
 ${website ? `<span><strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${website.replace(/^https?:\/\//, '')}</a></span>` : ''}</div></div>
-<div class="flex justify-center w-full mt-4">
-  <div id="qrcodeContainer" class="qrcode-container">
-    <QRCode size={256} bgColor="#f1f1f1" fgColor="#1a1f2c" imageSettings={${programmerIcon}} includeMargin={false} value="${encodeURIComponent(vCard)}" title="Scan QR Code to Save My Contact Information" />
-  </div>
-</div>`,
+<div class="flex justify-center w-full mt-4"><div id="qrcodeContainer" class="qrcode-container"><QRCode value="${encodeURIComponent(vCard)}" title="Scan QR Code to Save My Contact Information" /></div></div>`,
           isError: false,
           rawHTML: true
         };

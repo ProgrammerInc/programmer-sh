@@ -1,7 +1,7 @@
 import programmerIcon from '@/lib/qrcode-logos';
 import { cn } from '@/lib/utils';
-import { QRCodeSVG } from 'qrcode.react';
 import React from 'react';
+import { QRCode } from 'react-qrcode-logo';
 
 // Define the ImageSettings interface locally instead of importing it
 export interface ImageSettings {
@@ -23,36 +23,71 @@ export interface ImageSettings {
 }
 
 export interface QRCodeProps {
+  id: string;
   value: string;
-  size?: number;
-  className?: string;
   title?: string;
+  className?: string;
   bgColor?: string;
   fgColor?: string;
-  imageSettings?: ImageSettings;
+  eyeColor?: string;
+  eyeRadius?: number;
+  level?: 'L' | 'M' | 'Q' | 'H';
+  marginSize?: number;
+  minVersion?: number;
+  qrStyle?: 'squares' | 'dots' | 'fluid';
+  quietZone?: number;
+  size?: number;
+  style?: React.CSSProperties;
+  boostLevel?: boolean;
+  enableCORS?: boolean;
   includeMargin?: boolean;
+  imageSettings?: ImageSettings;
 }
 
 const QRCodeComponent: React.FC<QRCodeProps> = ({
   value,
-  size = 256,
-  bgColor = '#1a1f2c',
+  bgColor = '#31373F',
   fgColor = '#f1f1f1',
+  eyeColor = '#1a1f2c',
+  eyeRadius = 7,
+  level = 'M',
+  marginSize = 0,
+  minVersion = 1,
+  quietZone = 0,
+  qrStyle = 'dots',
+  size = 300,
+  style = {
+    backgroundColor: bgColor,
+    color: fgColor
+  },
+  boostLevel = false,
+  enableCORS = false,
   includeMargin = false,
+  imageSettings,
   className,
   title = 'Scan QR Code to Save My Contact Information'
 }) => {
   return (
     <div className={cn('flex flex-col items-center my-4', className)}>
       <div className="p-2 rounded">
-        <QRCodeSVG
+        <QRCode
           value={value}
-          size={size}
-          imageSettings={programmerIcon}
-          level="M"
           bgColor={bgColor}
           fgColor={fgColor}
-          includeMargin={includeMargin}
+          ecLevel={level}
+          enableCORS={enableCORS}
+          eyeColor={eyeColor}
+          eyeRadius={eyeRadius}
+          logoImage={programmerIcon.src}
+          logoWidth={programmerIcon.width}
+          logoHeight={programmerIcon.height}
+          logoPadding={programmerIcon.logoPadding}
+          logoPaddingStyle={programmerIcon.logoPaddingStyle}
+          qrStyle={qrStyle}
+          quietZone={quietZone}
+          removeQrCodeBehindLogo={programmerIcon.removeQrCodeBehindLogo}
+          size={size}
+          style={style}
         />
       </div>
       {title && (

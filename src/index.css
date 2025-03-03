@@ -131,11 +131,15 @@ body {
   }
 
   .qrcode-container p {
-    @apply text-terminal-prompt;
+    @apply text-terminal-prompt font-mono;
+    font-size: 13px;
+    padding-top: 1.5rem;
   }
 
   .qrcode-container .bg-white {
-    background-color: var(--terminal-foreground);
+    background-color: var(--terminal-background-translucent);
+    border: 1px solid var(--terminal-muted-50);
+    @apply rounded-md;
   }
 
   .qrcode-container svg path:first-child {

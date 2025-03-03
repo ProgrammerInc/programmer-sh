@@ -150,8 +150,8 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
           qrBackground.appendChild(qrContainer);
 
           // Import and use qrcode.react - but don't rely on ReactDOMServer
-          import('qrcode.react')
-            .then(QRCodeModule => {
+          import('react-qrcode-logo')
+            .then(QRCode => {
               try {
                 // Create a simplified SVG QR code directly
                 // This avoids using ReactDOMServer which isn't available on window
@@ -172,16 +172,30 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
 
                 // Use static import of ReactDOM to render QR code
                 try {
+                  const bgColor = '#1a1f2c';
+                  const fgColor = '#f1f1f1';
+                  const eyeColor = fgColor;
                   const reactRoot = createRoot(root);
                   reactRoot.render(
-                    React.createElement(QRCodeModule.QRCodeSVG, {
+                    React.createElement(QRCode.QRCode, {
                       value: decodedValue,
-                      size: 256,
-                      level: 'M',
-                      bgColor: '#f1f1f1',
-                      fgColor: '#1a1f2c',
-                      imageSettings: programmerIcon,
-                      includeMargin: false
+                      bgColor,
+                      fgColor,
+                      ecLevel: 'M',
+                      eyeColor,
+                      eyeRadius: 7,
+                      logoImage: programmerIcon.src,
+                      logoWidth: programmerIcon.width,
+                      logoHeight: programmerIcon.height,
+                      logoPadding: programmerIcon.logoPadding,
+                      logoPaddingStyle: programmerIcon.logoPaddingStyle,
+                      qrStyle: 'dots',
+                      removeQrCodeBehindLogo: programmerIcon.removeQrCodeBehindLogo,
+                      size: 300,
+                      style: {
+                        backgroundColor: 'transparent',
+                        color: 'transparent'
+                      }
                     })
                   );
                 } catch (renderErr) {
