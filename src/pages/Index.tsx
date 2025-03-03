@@ -2,10 +2,14 @@ import Terminal from '@/components/ui/terminal';
 import { Toaster } from '@/components/ui/toaster';
 import Aurora from '@/utils/animations/aurora/aurora';
 import Balatro from '@/utils/animations/balatro/balatro';
+import Ballpit from '@/utils/animations/ballpit/ballpit';
 import Dither from '@/utils/animations/dither/dither';
+import GridDistortion from '@/utils/animations/grid-distortion/grid-distortion';
 import Hyperspeed from '@/utils/animations/hyperspeed/hyperspeed';
+import Iridescence from '@/utils/animations/iridescence/iridescence';
 import { LetterGlitch } from '@/utils/animations/letter-glitch';
 import { Lightning } from '@/utils/animations/lightning';
+import Particles from '@/utils/animations/particles/particles';
 import Threads from '@/utils/animations/threads/threads';
 import { processThemeFromUrl } from '@/utils/commands/themeCommand';
 import { extractUrlParameters, validUrlCommands } from '@/utils/commands/urlCommandHandler';
@@ -143,6 +147,11 @@ const Index = () => {
       {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'balatro' && (
         <Balatro isRotate={false} mouseInteraction={true} pixelFilter={700} />
       )}
+      {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'ballpit' && (
+        <div id="ballpitContainer" className="ballpit-container">
+          <Ballpit count={200} gravity={0.7} friction={0.8} wallBounce={0.95} followCursor={true} />
+        </div>
+      )}
       {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'dither' && (
         <div id="ditherContainer" className="dither-container">
           <Dither
@@ -157,6 +166,19 @@ const Index = () => {
           />
         </div>
       )}
+      {wallpaperClasses.includes('wallpaper-animation') &&
+        currentWallpaper === 'grid-distortion' && (
+          <div id="gridDistortionContainer" className="grid-distortion-container">
+            <GridDistortion
+              imageSrc="/images/pikes-peak-colorado-v1.jpg"
+              grid={10}
+              mouse={0.1}
+              strength={0.15}
+              relaxation={0.9}
+              className="custom-class"
+            />
+          </div>
+        )}
       {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'hyperspeed' && (
         <Hyperspeed
           effectOptions={{
@@ -198,6 +220,9 @@ const Index = () => {
           }}
         />
       )}
+      {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'iridescence' && (
+        <Iridescence color={[1, 1, 1]} mouseReact={false} amplitude={0.1} speed={1.0} />
+      )}
       {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'letter-glitch' && (
         <LetterGlitch
           glitchColors={['#2b4539', '#61dca3', '#61b3dc']}
@@ -210,6 +235,21 @@ const Index = () => {
       {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'lightning' && (
         <div id="lightningContainer" className="lightning-container">
           <Lightning hue={220} xOffset={0} speed={1} intensity={1} size={1} />
+        </div>
+      )}
+
+      {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'particles' && (
+        <div id="particlesContainer" className="particles-container">
+          <Particles
+            particleColors={['#ffffff', '#ffffff']}
+            particleCount={200}
+            particleSpread={10}
+            speed={0.1}
+            particleBaseSize={100}
+            moveParticlesOnHover={true}
+            alphaParticles={false}
+            disableRotation={false}
+          />
         </div>
       )}
       {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'threads' && (

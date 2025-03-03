@@ -197,6 +197,14 @@ body {
     z-index: 1;
   }
 
+  .grid-distortion-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
   .threads-container {
     position: absolute;
     width: 100%;
@@ -274,6 +282,13 @@ body {
     @apply animate-scale-up;
   }
 }
+
+/* .wallpaper-animation {
+  background-image: url('https://images.unsplash.com/photo-1551641506-ee5bf4cb45f1?q=80&w=3568&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+} */
 
 .wallpaper-animation > div > canvas {
   min-height: 100vh;
