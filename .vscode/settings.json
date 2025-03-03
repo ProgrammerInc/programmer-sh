@@ -67,9 +67,11 @@
     "esbuild",
     "eventemitter",
     "fkey",
+    "fract",
     "frontends",
     "globjoin",
     "gnueabihf",
+    "highp",
     "hookform",
     "hookified",
     "htmlparser",
@@ -82,6 +84,7 @@
     "jiti",
     "jridgewell",
     "keyv",
+    "lerp",
     "lightningcss",
     "lilconfig",
     "loliapp",
@@ -108,6 +111,7 @@
     "rgba",
     "riscv",
     "rollup",
+    "snoise",
     "SOCIALPROFILE",
     "sugarss",
     "sunos",
@@ -122,6 +126,8 @@
     "vitejs",
     "webidl",
     "whatwg",
-    "XVCJ"
+    "XVCJ",
+    "xxzz",
+    "xyxy"
   ]
 }

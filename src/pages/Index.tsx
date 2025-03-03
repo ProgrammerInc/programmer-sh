@@ -1,5 +1,6 @@
 import Terminal from '@/components/ui/terminal';
 import { Toaster } from '@/components/ui/toaster';
+import Aurora from '@/utils/animations/aurora/aurora';
 import { LetterGlitch } from '@/utils/animations/letter-glitch';
 import { processThemeFromUrl } from '@/utils/commands/themeCommand';
 import { extractUrlParameters, validUrlCommands } from '@/utils/commands/urlCommandHandler';
@@ -126,6 +127,14 @@ const Index = () => {
 
   return (
     <div className={wallpaperClasses}>
+      {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'aurora' && (
+        <Aurora
+          colorStops={['#3A29FF', '#FF94B4', '#FF3232']}
+          blend={0.5}
+          amplitude={1.0}
+          speed={0.5}
+        />
+      )}
       {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'letter-glitch' && (
         <LetterGlitch
           glitchColors={['#2b4539', '#61dca3', '#61b3dc']}
