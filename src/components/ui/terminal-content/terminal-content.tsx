@@ -1,3 +1,4 @@
+
 import { HistoryItem } from '@/components/ui/terminal';
 import { useToast } from '@/hooks/use-toast';
 import React, { useEffect, useRef, useState } from 'react';
@@ -31,12 +32,30 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
   const [isSelecting, setIsSelecting] = useState(false);
   const [commandInput, setCommandInput] = useState('');
 
-  // Scroll to bottom when history changes
-  useEffect(() => {
+  // Enhanced scroll to bottom functionality - now also triggered by isProcessingAsync
+  const scrollToBottom = () => {
     if (terminalRef.current) {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
     }
-  }, [history]);
+  };
+
+  // Scroll to bottom when history changes or when command processing starts/ends
+  useEffect(() => {
+    scrollToBottom();
+  }, [history, isProcessingAsync]);
+
+  // Listen for command execution to scroll to bottom
+  useEffect(() => {
+    const handleCommandExecution = () => {
+      // Use setTimeout to ensure this happens after the DOM is updated
+      setTimeout(scrollToBottom, 0);
+    };
+
+    document.addEventListener('commandExecuted', handleCommandExecution);
+    return () => {
+      document.removeEventListener('commandExecuted', handleCommandExecution);
+    };
+  }, []);
 
   // Handle text selection and auto-copy to clipboard
   useEffect(() => {
