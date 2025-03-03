@@ -32,17 +32,33 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
   const [isSelecting, setIsSelecting] = useState(false);
   const [commandInput, setCommandInput] = useState('');
 
-  // Enhanced scroll to bottom functionality - now also triggered by isProcessingAsync
+  // Enhanced scroll to bottom functionality
   const scrollToBottom = () => {
     if (terminalRef.current) {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
     }
   };
 
-  // Scroll to bottom when history changes or when command processing starts/ends
+  // Scroll to bottom when history changes, when command processing starts/ends,
+  // and when the component mounts (page load)
   useEffect(() => {
     scrollToBottom();
   }, [history, isProcessingAsync]);
+
+  // Initial scroll on mount (page load)
+  useEffect(() => {
+    scrollToBottom();
+    
+    // Also listen for terminal content changes
+    const handleTerminalContentChanged = () => {
+      setTimeout(scrollToBottom, 0);
+    };
+    
+    document.addEventListener('terminalContentChanged', handleTerminalContentChanged);
+    return () => {
+      document.removeEventListener('terminalContentChanged', handleTerminalContentChanged);
+    };
+  }, []);
 
   // Listen for command execution to scroll to bottom
   useEffect(() => {

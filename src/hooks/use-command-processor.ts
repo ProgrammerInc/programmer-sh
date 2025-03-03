@@ -154,6 +154,10 @@ export const useCommandProcessor = (
           setTimeout(processNextCommand, 300);
         } else {
           setIsInitializing(false);
+          
+          // Dispatch a final scroll event after initialization is complete
+          const scrollEvent = new CustomEvent('terminalContentChanged');
+          document.dispatchEvent(scrollEvent);
         }
       };
       processNextCommand();
