@@ -123,15 +123,27 @@ body {
     @apply text-terminal-link hover:text-terminal-prompt transition-colors duration-200 cursor-pointer underline-offset-4 hover:underline;
   }
 
-  .qrcode-container p {
-    @apply text-terminal-prompt;
-  }
-
   .command-button {
     background-color: var(--terminal-muted-30);
     @apply px-3 py-1 text-terminal-foreground 
            hover:bg-terminal-muted/50 rounded transition-all duration-200 
            border border-terminal-muted/20 hover:border-terminal-prompt/50;
+  }
+
+  .qrcode-container p {
+    @apply text-terminal-prompt;
+  }
+
+  .qrcode-container .bg-white {
+    background-color: var(--terminal-foreground);
+  }
+
+  .qrcode-container svg path:first-child {
+    fill: var(--terminal-foreground);
+  }
+
+  .qrcode-container svg path:last-child {
+    fill: var(--terminal-background-translucent);
   }
 
   .terminal-scrollbar::-webkit-scrollbar {

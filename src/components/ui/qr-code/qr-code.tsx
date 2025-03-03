@@ -17,9 +17,9 @@ const QRCodeComponent: React.FC<QRCodeProps> = ({
   size = 256,
   bgColor = '#1a1f2c',
   fgColor = '#f1f1f1',
-  includeMargin = true,
+  includeMargin = false,
   className,
-  title = 'Scan this QR code'
+  title = 'Scan QR Code to Save My Contact Information'
 }) => {
   return (
     <div className={cn('flex flex-col items-center my-4', className)}>
