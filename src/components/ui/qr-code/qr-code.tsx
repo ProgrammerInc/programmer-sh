@@ -33,7 +33,11 @@ const QRCodeComponent: React.FC<QRCodeProps> = ({
           includeMargin={includeMargin}
         />
       </div>
-      {title && <p className="text-xs text-terminal-foreground mt-2">{title}</p>}
+      {title && (
+        <p className="text-xs text-terminal-foreground mt-2">
+          <span className="text-terminal-link hover:underline">{title}</span>
+        </p>
+      )}
     </div>
   );
 };

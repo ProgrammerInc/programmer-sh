@@ -115,12 +115,13 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
   // Add custom components for special content
   useEffect(() => {
     // Replace QRCode placeholder with actual QR code component
-    const qrContainers = document.querySelectorAll('#qrcode-container');
+    const qrContainers = document.querySelectorAll('.qrcode-container');
     qrContainers.forEach(container => {
       const qrElement = container.querySelector('QRCode');
       if (qrElement) {
         const value = qrElement.getAttribute('value') || '';
-        const title = qrElement.getAttribute('title') || 'Scan this QR code';
+        const title =
+          qrElement.getAttribute('title') || 'Scan QR Code to Save My Contact Information';
 
         // Create container div
         const qrCodeDiv = document.createElement('div');

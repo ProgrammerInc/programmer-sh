@@ -74,8 +74,8 @@ ${profile.summary}
   ${website ? `- <strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website}</a>` : ''}
 
 <div class="flex justify-center w-full mt-4">
-  <div id="qrcode-container">
-    <QRCode size={256} bgColor="#1a1f2c" fgColor="#ffffff" includeMargin={true} value="${encodeURIComponent(vCard)}" title="Scan to save contact information" />
+  <div id="qrcodeContainer" class="qrcode-container">
+    <QRCode size={256} bgColor="#1a1f2c" fgColor="#f1f1f1" includeMargin={true} value="${encodeURIComponent(vCard)}" title="Scan QR Code to Save My Contact Information" />
   </div>
 </div>`,
           isError: false,
@@ -155,8 +155,8 @@ END:VCARD`;
   ${website ? `- <strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website}</a>` : ''}
 
 <div class="flex justify-center w-full mt-4">
-  <div id="qrcode-container">
-    <QRCode size={256} bgColor="#1a1f2c" fgColor="#ffffff" includeMargin={true} value="${encodeURIComponent(vCard)}" title="Scan to save contact information" />
+  <div id="qrcodeContainer" class="qrcode-container">
+    <QRCode size={256} bgColor="#1a1f2c" fgColor="#f1f1f1" includeMargin={true} value="${encodeURIComponent(vCard)}" title="Scan QR Code to Save My Contact Information" />
   </div>
 </div>`,
           isError: false,

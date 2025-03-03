@@ -100,8 +100,8 @@ ${github ? `<span><strong>GitHub:</strong> <a href="${github}" target="_blank" c
 ${twitter ? `<span><strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${twitter.replace(/^https?:\/\//, '')}</a></span>` : ''}
 ${website ? `<span><strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${website.replace(/^https?:\/\//, '')}</a></span>` : ''}</div></div>
 <div class="flex justify-center w-full mt-4">
-  <div id="qrcode-container">
-    <QRCode size={256} bgColor="ffffff" fgColor="1a1f2c" includeMargin={false} value="${encodeURIComponent(vCard)}" title="Scan to save contact information" />
+  <div id="qrcodeContainer" class="qrcode-container">
+    <QRCode size={256} bgColor="#1a1f2c" fgColor="#f1f1f1" includeMargin={false} value="${encodeURIComponent(vCard)}" title="Scan QR Code to Save My Contact Information" />
   </div>
 </div>`,
           isError: false,
