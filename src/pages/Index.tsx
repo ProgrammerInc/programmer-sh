@@ -1,7 +1,9 @@
 import Terminal from '@/components/ui/terminal';
 import { Toaster } from '@/components/ui/toaster';
 import Aurora from '@/utils/animations/aurora/aurora';
+import Balatro from '@/utils/animations/balatro/balatro';
 import { LetterGlitch } from '@/utils/animations/letter-glitch';
+import { Lightning } from '@/utils/animations/lightning';
 import { processThemeFromUrl } from '@/utils/commands/themeCommand';
 import { extractUrlParameters, validUrlCommands } from '@/utils/commands/urlCommandHandler';
 import { getCurrentWallpaper, wallpapers } from '@/utils/commands/wallpaperCommand';
@@ -21,7 +23,7 @@ const Index = () => {
   // Update the document title when the current command changes
   useEffect(() => {
     const titleCommand = currentCommand || 'portfolio';
-    document.title = `~/${titleCommand} - &lt;programmer&gt;._`;
+    document.title = `~/${titleCommand} - <programmer>._`;
   }, [currentCommand]);
 
   useEffect(() => {
@@ -135,6 +137,9 @@ const Index = () => {
           speed={0.5}
         />
       )}
+      {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'balatro' && (
+        <Balatro isRotate={false} mouseInteraction={true} pixelFilter={700} />
+      )}
       {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'letter-glitch' && (
         <LetterGlitch
           glitchColors={['#2b4539', '#61dca3', '#61b3dc']}
@@ -143,6 +148,11 @@ const Index = () => {
           outerVignette={true}
           smooth={true}
         />
+      )}
+      {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'lightning' && (
+        <div id="LightningContainer" className="lightning-container">
+          <Lightning hue={220} xOffset={0} speed={1} intensity={1} size={1} />
+        </div>
       )}
       <div id="terminalContainer" className="terminal-container">
         <div
