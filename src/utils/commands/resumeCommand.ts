@@ -1,3 +1,4 @@
+import { programmerIcon } from '../../lib/qrcode-logos';
 import { fetchPortfolioData } from '../database/portfolioServices';
 import { Command, CommandResult } from './types';
 
@@ -101,7 +102,7 @@ ${twitter ? `<span><strong>Twitter/X:</strong> <a href="${twitter}" target="_bla
 ${website ? `<span><strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${website.replace(/^https?:\/\//, '')}</a></span>` : ''}</div></div>
 <div class="flex justify-center w-full mt-4">
   <div id="qrcodeContainer" class="qrcode-container">
-    <QRCode size={256} bgColor="#1a1f2c" fgColor="#f1f1f1" includeMargin={false} value="${encodeURIComponent(vCard)}" title="Scan QR Code to Save My Contact Information" />
+    <QRCode size={256} bgColor="#f1f1f1" fgColor="#1a1f2c" imageSettings={${programmerIcon}} includeMargin={false} value="${encodeURIComponent(vCard)}" title="Scan QR Code to Save My Contact Information" />
   </div>
 </div>`,
           isError: false,

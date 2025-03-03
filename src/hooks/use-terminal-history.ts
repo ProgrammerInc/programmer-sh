@@ -52,7 +52,7 @@ export const useTerminalHistory = (isInitializing: boolean) => {
   const updateLastCommand = useCallback(
     (command: string) => {
       if (command !== lastExecutedCommand) {
-        console.log('Updating last command to:', command);
+        // console.log('Updating last command to:', command);
         setLastExecutedCommand(command);
         localStorage.setItem(LAST_COMMAND_KEY, command);
       }

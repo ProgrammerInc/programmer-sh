@@ -2,6 +2,7 @@ import { HistoryItem } from '@/components/ui/terminal';
 import { useToast } from '@/hooks/use-toast';
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { programmerIcon } from '../../../lib/qrcode-logos';
 import AsciiArt from '../ascii-art/ascii-art';
 import CommandLine from '../command-line';
 import TerminalHistory from '../terminal-history';
@@ -177,8 +178,9 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
                       value: decodedValue,
                       size: 256,
                       level: 'M',
-                      bgColor: '#1a1f2c',
-                      fgColor: '#f1f1f1',
+                      bgColor: '#f1f1f1',
+                      fgColor: '#1a1f2c',
+                      imageSettings: programmerIcon,
                       includeMargin: false
                     })
                   );

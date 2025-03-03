@@ -1,14 +1,35 @@
+import programmerIcon from '@/lib/qrcode-logos';
 import { cn } from '@/lib/utils';
 import { QRCodeSVG } from 'qrcode.react';
 import React from 'react';
 
-interface QRCodeProps {
+// Define the ImageSettings interface locally instead of importing it
+export interface ImageSettings {
+  src: string;
+  size?: number;
+  height: number;
+  width: number;
+  crossOrigin?: string;
+  excavate: boolean;
+  logoPadding?: number;
+  logoPaddingStyle?: 'circle' | 'square';
+  logoWidth?: number;
+  logoHeight?: number;
+  opacity?: number;
+  quietZone?: number;
+  removeQrCodeBehindLogo?: boolean;
+  x?: number;
+  y?: number;
+}
+
+export interface QRCodeProps {
   value: string;
   size?: number;
   className?: string;
   title?: string;
   bgColor?: string;
   fgColor?: string;
+  imageSettings?: ImageSettings;
   includeMargin?: boolean;
 }
 
@@ -27,6 +48,7 @@ const QRCodeComponent: React.FC<QRCodeProps> = ({
         <QRCodeSVG
           value={value}
           size={size}
+          imageSettings={programmerIcon}
           level="M"
           bgColor={bgColor}
           fgColor={fgColor}
