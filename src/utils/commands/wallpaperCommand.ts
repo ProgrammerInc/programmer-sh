@@ -150,10 +150,10 @@ export interface Wallpaper {
 // Current wallpaper key in localStorage
 export const WALLPAPER_STORAGE_KEY = 'terminal_wallpaper';
 
-// Get current wallpaper from localStorage or default to code wallpaper instead of default
+// Get current wallpaper from localStorage or default to letter-glitch wallpaper instead of code
 export const getCurrentWallpaper = (): string => {
   const savedWallpaper = localStorage.getItem(WALLPAPER_STORAGE_KEY);
-  return savedWallpaper || 'code';
+  return savedWallpaper || 'letter-glitch';
 };
 
 // Set wallpaper in localStorage and dispatch event
