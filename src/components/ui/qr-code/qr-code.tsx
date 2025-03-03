@@ -16,7 +16,7 @@ const QRCodeComponent: React.FC<QRCodeProps> = ({
   value,
   size = 256,
   bgColor = '#1a1f2c',
-  fgColor = '#ffffff',
+  fgColor = '#f1f1f1',
   includeMargin = true,
   className,
   title = 'Scan this QR code'

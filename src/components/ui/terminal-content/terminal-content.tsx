@@ -178,8 +178,8 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
                       size: 256,
                       level: 'M',
                       bgColor: '#1a1f2c',
-                      fgColor: '#ffffff',
-                      includeMargin: false
+                      fgColor: '#f1f1f1',
+                      includeMargin: true
                     })
                   );
                 } catch (renderErr) {
@@ -187,8 +187,8 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
                   // Fallback to simple SVG
                   root.innerHTML = `<svg width="256" height="256" viewBox="0 0 256 256">
                 <rect width="256" height="256" fill="#1a1f2c" />
-                <text x="128" y="128" text-anchor="middle" dominant-baseline="middle" fill="#ffffff">QR Code</text>
-                <text x="128" y="144" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="16">${decodedValue}</text>
+                <text x="128" y="128" text-anchor="middle" dominant-baseline="middle" fill="#f1f1f1">QR Code</text>
+                <text x="128" y="144" text-anchor="middle" dominant-baseline="middle" fill="#f1f1f1" font-size="16">${decodedValue}</text>
               </svg>`;
                 }
               } catch (e) {
@@ -196,8 +196,8 @@ const TerminalContent: React.FC<TerminalContentProps> = ({
                 // Fallback method - create a basic SVG
                 qrContainer.innerHTML = `<svg width="256" height="256" viewBox="0 0 256 256">
                 <rect width="256" height="256" fill="#1a1f2c" />
-                <text x="128" y="128" text-anchor="middle" dominant-baseline="middle" fill="#ffffff">QR Code</text>
-                <text x="128" y="144" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="16">${decodedValue}</text>
+                <text x="128" y="128" text-anchor="middle" dominant-baseline="middle" fill="#f1f1f1">QR Code</text>
+                <text x="128" y="144" text-anchor="middle" dominant-baseline="middle" fill="#f1f1f1" font-size="16">${decodedValue}</text>
               </svg>`;
               }
             })

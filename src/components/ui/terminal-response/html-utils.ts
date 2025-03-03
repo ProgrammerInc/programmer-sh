@@ -17,9 +17,9 @@ export const containsHtmlTags = (content: string): boolean => {
     /<(strong|a|span|em|ul|li|ol|p|div|h[1-6]|br|code|pre|h[1-6])[^>]*>|<\/(strong|a|span|em|ul|li|ol|p|div|h[1-6]|code|pre|h[1-6])>|<(div|span) class="[^"]*-[^"]*">|<\/div>|<\/span>/;
 
   // Log for debugging
-  console.log(`Checking HTML tags in: ${content.substring(0, 50)}...`);
+  // console.log(`Checking HTML tags in: ${content.substring(0, 50)}...`);
   const result = htmlTagsRegex.test(content);
-  console.log(`Contains HTML tags: ${result}`);
+  // console.log(`Contains HTML tags: ${result}`);
 
   return result;
 };

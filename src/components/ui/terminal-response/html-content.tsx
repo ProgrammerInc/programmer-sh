@@ -15,9 +15,9 @@ const HtmlContent: React.FC<HtmlContentProps> = ({
   const hasCommandLinks = content.includes('command-link') || content.includes('[[');
 
   // Debug logs to help troubleshoot
-  console.log('Content contains HTML tags:', hasHtmlTags);
-  console.log('Content contains command links:', hasCommandLinks);
-  console.log('Content sample:', content.substring(0, 100));
+  // console.log('Content contains HTML tags:', hasHtmlTags);
+  // console.log('Content contains command links:', hasCommandLinks);
+  // console.log('Content sample:', content.substring(0, 100));
 
   if (hasHtmlTags || hasCommandLinks) {
     // For content with HTML tags, use dangerouslySetInnerHTML

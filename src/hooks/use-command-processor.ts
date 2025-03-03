@@ -16,7 +16,7 @@ export const useCommandProcessor = (
   // Set up initial commands
   useEffect(() => {
     if (initialCommands && initialCommands.length > 0) {
-      console.log('Setting initial commands:', initialCommands);
+      // console.log('Setting initial commands:', initialCommands);
       setCommandsToProcess(initialCommands);
     } else {
       setCommandsToProcess(['welcome']);
