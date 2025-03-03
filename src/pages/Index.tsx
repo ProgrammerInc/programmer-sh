@@ -130,7 +130,7 @@ const Index = () => {
         <LetterGlitch
           glitchColors={['#2b4539', '#61dca3', '#61b3dc']}
           glitchSpeed={50}
-          centerVignette={true}
+          centerVignette={false}
           outerVignette={false}
           smooth={true}
         />

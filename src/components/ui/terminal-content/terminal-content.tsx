@@ -172,7 +172,7 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
 
                 // Use static import of ReactDOM to render QR code
                 try {
-                  const bgColor = '#1a1f2c';
+                  const bgColor = '#111827';
                   const fgColor = '#f1f1f1';
                   const eyeColor = fgColor;
                   const eyeRadius = 7;
