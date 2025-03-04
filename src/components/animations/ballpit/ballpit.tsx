@@ -7,6 +7,7 @@ import {
   AmbientLight,
   Clock,
   Color,
+  Euler,
   InstancedBufferAttribute,
   InstancedMesh,
   Material,
@@ -198,12 +199,12 @@ export class X {
   }
 
   updateWorldSize() {
-    if (this.camera.isPerspectiveCamera) {
+    if ('isPerspectiveCamera' in this.camera && this.camera.isPerspectiveCamera) {
       const fovRad = (this.camera.fov * Math.PI) / 180;
       this.size.wHeight = 2 * Math.tan(fovRad / 2) * this.camera.position.length();
       this.size.wWidth = this.size.wHeight * this.camera.aspect;
-    } else if (this.camera.isOrthographicCamera) {
-      const cam = this.camera as OrthographicCamera;
+    } else if ('isOrthographicCamera' in this.camera) {
+      const cam = this.camera as unknown as OrthographicCamera;
       this.size.wHeight = cam.top - cam.bottom;
       this.size.wWidth = cam.right - cam.left;
     }
@@ -461,8 +462,7 @@ export class Y extends MeshPhysicalMaterial {
 
   defines: { [key: string]: string | number | boolean } = {};
 
-  // Add the envMapRotation property
-  envMapRotation: Vector3 = new Vector3();
+  envMapRotation: Euler = new Euler();
 
   onBeforeCompile: (shader: {
     uniforms: Record<
@@ -505,7 +505,7 @@ export class Y extends MeshPhysicalMaterial {
         void main() {
         `
       );
-      const lightsChunk = ShaderChunk.lights_fragment_begin.replaceAll(
+      const lightsChunk = ShaderChunk.lights_fragment_begin.replace(
         'RE_Direct( directLight, geometryPosition, geometryNormal, geometryViewDir, geometryClearcoatNormal, material, reflectedLight );',
         `
           RE_Direct( directLight, geometryPosition, geometryNormal, geometryViewDir, geometryClearcoatNormal, material, reflectedLight );
@@ -683,12 +683,9 @@ const T = new Vector3();
 export class Z extends InstancedMesh {
   config: typeof XConfig;
   physics: W;
-  ambientLight: AmbientLight | undefined;
-  light: PointLight | undefined;
-  declare count: number;
-
-  declare add: (object: Object3D) => Object3D;
-  declare remove: (object: Object3D) => Object3D;
+  ambientLight?: AmbientLight;
+  light?: PointLight;
+  
   declare setColorAt: (index: number, color: Color) => void;
   declare instanceColor: InstancedBufferAttribute | null;
   declare setMatrixAt: (index: number, matrix: Matrix4) => void;
