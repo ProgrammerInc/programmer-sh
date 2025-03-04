@@ -1,6 +1,6 @@
+import PixelCard from '@/components/animations/pixel-card/pixel-card';
 import programmerIcon from '@/lib/qrcode-logos';
 import { cn } from '@/lib/utils';
-import PixelCard from '@/utils/animations/pixel-card/pixel-card';
 import React from 'react';
 import { QRCode } from 'react-qrcode-logo';
 
@@ -33,16 +33,11 @@ export interface QRCodeProps {
   eyeColor?: string;
   eyeRadius?: number;
   level?: 'L' | 'M' | 'Q' | 'H';
-  marginSize?: number;
-  minVersion?: number;
   qrStyle?: 'squares' | 'dots' | 'fluid';
   quietZone?: number;
   size?: number;
   style?: React.CSSProperties;
-  boostLevel?: boolean;
   enableCORS?: boolean;
-  includeMargin?: boolean;
-  imageSettings?: ImageSettings;
 }
 
 export const QRCodeComponent: React.FC<QRCodeProps> = ({
@@ -52,8 +47,6 @@ export const QRCodeComponent: React.FC<QRCodeProps> = ({
   eyeColor = '#1a1f2c',
   eyeRadius = 7,
   level = 'M',
-  marginSize = 0,
-  minVersion = 1,
   quietZone = 0,
   qrStyle = 'dots',
   size = 300,
@@ -61,10 +54,7 @@ export const QRCodeComponent: React.FC<QRCodeProps> = ({
     backgroundColor: bgColor,
     color: fgColor
   },
-  boostLevel = false,
   enableCORS = false,
-  includeMargin = false,
-  imageSettings,
   className,
   title = 'Scan QR Code to Save My Contact Information'
 }) => {
@@ -73,6 +63,7 @@ export const QRCodeComponent: React.FC<QRCodeProps> = ({
       <div className="p-2 rounded">
         <PixelCard>
           <QRCode
+            id={value}
             value={value}
             bgColor={bgColor}
             fgColor={fgColor}
