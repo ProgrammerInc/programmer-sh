@@ -55,7 +55,7 @@ export const wallpapers = {
     name: 'Grid Distortion',
     description: 'Grid Distortion - a twisted grid of tiles flipping and rotating',
     type: 'animation',
-    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
+    url: 'https://images.unsplash.com/photo-1551641506-ee5bf4cb45f1?auto=format&fit=crop&q=80'
   },
   hyperspeed: {
     id: 'hyperspeed',
