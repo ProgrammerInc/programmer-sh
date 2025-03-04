@@ -6,22 +6,19 @@ export const wallpapers = {
     id: 'aurora',
     name: 'Aurora',
     description: 'Northern Lights in the night sky',
-    type: 'animation',
-    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
+    type: 'animation'
   },
   balatro: {
     id: 'balatro',
     name: 'Balatro',
     description: 'Balatro - a rainbow of colors',
-    type: 'animation',
-    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
+    type: 'animation'
   },
   ballpit: {
     id: 'ballpit',
     name: 'Ballpit',
     description: 'A ball pit of many colorful balls',
-    type: 'animation',
-    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
+    type: 'animation'
   },
   code: {
     id: 'code',
@@ -30,13 +27,12 @@ export const wallpapers = {
     type: 'image',
     url: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80'
   },
-  dither: {
-    id: 'dither',
-    name: 'Dither',
-    description: 'Dithered animation wallpaper',
-    type: 'animation',
-    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
-  },
+  // dither: {
+  //   id: 'dither',
+  //   name: 'Dither',
+  //   description: 'Dithered animation wallpaper',
+  //   type: 'animation'
+  // },
   fog: {
     id: 'fog',
     name: 'Fog',
@@ -68,43 +64,37 @@ export const wallpapers = {
     id: 'iridescence',
     name: 'Iridescence',
     description: 'Iridescence - waves of iridescence',
-    type: 'animation',
-    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
+    type: 'animation'
   },
   'letter-glitch': {
     id: 'letter-glitch',
     name: 'Letter Glitch',
     description: "There's a glitch in the matrix",
-    type: 'animation',
-    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
+    type: 'animation'
   },
   lightning: {
     id: 'lightning',
     name: 'Lightning',
     description: 'Lightning across in the sky',
-    type: 'animation',
-    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
+    type: 'animation'
   },
   'liquid-chrome': {
     id: 'liquid-chrome',
     name: 'Liquid Chrome',
     description: 'Liquid Chrome - monochrome waves of liquid metal',
-    type: 'animation',
-    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
+    type: 'animation'
   },
   'magnet-lines': {
     id: 'magnet-lines',
     name: 'Magnet Lines',
     description: 'Magnet Lines - magnet lines follows the cursor across the screen',
-    type: 'animation',
-    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
+    type: 'animation'
   },
   'meta-balls': {
     id: 'meta-balls',
     name: 'Meta Balls',
     description: 'Meta Balls - reactivate balls on cursor hover',
-    type: 'animation',
-    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
+    type: 'animation'
   },
   mountains: {
     id: 'mountains',
@@ -124,22 +114,19 @@ export const wallpapers = {
     id: 'particles',
     name: 'Particles',
     description: 'Particles - lucy in the sky with diamonds',
-    type: 'animation',
-    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
+    type: 'animation'
   },
   threads: {
     id: 'threads',
     name: 'Threads',
     description: 'The threads of fate on your desktop',
-    type: 'animation',
-    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
+    type: 'animation'
   },
   waves: {
     id: 'waves',
     name: 'Waves',
     description: 'Waves - trippy psychedelic liquid animation wallpaper',
-    type: 'animation',
-    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
+    type: 'animation'
   },
   workspace: {
     id: 'workspace',
