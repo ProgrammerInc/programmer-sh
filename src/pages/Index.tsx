@@ -169,8 +169,14 @@ const Index = () => {
           <Ballpit
             colors={[0x3a29ff, 0x6c01b4, 0xff0070, 0xffbd2d, 0x25c93f]}
             ambientColor={0x1a1f2c}
-            ambientIntensity={1}
-            lightIntensity={50}
+            ambientIntensity={0}
+            lightIntensity={0}
+            materialParams={{
+              metalness: 0.5,
+              roughness: 0.5,
+              clearcoat: 1,
+              clearcoatRoughness: 0.15
+            }}
             followCursor={false}
           />
         </div>
