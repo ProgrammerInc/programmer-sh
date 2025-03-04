@@ -14,3 +14,5 @@ export const SidebarContextProvider: React.FC<
  * Export the context for convenience
  */
 export { SidebarContext, type SidebarContextType };
+
+export default SidebarContextProvider;

@@ -22,3 +22,5 @@ export const useSocialLinks = () => {
 
   return { socialLinks };
 };
+
+export default useSocialLinks;

@@ -1,4 +1,5 @@
 import TerminalHistory from './terminal-history';
 
-export { TerminalHistory };
+export * from './terminal-history';
+
 export default TerminalHistory;

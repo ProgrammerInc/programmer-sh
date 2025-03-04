@@ -198,3 +198,5 @@ export function convertLinksToAnchors(
 ): React.ReactNode[] {
   return processLinks(text, onCommandClick);
 }
+
+export default processLinks;

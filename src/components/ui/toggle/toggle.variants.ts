@@ -24,3 +24,5 @@ export const toggleVariants = cva(
     }
   }
 );
+
+export default toggleVariants;

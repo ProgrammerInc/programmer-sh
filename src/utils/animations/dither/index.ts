@@ -1,4 +1,5 @@
 import Dither from './dither';
 
-export { Dither };
+export * from './dither';
+
 export default Dither;

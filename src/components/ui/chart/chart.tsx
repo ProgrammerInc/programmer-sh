@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import styles from './chart.module.css';
 
 // Format: { THEME_NAME: CSS_SELECTOR }
-const THEMES = { light: '', dark: '.dark' } as const;
+export const THEMES = { light: '', dark: '.dark' } as const;
 
 export type ChartConfig = {
   [k in string]: {
@@ -17,7 +17,7 @@ export type ChartConfig = {
   );
 };
 
-type ChartContextProps = {
+export type ChartContextProps = {
   config: ChartConfig;
 };
 
@@ -52,6 +52,7 @@ const ChartContainer = React.forwardRef<
     </ChartContext.Provider>
   );
 });
+
 ChartContainer.displayName = 'Chart';
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
@@ -215,6 +216,7 @@ const ChartTooltipContent = React.forwardRef<
     );
   }
 );
+
 ChartTooltipContent.displayName = 'ChartTooltip';
 
 const ChartLegend = RechartsPrimitive.Legend;
@@ -268,6 +270,7 @@ const ChartLegendContent = React.forwardRef<
     </div>
   );
 });
+
 ChartLegendContent.displayName = 'ChartLegend';
 
 // Helper to extract item config from a payload.
@@ -297,10 +300,12 @@ function getPayloadConfigFromPayload(config: ChartConfig, payload: unknown, key:
 }
 
 export {
-  ChartContainer,
+  ChartContainer as Chart,
   ChartLegend,
   ChartLegendContent,
   ChartStyle,
   ChartTooltip,
   ChartTooltipContent
 };
+
+export default ChartContainer;

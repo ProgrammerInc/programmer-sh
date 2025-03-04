@@ -72,3 +72,5 @@ export interface Profile {
   projects: Project[];
   skills: Skill[];
 }
+
+export default Profile;

@@ -113,3 +113,5 @@ export {
   AlertDialogTitle,
   AlertDialogTrigger
 };
+
+export default AlertDialog;

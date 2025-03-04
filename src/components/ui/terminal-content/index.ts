@@ -1,4 +1,5 @@
 import TerminalContent from './terminal-content';
 
-export { TerminalContent };
+export * from './terminal-content';
+
 export default TerminalContent;

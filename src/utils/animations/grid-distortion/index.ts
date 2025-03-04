@@ -1,4 +1,5 @@
 import GridDistortion from './grid-distortion';
 
-export { GridDistortion };
+export * from './grid-distortion';
+
 export default GridDistortion;

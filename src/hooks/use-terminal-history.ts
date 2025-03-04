@@ -91,3 +91,5 @@ export const useTerminalHistory = (isInitializing: boolean) => {
     commandHistory: history.map(item => item.command)
   };
 };
+
+export default useTerminalHistory;

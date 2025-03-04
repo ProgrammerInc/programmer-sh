@@ -1,4 +1,5 @@
 import PixelCard from './pixel-card';
 
-export { PixelCard };
+export * from './pixel-card';
+
 export default PixelCard;

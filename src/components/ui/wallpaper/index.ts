@@ -1,2 +1,1 @@
-
-export * from '../../../utils/animations';
+export * from './wallpaper';

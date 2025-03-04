@@ -41,6 +41,7 @@ const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
     );
   }
 );
+
 FormItem.displayName = 'FormItem';
 
 const FormLabel = React.forwardRef<
@@ -58,6 +59,7 @@ const FormLabel = React.forwardRef<
     />
   );
 });
+
 FormLabel.displayName = 'FormLabel';
 
 const FormControl = React.forwardRef<
@@ -76,6 +78,7 @@ const FormControl = React.forwardRef<
     />
   );
 });
+
 FormControl.displayName = 'FormControl';
 
 const FormDescription = React.forwardRef<
@@ -93,6 +96,7 @@ const FormDescription = React.forwardRef<
     />
   );
 });
+
 FormDescription.displayName = 'FormDescription';
 
 const FormMessage = React.forwardRef<
@@ -117,6 +121,9 @@ const FormMessage = React.forwardRef<
     </p>
   );
 });
+
 FormMessage.displayName = 'FormMessage';
 
 export { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage };
+
+export default Form;

@@ -27,6 +27,7 @@ const Menubar = React.forwardRef<
     {...props}
   />
 ));
+
 Menubar.displayName = MenubarPrimitive.Root.displayName;
 
 const MenubarTrigger = React.forwardRef<
@@ -42,6 +43,7 @@ const MenubarTrigger = React.forwardRef<
     {...props}
   />
 ));
+
 MenubarTrigger.displayName = MenubarPrimitive.Trigger.displayName;
 
 const MenubarSubTrigger = React.forwardRef<
@@ -63,6 +65,7 @@ const MenubarSubTrigger = React.forwardRef<
     <ChevronRight className="ml-auto h-4 w-4" />
   </MenubarPrimitive.SubTrigger>
 ));
+
 MenubarSubTrigger.displayName = MenubarPrimitive.SubTrigger.displayName;
 
 const MenubarSubContent = React.forwardRef<
@@ -78,6 +81,7 @@ const MenubarSubContent = React.forwardRef<
     {...props}
   />
 ));
+
 MenubarSubContent.displayName = MenubarPrimitive.SubContent.displayName;
 
 const MenubarContent = React.forwardRef<
@@ -98,6 +102,7 @@ const MenubarContent = React.forwardRef<
     />
   </MenubarPrimitive.Portal>
 ));
+
 MenubarContent.displayName = MenubarPrimitive.Content.displayName;
 
 const MenubarItem = React.forwardRef<
@@ -116,6 +121,7 @@ const MenubarItem = React.forwardRef<
     {...props}
   />
 ));
+
 MenubarItem.displayName = MenubarPrimitive.Item.displayName;
 
 const MenubarCheckboxItem = React.forwardRef<
@@ -139,6 +145,7 @@ const MenubarCheckboxItem = React.forwardRef<
     {children}
   </MenubarPrimitive.CheckboxItem>
 ));
+
 MenubarCheckboxItem.displayName = MenubarPrimitive.CheckboxItem.displayName;
 
 const MenubarRadioItem = React.forwardRef<
@@ -161,6 +168,7 @@ const MenubarRadioItem = React.forwardRef<
     {children}
   </MenubarPrimitive.RadioItem>
 ));
+
 MenubarRadioItem.displayName = MenubarPrimitive.RadioItem.displayName;
 
 const MenubarLabel = React.forwardRef<
@@ -175,6 +183,7 @@ const MenubarLabel = React.forwardRef<
     {...props}
   />
 ));
+
 MenubarLabel.displayName = MenubarPrimitive.Label.displayName;
 
 const MenubarSeparator = React.forwardRef<
@@ -187,6 +196,7 @@ const MenubarSeparator = React.forwardRef<
     {...props}
   />
 ));
+
 MenubarSeparator.displayName = MenubarPrimitive.Separator.displayName;
 
 const MenubarShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
@@ -197,6 +207,7 @@ const MenubarShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanE
     />
   );
 };
+
 MenubarShortcut.displayname = 'MenubarShortcut';
 
 export {
@@ -217,3 +228,5 @@ export {
   MenubarSubTrigger,
   MenubarTrigger
 };
+
+export default Menubar;

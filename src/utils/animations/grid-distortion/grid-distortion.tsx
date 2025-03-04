@@ -10,7 +10,7 @@ export interface GridDistortionProps {
   className?: string;
 }
 
-export const vertexShader = `
+const vertexShader = `
 uniform float time;
 varying vec2 vUv;
 varying vec3 vPosition;
@@ -22,7 +22,7 @@ void main() {
 }
 `;
 
-export const fragmentShader = `
+const fragmentShader = `
 uniform sampler2D uDataTexture;
 uniform sampler2D uTexture;
 uniform vec4 resolution;

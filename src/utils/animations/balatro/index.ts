@@ -1,4 +1,5 @@
 import Balatro from './balatro';
 
-export { Balatro };
+export * from './balatro';
+
 export default Balatro;

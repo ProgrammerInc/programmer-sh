@@ -1,4 +1,5 @@
 import TerminalHeader from './terminal-header';
 
-export { TerminalHeader };
+export * from './terminal-header';
+
 export default TerminalHeader;

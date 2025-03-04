@@ -1,4 +1,5 @@
 import Lightning from './lightning';
 
-export { Lightning };
+export * from './lightning';
+
 export default Lightning;

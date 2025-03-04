@@ -8,7 +8,7 @@ export interface ThreadsProps {
   enableMouseInteraction?: boolean;
 }
 
-export const vertexShader = `
+const vertexShader = `
 attribute vec2 position;
 attribute vec2 uv;
 varying vec2 vUv;
@@ -18,7 +18,7 @@ void main() {
 }
 `;
 
-export const fragmentShader = `
+const fragmentShader = `
 precision highp float;
 uniform float iTime;
 uniform vec3 iResolution;

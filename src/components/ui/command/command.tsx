@@ -19,6 +19,7 @@ const Command = React.forwardRef<
     {...props}
   />
 ));
+
 Command.displayName = CommandPrimitive.displayName;
 
 const CommandDialog = ({ children, ...props }: DialogProps) => {
@@ -100,6 +101,7 @@ const CommandSeparator = React.forwardRef<
     {...props}
   />
 ));
+
 CommandSeparator.displayName = CommandPrimitive.Separator.displayName;
 
 const CommandItem = React.forwardRef<
@@ -126,6 +128,7 @@ const CommandShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanE
     />
   );
 };
+
 CommandShortcut.displayName = 'CommandShortcut';
 
 export {
@@ -139,3 +142,5 @@ export {
   CommandSeparator,
   CommandShortcut
 };
+
+export default Command;

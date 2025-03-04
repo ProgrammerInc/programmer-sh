@@ -1,4 +1,4 @@
-import { CommandResult } from '@/utils/terminalCommands';
+import { CommandResult } from '@/lib/terminalCommands';
 import React from 'react';
 import TerminalResponse from '../terminal-response';
 

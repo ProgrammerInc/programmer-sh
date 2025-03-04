@@ -13,6 +13,7 @@ const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
     {...props}
   />
 );
+
 Pagination.displayName = 'Pagination';
 
 const PaginationContent = React.forwardRef<
@@ -21,14 +22,16 @@ const PaginationContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ul ref={ref} className={cn('flex flex-row items-center gap-1', className)} {...props} />
 ));
+
 PaginationContent.displayName = 'PaginationContent';
 
 const PaginationItem = React.forwardRef<HTMLLIElement, React.HTMLAttributes<HTMLLIElement>>(
   ({ className, ...props }, ref) => <li ref={ref} className={cn('', className)} {...props} />
 );
+
 PaginationItem.displayName = 'PaginationItem';
 
-type PaginationLinkProps = {
+export type PaginationLinkProps = {
   isActive?: boolean;
 } & Pick<ButtonProps, 'size'> &
   React.ComponentProps<'a'>;
@@ -46,8 +49,8 @@ const PaginationLink = ({ className, isActive, size = 'icon', ...props }: Pagina
     {...props}
   />
 );
-PaginationLink.displayName = 'PaginationLink';
 
+PaginationLink.displayName = 'PaginationLink';
 const PaginationPrevious = ({
   className,
   ...props
@@ -98,3 +101,5 @@ export {
   PaginationNext,
   PaginationPrevious
 };
+
+export default Pagination;

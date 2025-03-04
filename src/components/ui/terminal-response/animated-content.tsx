@@ -3,7 +3,7 @@ import React from 'react';
 import { convertLinksToAnchors } from './link-utils';
 import { AnimatedContentProps } from './types';
 
-const AnimatedContent: React.FC<AnimatedContentProps> = ({
+export const AnimatedContent: React.FC<AnimatedContentProps> = ({
   displayText,
   isDone,
   isError,

@@ -1,4 +1,5 @@
 import Particles from './particles';
 
-export { Particles };
+export * from './particles';
+
 export default Particles;

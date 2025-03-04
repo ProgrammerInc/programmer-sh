@@ -1,7 +1,7 @@
 import { Color, Mesh, Program, Renderer, Triangle } from 'ogl';
 import { useEffect, useRef } from 'react';
 
-export const vertexShader = `
+const vertexShader = `
 attribute vec2 uv;
 attribute vec2 position;
 
@@ -13,7 +13,7 @@ void main() {
 }
 `;
 
-export const fragmentShader = `
+const fragmentShader = `
 precision highp float;
 
 uniform float uTime;

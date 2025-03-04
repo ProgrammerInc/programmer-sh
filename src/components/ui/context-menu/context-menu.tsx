@@ -35,6 +35,7 @@ const ContextMenuSubTrigger = React.forwardRef<
     <ChevronRight className="ml-auto h-4 w-4" />
   </ContextMenuPrimitive.SubTrigger>
 ));
+
 ContextMenuSubTrigger.displayName = ContextMenuPrimitive.SubTrigger.displayName;
 
 const ContextMenuSubContent = React.forwardRef<
@@ -50,6 +51,7 @@ const ContextMenuSubContent = React.forwardRef<
     {...props}
   />
 ));
+
 ContextMenuSubContent.displayName = ContextMenuPrimitive.SubContent.displayName;
 
 const ContextMenuContent = React.forwardRef<
@@ -67,6 +69,7 @@ const ContextMenuContent = React.forwardRef<
     />
   </ContextMenuPrimitive.Portal>
 ));
+
 ContextMenuContent.displayName = ContextMenuPrimitive.Content.displayName;
 
 const ContextMenuItem = React.forwardRef<
@@ -85,6 +88,7 @@ const ContextMenuItem = React.forwardRef<
     {...props}
   />
 ));
+
 ContextMenuItem.displayName = ContextMenuPrimitive.Item.displayName;
 
 const ContextMenuCheckboxItem = React.forwardRef<
@@ -108,6 +112,7 @@ const ContextMenuCheckboxItem = React.forwardRef<
     {children}
   </ContextMenuPrimitive.CheckboxItem>
 ));
+
 ContextMenuCheckboxItem.displayName = ContextMenuPrimitive.CheckboxItem.displayName;
 
 const ContextMenuRadioItem = React.forwardRef<
@@ -130,6 +135,7 @@ const ContextMenuRadioItem = React.forwardRef<
     {children}
   </ContextMenuPrimitive.RadioItem>
 ));
+
 ContextMenuRadioItem.displayName = ContextMenuPrimitive.RadioItem.displayName;
 
 const ContextMenuLabel = React.forwardRef<
@@ -144,6 +150,7 @@ const ContextMenuLabel = React.forwardRef<
     {...props}
   />
 ));
+
 ContextMenuLabel.displayName = ContextMenuPrimitive.Label.displayName;
 
 const ContextMenuSeparator = React.forwardRef<
@@ -156,6 +163,7 @@ const ContextMenuSeparator = React.forwardRef<
     {...props}
   />
 ));
+
 ContextMenuSeparator.displayName = ContextMenuPrimitive.Separator.displayName;
 
 const ContextMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
@@ -166,6 +174,7 @@ const ContextMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLS
     />
   );
 };
+
 ContextMenuShortcut.displayName = 'ContextMenuShortcut';
 
 export {
@@ -185,3 +194,5 @@ export {
   ContextMenuSubTrigger,
   ContextMenuTrigger
 };
+
+export default ContextMenu;

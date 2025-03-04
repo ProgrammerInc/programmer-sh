@@ -31,3 +31,5 @@ export const useTerminalAuth = () => {
 
   return { userEmail, setUserEmail };
 };
+
+export default useTerminalAuth;

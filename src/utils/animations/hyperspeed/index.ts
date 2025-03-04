@@ -1,4 +1,5 @@
 import Hyperspeed from './hyperspeed';
 
-export { Hyperspeed };
+export * from './hyperspeed';
+
 export default Hyperspeed;

@@ -21,3 +21,5 @@ export const badgeVariants = cva(
     }
   }
 );
+
+export default badgeVariants;

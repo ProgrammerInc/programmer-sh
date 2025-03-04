@@ -1,4 +1,5 @@
 import Aurora from './aurora';
 
-export { Aurora };
+export * from './aurora';
+
 export default Aurora;

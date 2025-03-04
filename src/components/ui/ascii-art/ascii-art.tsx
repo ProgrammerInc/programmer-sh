@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AsciiArt: React.FC = () => {
+export const AsciiArt: React.FC = () => {
   const asciiArt = [
     '  ____                                                          ____  _   _   ',
     ' |  _ \\ _ __ ___   __ _ _ __ __ _ _ __ ___  ___ _ __   ___ _ __/ ___|| | | | ',

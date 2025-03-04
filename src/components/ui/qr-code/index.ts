@@ -1,4 +1,5 @@
 import QRCodeComponent from './qr-code';
 
-export { QRCodeComponent };
+export * from './qr-code';
+
 export default QRCodeComponent;

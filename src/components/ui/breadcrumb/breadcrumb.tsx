@@ -31,6 +31,7 @@ const BreadcrumbItem = React.forwardRef<HTMLLIElement, React.ComponentPropsWitho
     <li ref={ref} className={cn('inline-flex items-center gap-1.5', className)} {...props} />
   )
 );
+
 BreadcrumbItem.displayName = 'BreadcrumbItem';
 
 const BreadcrumbLink = React.forwardRef<
@@ -49,6 +50,7 @@ const BreadcrumbLink = React.forwardRef<
     />
   );
 });
+
 BreadcrumbLink.displayName = 'BreadcrumbLink';
 
 const BreadcrumbPage = React.forwardRef<HTMLSpanElement, React.ComponentPropsWithoutRef<'span'>>(
@@ -63,6 +65,7 @@ const BreadcrumbPage = React.forwardRef<HTMLSpanElement, React.ComponentPropsWit
     />
   )
 );
+
 BreadcrumbPage.displayName = 'BreadcrumbPage';
 
 const BreadcrumbSeparator = ({ children, className, ...props }: React.ComponentProps<'li'>) => (
@@ -75,6 +78,7 @@ const BreadcrumbSeparator = ({ children, className, ...props }: React.ComponentP
     {children ?? <ChevronRight />}
   </li>
 );
+
 BreadcrumbSeparator.displayName = 'BreadcrumbSeparator';
 
 const BreadcrumbEllipsis = ({ className, ...props }: React.ComponentProps<'span'>) => (
@@ -88,6 +92,7 @@ const BreadcrumbEllipsis = ({ className, ...props }: React.ComponentProps<'span'
     <span className="sr-only">More</span>
   </span>
 );
+
 BreadcrumbEllipsis.displayName = 'BreadcrumbElipssis';
 
 export {
@@ -99,3 +104,5 @@ export {
   BreadcrumbPage,
   BreadcrumbSeparator
 };
+
+export default Breadcrumb;

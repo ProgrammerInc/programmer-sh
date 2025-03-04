@@ -1,4 +1,5 @@
 import StarBorder from './star-border';
 
-export { StarBorder };
+export * from './star-border';
+
 export default StarBorder;

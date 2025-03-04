@@ -38,3 +38,5 @@ const ResizableHandle = ({
 );
 
 export { ResizableHandle, ResizablePanel, ResizablePanelGroup };
+
+export default ResizableHandle;

@@ -11,6 +11,7 @@ const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElemen
     />
   )
 );
+
 Card.displayName = 'Card';
 
 const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
@@ -18,6 +19,7 @@ const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
     <div ref={ref} className={cn('flex flex-col space-y-1.5 p-6', className)} {...props} />
   )
 );
+
 CardHeader.displayName = 'CardHeader';
 
 const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
@@ -29,6 +31,7 @@ const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HT
     />
   )
 );
+
 CardTitle.displayName = 'CardTitle';
 
 const CardDescription = React.forwardRef<
@@ -54,3 +57,5 @@ const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 CardFooter.displayName = 'CardFooter';
 
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle };
+
+export default Card;

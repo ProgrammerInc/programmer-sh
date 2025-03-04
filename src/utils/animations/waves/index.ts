@@ -1,4 +1,5 @@
 import Waves from './waves';
 
-export { Waves };
+export * from './waves';
+
 export default Waves;

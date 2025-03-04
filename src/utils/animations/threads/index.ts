@@ -1,4 +1,5 @@
 import Threads from './threads';
 
-export { Threads };
+export * from './threads';
+
 export default Threads;

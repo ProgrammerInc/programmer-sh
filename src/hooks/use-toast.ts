@@ -13,7 +13,7 @@ type ToasterToast = ToastProps & {
   action?: ToastActionElement;
 };
 
-const actionTypes = {
+export const actionTypes = {
   ADD_TOAST: 'ADD_TOAST',
   UPDATE_TOAST: 'UPDATE_TOAST',
   DISMISS_TOAST: 'DISMISS_TOAST',
@@ -26,9 +26,9 @@ function generateId() {
   return `${count++}`;
 }
 
-type ActionType = typeof actionTypes;
+export type ActionType = typeof actionTypes;
 
-type Action =
+export type Action =
   | {
       type: ActionType['ADD_TOAST'];
       toast: ToasterToast;
@@ -46,13 +46,13 @@ type Action =
       toastId?: string;
     };
 
-interface State {
+export interface State {
   toasts: ToasterToast[];
 }
 
-const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
+export const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
 
-const reducer = (state: State, action: Action): State => {
+export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case actionTypes.ADD_TOAST:
       return {
@@ -171,3 +171,5 @@ function useToast() {
 }
 
 export { toast, useToast };
+
+export default useToast;

@@ -1,4 +1,5 @@
 import LetterGlitch from './letter-glitch';
 
-export { LetterGlitch };
+export * from './letter-glitch';
+
 export default LetterGlitch;

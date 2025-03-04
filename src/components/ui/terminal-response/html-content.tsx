@@ -4,7 +4,7 @@ import { containsHtmlTags, createMarkup } from './html-utils';
 import { convertLinksToAnchors } from './link-utils';
 import { HtmlContentProps } from './types';
 
-const HtmlContent: React.FC<HtmlContentProps> = ({
+export const HtmlContent: React.FC<HtmlContentProps> = ({
   content,
   isError,
   className,

@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import React, { useEffect, useRef, useState } from 'react';
 
-interface CommandLineProps {
+export interface CommandLineProps {
   prompt?: string;
   onSubmit: (command: string) => void;
   disabled?: boolean;
@@ -14,7 +14,7 @@ interface CommandLineProps {
   onInputChange?: (value: string) => void;
 }
 
-const CommandLine: React.FC<CommandLineProps> = ({
+export const CommandLine: React.FC<CommandLineProps> = ({
   prompt = '~$',
   onSubmit,
   disabled = false,

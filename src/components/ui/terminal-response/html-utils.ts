@@ -23,3 +23,5 @@ export const containsHtmlTags = (content: string): boolean => {
 
   return result;
 };
+
+export default createMarkup;

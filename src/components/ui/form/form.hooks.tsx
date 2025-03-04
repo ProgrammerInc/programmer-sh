@@ -28,3 +28,5 @@ export const useFormField = () => {
     ...fieldState
   };
 };
+
+export default useFormField;

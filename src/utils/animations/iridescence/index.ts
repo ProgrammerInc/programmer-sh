@@ -1,4 +1,5 @@
 import Iridescence from './iridescence';
 
-export { Iridescence };
+export * from './iridescence';
+
 export default Iridescence;

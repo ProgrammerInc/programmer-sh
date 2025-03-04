@@ -1,31 +1,27 @@
-
 import { Command, CommandResult } from './types';
 
 // Predefined wallpapers
 export const wallpapers = {
-  default: {
-    id: 'default',
-    name: 'Default',
-    description: 'Default gradient background',
-    type: 'gradient'
-  },
   aurora: {
     id: 'aurora',
     name: 'Aurora',
     description: 'Northern Lights in the night sky',
-    type: 'animation'
+    type: 'animation',
+    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
   },
   balatro: {
     id: 'balatro',
     name: 'Balatro',
     description: 'Balatro - a rainbow of colors',
-    type: 'animation'
+    type: 'animation',
+    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
   },
   ballpit: {
     id: 'ballpit',
     name: 'Ballpit',
     description: 'A ball pit of many colorful balls',
-    type: 'animation'
+    type: 'animation',
+    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
   },
   code: {
     id: 'code',
@@ -38,7 +34,8 @@ export const wallpapers = {
     id: 'dither',
     name: 'Dither',
     description: 'Dithered animation wallpaper',
-    type: 'animation'
+    type: 'animation',
+    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
   },
   fog: {
     id: 'fog',
@@ -47,53 +44,67 @@ export const wallpapers = {
     type: 'image',
     url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80'
   },
+  gradient: {
+    id: 'gradient',
+    name: 'Gradient',
+    description: 'A simple gradient background',
+    type: 'gradient'
+  },
   'grid-distortion': {
     id: 'grid-distortion',
     name: 'Grid Distortion',
     description: 'Grid Distortion - a twisted grid of tiles flipping and rotating',
-    type: 'animation'
+    type: 'animation',
+    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
   },
   hyperspeed: {
     id: 'hyperspeed',
     name: 'Hyperspeed',
     description: 'Hyperspeed - streams of light race across the screen',
-    type: 'animation'
+    type: 'animation',
+    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
   },
   iridescence: {
     id: 'iridescence',
     name: 'Iridescence',
     description: 'Iridescence - waves of iridescence',
-    type: 'animation'
+    type: 'animation',
+    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
   },
   'letter-glitch': {
     id: 'letter-glitch',
     name: 'Letter Glitch',
     description: "There's a glitch in the matrix",
-    type: 'animation'
+    type: 'animation',
+    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
   },
   lightning: {
     id: 'lightning',
     name: 'Lightning',
     description: 'Lightning across in the sky',
-    type: 'animation'
+    type: 'animation',
+    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
   },
   'liquid-chrome': {
     id: 'liquid-chrome',
     name: 'Liquid Chrome',
     description: 'Liquid Chrome - monochrome waves of liquid metal',
-    type: 'animation'
+    type: 'animation',
+    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
   },
   'magnetic-lines': {
     id: 'magnetic-lines',
     name: 'Magnetic Lines',
     description: 'Magnetic Lines - magnetic lines follows the cursor across the screen',
-    type: 'animation'
+    type: 'animation',
+    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
   },
   'meta-balls': {
     id: 'meta-balls',
     name: 'Meta Balls',
     description: 'Meta Balls - reactivate balls on cursor hover',
-    type: 'animation'
+    type: 'animation',
+    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
   },
   mountains: {
     id: 'mountains',
@@ -113,19 +124,22 @@ export const wallpapers = {
     id: 'particles',
     name: 'Particles',
     description: 'Particles - lucy in the sky with diamonds',
-    type: 'animation'
+    type: 'animation',
+    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
   },
   threads: {
     id: 'threads',
     name: 'Threads',
     description: 'The threads of fate on your desktop',
-    type: 'animation'
+    type: 'animation',
+    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
   },
   waves: {
     id: 'waves',
     name: 'Waves',
     description: 'Waves - trippy psychedelic liquid animation wallpaper',
-    type: 'animation'
+    type: 'animation',
+    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
   },
   workspace: {
     id: 'workspace',

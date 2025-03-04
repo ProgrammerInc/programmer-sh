@@ -17,3 +17,5 @@ export type SidebarContextType = {
  * Create the sidebar context
  */
 export const SidebarContext = React.createContext<SidebarContextType | null>(null);
+
+export default SidebarContext;

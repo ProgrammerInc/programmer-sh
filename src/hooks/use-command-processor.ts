@@ -161,3 +161,5 @@ export const useCommandProcessor = (
     processCommandWithHistory
   };
 };
+
+export default useCommandProcessor;

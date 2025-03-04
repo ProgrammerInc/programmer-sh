@@ -1,4 +1,5 @@
 import CommandLine from './command-line';
 
-export { CommandLine };
+export * from './command-line';
+
 export default CommandLine;

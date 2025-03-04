@@ -1,4 +1,5 @@
 import Ballpit from './ballpit';
 
-export { Ballpit };
+export * from './ballpit';
+
 export default Ballpit;
