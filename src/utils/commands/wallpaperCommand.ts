@@ -57,8 +57,7 @@ export const wallpapers = {
     id: 'hyperspeed',
     name: 'Hyperspeed',
     description: 'Hyperspeed - streams of light race across the screen',
-    type: 'animation',
-    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
+    type: 'animation'
   },
   iridescence: {
     id: 'iridescence',
