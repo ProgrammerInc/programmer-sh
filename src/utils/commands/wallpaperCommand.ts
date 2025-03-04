@@ -92,10 +92,10 @@ export const wallpapers = {
     type: 'animation',
     url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
   },
-  'magnetic-lines': {
-    id: 'magnetic-lines',
-    name: 'Magnetic Lines',
-    description: 'Magnetic Lines - magnetic lines follows the cursor across the screen',
+  'magnet-lines': {
+    id: 'magnet-lines',
+    name: 'Magnet Lines',
+    description: 'Magnet Lines - magnet lines follows the cursor across the screen',
     type: 'animation',
     url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80'
   },

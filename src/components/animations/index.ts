@@ -7,6 +7,7 @@ export * from './hyperspeed';
 export * from './iridescence';
 export * from './letter-glitch';
 export * from './lightning';
+export * from './magnet-lines';
 export * from './particles';
 export * from './pixel-card';
 export * from './star-border';

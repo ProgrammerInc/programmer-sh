@@ -9,6 +9,7 @@ import Iridescence from '@/components/animations/iridescence/iridescence';
 import { LetterGlitch } from '@/components/animations/letter-glitch';
 import { Lightning } from '@/components/animations/lightning';
 import LiquidChrome from '@/components/animations/liquid-chrome';
+import MagnetLines from '@/components/animations/magnet-lines';
 import Particles from '@/components/animations/particles/particles';
 import Threads from '@/components/animations/threads/threads';
 import Terminal from '@/components/ui/terminal';
@@ -50,12 +51,6 @@ const Index = () => {
 
     // Prepare initial commands
     let commands: string[] = [];
-
-    // Always show welcome command if there's no history or we're at the root URL
-    // if (!savedHistory || savedHistory === '[]' || location.pathname === '/') {
-    //   commands.push('welcome');
-    //   setCurrentCommand('welcome');
-    // }
 
     // Determine valid command to execute
     const commandToExecute = command || urlCommand;
@@ -261,6 +256,19 @@ const Index = () => {
             speed={0.25}
             amplitude={0.6}
             interactive={true}
+          />
+        </div>
+      )}
+      {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'magnet-lines' && (
+        <div id="magnetLinesContainer" className="magnet-lines-container">
+          <MagnetLines
+            rows={9}
+            columns={9}
+            containerSize="100%"
+            lineColor="#64ffda"
+            lineWidth="0.8vmin"
+            lineHeight="9vmin"
+            baseAngle={0}
           />
         </div>
       )}
