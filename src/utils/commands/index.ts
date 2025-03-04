@@ -48,15 +48,19 @@ export const processCommand = (commandString: string) => {
   if (commandName === loginCommand.name) {
     return loginCommand.execute(args);
   }
+
   if (commandName === logoutCommand.name) {
     return logoutCommand.execute();
   }
+
   if (commandName === signupCommand.name) {
     return signupCommand.execute(args);
   }
+
   if (commandName === whoamiCommand.name) {
     return whoamiCommand.execute();
   }
+
   if (commandName === profileCommand.name) {
     return profileCommand.execute(args);
   }
@@ -65,24 +69,31 @@ export const processCommand = (commandString: string) => {
   if (commandName === aboutCommand.name) {
     return aboutCommand.execute();
   }
+
   if (commandName === contactCommand.name) {
     return contactCommand.execute();
   }
+
   if (commandName === skillsCommand.name) {
     return skillsCommand.execute();
   }
+
   if (commandName === experienceCommand.name) {
     return experienceCommand.execute();
   }
+
   if (commandName === projectsCommand.name) {
     return projectsCommand.execute();
   }
+
   if (commandName === resumeCommand.name) {
     return resumeCommand.execute();
   }
+
   if (commandName === educationCommand.name) {
     return educationCommand.execute();
   }
+
   if (commandName === socialCommand.name) {
     return socialCommand.execute();
   }
@@ -91,15 +102,19 @@ export const processCommand = (commandString: string) => {
   if (commandName === helpCommand.name) {
     return helpCommand.execute();
   }
+
   if (commandName === 'theme') {
     return themeCommand.execute(args);
   }
+
   if (commandName === 'echo') {
     return echoCommand.execute(args);
   }
+
   if (commandName === 'date') {
     return dateCommand.execute();
   }
+
   if (commandName === 'history') {
     return historyCommand.execute();
   }

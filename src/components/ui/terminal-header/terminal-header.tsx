@@ -25,6 +25,7 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = ''
     };
 
     document.addEventListener('mousedown', handleClickOutside);
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -47,6 +48,7 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = ''
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
+
       setDropdownOpen(false);
     } catch (error) {
       console.error('Error logging out:', error);

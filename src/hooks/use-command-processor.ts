@@ -32,9 +32,11 @@ export const useCommandProcessor = (
       const commandExecutedEvent = new CustomEvent('commandExecuted', {
         detail: { command: commandString }
       });
+
       document.dispatchEvent(commandExecutedEvent);
 
       setIsProcessingAsync(true);
+
       let result = processCommand(commandString);
 
       // Special handling for history command
@@ -66,6 +68,7 @@ export const useCommandProcessor = (
             result: result.runAfterClear,
             timestamp: new Date()
           };
+
           setHistory([welcomeHistoryItem]);
           setLastExecutedCommand('welcome');
 
@@ -73,6 +76,7 @@ export const useCommandProcessor = (
           const welcomeEvent = new CustomEvent('commandExecuted', {
             detail: { command: 'welcome' }
           });
+
           document.dispatchEvent(welcomeEvent);
         }
         return;
@@ -89,11 +93,13 @@ export const useCommandProcessor = (
       if (result.isAsync && result.asyncResolver) {
         try {
           const asyncResult = await result.asyncResolver();
+
           setHistory(prev =>
             prev.map(item => (item === historyItem ? { ...item, result: asyncResult } : item))
           );
         } catch (error) {
           console.error('Error processing async command:', error);
+
           setHistory(prev =>
             prev.map(item =>
               item === historyItem
@@ -125,19 +131,24 @@ export const useCommandProcessor = (
       console.log('Processing initial commands:', commandsToProcess);
 
       let i = 0;
+
       const processNextCommand = () => {
         if (i < commandsToProcess.length) {
           const command = commandsToProcess[i];
+
           console.log('Processing command:', command);
+
           processCommandWithHistory(command);
 
           // Set last executed command to be the very last command in the queue
           if (i === commandsToProcess.length - 1) {
             console.log('Setting final command as last executed:', command);
+
             setLastExecutedCommand(command);
           }
 
           i++;
+
           setTimeout(processNextCommand, 300);
         } else {
           setIsInitializing(false);

@@ -51,6 +51,7 @@ const PaginationLink = ({ className, isActive, size = 'icon', ...props }: Pagina
 );
 
 PaginationLink.displayName = 'PaginationLink';
+
 const PaginationPrevious = ({
   className,
   ...props
@@ -65,6 +66,7 @@ const PaginationPrevious = ({
     <span>Previous</span>
   </PaginationLink>
 );
+
 PaginationPrevious.displayName = 'PaginationPrevious';
 
 const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
@@ -78,6 +80,7 @@ const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof Pag
     <ChevronRight className="h-4 w-4" />
   </PaginationLink>
 );
+
 PaginationNext.displayName = 'PaginationNext';
 
 const PaginationEllipsis = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => (
@@ -90,6 +93,7 @@ const PaginationEllipsis = ({ className, ...props }: React.HTMLAttributes<HTMLSp
     <span className="sr-only">More pages</span>
   </span>
 );
+
 PaginationEllipsis.displayName = 'PaginationEllipsis';
 
 export {

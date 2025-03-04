@@ -40,10 +40,12 @@ export const CommandLine: React.FC<CommandLineProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     if (command.trim() && !disabled) {
       onSubmit(command);
       setCommand('');
       setHistoryIndex(-1);
+
       if (onInputChange) {
         onInputChange('');
       }
@@ -53,24 +55,28 @@ export const CommandLine: React.FC<CommandLineProps> = ({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'ArrowUp') {
       e.preventDefault();
+
       if (history.length > 0) {
         // Move back through history, but don't go past the beginning
         const newIndex = Math.min(historyIndex + 1, history.length - 1);
         setHistoryIndex(newIndex);
         const newCommand = history[history.length - 1 - newIndex];
         setCommand(newCommand); // Access history in reverse order
+
         if (onInputChange) {
           onInputChange(newCommand);
         }
       }
     } else if (e.key === 'ArrowDown') {
       e.preventDefault();
+
       if (historyIndex > 0) {
         // Move forward through history
         const newIndex = historyIndex - 1;
         setHistoryIndex(newIndex);
         const newCommand = history[history.length - 1 - newIndex];
         setCommand(newCommand); // Access history in reverse order
+
         if (onInputChange) {
           onInputChange(newCommand);
         }
@@ -78,6 +84,7 @@ export const CommandLine: React.FC<CommandLineProps> = ({
         // Reached the most recent command, clear the input
         setHistoryIndex(-1);
         setCommand('');
+
         if (onInputChange) {
           onInputChange('');
         }
@@ -88,6 +95,7 @@ export const CommandLine: React.FC<CommandLineProps> = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setCommand(newValue);
+
     if (onInputChange) {
       onInputChange(newValue);
     }

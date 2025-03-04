@@ -63,6 +63,7 @@ const Index = () => {
     // If we have a valid URL command, add it to our initial commands
     if (commandToExecute && validUrlCommands.includes(commandToExecute)) {
       console.log('Valid URL command found:', commandToExecute);
+
       setCurrentCommand(commandToExecute);
 
       // Either replace welcome or add after welcome
@@ -89,10 +90,12 @@ const Index = () => {
   useEffect(() => {
     const handleWallpaperChange = (event: Event) => {
       const { wallpaperId } = (event as CustomEvent).detail;
+
       setCurrentWallpaper(wallpaperId);
     };
 
     document.addEventListener('wallpaperChange', handleWallpaperChange);
+
     return () => {
       document.removeEventListener('wallpaperChange', handleWallpaperChange);
     };
@@ -102,12 +105,14 @@ const Index = () => {
   useEffect(() => {
     const handleCommandExecution = (event: Event) => {
       const { command } = (event as CustomEvent).detail;
+
       if (command && typeof command === 'string') {
         setCurrentCommand(command);
       }
     };
 
     document.addEventListener('commandExecuted', handleCommandExecution);
+
     return () => {
       document.removeEventListener('commandExecuted', handleCommandExecution);
     };
@@ -122,6 +127,8 @@ const Index = () => {
       classes.push('wallpaper-animation');
     } else if (wallpaper.type === 'gradient') {
       classes.push('wallpaper-gradient');
+    } else if (wallpaper.type === 'color') {
+      classes.push('wallpaper-color');
     } else if (wallpaper.type === 'image') {
       classes.push('wallpaper-image');
 

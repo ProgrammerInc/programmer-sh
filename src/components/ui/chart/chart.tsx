@@ -300,7 +300,7 @@ function getPayloadConfigFromPayload(config: ChartConfig, payload: unknown, key:
 }
 
 export {
-  ChartContainer as Chart,
+  ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartStyle,

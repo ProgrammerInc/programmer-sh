@@ -3,10 +3,10 @@ import * as React from 'react';
 
 import type { ToastActionElement, ToastProps } from '@/components/ui/toast/toast';
 
-const TOAST_LIMIT = 5;
-const TOAST_REMOVE_DELAY = 5000;
+export const TOAST_LIMIT = 5;
+export const TOAST_REMOVE_DELAY = 5000;
 
-type ToasterToast = ToastProps & {
+export type ToasterToast = ToastProps & {
   id: string;
   title?: React.ReactNode;
   description?: React.ReactNode;
@@ -118,7 +118,7 @@ function dispatch(action: Action) {
   });
 }
 
-type Toast = Omit<ToasterToast, 'id'>;
+export type Toast = Omit<ToasterToast, 'id'>;
 
 function toast({ ...props }: Toast) {
   const id = generateId();

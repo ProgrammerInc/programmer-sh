@@ -14,15 +14,18 @@ export const useTerminalHistory = (isInitializing: boolean) => {
     if (isInitializing && !historyLoaded) {
       // First, try to get the specific last command
       const savedLastCommand = localStorage.getItem(LAST_COMMAND_KEY);
+
       if (savedLastCommand) {
         setLastExecutedCommand(savedLastCommand);
       }
 
       // Then load the full history
       const savedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);
+
       if (savedHistory) {
         try {
           const parsedHistory = JSON.parse(savedHistory);
+
           if (Array.isArray(parsedHistory) && parsedHistory.length > 0) {
             const formattedHistory = parsedHistory.map(
               (item: Omit<HistoryItem, 'timestamp'> & { timestamp: string }) => ({
@@ -30,11 +33,13 @@ export const useTerminalHistory = (isInitializing: boolean) => {
                 timestamp: new Date(item.timestamp)
               })
             );
+
             setHistory(formattedHistory);
 
             // Set the last command from history only if we didn't already get it from storage
             if (!savedLastCommand) {
               const lastItem = formattedHistory[formattedHistory.length - 1];
+
               if (lastItem && lastItem.command) {
                 setLastExecutedCommand(lastItem.command);
               }
@@ -54,6 +59,7 @@ export const useTerminalHistory = (isInitializing: boolean) => {
       if (command !== lastExecutedCommand) {
         // console.log('Updating last command to:', command);
         setLastExecutedCommand(command);
+
         localStorage.setItem(LAST_COMMAND_KEY, command);
       }
     },
@@ -68,6 +74,7 @@ export const useTerminalHistory = (isInitializing: boolean) => {
       // Update last executed command whenever history changes if we're not initializing
       if (!isInitializing) {
         const lastItem = history[history.length - 1];
+
         if (lastItem && lastItem.command) {
           updateLastCommand(lastItem.command);
         }
@@ -78,6 +85,7 @@ export const useTerminalHistory = (isInitializing: boolean) => {
   // Clear history
   const clearHistory = () => {
     setHistory([]);
+
     localStorage.removeItem(HISTORY_STORAGE_KEY);
     // We don't clear the last command when clearing history
   };

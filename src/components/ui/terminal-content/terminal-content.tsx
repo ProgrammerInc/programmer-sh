@@ -49,6 +49,7 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
         setIsSelecting(false);
 
         const selection = window.getSelection();
+
         if (selection && !selection.isCollapsed && selection.toString().trim() !== '') {
           // Only copy if there's actual text selected
           try {
@@ -56,6 +57,7 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
               .writeText(selection.toString())
               .then(() => {
                 console.log('Text copied to clipboard');
+
                 toast({
                   title: 'Copied to clipboard',
                   description: 'The selected text has been copied to your clipboard.',
@@ -64,6 +66,7 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
               })
               .catch(err => {
                 console.error('Failed to copy text: ', err);
+
                 toast({
                   title: 'Copy failed',
                   description: 'Could not copy to clipboard. Please try again.',
@@ -73,6 +76,7 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
               });
           } catch (error) {
             console.error('Clipboard API not available: ', error);
+
             toast({
               title: 'Copy failed',
               description: 'Clipboard functionality is not available in your browser.',
@@ -101,6 +105,7 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
     if (hasPlaceholders) {
       // Extract base command
       const baseCommand = commandText.split(' ')[0];
+
       setCommandInput(baseCommand + ' ');
 
       // Focus on input
@@ -117,8 +122,10 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
   useEffect(() => {
     // Replace QRCode placeholder with actual QR code component
     const qrContainers = document.querySelectorAll('.qrcode-container');
+
     qrContainers.forEach(container => {
       const qrElement = container.querySelector('QRCode');
+
       if (qrElement) {
         const value = qrElement.getAttribute('value') || '';
         const title =
@@ -126,17 +133,20 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
 
         // Create container div
         const qrCodeDiv = document.createElement('div');
+
         qrCodeDiv.className = 'flex flex-col items-center my-4';
         container.innerHTML = '';
         container.appendChild(qrCodeDiv);
 
         // Create QR code container with white background
         const qrBackground = document.createElement('div');
+
         qrBackground.className = 'bg-white p-2 rounded';
         qrCodeDiv.appendChild(qrBackground);
 
         // Create title paragraph
         const titleParagraph = document.createElement('p');
+
         titleParagraph.className = 'text-xs text-terminal-foreground mt-2';
         titleParagraph.textContent = title;
         qrCodeDiv.appendChild(titleParagraph);
@@ -147,6 +157,7 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
 
           // Use qrcode.react to generate the QR code in a separate div
           const qrContainer = document.createElement('div');
+
           qrBackground.appendChild(qrContainer);
 
           // Import and use qrcode.react - but don't rely on ReactDOMServer
@@ -156,6 +167,7 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
                 // Create a simplified SVG QR code directly
                 // This avoids using ReactDOMServer which isn't available on window
                 const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+
                 svgElement.setAttribute('width', '300');
                 svgElement.setAttribute('height', '300');
                 svgElement.setAttribute('viewBox', '0 0 300 300');
@@ -163,11 +175,14 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
                 // Instead of trying to convert React element to string,
                 // we'll create a placeholder and then render QR code using the actual component
                 qrContainer.innerHTML = '';
+
                 const qrDiv = document.createElement('div');
+
                 qrContainer.appendChild(qrDiv);
 
                 // Create a new react root and render the QR code component
                 const root = document.createElement('div');
+
                 qrContainer.appendChild(root);
 
                 // Use static import of ReactDOM to render QR code
@@ -207,6 +222,7 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
                   );
                 } catch (renderErr) {
                   console.error('Error rendering QR code with React:', renderErr);
+
                   // Fallback to simple SVG
                   root.innerHTML = `<svg width="300" height="300" viewBox="0 0 300 300">
                 <rect width="300" height="300" fill="#1a1f2c" />
@@ -216,6 +232,7 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
                 }
               } catch (e) {
                 console.error('Error creating QR code:', e);
+
                 // Fallback method - create a basic SVG
                 qrContainer.innerHTML = `<svg width="300" height="300" viewBox="0 0 300 300">
                 <rect width="300" height="300" fill="#1a1f2c" />
@@ -226,6 +243,7 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
             })
             .catch(err => {
               console.error('Failed to load QR code library:', err);
+
               qrContainer.textContent = 'QR Code failed to load.';
             });
         }

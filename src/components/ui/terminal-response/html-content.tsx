@@ -32,6 +32,7 @@ export const HtmlContent: React.FC<HtmlContentProps> = ({
         onClick={e => {
           // Handle clicks on any links to ensure they open in a new tab
           const target = e.target as HTMLElement;
+
           if (target.tagName === 'A') {
             if (target.classList.contains('command-link')) {
               e.preventDefault();
@@ -39,6 +40,7 @@ export const HtmlContent: React.FC<HtmlContentProps> = ({
 
               // Extract command and execute it
               const command = target.getAttribute('data-command') || target.textContent;
+
               if (command && onCommandClick) {
                 onCommandClick(command);
               }
@@ -48,6 +50,7 @@ export const HtmlContent: React.FC<HtmlContentProps> = ({
 
               // Extract href and open in new tab
               const href = target.getAttribute('href');
+
               if (href && !href.startsWith('javascript:')) {
                 window.open(href, '_blank', 'noopener,noreferrer');
               }
@@ -58,6 +61,7 @@ export const HtmlContent: React.FC<HtmlContentProps> = ({
 
             // Extract command and execute it
             const command = target.getAttribute('data-command') || target.textContent;
+
             if (command && onCommandClick) {
               onCommandClick(command);
             }
