@@ -196,7 +196,7 @@ const Index = () => {
         currentWallpaper === 'grid-distortion' && (
           <div
             id="gridDistortionContainer"
-            className={`grid-distortion-container animation-container wallpaper-image wallpaper-${currentWallpaper}`}
+            className={`grid-distortion-container animation-container wallpaper-gradient wallpaper-${currentWallpaper}`}
           >
             <GridDistortion
               imageSrc={wallpapers[currentWallpaper].url}
