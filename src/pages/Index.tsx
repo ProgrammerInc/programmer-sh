@@ -52,10 +52,10 @@ const Index = () => {
     let commands: string[] = [];
 
     // Always show welcome command if there's no history or we're at the root URL
-    if (!savedHistory || savedHistory === '[]' || location.pathname === '/') {
-      commands.push('welcome');
-      setCurrentCommand('welcome');
-    }
+    // if (!savedHistory || savedHistory === '[]' || location.pathname === '/') {
+    //   commands.push('welcome');
+    //   setCurrentCommand('welcome');
+    // }
 
     // Determine valid command to execute
     const commandToExecute = command || urlCommand;

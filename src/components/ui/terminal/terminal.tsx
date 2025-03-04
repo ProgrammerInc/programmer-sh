@@ -1,4 +1,3 @@
-
 import { useCommandProcessor } from '@/hooks/use-command-processor';
 import { useSocialLinks } from '@/hooks/use-social-links';
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
@@ -67,17 +66,17 @@ export const Terminal: React.FC<TerminalProps> = ({ className, initialCommands =
   // Listen for welcome command event from ASCII art component
   useEffect(() => {
     const handleWelcomeCommand = () => {
-      if (!isInitializing) {
+      if (!isInitializing && commandHistory.length === 0) {
         processCommandWithHistory('welcome');
       }
     };
 
     document.addEventListener('runWelcomeCommand', handleWelcomeCommand);
-    
+
     return () => {
       document.removeEventListener('runWelcomeCommand', handleWelcomeCommand);
     };
-  }, [isInitializing, processCommandWithHistory]);
+  }, [isInitializing, commandHistory, processCommandWithHistory]);
 
   return (
     <div
