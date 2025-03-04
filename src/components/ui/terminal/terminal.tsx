@@ -1,10 +1,11 @@
+
 import { useCommandProcessor } from '@/hooks/use-command-processor';
 import { useSocialLinks } from '@/hooks/use-social-links';
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
 import { useTerminalHistory } from '@/hooks/use-terminal-history';
 import { cn } from '@/lib/utils';
 import { CommandResult } from '@/utils/commands/types';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { TerminalContent } from '../terminal-content';
 import TerminalHeader from '../terminal-header';
 
@@ -62,6 +63,21 @@ export const Terminal: React.FC<TerminalProps> = ({ className, initialCommands =
       document.dispatchEvent(commandExecutedEvent);
     }
   };
+
+  // Listen for welcome command event from ASCII art component
+  useEffect(() => {
+    const handleWelcomeCommand = () => {
+      if (!isInitializing) {
+        processCommandWithHistory('welcome');
+      }
+    };
+
+    document.addEventListener('runWelcomeCommand', handleWelcomeCommand);
+    
+    return () => {
+      document.removeEventListener('runWelcomeCommand', handleWelcomeCommand);
+    };
+  }, [isInitializing, processCommandWithHistory]);
 
   return (
     <div

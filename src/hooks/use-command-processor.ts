@@ -1,3 +1,4 @@
+
 import { HistoryItem } from '@/components/ui/terminal';
 import { processCommand } from '@/utils/commands';
 import { useCallback, useEffect, useState } from 'react';
@@ -19,7 +20,8 @@ export const useCommandProcessor = (
       // console.log('Setting initial commands:', initialCommands);
       setCommandsToProcess(initialCommands);
     } else {
-      setCommandsToProcess(['welcome']);
+      // Don't set welcome as initial command - it will be triggered by ASCII art
+      setCommandsToProcess([]);
     }
   }, [initialCommands]);
 
@@ -145,6 +147,9 @@ export const useCommandProcessor = (
             console.log('Setting final command as last executed:', command);
 
             setLastExecutedCommand(command);
+            
+            // Finish initialization after processing all commands
+            setIsInitializing(false);
           }
 
           i++;
@@ -156,6 +161,8 @@ export const useCommandProcessor = (
       };
       processNextCommand();
     } else if (isInitializing && commandsToProcess.length === 0) {
+      // No initial commands to process - finish initialization quickly
+      // to allow welcome command from ASCII art
       setIsInitializing(false);
     }
   }, [

@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useEffect } from 'react';
 
 export const AsciiArt: React.FC = () => {
   const asciiArt = [
@@ -9,6 +10,18 @@ export const AsciiArt: React.FC = () => {
     ' |_|   |_|  \\___/ \\__,_|_|  \\__,_|_| |_| |_|_| |_| |_|\\___|_(_)|____/|_| |_| ',
     '                  |___/                                                     '
   ];
+
+  // Trigger welcome command after ASCII art renders
+  useEffect(() => {
+    // Use a short timeout to ensure ASCII art renders first
+    const timer = setTimeout(() => {
+      // Dispatch event to trigger welcome command
+      const welcomeEvent = new CustomEvent('runWelcomeCommand');
+      document.dispatchEvent(welcomeEvent);
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="mb-6 text-terminal-prompt font-mono text-xs md:text-sm">
