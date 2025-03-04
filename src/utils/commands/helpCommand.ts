@@ -135,6 +135,11 @@ export const getSpecificCommandHelp = (commandName: string): string | undefined 
       Usage: echo [message]
       Example: echo Hello, world!
       `;
+    case 'cursor':
+      return `
+      <strong class="text-terminal-prompt">cursor</strong>: Change the cursor style
+      Usage: cursor [style]
+      `;
     case 'wallpaper':
       return `
       <strong class="text-terminal-prompt">wallpaper</strong>: Change the background wallpaper
@@ -172,6 +177,7 @@ export const getCommandHelp = () => {
   <strong>System Commands:</strong>
   - <span class="command-link" data-command="theme [dark|light]">theme</span>: Change the terminal theme
   - <span class="command-link" data-command="wallpaper">wallpaper</span>: Change the background wallpaper
+  - <span class="command-link" data-command="cursor">cursor</span>: Change the cursor style
   - <span class="command-link" data-command="date">date</span>: Display the current date and time
   - <span class="command-link" data-command="whoami">whoami</span>: Display current user
   - <span class="command-link" data-command="history">history</span>: Show command history

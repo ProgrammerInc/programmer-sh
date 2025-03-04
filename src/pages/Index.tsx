@@ -12,8 +12,9 @@ import LiquidChrome from '@/components/animations/liquid-chrome';
 import MagnetLines from '@/components/animations/magnet-lines';
 import Particles from '@/components/animations/particles/particles';
 import Threads from '@/components/animations/threads/threads';
+import SplashCursor from '@/components/cursors/splash-cursor';
 import Terminal from '@/components/ui/terminal';
-import { Toaster } from '@/components/ui/toaster';
+import { getCurrentCursor } from '@/utils/commands/cursorCommand';
 import { processThemeFromUrl } from '@/utils/commands/themeCommand';
 import { extractUrlParameters, validUrlCommands } from '@/utils/commands/urlCommandHandler';
 import { getCurrentWallpaper, wallpapers } from '@/utils/commands/wallpaperCommand';
@@ -27,6 +28,7 @@ const Index = () => {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [initialCommands, setInitialCommands] = useState<string[]>([]);
+  const [currentCursor, setCursor] = useState<string>(getCurrentCursor());
   const [currentWallpaper, setCurrentWallpaper] = useState<string>(getCurrentWallpaper());
   const [currentCommand, setCurrentCommand] = useState<string>('welcome');
 
@@ -80,6 +82,21 @@ const Index = () => {
 
     return () => clearTimeout(timer);
   }, [urlCommand, location]);
+
+  // Listen for cursor changes
+  useEffect(() => {
+    const handleCursorChange = (event: Event) => {
+      const { cursorId } = (event as CustomEvent).detail;
+
+      setCursor(cursorId);
+    };
+
+    document.addEventListener('cursorChange', handleCursorChange);
+
+    return () => {
+      document.removeEventListener('cursorChange', handleCursorChange);
+    };
+  }, []);
 
   // Listen for wallpaper changes
   useEffect(() => {
@@ -377,7 +394,9 @@ const Index = () => {
         >
           <Terminal initialCommands={initialCommands} />
         </div>
-        <Toaster />
+      </div>
+      <div id="cursorContainer" className="cursor-container">
+        {currentCursor === 'splash' && <SplashCursor />}
       </div>
     </div>
   );

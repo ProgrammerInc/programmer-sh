@@ -5,6 +5,7 @@ import {
   signupCommand,
   whoamiCommand
 } from './authCommands';
+import { cursorCommand } from './cursorCommand';
 import { educationCommand } from './educationCommand';
 import { experienceCommand } from './experienceCommand';
 import { helpCommand } from './helpCommand';
@@ -119,7 +120,10 @@ export const processCommand = (commandString: string) => {
     return historyCommand.execute();
   }
 
-  // Add wallpaperCommand to commands object
+  if (commandName === 'cursor') {
+    return cursorCommand.execute(args);
+  }
+
   if (commandName === 'wallpaper') {
     return wallpaperCommand.execute(args);
   }
