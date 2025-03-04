@@ -28,11 +28,11 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [initialCommands, setInitialCommands] = useState<string[]>([]);
   const [currentWallpaper, setCurrentWallpaper] = useState<string>(getCurrentWallpaper());
-  const [currentCommand, setCurrentCommand] = useState<string>('portfolio');
+  const [currentCommand, setCurrentCommand] = useState<string>('welcome');
 
   // Update the document title when the current command changes
   useEffect(() => {
-    const titleCommand = currentCommand || 'portfolio';
+    const titleCommand = currentCommand || 'welcome';
     document.title = `~/${titleCommand} - <programmer>._`;
   }, [currentCommand]);
 
