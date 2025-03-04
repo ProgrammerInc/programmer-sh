@@ -325,7 +325,7 @@ const Index = () => {
           className={`particles-container animation-container wallpaper-image wallpaper-${currentWallpaper}`}
         >
           <Particles
-            particleColors={['#64ffda', '#64ffda']}
+            particleColors={['#64ffda']}
             particleCount={2000}
             particleSpread={5}
             speed={0.2}
@@ -341,7 +341,12 @@ const Index = () => {
           id="threadsContainer"
           className={`threads-container animation-container wallpaper-image wallpaper-${currentWallpaper}`}
         >
-          <Threads amplitude={1} distance={0} enableMouseInteraction={true} />
+          <Threads
+            amplitude={3}
+            color={[0.4, 1, 0.85]}
+            distance={0}
+            enableMouseInteraction={true}
+          />
         </div>
       )}
       {wallpaperClasses.includes('wallpaper-animation') && currentWallpaper === 'waves' && (
