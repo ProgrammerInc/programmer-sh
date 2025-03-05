@@ -18,7 +18,7 @@ const Index = () => {
   const [initialCommands, setInitialCommands] = useState<string[]>([]);
   const [currentCursor, setCursor] = useState<string>(getCurrentCursor());
   const [currentWallpaper, setCurrentWallpaper] = useState<string>(getCurrentWallpaper());
-  const [currentCommand, setCurrentCommand] = useState<string>('welcome');
+  const [currentCommand, setCurrentCommand] = useState<string>(urlCommand || 'welcome');
 
   // Update the document title when the current command changes
   useEffect(() => {
@@ -43,7 +43,7 @@ const Index = () => {
     let commands: string[] = [];
 
     // Determine valid command to execute
-    const commandToExecute = command || urlCommand;
+    const commandToExecute = urlCommand || command;
 
     // If we have a valid URL command, add it to our initial commands
     if (commandToExecute && validUrlCommands.includes(commandToExecute)) {
@@ -142,6 +142,10 @@ const Index = () => {
   };
 
   const wallpaperClasses = getWallpaperClasses();
+
+  console.log('Current command:', currentCommand);
+  console.log('Current cursor:', currentCursor);
+  console.log('Current wallpaper:', currentWallpaper);
 
   return (
     <div className={wallpaperClasses}>
