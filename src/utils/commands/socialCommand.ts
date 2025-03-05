@@ -49,7 +49,7 @@ export const socialCommand: Command = {
             .join('\n');
 
           return {
-            content: `<strong>Social Links:</strong>\n\n${formattedLinks}`,
+            content: `<strong>My Social Links:</strong>\n\n${formattedLinks}`,
             isError: false
           };
         } catch (error) {

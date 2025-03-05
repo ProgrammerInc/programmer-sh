@@ -20,7 +20,7 @@ export const experienceCommand: Command = {
         }
 
         return {
-          content: `<strong>My Work Experience:</strong>
+          content: `<strong>My Experience:</strong>
 ${experience
   .map(
     exp => `

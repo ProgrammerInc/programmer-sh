@@ -131,13 +131,18 @@ body {
            border border-terminal-muted/20 hover:border-terminal-prompt/50;
   }
 
+  .qrcode-container {
+    min-height: 416px;
+    min-width: 336px;
+  }
+
   .qrcode-container p {
     @apply text-terminal-prompt font-mono;
     font-size: 13px;
     padding-top: 1.5rem;
   }
 
-  .qrcode-container .bg-white {
+  .qrcode-container .qrcode-background {
     background-color: #111827;
     color: #f1f1f1;
     font-size: 16px;

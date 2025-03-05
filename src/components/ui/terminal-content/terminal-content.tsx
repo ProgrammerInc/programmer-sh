@@ -141,13 +141,13 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
         // Create QR code container with white background
         const qrBackground = document.createElement('div');
 
-        qrBackground.className = 'bg-white p-2 rounded';
+        qrBackground.className = 'qrcode-background p-2 rounded';
         qrCodeDiv.appendChild(qrBackground);
 
         // Create title paragraph
         const titleParagraph = document.createElement('p');
 
-        titleParagraph.className = 'text-xs text-terminal-foreground mt-2';
+        titleParagraph.className = 'qrcode-title text-xs text-terminal-foreground mt-2';
         titleParagraph.textContent = title;
         qrCodeDiv.appendChild(titleParagraph);
 
@@ -193,7 +193,6 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
                   const eyeRadius = 7;
                   const ecLevel = 'M';
                   const qrStyle = 'dots';
-                  const quietZone = 0;
                   const size = 300;
 
                   const reactRoot = createRoot(root);

@@ -89,12 +89,12 @@ export const wallpapers = {
     description: 'Magnet Lines - magnet lines follows the cursor across the screen',
     type: 'animation'
   },
-  'meta-balls': {
-    id: 'meta-balls',
-    name: 'Meta Balls',
-    description: 'Meta Balls - reactivate balls on cursor hover',
-    type: 'animation'
-  },
+  // 'meta-balls': {
+  //   id: 'meta-balls',
+  //   name: 'Meta Balls',
+  //   description: 'Meta Balls - reactivate balls on cursor hover',
+  //   type: 'animation'
+  // },
   mountains: {
     id: 'mountains',
     name: 'Mountains',

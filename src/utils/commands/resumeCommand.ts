@@ -99,8 +99,7 @@ ${portfolioData.contact.phone ? `<span><strong>Phone:</strong> <a href="tel:${po
 ${linkedin ? `<span><strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${linkedin.replace(/^https?:\/\//, '')}</a></span>` : ''}
 ${github ? `<span><strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${github.replace(/^https?:\/\//, '')}</a></span>` : ''}
 ${twitter ? `<span><strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${twitter.replace(/^https?:\/\//, '')}</a></span>` : ''}
-${website ? `<span><strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${website.replace(/^https?:\/\//, '')}</a></span>` : ''}</div></div>
-<div class="flex justify-center w-full mt-4"><div id="qrcodeContainer" class="qrcode-container"><QRCode value="${encodeURIComponent(vCard)}" title="Scan QR Code to Save My Contact Information" /></div></div>`,
+${website ? `<span><strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${website.replace(/^https?:\/\//, '')}</a></span>` : ''}</div></div>`,
           isError: false,
           rawHTML: true
         };
