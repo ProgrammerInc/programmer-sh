@@ -1,4 +1,4 @@
-import { HistoryItem } from '@/components/ui/terminal';
+import { HistoryItem } from '@/components/ui/terminal-history';
 import { useToast } from '@/hooks/use-toast';
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';

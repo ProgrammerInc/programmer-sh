@@ -1,6 +1,6 @@
-
-import { HistoryItem } from '@/components/ui/terminal';
+import { HistoryItem } from '@/components/ui/terminal-history';
 import { processCommand } from '@/utils/commands';
+import { getSpecificCommandHelp } from '@/utils/commands/helpCommand';
 import { useCallback, useEffect, useState } from 'react';
 
 export const useCommandProcessor = (
@@ -47,7 +47,12 @@ export const useCommandProcessor = (
         const historyOutput = commandHistory
           .map(
             (cmd, index) =>
-              `  ${index + 1}.  <span class="command-link" data-command="${cmd}">${cmd}</span>`
+              `  ${index + 1}. <strong><span class="command-link" data-command="${cmd}">${cmd}</span>: </strong>${getSpecificCommandHelp(
+                cmd
+              )
+                .split('\n')[1]
+                .trim()
+                .replace(`<strong class="text-terminal-prompt">${cmd}</strong>: `, '')}`
           )
           .join('\n');
 
@@ -147,7 +152,7 @@ export const useCommandProcessor = (
             console.log('Setting final command as last executed:', command);
 
             setLastExecutedCommand(command);
-            
+
             // Finish initialization after processing all commands
             setIsInitializing(false);
           }
