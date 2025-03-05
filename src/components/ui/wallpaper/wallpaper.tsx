@@ -193,6 +193,7 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               particleSpread={5}
               speed={0.2}
               particleBaseSize={50}
+              disableRotation={true}
               moveParticlesOnHover={false}
             />
           )}
