@@ -3,23 +3,9 @@ import { useSocialLinks } from '@/hooks/use-social-links';
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
 import { useTerminalHistory } from '@/hooks/use-terminal-history';
 import { cn } from '@/lib/utils';
-import { CommandResult } from '@/utils/commands/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { TerminalContent } from '../terminal-content';
 import TerminalHeader from '../terminal-header';
-
-export interface HistoryItem {
-  command: string;
-  result: {
-    content: string;
-    isError: boolean;
-    isAsync?: boolean;
-    asyncResolver?: () => Promise<CommandResult>;
-    rawHTML?: boolean;
-    runAfterClear?: CommandResult;
-  };
-  timestamp: Date;
-}
 
 export interface TerminalProps {
   className?: string;
