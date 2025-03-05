@@ -1,4 +1,4 @@
-import SplashCursor from '@/components/cursors/splash-cursor';
+import CursorProvider from '@/components/ui/cursor';
 import Terminal from '@/components/ui/terminal';
 import WallpaperProvider from '@/components/ui/wallpaper';
 import wallpapers from '@/components/ui/wallpaper/wallpaper.presets';
@@ -160,9 +160,7 @@ const Index = () => {
           </div>
         </div>
       </WallpaperProvider>
-      <div id="cursorContainer" className="cursor-container">
-        {currentCursor === 'splash' && <SplashCursor />}
-      </div>
+      <CursorProvider cursor={getCurrentCursor()} />
     </div>
   );
 };
