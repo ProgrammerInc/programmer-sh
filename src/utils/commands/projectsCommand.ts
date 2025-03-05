@@ -24,14 +24,14 @@ export const projectsCommand: Command = {
 
           return {
             content: `<strong>My Projects:</strong>
+
 ${projects
   .map(
-    project => `
-  - <strong>Project:</strong> <span class="text-terminal-prompt">${project.title}</span>
-    <strong>Description:</strong> ${project.description}
-    <strong>Technologies:</strong> ${project.technologies.map(tech => `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${tech}" target="_blank">${tech}</a>`).join(', ')}
-  
-    Type <span class="command-link" data-command="project ${project.id}">project ${project.id}</span> for more details.
+    project => `<strong>Project:</strong> <span class="text-terminal-prompt">${project.title}</span>
+<strong>Description:</strong> ${project.description}
+<strong>Technologies:</strong> ${project.technologies.map(tech => `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${tech}" target="_blank">${tech}</a>`).join(', ')}
+
+Type <span class="command-link" data-command="project ${project.id}">project ${project.id}</span> for more details.
 `
   )
   .join('\n')}
