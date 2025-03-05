@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { CSSProperties, useEffect, useRef } from 'react';
 
-interface MagnetLinesProps {
+export interface MagnetLinesProps {
   rows?: number;
   columns?: number;
   containerSize?: string;

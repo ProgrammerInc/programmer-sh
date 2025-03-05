@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Canvas, ThreeEvent, useFrame, useThree } from '@react-three/fiber';
 import { EffectComposer, wrapEffect } from '@react-three/postprocessing';
 import { Effect } from 'postprocessing';
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
-export const waveVertexShader = `
+const waveVertexShader = `
 precision highp float;
 varying vec2 vUv;
 void main() {
@@ -15,7 +16,7 @@ void main() {
 }
 `;
 
-export const waveFragmentShader = `
+const waveFragmentShader = `
 precision highp float;
 uniform vec2 resolution;
 uniform float time;
@@ -95,7 +96,7 @@ void main() {
 }
 `;
 
-export const ditherFragmentShader = `
+const ditherFragmentShader = `
 precision highp float;
 uniform float colorNum;
 uniform float pixelSize;
@@ -127,52 +128,36 @@ void mainImage(in vec4 inputColor, in vec2 uv, out vec4 outputColor) {
 }
 `;
 
-export class RetroEffectImpl extends Effect {
-  private _colorNum: number;
-  private _pixelSize: number;
-
-  declare uniforms: Map<string, THREE.Uniform<number>>;
-
+class RetroEffectImpl extends Effect {
+  declare public uniforms: Map<string, THREE.Uniform<any>>;
   constructor() {
-    const uniforms = new Map<string, THREE.Uniform<number>>([
+    const uniforms = new Map<string, THREE.Uniform<any>>([
       ['colorNum', new THREE.Uniform(4.0)],
       ['pixelSize', new THREE.Uniform(2.0)]
     ]);
     super('RetroEffect', ditherFragmentShader, { uniforms });
     this.uniforms = uniforms;
   }
-
   set colorNum(value: number) {
     this.uniforms.get('colorNum')!.value = value;
   }
-
   get colorNum(): number {
     return this.uniforms.get('colorNum')!.value;
   }
-
   set pixelSize(value: number) {
     this.uniforms.get('pixelSize')!.value = value;
   }
-
   get pixelSize(): number {
     return this.uniforms.get('pixelSize')!.value;
   }
 }
 
-export const RetroEffect = wrapEffect(RetroEffectImpl) as React.ForwardRefExoticComponent<
+const RetroEffect = wrapEffect(RetroEffectImpl) as React.ForwardRefExoticComponent<
   React.RefAttributes<RetroEffectImpl>
 >;
 
-export interface WaveUniforms {
-  [key: string]: THREE.Uniform<
-    | number
-    | THREE.Vector2
-    | THREE.Vector3
-    | THREE.Color
-    | THREE.Matrix3
-    | THREE.Matrix4
-    | THREE.Texture
-  >;
+interface WaveUniforms {
+  [key: string]: THREE.Uniform<any>;
   time: THREE.Uniform<number>;
   resolution: THREE.Uniform<THREE.Vector2>;
   waveSpeed: THREE.Uniform<number>;
@@ -184,7 +169,7 @@ export interface WaveUniforms {
   mouseRadius: THREE.Uniform<number>;
 }
 
-export interface DitheredWavesProps {
+interface DitheredWavesProps {
   waveSpeed: number;
   waveFrequency: number;
   waveAmplitude: number;
@@ -196,7 +181,7 @@ export interface DitheredWavesProps {
   mouseRadius: number;
 }
 
-export function DitheredWaves({
+function DitheredWaves({
   waveSpeed,
   waveFrequency,
   waveAmplitude,
@@ -232,22 +217,14 @@ export function DitheredWaves({
     const newWidth = Math.floor(size.width * dpr);
     const newHeight = Math.floor(size.height * dpr);
     const currentRes = waveUniformsRef.current.resolution.value;
-
-    // Fix: Using Vector2's set method
-    currentRes.set(newWidth, newHeight);
-
-    if (effect.current && effect.current.uniforms.get('resolution')) {
-      const resolutionUniform = effect.current.uniforms.get('resolution');
-      // Fix: Using type guard and assertion pattern
-      if (resolutionUniform && resolutionUniform.value) {
-        // First check that the value exists, then assert its type for TypeScript
-        const value = resolutionUniform.value as unknown;
-
-        // Now check if the value is an object with a set method
-        if (typeof value === 'object' && value !== null && 'set' in value) {
-          // Safe to use set method now
-          (value as THREE.Vector2).set(newWidth, newHeight);
-        }
+    if (currentRes.x !== newWidth || currentRes.y !== newHeight) {
+      currentRes.set(newWidth, newHeight);
+      if (
+        effect.current &&
+        effect.current.uniforms.get('resolution') &&
+        effect.current.uniforms.get('resolution')!.value
+      ) {
+        effect.current.uniforms.get('resolution')!.value.set(newWidth, newHeight);
       }
     }
   }, [size, gl]);
@@ -318,14 +295,6 @@ export interface DitherProps {
   mouseRadius?: number;
 }
 
-export interface NavigatorWithUserAgentData extends Navigator {
-  userAgentData?: {
-    platform: string;
-    brands: Array<{ brand: string; version: string }>;
-    mobile: boolean;
-  };
-}
-
 export default function Dither({
   waveSpeed = 0.05,
   waveFrequency = 3,
@@ -337,8 +306,8 @@ export default function Dither({
   enableMouseInteraction = true,
   mouseRadius = 1
 }: DitherProps) {
-  const isMac = (navigator as NavigatorWithUserAgentData).userAgentData
-    ? (navigator as NavigatorWithUserAgentData).userAgentData?.platform.toLowerCase() === 'macos'
+  const isMac = (navigator as any).userAgentData
+    ? (navigator as any).userAgentData.platform.toLowerCase() === 'macos'
     : /macintosh|mac os x/i.test(navigator.userAgent);
 
   return (

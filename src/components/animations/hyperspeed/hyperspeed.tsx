@@ -61,7 +61,7 @@ interface HyperspeedOptions {
   isHyper?: boolean;
 }
 
-interface HyperspeedProps {
+export interface HyperspeedProps {
   effectOptions?: Partial<HyperspeedOptions>;
 }
 

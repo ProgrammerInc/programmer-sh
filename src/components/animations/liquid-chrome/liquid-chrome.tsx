@@ -1,7 +1,7 @@
 import { Mesh, Program, Renderer, Triangle } from 'ogl';
 import React, { useEffect, useRef } from 'react';
 
-interface LiquidChromeProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface LiquidChromeProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Base color as an RGB array. Default is [0.1, 0.1, 0.1]. */
   baseColor?: [number, number, number];
   /** Animation speed multiplier. Default is 1.0. */
