@@ -69,7 +69,7 @@ Type <span class="command-link" data-command="project ${project.id}">project ${p
 ${project.highlights.map(highlight => `  - ${highlight}`).join('\n')}
 
 ${project.github ? `<strong>GitHub:</strong> ${project.github}` : ''}
-${project.link ? `<strong>Live Demo:</strong> ${project.link}` : ''}
+${project.url ? `<strong>Live Demo:</strong> ${project.url}` : ''}
 `,
           isError: false
         };
