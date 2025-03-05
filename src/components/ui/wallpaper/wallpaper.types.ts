@@ -46,8 +46,11 @@ export interface Wallpaper {
     | ParticlesProps
     | ThreadsProps
     | WavesProps;
-  color?: string;
+  backgroundColor?: string;
+  backgroundGradient?: string;
+  backgroundImage?: string;
   colorType?: ColorType;
+  foregroundColor?: string;
   gradient?: string;
   gradientType?: GradientType;
   imageType?: ImageType;

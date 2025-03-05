@@ -1,17 +1,17 @@
-import Aurora from '@/components/animations/aurora';
-import Balatro from '@/components/animations/balatro';
-import Ballpit from '@/components/animations/ballpit';
-import Dither from '@/components/animations/dither';
-import GridDistortion from '@/components/animations/grid-distortion';
-import Hyperspeed from '@/components/animations/hyperspeed';
-import Iridescence from '@/components/animations/iridescence';
-import LetterGlitch from '@/components/animations/letter-glitch';
-import Lightning from '@/components/animations/lightning';
-import LiquidChrome from '@/components/animations/liquid-chrome';
-import MagnetLines from '@/components/animations/magnet-lines';
-import Particles from '@/components/animations/particles';
-import Threads from '@/components/animations/threads';
-import Waves from '@/components/animations/waves';
+import Aurora, { AuroraProps } from '@/components/animations/aurora';
+import Balatro, { BalatroProps } from '@/components/animations/balatro';
+import Ballpit, { BallpitProps } from '@/components/animations/ballpit';
+import Dither, { DitherProps } from '@/components/animations/dither';
+import GridDistortion, { GridDistortionProps } from '@/components/animations/grid-distortion';
+import Hyperspeed, { HyperspeedProps } from '@/components/animations/hyperspeed';
+import Iridescence, { IridescenceProps } from '@/components/animations/iridescence';
+import LetterGlitch, { LetterGlitchProps } from '@/components/animations/letter-glitch';
+import Lightning, { LightningProps } from '@/components/animations/lightning';
+import LiquidChrome, { LiquidChromeProps } from '@/components/animations/liquid-chrome';
+import MagnetLines, { MagnetLinesProps } from '@/components/animations/magnet-lines';
+import Particles, { ParticlesProps } from '@/components/animations/particles';
+import Threads, { ThreadsProps } from '@/components/animations/threads';
+import Waves, { WavesProps } from '@/components/animations/waves';
 import React from 'react';
 import wallpapers from './wallpaper.presets';
 import Wallpaper from './wallpaper.types';
@@ -27,25 +27,36 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
   style,
   wallpaper = wallpapers.default
 }) => {
-  {
-    // Wallpaper debugging
-    console.log('Current wallpaper:', wallpaper);
-  }
+  // Wallpaper debugging
+  console.log('Current wallpaper:', wallpaper);
+
+  // Wallpaper properties
+  const animation = wallpaper.animation || 'default';
+  const animationProps = wallpaper.animationProps || {};
+  const backgroundColor = wallpaper.backgroundColor || 'transparent';
+  const colorType = wallpaper.colorType || 'hex';
+  const foregroundColor = wallpaper.foregroundColor || '#f1f1f1';
+  const gradient = wallpaper.gradient || 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)';
+  const gradientType = wallpaper.gradientType || 'linear';
+  const image = wallpaper.image;
+  const imageType = wallpaper.imageType || 'unsplash';
+  const mimeType = wallpaper.mimeType || 'image/png';
+  const theme = wallpaper.theme || 'dark';
+  const url = wallpaper.url;
+  const wallpaperId = wallpaper.id || 'default';
+  const wallpaperType = wallpaper.type || 'image';
+
   return (
     <div
       id={id}
-      className={`wallpaper-${wallpaper.id} ${className}`}
-      data-wallpaper={wallpaper.id}
+      className={`wallpaper-${wallpaperId} ${className}`}
+      data-wallpaper={wallpaperId}
       style={{
-        backgroundColor: wallpaper.color || 'transparent',
+        backgroundColor,
         backgroundImage:
-          (wallpaper.type === 'image' &&
-            wallpaper.imageType === 'url' &&
-            `url(${wallpaper.url})`) ||
-          (wallpaper.imageType === 'base64' &&
-            `url(data:${wallpaper.mimeType};${wallpaper.imageType},${wallpaper.image})`) ||
-          (wallpaper.type === 'gradient' &&
-            `${wallpaper.gradientType}-gradient(${wallpaper.gradient})`) ||
+          (wallpaperType === 'image' && imageType === 'url' && `url(${url})`) ||
+          (imageType === 'base64' && `url(data:${mimeType};${imageType},${image})`) ||
+          (wallpaperType === 'gradient' && `${gradientType}-gradient(${gradient})`) ||
           'none',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -58,23 +69,29 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
         ...style
       }}
     >
-      {wallpaper.type === 'animation' && (
+      {wallpaperType === 'animation' && (
         <div
-          id={`${wallpaper.animation}-container`}
-          className={`animation-container ${wallpaper.animation}-container ${wallpaper.image ? 'wallpaper-image' : wallpaper.gradient ? 'wallpaper-gradient' : 'wallpaper-color'} wallpaper-${wallpaper.id}`}
+          id={`${animation}-container`}
+          className={`animation-container ${animation}-container ${image ? 'wallpaper-image' : gradient ? 'wallpaper-gradient' : 'wallpaper-color'} wallpaper-${wallpaper.id}`}
         >
-          {wallpaper.animation === 'aurora' && (
+          {animation === 'aurora' && (
             <Aurora
               colorStops={['#3A29FF', '#FF94B4', '#FF3232']}
               blend={0.5}
               amplitude={1.0}
               speed={0.5}
+              {...(animationProps as AuroraProps)}
             />
           )}
-          {wallpaper.animation === 'balatro' && (
-            <Balatro isRotate={false} mouseInteraction={true} pixelFilter={700} />
+          {animation === 'balatro' && (
+            <Balatro
+              isRotate={false}
+              mouseInteraction={true}
+              pixelFilter={700}
+              {...(animationProps as BalatroProps)}
+            />
           )}
-          {wallpaper.animation === 'ballpit' && (
+          {animation === 'ballpit' && (
             <Ballpit
               colors={[0x3a29ff, 0x6c01b4, 0xff0070, 0xffbd2d, 0x25c93f]}
               ambientColor={0x1a1f2c}
@@ -87,9 +104,10 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
                 clearcoatRoughness: 0.15
               }}
               followCursor={false}
+              {...(animationProps as BallpitProps)}
             />
           )}
-          {wallpaper.animation === 'dither' && (
+          {animation === 'dither' && (
             <Dither
               waveColor={[0.5, 0.5, 0.5]}
               disableAnimation={false}
@@ -99,9 +117,10 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               waveAmplitude={0.3}
               waveFrequency={3}
               waveSpeed={0.05}
+              {...(animationProps as DitherProps)}
             />
           )}
-          {wallpaper.animation === 'grid-distortion' && (
+          {animation === 'grid-distortion' && (
             <GridDistortion
               imageSrc={wallpaper.url}
               grid={10}
@@ -109,9 +128,10 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               strength={0.15}
               relaxation={0.9}
               className="grid-distortion"
+              {...(animationProps as GridDistortionProps)}
             />
           )}
-          {wallpaper.animation === 'hyperspeed' && (
+          {animation === 'hyperspeed' && (
             <Hyperspeed
               effectOptions={{
                 onSpeedUp: () => {},
@@ -150,32 +170,48 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
                   sticks: 0x03b3c3
                 }
               }}
+              {...(animationProps as HyperspeedProps)}
             />
           )}
-          {wallpaper.animation === 'iridescence' && (
-            <Iridescence color={[1, 1, 1]} mouseReact={false} amplitude={0.1} speed={1.0} />
+          {animation === 'iridescence' && (
+            <Iridescence
+              color={[1, 1, 1]}
+              mouseReact={false}
+              amplitude={0.1}
+              speed={1.0}
+              {...(animationProps as IridescenceProps)}
+            />
           )}
-          {wallpaper.animation === 'letter-glitch' && (
+          {animation === 'letter-glitch' && (
             <LetterGlitch
               glitchColors={['#2b4539', '#61dca3', '#61b3dc']}
               glitchSpeed={50}
               centerVignette={false}
               outerVignette={true}
               smooth={true}
+              {...(animationProps as LetterGlitchProps)}
             />
           )}
-          {wallpaper.animation === 'lightning' && (
-            <Lightning hue={220} xOffset={0} speed={1} intensity={1} size={1} />
+          {animation === 'lightning' && (
+            <Lightning
+              hue={220}
+              xOffset={0}
+              speed={1}
+              intensity={1}
+              size={1}
+              {...(animationProps as LightningProps)}
+            />
           )}
-          {wallpaper.animation === 'liquid-chrome' && (
+          {animation === 'liquid-chrome' && (
             <LiquidChrome
               baseColor={[0.3, 0.2, 0.5]}
               speed={0.25}
               amplitude={0.6}
               interactive={true}
+              {...(animationProps as LiquidChromeProps)}
             />
           )}
-          {wallpaper.animation === 'magnet-lines' && (
+          {animation === 'magnet-lines' && (
             <MagnetLines
               rows={9}
               columns={9}
@@ -184,9 +220,10 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               lineWidth="0.8vmin"
               lineHeight="9vmin"
               baseAngle={0}
+              {...(animationProps as MagnetLinesProps)}
             />
           )}
-          {wallpaper.animation === 'particles' && (
+          {animation === 'particles' && (
             <Particles
               particleColors={['#64ffda']}
               particleCount={2000}
@@ -195,17 +232,19 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               particleBaseSize={50}
               disableRotation={true}
               moveParticlesOnHover={false}
+              {...(animationProps as ParticlesProps)}
             />
           )}
-          {wallpaper.animation === 'threads' && (
+          {animation === 'threads' && (
             <Threads
               amplitude={3}
               color={[0.4, 1, 0.85]}
               distance={0}
               enableMouseInteraction={true}
+              {...(animationProps as ThreadsProps)}
             />
           )}
-          {wallpaper.animation === 'waves' && (
+          {animation === 'waves' && (
             <Waves
               lineColor="#64ffda"
               backgroundColor="rgba(0, 0, 0, 0.7)"
@@ -218,6 +257,7 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               maxCursorMove={120}
               xGap={12}
               yGap={36}
+              {...(animationProps as WavesProps)}
             />
           )}
         </div>
