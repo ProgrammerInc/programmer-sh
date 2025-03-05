@@ -158,14 +158,12 @@ export const getCommandHelp = () => {
   - <span class="command-link" data-command="help">help</span>: Display this help message
   - <span class="command-link" data-command="welcome">welcome</span>: Display the welcome message
   - <span class="command-link" data-command="about">about</span>: Show information about me
-  - <span class="command-link" data-command="clear">clear</span>: Clear the terminal screen
-  - <span class="command-link" data-command="echo [message]">echo</span>: Echo a message back to the terminal
 
   <strong>Portfolio Commands:</strong>
-  - <span class="command-link" data-command="skills">skills</span>: Display my technical skills
   - <span class="command-link" data-command="experience">experience</span>: Show my work experience
   - <span class="command-link" data-command="education">education</span>: Show my educational background
   - <span class="command-link" data-command="projects">projects</span>: Browse my projects
+  - <span class="command-link" data-command="skills">skills</span>: Show my technical skills
   - <span class="command-link" data-command="resume">resume</span>: View or download my resume
 
   <strong>Contact Commands:</strong>
@@ -174,15 +172,18 @@ export const getCommandHelp = () => {
   - <span class="command-link" data-command="social">social</span>: Show social media links
   - <span class="command-link" data-command="message">message</span>: Leave me a message
 
-  <strong>System Commands:</strong>
-  - <span class="command-link" data-command="theme [dark|light]">theme</span>: Change the terminal theme
-  - <span class="command-link" data-command="wallpaper">wallpaper</span>: Change the background wallpaper
+  <strong>Theme Commands:</strong>
+  - <span class="command-link" data-command="theme">theme</span>: Change the terminal theme
   - <span class="command-link" data-command="cursor">cursor</span>: Change the cursor style
+  - <span class="command-link" data-command="wallpaper">wallpaper</span>: Change the background wallpaper
+
+  <strong>System Commands:</strong>
   - <span class="command-link" data-command="date">date</span>: Display the current date and time
   - <span class="command-link" data-command="whoami">whoami</span>: Display current user
   - <span class="command-link" data-command="history">history</span>: Show command history
+  - <span class="command-link" data-command="clear">clear</span>: Clear the command history
   - <span class="command-link" data-command="login">login</span>: Log in to access exclusive content
   - <span class="command-link" data-command="logout">logout</span>: Log out from the current session
 
-  Type <span class="command-link" data-command="help [command]">help [command]</span> for more information about a specific command.`;
+Type <span class="command-link" data-command="help [command]">help [command]</span> for more information about a specific command.`;
 };
