@@ -25,6 +25,7 @@ export const projectsCommand: Command = {
           return {
             content: `<strong>My Projects:</strong>
 ${projects
+  .sort((a, b) => a.id.localeCompare(b.id))
   .map(
     project => `
 <strong>Project:</strong> <span class="text-terminal-prompt">${project.title}</span>

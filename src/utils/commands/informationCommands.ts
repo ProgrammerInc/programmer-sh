@@ -149,7 +149,7 @@ END:VCARD`;
   ${github ? `- <strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github.replace('https://', '')}</a>` : ''}
   ${twitter ? `- <strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter.replace('https://', '')}</a>` : ''}
   ${website ? `- <strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website.replace('https://', '')}</a>` : ''}
-<div class="flex justify-center w-full mt-4"><div id="qrcodeContainer" class="qrcode-container"><PixelCard><QRCode value="${encodeURIComponent(vCard)}" title="Scan QR Code to Save My Contact Information" /></PixelCard></div></div>`,
+<div class="flex justify-center w-full mt-4"><div id="qrcodeContainer" class="qrcode-container"><QRCode value="${encodeURIComponent(vCard)}" title="Scan QR Code to Save My Contact Information" /></div></div>`,
           isError: false,
           rawHTML: true
         };

@@ -1,4 +1,3 @@
-import PixelCard from '@/components/animations/pixel-card/pixel-card';
 import programmerIcon from '@/lib/qrcode-logos';
 import { cn } from '@/lib/utils';
 import React from 'react';
@@ -61,28 +60,26 @@ export const QRCodeComponent: React.FC<QRCodeProps> = ({
   return (
     <div className={cn('flex flex-col items-center my-4', className)}>
       <div className="p-2 rounded">
-        <PixelCard>
-          <QRCode
-            id={value}
-            value={value}
-            bgColor={bgColor}
-            fgColor={fgColor}
-            ecLevel={level}
-            enableCORS={enableCORS}
-            eyeColor={eyeColor}
-            eyeRadius={eyeRadius}
-            logoImage={programmerIcon.src}
-            logoWidth={programmerIcon.width}
-            logoHeight={programmerIcon.height}
-            logoPadding={programmerIcon.logoPadding}
-            logoPaddingStyle={programmerIcon.logoPaddingStyle}
-            qrStyle={qrStyle}
-            quietZone={quietZone}
-            removeQrCodeBehindLogo={programmerIcon.removeQrCodeBehindLogo}
-            size={size}
-            style={style}
-          />
-        </PixelCard>
+        <QRCode
+          id={value}
+          value={value}
+          bgColor={bgColor}
+          fgColor={fgColor}
+          ecLevel={level}
+          enableCORS={enableCORS}
+          eyeColor={eyeColor}
+          eyeRadius={eyeRadius}
+          logoImage={programmerIcon.src}
+          logoWidth={programmerIcon.width}
+          logoHeight={programmerIcon.height}
+          logoPadding={programmerIcon.logoPadding}
+          logoPaddingStyle={programmerIcon.logoPaddingStyle}
+          qrStyle={qrStyle}
+          quietZone={quietZone}
+          removeQrCodeBehindLogo={programmerIcon.removeQrCodeBehindLogo}
+          size={size}
+          style={style}
+        />
       </div>
       {title && (
         <p className="text-xs text-terminal-foreground mt-2">
