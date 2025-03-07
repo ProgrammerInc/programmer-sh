@@ -27,10 +27,15 @@ export const TerminalContent = forwardRef<HTMLDivElement, TerminalContentProps>(
       if (target.classList.contains('command-link')) {
         e.preventDefault();
         const command = target.getAttribute('data-command');
+        const placeholder = target.getAttribute('data-placeholder');
 
         if (command) {
           const event = new CustomEvent('executeCommandFromLink', {
-            detail: { command, addToHistory: true }
+            detail: { 
+              command, 
+              addToHistory: !placeholder, // Only add to history if it's not a placeholder command
+              placeholder: placeholder 
+            }
           });
           document.dispatchEvent(event);
         }

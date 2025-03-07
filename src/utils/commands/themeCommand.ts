@@ -70,7 +70,7 @@ export const themeCommand: Command = {
 
     if (!args) {
       return {
-        content: `Current theme: <span class="text-terminal-prompt">${currentTheme}</span>\n\nUsage: theme [<span class="command-link" data-command="theme dark">dark</span>|<span class="command-link" data-command="theme light">light</span>]`,
+        content: `\nCurrent theme: <span class="text-terminal-prompt">${currentTheme}</span>\n\nUsage: <span class="command-link" data-command="theme" data-placeholder="[dark|light]">theme</span> [<span class="command-link" data-command="theme dark">dark</span>|<span class="command-link" data-command="theme light">light</span>]\n\n`,
         isError: false
       };
     }
@@ -79,14 +79,14 @@ export const themeCommand: Command = {
 
     if (newTheme !== 'dark' && newTheme !== 'light') {
       return {
-        content: `Invalid theme: <span class="text-terminal-prompt">${newTheme}</span>. Available themes: <span class="command-link" data-command="theme dark">dark</span>, <span class="command-link" data-command="theme light">light</span>`,
+        content: `\nInvalid theme: <span class="text-terminal-prompt">${newTheme}</span>. Available themes: <span class="command-link" data-command="theme dark">dark</span>, <span class="command-link" data-command="theme light">light</span>\n\n`,
         isError: true
       };
     }
 
     if (newTheme === currentTheme) {
       return {
-        content: `Theme is already set to <span class="text-terminal-prompt">${currentTheme}</span> mode.`,
+        content: `\nTheme is already set to <span class="text-terminal-prompt">${currentTheme}</span> mode.\n\n`,
         isError: false
       };
     }
@@ -94,7 +94,7 @@ export const themeCommand: Command = {
     setTheme(newTheme as ThemeOption);
 
     return {
-      content: `Theme switched to <span class="text-terminal-prompt">${newTheme}</span> mode.`,
+      content: `\nTheme switched to <span class="text-terminal-prompt">${newTheme}</span> mode.\n\n`,
       isError: false
     };
   }

@@ -174,49 +174,69 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     };
 
     const handleExecuteCommandFromLink = (event: Event) => {
-      const { command, addToHistory } = (event as CustomEvent).detail;
+      const { command, addToHistory, placeholder } = (event as CustomEvent).detail;
+      
       if (command) {
-        // Set the input field to show the command
-        setCommandInput(command);
-
-        // Add command to history if flag is true
-        if (addToHistory) {
-          // Using functional update to ensure we have the latest state
-          setCommandHistory(prevHistory => {
-            // Make a copy of the previous history
-            const newHistory = [...prevHistory];
-
-            // Don't add if it's empty or the same as the last command
-            if (
-              command &&
-              (newHistory.length === 0 || newHistory[newHistory.length - 1] !== command)
-            ) {
-              newHistory.push(command);
-              console.log('HISTORY UPDATE: Added link command to history:', command);
-              console.log('HISTORY UPDATE: New history state:', newHistory);
+        // If there's a placeholder, we don't execute the command yet
+        if (placeholder) {
+          // Format the command with the placeholder
+          const commandWithPlaceholder = `${command} ${placeholder}`;
+          
+          // Set the input field to show the command with placeholder
+          setCommandInput(commandWithPlaceholder);
+          
+          // Select just the placeholder part for easy replacement
+          setTimeout(() => {
+            const terminalInput = document.getElementById('terminal-input');
+            if (terminalInput instanceof HTMLInputElement) {
+              const startPos = command.length + 1; // +1 for the space
+              terminalInput.setSelectionRange(startPos, commandWithPlaceholder.length);
+              terminalInput.focus();
             }
-
-            // Update our ref immediately for consistent access
-            commandHistoryRef.current = newHistory;
-
-            return newHistory;
-          });
-
-          // Reset history index and clear any temp input after adding new command
-          setHistoryIndex(-1);
-          setTempInput('');
-          historyIndexRef.current = -1;
+          }, 50);
+        } else {
+          // Set the input field to show the command
+          setCommandInput(command);
+          
+          // Add command to history if flag is true
+          if (addToHistory) {
+            // Using functional update to ensure we have the latest state
+            setCommandHistory(prevHistory => {
+              // Make a copy of the previous history
+              const newHistory = [...prevHistory];
+              
+              // Don't add if it's empty or the same as the last command
+              if (
+                command &&
+                (newHistory.length === 0 || newHistory[newHistory.length - 1] !== command)
+              ) {
+                newHistory.push(command);
+                console.log('HISTORY UPDATE: Added link command to history:', command);
+                console.log('HISTORY UPDATE: New history state:', newHistory);
+              }
+              
+              // Update our ref immediately for consistent access
+              commandHistoryRef.current = newHistory;
+              
+              return newHistory;
+            });
+            
+            // Reset history index and clear any temp input after adding new command
+            setHistoryIndex(-1);
+            setTempInput('');
+            historyIndexRef.current = -1;
+          }
+          
+          // Execute the command
+          executeCommand(command);
+          
+          // Clear input after execution
+          setTimeout(() => setCommandInput(''), 100);
+          // Scroll to bottom after command execution
+          setTimeout(() => handleScrollToBottom(), 200);
+          // Focus the input field after execution
+          setTimeout(() => focusInputField(), 250);
         }
-
-        // Execute the command
-        executeCommand(command);
-
-        // Clear input after execution
-        setTimeout(() => setCommandInput(''), 100);
-        // Scroll to bottom after command execution
-        setTimeout(() => handleScrollToBottom(), 200);
-        // Focus the input field after execution
-        setTimeout(() => focusInputField(), 250);
       }
     };
 

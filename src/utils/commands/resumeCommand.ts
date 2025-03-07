@@ -1,4 +1,3 @@
-
 import { Command, CommandResult } from './types';
 
 export const resumeCommand: Command = {
@@ -41,12 +40,7 @@ export const resumeCommand: Command = {
           
           <div class="mt-4">
             <p class="font-bold">CERTIFICATIONS</p>
-            <ul class="list-disc ml-5">
-              <li>AWS Certified Solutions Architect - Professional</li>
-              <li>Google Cloud Professional Data Engineer</li>
-              <li>Microsoft Certified: Azure Developer Associate</li>
-              <li>TensorFlow Developer Certificate</li>
-            </ul>
+            <p>See details with <span class="command-link" data-command="certifications">certifications</span> command.</p>
           </div>
           
           <div class="mt-4">

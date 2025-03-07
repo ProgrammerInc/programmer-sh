@@ -31,10 +31,10 @@ export const initializeWallpaper = (): void => {
   if (wallpaperInitialized) {
     return;
   }
-  
+
   const currentWallpaper = getCurrentWallpaper();
   setWallpaper(currentWallpaper);
-  
+
   // Mark as initialized
   wallpaperInitialized = true;
   console.log('Wallpaper initialized');
@@ -48,16 +48,51 @@ export const wallpaperCommand: Command = {
     const currentWallpaper = getCurrentWallpaper();
 
     if (!args) {
-      const availableWallpapers = Object.entries(wallpapers)
-        .map(
-          ([id, wallpaper]) =>
-            `\n  - <span class="command-link" data-command="wallpaper ${wallpaper.id}">${wallpaper.id}</span>: ${wallpaper.description}`
-        )
-        .join('');
+      // Group wallpapers by their type
+      const wallpapersByType: Record<
+        string,
+        Array<[string, (typeof wallpapers)[keyof typeof wallpapers]]>
+      > = {};
+
+      Object.entries(wallpapers).forEach(([id, wallpaper]) => {
+        const type = wallpaper.type;
+        if (!wallpapersByType[type]) {
+          wallpapersByType[type] = [];
+        }
+        wallpapersByType[type].push([id, wallpaper]);
+      });
+
+      // Define the display order and titles for types
+      const typeDisplayOrder = ['animation', 'gradient', 'color', 'image', 'video'];
+      const typeDisplayNames: Record<string, string> = {
+        animation: 'Animation',
+        gradient: 'Gradient',
+        color: 'Color',
+        image: 'Image',
+        video: 'Video'
+      };
+
+      // Build the categorized output
+      let wallpaperOutput = '';
+
+      typeDisplayOrder.forEach(type => {
+        if (wallpapersByType[type] && wallpapersByType[type].length > 0) {
+          wallpaperOutput += `\n<span class="text-terminal-prompt">${typeDisplayNames[type]} Wallpapers</span>`;
+
+          wallpapersByType[type]
+            .sort(([idA], [idB]) => idA.localeCompare(idB))
+            .forEach(([id, wallpaper]) => {
+              wallpaperOutput += `\n&nbsp;&nbsp;- <span class="command-link" data-command="wallpaper ${wallpaper.id}">${wallpaper.id}</span>: ${wallpaper.description}`;
+            });
+
+          wallpaperOutput += '\n';
+        }
+      });
 
       return {
-        content: `Current wallpaper: <span class="text-terminal-prompt">${wallpapers[currentWallpaper].id}</span>\n\nAvailable wallpapers:\n${availableWallpapers}\n\nUsage: wallpaper [name]`,
-        isError: false
+        content: `\nCurrent wallpaper: <span class="text-terminal-prompt">${wallpapers[currentWallpaper].id}</span>\n\nAvailable wallpapers:\n${wallpaperOutput}\nUsage: <span class="command-link" data-command="wallpaper" data-placeholder="[name]">wallpaper [name]</span>\n\n`,
+        isError: false,
+        rawHTML: true
       };
     }
 

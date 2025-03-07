@@ -89,7 +89,7 @@ export const helpCommand: Command = {
       const commandEntries = Object.entries(category.commands);
       const commandsHtml = commandEntries
         .map(([cmd, desc], index) => {
-          return `- <span class="command-link text-terminal-prompt" data-command="${cmd}">${cmd}</span>: ${desc}${index < commandEntries.length - 1 ? '\n' : ''}`;
+          return `&nbsp;- <span class="command-link text-terminal-prompt" data-command="${cmd}">${cmd}</span>: ${desc}${index < commandEntries.length - 1 ? '\n' : ''}`;
         })
         .join('');
 
