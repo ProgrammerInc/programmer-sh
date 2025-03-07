@@ -11,51 +11,46 @@ export const renderCommandOutput = (command: string, output: string, rawHTML: bo
 export const scrollToBottom = (ref: React.RefObject<HTMLDivElement>) => {
   if (!ref.current) return;
 
-  // Force immediate scroll - this is the most reliable method
+  // Cache the element reference for better performance
   const element = ref.current;
-  const scrollToBottomForce = () => {
+  
+  // Function for immediate scrolling (used for initial scroll)
+  const scrollImmediately = () => {
     if (element) {
-      // Use both methods for maximum compatibility
+      // Set scroll position directly for immediate effect
       element.scrollTop = element.scrollHeight;
+    }
+  };
+  
+  // Function for gentle scrolling that can be interrupted by user
+  const scrollGently = () => {
+    if (element) {
       element.scrollTo({
         top: element.scrollHeight,
-        behavior: 'auto' // Use 'auto' for immediate scrolling without animation
+        behavior: 'smooth' // Use smooth scrolling for better UX
       });
     }
   };
 
-  // First immediate scroll
-  scrollToBottomForce();
-
-  // Then ensure we continue scrolling during content loading
-  // Use requestAnimationFrame for smoother performance
-  const rafScroll = () => {
-    scrollToBottomForce();
-    // Continue scrolling for a short duration to catch any loading content
-    const startTime = Date.now();
-    const continueScrolling = () => {
-      scrollToBottomForce();
-      if (Date.now() - startTime < 2000) {
-        // 2 seconds of continuous scrolling attempts
-        requestAnimationFrame(continueScrolling);
-      }
-    };
-    requestAnimationFrame(continueScrolling);
-  };
-
-  requestAnimationFrame(rafScroll);
-
-  // Also use intervals as a backup method
-  const intervals = [50, 100, 200, 350, 500, 1000];
-  intervals.forEach(delay => {
-    setTimeout(scrollToBottomForce, delay);
+  // First do an immediate scroll to ensure content is visible
+  scrollImmediately();
+  
+  // Then do a few gentle scroll attempts with decreasing frequency
+  // This helps with dynamically loading content without preventing user interaction
+  const shortIntervals = [50, 150, 300];
+  shortIntervals.forEach(delay => {
+    setTimeout(scrollGently, delay);
   });
+  
+  // One final scroll after content should be fully loaded
+  // Using a shorter duration ensures users can scroll up sooner
+  setTimeout(scrollGently, 500);
 
   // Create a single observer instance for efficiency
   if (typeof MutationObserver !== 'undefined') {
     // Use a more selective observer to avoid performance issues
     const observer = new MutationObserver(() => {
-      scrollToBottomForce();
+      scrollGently();
     });
 
     observer.observe(element, {
