@@ -21,7 +21,7 @@ export const welcomeCommand: Command = {
         This is an interactive terminal portfolio app designed and developed by <span class="text-terminal-prompt">James A. Black Jr.</span>
 
         Type <span class="command-link" data-command="help">help</span> to see available commands, or try one of these:
-        <div class="ml-4">
+        <div class="ml-2">
           <span>- <span class="command-link" data-command="about">about</span>: To learn about me</span>
           <span>- <span class="command-link" data-command="contact">contact</span>: For my contact information</span>
           <span>- <span class="command-link" data-command="education">education</span>: To see my educational background</span>

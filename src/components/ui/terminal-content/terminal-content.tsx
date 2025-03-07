@@ -30,7 +30,7 @@ export const TerminalContent = forwardRef<HTMLDivElement, TerminalContentProps>(
 
         if (command) {
           const event = new CustomEvent('executeCommandFromLink', {
-            detail: { command }
+            detail: { command, addToHistory: true }
           });
           document.dispatchEvent(event);
         }

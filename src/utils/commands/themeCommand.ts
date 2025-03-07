@@ -52,10 +52,10 @@ export const initializeTheme = (): void => {
   if (themeInitialized) {
     return;
   }
-  
+
   const currentTheme = getCurrentTheme();
   setTheme(currentTheme);
-  
+
   // Mark as initialized
   themeInitialized = true;
   console.log('Theme initialized');
@@ -70,7 +70,7 @@ export const themeCommand: Command = {
 
     if (!args) {
       return {
-        content: `Current theme: <span class="text-terminal-prompt">${currentTheme}</span>\nUsage: theme [<span class="command-link" data-command="theme dark">dark</span>|<span class="command-link" data-command="theme light">light</span>]`,
+        content: `Current theme: <span class="text-terminal-prompt">${currentTheme}</span>\n\nUsage: theme [<span class="command-link" data-command="theme dark">dark</span>|<span class="command-link" data-command="theme light">light</span>]`,
         isError: false
       };
     }
