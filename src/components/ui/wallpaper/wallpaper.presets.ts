@@ -6,9 +6,9 @@ const wallpapers: Record<string, Wallpaper> = {
     id: 'default',
     name: 'Default',
     description: 'Default wallpaper',
-    type: 'image',
-    imageType: 'url',
-    url: 'https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&q=80'
+    type: 'animation',
+    animation: 'particles',
+    animationType: 'reactbits'
   },
   aurora: {
     id: 'aurora',
@@ -50,7 +50,7 @@ const wallpapers: Record<string, Wallpaper> = {
     description: 'Foggy mountain summit',
     type: 'image',
     imageType: 'url',
-    url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80'
+    url: 'https://images.unsplash.com/photo-1578147063111-9ffec96050cd?auto=format&fit=crop&q=80'
   },
   gradient: {
     id: 'gradient',

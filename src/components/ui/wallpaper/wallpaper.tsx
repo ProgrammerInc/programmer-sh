@@ -17,14 +17,31 @@ import wallpapers from './wallpaper.presets';
 import Wallpaper from './wallpaper.types';
 
 export interface WallpaperProps extends React.HTMLAttributes<HTMLDivElement> {
+  interactive?: boolean;
+  theme?: 'light' | 'dark';
   wallpaper?: Wallpaper;
 }
+
+// Helper function to convert hex color to RGB array
+const hexToRgb = (hex: string): [number, number, number] => {
+  // Remove the # if present
+  const cleanHex = hex.startsWith('#') ? hex.slice(1) : hex;
+
+  // Convert to RGB
+  const r = parseInt(cleanHex.substring(0, 2), 16) / 255;
+  const g = parseInt(cleanHex.substring(2, 4), 16) / 255;
+  const b = parseInt(cleanHex.substring(4, 6), 16) / 255;
+
+  return [r, g, b];
+};
 
 export const WallpaperProvider: React.FC<WallpaperProps> = ({
   id = 'wallpaperContainer',
   className = 'wallpaper-container',
   children,
   style,
+  interactive = true,
+  theme = 'dark',
   wallpaper = wallpapers.default
 }) => {
   // Wallpaper debugging
@@ -35,13 +52,13 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
   const animationProps = wallpaper.animationProps || {};
   const backgroundColor = wallpaper.backgroundColor || 'transparent';
   const colorType = wallpaper.colorType || 'hex';
-  const foregroundColor = wallpaper.foregroundColor || '#f1f1f1';
+  const foregroundColor: [number, number, number] | number | string =
+    wallpaper.foregroundColor || '#64ffda';
   const gradient = wallpaper.gradient || 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)';
   const gradientType = wallpaper.gradientType || 'linear';
   const image = wallpaper.image;
   const imageType = wallpaper.imageType || 'unsplash';
   const mimeType = wallpaper.mimeType || 'image/png';
-  const theme = wallpaper.theme || 'dark';
   const url = wallpaper.url;
   const wallpaperId = wallpaper.id || 'default';
   const wallpaperType = wallpaper.type || 'image';
@@ -86,7 +103,7 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
           {animation === 'balatro' && (
             <Balatro
               isRotate={false}
-              mouseInteraction={true}
+              mouseInteraction={interactive}
               pixelFilter={700}
               {...(animationProps as BalatroProps)}
             />
@@ -111,7 +128,7 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
             <Dither
               waveColor={[0.5, 0.5, 0.5]}
               disableAnimation={false}
-              enableMouseInteraction={true}
+              enableMouseInteraction={interactive}
               mouseRadius={0.3}
               colorNum={4}
               waveAmplitude={0.3}
@@ -176,7 +193,7 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
           {animation === 'iridescence' && (
             <Iridescence
               color={[1, 1, 1]}
-              mouseReact={false}
+              mouseReact={interactive}
               amplitude={0.1}
               speed={1.0}
               {...(animationProps as IridescenceProps)}
@@ -207,7 +224,7 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               baseColor={[0.3, 0.2, 0.5]}
               speed={0.25}
               amplitude={0.6}
-              interactive={true}
+              interactive={interactive}
               {...(animationProps as LiquidChromeProps)}
             />
           )}
@@ -216,7 +233,7 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               rows={9}
               columns={9}
               containerSize="100%"
-              lineColor="#64ffda"
+              lineColor={foregroundColor}
               lineWidth="0.8vmin"
               lineHeight="9vmin"
               baseAngle={0}
@@ -225,7 +242,7 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
           )}
           {animation === 'particles' && (
             <Particles
-              particleColors={['#64ffda']}
+              particleColors={[foregroundColor]}
               particleCount={2000}
               particleSpread={5}
               speed={0.2}
@@ -238,16 +255,20 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
           {animation === 'threads' && (
             <Threads
               amplitude={3}
-              color={[0.4, 1, 0.85]}
+              color={
+                colorType === 'hex'
+                  ? hexToRgb(foregroundColor)
+                  : (foregroundColor as unknown as [number, number, number])
+              }
               distance={0}
-              enableMouseInteraction={true}
+              enableMouseInteraction={interactive}
               {...(animationProps as ThreadsProps)}
             />
           )}
           {animation === 'waves' && (
             <Waves
-              lineColor="#64ffda"
-              backgroundColor="rgba(0, 0, 0, 0.7)"
+              lineColor={foregroundColor}
+              backgroundColor={backgroundColor}
               waveSpeedX={0.02}
               waveSpeedY={0.01}
               waveAmpX={40}
