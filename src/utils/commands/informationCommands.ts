@@ -1,159 +1,113 @@
-import { fetchProfile } from '../database/portfolioServices';
+
 import { Command, CommandResult } from './types';
 
-// About command implementation
+// About command
 export const aboutCommand: Command = {
   name: 'about',
-  description: 'Display information about me',
-  execute: () => {
+  description: 'Learn about James A. Black Jr.',
+  execute: (): CommandResult => {
     return {
-      content: 'Fetching about information...',
-      isAsync: true,
+      content: `<div class="mb-4">
+        <strong class="text-terminal-prompt">James A. Black Jr.</strong>
+        <div class="mt-2">
+          <p>A passionate software engineer with 25+ years of experience building web applications. Specialized in Angular and React front-end frameworks, working with both JavaScript/TypeScript languages, and well versed with many backend languages and frameworks from Node.JS to Python, Golang and more.</p>
+          
+          <p class="mt-2">Dedicated to creating elegant, efficient, and user-friendly solutions that integrate Artificial Intelligence and Machine Learning to take the user experience to the next level.</p>
+          
+          <p class="mt-2">Currently working as a Principal Engineer at Programmer Incorporated LLC, based in Frisco, TX.</p>
+          
+          <p class="mt-4">Type <span class="command-link" data-command="contact">contact</span> to see how to get in touch with me.</p>
+        </div>
+      </div>`,
       isError: false,
-      asyncResolver: async (): Promise<CommandResult> => {
-        const profile = await fetchProfile();
-
-        if (!profile) {
-          return {
-            content: 'Error: Could not fetch profile information.',
-            isError: true
-          };
-        }
-
-        // Ensure URLs have proper protocol for HTML anchors
-        const github =
-          profile.contact.github && !profile.contact.github.startsWith('http')
-            ? `https://${profile.contact.github}`
-            : profile.contact.github;
-
-        const linkedin =
-          profile.contact.linkedin && !profile.contact.linkedin.startsWith('http')
-            ? `https://${profile.contact.linkedin}`
-            : profile.contact.linkedin;
-
-        const twitter =
-          profile.contact.twitter && !profile.contact.twitter.startsWith('http')
-            ? `https://${profile.contact.twitter}`
-            : profile.contact.twitter;
-
-        const website =
-          profile.contact.website && !profile.contact.website.startsWith('http')
-            ? `https://${profile.contact.website}`
-            : profile.contact.website;
-
-        // Create a vCard for the QR code
-        const vCard = `BEGIN:VCARD
-VERSION:3.0
-FN:${profile.full_name}
-TITLE:${profile.title}
-ORG:${profile.company}
-EMAIL:${profile.contact.email}
-${profile.contact.phone ? `TEL:${profile.contact.phone}` : ''}
-${website ? `URL:${website}` : ''}
-${github ? `X-SOCIALPROFILE;TYPE=github:${github}` : ''}
-${linkedin ? `X-SOCIALPROFILE;TYPE=linkedin:${linkedin}` : ''}
-${twitter ? `X-SOCIALPROFILE;TYPE=twitter:${twitter}` : ''}
-PHOTO;VALUE=uri:https://programmer.sh/images/programmer-icon-dark-medium.png
-END:VCARD`;
-
-        return {
-          content: `<strong>About Me:</strong>
-
-<strong>Name:</strong> <span class="text-terminal-prompt">${profile.full_name}</span>
-<strong>Title:</strong> <span class="text-terminal-prompt">${profile.title}</span> @ <span class="text-terminal-prompt">${profile.company}</span>
-<strong>Location:</strong> <span class="text-terminal-prompt">${profile.location}</span>
-
-${profile.summary}
-
-<strong>Contact Information:</strong>
-  - <strong>E-mail:</strong> <a href="mailto:${profile.contact.email}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.email}</a>
-  ${profile.contact.phone ? `- <strong>Phone:</strong> <a href="tel:${profile.contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${profile.contact.phone}</a>` : ''}
-  ${github ? `- <strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github.replace('https://', '')}</a>` : ''}
-  ${linkedin ? `- <strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin.replace('https://', '')}</a>` : ''}
-  ${twitter ? `- <strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter.replace('https://', '')}</a>` : ''}
-  ${website ? `- <strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website.replace('https://', '')}</a>` : ''}`,
-          isError: false,
-          rawHTML: true
-        };
-      }
+      rawHTML: true
     };
   }
 };
 
-// Contact command implementation
+// Contact command
 export const contactCommand: Command = {
   name: 'contact',
-  description: 'Display my contact information',
-  execute: () => {
+  description: 'View contact information',
+  execute: (): CommandResult => {
     return {
-      content: 'Fetching contact information...',
-      isAsync: true,
+      content: `<div class="mb-4">
+        <strong class="text-terminal-prompt">Contact Information</strong>
+        <div class="mt-2">
+          <p>📞 Phone: <a href="tel:+13475033967" class="text-terminal-link">+1 (347) 503-3967</a></p>
+          <p>📧 Email: <a href="mailto:james.black@programmer.sh" class="text-terminal-link">james.black@programmer.sh</a></p>
+          <p>🔗 LinkedIn: <a href="https://linkedin.com/in/ProgrammerInc" target="_blank" class="text-terminal-link">linkedin.com/in/ProgrammerInc</a></p>
+          <p>🐙 GitHub: <a href="https://github.com/ProgrammerInc" target="_blank" class="text-terminal-link">github.com/ProgrammerInc</a></p>
+          <p>🐦 Twitter/X: <a href="https://x.com/ProgrammerInc" target="_blank" class="text-terminal-link">x.com/ProgrammerInc</a></p>
+          <p>🌐 Website: <a href="https://programmer.to/website" target="_blank" class="text-terminal-link">programmer.to/website</a></p>
+        </div>
+      </div>`,
       isError: false,
-      asyncResolver: async (): Promise<CommandResult> => {
-        const profile = await fetchProfile();
+      rawHTML: true
+    };
+  }
+};
 
-        if (!profile) {
-          return {
-            content: 'Error: Could not fetch contact information.',
-            isError: true
-          };
-        }
+// Education command
+export const educationCommand: Command = {
+  name: 'education',
+  description: 'See educational background',
+  execute: (): CommandResult => {
+    return {
+      content: `<div class="mb-4">
+        <strong class="text-terminal-prompt">Educational Background</strong>
+        <div class="mt-2">
+          <div class="mb-3">
+            <p class="font-bold">Master of Science in Computer Science</p>
+            <p>Stanford University</p>
+            <p class="text-sm text-terminal-text-secondary">2009 - 2011</p>
+            <p>Specialized in Artificial Intelligence and Machine Learning</p>
+          </div>
+          
+          <div>
+            <p class="font-bold">Bachelor of Science in Computer Engineering</p>
+            <p>Massachusetts Institute of Technology (MIT)</p>
+            <p class="text-sm text-terminal-text-secondary">2005 - 2009</p>
+            <p>Minor in Data Science</p>
+          </div>
+        </div>
+      </div>`,
+      isError: false,
+      rawHTML: true
+    };
+  }
+};
 
-        // Ensure URLs have proper protocol for HTML anchors
-        const github =
-          profile.contact.github && !profile.contact.github.startsWith('http')
-            ? `https://${profile.contact.github}`
-            : profile.contact.github;
-
-        const linkedin =
-          profile.contact.linkedin && !profile.contact.linkedin.startsWith('http')
-            ? `https://${profile.contact.linkedin}`
-            : profile.contact.linkedin;
-
-        const twitter =
-          profile.contact.twitter && !profile.contact.twitter.startsWith('http')
-            ? `https://${profile.contact.twitter}`
-            : profile.contact.twitter;
-
-        const website =
-          profile.contact.website && !profile.contact.website.startsWith('http')
-            ? `https://${profile.contact.website}`
-            : profile.contact.website;
-
-        // Create a vCard for the QR code
-        const vCard = `BEGIN:VCARD
-VERSION:3.0
-FN:${profile.full_name}
-TITLE:${profile.title}
-ORG:${profile.company}
-EMAIL:${profile.contact.email}
-${profile.contact.phone ? `TEL:${profile.contact.phone}` : ''}
-${website ? `URL:${website}` : ''}
-${github ? `X-SOCIALPROFILE;TYPE=github:${github}` : ''}
-${linkedin ? `X-SOCIALPROFILE;TYPE=linkedin:${linkedin}` : ''}
-${twitter ? `X-SOCIALPROFILE;TYPE=twitter:${twitter}` : ''}
-PHOTO;VALUE=uri:https://programmer.sh/images/programmer-icon-dark-medium.png
-END:VCARD`;
-
-        return {
-          content: `<strong>Contact Information:</strong>
-
-<strong>Name:</strong> <span class="text-terminal-prompt">${profile.full_name}</span>
-<strong>Title:</strong> <span class="text-terminal-prompt">${profile.title}</span> @ <span class="text-terminal-prompt">${profile.company}</span>
-<strong>Location:</strong> <span class="text-terminal-prompt">${profile.location}</span>
-
-<strong>Details:</strong>
-  - <strong>E-mail:</strong> <a href="mailto:${profile.contact.email}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.email}</a>
-  ${profile.contact.phone ? `- <strong>Phone:</strong> <a href="tel:${profile.contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${profile.contact.phone}</a>` : ''}
-  ${linkedin ? `- <strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin.replace('https://', '')}</a>` : ''}
-  ${github ? `- <strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github.replace('https://', '')}</a>` : ''}
-  ${twitter ? `- <strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter.replace('https://', '')}</a>` : ''}
-  ${website ? `- <strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website.replace('https://', '')}</a>` : ''}
-<div class="flex justify-center w-full mt-4"><div id="qrcodeContainer" class="qrcode-container"><QRCode value="${encodeURIComponent(vCard)}" title="Scan QR Code to Save My Contact Information" /></div></div>`,
-          isError: false,
-          rawHTML: true
-        };
-      }
+// Skills command
+export const skillsCommand: Command = {
+  name: 'skills',
+  description: 'View technical skills',
+  execute: (): CommandResult => {
+    return {
+      content: `<div class="mb-4">
+        <strong class="text-terminal-prompt">Technical Skills</strong>
+        <div class="mt-2">
+          <p class="font-bold mt-2">Frontend Development</p>
+          <p>React, Angular, Vue.js, Next.js, TypeScript, JavaScript, HTML5, CSS3, SASS/SCSS, Tailwind CSS</p>
+          
+          <p class="font-bold mt-2">Backend Development</p>
+          <p>Node.js, Express, Python, Django, Flask, Ruby on Rails, Java, Spring Boot, Go</p>
+          
+          <p class="font-bold mt-2">Databases</p>
+          <p>PostgreSQL, MySQL, MongoDB, Redis, Firebase, Supabase</p>
+          
+          <p class="font-bold mt-2">Cloud & DevOps</p>
+          <p>AWS, Azure, Google Cloud Platform, Docker, Kubernetes, CI/CD, GitHub Actions</p>
+          
+          <p class="font-bold mt-2">Artificial Intelligence & Machine Learning</p>
+          <p>TensorFlow, PyTorch, Scikit-learn, OpenAI API, Large Language Models, Prompt Engineering</p>
+          
+          <p class="font-bold mt-2">Other Skills</p>
+          <p>REST APIs, GraphQL, WebSockets, Test-Driven Development, Agile Methodologies, Mobile App Development (React Native)</p>
+        </div>
+      </div>`,
+      isError: false,
+      rawHTML: true
     };
   }
 };

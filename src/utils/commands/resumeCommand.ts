@@ -1,134 +1,61 @@
-import { fetchPortfolioData } from '../database/portfolioServices';
+
 import { Command, CommandResult } from './types';
 
 export const resumeCommand: Command = {
   name: 'resume',
-  description: 'Display my resume',
-  execute: () => {
+  description: 'View resume',
+  execute: (): CommandResult => {
     return {
-      content: 'Fetching resume...',
-      isAsync: true,
+      content: `<div class="mb-4">
+        <strong class="text-terminal-prompt">Resume</strong>
+        <div class="mt-2">
+          <p class="font-bold text-lg">James A. Black Jr.</p>
+          <p>Principal Engineer at Programmer Incorporated LLC</p>
+          <p>Frisco, TX</p>
+          <p><a href="mailto:james.black@programmer.sh" class="text-terminal-link">james.black@programmer.sh</a> | <a href="tel:+13475033967" class="text-terminal-link">+1 (347) 503-3967</a></p>
+          
+          <div class="mt-4">
+            <p class="font-bold">PROFESSIONAL SUMMARY</p>
+            <p>Full Stack Engineer with 25+ years of experience in web development, specializing in Angular and React frameworks. Proficient in multiple programming languages including JavaScript/TypeScript, Python, and Go. Experienced in integrating AI and machine learning solutions.</p>
+          </div>
+          
+          <div class="mt-4">
+            <p class="font-bold">WORK EXPERIENCE</p>
+            <p>See details with <span class="command-link" data-command="experience">experience</span> command.</p>
+          </div>
+          
+          <div class="mt-4">
+            <p class="font-bold">EDUCATION</p>
+            <p>See details with <span class="command-link" data-command="education">education</span> command.</p>
+          </div>
+          
+          <div class="mt-4">
+            <p class="font-bold">SKILLS</p>
+            <p>See details with <span class="command-link" data-command="skills">skills</span> command.</p>
+          </div>
+          
+          <div class="mt-4">
+            <p class="font-bold">PROJECTS</p>
+            <p>See details with <span class="command-link" data-command="projects">projects</span> command.</p>
+          </div>
+          
+          <div class="mt-4">
+            <p class="font-bold">CERTIFICATIONS</p>
+            <ul class="list-disc ml-5">
+              <li>AWS Certified Solutions Architect - Professional</li>
+              <li>Google Cloud Professional Data Engineer</li>
+              <li>Microsoft Certified: Azure Developer Associate</li>
+              <li>TensorFlow Developer Certificate</li>
+            </ul>
+          </div>
+          
+          <div class="mt-4">
+            <p>Download full resume: <a href="#" class="text-terminal-link">resume.pdf</a></p>
+          </div>
+        </div>
+      </div>`,
       isError: false,
-      asyncResolver: async (): Promise<CommandResult> => {
-        const portfolioData = await fetchPortfolioData();
-
-        if (!portfolioData) {
-          return {
-            content: 'Error: Could not fetch resume information.',
-            isError: true
-          };
-        }
-
-        // Format contact links with proper HTML and ensure all URLs have protocol
-        const github =
-          portfolioData.contact.github && !portfolioData.contact.github.startsWith('http')
-            ? `https://${portfolioData.contact.github}`
-            : portfolioData.contact.github;
-
-        const linkedin =
-          portfolioData.contact.linkedin && !portfolioData.contact.linkedin.startsWith('http')
-            ? `https://${portfolioData.contact.linkedin}`
-            : portfolioData.contact.linkedin;
-
-        const twitter =
-          portfolioData.contact.twitter && !portfolioData.contact.twitter.startsWith('http')
-            ? `https://${portfolioData.contact.twitter}`
-            : portfolioData.contact.twitter;
-
-        const website =
-          portfolioData.contact.website && !portfolioData.contact.website.startsWith('http')
-            ? `https://${portfolioData.contact.website}`
-            : portfolioData.contact.website;
-
-        // Create a vCard for the QR code
-        const vCard = `BEGIN:VCARD
-VERSION:3.0
-FN:${portfolioData.full_name}
-TITLE:${portfolioData.title}
-ORG:${portfolioData.company}
-EMAIL:${portfolioData.contact.email}
-${portfolioData.contact.phone ? `TEL:${portfolioData.contact.phone}` : ''}
-${website ? `URL:${website}` : ''}
-${github ? `X-SOCIALPROFILE;TYPE=github:${github}` : ''}
-${linkedin ? `X-SOCIALPROFILE;TYPE=linkedin:${linkedin}` : ''}
-${twitter ? `X-SOCIALPROFILE;TYPE=twitter:${twitter}` : ''}
-PHOTO;VALUE=uri:https://programmer.sh/images/programmer-icon-dark-medium.png
-END:VCARD`;
-
-        return {
-          content: `<strong>My Resume:</strong>
-<div class="resume-header">
-<strong>Name:</strong> <span class="text-terminal-prompt">${portfolioData.full_name}</span>
-<strong>Title:</strong> <span class="text-terminal-prompt">${portfolioData.title}</span> @ <span class="text-terminal-prompt">${portfolioData.company}</span>
-<strong>Location:</strong> <span class="text-terminal-prompt">${portfolioData.location}</span>
-</div>
-<div class="resume-summary"><strong>SUMMARY</strong>
-
-<p>${portfolioData.summary}</p></div>
-<div class="resume-section">
-<strong>EXPERIENCE</strong>
-
-${portfolioData.experience
-  .sort(
-    (a, b) =>
-      new Date(b.duration.split(' - ')[0]).getTime() -
-      new Date(a.duration.split(' - ')[0]).getTime()
-  )
-  .map(
-    exp => `<div class="experience-item"><span class="position"><strong><span class="text-terminal-prompt">${exp.position}</span></strong> @ <strong><span class="text-terminal-prompt">${exp.company}</span></strong> <span class="duration">(${exp.duration})</span></span>
-<span class="description">${exp.description}</span>
-
-<span class="achievements-title">Key achievements:</span><ul class="achievements-list">${exp.achievements
-      .sort()
-      .map(achievement => `<li>- ${achievement}</li>`)
-      .join('')}</ul>
-</div>`
-  )
-  .join('')}</div>
-<div class="resume-section"><strong>EDUCATION</strong>
-
-${portfolioData.education
-  .sort(
-    (a, b) =>
-      new Date(b.duration.split(' - ')[0]).getTime() -
-      new Date(a.duration.split(' - ')[0]).getTime()
-  )
-  .map(
-    edu => `<div class="education-item"><strong>Degree/Major:</strong> <span class="text-terminal-prompt">${edu.degree}</span>
-<strong>Institution:</strong> <span class="institution"><span class="text-terminal-prompt">${edu.institution}</span> (${edu.duration})</span>
-
-${edu.details ? `<strong>Details:</strong> <span class="details">${edu.details}</span>` : ''}</div>`
-  )
-  .join('')}</div>
-
-<div class="resume-section"><strong>SKILLS</strong>
-
-<div class="skills-section">${portfolioData.skills
-            .sort()
-            .map(
-              skillCategory =>
-                `<div class="skill-category"><span class="category"><strong>${skillCategory.category}:</strong> ${skillCategory.items
-                  .sort()
-                  .map(
-                    skill =>
-                      `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${skill}" target="_blank">${skill}</a>`
-                  )
-                  .join(', ')}</span></div>`
-            )
-            .join('')}</div></div>
-
-<div class="resume-section"><strong>CONTACT</strong>
-<div class="contact-section">
-<span><strong>E-mail:</strong> <a href="mailto:${portfolioData.contact.email}" target="_blank" class="text-terminal-link hover:underline">${portfolioData.contact.email}</a></span>
-${portfolioData.contact.phone ? `<span><strong>Phone:</strong> <a href="tel:${portfolioData.contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${portfolioData.contact.phone}</a></span>` : ''}
-${linkedin ? `<span><strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${linkedin.replace(/^https?:\/\//, '')}</a></span>` : ''}
-${github ? `<span><strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${github.replace(/^https?:\/\//, '')}</a></span>` : ''}
-${twitter ? `<span><strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${twitter.replace(/^https?:\/\//, '')}</a></span>` : ''}
-${website ? `<span><strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${website.replace(/^https?:\/\//, '')}</a></span>` : ''}</div></div>`,
-          isError: false,
-          rawHTML: true
-        };
-      }
+      rawHTML: true
     };
   }
 };

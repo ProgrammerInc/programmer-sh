@@ -1,43 +1,31 @@
-import { fetchEducation } from '../database/portfolioServices';
+
 import { Command, CommandResult } from './types';
 
 export const educationCommand: Command = {
   name: 'education',
-  description: 'Display my education background',
-  execute: () => {
+  description: 'See educational background',
+  execute: (): CommandResult => {
     return {
-      content: 'Fetching education...',
-      isAsync: true,
+      content: `<div class="mb-4">
+        <strong class="text-terminal-prompt">Educational Background</strong>
+        <div class="mt-2">
+          <div class="mb-3">
+            <p class="font-bold">Master of Science in Computer Science</p>
+            <p>Stanford University</p>
+            <p class="text-sm text-terminal-text-secondary">2009 - 2011</p>
+            <p>Specialized in Artificial Intelligence and Machine Learning</p>
+          </div>
+          
+          <div>
+            <p class="font-bold">Bachelor of Science in Computer Engineering</p>
+            <p>Massachusetts Institute of Technology (MIT)</p>
+            <p class="text-sm text-terminal-text-secondary">2005 - 2009</p>
+            <p>Minor in Data Science</p>
+          </div>
+        </div>
+      </div>`,
       isError: false,
-      asyncResolver: async (): Promise<CommandResult> => {
-        const education = await fetchEducation();
-
-        if (!education || !education.length) {
-          return {
-            content: 'Error: Could not fetch education information.',
-            isError: true
-          };
-        }
-
-        return {
-          content: `<strong>My Education:</strong>
-
-${education
-  .sort(
-    (a, b) =>
-      new Date(b.duration.split(' - ')[0]).getTime() -
-      new Date(a.duration.split(' - ')[0]).getTime()
-  )
-  .map(
-    edu => `<strong>Degree/Major:</strong> <span class="text-terminal-prompt">${edu.degree}</span>
-<strong>Institution:</strong> <span class="institution"><span class="text-terminal-prompt">${edu.institution}</span> (${edu.duration})</span>
-
-${edu.details ? `<strong>Details:</strong> <span class="details">${edu.details}</span>` : ''}`
-  )
-  .join('\n')}`,
-          isError: false
-        };
-      }
+      rawHTML: true
     };
   }
 };

@@ -10,13 +10,19 @@ import { clearCommand, echoCommand, helpCommand } from '@/utils/commands/helpCom
 import { themeCommand } from '@/utils/commands/themeCommand';
 import { cursorCommand } from '@/utils/commands/cursorCommand';
 import { wallpaperCommand } from '@/utils/commands/wallpaperCommand';
+import { welcomeCommand } from '@/utils/commands/welcomeCommand';
+import { aboutCommand, contactCommand } from '@/utils/commands/informationCommands';
+import { skillsCommand } from '@/utils/commands/skillsCommand';
+import { experienceCommand } from '@/utils/commands/experienceCommand';
+import { projectsCommand } from '@/utils/commands/projectsCommand';
+import { resumeCommand } from '@/utils/commands/resumeCommand';
+import { educationCommand } from '@/utils/commands/educationCommand';
 import { Command, CommandResult } from '@/utils/commands/types';
 import { SocialLink } from '@/types/socialLinks';
 import { TerminalHeader } from '@/components/ui/terminal-header';
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
-import { toast } from 'sonner';
 
 // Create the terminal footer component
 const TerminalFooter = ({ 
@@ -76,31 +82,14 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     cursor: cursorCommand,
     wallpaper: wallpaperCommand,
     setwallpaper: wallpaperCommand,
-    welcome: {
-      name: 'welcome',
-      description: 'Display welcome message',
-      execute: (): CommandResult => {
-        return {
-          content: `Welcome to the <span class="text-terminal-prompt">&lt;programmer&gt;</span><span class="text-terminal-prompt">.</span><span class="text-terminal-prompt animate-cursor-blink">_</span> portfolio.
-
-This is an interactive terminal portfolio app designed and developed by <span class="text-terminal-prompt">James A. Black Jr.</span>
-
-Type <span class="command-link" data-command="help">help</span> to see available commands, or try one of these:
-
-  - <span class="command-link" data-command="about">about</span>: To learn about me
-  - <span class="command-link" data-command="contact">contact</span>: For my contact information
-  - <span class="command-link" data-command="education">education</span>: To see my educational background
-  - <span class="command-link" data-command="experience">experience</span>: To see my work experience
-  - <span class="command-link" data-command="projects">projects</span>: To view my portfolio
-  - <span class="command-link" data-command="resume">resume</span>: To view my resume
-  - <span class="command-link" data-command="skills">skills</span>: To see my technical skills
-  - <span class="command-link" data-command="theme">theme</span>: To change the terminal theme
-
-Feel free to explore and get in touch!`,
-          isError: false
-        };
-      }
-    }
+    welcome: welcomeCommand,
+    about: aboutCommand,
+    contact: contactCommand,
+    skills: skillsCommand,
+    experience: experienceCommand,
+    projects: projectsCommand,
+    resume: resumeCommand,
+    education: educationCommand
   };
 
   // Scroll to bottom on output change
@@ -183,8 +172,8 @@ Feel free to explore and get in touch!`,
           .then(output => {
             setIsAwaitingAsync(false);
             setCommandOutput(prevOutput => 
-              prevOutput ? `${prevOutput}\n${renderCommandOutput(commandStr, output.content)}` 
-                         : renderCommandOutput(commandStr, output.content)
+              prevOutput ? `${prevOutput}\n${renderCommandOutput(commandStr, output.content, output.rawHTML)}` 
+                         : renderCommandOutput(commandStr, output.content, output.rawHTML)
             );
             
             // Dispatch event
@@ -202,12 +191,12 @@ Feel free to explore and get in touch!`,
         if (commandName === 'clear') {
           setCommandOutput('');
           if (result.runAfterClear) {
-            setCommandOutput(renderCommandOutput(commandStr, result.runAfterClear.content));
+            setCommandOutput(renderCommandOutput(commandStr, result.runAfterClear.content, result.runAfterClear.rawHTML));
           }
         } else {
           setCommandOutput(prevOutput => 
-            prevOutput ? `${prevOutput}\n${renderCommandOutput(commandStr, result.content)}` 
-                      : renderCommandOutput(commandStr, result.content)
+            prevOutput ? `${prevOutput}\n${renderCommandOutput(commandStr, result.content, result.rawHTML)}` 
+                       : renderCommandOutput(commandStr, result.content, result.rawHTML)
           );
         }
         
@@ -224,9 +213,14 @@ Feel free to explore and get in touch!`,
   };
 
   // Helper function to render command output
-  const renderCommandOutput = (command: string, output: string) => {
+  const renderCommandOutput = (command: string, output: string, rawHTML: boolean = false) => {
     const commandHeader = `<div class="mb-1"><span class="text-terminal-prompt">guest@programmer:~$&nbsp;</span><span class="text-terminal-command">${command}</span></div>`;
-    return `${commandHeader}<div class="whitespace-pre-line">${output}</div>`;
+    
+    if (rawHTML) {
+      return `${commandHeader}<div class="whitespace-pre-line">${output}</div>`;
+    } else {
+      return `${commandHeader}<div class="whitespace-pre-line">${output}</div>`;
+    }
   };
 
   // Handle command submission from form

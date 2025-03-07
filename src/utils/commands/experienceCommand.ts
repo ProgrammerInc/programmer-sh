@@ -1,55 +1,51 @@
-import { fetchExperience } from '../database/portfolioServices';
+
 import { Command, CommandResult } from './types';
 
 export const experienceCommand: Command = {
   name: 'experience',
-  description: 'Display my work experience',
-  execute: () => {
+  description: 'View work experience',
+  execute: (): CommandResult => {
     return {
-      content: 'Fetching experience...',
-      isAsync: true,
+      content: `<div class="mb-4">
+        <strong class="text-terminal-prompt">Work Experience</strong>
+        <div class="mt-2">
+          <div class="mb-4">
+            <p class="font-bold">Principal Engineer</p>
+            <p>Programmer Incorporated LLC, Frisco, TX</p>
+            <p class="text-sm text-terminal-text-secondary">January 2019 - Present</p>
+            <ul class="list-disc ml-5 mt-1">
+              <li>Lead development of critical, high-performance web applications</li>
+              <li>Architect scalable solutions using React, Node.js, and cloud services</li>
+              <li>Implement AI-powered features to enhance user experience</li>
+              <li>Mentor junior developers and establish best practices</li>
+            </ul>
+          </div>
+          
+          <div class="mb-4">
+            <p class="font-bold">Senior Software Engineer</p>
+            <p>Tech Solutions International, Austin, TX</p>
+            <p class="text-sm text-terminal-text-secondary">March 2015 - December 2018</p>
+            <ul class="list-disc ml-5 mt-1">
+              <li>Developed and maintained large-scale Angular applications</li>
+              <li>Designed RESTful APIs and microservices architecture</li>
+              <li>Implemented automated testing and deployment pipelines</li>
+            </ul>
+          </div>
+          
+          <div class="mb-4">
+            <p class="font-bold">Full Stack Developer</p>
+            <p>Innovate Digital, San Francisco, CA</p>
+            <p class="text-sm text-terminal-text-secondary">June 2011 - February 2015</p>
+            <ul class="list-disc ml-5 mt-1">
+              <li>Built responsive web applications using JavaScript frameworks</li>
+              <li>Managed database design and optimization</li>
+              <li>Collaborated with design and product teams to implement user-friendly interfaces</li>
+            </ul>
+          </div>
+        </div>
+      </div>`,
       isError: false,
-      asyncResolver: async (): Promise<CommandResult> => {
-        const experience = await fetchExperience();
-
-        if (!experience || !experience.length) {
-          return {
-            content: 'Error: Could not fetch experience information.',
-            isError: true
-          };
-        }
-
-        return {
-          content: `<strong>My Experience:</strong>
-${experience
-  .sort(
-    (a, b) =>
-      new Date(b.duration.split(' - ')[0]).getTime() -
-      new Date(a.duration.split(' - ')[0]).getTime()
-  )
-  .map(
-    exp => `
-<strong>Position:</strong> <span class="text-terminal-prompt">${exp.position}</span> @ <span class="text-terminal-prompt">${exp.company}</span>
-<strong>Duration:</strong> ${exp.duration}
-
-<strong>Description:</strong> ${exp.description}
-
-<strong>Achievements:</strong>
-${exp.achievements.map(achievement => `- ${achievement}`).join('\n')}
-
-<strong>Technologies:</strong> ${exp.technologies
-      .sort()
-      .map(
-        tech =>
-          `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${tech}" target="_blank">${tech}</a>`
-      )
-      .join(', ')}
-`
-  )
-  .join('\n')}`,
-          isError: false
-        };
-      }
+      rawHTML: true
     };
   }
 };
