@@ -9,9 +9,7 @@ import {
 import { clearCommand, echoCommand, helpCommand } from '@/utils/commands/helpCommand';
 import { themeCommand } from '@/utils/commands/themeCommand';
 import { cursorCommand } from '@/utils/commands/cursorCommand';
-import { 
-  wallpaperCommand
-} from '@/utils/commands/wallpaperCommand';
+import { wallpaperCommand } from '@/utils/commands/wallpaperCommand';
 import { Command, CommandResult } from '@/utils/commands/types';
 import { SocialLink } from '@/types/socialLinks';
 import { TerminalHeader } from '@/components/ui/terminal-header';
@@ -77,7 +75,17 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     clear: clearCommand,
     cursor: cursorCommand,
     wallpaper: wallpaperCommand,
-    setwallpaper: wallpaperCommand
+    setwallpaper: wallpaperCommand,
+    welcome: {
+      name: 'welcome',
+      description: 'Display welcome message',
+      execute: (): CommandResult => {
+        return {
+          content: `Welcome to <programmer>._ terminal!\n\nThis is an interactive terminal portfolio for James A. Black Jr., a talented software developer.\n\nType 'help' to see available commands.`,
+          isError: false
+        };
+      }
+    }
   };
 
   // Scroll to bottom on output change
@@ -93,24 +101,68 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     });
   };
 
-  // Focus on mount
+  // Focus on mount and execute welcome command
   useEffect(() => {
     const terminalInput = document.getElementById('terminal-input');
     if (terminalInput) {
       terminalInput.focus();
     }
 
-    // Execute initial commands
-    if (initialCommands.length > 0) {
+    // Auto-run welcome command on initial load if no other commands are specified
+    if (initialCommands.length === 0) {
+      executeCommand('welcome');
+    } else {
+      // Execute initial commands
       initialCommands.forEach(command => {
-        setCommandInput(command);
-        handleCommandSubmit(new Event('initial') as unknown as React.FormEvent<HTMLFormElement>);
+        executeCommand(command);
       });
     }
   }, []);
 
-  // Handle command submission
-  const handleCommandSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  // Execute a command programmatically
+  const executeCommand = (commandStr: string) => {
+    // Add command to history
+    setCommandHistory(prevHistory => [...prevHistory, commandStr]);
+    
+    // Set last command
+    setLastCommand(commandStr);
+
+    // Process command
+    const [commandName, ...commandArgs] = commandStr.split(' ');
+    const args = commandArgs.join(' ');
+    
+    if (commandName in commands) {
+      const result = commands[commandName].execute(args);
+      
+      if (result?.isAsync) {
+        setIsAwaitingAsync(true);
+        result.asyncResolver!()
+          .then(output => {
+            setIsAwaitingAsync(false);
+            setCommandOutput(prevOutput => `${prevOutput}\n${output.content}`);
+            
+            // Dispatch event
+            const event = new CustomEvent('commandExecuted', { detail: { command: commandName } });
+            document.dispatchEvent(event);
+          })
+          .catch(error => {
+            setIsAwaitingAsync(false);
+            setCommandOutput(prevOutput => `${prevOutput}\nError executing command: ${error.message}`);
+          });
+      } else {
+        setCommandOutput(prevOutput => `${prevOutput}\n${result.content}`);
+        
+        // Dispatch event
+        const event = new CustomEvent('commandExecuted', { detail: { command: commandName } });
+        document.dispatchEvent(event);
+      }
+    } else {
+      setCommandOutput(prevOutput => `${prevOutput}\nCommand not found: ${commandName}`);
+    }
+  };
+
+  // Handle command submission from form
+  const handleCommandSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // Trim the command input
@@ -183,7 +235,7 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
       const { command } = (event as CustomEvent).detail;
       if (command) {
         setCommandInput(command);
-        handleCommandSubmit(new Event('custom') as unknown as React.FormEvent<HTMLFormElement>);
+        executeCommand(command);
       }
     };
 

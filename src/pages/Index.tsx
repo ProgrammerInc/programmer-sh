@@ -1,3 +1,4 @@
+
 import CursorProvider from '@/components/ui/cursor';
 import Terminal from '@/components/ui/terminal';
 import WallpaperProvider from '@/components/ui/wallpaper';
@@ -42,6 +43,11 @@ const Index = () => {
     // Prepare initial commands
     let commands: string[] = [];
 
+    // Always start with welcome command unless overridden
+    if (!urlCommand && !command) {
+      commands.push('welcome');
+    }
+
     // Determine valid command to execute
     const commandToExecute = urlCommand || command;
 
@@ -52,12 +58,8 @@ const Index = () => {
       setCurrentCommand(commandToExecute);
 
       // Either replace welcome or add after welcome
-      if (commands.length === 0) {
-        // If we're not already showing welcome, just use the URL command
-        commands = [commandToExecute];
-      } else {
-        // If we're showing welcome, add the command after welcome
-        commands = ['welcome', commandToExecute];
+      if (commandToExecute !== 'welcome') {
+        commands.push(commandToExecute);
       }
     }
 
@@ -146,6 +148,7 @@ const Index = () => {
   console.log('Current command:', currentCommand);
   console.log('Current cursor:', currentCursor);
   console.log('Current wallpaper:', currentWallpaper);
+  console.log('Initial commands:', initialCommands);
 
   return (
     <div className={wallpaperClasses}>
