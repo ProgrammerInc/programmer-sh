@@ -1,32 +1,5 @@
+import { cursors } from '@/components/ui/cursor/cursor.presets';
 import { Command, CommandResult } from './types';
-
-// Predefined cursors
-export const cursors = {
-  default: {
-    id: 'default',
-    name: 'Default',
-    description: 'Default cursor',
-    type: 'cursor'
-  },
-  splash: {
-    id: 'splash',
-    name: 'Splash',
-    description: 'Splash cursor',
-    type: 'animation'
-  }
-};
-
-// Cursor types
-export type CursorType = 'cursor' | 'animation';
-
-// Cursor definition
-export interface Cursor {
-  id: string;
-  name: string;
-  description: string;
-  type: CursorType;
-  url?: string;
-}
 
 // Current cursor key in localStorage
 export const CURSOR_STORAGE_KEY = 'terminal_cursor';
@@ -58,10 +31,10 @@ export const initializeCursor = (): void => {
   if (cursorInitialized) {
     return;
   }
-  
+
   const currentCursor = getCurrentCursor();
   setCursor(currentCursor);
-  
+
   // Mark as initialized
   cursorInitialized = true;
   console.log('Cursor initialized');
@@ -83,7 +56,7 @@ export const cursorCommand: Command = {
         .join('');
 
       return {
-        content: `Current cursor: <span class="text-terminal-prompt">${cursors[currentCursor].id}</span>\n\nAvailable cursors:\n${availableCursors}\n\nUsage: cursor [name]`,
+        content: `Current cursor: <span class="text-terminal-prompt">${cursors[currentCursor].id}</span>\n\nAvailable cursors:\n${availableCursors}\n\nUsage: <span class="command-link" data-command="cursor" data-placeholder="[name]">cursor [name]</span>`,
         isError: false
       };
     }

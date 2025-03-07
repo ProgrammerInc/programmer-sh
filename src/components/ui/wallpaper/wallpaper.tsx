@@ -1,3 +1,4 @@
+import { GridMotion, GridMotionProps, Squares, SquaresProps } from '@/components/animations';
 import Aurora, { AuroraProps } from '@/components/animations/aurora';
 import Balatro, { BalatroProps } from '@/components/animations/balatro';
 import Ballpit, { BallpitProps } from '@/components/animations/ballpit';
@@ -9,6 +10,7 @@ import LetterGlitch, { LetterGlitchProps } from '@/components/animations/letter-
 import Lightning, { LightningProps } from '@/components/animations/lightning';
 import LiquidChrome, { LiquidChromeProps } from '@/components/animations/liquid-chrome';
 import MagnetLines, { MagnetLinesProps } from '@/components/animations/magnet-lines';
+import Noise, { NoiseProps } from '@/components/animations/noise';
 import Particles, { ParticlesProps } from '@/components/animations/particles';
 import Threads, { ThreadsProps } from '@/components/animations/threads';
 import Waves, { WavesProps } from '@/components/animations/waves';
@@ -154,6 +156,37 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               {...(animationProps as GridDistortionProps)}
             />
           )}
+          {animation === 'grid-motion' && (
+            <GridMotion
+              items={[
+                'Terminal',
+                'Code',
+                'https://images.unsplash.com/photo-1723403804231-f4e9b515fe9d?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'Systems',
+                'Design',
+                'https://images.unsplash.com/photo-1723403804231-f4e9b515fe9d?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'Web',
+                'Apps',
+                'https://images.unsplash.com/photo-1723403804231-f4e9b515fe9d?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'Mobile',
+                'UX/UI',
+                'https://images.unsplash.com/photo-1723403804231-f4e9b515fe9d?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'Database',
+                'Cloud',
+                'https://images.unsplash.com/photo-1723403804231-f4e9b515fe9d?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'DevOps',
+                'Security',
+                'https://images.unsplash.com/photo-1723403804231-f4e9b515fe9d?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'Analysis',
+                'ML/AI',
+                'https://images.unsplash.com/photo-1723403804231-f4e9b515fe9d?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'Responsive',
+                'Scalable'
+              ]}
+              gradientColor="rgba(30, 30, 30, 0.8)"
+              {...(animationProps as GridMotionProps)}
+            />
+          )}
           {animation === 'hyperspeed' && (
             <Hyperspeed
               effectOptions={{
@@ -246,6 +279,16 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               {...(animationProps as MagnetLinesProps)}
             />
           )}
+          {animation === 'noise' && (
+            <Noise
+              patternSize={250}
+              patternScaleX={1}
+              patternScaleY={1}
+              patternRefreshInterval={2}
+              patternAlpha={15}
+              {...(animationProps as NoiseProps)}
+            />
+          )}
           {animation === 'particles' && (
             <Particles
               particleColors={[foregroundColor]}
@@ -256,6 +299,16 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               disableRotation={true}
               moveParticlesOnHover={false}
               {...(animationProps as ParticlesProps)}
+            />
+          )}
+          {animation === 'squares' && (
+            <Squares
+              speed={0.5}
+              squareSize={35}
+              direction="down" // up, down, left, right, diagonal
+              borderColor={foregroundColor}
+              hoverFillColor={backgroundColor}
+              {...(animationProps as SquaresProps)}
             />
           )}
           {animation === 'threads' && (

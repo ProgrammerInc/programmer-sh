@@ -1,11 +1,18 @@
-export type CursorType = 'default' | 'animation' | 'image';
+import { RibbonsProps } from '@/components/cursors/ribbons';
 
+// Cursor types
+export type CursorType = 'default' | 'cursor' | 'animation';
+
+// Cursor definition
 export interface Cursor {
   id: string;
-  color?: string;
+  name: string;
+  description: string;
+  type: CursorType;
   animation?: string;
-  gradient?: string;
-  type?: CursorType;
+  animationProps?: RibbonsProps;
+  animationType?: string;
+  url?: string;
 }
 
 export interface CursorProps extends React.HTMLAttributes<HTMLDivElement> {

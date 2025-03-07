@@ -21,7 +21,7 @@ export type GradientType = 'linear' | 'radial';
 export type ImageType = 'base64' | 'url';
 export type MimeType = 'image/jpeg' | 'image/png' | 'image/webp';
 export type ThemeType = 'light' | 'dark' | 'system';
-export type WallpaperType = 'animation' | 'color' | 'gradient' | 'image';
+export type WallpaperType = 'default' | 'animation' | 'color' | 'gradient' | 'image';
 
 // Wallpaper definition
 export interface Wallpaper {

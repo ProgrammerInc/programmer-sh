@@ -1,8 +1,8 @@
 import { gsap } from 'gsap';
-import { FC, useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 
 export interface GridMotionProps {
-  items?: string[];
+  items?: (string | React.ReactNode)[];
   gradientColor?: string;
 }
 
@@ -83,7 +83,9 @@ export const GridMotion: FC<GridMotionProps> = ({ items = [], gradientColor = 'b
                           style={{ backgroundImage: `url(${content})` }}
                         ></div>
                       ) : (
-                        <div className="p-4 text-center z-[1]">{content}</div>
+                        <div className="p-4 text-center z-[1]">
+                          {content}
+                        </div>
                       )}
                     </div>
                   </div>

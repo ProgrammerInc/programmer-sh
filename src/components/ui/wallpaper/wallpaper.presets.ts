@@ -6,7 +6,7 @@ const wallpapers: Record<string, Wallpaper> = {
     id: 'default',
     name: 'Default',
     description: 'Default wallpaper',
-    type: 'animation',
+    type: 'default',
     animation: 'particles',
     animationType: 'reactbits'
   },
@@ -69,6 +69,16 @@ const wallpapers: Record<string, Wallpaper> = {
     imageType: 'url',
     url: 'https://images.unsplash.com/photo-1551641506-ee5bf4cb45f1?auto=format&fit=crop&q=80'
   },
+  // 'grid-motion': {
+  //   id: 'grid-motion',
+  //   name: 'Grid Motion',
+  //   description: 'Animated grid of moving elements',
+  //   type: 'animation',
+  //   animation: 'grid-motion',
+  //   animationType: 'reactbits',
+  //   gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+  //   gradientType: 'linear'
+  // },
   hyperspeed: {
     id: 'hyperspeed',
     name: 'Hyperspeed',
@@ -129,6 +139,16 @@ const wallpapers: Record<string, Wallpaper> = {
     imageType: 'url',
     url: 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&q=80'
   },
+  noise: {
+    id: 'noise',
+    name: 'Noise',
+    description: 'Noise - animated noise',
+    type: 'animation',
+    animation: 'noise',
+    animationType: 'reactbits',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
+  },
   ocean: {
     id: 'ocean',
     name: 'Ocean',
@@ -147,12 +167,23 @@ const wallpapers: Record<string, Wallpaper> = {
     gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
     gradientType: 'linear'
   },
+  squares: {
+    id: 'squares',
+    name: 'Squares',
+    description: 'Squares - animated squares',
+    type: 'animation',
+    animation: 'squares',
+    animationType: 'reactbits',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
+  },
   threads: {
     id: 'threads',
     name: 'Threads',
     description: 'The threads of fate on your desktop',
     type: 'animation',
     animation: 'threads',
+    animationType: 'reactbits',
     gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
     gradientType: 'linear'
   },
@@ -162,6 +193,7 @@ const wallpapers: Record<string, Wallpaper> = {
     description: 'Waves - trippy psychedelic liquid animation wallpaper',
     type: 'animation',
     animation: 'waves',
+    animationType: 'reactbits',
     gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
     gradientType: 'linear'
   },
