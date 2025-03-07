@@ -360,7 +360,7 @@ export type Database = {
         Row: {
           created_at: string;
           description: string;
-          github: string | null;
+          github_url: string | null;
           id: string;
           image: string | null;
           url: string | null;
@@ -370,7 +370,7 @@ export type Database = {
         Insert: {
           created_at?: string;
           description: string;
-          github?: string | null;
+          github_url?: string | null;
           id?: string;
           image?: string | null;
           url?: string | null;
@@ -380,7 +380,7 @@ export type Database = {
         Update: {
           created_at?: string;
           description?: string;
-          github?: string | null;
+          github_url?: string | null;
           id?: string;
           image?: string | null;
           url?: string | null;

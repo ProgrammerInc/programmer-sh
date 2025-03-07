@@ -60,16 +60,15 @@ Type <span class="command-link" data-command="project ${project.id}">project ${p
         return {
           content: `
 <strong>Project:</strong> <span class="text-terminal-prompt">${project.title}</span>
-
 <strong>Description:</strong> ${project.description}
-
-<strong>Technologies:</strong> ${project.technologies.map(tech => `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${tech}" target="_blank">${tech}</a>`).join(', ')}
 
 <strong>Highlights:</strong>
 ${project.highlights.map(highlight => `  - ${highlight}`).join('\n')}
 
-${project.github ? `<strong>GitHub:</strong> ${project.github}` : ''}
-${project.url ? `<strong>Live Demo:</strong> ${project.url}` : ''}
+<strong>Technologies:</strong> ${project.technologies.map(tech => `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${tech}" target="_blank">${tech}</a>`).join(', ')}
+
+${project.github_url ? `<strong>GitHub:</strong> <a class="text-terminal-link hover:underline" href="${project.github_url}" target="_blank">${project.github_url}</a>` : ''}
+${project.url ? `<strong>Website:</strong> <a class="text-terminal-link hover:underline" href="${project.url}" target="_blank">${project.url}</a>` : ''}
 `,
           isError: false
         };

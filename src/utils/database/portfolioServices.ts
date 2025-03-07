@@ -134,7 +134,7 @@ export const fetchProjects = async (): Promise<Project[]> => {
         title,
         description,
         url,
-        github,
+        github_url,
         image,
         project_technologies (name),
         project_highlights (description)
@@ -151,7 +151,7 @@ export const fetchProjects = async (): Promise<Project[]> => {
       title: project.title,
       description: project.description,
       url: project.url,
-      github: project.github,
+      github: project.github_url,
       image: project.image,
       technologies: project.project_technologies.map((tech: { name: string }) => tech.name),
       highlights: project.project_highlights.map(
@@ -227,7 +227,7 @@ export const fetchProjectById = async (projectId: string): Promise<Project | nul
         title,
         description,
         url,
-        github,
+        github_url,
         image,
         project_technologies (name),
         project_highlights (description)
@@ -244,7 +244,7 @@ export const fetchProjectById = async (projectId: string): Promise<Project | nul
       title: projectData.title,
       description: projectData.description,
       url: projectData.url,
-      github: projectData.github,
+      github_url: projectData.github_url,
       image: projectData.image,
       technologies: projectData.project_technologies.map((tech: { name: string }) => tech.name),
       highlights: projectData.project_highlights.map(
