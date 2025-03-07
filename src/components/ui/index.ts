@@ -65,6 +65,7 @@ export * from './table';
 export * from './tabs';
 export * from './terminal';
 export * from './terminal-content';
+export * from './terminal-footer';
 export * from './terminal-header';
 export * from './terminal-history';
 export * from './terminal-response';

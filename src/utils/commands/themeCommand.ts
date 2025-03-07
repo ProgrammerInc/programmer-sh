@@ -43,10 +43,22 @@ export const processThemeFromUrl = (themeParam: string): void => {
   }
 };
 
-// Initialize theme on load
+// Flag to track initialization status
+let themeInitialized = false;
+
+// Initialize theme on load - with safeguard to prevent multiple initializations
 export const initializeTheme = (): void => {
+  // Only initialize once
+  if (themeInitialized) {
+    return;
+  }
+  
   const currentTheme = getCurrentTheme();
   setTheme(currentTheme);
+  
+  // Mark as initialized
+  themeInitialized = true;
+  console.log('Theme initialized');
 };
 
 // Theme command

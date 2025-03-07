@@ -34,7 +34,8 @@ export const welcomeCommand: Command = {
         Feel free to explore and get in touch!
       </div>`,
       isError: false,
-      rawHTML: true
+      rawHTML: true,
+      noHistory: true // Prevents storing large ASCII art in localStorage
     };
   }
 };

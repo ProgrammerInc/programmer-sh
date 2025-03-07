@@ -75,9 +75,22 @@ export function processCommandLinks(
       index: match.index,
       length: match[0].length,
       content: React.createElement(
-        'span',
+        'a',
         {
-          onClick: () => onCommandClick && onCommandClick(command),
+          onClick: (e) => {
+            e.preventDefault();
+            onCommandClick && onCommandClick(command);
+          },
+          onKeyDown: (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onCommandClick && onCommandClick(command);
+            }
+          },
+          href: '#',
+          role: 'button',
+          tabIndex: 0,
+          'data-command': command,
           className: 'command-link text-terminal-command cursor-pointer hover:underline'
         },
         command
@@ -87,22 +100,36 @@ export function processCommandLinks(
   }
 
   // Also detect HTML command links like <span class="command-link" data-command="help">help</span>
+  // Also handle a tags that might already be in the content
   const htmlCommandLinkRegex =
-    /<span class="command-link"(?: data-command="(.*?)")?>([^<]+)<\/span>/g;
+    /<(span|a) class="command-link"(?: data-command="(.*?)")?>([^<]+)<\/(span|a)>/g;
 
   while ((match = htmlCommandLinkRegex.exec(text)) !== null) {
-    const command = match[1] || match[2]; // Use data-command if available, otherwise use the text content
+    const command = match[2] || match[3]; // Use data-command if available, otherwise use the text content
 
     matches.push({
       index: match.index,
       length: match[0].length,
       content: React.createElement(
-        'span',
+        'a',
         {
-          onClick: () => onCommandClick && onCommandClick(command),
+          onClick: (e) => {
+            e.preventDefault();
+            onCommandClick && onCommandClick(command);
+          },
+          onKeyDown: (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onCommandClick && onCommandClick(command);
+            }
+          },
+          href: '#',
+          role: 'button',
+          tabIndex: 0,
+          'data-command': command,
           className: 'command-link text-terminal-command cursor-pointer hover:underline'
         },
-        match[2] // Use the text content for display
+        match[3] // Use the text content for display
       ),
       type: 'command'
     });

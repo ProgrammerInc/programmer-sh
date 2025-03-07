@@ -1,7 +1,6 @@
-
 import React, { useEffect } from 'react';
 
-export const AsciiArt: React.FC = () => {
+export const ASCIIArt: React.FC = () => {
   const asciiArt = [
     '  ____                                                          ____  _   _   ',
     ' |  _ \\ _ __ ___   __ _ _ __ __ _ _ __ ___  ___ _ __   ___ _ __/ ___|| | | | ',
@@ -19,7 +18,7 @@ export const AsciiArt: React.FC = () => {
       const welcomeEvent = new CustomEvent('runWelcomeCommand');
       document.dispatchEvent(welcomeEvent);
     }, 100);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -34,4 +33,4 @@ export const AsciiArt: React.FC = () => {
   );
 };
 
-export default AsciiArt;
+export default ASCIIArt;

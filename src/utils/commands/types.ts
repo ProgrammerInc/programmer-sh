@@ -1,4 +1,3 @@
-
 export interface CommandResult {
   content: string;
   isError: boolean;
@@ -6,6 +5,7 @@ export interface CommandResult {
   asyncResolver?: () => Promise<CommandResult>;
   rawHTML?: boolean;
   runAfterClear?: CommandResult;
+  noHistory?: boolean; // When true, command will not be added to history (for large outputs)
 }
 
 // Command interface

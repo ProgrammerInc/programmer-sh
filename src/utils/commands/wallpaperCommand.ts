@@ -22,10 +22,22 @@ export const setWallpaper = (id: string): void => {
   );
 };
 
-// Initialize wallpaper on load
+// Flag to track initialization status
+let wallpaperInitialized = false;
+
+// Initialize wallpaper on load - with safeguard to prevent multiple initializations
 export const initializeWallpaper = (): void => {
+  // Only initialize once
+  if (wallpaperInitialized) {
+    return;
+  }
+  
   const currentWallpaper = getCurrentWallpaper();
   setWallpaper(currentWallpaper);
+  
+  // Mark as initialized
+  wallpaperInitialized = true;
+  console.log('Wallpaper initialized');
 };
 
 // Wallpaper command

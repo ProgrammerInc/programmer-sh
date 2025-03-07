@@ -49,10 +49,22 @@ export const setCursor = (id: string): void => {
   );
 };
 
-// Initialize cursor on load
+// Flag to track initialization status
+let cursorInitialized = false;
+
+// Initialize cursor on load - with safeguard to prevent multiple initializations
 export const initializeCursor = (): void => {
+  // Only initialize once
+  if (cursorInitialized) {
+    return;
+  }
+  
   const currentCursor = getCurrentCursor();
   setCursor(currentCursor);
+  
+  // Mark as initialized
+  cursorInitialized = true;
+  console.log('Cursor initialized');
 };
 
 // Cursor command

@@ -66,14 +66,17 @@ export const useCommandProcessor = (
       }
 
       if (result.content === 'CLEAR_TERMINAL') {
+        // Clear history from state
         setHistory([]);
+        // Clear history from localStorage
+        localStorage.removeItem('terminal_history');
         setIsProcessingAsync(false);
 
         if (result.runAfterClear) {
           const welcomeHistoryItem = {
             command: 'welcome',
-            result: result.runAfterClear,
             timestamp: new Date()
+            // No longer storing result - will re-execute command when needed
           };
 
           setHistory([welcomeHistoryItem]);
@@ -91,8 +94,8 @@ export const useCommandProcessor = (
 
       const historyItem = {
         command: commandString,
-        result,
         timestamp: new Date()
+        // No longer storing result - will re-execute command when needed
       };
 
       setHistory(prev => [...prev, historyItem]);

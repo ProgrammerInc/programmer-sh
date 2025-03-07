@@ -9,8 +9,25 @@ export const renderCommandOutput = (command: string, output: string, rawHTML: bo
 };
 
 export const scrollToBottom = (ref: React.RefObject<HTMLDivElement>) => {
-  ref.current?.scrollTo({
-    top: ref.current.scrollHeight,
-    behavior: 'smooth'
-  });
+  if (ref.current) {
+    // First attempt immediate scroll
+    ref.current.scrollTop = ref.current.scrollHeight;
+
+    // Then use smooth scrolling for better UX
+    setTimeout(() => {
+      if (ref.current) {
+        ref.current.scrollTo({
+          top: ref.current.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
+    }, 50);
+
+    // Final attempt after content has likely settled
+    setTimeout(() => {
+      if (ref.current) {
+        ref.current.scrollTop = ref.current.scrollHeight;
+      }
+    }, 300);
+  }
 };

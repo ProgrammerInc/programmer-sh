@@ -65,6 +65,25 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     scrollToBottom(terminalContentRef);
   };
 
+  // Helper function to focus the input field
+  const focusInputField = () => {
+    const terminalInput = document.getElementById('terminal-input');
+    if (terminalInput) {
+      terminalInput.focus();
+    }
+  };
+
+  // Effect to scroll to bottom when command output changes
+  useEffect(() => {
+    if (commandOutput) {
+      handleScrollToBottom();
+    }
+  }, [commandOutput]);
+
+  // Use a ref to track initialization state
+  const initializedRef = useRef(false);
+
+  // Initialize once on mount with initial commands
   useEffect(() => {
     const terminalInput = document.getElementById('terminal-input');
     if (terminalInput) {
@@ -77,7 +96,7 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
   useEffect(() => {
     if (!initialCommandsExecuted.current) {
       initialCommandsExecuted.current = true;
-      
+
       if (initialCommands.length === 0) {
         executeCommand('welcome');
       } else {
@@ -88,12 +107,27 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     }
   }, [initialCommands, executeCommand]);
 
+  // Store the executeCommand function in a ref to prevent it from causing re-renders
+  const executeCommandRef = useRef(executeCommand);
+
+  // Update the ref when executeCommand changes
+  useEffect(() => {
+    executeCommandRef.current = executeCommand;
+  }, [executeCommand]);
+
+  // Set up event listeners only once on mount
   useEffect(() => {
     const handleExecuteCommand = (event: Event) => {
       const { command } = (event as CustomEvent).detail;
       if (command) {
         setCommandInput(command);
         executeCommand(command);
+        // Clear input after execution
+        setTimeout(() => setCommandInput(''), 100);
+        // Scroll to bottom after command execution
+        setTimeout(() => handleScrollToBottom(), 200);
+        // Focus the input field after execution
+        setTimeout(() => focusInputField(), 250);
       }
     };
 
@@ -102,6 +136,12 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
       if (command) {
         setCommandInput(command);
         executeCommand(command);
+        // Clear input after execution
+        setTimeout(() => setCommandInput(''), 100);
+        // Scroll to bottom after command execution
+        setTimeout(() => handleScrollToBottom(), 200);
+        // Focus the input field after execution
+        setTimeout(() => focusInputField(), 250);
       }
     };
 
@@ -123,9 +163,71 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
       return;
     }
 
+    // Strip any special prefixes that might have been typed directly
+    const cleanCommand = trimmedCommand.replace(/^(__event_|__init_)/, '');
+
     setCommandInput('');
     executeCommand(trimmedCommand);
+    // Ensure terminal scrolls to bottom after manually submitting a command
+    setTimeout(() => handleScrollToBottom(), 200);
+    // Focus the input field after execution
+    setTimeout(() => focusInputField(), 250);
   };
+
+  // Add event handler for command links (both click and keyboard)
+  useEffect(() => {
+    const handleCommandLinkInteraction = (e: MouseEvent | KeyboardEvent) => {
+      // For click events
+      if (e.type === 'click') {
+        const target = e.target as HTMLElement;
+        if (target.classList.contains('command-link')) {
+          e.preventDefault();
+          const command = target.getAttribute('data-command');
+          if (command) {
+            // Execute the command with the __event_ prefix to prevent loops
+            executeCommandRef.current(`__event_${command}`);
+            // Clear the input field after executing the command
+            setCommandInput('');
+            // Focus the input field after execution
+            setTimeout(() => focusInputField(), 250);
+          }
+        }
+      }
+      // For keyboard events (Enter or Space)
+      else if (e.type === 'keydown') {
+        const keyEvent = e as KeyboardEvent;
+        if ((keyEvent.key === 'Enter' || keyEvent.key === ' ') && document.activeElement) {
+          const target = document.activeElement as HTMLElement;
+          if (target.classList.contains('command-link')) {
+            e.preventDefault();
+            const command = target.getAttribute('data-command');
+            if (command) {
+              // Execute the command with the __event_ prefix to prevent loops
+              executeCommandRef.current(`__event_${command}`);
+              // Clear the input field after executing the command
+              setCommandInput('');
+              // Focus the input field after execution
+              setTimeout(() => focusInputField(), 250);
+            }
+          }
+        }
+      }
+    };
+
+    // Add both click and keyboard event listeners
+    const terminalContent = terminalContentRef.current;
+    if (terminalContent) {
+      terminalContent.addEventListener('click', handleCommandLinkInteraction);
+      terminalContent.addEventListener('keydown', handleCommandLinkInteraction);
+    }
+
+    return () => {
+      if (terminalContent) {
+        terminalContent.removeEventListener('click', handleCommandLinkInteraction);
+        terminalContent.removeEventListener('keydown', handleCommandLinkInteraction);
+      }
+    };
+  }, []);
 
   return (
     <div className="flex flex-col h-full bg-terminal-background rounded-lg overflow-hidden terminal-glass">

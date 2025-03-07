@@ -7,7 +7,7 @@ import { getCurrentCursor } from '@/utils/commands/cursorCommand';
 import { processThemeFromUrl } from '@/utils/commands/themeCommand';
 import { extractUrlParameters, validUrlCommands } from '@/utils/commands/urlCommandHandler';
 import { getCurrentWallpaper } from '@/utils/commands/wallpaperCommand';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
 export const HISTORY_STORAGE_KEY = 'terminal_command_history';
@@ -17,8 +17,26 @@ const Index = () => {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [initialCommands, setInitialCommands] = useState<string[]>([]);
-  const [currentCursor, setCursor] = useState<string>(getCurrentCursor());
-  const [currentWallpaper, setCurrentWallpaper] = useState<string>(getCurrentWallpaper());
+  // Use refs to track initialization status
+  const cursorInitialized = useRef(false);
+  const wallpaperInitialized = useRef(false);
+  
+  // Use state with lazy initialization to prevent multiple calls
+  const [currentCursor, setCursor] = useState<string>(() => {
+    if (!cursorInitialized.current) {
+      cursorInitialized.current = true;
+      return getCurrentCursor();
+    }
+    return 'default';
+  });
+  
+  const [currentWallpaper, setCurrentWallpaper] = useState<string>(() => {
+    if (!wallpaperInitialized.current) {
+      wallpaperInitialized.current = true;
+      return getCurrentWallpaper();
+    }
+    return 'particles';
+  });
   const [currentCommand, setCurrentCommand] = useState<string>(urlCommand || 'welcome');
 
   // Update the document title when the current command changes
@@ -163,7 +181,7 @@ const Index = () => {
           </div>
         </div>
       </WallpaperProvider>
-      <CursorProvider cursor={getCurrentCursor()} />
+      <CursorProvider cursor={currentCursor} />
     </div>
   );
 };

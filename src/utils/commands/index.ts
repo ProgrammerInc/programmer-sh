@@ -15,6 +15,7 @@ import { resumeCommand } from './resumeCommand';
 import { skillsCommand } from './skillsCommand';
 import { socialCommand } from './socialCommand';
 import { clearCommand, dateCommand, echoCommand, historyCommand } from './systemCommands';
+import { Command } from './types';
 import { initializeTheme, themeCommand } from './themeCommand';
 import { initializeWallpaper, wallpaperCommand } from './wallpaperCommand';
 import { welcomeCommand } from './welcomeCommand';
@@ -22,6 +23,34 @@ import { welcomeCommand } from './welcomeCommand';
 // Initialize settings
 initializeTheme();
 initializeWallpaper();
+
+// Export a function to get all available commands
+export const getCommands = (): Record<string, Command> => {
+  return {
+    welcome: welcomeCommand,
+    about: aboutCommand,
+    contact: contactCommand,
+    skills: skillsCommand,
+    experience: experienceCommand,
+    education: educationCommand,
+    projects: projectsCommand,
+    resume: resumeCommand,
+    social: socialCommand,
+    help: helpCommand,
+    login: loginCommand,
+    logout: logoutCommand,
+    signup: signupCommand,
+    whoami: whoamiCommand,
+    profile: profileCommand,
+    clear: clearCommand,
+    theme: themeCommand,
+    echo: echoCommand,
+    date: dateCommand,
+    history: historyCommand,
+    cursor: cursorCommand,
+    wallpaper: wallpaperCommand
+  };
+};
 
 export const processCommand = (commandString: string) => {
   if (commandString.trim() === '') {
