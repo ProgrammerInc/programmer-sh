@@ -1,3 +1,4 @@
+
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
 import { supabase } from '@/integrations/supabase/client';
 import { isIncognitoMode } from '@/lib/incognito';
@@ -48,15 +49,42 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = ''
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
-
       setDropdownOpen(false);
     } catch (error) {
       console.error('Error logging out:', error);
     }
   };
 
+  const handleLoginClick = () => {
+    setDropdownOpen(false);
+    // Dispatch a custom event to execute the login command
+    const event = new CustomEvent('executeCommand', { detail: { command: 'login' } });
+    document.dispatchEvent(event);
+  };
+
+  const handleSignupClick = () => {
+    setDropdownOpen(false);
+    // Dispatch a custom event to execute the signup command
+    const event = new CustomEvent('executeCommand', { detail: { command: 'signup' } });
+    document.dispatchEvent(event);
+  };
+
+  const handleProfileClick = () => {
+    setDropdownOpen(false);
+    // Dispatch a custom event to execute the profile command
+    const event = new CustomEvent('executeCommand', { detail: { command: 'whoami' } });
+    document.dispatchEvent(event);
+  };
+
+  const handleSettingsClick = () => {
+    setDropdownOpen(false);
+    // Dispatch a custom event to execute the settings command
+    const event = new CustomEvent('executeCommand', { detail: { command: 'theme' } });
+    document.dispatchEvent(event);
+  };
+
   return (
-    <div className="flex items-center justify-between bg-terminal-header p-2 border-b border-terminal-border">
+    <div className="flex items-center justify-between bg-terminal-background p-2 border-b border-terminal-border">
       <div className="flex space-x-2">
         <div className="w-3 h-3 rounded-full bg-terminal-close window-control group flex items-center justify-center">
           <X
@@ -100,7 +128,7 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = ''
             e.currentTarget.ariaExpanded = String(!dropdownOpen);
             setDropdownOpen(!dropdownOpen);
           }}
-          className="flex items-center space-x-1 text-terminal-title hover:text-terminal-foreground transition-colors py-1 px-2 rounded"
+          className="flex items-center space-x-1 text-terminal-title hover:text-terminal-prompt transition-colors py-1 px-2 rounded"
           aria-haspopup="true"
           aria-expanded="false"
         >
@@ -111,65 +139,52 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = ''
 
         {dropdownOpen && (
           <div
-            className="absolute right-0 mt-1 w-40 rounded-md shadow-lg bg-terminal-dropdown border border-terminal-border z-50"
+            className="absolute right-0 mt-1 w-48 rounded-md shadow-lg border border-terminal-border z-50 terminal-glass"
             onClick={e => e.stopPropagation()}
           >
-            <div className="py-1 rounded-md bg-terminal-dropdown">
+            <div className="py-1 rounded-md bg-terminal-background-translucent">
               {userEmail ? (
                 <>
-                  <a
-                    href="#profile"
-                    className="flex items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-dropdown-hover"
-                    onClick={e => {
-                      e.preventDefault();
-                      setDropdownOpen(false);
-                      // You can add code to execute the profile command here
-                      console.log('Navigate to profile');
-                    }}
+                  <button
+                    className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
+                    onClick={handleProfileClick}
                   >
                     <User className="w-4 h-4 mr-2" />
                     Profile
-                  </a>
-                  <a
-                    href="#settings"
-                    className="flex items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-dropdown-hover"
-                    onClick={e => {
-                      e.preventDefault();
-                      setDropdownOpen(false);
-                      // You can add code to execute the settings command here
-                      console.log('Navigate to settings');
-                    }}
+                  </button>
+                  <button
+                    className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
+                    onClick={handleSettingsClick}
                   >
                     <Settings className="w-4 h-4 mr-2" />
                     Settings
-                  </a>
+                  </button>
                   <div className="border-t border-terminal-border my-1"></div>
-                  <a
-                    href="#logout"
-                    className="flex items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-dropdown-hover"
-                    onClick={e => {
-                      e.preventDefault();
-                      handleLogout();
-                    }}
+                  <button
+                    className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
+                    onClick={handleLogout}
                   >
                     <LogOut className="w-4 h-4 mr-2" />
                     Logout
-                  </a>
+                  </button>
                 </>
               ) : (
-                <a
-                  href="#login"
-                  className="flex items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-dropdown-hover"
-                  onClick={e => {
-                    e.preventDefault();
-                    setDropdownOpen(false);
-                    // You can add code to execute the login command here
-                    console.log('Navigate to login');
-                  }}
-                >
-                  <LogIn className="w-4 h-4 mr-2" />
-                  Login
-                </a>
+                <>
+                  <button
+                    className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
+                    onClick={handleLoginClick}
+                  >
+                    <LogIn className="w-4 h-4 mr-2" />
+                    Login
+                  </button>
+                  <button
+                    className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
+                    onClick={handleSignupClick}
+                  >
+                    <User className="w-4 h-4 mr-2" />
+                    Sign Up
+                  </button>
+                </>
               )}
             </div>
           </div>

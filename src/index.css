@@ -37,7 +37,7 @@ body {
 
     /* Terminal specific colors */
     --terminal-background: #1a1f2c;
-    --terminal-background-translucent: rgba(26, 31, 44, 0.9);
+    --terminal-background-translucent: rgba(26, 31, 44, 0.95);
     --terminal-foreground: #f1f1f1;
     --terminal-prompt: #64ffda;
     --terminal-success: #a3be8c;
@@ -51,6 +51,7 @@ body {
     --terminal-prompt-50: rgba(100, 255, 218, 0.5);
     --terminal-dropdown: 240 10% 3.9%;
     --terminal-dropdown-hover: 240 10% 7%;
+    --terminal-border: rgba(76, 86, 106, 0.3);
   }
 
   .light-theme {
@@ -109,7 +110,7 @@ body {
 @layer utilities {
   .terminal-glass {
     background-color: var(--terminal-background-translucent);
-    @apply backdrop-blur-md border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)];
+    @apply backdrop-blur-md border border-terminal-border shadow-[0_8px_32px_rgba(0,0,0,0.5)];
   }
 
   .typing-animation {
@@ -273,6 +274,15 @@ body {
 
   .window-control:hover {
     @apply animate-scale-up;
+  }
+
+  .terminal-dropdown {
+    background-color: var(--terminal-background-translucent);
+    @apply backdrop-blur-md border border-terminal-border rounded-md shadow-lg;
+  }
+
+  .terminal-dropdown-item {
+    @apply flex items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30 transition-colors;
   }
 }
 
