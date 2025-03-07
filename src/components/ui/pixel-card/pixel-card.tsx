@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef } from 'react';
 
 export class Pixel {
@@ -102,11 +103,11 @@ export class Pixel {
   }
 }
 
-function getEffectiveSpeed(value: number | string, reducedMotion: boolean): number {
+function getEffectiveSpeed(value: any, reducedMotion: any) {
   const min = 0;
   const max = 100;
   const throttle = 0.001;
-  const parsed = typeof value === 'string' ? parseInt(value, 10) : value;
+  const parsed = parseInt(value, 10);
 
   if (parsed <= min || reducedMotion) {
     return min;
@@ -181,7 +182,7 @@ export default function PixelCard({
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pixelsRef = useRef<Pixel[]>([]);
-  const animationRef = useRef<number | null>(null);
+  const animationRef = useRef<any>(null);
   const timePreviousRef = useRef(performance.now());
   const reducedMotion = useRef(
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -296,7 +297,7 @@ export default function PixelCard({
   return (
     <div
       ref={containerRef}
-      className={`h-[400px] w-[300px] relative overflow-hidden grid place-items-center aspect-[4/5] border border-[#27272a] rounded-[25px] isolate transition-colors duration-200 ease-&lsqb;cubic-bezier(0.5,1,0.89,1)&rsqb; select-none ${className}`}
+      className={`h-[400px] w-[300px] relative overflow-hidden grid place-items-center aspect-[4/5] border border-[#27272a] rounded-[25px] isolate transition-colors duration-200 ease-[cubic-bezier(0.5,1,0.89,1)] select-none ${className}`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onFocus={finalNoFocus ? undefined : onFocus}
