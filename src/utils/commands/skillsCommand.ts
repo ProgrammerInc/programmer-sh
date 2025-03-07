@@ -22,7 +22,19 @@ export const skillsCommand: Command = {
         return {
           content: `<strong>My Skills:</strong>
 
-${profile.skills.map(skillCategory => `<strong>${skillCategory.category}:</strong>\n${skillCategory.items.map(skill => `  - <a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${skill}" target="_blank">${skill}</a>`).join('\n')}`).join('\n\n')}`,
+${profile.skills
+  .sort()
+  .map(
+    skillCategory =>
+      `<strong>${skillCategory.category}:</strong>\n${skillCategory.items
+        .sort()
+        .map(
+          skill =>
+            `  - <a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${skill}" target="_blank">${skill}</a>`
+        )
+        .join('\n')}`
+  )
+  .join('\n\n')}`,
           isError: false
         };
       }

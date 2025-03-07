@@ -37,7 +37,13 @@ ${experience
 <strong>Achievements:</strong>
 ${exp.achievements.map(achievement => `- ${achievement}`).join('\n')}
 
-<strong>Technologies:</strong> ${exp.technologies.map(tech => `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${tech}" target="_blank">${tech}</a>`).join(', ')}
+<strong>Technologies:</strong> ${exp.technologies
+      .sort()
+      .map(
+        tech =>
+          `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${tech}" target="_blank">${tech}</a>`
+      )
+      .join(', ')}
 `
   )
   .join('\n')}`,

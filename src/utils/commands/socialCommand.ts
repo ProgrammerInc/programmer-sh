@@ -42,9 +42,19 @@ export const socialCommand: Command = {
 
           // Format social links output
           const formattedLinks = links
+            .sort((a, b) => getSocialName(a.type).localeCompare(getSocialName(b.type)))
             .map(link => {
               const name = getSocialName(link.type);
-              return `  - <strong>${name}:</strong> <a class="text-terminal-link hover:underline" href="${link.url}" target="_blank" rel="noopener noreferrer">${link.url}</a>`;
+
+              if (link.type === 'email') {
+                return `  - <strong>${name}:</strong> <a class="text-terminal-link hover:underline" href="${link.url}" target="_blank" rel="noopener noreferrer">${link.url.replace('mailto:', '')}</a>`;
+              }
+
+              if (link.type === 'website') {
+                return `  - <strong>${name}:</strong> <a class="text-terminal-link hover:underline" href="${link.url}" target="_blank" rel="noopener noreferrer">${link.url.replace('https://', '')}</a>`;
+              }
+
+              return `  - <strong>${name}:</strong> <a class="text-terminal-link hover:underline" href="${link.url}" target="_blank" rel="noopener noreferrer">${link.url.replace('https://', '')}</a>`;
             })
             .join('\n');
 

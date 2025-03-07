@@ -78,7 +78,10 @@ ${portfolioData.experience
     exp => `<div class="experience-item"><span class="position"><strong><span class="text-terminal-prompt">${exp.position}</span></strong> @ <strong><span class="text-terminal-prompt">${exp.company}</span></strong> <span class="duration">(${exp.duration})</span></span>
 <span class="description">${exp.description}</span>
 
-<span class="achievements-title">Key achievements:</span><ul class="achievements-list">${exp.achievements.map(achievement => `<li>- ${achievement}</li>`).join('')}</ul>
+<span class="achievements-title">Key achievements:</span><ul class="achievements-list">${exp.achievements
+      .sort()
+      .map(achievement => `<li>- ${achievement}</li>`)
+      .join('')}</ul>
 </div>`
   )
   .join('')}</div>

@@ -24,16 +24,21 @@ export const projectsCommand: Command = {
 
           return {
             content: `<strong>My Projects:</strong>
-
 ${projects
   .map(
-    project => `<strong>Project:</strong> <span class="text-terminal-prompt">${project.title}</span>
+    project => `
+<strong>Project:</strong> <span class="text-terminal-prompt">${project.title}</span>
 <strong>Description:</strong> ${project.description}
 
-<strong>Technologies:</strong> ${project.technologies.map(tech => `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${tech}" target="_blank">${tech}</a>`).join(', ')}
+<strong>Technologies:</strong> ${project.technologies
+      .sort()
+      .map(
+        tech =>
+          `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${tech}" target="_blank">${tech}</a>`
+      )
+      .join(', ')}
 
 Type <span class="command-link" data-command="project ${project.id}">project ${project.id}</span> for more details.
-
 `
   )
   .join('\n')}
@@ -67,9 +72,15 @@ Type <span class="command-link" data-command="project ${project.id}">project ${p
 <strong>Highlights:</strong>
 ${project.highlights.map(highlight => `  - ${highlight}`).join('\n')}
 
-<strong>Technologies:</strong> ${project.technologies.map(tech => `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${tech}" target="_blank">${tech}</a>`).join(', ')}
+<strong>Technologies:</strong> ${project.technologies
+            .sort()
+            .map(
+              tech =>
+                `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${tech}" target="_blank">${tech}</a>`
+            )
+            .join(', ')}
 
-${project.github_url ? `<strong>GitHub:</strong> <a class="text-terminal-link hover:underline" href="${project.github_url}" target="_blank">${project.github_url}</a>` : ''}
+${project.github_url ? `<strong>GitHub:</strong> <a class="text-terminal-link hover:underline" href="${project.github_url}" target="_blank">${project.github_url.replace('https://', '')}</a>` : ''}
 ${project.url ? `<strong>Website:</strong> <a class="text-terminal-link hover:underline" href="${project.url}" target="_blank">${project.url}</a>` : ''}
 `,
           isError: false
