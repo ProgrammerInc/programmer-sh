@@ -37,9 +37,6 @@ const Index = () => {
       processThemeFromUrl(theme);
     }
 
-    // Check if there's existing history
-    const savedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);
-
     // Prepare initial commands
     let commands: string[] = [];
 
@@ -58,7 +55,11 @@ const Index = () => {
       setCurrentCommand(commandToExecute);
 
       // Either replace welcome or add after welcome
-      if (commandToExecute !== 'welcome') {
+      if (commandToExecute === 'welcome') {
+        commands = ['welcome'];
+      } else if (!commands.includes('welcome')) {
+        commands = ['welcome', commandToExecute];
+      } else {
         commands.push(commandToExecute);
       }
     }
@@ -144,11 +145,6 @@ const Index = () => {
   };
 
   const wallpaperClasses = getWallpaperClasses();
-
-  console.log('Current command:', currentCommand);
-  console.log('Current cursor:', currentCursor);
-  console.log('Current wallpaper:', currentWallpaper);
-  console.log('Initial commands:', initialCommands);
 
   return (
     <div className={wallpaperClasses}>

@@ -1,14 +1,14 @@
 
-import { Command } from './types';
+import { Command, CommandResult } from './types';
 
 export const welcomeCommand: Command = {
   name: 'welcome',
   description: 'Display the welcome message',
-  execute: () => {
+  execute: (): CommandResult => {
     return {
       content: `Welcome to the <span class="text-terminal-prompt">&lt;programmer&gt;</span><span class="text-terminal-prompt">.</span><span class="text-terminal-prompt animate-cursor-blink">_</span> portfolio.
 
-This is an interactive portfolio app designed and developed by <span class="text-terminal-prompt">James A. Black Jr.</span>
+This is an interactive terminal portfolio app designed and developed by <span class="text-terminal-prompt">James A. Black Jr.</span>
 
 Type <span class="command-link" data-command="help">help</span> to see available commands, or try one of these:
 

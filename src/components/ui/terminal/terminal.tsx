@@ -170,11 +170,12 @@ Feel free to explore and get in touch!`,
     setLastCommand(commandStr);
 
     // Process command
-    const [commandName, ...commandArgs] = commandStr.split(' ');
-    const args = commandArgs.join(' ');
+    const [commandName, ...args] = commandStr.split(' ');
+    const cmdArgs = args.join(' ');
     
     if (commandName in commands) {
-      const result = commands[commandName].execute(args);
+      const command = commands[commandName];
+      const result = command.execute(cmdArgs);
       
       if (result?.isAsync) {
         setIsAwaitingAsync(true);
@@ -198,10 +199,17 @@ Feel free to explore and get in touch!`,
             );
           });
       } else {
-        setCommandOutput(prevOutput => 
-          prevOutput ? `${prevOutput}\n${renderCommandOutput(commandStr, result.content)}` 
-                     : renderCommandOutput(commandStr, result.content)
-        );
+        if (commandName === 'clear') {
+          setCommandOutput('');
+          if (result.runAfterClear) {
+            setCommandOutput(renderCommandOutput(commandStr, result.runAfterClear.content));
+          }
+        } else {
+          setCommandOutput(prevOutput => 
+            prevOutput ? `${prevOutput}\n${renderCommandOutput(commandStr, result.content)}` 
+                      : renderCommandOutput(commandStr, result.content)
+          );
+        }
         
         // Dispatch event
         const event = new CustomEvent('commandExecuted', { detail: { command: commandName } });

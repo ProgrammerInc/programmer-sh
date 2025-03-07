@@ -53,7 +53,15 @@ export const helpCommand: Command = {
       { name: 'profile', description: 'View or update your profile' },
       { name: 'theme', description: 'Change the terminal theme (dark/light)' },
       { name: 'cursor', description: 'Change the cursor style' },
-      { name: 'wallpaper', description: 'Change the terminal background wallpaper' }
+      { name: 'wallpaper', description: 'Change the terminal background wallpaper' },
+      { name: 'about', description: 'Learn about James A. Black Jr.' },
+      { name: 'contact', description: 'View contact information' },
+      { name: 'education', description: 'See educational background' },
+      { name: 'experience', description: 'View work experience' },
+      { name: 'projects', description: 'Browse portfolio projects' },
+      { name: 'resume', description: 'View resume' },
+      { name: 'skills', description: 'View technical skills' },
+      { name: 'welcome', description: 'Display welcome message' }
     ];
 
     const commandsList = availableCommands
@@ -67,7 +75,7 @@ export const helpCommand: Command = {
   }
 };
 
-// This is the missing function that's causing one of the errors
+// This is the function that's used to get help for a specific command
 export const getSpecificCommandHelp = (commandName: string): string => {
   const commands: Record<string, { description: string, usage?: string }> = {
     'help': { description: 'Show available commands' },
@@ -80,7 +88,15 @@ export const getSpecificCommandHelp = (commandName: string): string => {
     'profile': { description: 'View or update your profile' },
     'theme': { description: 'Change the terminal theme', usage: 'theme [dark/light]' },
     'cursor': { description: 'Change the cursor style', usage: 'cursor [style]' },
-    'wallpaper': { description: 'Change the terminal background', usage: 'wallpaper [name]' }
+    'wallpaper': { description: 'Change the terminal background', usage: 'wallpaper [name]' },
+    'about': { description: 'Learn about James A. Black Jr.' },
+    'contact': { description: 'View contact information' },
+    'education': { description: 'See educational background' },
+    'experience': { description: 'View work experience' },
+    'projects': { description: 'Browse portfolio projects' },
+    'resume': { description: 'View resume' },
+    'skills': { description: 'View technical skills' },
+    'welcome': { description: 'Display welcome message' }
   };
 
   const command = commands[commandName.toLowerCase()];

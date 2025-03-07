@@ -1,3 +1,4 @@
+
 export interface CommandResult {
   content: string;
   isError: boolean;
@@ -38,7 +39,10 @@ export const commandNames = [
   'login',
   'logout',
   'echo',
-  'wallpaper'
+  'wallpaper',
+  'cursor',
+  'profile',
+  'signup'
 ] as const;
 
 export type CommandName = (typeof commandNames)[number];
