@@ -79,7 +79,7 @@ export * from './wallpaper';
 // Terminal components - explicitly re-export to avoid ambiguity
 export { 
   Terminal,
-  TerminalContent as TerminalContentComponent,
+  TerminalContentComponent,
   TerminalFooter, 
   TerminalUtils
 } from './terminal';

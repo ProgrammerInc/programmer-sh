@@ -4,13 +4,13 @@ import TerminalContent from './terminal-content';
 import TerminalFooter from './terminal-footer';
 import * as TerminalUtils from './terminal-utils';
 
-// Export components individually
+// Named exports with alias to avoid ambiguity
 export { Terminal };
-export { TerminalContent };
+export { TerminalContent as TerminalContentComponent };
 export { TerminalFooter };
 export { TerminalUtils };
 
-// Export named exports from each file
+// Export everything from component files
 export * from './terminal';
 export * from './terminal-content';
 export * from './terminal-footer';
