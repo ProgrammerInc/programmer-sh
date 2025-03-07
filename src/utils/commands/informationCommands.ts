@@ -68,10 +68,10 @@ ${profile.summary}
 <strong>Contact Information:</strong>
   - <strong>E-mail:</strong> <a href="mailto:${profile.contact.email}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.email}</a>
   ${profile.contact.phone ? `- <strong>Phone:</strong> <a href="tel:${profile.contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${profile.contact.phone}</a>` : ''}
-  ${github ? `- <strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github}</a>` : ''}
-  ${linkedin ? `- <strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin}</a>` : ''}
-  ${twitter ? `- <strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter}</a>` : ''}
-  ${website ? `- <strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website}</a>` : ''}`,
+  ${github ? `- <strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github.replace('https://', '')}</a>` : ''}
+  ${linkedin ? `- <strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin.replace('https://', '')}</a>` : ''}
+  ${twitter ? `- <strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter.replace('https://', '')}</a>` : ''}
+  ${website ? `- <strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website.replace('https://', '')}</a>` : ''}`,
           isError: false,
           rawHTML: true
         };
@@ -145,10 +145,10 @@ END:VCARD`;
 <strong>Details:</strong>
   - <strong>E-mail:</strong> <a href="mailto:${profile.contact.email}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.email}</a>
   ${profile.contact.phone ? `- <strong>Phone:</strong> <a href="tel:${profile.contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${profile.contact.phone}</a>` : ''}
-  ${linkedin ? `- <strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin}</a>` : ''}
-  ${github ? `- <strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github}</a>` : ''}
-  ${twitter ? `- <strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter}</a>` : ''}
-  ${website ? `- <strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website}</a>` : ''}
+  ${linkedin ? `- <strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin.replace('https://', '')}</a>` : ''}
+  ${github ? `- <strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github.replace('https://', '')}</a>` : ''}
+  ${twitter ? `- <strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter.replace('https://', '')}</a>` : ''}
+  ${website ? `- <strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website.replace('https://', '')}</a>` : ''}
 <div class="flex justify-center w-full mt-4"><div id="qrcodeContainer" class="qrcode-container"><PixelCard><QRCode value="${encodeURIComponent(vCard)}" title="Scan QR Code to Save My Contact Information" /></PixelCard></div></div>`,
           isError: false,
           rawHTML: true
