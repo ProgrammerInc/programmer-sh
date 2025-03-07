@@ -1,3 +1,4 @@
+
 import {
   loginCommand,
   logoutCommand,
@@ -5,22 +6,49 @@ import {
   signupCommand,
   whoamiCommand
 } from '@/utils/commands/authCommands';
-import { clearCommand, echoCommand, helpCommand, themeCommand } from '@/utils/commands/coreCommands';
-import { cursorCommand, listCursors } from '@/utils/commands/cursorCommand';
-import { catCommand, lsCommand, openCommand } from '@/utils/commands/fileCommands';
-import {
-  listWallpapers,
-  setWallpaperCommand,
-  wallpaperCommand
+import { clearCommand, echoCommand, helpCommand } from '@/utils/commands/helpCommand';
+import { themeCommand } from '@/utils/commands/themeCommand';
+import { cursorCommand } from '@/utils/commands/cursorCommand';
+import { 
+  wallpaperCommand,
+  setWallpaper as setWallpaperCommand
 } from '@/utils/commands/wallpaperCommand';
-import processCommand, { Command } from '@/utils/commands/types';
+import { Command, CommandResult } from '@/utils/commands/types';
 import { SocialLink } from '@/types/socialLinks';
 import { TerminalHeader } from '@/components/ui/terminal-header';
-import { TerminalFooter } from '@/components/ui/terminal-footer';
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
 import { toast } from 'sonner';
+
+// Create the terminal footer component
+const TerminalFooter = ({ 
+  commandInput, 
+  setCommandInput, 
+  handleCommandSubmit 
+}: { 
+  commandInput: string; 
+  setCommandInput: (value: string) => void; 
+  handleCommandSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+}) => {
+  return (
+    <form onSubmit={handleCommandSubmit} className="px-4 py-2 border-t border-terminal-border">
+      <div className="flex items-center">
+        <span className="text-terminal-prompt mr-2">guest@programmer:~$</span>
+        <input
+          id="terminal-input"
+          type="text"
+          value={commandInput}
+          onChange={(e) => setCommandInput(e.target.value)}
+          className="flex-grow bg-transparent border-none outline-none text-terminal-command"
+          autoComplete="off"
+          autoCapitalize="off"
+          spellCheck="false"
+        />
+      </div>
+    </form>
+  );
+};
 
 export interface TerminalProps {
   socialLinks?: SocialLink[];
@@ -48,13 +76,8 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     profile: profileCommand,
     theme: themeCommand,
     clear: clearCommand,
-    cat: catCommand,
-    ls: lsCommand,
-    open: openCommand,
     cursor: cursorCommand,
-    cursors: listCursors,
     wallpaper: wallpaperCommand,
-    wallpapers: listWallpapers,
     setwallpaper: setWallpaperCommand
   };
 
@@ -82,7 +105,7 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     if (initialCommands.length > 0) {
       initialCommands.forEach(command => {
         setCommandInput(command);
-        handleCommandSubmit(new Event('initial') as React.FormEvent<HTMLFormElement>);
+        handleCommandSubmit(new Event('initial') as unknown as React.FormEvent<HTMLFormElement>);
       });
     }
   }, []);
@@ -113,7 +136,17 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     const args = commandArgs.join(' ');
 
     // Process command
-    const result = processCommand(commands, commandName, args, isAuthenticated);
+    let result: CommandResult | null = null;
+    
+    if (commandName in commands) {
+      result = commands[commandName].execute(args);
+    } else {
+      // If the command is not found, set the output to command not found
+      result = {
+        content: `Command not found: ${commandName}`,
+        isError: true
+      };
+    }
 
     // If the command is async, set the loading state
     if (result?.isAsync) {
@@ -121,7 +154,7 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
 
       // Resolve the promise and set the output
       result
-        .asyncResolver()
+        .asyncResolver!()
         .then(output => {
           setIsAwaitingAsync(false);
           setCommandOutput(prevOutput => `${prevOutput}\n${output.content}`);
@@ -138,14 +171,11 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
         });
     } else if (result) {
       // If the command is not async, set the output immediately
-      setCommandOutput(prevOutput => `${prevOutput}\n${result.content}`);
+      setCommandOutput(prevOutput => `${prevOutput}\n${result!.content}`);
 
       // Dispatch a custom event to notify of command execution
       const event = new CustomEvent('commandExecuted', { detail: { command: commandName } });
       document.dispatchEvent(event);
-    } else {
-      // If the command is not found, set the output to command not found
-      setCommandOutput(prevOutput => `${prevOutput}\nCommand not found: ${commandName}`);
     }
   };
 
@@ -154,7 +184,7 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
       const { command } = (event as CustomEvent).detail;
       if (command) {
         setCommandInput(command);
-        handleCommandSubmit(new Event('custom') as React.FormEvent<HTMLFormElement>);
+        handleCommandSubmit(new Event('custom') as unknown as React.FormEvent<HTMLFormElement>);
       }
     };
 
