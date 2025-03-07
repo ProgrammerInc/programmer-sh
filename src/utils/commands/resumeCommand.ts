@@ -103,7 +103,19 @@ ${edu.details ? `<strong>Details:</strong> <span class="details">${edu.details}<
 
 <div class="resume-section"><strong>SKILLS</strong>
 
-<div class="skills-section">${portfolioData.skills.map(skillCategory => `<div class="skill-category"><span class="category"><strong>${skillCategory.category}:</strong> ${skillCategory.items.map(skill => `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${skill}" target="_blank">${skill}</a>`).join(', ')}</span></div>`).join('')}</div></div>
+<div class="skills-section">${portfolioData.skills
+            .sort()
+            .map(
+              skillCategory =>
+                `<div class="skill-category"><span class="category"><strong>${skillCategory.category}:</strong> ${skillCategory.items
+                  .sort()
+                  .map(
+                    skill =>
+                      `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${skill}" target="_blank">${skill}</a>`
+                  )
+                  .join(', ')}</span></div>`
+            )
+            .join('')}</div></div>
 
 <div class="resume-section"><strong>CONTACT</strong>
 <div class="contact-section">
