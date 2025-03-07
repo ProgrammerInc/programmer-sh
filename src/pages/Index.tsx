@@ -1,4 +1,3 @@
-
 import CursorProvider from '@/components/ui/cursor';
 import Terminal from '@/components/ui/terminal';
 import WallpaperProvider from '@/components/ui/wallpaper';
@@ -20,7 +19,7 @@ const Index = () => {
   // Use refs to track initialization status
   const cursorInitialized = useRef(false);
   const wallpaperInitialized = useRef(false);
-  
+
   // Use state with lazy initialization to prevent multiple calls
   const [currentCursor, setCursor] = useState<string>(() => {
     if (!cursorInitialized.current) {
@@ -29,7 +28,7 @@ const Index = () => {
     }
     return 'default';
   });
-  
+
   const [currentWallpaper, setCurrentWallpaper] = useState<string>(() => {
     if (!wallpaperInitialized.current) {
       wallpaperInitialized.current = true;
@@ -45,10 +44,30 @@ const Index = () => {
     document.title = `~/${titleCommand} - <programmer>._`;
   }, [currentCommand]);
 
+  // Add a ref to track if commands have been processed
+  const commandsProcessed = useRef(false);
+
   useEffect(() => {
-    // Process URL parameters
+    // Only process commands once to prevent duplicate execution
+    if (commandsProcessed.current) {
+      return;
+    }
+    commandsProcessed.current = true;
+
+    console.log('Processing URL commands with urlCommand:', urlCommand);
+
+    // Process URL parameters - capture both the route parameter and any query parameters
     const currentUrl = location.pathname + location.search;
-    const { command, theme } = extractUrlParameters(currentUrl);
+    const { command: pathCommand, theme } = extractUrlParameters(currentUrl);
+
+    // Log all parameters for debugging
+    console.log('URL parameters:', {
+      urlCommand, // From route parameter
+      pathCommand, // From URL extraction
+      theme,
+      currentUrl,
+      validCommands: validUrlCommands
+    });
 
     // Process theme parameter if present
     if (theme) {
@@ -58,29 +77,78 @@ const Index = () => {
     // Prepare initial commands
     let commands: string[] = [];
 
-    // Always start with welcome command unless overridden
-    if (!urlCommand && !command) {
-      commands.push('welcome');
-    }
+    // Log what we're doing
+    console.log(
+      'Processing URL parameters with high priority - will NOT show welcome if URL command exists'
+    );
 
     // Determine valid command to execute
-    const commandToExecute = urlCommand || command;
+    const commandToExecute = urlCommand || pathCommand;
 
-    // If we have a valid URL command, add it to our initial commands
-    if (commandToExecute && validUrlCommands.includes(commandToExecute)) {
-      console.log('Valid URL command found:', commandToExecute);
+    console.log('URL command found:', commandToExecute);
+    console.log('Valid URL commands array type:', typeof validUrlCommands);
+    console.log('Valid URL commands length:', validUrlCommands.length);
 
-      setCurrentCommand(commandToExecute);
+    // If we have a command from the URL, add it to our initial commands
+    if (commandToExecute) {
+      // Force lowercase for consistent matching
+      const normalizedCommand = commandToExecute.toLowerCase();
 
-      // Either replace welcome or add after welcome
-      if (commandToExecute === 'welcome') {
-        commands = ['welcome'];
-      } else if (!commands.includes('welcome')) {
-        commands = ['welcome', commandToExecute];
-      } else {
-        commands.push(commandToExecute);
+      // Check if exact command exists
+      let isValidCommand = validUrlCommands.includes(normalizedCommand);
+
+      // If not found, try case-insensitive search
+      if (!isValidCommand) {
+        isValidCommand = validUrlCommands.some(cmd => cmd.toLowerCase() === normalizedCommand);
       }
+
+      console.log('Command to execute:', normalizedCommand);
+      console.log('Is valid command:', isValidCommand);
+
+      if (isValidCommand) {
+        console.log('Valid URL command found:', normalizedCommand);
+        setCurrentCommand(normalizedCommand);
+
+        // Either replace welcome or add after welcome
+        if (normalizedCommand === 'welcome') {
+          commands = ['welcome'];
+        } else {
+          // Just execute the command directly
+          commands = [normalizedCommand];
+          console.log('Setting commands to:', commands);
+        }
+      } else {
+        // Hard-code some known commands as a fallback
+        const knownCommands = [
+          'help',
+          'about',
+          'skills',
+          'projects',
+          'contact',
+          'experience',
+          'education'
+        ];
+
+        if (knownCommands.includes(normalizedCommand)) {
+          console.log('Using fallback for known command:', normalizedCommand);
+          commands = [normalizedCommand];
+        } else {
+          console.warn('Invalid URL command:', normalizedCommand);
+          // If invalid command, we'll still show the welcome screen
+          commands = ['welcome'];
+          // Optionally show an error message about invalid command
+          commands.push(
+            `echo Command '${normalizedCommand}' not found. Try 'help' to see available commands.`
+          );
+        }
+      }
+    } else {
+      // If no URL command was provided, show welcome
+      console.log('No URL command found, showing welcome');
+      commands = ['welcome'];
     }
+
+    console.log('Initial commands to execute:', commands);
 
     setInitialCommands(commands);
 

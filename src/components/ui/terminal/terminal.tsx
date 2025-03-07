@@ -20,10 +20,9 @@ import { projectsCommand } from '@/utils/commands/projectsCommand';
 import { resumeCommand } from '@/utils/commands/resumeCommand';
 import { skillsCommand } from '@/utils/commands/skillsCommand';
 import { themeCommand } from '@/utils/commands/themeCommand';
-import { Command } from '@/utils/commands/types';
 import { wallpaperCommand } from '@/utils/commands/wallpaperCommand';
 import { welcomeCommand } from '@/utils/commands/welcomeCommand';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { scrollToBottom } from './terminal-utils';
 
 export interface TerminalProps {
@@ -69,30 +68,35 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
   const terminalContentRef = useRef<HTMLDivElement>(null);
   const { isAuthenticated } = useTerminalAuth();
 
-  const commands: Record<string, Command> = {
-    help: helpCommand,
-    echo: echoCommand,
-    login: loginCommand,
-    signup: signupCommand,
-    logout: logoutCommand,
-    whoami: whoamiCommand,
-    profile: profileCommand,
-    theme: themeCommand,
-    clear: clearCommand,
-    cursor: cursorCommand,
-    wallpaper: wallpaperCommand,
-    setwallpaper: wallpaperCommand,
-    welcome: welcomeCommand,
-    about: aboutCommand,
-    contact: contactCommand,
-    skills: skillsCommand,
-    experience: experienceCommand,
-    projects: projectsCommand,
-    resume: resumeCommand,
-    education: educationCommand
-  };
+  // Memoize the commands object to prevent unnecessary re-renders
+  const commands = useMemo(
+    () => ({
+      help: helpCommand,
+      echo: echoCommand,
+      login: loginCommand,
+      signup: signupCommand,
+      logout: logoutCommand,
+      whoami: whoamiCommand,
+      profile: profileCommand,
+      theme: themeCommand,
+      clear: clearCommand,
+      cursor: cursorCommand,
+      wallpaper: wallpaperCommand,
+      setwallpaper: wallpaperCommand,
+      welcome: welcomeCommand,
+      about: aboutCommand,
+      contact: contactCommand,
+      skills: skillsCommand,
+      experience: experienceCommand,
+      projects: projectsCommand,
+      resume: resumeCommand,
+      education: educationCommand
+    }),
+    []
+  );
 
-  const { commandOutput, lastCommand, executeCommand } = useCommandExecution(commands);
+  const { commandOutput, lastCommand, executeCommand, setCommandOutput } =
+    useCommandExecution(commands);
 
   const handleScrollToBottom = () => {
     scrollToBottom(terminalContentRef);
@@ -136,18 +140,80 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
   // Use a separate effect with a ref to prevent repeated execution of initial commands
   const initialCommandsExecuted = useRef(false);
   useEffect(() => {
-    if (!initialCommandsExecuted.current) {
-      initialCommandsExecuted.current = true;
-
-      if (initialCommands.length === 0) {
-        executeCommand('welcome');
-      } else {
-        initialCommands.forEach(command => {
-          executeCommand(command);
-        });
-      }
+    // Only run this effect when executeCommand is defined and we haven't executed the commands yet
+    if (!executeCommand || initialCommandsExecuted.current) {
+      return;
     }
-  }, [initialCommands, executeCommand]);
+
+    // Log the commands we're about to execute
+    console.log('Terminal component received initialCommands:', initialCommands);
+
+    // Mark as executed immediately to prevent multiple executions
+    initialCommandsExecuted.current = true;
+
+    // Ensure we have commands to execute
+    if (initialCommands.length === 0) {
+      console.log('No initial commands provided, executing welcome');
+      // Small delay to ensure the terminal is ready
+      setTimeout(() => executeCommand('welcome'), 100);
+      return;
+    }
+
+    // Execute each command with a slight delay between them
+    console.log('Will execute commands:', initialCommands);
+
+    // Check if we have URL commands (non-welcome commands)
+    const hasUrlCommand =
+      initialCommands.length > 0 && initialCommands.some(cmd => cmd.toLowerCase() !== 'welcome');
+
+    if (hasUrlCommand) {
+      // If we have a URL command, make sure we execute it directly
+      console.log('URL command detected - skipping welcome and executing directly');
+
+      // To ensure URL commands execute properly, we use a different approach
+      // First clear the terminal
+      setCommandOutput('');
+
+      // Then execute each command with a fixed delay between them
+      initialCommands.forEach((cmd, index) => {
+        // Normalize command and mark URL commands to ensure proper handling
+        const command = cmd.trim().toLowerCase();
+        const prefixedCommand = command.startsWith('__url_') ? command : `__url_${command}`;
+
+        // Use longer delays to ensure commands execute in order
+        setTimeout(
+          () => {
+            console.log(`Executing URL command ${index}:`, prefixedCommand);
+            try {
+              // Use the prefixed command to ensure proper URL command handling
+              executeCommand(prefixedCommand);
+            } catch (error) {
+              console.error('Error executing URL command:', prefixedCommand, error);
+            }
+          },
+          300 + index * 500
+        ); // Longer delays for URL commands to ensure proper execution
+      });
+    } else {
+      // Standard execution for welcome or empty commands
+      initialCommands.forEach((cmd, index) => {
+        // Normalize command
+        const command = cmd.trim().toLowerCase();
+
+        setTimeout(
+          () => {
+            console.log(`Executing welcome command ${index}:`, command);
+            try {
+              executeCommand(command);
+            } catch (error) {
+              console.error('Error executing command:', command, error);
+            }
+          },
+          500 + index * 300
+        ); // Standard delay for welcome command
+      });
+    }
+  }, [initialCommands, executeCommand, setCommandOutput]); // Only depend on these two props
 
   // Store the executeCommand function in a ref to prevent it from causing re-renders
   const executeCommandRef = useRef(executeCommand);
@@ -175,16 +241,16 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
 
     const handleExecuteCommandFromLink = (event: Event) => {
       const { command, addToHistory, placeholder } = (event as CustomEvent).detail;
-      
+
       if (command) {
         // If there's a placeholder, we don't execute the command yet
         if (placeholder) {
           // Format the command with the placeholder
           const commandWithPlaceholder = `${command} ${placeholder}`;
-          
+
           // Set the input field to show the command with placeholder
           setCommandInput(commandWithPlaceholder);
-          
+
           // Select just the placeholder part for easy replacement
           setTimeout(() => {
             const terminalInput = document.getElementById('terminal-input');
@@ -197,14 +263,14 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
         } else {
           // Set the input field to show the command
           setCommandInput(command);
-          
+
           // Add command to history if flag is true
           if (addToHistory) {
             // Using functional update to ensure we have the latest state
             setCommandHistory(prevHistory => {
               // Make a copy of the previous history
               const newHistory = [...prevHistory];
-              
+
               // Don't add if it's empty or the same as the last command
               if (
                 command &&
@@ -214,22 +280,22 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
                 console.log('HISTORY UPDATE: Added link command to history:', command);
                 console.log('HISTORY UPDATE: New history state:', newHistory);
               }
-              
+
               // Update our ref immediately for consistent access
               commandHistoryRef.current = newHistory;
-              
+
               return newHistory;
             });
-            
+
             // Reset history index and clear any temp input after adding new command
             setHistoryIndex(-1);
             setTempInput('');
             historyIndexRef.current = -1;
           }
-          
+
           // Execute the command
           executeCommand(command);
-          
+
           // Clear input after execution
           setTimeout(() => setCommandInput(''), 100);
           // Scroll to bottom after command execution

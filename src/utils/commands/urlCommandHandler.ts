@@ -1,15 +1,16 @@
+// Import getCommands function from the main commands file
+import { getCommands } from './';
+
+// Get all commands and log them for debugging
+const allCommands = getCommands();
+console.log('All available commands:', Object.keys(allCommands));
+
 // List of valid commands that can be executed via URL
-export const validUrlCommands = [
-  'welcome',
-  'about',
-  'skills',
-  'experience',
-  'education',
-  'projects',
-  'resume',
-  'contact',
-  'help'
-];
+// This is now dynamically generated from all available commands
+export const validUrlCommands = Object.keys(allCommands);
+
+// Log the valid commands to verify they are correctly populated
+console.log('Valid URL commands:', validUrlCommands);
 
 // Extract command and theme from URL
 export const extractUrlParameters = (url: string) => {
