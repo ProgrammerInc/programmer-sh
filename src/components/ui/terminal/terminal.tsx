@@ -65,7 +65,7 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
   const { isAuthenticated } = useTerminalAuth();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Command list
+  // Command list - fix the issue by making a proper command object instead of a function
   const commands: Record<string, Command> = {
     help: helpCommand,
     echo: echoCommand,
@@ -78,7 +78,7 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     clear: clearCommand,
     cursor: cursorCommand,
     wallpaper: wallpaperCommand,
-    setwallpaper: setWallpaperCommand
+    setwallpaper: wallpaperCommand // Changed from setWallpaperCommand to just use wallpaperCommand
   };
 
   // Scroll to bottom on output change

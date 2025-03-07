@@ -66,3 +66,34 @@ export const helpCommand: Command = {
     };
   }
 };
+
+// This is the missing function that's causing one of the errors
+export const getSpecificCommandHelp = (commandName: string): string => {
+  const commands: Record<string, { description: string, usage?: string }> = {
+    'help': { description: 'Show available commands' },
+    'clear': { description: 'Clear the terminal screen' },
+    'echo': { description: 'Echo a message to the terminal', usage: 'echo [message]' },
+    'login': { description: 'Log in to your account', usage: 'login [email] [password]' },
+    'signup': { description: 'Create a new account', usage: 'signup [email] [password]' },
+    'logout': { description: 'Log out of your account' },
+    'whoami': { description: 'Show current user information' },
+    'profile': { description: 'View or update your profile' },
+    'theme': { description: 'Change the terminal theme', usage: 'theme [dark/light]' },
+    'cursor': { description: 'Change the cursor style', usage: 'cursor [style]' },
+    'wallpaper': { description: 'Change the terminal background', usage: 'wallpaper [name]' }
+  };
+
+  const command = commands[commandName.toLowerCase()];
+  
+  if (!command) {
+    return `Unknown command: ${commandName}`;
+  }
+
+  let helpText = `<strong class="text-terminal-prompt">${commandName}</strong>: ${command.description}`;
+  
+  if (command.usage) {
+    helpText += `\nUsage: ${command.usage}`;
+  }
+  
+  return helpText;
+};
