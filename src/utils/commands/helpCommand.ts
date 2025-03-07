@@ -1,5 +1,34 @@
+
 import { Command, CommandResult } from './types';
 import { welcomeCommand } from './welcomeCommand';
+
+export const getSpecificCommandHelp = (commandName: string): string => {
+  const commandMap: Record<string, string> = {
+    help: "Show available commands",
+    echo: "Echo a message back to the terminal",
+    login: "Log in to your account",
+    signup: "Create a new account",
+    logout: "Log out of your account",
+    whoami: "Show the current user",
+    profile: "Show your profile",
+    theme: "Change the terminal theme",
+    clear: "Clear the terminal",
+    cursor: "Change the cursor style",
+    wallpaper: "Change the terminal wallpaper",
+    welcome: "Display the welcome message",
+    about: "Learn about me",
+    contact: "Get my contact information",
+    skills: "View technical skills",
+    experience: "View work experience",
+    projects: "Browse portfolio projects",
+    resume: "View my resume",
+    education: "See educational background"
+  };
+
+  return commandName in commandMap 
+    ? `<strong class="text-terminal-prompt">${commandName}</strong>: ${commandMap[commandName]}`
+    : `Command not found: ${commandName}`;
+};
 
 export const helpCommand: Command = {
   name: 'help',
