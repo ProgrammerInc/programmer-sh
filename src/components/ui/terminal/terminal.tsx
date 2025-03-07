@@ -134,6 +134,33 @@ Feel free to explore and get in touch!`,
     }
   }, []);
 
+  // Handle command link clicks
+  useEffect(() => {
+    const handleCommandLinkClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      
+      if (target.classList.contains('command-link')) {
+        e.preventDefault();
+        const command = target.getAttribute('data-command');
+        
+        if (command) {
+          // Set the command in the input field
+          setCommandInput(command);
+          // Execute it
+          executeCommand(command);
+        }
+      }
+    };
+
+    // Add event listener to the terminal content div
+    terminalContentRef.current?.addEventListener('click', handleCommandLinkClick);
+
+    // Clean up
+    return () => {
+      terminalContentRef.current?.removeEventListener('click', handleCommandLinkClick);
+    };
+  }, []);
+
   // Execute a command programmatically
   const executeCommand = (commandStr: string) => {
     // Add command to history
@@ -190,7 +217,8 @@ Feel free to explore and get in touch!`,
 
   // Helper function to render command output
   const renderCommandOutput = (command: string, output: string) => {
-    return output;
+    const commandHeader = `<div class="mb-1"><span class="text-terminal-prompt">guest@programmer:~$&nbsp;</span><span class="text-terminal-command">${command}</span></div>`;
+    return `${commandHeader}<div class="whitespace-pre-line">${output}</div>`;
   };
 
   // Handle command submission from form
@@ -205,68 +233,11 @@ Feel free to explore and get in touch!`,
       return;
     }
 
-    // Add command to history
-    setCommandHistory(prevHistory => [...prevHistory, trimmedCommand]);
-
     // Clear command input
     setCommandInput('');
 
-    // Set last command
-    setLastCommand(trimmedCommand);
-
-    // Split command into command name and arguments
-    const [commandName, ...commandArgs] = trimmedCommand.split(' ');
-    const args = commandArgs.join(' ');
-
     // Process command
-    let result: CommandResult | null = null;
-    
-    if (commandName in commands) {
-      result = commands[commandName].execute(args);
-    } else {
-      // If the command is not found, set the output to command not found
-      result = {
-        content: `Command not found: ${commandName}`,
-        isError: true
-      };
-    }
-
-    // If the command is async, set the loading state
-    if (result?.isAsync) {
-      setIsAwaitingAsync(true);
-
-      // Resolve the promise and set the output
-      result
-        .asyncResolver!()
-        .then(output => {
-          setIsAwaitingAsync(false);
-          setCommandOutput(prevOutput => 
-            prevOutput ? `${prevOutput}\n${renderCommandOutput(trimmedCommand, output.content)}` 
-                       : renderCommandOutput(trimmedCommand, output.content)
-          );
-
-          // Dispatch a custom event to notify of command execution
-          const event = new CustomEvent('commandExecuted', { detail: { command: commandName } });
-          document.dispatchEvent(event);
-        })
-        .catch(error => {
-          setIsAwaitingAsync(false);
-          setCommandOutput(prevOutput => 
-            prevOutput ? `${prevOutput}\n${renderCommandOutput(trimmedCommand, `Error executing command: ${error.message}`)}` 
-                       : renderCommandOutput(trimmedCommand, `Error executing command: ${error.message}`)
-          );
-        });
-    } else if (result) {
-      // If the command is not async, set the output immediately
-      setCommandOutput(prevOutput => 
-        prevOutput ? `${prevOutput}\n${renderCommandOutput(trimmedCommand, result!.content)}` 
-                   : renderCommandOutput(trimmedCommand, result!.content)
-      );
-
-      // Dispatch a custom event to notify of command execution
-      const event = new CustomEvent('commandExecuted', { detail: { command: commandName } });
-      document.dispatchEvent(event);
-    }
+    executeCommand(trimmedCommand);
   };
 
   useEffect(() => {
@@ -292,24 +263,8 @@ Feel free to explore and get in touch!`,
       <div
         ref={terminalContentRef}
         className="flex-grow overflow-y-scroll terminal-content-height terminal-scrollbar px-4 py-2 font-mono text-sm bg-terminal-background"
-      >
-        {commandHistory.map((command, index) => (
-          <div key={index} className="mb-1">
-            <span className="text-terminal-prompt">guest@programmer:~$&nbsp;</span>
-            <span className="text-terminal-command">{command}</span>
-          </div>
-        ))}
-        {commandOutput && (
-          <div className="whitespace-pre-line" dangerouslySetInnerHTML={{ __html: commandOutput }}></div>
-        )}
-        {isAwaitingAsync && (
-          <div className="mb-1">
-            <span className="text-terminal-prompt">guest@programmer:~$&nbsp;</span>
-            <span className="text-terminal-command">{commandInput}</span>
-            <span className="text-terminal-foreground">&nbsp;Loading...</span>
-          </div>
-        )}
-      </div>
+        dangerouslySetInnerHTML={{ __html: commandOutput }}
+      />
 
       <TerminalFooter
         commandInput={commandInput}
