@@ -1,16 +1,23 @@
-
 import { Command, CommandResult } from './types';
-import ASCIIText from '@/components/animations/ascii-text';
+
+const ASCIIArt = [
+  ' ____                                                          ____  _   _ ',
+  '|  _ \\ _ __ ___   __ _ _ __ __ _ _ __ ___  _ __ ___   ___ _ __/ ___|| | | |',
+  "| |_) | '__/ _ \\ / _` | '__/ _` | '_ ` _ \\| '_ ` _ \\ / _ \\ '__\\___ \\| |_| |",
+  '|  __/| | | (_) | (_| | | | (_| | | | | | | | | | | |  __/ |_  ___) |  _  |',
+  '|_|   |_|  \\___/ \\__, |_|  \\__,_|_| |_| |_|_| |_| |_|\\___|_(_)|____/|_| |_|',
+  '                   |___/                                                   '
+];
 
 export const welcomeCommand: Command = {
   name: 'welcome',
   description: 'Display the welcome message',
   execute: (): CommandResult => {
     return {
-      content: `<div class="mb-4">
-        <ASCIIText text="<programmer>._" asciiFontSize={8} textFontSize={200} enableWaves={true} />
+      content: `<div class="font-mono text-xs md:text-sm">
+      <pre><span class="text-terminal-prompt">${ASCIIArt.join('\n')}</span></pre>
       </div>
-      <div class="mt-8">
+      <div class="font-mono text-xs md:text-sm">
         Welcome to the <span class="text-terminal-prompt">&lt;programmer&gt;</span><span class="text-terminal-prompt">.</span><span class="text-terminal-prompt animate-cursor-blink">_</span> portfolio.
 
         This is an interactive terminal portfolio app designed and developed by <span class="text-terminal-prompt">James A. Black Jr.</span>
