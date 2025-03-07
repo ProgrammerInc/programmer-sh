@@ -10,8 +10,7 @@ import { clearCommand, echoCommand, helpCommand } from '@/utils/commands/helpCom
 import { themeCommand } from '@/utils/commands/themeCommand';
 import { cursorCommand } from '@/utils/commands/cursorCommand';
 import { 
-  wallpaperCommand,
-  setWallpaper as setWallpaperCommand
+  wallpaperCommand
 } from '@/utils/commands/wallpaperCommand';
 import { Command, CommandResult } from '@/utils/commands/types';
 import { SocialLink } from '@/types/socialLinks';
@@ -65,7 +64,7 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
   const { isAuthenticated } = useTerminalAuth();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Command list - fix the issue by making a proper command object instead of a function
+  // Command list
   const commands: Record<string, Command> = {
     help: helpCommand,
     echo: echoCommand,
@@ -78,7 +77,7 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     clear: clearCommand,
     cursor: cursorCommand,
     wallpaper: wallpaperCommand,
-    setwallpaper: wallpaperCommand // Changed from setWallpaperCommand to just use wallpaperCommand
+    setwallpaper: wallpaperCommand
   };
 
   // Scroll to bottom on output change
@@ -196,12 +195,12 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
   }, []);
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-terminal-background">
       <TerminalHeader lastCommand={lastCommand} socialLinks={socialLinks} />
 
       <div
         ref={terminalContentRef}
-        className="flex-grow overflow-y-scroll terminal-content-height terminal-scrollbar px-4 py-2 font-mono text-sm"
+        className="flex-grow overflow-y-scroll terminal-content-height terminal-scrollbar px-4 py-2 font-mono text-sm bg-terminal-background"
       >
         {commandHistory.map((command, index) => (
           <div key={index} className="mb-1">
