@@ -75,3 +75,14 @@ export * from './toggle';
 export * from './toggle-group';
 export * from './tooltip';
 export * from './wallpaper';
+
+// Terminal components - explicitly re-export to avoid ambiguity
+export { 
+  Terminal,
+  TerminalContent as TerminalContentComponent,
+  TerminalFooter, 
+  TerminalUtils
+} from './terminal';
+
+// Re-export from terminal-content as a different name
+export { default as TerminalContentView } from './terminal-content';
