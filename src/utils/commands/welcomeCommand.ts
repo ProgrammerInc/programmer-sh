@@ -1,3 +1,4 @@
+
 import { Command } from './types';
 
 export const welcomeCommand: Command = {

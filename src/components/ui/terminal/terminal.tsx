@@ -81,7 +81,22 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
       description: 'Display welcome message',
       execute: (): CommandResult => {
         return {
-          content: `Welcome to <programmer>._ terminal!\n\nThis is an interactive terminal portfolio for James A. Black Jr., a talented software developer.\n\nType 'help' to see available commands.`,
+          content: `Welcome to the <span class="text-terminal-prompt">&lt;programmer&gt;</span><span class="text-terminal-prompt">.</span><span class="text-terminal-prompt animate-cursor-blink">_</span> portfolio.
+
+This is an interactive terminal portfolio app designed and developed by <span class="text-terminal-prompt">James A. Black Jr.</span>
+
+Type <span class="command-link" data-command="help">help</span> to see available commands, or try one of these:
+
+  - <span class="command-link" data-command="about">about</span>: To learn about me
+  - <span class="command-link" data-command="contact">contact</span>: For my contact information
+  - <span class="command-link" data-command="education">education</span>: To see my educational background
+  - <span class="command-link" data-command="experience">experience</span>: To see my work experience
+  - <span class="command-link" data-command="projects">projects</span>: To view my portfolio
+  - <span class="command-link" data-command="resume">resume</span>: To view my resume
+  - <span class="command-link" data-command="skills">skills</span>: To see my technical skills
+  - <span class="command-link" data-command="theme">theme</span>: To change the terminal theme
+
+Feel free to explore and get in touch!`,
           isError: false
         };
       }
@@ -139,7 +154,10 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
         result.asyncResolver!()
           .then(output => {
             setIsAwaitingAsync(false);
-            setCommandOutput(prevOutput => `${prevOutput}\n${output.content}`);
+            setCommandOutput(prevOutput => 
+              prevOutput ? `${prevOutput}\n${renderCommandOutput(commandStr, output.content)}` 
+                         : renderCommandOutput(commandStr, output.content)
+            );
             
             // Dispatch event
             const event = new CustomEvent('commandExecuted', { detail: { command: commandName } });
@@ -147,18 +165,32 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
           })
           .catch(error => {
             setIsAwaitingAsync(false);
-            setCommandOutput(prevOutput => `${prevOutput}\nError executing command: ${error.message}`);
+            setCommandOutput(prevOutput => 
+              prevOutput ? `${prevOutput}\n${renderCommandOutput(commandStr, `Error executing command: ${error.message}`)}` 
+                         : renderCommandOutput(commandStr, `Error executing command: ${error.message}`)
+            );
           });
       } else {
-        setCommandOutput(prevOutput => `${prevOutput}\n${result.content}`);
+        setCommandOutput(prevOutput => 
+          prevOutput ? `${prevOutput}\n${renderCommandOutput(commandStr, result.content)}` 
+                     : renderCommandOutput(commandStr, result.content)
+        );
         
         // Dispatch event
         const event = new CustomEvent('commandExecuted', { detail: { command: commandName } });
         document.dispatchEvent(event);
       }
     } else {
-      setCommandOutput(prevOutput => `${prevOutput}\nCommand not found: ${commandName}`);
+      setCommandOutput(prevOutput => 
+        prevOutput ? `${prevOutput}\n${renderCommandOutput(commandStr, `Command not found: ${commandName}`)}` 
+                   : renderCommandOutput(commandStr, `Command not found: ${commandName}`)
+      );
     }
+  };
+
+  // Helper function to render command output
+  const renderCommandOutput = (command: string, output: string) => {
+    return output;
   };
 
   // Handle command submission from form
@@ -208,7 +240,10 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
         .asyncResolver!()
         .then(output => {
           setIsAwaitingAsync(false);
-          setCommandOutput(prevOutput => `${prevOutput}\n${output.content}`);
+          setCommandOutput(prevOutput => 
+            prevOutput ? `${prevOutput}\n${renderCommandOutput(trimmedCommand, output.content)}` 
+                       : renderCommandOutput(trimmedCommand, output.content)
+          );
 
           // Dispatch a custom event to notify of command execution
           const event = new CustomEvent('commandExecuted', { detail: { command: commandName } });
@@ -216,13 +251,17 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
         })
         .catch(error => {
           setIsAwaitingAsync(false);
-          setCommandOutput(
-            prevOutput => `${prevOutput}\nError executing command: ${error.message}`
+          setCommandOutput(prevOutput => 
+            prevOutput ? `${prevOutput}\n${renderCommandOutput(trimmedCommand, `Error executing command: ${error.message}`)}` 
+                       : renderCommandOutput(trimmedCommand, `Error executing command: ${error.message}`)
           );
         });
     } else if (result) {
       // If the command is not async, set the output immediately
-      setCommandOutput(prevOutput => `${prevOutput}\n${result!.content}`);
+      setCommandOutput(prevOutput => 
+        prevOutput ? `${prevOutput}\n${renderCommandOutput(trimmedCommand, result!.content)}` 
+                   : renderCommandOutput(trimmedCommand, result!.content)
+      );
 
       // Dispatch a custom event to notify of command execution
       const event = new CustomEvent('commandExecuted', { detail: { command: commandName } });
@@ -247,7 +286,7 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
   }, []);
 
   return (
-    <div className="flex flex-col h-full bg-terminal-background">
+    <div className="flex flex-col h-full bg-terminal-background rounded-lg overflow-hidden terminal-glass">
       <TerminalHeader lastCommand={lastCommand} socialLinks={socialLinks} />
 
       <div
@@ -261,12 +300,7 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
           </div>
         ))}
         {commandOutput && (
-          <div className="whitespace-pre-line">
-            <span className="text-terminal-prompt">
-              guest@programmer:~$&nbsp;
-            </span>
-            <span className="text-terminal-foreground">{commandOutput}</span>
-          </div>
+          <div className="whitespace-pre-line" dangerouslySetInnerHTML={{ __html: commandOutput }}></div>
         )}
         {isAwaitingAsync && (
           <div className="mb-1">
