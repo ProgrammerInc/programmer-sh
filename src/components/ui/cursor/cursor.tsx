@@ -1,5 +1,5 @@
 import SplashCursor from '@/components/cursors/splash-cursor';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { cursors } from './cursor.presets';
 import { Cursor, CursorProps } from './cursor.types';
 
@@ -10,10 +10,14 @@ export const CursorProvider: React.FC<CursorProps> = ({
   cursor = 'default'
 }) => {
   const currentCursor: Cursor = cursors[cursor] || cursors.default;
-  {
-    // Cursor debugging
-    console.log('Current cursor:', currentCursor);
-  }
+  // Cursor debugging - only log once
+  const isInitialMount = useRef(true);
+  useEffect(() => {
+    if (isInitialMount.current) {
+      console.log('Current cursor:', currentCursor);
+      isInitialMount.current = false;
+    }
+  }, [currentCursor, cursor]);
   return (
     <div
       id={id}

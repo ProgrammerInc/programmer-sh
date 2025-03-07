@@ -12,7 +12,7 @@ import MagnetLines, { MagnetLinesProps } from '@/components/animations/magnet-li
 import Particles, { ParticlesProps } from '@/components/animations/particles';
 import Threads, { ThreadsProps } from '@/components/animations/threads';
 import Waves, { WavesProps } from '@/components/animations/waves';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import wallpapers from './wallpaper.presets';
 import Wallpaper from './wallpaper.types';
 
@@ -44,8 +44,14 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
   theme = 'dark',
   wallpaper = wallpapers.default
 }) => {
-  // Wallpaper debugging
-  console.log('Current wallpaper:', wallpaper);
+  // Wallpaper debugging - only log once
+  const isInitialMount = useRef(true);
+  useEffect(() => {
+    if (isInitialMount.current) {
+      console.log('Current wallpaper:', wallpaper);
+      isInitialMount.current = false;
+    }
+  }, [wallpaper]);
 
   // Wallpaper properties
   const animation = wallpaper.animation || 'default';
