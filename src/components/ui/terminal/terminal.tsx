@@ -1,4 +1,3 @@
-
 import {
   loginCommand,
   logoutCommand,
@@ -24,7 +23,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
 
-// Create the terminal footer component
 const TerminalFooter = ({ 
   commandInput, 
   setCommandInput, 
@@ -68,7 +66,6 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
   const { isAuthenticated } = useTerminalAuth();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Command list
   const commands: Record<string, Command> = {
     help: helpCommand,
     echo: echoCommand,
@@ -92,12 +89,10 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     education: educationCommand
   };
 
-  // Scroll to bottom on output change
   useEffect(() => {
     scrollToBottom();
   }, [commandOutput]);
 
-  // Scroll to bottom function
   const scrollToBottom = () => {
     terminalContentRef.current?.scrollTo({
       top: terminalContentRef.current.scrollHeight,
@@ -105,25 +100,21 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     });
   };
 
-  // Focus on mount and execute welcome command
   useEffect(() => {
     const terminalInput = document.getElementById('terminal-input');
     if (terminalInput) {
       terminalInput.focus();
     }
 
-    // Auto-run welcome command on initial load if no other commands are specified
     if (initialCommands.length === 0) {
       executeCommand('welcome');
     } else {
-      // Execute initial commands
       initialCommands.forEach(command => {
         executeCommand(command);
       });
     }
   }, []);
 
-  // Handle command link clicks
   useEffect(() => {
     const handleCommandLinkClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -133,35 +124,26 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
         const command = target.getAttribute('data-command');
         
         if (command) {
-          // Set the command in the input field
           setCommandInput(command);
-          // Execute it
           executeCommand(command);
         }
       }
     };
 
-    // Add event listener to the terminal content div
     terminalContentRef.current?.addEventListener('click', handleCommandLinkClick);
 
-    // Clean up
     return () => {
       terminalContentRef.current?.removeEventListener('click', handleCommandLinkClick);
     };
   }, []);
 
-  // Execute a command programmatically
   const executeCommand = (commandStr: string) => {
-    // Add command to history
     setCommandHistory(prevHistory => [...prevHistory, commandStr]);
-    
-    // Set last command
     setLastCommand(commandStr);
 
-    // Process command
     const [commandName, ...args] = commandStr.split(' ');
     const cmdArgs = args.join(' ');
-    
+
     if (commandName in commands) {
       const command = commands[commandName];
       const result = command.execute(cmdArgs);
@@ -176,7 +158,6 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
                          : renderCommandOutput(commandStr, output.content, output.rawHTML)
             );
             
-            // Dispatch event
             const event = new CustomEvent('commandExecuted', { detail: { command: commandName } });
             document.dispatchEvent(event);
           })
@@ -191,18 +172,22 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
         if (commandName === 'clear') {
           setCommandOutput('');
           if (result.runAfterClear) {
-            setCommandOutput(renderCommandOutput(commandStr, result.runAfterClear.content, result.runAfterClear.rawHTML));
+            setTimeout(() => {
+              setCommandOutput(renderCommandOutput('welcome', result.runAfterClear.content, result.runAfterClear.rawHTML));
+              
+              const welcomeEvent = new CustomEvent('commandExecuted', { detail: { command: 'welcome' } });
+              document.dispatchEvent(welcomeEvent);
+            }, 100);
           }
         } else {
           setCommandOutput(prevOutput => 
             prevOutput ? `${prevOutput}\n${renderCommandOutput(commandStr, result.content, result.rawHTML)}` 
                        : renderCommandOutput(commandStr, result.content, result.rawHTML)
           );
+          
+          const event = new CustomEvent('commandExecuted', { detail: { command: commandName } });
+          document.dispatchEvent(event);
         }
-        
-        // Dispatch event
-        const event = new CustomEvent('commandExecuted', { detail: { command: commandName } });
-        document.dispatchEvent(event);
       }
     } else {
       setCommandOutput(prevOutput => 
@@ -212,7 +197,6 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     }
   };
 
-  // Helper function to render command output
   const renderCommandOutput = (command: string, output: string, rawHTML: boolean = false) => {
     const commandHeader = `<div class="mb-1"><span class="text-terminal-prompt">guest@programmer:~$&nbsp;</span><span class="text-terminal-command">${command}</span></div>`;
     
@@ -223,22 +207,17 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     }
   };
 
-  // Handle command submission from form
   const handleCommandSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Trim the command input
     const trimmedCommand = commandInput.trim();
 
-    // If the command is empty, do nothing
     if (!trimmedCommand) {
       return;
     }
 
-    // Clear command input
     setCommandInput('');
 
-    // Process command
     executeCommand(trimmedCommand);
   };
 
