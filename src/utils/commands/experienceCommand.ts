@@ -22,6 +22,11 @@ export const experienceCommand: Command = {
         return {
           content: `<strong>My Experience:</strong>
 ${experience
+  .sort(
+    (a, b) =>
+      new Date(b.duration.split(' - ')[0]).getTime() -
+      new Date(a.duration.split(' - ')[0]).getTime()
+  )
   .map(
     exp => `
 <strong>Position:</strong> <span class="text-terminal-prompt">${exp.position}</span> @ <span class="text-terminal-prompt">${exp.company}</span>

@@ -69,6 +69,11 @@ END:VCARD`;
 <strong>EXPERIENCE</strong>
 
 ${portfolioData.experience
+  .sort(
+    (a, b) =>
+      new Date(b.duration.split(' - ')[0]).getTime() -
+      new Date(a.duration.split(' - ')[0]).getTime()
+  )
   .map(
     exp => `<div class="experience-item"><span class="position"><strong><span class="text-terminal-prompt">${exp.position}</span></strong> @ <strong><span class="text-terminal-prompt">${exp.company}</span></strong> <span class="duration">(${exp.duration})</span></span>
 <span class="description">${exp.description}</span>
@@ -80,6 +85,11 @@ ${portfolioData.experience
 <div class="resume-section"><strong>EDUCATION</strong>
 
 ${portfolioData.education
+  .sort(
+    (a, b) =>
+      new Date(b.duration.split(' - ')[0]).getTime() -
+      new Date(a.duration.split(' - ')[0]).getTime()
+  )
   .map(
     edu => `<div class="education-item"><strong>Degree/Major:</strong> <span class="text-terminal-prompt">${edu.degree}</span>
 <strong>Institution:</strong> <span class="institution"><span class="text-terminal-prompt">${edu.institution}</span> (${edu.duration})</span>

@@ -23,6 +23,11 @@ export const educationCommand: Command = {
           content: `<strong>My Education:</strong>
 
 ${education
+  .sort(
+    (a, b) =>
+      new Date(b.duration.split(' - ')[0]).getTime() -
+      new Date(a.duration.split(' - ')[0]).getTime()
+  )
   .map(
     edu => `<strong>Degree/Major:</strong> <span class="text-terminal-prompt">${edu.degree}</span>
 <strong>Institution:</strong> <span class="institution"><span class="text-terminal-prompt">${edu.institution}</span> (${edu.duration})</span>
