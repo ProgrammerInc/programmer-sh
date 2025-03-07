@@ -233,7 +233,11 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     <div className="flex flex-col h-full bg-terminal-background rounded-lg overflow-hidden terminal-glass">
       <TerminalHeader lastCommand={lastCommand} socialLinks={socialLinks} />
 
-      <TerminalContent commandOutput={commandOutput} setScrollToBottom={handleScrollToBottom} />
+      <TerminalContent 
+        ref={terminalContentRef}
+        commandOutput={commandOutput} 
+        setScrollToBottom={handleScrollToBottom} 
+      />
 
       <TerminalFooter
         commandInput={commandInput}

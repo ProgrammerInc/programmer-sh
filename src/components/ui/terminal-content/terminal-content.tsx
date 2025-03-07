@@ -1,16 +1,21 @@
-import React, { useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
 interface TerminalContentProps {
   commandOutput: string;
   setScrollToBottom: () => void;
 }
 
-export const TerminalContent: React.FC<TerminalContentProps> = ({
-  commandOutput,
-  setScrollToBottom
-}) => {
-  const terminalContentRef = useRef<HTMLDivElement>(null);
-
+export const TerminalContent = forwardRef<HTMLDivElement, TerminalContentProps>((
+  { commandOutput, setScrollToBottom },
+  ref
+) => {
+  // Local ref for event handlers
+  const innerRef = useRef<HTMLDivElement>(null);
+  
+  // Connect the forwarded ref to our inner ref
+  useImperativeHandle(ref, () => innerRef.current!);
+  
+  // Call setScrollToBottom when output changes
   useEffect(() => {
     setScrollToBottom();
   }, [commandOutput, setScrollToBottom]);
@@ -32,7 +37,7 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
       }
     };
 
-    const currentTerminalContent = terminalContentRef.current;
+    const currentTerminalContent = innerRef.current;
 
     if (currentTerminalContent) {
       currentTerminalContent.addEventListener('click', handleCommandLinkClick);
@@ -47,11 +52,11 @@ export const TerminalContent: React.FC<TerminalContentProps> = ({
 
   return (
     <div
-      ref={terminalContentRef}
+      ref={innerRef}
       className="flex-grow overflow-y-scroll terminal-content-height terminal-scrollbar px-4 py-2 font-mono text-sm bg-terminal-background"
       dangerouslySetInnerHTML={{ __html: commandOutput }}
     />
   );
-};
+});
 
 export default TerminalContent;
