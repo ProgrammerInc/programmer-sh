@@ -1,10 +1,5 @@
-import {
-  loginCommand,
-  logoutCommand,
-  profileCommand,
-  signupCommand,
-  whoamiCommand
-} from '@/utils/commands/authCommands';
+
+import { loginCommand, logoutCommand, profileCommand, signupCommand, whoamiCommand } from '@/utils/commands/authCommands';
 import { clearCommand, echoCommand, helpCommand } from '@/utils/commands/helpCommand';
 import { themeCommand } from '@/utils/commands/themeCommand';
 import { cursorCommand } from '@/utils/commands/cursorCommand';
@@ -16,40 +11,15 @@ import { experienceCommand } from '@/utils/commands/experienceCommand';
 import { projectsCommand } from '@/utils/commands/projectsCommand';
 import { resumeCommand } from '@/utils/commands/resumeCommand';
 import { educationCommand } from '@/utils/commands/educationCommand';
-import { Command, CommandResult } from '@/utils/commands/types';
+import { Command } from '@/utils/commands/types';
 import { SocialLink } from '@/types/socialLinks';
 import { TerminalHeader } from '@/components/ui/terminal-header';
 import { useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
-
-const TerminalFooter = ({ 
-  commandInput, 
-  setCommandInput, 
-  handleCommandSubmit 
-}: { 
-  commandInput: string; 
-  setCommandInput: (value: string) => void; 
-  handleCommandSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-}) => {
-  return (
-    <form onSubmit={handleCommandSubmit} className="px-4 py-2 border-t border-terminal-border">
-      <div className="flex items-center">
-        <span className="text-terminal-prompt mr-2">guest@programmer:~$</span>
-        <input
-          id="terminal-input"
-          type="text"
-          value={commandInput}
-          onChange={(e) => setCommandInput(e.target.value)}
-          className="flex-grow bg-transparent border-none outline-none text-terminal-command"
-          autoComplete="off"
-          autoCapitalize="off"
-          spellCheck="false"
-        />
-      </div>
-    </form>
-  );
-};
+import { useCommandExecution } from '@/hooks/use-command-execution';
+import { scrollToBottom } from './terminal-utils';
+import TerminalContent from './terminal-content';
+import TerminalFooter from './terminal-footer';
 
 export interface TerminalProps {
   socialLinks?: SocialLink[];
@@ -57,14 +27,9 @@ export interface TerminalProps {
 }
 
 const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands = [] }) => {
-  const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [commandInput, setCommandInput] = useState<string>('');
-  const [commandOutput, setCommandOutput] = useState<string>('');
-  const [isAwaitingAsync, setIsAwaitingAsync] = useState<boolean>(false);
-  const [lastCommand, setLastCommand] = useState<string>('');
   const terminalContentRef = useRef<HTMLDivElement>(null);
   const { isAuthenticated } = useTerminalAuth();
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const commands: Record<string, Command> = {
     help: helpCommand,
@@ -89,15 +54,14 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     education: educationCommand
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [commandOutput]);
+  const { 
+    commandOutput, 
+    lastCommand,
+    executeCommand 
+  } = useCommandExecution(commands);
 
-  const scrollToBottom = () => {
-    terminalContentRef.current?.scrollTo({
-      top: terminalContentRef.current.scrollHeight,
-      behavior: 'smooth'
-    });
+  const handleScrollToBottom = () => {
+    scrollToBottom(terminalContentRef);
   };
 
   useEffect(() => {
@@ -113,99 +77,33 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
         executeCommand(command);
       });
     }
-  }, []);
+  }, [initialCommands, executeCommand]);
 
   useEffect(() => {
-    const handleCommandLinkClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      
-      if (target.classList.contains('command-link')) {
-        e.preventDefault();
-        const command = target.getAttribute('data-command');
-        
-        if (command) {
-          setCommandInput(command);
-          executeCommand(command);
-        }
+    const handleExecuteCommand = (event: Event) => {
+      const { command } = (event as CustomEvent).detail;
+      if (command) {
+        setCommandInput(command);
+        executeCommand(command);
       }
     };
 
-    terminalContentRef.current?.addEventListener('click', handleCommandLinkClick);
+    const handleExecuteCommandFromLink = (event: Event) => {
+      const { command } = (event as CustomEvent).detail;
+      if (command) {
+        setCommandInput(command);
+        executeCommand(command);
+      }
+    };
+
+    document.addEventListener('executeCommand', handleExecuteCommand);
+    document.addEventListener('executeCommandFromLink', handleExecuteCommandFromLink);
 
     return () => {
-      terminalContentRef.current?.removeEventListener('click', handleCommandLinkClick);
+      document.removeEventListener('executeCommand', handleExecuteCommand);
+      document.removeEventListener('executeCommandFromLink', handleExecuteCommandFromLink);
     };
-  }, []);
-
-  const executeCommand = (commandStr: string) => {
-    setCommandHistory(prevHistory => [...prevHistory, commandStr]);
-    setLastCommand(commandStr);
-
-    const [commandName, ...args] = commandStr.split(' ');
-    const cmdArgs = args.join(' ');
-
-    if (commandName in commands) {
-      const command = commands[commandName];
-      const result = command.execute(cmdArgs);
-      
-      if (result?.isAsync) {
-        setIsAwaitingAsync(true);
-        result.asyncResolver!()
-          .then(output => {
-            setIsAwaitingAsync(false);
-            setCommandOutput(prevOutput => 
-              prevOutput ? `${prevOutput}\n${renderCommandOutput(commandStr, output.content, output.rawHTML)}` 
-                         : renderCommandOutput(commandStr, output.content, output.rawHTML)
-            );
-            
-            const event = new CustomEvent('commandExecuted', { detail: { command: commandName } });
-            document.dispatchEvent(event);
-          })
-          .catch(error => {
-            setIsAwaitingAsync(false);
-            setCommandOutput(prevOutput => 
-              prevOutput ? `${prevOutput}\n${renderCommandOutput(commandStr, `Error executing command: ${error.message}`)}` 
-                         : renderCommandOutput(commandStr, `Error executing command: ${error.message}`)
-            );
-          });
-      } else {
-        if (commandName === 'clear') {
-          setCommandOutput('');
-          if (result.runAfterClear) {
-            setTimeout(() => {
-              setCommandOutput(renderCommandOutput('welcome', result.runAfterClear.content, result.runAfterClear.rawHTML));
-              
-              const welcomeEvent = new CustomEvent('commandExecuted', { detail: { command: 'welcome' } });
-              document.dispatchEvent(welcomeEvent);
-            }, 100);
-          }
-        } else {
-          setCommandOutput(prevOutput => 
-            prevOutput ? `${prevOutput}\n${renderCommandOutput(commandStr, result.content, result.rawHTML)}` 
-                       : renderCommandOutput(commandStr, result.content, result.rawHTML)
-          );
-          
-          const event = new CustomEvent('commandExecuted', { detail: { command: commandName } });
-          document.dispatchEvent(event);
-        }
-      }
-    } else {
-      setCommandOutput(prevOutput => 
-        prevOutput ? `${prevOutput}\n${renderCommandOutput(commandStr, `Command not found: ${commandName}`)}` 
-                   : renderCommandOutput(commandStr, `Command not found: ${commandName}`)
-      );
-    }
-  };
-
-  const renderCommandOutput = (command: string, output: string, rawHTML: boolean = false) => {
-    const commandHeader = `<div class="mb-1"><span class="text-terminal-prompt">guest@programmer:~$&nbsp;</span><span class="text-terminal-command">${command}</span></div>`;
-    
-    if (rawHTML) {
-      return `${commandHeader}<div class="whitespace-pre-line">${output}</div>`;
-    } else {
-      return `${commandHeader}<div class="whitespace-pre-line">${output}</div>`;
-    }
-  };
+  }, [executeCommand]);
 
   const handleCommandSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -217,34 +115,16 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     }
 
     setCommandInput('');
-
     executeCommand(trimmedCommand);
   };
-
-  useEffect(() => {
-    const handleExecuteCommand = (event: Event) => {
-      const { command } = (event as CustomEvent).detail;
-      if (command) {
-        setCommandInput(command);
-        executeCommand(command);
-      }
-    };
-
-    document.addEventListener('executeCommand', handleExecuteCommand);
-
-    return () => {
-      document.removeEventListener('executeCommand', handleExecuteCommand);
-    };
-  }, []);
 
   return (
     <div className="flex flex-col h-full bg-terminal-background rounded-lg overflow-hidden terminal-glass">
       <TerminalHeader lastCommand={lastCommand} socialLinks={socialLinks} />
 
-      <div
-        ref={terminalContentRef}
-        className="flex-grow overflow-y-scroll terminal-content-height terminal-scrollbar px-4 py-2 font-mono text-sm bg-terminal-background"
-        dangerouslySetInnerHTML={{ __html: commandOutput }}
+      <TerminalContent 
+        commandOutput={commandOutput} 
+        setScrollToBottom={handleScrollToBottom} 
       />
 
       <TerminalFooter
