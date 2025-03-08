@@ -81,7 +81,7 @@ ${portfolioData.experience
 
 <span class="achievements-title">Key achievements:</span><ul class="achievements-list">${exp.achievements
       .sort()
-      .map(achievement => `<li>- ${achievement}</li>`)
+      .map(achievement => `<li>&nbsp;&nbsp;- ${achievement}</li>`)
       .join('')}</ul>
 </div>`
   )
