@@ -1,6 +1,7 @@
 export * from './animated-content';
 export * from './ascii-text';
 export * from './aurora';
+export * from './background-lines';
 export * from './balatro';
 export * from './ballpit';
 export * from './blur-text';

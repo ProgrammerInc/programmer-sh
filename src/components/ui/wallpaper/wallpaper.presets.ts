@@ -34,6 +34,16 @@ const wallpapers: Record<string, Wallpaper> = {
     animation: 'aurora',
     animationType: 'reactbits'
   },
+  'background-lines': {
+    id: 'background-lines',
+    name: 'Background Lines',
+    description: 'Background Lines - lines that animate in a wave pattern',
+    type: 'animation',
+    animation: 'background-lines',
+    animationType: 'aceternity',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
+  },
   balatro: {
     id: 'balatro',
     name: 'Balatro',

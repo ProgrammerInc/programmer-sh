@@ -2,6 +2,8 @@
 import {
   Aurora,
   AuroraProps,
+  BackgroundLines,
+  BackgroundLinesProps,
   Balatro,
   BalatroProps,
   Ballpit,
@@ -143,6 +145,9 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               speed={0.5}
               {...(animationProps as AuroraProps)}
             />
+          )}
+          {animation === 'background-lines' && (
+            <BackgroundLines {...(animationProps as BackgroundLinesProps)} />
           )}
           {animation === 'balatro' && (
             <Balatro

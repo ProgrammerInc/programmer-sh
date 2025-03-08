@@ -1,5 +1,6 @@
 import {
   AuroraProps,
+  BackgroundLinesProps,
   BalatroProps,
   BallpitProps,
   DitherProps,
@@ -43,6 +44,7 @@ export interface Wallpaper {
   animationType?: AnimationType;
   animationProps?:
     | AuroraProps
+    | BackgroundLinesProps
     | BalatroProps
     | BallpitProps
     | DitherProps
