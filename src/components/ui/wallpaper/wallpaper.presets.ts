@@ -89,7 +89,18 @@ const wallpapers: Record<string, Wallpaper> = {
     name: 'Gradient',
     description: 'A simple gradient background',
     type: 'gradient',
-    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)'
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
+  },
+  'gradient-animation': {
+    id: 'gradient-animation',
+    name: 'Gradient Animation',
+    description: 'A gradient animation background',
+    type: 'animation',
+    animation: 'gradient-animation',
+    animationType: 'aceternity',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
   },
   'grid-distortion': {
     id: 'grid-distortion',

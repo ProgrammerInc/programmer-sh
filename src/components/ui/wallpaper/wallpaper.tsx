@@ -1,4 +1,6 @@
 import {
+  GradientAnimation,
+  GradientAnimationProps,
   GridMotion,
   GridMotionProps,
   ShootingStars,
@@ -159,6 +161,9 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               waveSpeed={0.05}
               {...(animationProps as DitherProps)}
             />
+          )}
+          {animation === 'gradient-animation' && (
+            <GradientAnimation {...(animationProps as GradientAnimationProps)} />
           )}
           {animation === 'grid-distortion' && (
             <GridDistortion

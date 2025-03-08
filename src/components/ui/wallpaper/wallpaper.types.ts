@@ -3,6 +3,7 @@ import {
   BalatroProps,
   BallpitProps,
   DitherProps,
+  GradientAnimationProps,
   GridDistortionProps,
   GridMotionProps,
   HyperspeedProps,
@@ -44,6 +45,7 @@ export interface Wallpaper {
     | BalatroProps
     | BallpitProps
     | DitherProps
+    | GradientAnimationProps
     | GridDistortionProps
     | GridMotionProps
     | HyperspeedProps
