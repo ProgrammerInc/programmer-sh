@@ -3,6 +3,8 @@ import {
   GridMotionProps,
   Squares,
   SquaresProps,
+  WavyBackground,
+  WavyBackgroundProps,
   WorldMap,
   WorldMapProps
 } from '@/components/animations';
@@ -346,6 +348,9 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               yGap={36}
               {...(animationProps as WavesProps)}
             />
+          )}
+          {animation === 'wavy-background' && (
+            <WavyBackground {...(animationProps as WavyBackgroundProps)} />
           )}
           {animation === 'world-map' && (
             <WorldMap

@@ -42,4 +42,5 @@ export * from './threads';
 export * from './true-focus';
 export * from './variable-proximity';
 export * from './waves';
+export * from './wavy-background';
 export * from './world-map';

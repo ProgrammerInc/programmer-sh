@@ -322,6 +322,8 @@
     min-width: 100vw;
     max-height: 100vh;
     max-width: 100vw;
+    overflow: hidden;
+    z-index: 0;
   }
 
   .cursor-container {
@@ -355,12 +357,15 @@
   .squares-container,
   .threads-container,
   .waves-container,
+  .wavy-background-container,
   .world-map-container {
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
+    overflow: hidden;
+    z-index: 0;
   }
 }
 
