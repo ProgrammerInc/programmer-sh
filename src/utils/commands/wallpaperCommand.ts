@@ -90,7 +90,7 @@ export const wallpaperCommand: Command = {
       });
 
       return {
-        content: `\nCurrent wallpaper: <span class="text-terminal-prompt">${wallpapers[currentWallpaper].id}</span>\n\nAvailable wallpapers:\n${wallpaperOutput}\nUsage: <span class="command-link" data-command="wallpaper" data-placeholder="[name]">wallpaper [name]</span>\n\n`,
+        content: `\nCurrent wallpaper: <span class="text-terminal-prompt">${wallpapers[currentWallpaper].id}</span>\n\nAvailable Wallpapers:\n${wallpaperOutput}\nUsage: <span class="command-link" data-command="wallpaper" data-placeholder="[name]">wallpaper [name]</span>\n\n`,
         isError: false,
         rawHTML: true
       };

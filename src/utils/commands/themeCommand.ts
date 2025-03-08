@@ -79,7 +79,7 @@ export const themeCommand: Command = {
 
     if (newTheme !== 'dark' && newTheme !== 'light') {
       return {
-        content: `\nInvalid theme: <span class="text-terminal-prompt">${newTheme}</span>. Available themes: <span class="command-link" data-command="theme dark">dark</span>, <span class="command-link" data-command="theme light">light</span>\n\n`,
+        content: `\nInvalid theme: <span class="text-terminal-prompt">${newTheme}</span>. Available Themes: <span class="command-link" data-command="theme dark">dark</span>, <span class="command-link" data-command="theme light">light</span>\n\n`,
         isError: true
       };
     }

@@ -56,7 +56,7 @@ export const cursorCommand: Command = {
         .join('');
 
       return {
-        content: `\nCurrent cursor: <span class="text-terminal-prompt">${cursors[currentCursor].id}</span>\n\nAvailable cursors:\n${availableCursors}\n\nUsage: <span class="command-link" data-command="cursor" data-placeholder="[name]">cursor [name]</span>\n\n`,
+        content: `\nCurrent cursor: <span class="text-terminal-prompt">${cursors[currentCursor].id}</span>\n\nAvailable Cursors:\n${availableCursors}\n\nUsage: <span class="command-link" data-command="cursor" data-placeholder="[name]">cursor [name]</span>\n\n`,
         isError: false
       };
     }

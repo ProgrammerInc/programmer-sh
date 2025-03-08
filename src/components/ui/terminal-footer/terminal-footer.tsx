@@ -80,7 +80,7 @@ export const TerminalFooter: React.FC<TerminalFooterProps> = ({
               e.preventDefault();
             }
           }}
-          className="flex-grow bg-transparent border-none outline-none text-terminal-command"
+          className="flex-grow bg-transparent border-none outline-none"
           autoComplete="off"
           autoCapitalize="off"
           spellCheck="false"

@@ -10,6 +10,22 @@ const wallpapers: Record<string, Wallpaper> = {
     animation: 'particles',
     animationType: 'reactbits'
   },
+  alley: {
+    id: 'alley',
+    name: 'Alley',
+    description: 'A city alley at night',
+    type: 'image',
+    imageType: 'url',
+    url: 'https://images.unsplash.com/photo-1551641506-ee5bf4cb45f1?auto=format&fit=crop&q=80'
+  },
+  arcade: {
+    id: 'arcade',
+    name: 'Arcade',
+    description: 'An arcade filled with neon lights and machines',
+    type: 'image',
+    imageType: 'url',
+    url: 'https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&q=80'
+  },
   aurora: {
     id: 'aurora',
     name: 'Aurora',
@@ -36,6 +52,14 @@ const wallpapers: Record<string, Wallpaper> = {
     imageType: 'url',
     url: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80'
   },
+  beach: {
+    id: 'beach',
+    name: 'Beach',
+    description: 'A beach with sand and sea',
+    type: 'image',
+    imageType: 'url',
+    url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80'
+  },
   code: {
     id: 'code',
     name: 'Code',
@@ -43,6 +67,14 @@ const wallpapers: Record<string, Wallpaper> = {
     type: 'image',
     imageType: 'url',
     url: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80'
+  },
+  drummer: {
+    id: 'drummer',
+    name: 'Drummer',
+    description: 'A drummer playing drums',
+    type: 'image',
+    imageType: 'url',
+    url: 'https://images.unsplash.com/photo-1588032786045-59cefda005c0?auto=format&fit=crop&q=80'
   },
   fog: {
     id: 'fog',
