@@ -20,7 +20,7 @@ export const educationCommand: Command = {
         }
 
         return {
-          content: `<strong>My Education:</strong>
+          content: `\n<span class="font-bold">My Education:</span>
 
 ${education
   .sort(
@@ -29,12 +29,12 @@ ${education
       new Date(a.duration.split(' - ')[0]).getTime()
   )
   .map(
-    edu => `<strong>Degree/Major:</strong> <span class="text-terminal-prompt">${edu.degree}</span>
-<strong>Institution:</strong> <span class="institution"><span class="text-terminal-prompt">${edu.institution}</span> (${edu.duration})</span>
+    edu => `Degree/Major: <span class="text-terminal-prompt">${edu.degree}</span>
+Institution: <span class="institution"><span class="text-terminal-prompt">${edu.institution}</span> (${edu.duration})</span>
 
-${edu.details ? `<strong>Details:</strong> <span class="details">${edu.details}</span>` : ''}`
+${edu.details ? `Details: <span class="details">${edu.details}</span>` : ''}`
   )
-  .join('\n')}`,
+  .join('\n<hr class="terminal-divider" />\n')}\n\n`,
           isError: false
         };
       }

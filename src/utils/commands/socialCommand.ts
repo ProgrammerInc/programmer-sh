@@ -4,7 +4,7 @@ import { Command, CommandResult } from './types';
 export const socialCommand: Command = {
   name: 'social',
   description: 'Display social media links',
-  execute: (args?: string): CommandResult => {
+  execute: (): CommandResult => {
     // Return a CommandResult with isAsync flag and an asyncResolver function
     return {
       content: 'Loading social links...',

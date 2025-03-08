@@ -14,23 +14,20 @@ export const commandCategories: CommandCategory[] = [
     description: 'Commands for terminal operation',
     commands: {
       help: 'Show available commands',
+      welcome: 'Display the welcome message',
       echo: 'Echo a message back to the terminal',
-      clear: 'Clear the terminal',
-      theme: 'Change the terminal theme',
-      cursor: 'Change the cursor style',
-      wallpaper: 'Change the terminal wallpaper',
-      welcome: 'Display the welcome message'
+      clear: 'Clear the terminal'
     }
   },
   {
     name: 'Authentication',
     description: 'User account management',
     commands: {
-      login: 'Log in to your account',
       signup: 'Create a new account',
+      login: 'Log in to your account',
       logout: 'Log out of your account',
-      whoami: 'Show the current user',
-      profile: 'Show your profile'
+      profile: 'Show your profile',
+      whoami: 'Show the current user'
     }
   },
   {
@@ -38,12 +35,21 @@ export const commandCategories: CommandCategory[] = [
     description: 'Information about me and my work',
     commands: {
       about: 'Learn about me',
-      contact: 'Get my contact information',
-      skills: 'View technical skills',
-      experience: 'View work experience',
-      projects: 'Browse portfolio projects',
-      resume: 'View my resume',
-      education: 'See educational background'
+      experience: 'View my work experience',
+      education: 'View my educational background',
+      projects: 'Browse my portfolio projects',
+      skills: 'View my technical skills',
+      resume: 'View or download my resume',
+      contact: 'Get my contact information'
+    }
+  },
+  {
+    name: 'Personalization',
+    description: 'Customize your terminal experience',
+    commands: {
+      cursor: 'Change the cursor style',
+      wallpaper: 'Change the terminal wallpaper',
+      theme: 'Change the terminal theme'
     }
   }
 ];
@@ -82,8 +88,8 @@ export const helpCommand: Command = {
     let helpContent = `<div class="font-mono text-xs md:text-sm mt-4 mb-4"><span class="font-bold">Available Commands:</span></div>`;
 
     // List commands by category
-    commandCategories.forEach(category => {
-      helpContent += `<div class="mb-4"><div class="text-terminal-prompt font-bold">${category.name} Commands</div>`;
+    commandCategories.forEach((category, index) => {
+      helpContent += `<div class="mb-4"><div class="text-terminal-prompt font-normal">${category.name} Commands</div>`;
 
       // List all commands in this category in a compact format
       const commandEntries = Object.entries(category.commands);

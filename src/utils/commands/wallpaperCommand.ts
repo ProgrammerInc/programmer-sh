@@ -77,7 +77,7 @@ export const wallpaperCommand: Command = {
 
       typeDisplayOrder.forEach(type => {
         if (wallpapersByType[type] && wallpapersByType[type].length > 0) {
-          wallpaperOutput += `\n<span class="text-terminal-prompt">${typeDisplayNames[type]} Wallpapers</span>`;
+          wallpaperOutput += `\n<span class="text-terminal-prompt font-normal">${typeDisplayNames[type]} Wallpapers</span>`;
 
           wallpapersByType[type]
             .sort(([idA], [idB]) => idA.localeCompare(idB))

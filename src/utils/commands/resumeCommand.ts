@@ -56,16 +56,17 @@ PHOTO;VALUE=uri:https://programmer.sh/images/programmer-icon-dark-medium.png
 END:VCARD`;
 
         return {
-          content: `<strong>My Resume:</strong>
+          content: `\n<strong>My Resume:</strong>
 <div class="resume-header">
 <strong>Name:</strong> <span class="text-terminal-prompt">${portfolioData.full_name}</span>
 <strong>Title:</strong> <span class="text-terminal-prompt">${portfolioData.title}</span> @ <span class="text-terminal-prompt">${portfolioData.company}</span>
 <strong>Location:</strong> <span class="text-terminal-prompt">${portfolioData.location}</span>
 </div>
+<hr class="terminal-divider" />
 <div class="resume-summary"><strong>SUMMARY</strong>
 
 <p>${portfolioData.summary}</p></div>
-<div class="resume-section">
+<hr class="terminal-divider" /><div class="resume-section">
 <strong>EXPERIENCE</strong>
 
 ${portfolioData.experience
@@ -85,6 +86,7 @@ ${portfolioData.experience
 </div>`
   )
   .join('')}</div>
+<hr class="terminal-divider" />
 <div class="resume-section"><strong>EDUCATION</strong>
 
 ${portfolioData.education
@@ -100,19 +102,19 @@ ${portfolioData.education
 ${edu.details ? `<strong>Details:</strong> <span class="details">${edu.details}</span>` : ''}</div>`
   )
   .join('')}</div>
-
+<hr class="terminal-divider" />
 <div class="resume-section"><strong>SKILLS</strong>
 
 <div class="skills-section">${portfolioData.skills.map(skillCategory => `<div class="skill-category"><span class="category"><strong>${skillCategory.category}:</strong> ${skillCategory.items.map(skill => `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${skill}" target="_blank">${skill}</a>`).join(', ')}</span></div>`).join('')}</div></div>
-
+<hr class="terminal-divider" />
 <div class="resume-section"><strong>CONTACT</strong>
 <div class="contact-section">
 <span><strong>E-mail:</strong> <a href="mailto:${portfolioData.contact.email}" target="_blank" class="text-terminal-link hover:underline">${portfolioData.contact.email}</a></span>
 ${portfolioData.contact.phone ? `<span><strong>Phone:</strong> <a href="tel:${portfolioData.contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${portfolioData.contact.phone}</a></span>` : ''}
-${linkedin ? `<span><strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${linkedin.replace(/^https?:\/\//, '')}</a></span>` : ''}
 ${github ? `<span><strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${github.replace(/^https?:\/\//, '')}</a></span>` : ''}
+${linkedin ? `<span><strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${linkedin.replace(/^https?:\/\//, '')}</a></span>` : ''}
 ${twitter ? `<span><strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${twitter.replace(/^https?:\/\//, '')}</a></span>` : ''}
-${website ? `<span><strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${website.replace(/^https?:\/\//, '')}</a></span>` : ''}</div></div>`,
+${website ? `<span><strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${website.replace(/^https?:\/\//, '')}</a></span>` : ''}</div></div>\n`,
           isError: false,
           rawHTML: true
         };

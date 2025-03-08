@@ -20,21 +20,20 @@ export const skillsCommand: Command = {
         }
 
         return {
-          content: `<strong>My Skills:</strong>
-
+          content: `\n<strong>My Skills:</strong>\n
 ${profile.skills
   .sort()
   .map(
     skillCategory =>
-      `<strong>${skillCategory.category}:</strong>\n${skillCategory.items
+      `<span class="text-terminal-prompt font-normal">${skillCategory.category} Skills</span>\n${skillCategory.items
         .sort()
         .map(
           skill =>
-            `  - <a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${skill}" target="_blank">${skill}</a>`
+            `&nbsp;&nbsp;- <a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${skill}" target="_blank">${skill}</a>`
         )
         .join('\n')}`
   )
-  .join('\n\n')}`,
+  .join('\n\n')}\n\n`,
           isError: false
         };
       }

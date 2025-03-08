@@ -20,7 +20,7 @@ export const experienceCommand: Command = {
         }
 
         return {
-          content: `<strong>My Experience:</strong>
+          content: `\n<span class="font-bold">My Experience:</span>\n
 ${experience
   .sort(
     (a, b) =>
@@ -28,25 +28,23 @@ ${experience
       new Date(a.duration.split(' - ')[0]).getTime()
   )
   .map(
-    exp => `
-<strong>Position:</strong> <span class="text-terminal-prompt">${exp.position}</span> @ <span class="text-terminal-prompt">${exp.company}</span>
-<strong>Duration:</strong> ${exp.duration}
+    exp => `<span class="font-bold">Position:</span> <span class="text-terminal-prompt">${exp.position}</span> @ <span class="text-terminal-prompt">${exp.company}</span>
+<span class="font-bold">Duration:</span> ${exp.duration}
 
-<strong>Description:</strong> ${exp.description}
+<span class="font-bold">Description:</span> ${exp.description}
 
-<strong>Achievements:</strong>
+<span class="font-bold">Achievements:</span>
 ${exp.achievements.map(achievement => `- ${achievement}`).join('\n')}
 
-<strong>Technologies:</strong> ${exp.technologies
+<span class="font-bold">Technologies:</span> ${exp.technologies
       .sort()
       .map(
         tech =>
           `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${tech}" target="_blank">${tech}</a>`
       )
-      .join(', ')}
-`
+      .join(', ')}`
   )
-  .join('\n')}`,
+  .join('\n\n<hr class="terminal-divider" />\n')}\n\n`,
           isError: false
         };
       }

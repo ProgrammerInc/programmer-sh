@@ -42,23 +42,22 @@ export const aboutCommand: Command = {
             : profile.contact.website;
 
         return {
-          content: `<strong>About Me:</strong>
+          content: `\n<span class="font-bold">About Me:</span>
 
-<strong>Name:</strong> <span class="text-terminal-prompt">${profile.full_name}</span>
-<strong>Title:</strong> <span class="text-terminal-prompt">${profile.title}</span> @ <span class="text-terminal-prompt">${profile.company}</span>
-<strong>Location:</strong> <span class="text-terminal-prompt">${profile.location}</span>
+Name: <span class="text-terminal-prompt">${profile.full_name}</span>
+Title: <span class="text-terminal-prompt">${profile.title}</span> @ <span class="text-terminal-prompt">${profile.company}</span>
+Location: <span class="text-terminal-prompt">${profile.location}</span>
 
 ${profile.summary}
 
-<strong>Contact Information:</strong>
+<span class="font-bold">Contact Information:</span>
 
-  - <strong>E-mail:</strong> <a href="mailto:${profile.contact.email}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.email}</a>
-  ${profile.contact.phone ? `- <strong>Phone:</strong> <a href="tel:${profile.contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${profile.contact.phone}</a>` : ''}
-  ${github ? `- <strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github}</a>` : ''}
-  ${linkedin ? `- <strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin}</a>` : ''}
-  ${twitter ? `- <strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter}</a>` : ''}
-  ${website ? `- <strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website}</a>` : ''}
-`,
+&nbsp;&nbsp;- E-mail: <a href="mailto:${profile.contact.email}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.email}</a>
+  ${profile.contact.phone ? `&nbsp;&nbsp;- Phone: <a href="tel:${profile.contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${profile.contact.phone}</a>` : ''}
+  ${github ? `&nbsp;&nbsp;- GitHub: <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github}</a>` : ''}
+  ${linkedin ? `&nbsp;&nbsp;- LinkedIn: <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin}</a>` : ''}
+  ${twitter ? `&nbsp;&nbsp;- Twitter/X: <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter}</a>` : ''}
+  ${website ? `&nbsp;&nbsp;- Website: <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website}</a>` : ''}\n\n`,
           isError: false
         };
       }
@@ -107,19 +106,18 @@ export const contactCommand: Command = {
             : profile.contact.website;
 
         return {
-          content: `<strong>My Contact Information:</strong>
+          content: `\n<span class="font-bold">My Contact Information:</span>
 
-<strong>Name:</strong> <span class="text-terminal-prompt">${profile.full_name}</span>
-<strong>Title:</strong> <span class="text-terminal-prompt">${profile.title}</span> @ <span class="text-terminal-prompt">${profile.company}</span>
-<strong>Location:</strong> <span class="text-terminal-prompt">${profile.location}</span>
+Name: <span class="text-terminal-prompt">${profile.full_name}</span>
+Title: <span class="text-terminal-prompt">${profile.title}</span> @ <span class="text-terminal-prompt">${profile.company}</span>
+Location: <span class="text-terminal-prompt">${profile.location}</span>
 
-  - <strong>E-mail:</strong> <a href="mailto:${profile.contact.email}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.email}</a>
-  ${profile.contact.phone ? `- <strong>Phone:</strong> <a href="tel:${profile.contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${profile.contact.phone}</a>` : ''}
-  ${linkedin ? `- <strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin}</a>` : ''}
-  ${github ? `- <strong>GitHub:</strong> <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github}</a>` : ''}
-  ${twitter ? `- <strong>Twitter/X:</strong> <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter}</a>` : ''}
-  ${website ? `- <strong>Website:</strong> <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website}</a>` : ''}
-`,
+&nbsp;&nbsp;- E-mail: <a href="mailto:${profile.contact.email}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.email}</a>
+  ${profile.contact.phone ? `&nbsp;&nbsp;- Phone: <a href="tel:${profile.contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${profile.contact.phone}</a>` : ''}
+  ${github ? `&nbsp;&nbsp;- GitHub: <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github}</a>` : ''}
+  ${linkedin ? `&nbsp;&nbsp;- LinkedIn: <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin}</a>` : ''}
+  ${twitter ? `&nbsp;&nbsp;- Twitter/X: <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter}</a>` : ''}
+  ${website ? `&nbsp;&nbsp;- Website: <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website}</a>` : ''}\n\n`,
           isError: false
         };
       }

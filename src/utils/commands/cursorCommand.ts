@@ -51,12 +51,12 @@ export const cursorCommand: Command = {
       const availableCursors = Object.entries(cursors)
         .map(
           ([id, cursor]) =>
-            `\n  - <span class="command-link" data-command="cursor ${cursor.id}">${cursor.id}</span>: ${cursor.description}`
+            `\n&nbsp;&nbsp;- <span class="command-link" data-command="cursor ${cursor.id}">${cursor.id}</span>: ${cursor.description}`
         )
         .join('');
 
       return {
-        content: `Current cursor: <span class="text-terminal-prompt">${cursors[currentCursor].id}</span>\n\nAvailable cursors:\n${availableCursors}\n\nUsage: <span class="command-link" data-command="cursor" data-placeholder="[name]">cursor [name]</span>`,
+        content: `\n<span class="font-bold">Current cursor:</span> <span class="text-terminal-prompt">${cursors[currentCursor].id}</span>\n\n<span class="font-bold">Available cursors:</span>\n${availableCursors}\n\nUsage: <span class="command-link" data-command="cursor" data-placeholder="[name]">cursor [name]</span>\n\n`,
         isError: false
       };
     }
@@ -65,14 +65,14 @@ export const cursorCommand: Command = {
 
     if (!Object.keys(cursors).includes(requestedCursor)) {
       return {
-        content: `Cursor <span class="text-terminal-prompt">${requestedCursor}</span> not found. Use <span class="command-link" data-command="cursor">cursor</span> to see available options.`,
+        content: `\nCursor <span class="text-terminal-prompt">${requestedCursor}</span> not found. Use <span class="command-link" data-command="cursor">cursor</span> to see available options.\n\n`,
         isError: true
       };
     }
 
     if (requestedCursor === currentCursor) {
       return {
-        content: `Cursor is already set to <span class="text-terminal-prompt">${cursors[currentCursor].id}</span>.`,
+        content: `\nCursor is already set to <span class="text-terminal-prompt">${cursors[currentCursor].id}</span>.\n\n`,
         isError: false
       };
     }
@@ -80,7 +80,7 @@ export const cursorCommand: Command = {
     setCursor(requestedCursor);
 
     return {
-      content: `Cursor changed to <span class="text-terminal-prompt">${cursors[requestedCursor].id}</span>.`,
+      content: `\nCursor changed to <span class="text-terminal-prompt">${cursors[requestedCursor].id}</span>.\n\n`,
       isError: false
     };
   }

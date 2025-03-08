@@ -278,6 +278,13 @@ body,
     max-height: calc(100% - 46px);
   }
 
+  .terminal-divider {
+    @apply border-t border-terminal-muted-30 mt-0 mb-0;
+
+    /* margin-left: -1rem;
+    margin-right: -1rem; */
+  }
+
   .terminal-glow-shadow {
     box-shadow:
       0 0 80px rgba(100, 255, 218, 0.1),

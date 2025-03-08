@@ -23,14 +23,14 @@ export const projectsCommand: Command = {
           }
 
           return {
-            content: `<strong>My Projects:</strong>
+            content: `\n<span class="font-bold">My Projects:</span>
 ${projects
   .map(
     project => `
-<strong>Project:</strong> <span class="text-terminal-prompt">${project.title}</span>
-<strong>Description:</strong> ${project.description}
+Project: <span class="text-terminal-prompt">${project.title}</span>
+Description: ${project.description}
 
-<strong>Technologies:</strong> ${project.technologies
+Technologies: ${project.technologies
       .sort()
       .map(
         tech =>
@@ -38,11 +38,10 @@ ${projects
       )
       .join(', ')}
 
-Type <span class="command-link" data-command="project ${project.id}">project ${project.id}</span> for more details.
+<span class="text-terminal-prompt">Tip:</span> Type <span class="command-link" data-command="project ${project.id}">project ${project.id}</span> for more details.
 `
   )
-  .join('\n')}
-`,
+  .join('\n<hr class="terminal-divider" />')}\n`,
             isError: false
           };
         }
