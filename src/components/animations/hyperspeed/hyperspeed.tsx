@@ -31,7 +31,7 @@ interface Colors {
   sticks: number;
 }
 
-interface HyperspeedOptions {
+export interface HyperspeedOptions {
   onSpeedUp?: (ev: MouseEvent) => void;
   onSlowDown?: (ev: MouseEvent) => void;
   distortion?: string | Distortion;
@@ -1203,7 +1203,7 @@ class App {
   }
 }
 
-const Hyperspeed: FC<HyperspeedProps> = ({ effectOptions = {} }) => {
+export const Hyperspeed: FC<HyperspeedProps> = ({ effectOptions = {} }) => {
   const mergedOptions: HyperspeedOptions = {
     ...defaultOptions,
     ...effectOptions

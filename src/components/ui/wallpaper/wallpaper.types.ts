@@ -20,7 +20,8 @@ import {
   VortexProps,
   WavesProps,
   WavyBackgroundProps,
-  WorldMapProps
+  WorldMapProps,
+  WorldProps
 } from '@/components/animations';
 import { LiquidChromeProps } from '@/components/animations/liquid-chrome';
 
@@ -45,6 +46,7 @@ export interface Wallpaper {
     | BalatroProps
     | BallpitProps
     | DitherProps
+    | WorldProps
     | GradientAnimationProps
     | GridDistortionProps
     | GridMotionProps

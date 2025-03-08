@@ -1,7 +1,7 @@
 import React, { CSSProperties, useEffect, useRef } from 'react';
 import styles from './waves.module.css';
 
-export class Grad {
+class Grad {
   x: number;
   y: number;
   z: number;
@@ -15,7 +15,7 @@ export class Grad {
   }
 }
 
-export class Noise {
+class Noise {
   grad3: Grad[];
   p: number[];
   perm: number[];
@@ -87,14 +87,14 @@ export class Noise {
   }
 }
 
-export interface Point {
+interface Point {
   x: number;
   y: number;
   wave: { x: number; y: number };
   cursor: { x: number; y: number; vx: number; vy: number };
 }
 
-export interface Mouse {
+interface Mouse {
   x: number;
   y: number;
   lx: number;
@@ -107,7 +107,7 @@ export interface Mouse {
   set: boolean;
 }
 
-export interface Config {
+export interface WavesConfig {
   lineColor: string;
   waveSpeedX: number;
   waveSpeedY: number;
@@ -180,7 +180,7 @@ export const Waves: React.FC<WavesProps> = ({
     set: false
   });
 
-  const configRef = useRef<Config>({
+  const configRef = useRef<WavesConfig>({
     lineColor,
     waveSpeedX,
     waveSpeedY,

@@ -36,7 +36,7 @@ function hexToVec4(hex: string): [number, number, number, number] {
   return [r, g, b, a];
 }
 
-export const vertexShader = `
+const vertexShader = `
 attribute vec2 uv;
 attribute vec2 position;
 varying vec2 vUv;
@@ -46,7 +46,7 @@ void main() {
 }
 `;
 
-export const fragmentShader = `
+const fragmentShader = `
 precision highp float;
 
 #define PI 3.14159265359
@@ -120,7 +120,7 @@ void main() {
 }
 `;
 
-export default function Balatro({
+export function Balatro({
   spinRotation = -2.0,
   spinSpeed = 7.0,
   offset = [0.0, 0.0],
@@ -230,3 +230,5 @@ export default function Balatro({
 
   return <div ref={containerRef} className="w-full h-full" />;
 }
+
+export default Balatro;

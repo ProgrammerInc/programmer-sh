@@ -84,6 +84,14 @@ const wallpapers: Record<string, Wallpaper> = {
     imageType: 'url',
     url: 'https://images.unsplash.com/photo-1578147063111-9ffec96050cd?auto=format&fit=crop&q=80'
   },
+  globe: {
+    id: 'globe',
+    name: 'Globe',
+    description: 'A globe of the world',
+    type: 'animation',
+    animation: 'globe',
+    animationType: 'aceternity'
+  },
   gradient: {
     id: 'gradient',
     name: 'Gradient',

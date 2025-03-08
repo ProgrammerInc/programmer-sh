@@ -1,36 +1,55 @@
+'use client';
 import {
+  Aurora,
+  AuroraProps,
+  Balatro,
+  BalatroProps,
+  Ballpit,
+  BallpitProps,
+  Dither,
+  DitherProps,
   GradientAnimation,
   GradientAnimationProps,
+  GridDistortion,
+  GridDistortionProps,
   GridMotion,
   GridMotionProps,
+  Hyperspeed,
+  HyperspeedProps,
+  Iridescence,
+  IridescenceProps,
+  LetterGlitch,
+  LetterGlitchProps,
+  Lightning,
+  LightningProps,
+  LiquidChrome,
+  LiquidChromeProps,
+  MagnetLines,
+  MagnetLinesProps,
+  Noise,
+  NoiseProps,
+  Particles,
+  ParticlesProps,
   ShootingStars,
   ShootingStarsProps,
   Squares,
   SquaresProps,
   StarBackgroundProps,
   StarsBackground,
+  Threads,
+  ThreadsProps,
   Vortex,
   VortexProps,
+  Waves,
+  WavesProps,
   WavyBackground,
   WavyBackgroundProps,
+  World,
   WorldMap,
-  WorldMapProps
+  WorldMapProps,
+  WorldProps
 } from '@/components/animations';
-import Aurora, { AuroraProps } from '@/components/animations/aurora';
-import Balatro, { BalatroProps } from '@/components/animations/balatro';
-import Ballpit, { BallpitProps } from '@/components/animations/ballpit';
-import Dither, { DitherProps } from '@/components/animations/dither';
-import GridDistortion, { GridDistortionProps } from '@/components/animations/grid-distortion';
-import Hyperspeed, { HyperspeedProps } from '@/components/animations/hyperspeed';
-import Iridescence, { IridescenceProps } from '@/components/animations/iridescence';
-import LetterGlitch, { LetterGlitchProps } from '@/components/animations/letter-glitch';
-import Lightning, { LightningProps } from '@/components/animations/lightning';
-import LiquidChrome, { LiquidChromeProps } from '@/components/animations/liquid-chrome';
-import MagnetLines, { MagnetLinesProps } from '@/components/animations/magnet-lines';
-import Noise, { NoiseProps } from '@/components/animations/noise';
-import Particles, { ParticlesProps } from '@/components/animations/particles';
-import Threads, { ThreadsProps } from '@/components/animations/threads';
-import Waves, { WavesProps } from '@/components/animations/waves';
+import { globeArcs, globeConfig } from '@/components/animations/globe/globe.presets';
 import React, { useEffect, useRef } from 'react';
 import wallpapers from './wallpaper.presets';
 import Wallpaper from './wallpaper.types';
@@ -161,6 +180,9 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               waveSpeed={0.05}
               {...(animationProps as DitherProps)}
             />
+          )}
+          {animation === 'globe' && (
+            <World data={globeArcs} globeConfig={globeConfig} {...(animationProps as WorldProps)} />
           )}
           {animation === 'gradient-animation' && (
             <GradientAnimation {...(animationProps as GradientAnimationProps)} />

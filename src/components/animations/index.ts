@@ -12,6 +12,7 @@ export * from './fade-content';
 export * from './follow-cursor';
 export * from './fuzzy-text';
 export * from './glitch-text';
+export * from './globe';
 export * from './gradient-animation';
 export * from './gradient-text';
 export * from './grid-distortion';

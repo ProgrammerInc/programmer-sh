@@ -9,6 +9,12 @@ declare module 'meshline' {
   export const MeshLineMaterial: any;
 }
 
+declare module '@react-three/fiber' {
+  interface ThreeElements {
+    threeGlobe: Object3DNode<ThreeGlobe, typeof ThreeGlobe>;
+  }
+}
+
 declare global {
   namespace JSX {
     interface IntrinsicElements {

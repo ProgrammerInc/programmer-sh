@@ -8,7 +8,7 @@ export interface NoiseProps {
   patternAlpha?: number;
 }
 
-const Noise: React.FC<NoiseProps> = ({
+export const Noise: React.FC<NoiseProps> = ({
   patternSize = 250,
   patternScaleX = 1,
   patternScaleY = 1,

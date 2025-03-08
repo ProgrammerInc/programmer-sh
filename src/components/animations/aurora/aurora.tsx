@@ -115,7 +115,7 @@ export interface AuroraProps {
   speed?: number;
 }
 
-export default function Aurora(props: AuroraProps) {
+export function Aurora(props: AuroraProps) {
   const { colorStops = ['#00d8ff', '#7cff67', '#00d8ff'], amplitude = 1.0, blend = 0.5 } = props;
   const propsRef = useRef<AuroraProps>(props);
   propsRef.current = props;
@@ -201,3 +201,5 @@ export default function Aurora(props: AuroraProps) {
 
   return <div ref={ctnDom} className="w-full h-full" />;
 }
+
+export default Aurora;

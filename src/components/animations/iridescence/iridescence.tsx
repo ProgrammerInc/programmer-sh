@@ -52,7 +52,7 @@ export interface IridescenceProps {
   mouseReact?: boolean;
 }
 
-export default function Iridescence({
+export function Iridescence({
   color = [1, 1, 1],
   speed = 1.0,
   amplitude = 0.1,
@@ -138,3 +138,5 @@ export default function Iridescence({
 
   return <div ref={ctnDom} className="w-full h-full" {...rest} />;
 }
+
+export default Iridescence;

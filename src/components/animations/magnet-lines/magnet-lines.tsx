@@ -13,7 +13,7 @@ export interface MagnetLinesProps {
   style?: CSSProperties;
 }
 
-const MagnetLines: React.FC<MagnetLinesProps> = ({
+export const MagnetLines: React.FC<MagnetLinesProps> = ({
   rows = 9,
   columns = 9,
   containerSize = '80vmin',
