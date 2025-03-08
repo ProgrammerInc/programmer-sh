@@ -34,7 +34,7 @@ Duration: ${exp.duration}
 Description: ${exp.description}
 
 Achievements:
-${exp.achievements.map(achievement => `- ${achievement}`).join('\n')}
+${exp.achievements.map(achievement => `&nbsp;&nbsp;- ${achievement}`).join('\n')}
 
 Technologies: ${exp.technologies
       .sort()

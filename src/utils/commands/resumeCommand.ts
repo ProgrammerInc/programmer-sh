@@ -76,16 +76,24 @@ ${portfolioData.experience
       new Date(a.duration.split(' - ')[0]).getTime()
   )
   .map(
-    exp => `<div class="experience-item"><span class="position"><span class="text-terminal-prompt">${exp.position}</span></> @ <span class="text-terminal-prompt">${exp.company}</span> <span class="duration">(${exp.duration})</span></span>
-<span class="description">${exp.description}</span>
+    exp => `Position: <span class="text-terminal-prompt">${exp.position}</span> @ <span class="text-terminal-prompt">${exp.company}</span>
+Duration: ${exp.duration}
 
-<span class="achievements-title">Key achievements:</span><ul class="achievements-list">${exp.achievements
+Description: ${exp.description}
+
+Achievements:
+${exp.achievements.map(achievement => `&nbsp;&nbsp;- ${achievement}`).join('\n')}
+
+Technologies: ${exp.technologies
       .sort()
-      .map(achievement => `<li>&nbsp;&nbsp;- ${achievement}</li>`)
-      .join('')}</ul>
-</div>`
+      .map(
+        tech =>
+          `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${tech}" target="_blank">${tech}</a>`
+      )
+      .join(', ')}`
   )
-  .join('\n')}</div>
+  .join('\n\n<hr class="terminal-divider" />\n')}\n
+</div>
 <hr class="terminal-divider" /><div class="resume-section">
 MY EDUCATION
 
