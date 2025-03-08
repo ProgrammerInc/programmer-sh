@@ -14,7 +14,7 @@ export const commandCategories: CommandCategory[] = [
     description: 'Commands for terminal operation',
     commands: {
       help: 'Show available commands',
-      welcome: 'Display the welcome message',
+      welcome: 'Show the welcome message',
       echo: 'Echo a message back to the terminal',
       clear: 'Clear the terminal'
     }
