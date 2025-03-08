@@ -79,12 +79,12 @@ export function processCommandLinks(
         {
           onClick: (e) => {
             e.preventDefault();
-            onCommandClick && onCommandClick(command);
+            onCommandClick?.(command);
           },
           onKeyDown: (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
-              onCommandClick && onCommandClick(command);
+              onCommandClick?.(command);
             }
           },
           href: '#',
@@ -115,12 +115,12 @@ export function processCommandLinks(
         {
           onClick: (e) => {
             e.preventDefault();
-            onCommandClick && onCommandClick(command);
+            onCommandClick?.(command);
           },
           onKeyDown: (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
-              onCommandClick && onCommandClick(command);
+              onCommandClick?.(command);
             }
           },
           href: '#',
