@@ -26,7 +26,7 @@ export const Vortex = (props: VortexProps) => {
   const particleCount = props.particleCount || 700;
   const particlePropCount = 9;
   const particlePropsLength = particleCount * particlePropCount;
-  const rangeY = props.rangeY || 100;
+  const rangeY = props.rangeY || 400;
   const baseTTL = 50;
   const rangeTTL = 150;
   const baseSpeed = props.baseSpeed || 0.0;
