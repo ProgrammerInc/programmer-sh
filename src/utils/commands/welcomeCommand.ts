@@ -23,12 +23,12 @@ export const welcomeCommand: Command = {
         Type <span class="command-link" data-command="help">help</span> to see available commands, or try one of these:
         <div class="ml-2">
           <span>&nbsp;- <span class="command-link" data-command="about">about</span>: To learn about me</span>
-          <span>&nbsp;- <span class="command-link" data-command="contact">contact</span>: For my contact information</span>
-          <span>&nbsp;- <span class="command-link" data-command="education">education</span>: To see my educational background</span>
           <span>&nbsp;- <span class="command-link" data-command="experience">experience</span>: To see my work experience</span>
+          <span>&nbsp;- <span class="command-link" data-command="education">education</span>: To see my educational background</span>
           <span>&nbsp;- <span class="command-link" data-command="projects">projects</span>: To view my portfolio</span>
-          <span>&nbsp;- <span class="command-link" data-command="resume">resume</span>: To view my resume</span>
           <span>&nbsp;- <span class="command-link" data-command="skills">skills</span>: To see my technical skills</span>
+          <span>&nbsp;- <span class="command-link" data-command="resume">resume</span>: To view my resume</span>
+          <span>&nbsp;- <span class="command-link" data-command="contact">contact</span>: For my contact information</span>
           <span>&nbsp;- <span class="command-link" data-command="theme">theme</span>: To change the terminal theme</span>
         </div>
         Feel free to explore and get in touch!
