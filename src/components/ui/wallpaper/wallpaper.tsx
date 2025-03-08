@@ -335,7 +335,9 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               {...(animationProps as ThreadsProps)}
             />
           )}
-          {animation === 'vortex' && <Vortex {...(animationProps as VortexProps)} />}
+          {animation === 'vortex' && (
+            <Vortex backgroundColor={backgroundColor} {...(animationProps as VortexProps)} />
+          )}
           {animation === 'waves' && (
             <Waves
               lineColor={foregroundColor}
@@ -353,7 +355,10 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
             />
           )}
           {animation === 'wavy-background' && (
-            <WavyBackground {...(animationProps as WavyBackgroundProps)} />
+            <WavyBackground
+              backgroundColor={backgroundColor}
+              {...(animationProps as WavyBackgroundProps)}
+            />
           )}
           {animation === 'world-map' && (
             <WorldMap
