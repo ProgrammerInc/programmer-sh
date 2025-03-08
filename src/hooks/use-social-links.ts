@@ -8,9 +8,7 @@ export const useSocialLinks = () => {
   useEffect(() => {
     const loadSocialLinks = async () => {
       try {
-        // console.log('Fetching social links...');
         const links = await fetchSocialLinks();
-        // console.log('Social links loaded:', links);
         setSocialLinks(links);
       } catch (error) {
         console.error('Failed to load social links:', error);
