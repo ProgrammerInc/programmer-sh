@@ -29,7 +29,6 @@ export const welcomeCommand: Command = {
           <span>&nbsp;- <span class="command-link" data-command="skills">skills</span>: To see my technical skills</span>
           <span>&nbsp;- <span class="command-link" data-command="resume">resume</span>: To view my resume</span>
           <span>&nbsp;- <span class="command-link" data-command="contact">contact</span>: For my contact information</span>
-          <span>&nbsp;- <span class="command-link" data-command="theme">theme</span>: To change the terminal theme</span>
         </div>
         Feel free to explore and get in touch!
       </div>`,
