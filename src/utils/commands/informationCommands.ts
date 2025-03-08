@@ -53,10 +53,10 @@ Contact Information:
 
 &nbsp;&nbsp;- E-mail: <a href="mailto:${profile.contact.email}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.email}</a>
   ${profile.contact.phone ? `&nbsp;&nbsp;- Phone: <a href="tel:${profile.contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${profile.contact.phone}</a>` : ''}
-  ${github ? `&nbsp;&nbsp;- GitHub: <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github}</a>` : ''}
-  ${linkedin ? `&nbsp;&nbsp;- LinkedIn: <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin}</a>` : ''}
-  ${twitter ? `&nbsp;&nbsp;- Twitter/X: <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter}</a>` : ''}
-  ${website ? `&nbsp;&nbsp;- Website: <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website}</a>` : ''}\n\n`,
+  ${github ? `&nbsp;&nbsp;- GitHub: <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github.replace(/^https?:\/\//, '')}</a>` : ''}
+  ${linkedin ? `&nbsp;&nbsp;- LinkedIn: <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin.replace(/^https?:\/\//, '')}</a>` : ''}
+  ${twitter ? `&nbsp;&nbsp;- Twitter/X: <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter.replace(/^https?:\/\//, '')}</a>` : ''}
+  ${website ? `&nbsp;&nbsp;- Website: <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website.replace(/^https?:\/\//, '')}</a>` : ''}\n\n`,
           isError: false
         };
       }
@@ -112,10 +112,10 @@ Location: <span class="text-terminal-prompt">${profile.location}</span>
 
 &nbsp;&nbsp;- E-mail: <a href="mailto:${profile.contact.email}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.email}</a>
   ${profile.contact.phone ? `&nbsp;&nbsp;- Phone: <a href="tel:${profile.contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${profile.contact.phone}</a>` : ''}
-  ${github ? `&nbsp;&nbsp;- GitHub: <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github}</a>` : ''}
-  ${linkedin ? `&nbsp;&nbsp;- LinkedIn: <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin}</a>` : ''}
-  ${twitter ? `&nbsp;&nbsp;- Twitter/X: <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter}</a>` : ''}
-  ${website ? `&nbsp;&nbsp;- Website: <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website}</a>` : ''}\n\n`,
+  ${github ? `&nbsp;&nbsp;- GitHub: <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github.replace(/^https?:\/\//, '')}</a>` : ''}
+  ${linkedin ? `&nbsp;&nbsp;- LinkedIn: <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin.replace(/^https?:\/\//, '')}</a>` : ''}
+  ${twitter ? `&nbsp;&nbsp;- Twitter/X: <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter.replace(/^https?:\/\//, '')}</a>` : ''}
+  ${website ? `&nbsp;&nbsp;- Website: <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website.replace(/^https?:\/\//, '')}</a>` : ''}\n\n`,
           isError: false
         };
       }
