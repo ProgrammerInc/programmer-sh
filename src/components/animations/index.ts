@@ -41,6 +41,7 @@ export * from './text-pressure';
 export * from './threads';
 export * from './true-focus';
 export * from './variable-proximity';
+export * from './vortex';
 export * from './waves';
 export * from './wavy-background';
 export * from './world-map';

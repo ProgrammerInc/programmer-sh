@@ -219,6 +219,14 @@ const wallpapers: Record<string, Wallpaper> = {
     gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
     gradientType: 'linear'
   },
+  vortex: {
+    id: 'vortex',
+    name: 'Vortex',
+    description: 'Vortex - animated vortex',
+    type: 'animation',
+    animation: 'vortex',
+    animationType: 'aceternity'
+  },
   waves: {
     id: 'waves',
     name: 'Waves',

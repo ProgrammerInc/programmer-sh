@@ -3,6 +3,8 @@ import {
   GridMotionProps,
   Squares,
   SquaresProps,
+  Vortex,
+  VortexProps,
   WavyBackground,
   WavyBackgroundProps,
   WorldMap,
@@ -333,6 +335,7 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               {...(animationProps as ThreadsProps)}
             />
           )}
+          {animation === 'vortex' && <Vortex {...(animationProps as VortexProps)} />}
           {animation === 'waves' && (
             <Waves
               lineColor={foregroundColor}
