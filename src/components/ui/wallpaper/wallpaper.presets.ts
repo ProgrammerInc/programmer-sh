@@ -199,6 +199,16 @@ const wallpapers: Record<string, Wallpaper> = {
     gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
     gradientType: 'linear'
   },
+  'shooting-stars': {
+    id: 'shooting-stars',
+    name: 'Shooting Stars',
+    description: 'Shooting stars - animated shooting stars',
+    type: 'animation',
+    animation: 'shooting-stars',
+    animationType: 'aceternity',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
+  },
   squares: {
     id: 'squares',
     name: 'Squares',

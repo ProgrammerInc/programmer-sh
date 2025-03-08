@@ -1,8 +1,12 @@
 import {
   GridMotion,
   GridMotionProps,
+  ShootingStars,
+  ShootingStarsProps,
   Squares,
   SquaresProps,
+  StarBackgroundProps,
+  StarsBackground,
   Vortex,
   VortexProps,
   WavyBackground,
@@ -311,6 +315,12 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               moveParticlesOnHover={false}
               {...(animationProps as ParticlesProps)}
             />
+          )}
+          {animation === 'shooting-stars' && (
+            <div className="shooting-stars-container">
+              <ShootingStars {...(animationProps[0] as ShootingStarsProps)} />
+              <StarsBackground {...(animationProps[1] as StarBackgroundProps)} />
+            </div>
           )}
           {animation === 'squares' && (
             <Squares

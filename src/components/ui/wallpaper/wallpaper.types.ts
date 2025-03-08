@@ -4,14 +4,22 @@ import {
   BallpitProps,
   DitherProps,
   GridDistortionProps,
+  GridMotionProps,
   HyperspeedProps,
   IridescenceProps,
   LetterGlitchProps,
   LightningProps,
   MagnetLinesProps,
+  NoiseProps,
   ParticlesProps,
+  ShootingStarsProps,
+  SquaresProps,
+  StarBackgroundProps,
   ThreadsProps,
-  WavesProps
+  VortexProps,
+  WavesProps,
+  WavyBackgroundProps,
+  WorldMapProps
 } from '@/components/animations';
 import { LiquidChromeProps } from '@/components/animations/liquid-chrome';
 
@@ -37,15 +45,22 @@ export interface Wallpaper {
     | BallpitProps
     | DitherProps
     | GridDistortionProps
+    | GridMotionProps
     | HyperspeedProps
     | IridescenceProps
     | LetterGlitchProps
     | LightningProps
     | LiquidChromeProps
     | MagnetLinesProps
+    | NoiseProps
     | ParticlesProps
+    | SquaresProps
+    | [ShootingStarsProps, StarBackgroundProps]
     | ThreadsProps
-    | WavesProps;
+    | VortexProps
+    | WavesProps
+    | WavyBackgroundProps
+    | WorldMapProps;
   backgroundColor?: string;
   backgroundGradient?: string;
   backgroundImage?: string;
