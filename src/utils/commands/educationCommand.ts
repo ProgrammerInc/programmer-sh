@@ -20,8 +20,7 @@ export const educationCommand: Command = {
         }
 
         return {
-          content: `\n<span class="font-bold">My Education:</span>
-
+          content: `\nMy Education:\n
 ${education
   .sort(
     (a, b) =>

@@ -47,19 +47,19 @@ export const socialCommand: Command = {
               const name = getSocialName(link.type);
 
               if (link.type === 'email') {
-                return `  - <strong>${name}:</strong> <a class="text-terminal-link hover:underline" href="${link.url}" target="_blank" rel="noopener noreferrer">${link.url.replace('mailto:', '')}</a>`;
+                return `  - ${name}: <a class="text-terminal-link hover:underline" href="${link.url}" target="_blank" rel="noopener noreferrer">${link.url.replace('mailto:', '')}</a>`;
               }
 
               if (link.type === 'website') {
-                return `  - <strong>${name}:</strong> <a class="text-terminal-link hover:underline" href="${link.url}" target="_blank" rel="noopener noreferrer">${link.url.replace('https://', '')}</a>`;
+                return `  - ${name}: <a class="text-terminal-link hover:underline" href="${link.url}" target="_blank" rel="noopener noreferrer">${link.url.replace('https://', '')}</a>`;
               }
 
-              return `  - <strong>${name}:</strong> <a class="text-terminal-link hover:underline" href="${link.url}" target="_blank" rel="noopener noreferrer">${link.url.replace('https://', '')}</a>`;
+              return `  - ${name}: <a class="text-terminal-link hover:underline" href="${link.url}" target="_blank" rel="noopener noreferrer">${link.url.replace('https://', '')}</a>`;
             })
             .join('\n');
 
           return {
-            content: `<strong>My Social Links:</strong>\n\n${formattedLinks}`,
+            content: `My Social Links:\n\n${formattedLinks}`,
             isError: false
           };
         } catch (error) {

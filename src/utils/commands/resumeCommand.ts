@@ -56,18 +56,18 @@ PHOTO;VALUE=uri:https://programmer.sh/images/programmer-icon-dark-medium.png
 END:VCARD`;
 
         return {
-          content: `\n<span class="font-bold">My Resume:</span>
+          content: `\nMy Resume:
 <div class="resume-header">
 Name: <span class="text-terminal-prompt">${portfolioData.full_name}</span>
 Title: <span class="text-terminal-prompt">${portfolioData.title}</span> @ <span class="text-terminal-prompt">${portfolioData.company}</span>
 Location: <span class="text-terminal-prompt">${portfolioData.location}</span>
 </div>
 <hr class="terminal-divider" />
-<div class="resume-summary"><span class="font-bold">SUMMARY</span>
+<div class="resume-summary">SUMMARY
 
 <p>${portfolioData.summary}</p></div>
 <hr class="terminal-divider" /><div class="resume-section">
-<span class="font-bold">MY EXPERIENCE</span>
+MY EXPERIENCE
 
 ${portfolioData.experience
   .sort(
@@ -86,8 +86,8 @@ ${portfolioData.experience
 </div>`
   )
   .join('\n')}</div>
-<hr class="terminal-divider" />
-<div class="resume-section"><span class="font-bold">MY EDUCATION</span>
+<hr class="terminal-divider" /><div class="resume-section">
+MY EDUCATION
 
 ${portfolioData.education
   .sort(
@@ -102,12 +102,12 @@ Institution: <span class="institution"><span class="text-terminal-prompt">${edu.
 ${edu.details ? `Details: <span class="details">${edu.details}</span>` : ''}</div>`
   )
   .join('')}</div>
-<hr class="terminal-divider" />
-<div class="resume-section"><span class="font-bold">MY SKILLS</span>
+<hr class="terminal-divider" /><div class="resume-section">
+MY SKILLS
 
 <div class="skills-section">${portfolioData.skills.map(skillCategory => `<div class="skill-category"><span class="category">${skillCategory.category}:</span> ${skillCategory.items.map(skill => `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${skill}" target="_blank">${skill}</a>`).join(', ')}</span></div>`).join('')}</div></div>
-<hr class="terminal-divider" />
-<div class="resume-section"><span class="font-bold">CONTACT INFORMATION</span>
+<hr class="terminal-divider" /><div class="resume-section">
+CONTACT INFORMATION
 <div class="contact-section">
 <span>E-mail: <a href="mailto:${portfolioData.contact.email}" target="_blank" class="text-terminal-link hover:underline">${portfolioData.contact.email}</a></span>
 ${portfolioData.contact.phone ? `<span>Phone: <a href="tel:${portfolioData.contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${portfolioData.contact.phone}</a></span>` : ''}

@@ -20,7 +20,7 @@ export const skillsCommand: Command = {
         }
 
         return {
-          content: `\n<strong>My Skills:</strong>\n
+          content: `\nMy Skills:\n
 ${profile.skills
   .sort()
   .map(

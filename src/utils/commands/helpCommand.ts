@@ -64,7 +64,7 @@ export const getSpecificCommandHelp = (commandName: string): string => {
   const category = commandCategories.find(cat => Object.keys(cat.commands).includes(commandName));
 
   if (commandName in allCommands) {
-    return `<strong class="text-terminal-prompt command-link" data-command="${commandName}">${commandName}</strong>: ${allCommands[commandName]}${category ? ` (Category: ${category.name})` : ''}`;
+    return `<span class="text-terminal-prompt command-link" data-command="${commandName}">${commandName}</span>: ${allCommands[commandName]}${category ? ` (Category: ${category.name})` : ''}`;
   }
 
   return `Command not found: ${commandName}`;
@@ -85,7 +85,7 @@ export const helpCommand: Command = {
     }
 
     // Generate help text with categories
-    let helpContent = `<div class="font-mono text-xs md:text-sm mt-4 mb-4"><span class="font-bold">Available Commands:</span></div>`;
+    let helpContent = `<div class="font-mono text-xs md:text-sm mt-4 mb-4">Available Commands:</div>`;
 
     // List commands by category
     commandCategories.forEach((category, index) => {

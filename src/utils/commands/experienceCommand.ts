@@ -20,7 +20,7 @@ export const experienceCommand: Command = {
         }
 
         return {
-          content: `\n<span class="font-bold">My Experience:</span>\n
+          content: `\nMy Experience:\n
 ${experience
   .sort(
     (a, b) =>
@@ -28,15 +28,15 @@ ${experience
       new Date(a.duration.split(' - ')[0]).getTime()
   )
   .map(
-    exp => `<span class="font-bold">Position:</span> <span class="text-terminal-prompt">${exp.position}</span> @ <span class="text-terminal-prompt">${exp.company}</span>
-<span class="font-bold">Duration:</span> ${exp.duration}
+    exp => `Position: <span class="text-terminal-prompt">${exp.position}</span> @ <span class="text-terminal-prompt">${exp.company}</span>
+Duration: ${exp.duration}
 
-<span class="font-bold">Description:</span> ${exp.description}
+Description: ${exp.description}
 
-<span class="font-bold">Achievements:</span>
+Achievements:
 ${exp.achievements.map(achievement => `- ${achievement}`).join('\n')}
 
-<span class="font-bold">Technologies:</span> ${exp.technologies
+Technologies: ${exp.technologies
       .sort()
       .map(
         tech =>

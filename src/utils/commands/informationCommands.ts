@@ -42,15 +42,14 @@ export const aboutCommand: Command = {
             : profile.contact.website;
 
         return {
-          content: `\n<span class="font-bold">About Me:</span>
-
+          content: `\nAbout Me:\n
 Name: <span class="text-terminal-prompt">${profile.full_name}</span>
 Title: <span class="text-terminal-prompt">${profile.title}</span> @ <span class="text-terminal-prompt">${profile.company}</span>
 Location: <span class="text-terminal-prompt">${profile.location}</span>
 
 ${profile.summary}
 
-<span class="font-bold">Contact Information:</span>
+Contact Information:
 
 &nbsp;&nbsp;- E-mail: <a href="mailto:${profile.contact.email}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.email}</a>
   ${profile.contact.phone ? `&nbsp;&nbsp;- Phone: <a href="tel:${profile.contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${profile.contact.phone}</a>` : ''}
@@ -106,8 +105,7 @@ export const contactCommand: Command = {
             : profile.contact.website;
 
         return {
-          content: `\n<span class="font-bold">My Contact Information:</span>
-
+          content: `\nMy Contact Information:\n
 Name: <span class="text-terminal-prompt">${profile.full_name}</span>
 Title: <span class="text-terminal-prompt">${profile.title}</span> @ <span class="text-terminal-prompt">${profile.company}</span>
 Location: <span class="text-terminal-prompt">${profile.location}</span>
