@@ -15,7 +15,7 @@ import {
 } from '@/components/animations';
 import { LiquidChromeProps } from '@/components/animations/liquid-chrome';
 
-export type AnimationType = 'css' | 'react' | 'reactbits' | 'three';
+export type AnimationType = 'aceternity' | 'css' | 'react' | 'reactbits' | 'three';
 export type ColorType = 'hex' | 'rgb' | 'rgba' | 'hsl' | 'hsla';
 export type GradientType = 'linear' | 'radial';
 export type ImageType = 'base64' | 'url';

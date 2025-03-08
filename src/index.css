@@ -40,7 +40,7 @@
     --radius: 0.5rem;
 
     /* Default app colors */
-    --default-background: #1a1f2c;
+    --default-background: #111827;
     --default-background-gradient: linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0.25),
@@ -169,7 +169,7 @@
   }
 
   .qrcode-container .qrcode-background {
-    background-color: #111827;
+    background-color: var(--default-background);
     border: none;
     border-radius: 20px;
   }
@@ -183,8 +183,8 @@
   }
 
   .qrcode-container .qrcode {
-    background-color: #111827;
-    border: 15px solid #111827;
+    background-color: var(--default-background);
+    border: 15px solid var(--default-background);
     border-radius: 10px;
     height: 360px;
     width: 360px;
@@ -354,7 +354,8 @@
   .particles-container,
   .squares-container,
   .threads-container,
-  .waves-container {
+  .waves-container,
+  .world-map-container {
     position: absolute;
     width: 100%;
     height: 100%;

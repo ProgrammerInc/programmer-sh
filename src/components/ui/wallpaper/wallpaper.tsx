@@ -1,4 +1,11 @@
-import { GridMotion, GridMotionProps, Squares, SquaresProps } from '@/components/animations';
+import {
+  GridMotion,
+  GridMotionProps,
+  Squares,
+  SquaresProps,
+  WorldMap,
+  WorldMapProps
+} from '@/components/animations';
 import Aurora, { AuroraProps } from '@/components/animations/aurora';
 import Balatro, { BalatroProps } from '@/components/animations/balatro';
 import Ballpit, { BallpitProps } from '@/components/animations/ballpit';
@@ -338,6 +345,18 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               xGap={12}
               yGap={36}
               {...(animationProps as WavesProps)}
+            />
+          )}
+          {animation === 'world-map' && (
+            <WorldMap
+              dots={[
+                {
+                  start: { lat: 40.73061, lng: -73.935242 },
+                  end: { lat: 48.8534, lng: 2.3488 }
+                }
+              ]}
+              lineColor={foregroundColor}
+              {...(animationProps as WorldMapProps)}
             />
           )}
         </div>

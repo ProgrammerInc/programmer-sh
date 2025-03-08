@@ -236,6 +236,14 @@ const wallpapers: Record<string, Wallpaper> = {
     type: 'image',
     imageType: 'url',
     url: 'https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&q=80'
+  },
+  'world-map': {
+    id: 'world-map',
+    name: 'World Map',
+    description: 'World Map - animated world map',
+    type: 'animation',
+    animation: 'world-map',
+    animationType: 'aceternity'
   }
 };
 
