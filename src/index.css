@@ -91,20 +91,23 @@ body,
     --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
 
-    /* Terminal specific colors - light theme */
-    --terminal-background: #f5f5f5;
-    --terminal-background-translucent: rgba(245, 245, 245, 0.9);
+    /* Terminal specific colors - improved light theme */
+    --terminal-background: #F6F6F7;
+    --terminal-background-translucent: rgba(246, 246, 247, 0.95);
     --terminal-foreground: #2e3440;
-    --terminal-prompt: #00a8a8;
-    --terminal-success: #4c9a52;
-    --terminal-error: #bf616a;
-    --terminal-warning: #d08770;
-    --terminal-command: #5e81ac;
-    --terminal-link: #5e81ac;
-    --terminal-muted: #9e9e9e;
-    --terminal-muted-30: rgba(158, 158, 158, 0.3);
-    --terminal-muted-50: rgba(158, 158, 158, 0.5);
-    --terminal-prompt-50: rgba(0, 168, 168, 0.5);
+    --terminal-prompt: #007D7D;
+    --terminal-success: #3A8043;
+    --terminal-error: #C32F3A;
+    --terminal-warning: #C26839;
+    --terminal-command: #4A6F96;
+    --terminal-link: #4A6F96;
+    --terminal-muted: #6E6E6E;
+    --terminal-muted-30: rgba(110, 110, 110, 0.3);
+    --terminal-muted-50: rgba(110, 110, 110, 0.5);
+    --terminal-prompt-50: rgba(0, 125, 125, 0.5);
+    --terminal-dropdown: 0 0% 97%;
+    --terminal-dropdown-hover: 0 0% 92%;
+    --terminal-border: rgba(110, 110, 110, 0.3);
   }
 }
 
