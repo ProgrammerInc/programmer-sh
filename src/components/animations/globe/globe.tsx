@@ -3,6 +3,7 @@
 
 'use client';
 import countries from '@/data/globe.json';
+import { genRandomNumbers, hexToRgb } from '@/lib/utils';
 import { OrbitControls } from '@react-three/drei';
 import { Canvas, extend, useThree } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
@@ -116,7 +117,7 @@ export function Globe({ globeConfig, data }: WorldProps) {
     const points = [];
     for (let i = 0; i < arcs.length; i++) {
       const arc = arcs[i];
-      const rgb = hexToRgb(arc.color) as { r: number; g: number; b: number };
+      const rgb = hexToRgb(arc.color, 'rgb', 1, 'object') as { r: number; g: number; b: number };
       points.push({
         size: defaultProps.pointSize,
         order: arc.order,
@@ -264,32 +265,6 @@ export function World(props: WorldProps) {
       />
     </Canvas>
   );
-}
-
-function hexToRgb(hex: string) {
-  const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-  hex = hex.replace(shorthandRegex, function (m, r, g, b) {
-    return r + r + g + g + b + b;
-  });
-
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result
-    ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-      }
-    : null;
-}
-
-function genRandomNumbers(min: number, max: number, count: number) {
-  const arr = [];
-  while (arr.length < count) {
-    const r = Math.floor(Math.random() * (max - min)) + min;
-    if (arr.indexOf(r) === -1) arr.push(r);
-  }
-
-  return arr;
 }
 
 export default World;

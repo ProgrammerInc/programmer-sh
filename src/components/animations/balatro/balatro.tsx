@@ -1,3 +1,4 @@
+import { hexToVec4 } from '@/lib/utils';
 import { Mesh, Program, Renderer, Triangle } from 'ogl';
 import { useEffect, useRef } from 'react';
 
@@ -15,25 +16,6 @@ export interface BalatroProps {
   spinEase?: number;
   isRotate?: boolean;
   mouseInteraction?: boolean;
-}
-
-function hexToVec4(hex: string): [number, number, number, number] {
-  const hexStr = hex.replace('#', '');
-  let r = 0,
-    g = 0,
-    b = 0,
-    a = 1;
-  if (hexStr.length === 6) {
-    r = parseInt(hexStr.slice(0, 2), 16) / 255;
-    g = parseInt(hexStr.slice(2, 4), 16) / 255;
-    b = parseInt(hexStr.slice(4, 6), 16) / 255;
-  } else if (hexStr.length === 8) {
-    r = parseInt(hexStr.slice(0, 2), 16) / 255;
-    g = parseInt(hexStr.slice(2, 4), 16) / 255;
-    b = parseInt(hexStr.slice(4, 6), 16) / 255;
-    a = parseInt(hexStr.slice(6, 8), 16) / 255;
-  }
-  return [r, g, b, a];
 }
 
 const vertexShader = `

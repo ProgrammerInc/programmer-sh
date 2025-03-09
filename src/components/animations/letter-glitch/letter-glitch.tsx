@@ -1,3 +1,4 @@
+import { hexToRgb } from '@/lib/utils';
 import { useEffect, useRef } from 'react';
 import styles from './letter-glitch.module.css';
 
@@ -102,22 +103,6 @@ export const LetterGlitch = ({
     return glitchColors[Math.floor(Math.random() * glitchColors.length)];
   };
 
-  const hexToRgb = (hex: string) => {
-    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    hex = hex.replace(shorthandRegex, (m, r, g, b) => {
-      return r + r + g + g + b + b;
-    });
-
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result
-      ? {
-          r: parseInt(result[1], 16),
-          g: parseInt(result[2], 16),
-          b: parseInt(result[3], 16)
-        }
-      : null;
-  };
-
   const interpolateColor = (
     start: { r: number; g: number; b: number },
     end: { r: number; g: number; b: number },
@@ -216,8 +201,17 @@ export const LetterGlitch = ({
         letter.colorProgress += 0.05;
         if (letter.colorProgress > 1) letter.colorProgress = 1;
 
-        const startRgb = hexToRgb(letter.color);
-        const endRgb = hexToRgb(letter.targetColor);
+        const startRgb = hexToRgb(letter.color, 'rgb', 1, 'object') as {
+          r: number;
+          g: number;
+          b: number;
+        };
+        const endRgb = hexToRgb(letter.targetColor, 'rgb', 1, 'object') as {
+          r: number;
+          g: number;
+          b: number;
+        };
+
         if (startRgb && endRgb) {
           letter.color = interpolateColor(startRgb, endRgb, letter.colorProgress);
           needsRedraw = true;

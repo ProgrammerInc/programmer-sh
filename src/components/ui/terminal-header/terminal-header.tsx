@@ -3,194 +3,203 @@ import { supabase } from '@/integrations/supabase/client';
 import { isIncognitoMode } from '@/lib/incognito';
 import { SocialLink } from '@/types/social-links';
 import { ChevronDown, LogIn, LogOut, Minus, Plus, Settings, User, X } from 'lucide-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
 export interface TerminalHeaderProps {
+  ref?: React.RefObject<HTMLDivElement> | null;
   lastCommand?: string;
   socialLinks?: SocialLink[];
 }
 
-export const TerminalHeader: React.FC<TerminalHeaderProps> = ({ lastCommand = '' }) => {
-  const { userEmail } = useTerminalAuth();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [isAnonymous, setIsAnonymous] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+export const TerminalHeader = forwardRef<HTMLDivElement, TerminalHeaderProps>(
+  ({ lastCommand = '' }, ref) => {
+    const { userEmail } = useTerminalAuth();
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [isAnonymous, setIsAnonymous] = useState(false);
+    const headerRef = useRef<HTMLDivElement>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: globalThis.MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    useImperativeHandle(ref, () => headerRef.current!);
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+      const handleClickOutside = (event: globalThis.MouseEvent) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+          setDropdownOpen(false);
+        }
+      };
+
+      document.addEventListener('mousedown', handleClickOutside);
+
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, []);
+
+    // Check for incognito mode
+    useEffect(() => {
+      setIsAnonymous(isIncognitoMode());
+    }, []);
+
+    // Determine display name
+    const getUserDisplayName = () => {
+      if (userEmail) {
+        return userEmail.split('@')[0];
+      }
+
+      return isAnonymous ? 'Anonymous' : 'Guest';
+    };
+
+    const handleLogout = async () => {
+      try {
+        await supabase.auth.signOut();
         setDropdownOpen(false);
+      } catch (error) {
+        console.error('Error logging out:', error);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  // Check for incognito mode
-  useEffect(() => {
-    setIsAnonymous(isIncognitoMode());
-  }, []);
-
-  // Determine display name
-  const getUserDisplayName = () => {
-    if (userEmail) {
-      return userEmail.split('@')[0];
-    }
-
-    return isAnonymous ? 'Anonymous' : 'Guest';
-  };
-
-  const handleLogout = async () => {
-    try {
-      await supabase.auth.signOut();
+    const handleLoginClick = () => {
       setDropdownOpen(false);
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  };
+      // Dispatch a custom event to execute the login command
+      const event = new CustomEvent('executeCommand', { detail: { command: 'login' } });
+      document.dispatchEvent(event);
+    };
 
-  const handleLoginClick = () => {
-    setDropdownOpen(false);
-    // Dispatch a custom event to execute the login command
-    const event = new CustomEvent('executeCommand', { detail: { command: 'login' } });
-    document.dispatchEvent(event);
-  };
+    const handleSignupClick = () => {
+      setDropdownOpen(false);
+      // Dispatch a custom event to execute the signup command
+      const event = new CustomEvent('executeCommand', { detail: { command: 'signup' } });
+      document.dispatchEvent(event);
+    };
 
-  const handleSignupClick = () => {
-    setDropdownOpen(false);
-    // Dispatch a custom event to execute the signup command
-    const event = new CustomEvent('executeCommand', { detail: { command: 'signup' } });
-    document.dispatchEvent(event);
-  };
+    const handleProfileClick = () => {
+      setDropdownOpen(false);
+      // Dispatch a custom event to execute the profile command
+      const event = new CustomEvent('executeCommand', { detail: { command: 'whoami' } });
+      document.dispatchEvent(event);
+    };
 
-  const handleProfileClick = () => {
-    setDropdownOpen(false);
-    // Dispatch a custom event to execute the profile command
-    const event = new CustomEvent('executeCommand', { detail: { command: 'whoami' } });
-    document.dispatchEvent(event);
-  };
+    const handleSettingsClick = () => {
+      setDropdownOpen(false);
+      // Dispatch a custom event to execute the settings command
+      const event = new CustomEvent('executeCommand', { detail: { command: 'theme' } });
+      document.dispatchEvent(event);
+    };
 
-  const handleSettingsClick = () => {
-    setDropdownOpen(false);
-    // Dispatch a custom event to execute the settings command
-    const event = new CustomEvent('executeCommand', { detail: { command: 'theme' } });
-    document.dispatchEvent(event);
-  };
-
-  return (
-    <div className="flex items-center justify-between bg-terminal-background p-2 border-b border-terminal-border">
-      <div className="flex space-x-2">
-        <div className="w-3 h-3 rounded-full bg-terminal-close window-control group flex items-center justify-center">
-          <X
-            className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100"
-            strokeWidth={3}
-          />
-        </div>
-        <div className="w-3 h-3 rounded-full bg-terminal-minimize window-control group flex items-center justify-center">
-          <Minus
-            className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100"
-            strokeWidth={3}
-          />
-        </div>
-        <div className="w-3 h-3 rounded-full bg-terminal-maximize window-control group flex items-center justify-center">
-          <Plus
-            className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100"
-            strokeWidth={3}
-          />
-        </div>
-      </div>
-
-      <div className="flex-1 text-center text-terminal-title text-sm font-mono truncate px-4">
-        <span>
-          <span className="font-mono">&lt;programmer&gt;</span>.
-          <span className="animate-cursor-blink font-mono">_</span>
-        </span>
-        {lastCommand && (
-          <span>
-            <span className="text-terminal-muted font-mono">&nbsp;-&nbsp;</span>
-            <span className="text-terminal-prompt font-mono">~/{lastCommand}</span>
-          </span>
-        )}
-      </div>
-
-      <div className="relative" ref={dropdownRef}>
-        <button
-          id="userDropdown"
-          type="button"
-          onClick={e => {
-            e.preventDefault();
-            e.currentTarget.ariaExpanded = String(!dropdownOpen);
-            setDropdownOpen(!dropdownOpen);
-          }}
-          className="flex items-center space-x-1 text-terminal-title hover:text-terminal-prompt transition-colors py-1 px-2 rounded"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <User className="w-4 h-4" />
-          <span className="text-xs">{getUserDisplayName()}</span>
-          <ChevronDown className="w-3 h-3" />
-        </button>
-
-        {dropdownOpen && (
-          <div
-            className="absolute right-0 mt-1 w-48 rounded-md shadow-lg border border-terminal-border z-50 terminal-glass"
-            onClick={e => e.stopPropagation()}
-          >
-            <div className="py-1 rounded-md bg-terminal-background-translucent">
-              {userEmail ? (
-                <>
-                  <button
-                    className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
-                    onClick={handleProfileClick}
-                  >
-                    <User className="w-4 h-4 mr-2" />
-                    Profile
-                  </button>
-                  <button
-                    className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
-                    onClick={handleSettingsClick}
-                  >
-                    <Settings className="w-4 h-4 mr-2" />
-                    Settings
-                  </button>
-                  <div className="border-t border-terminal-border my-1"></div>
-                  <button
-                    className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
-                    onClick={handleLogout}
-                  >
-                    <LogOut className="w-4 h-4 mr-2" />
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button
-                    className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
-                    onClick={handleLoginClick}
-                  >
-                    <LogIn className="w-4 h-4 mr-2" />
-                    Login
-                  </button>
-                  <button
-                    className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
-                    onClick={handleSignupClick}
-                  >
-                    <User className="w-4 h-4 mr-2" />
-                    Sign Up
-                  </button>
-                </>
-              )}
-            </div>
+    return (
+      <div
+        ref={headerRef}
+        className="flex items-center justify-between bg-terminal-background p-2 border-b border-terminal-border"
+      >
+        <div className="flex space-x-2">
+          <div className="w-3 h-3 rounded-full bg-terminal-close window-control group flex items-center justify-center">
+            <X
+              className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100"
+              strokeWidth={3}
+            />
           </div>
-        )}
+          <div className="w-3 h-3 rounded-full bg-terminal-minimize window-control group flex items-center justify-center">
+            <Minus
+              className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100"
+              strokeWidth={3}
+            />
+          </div>
+          <div className="w-3 h-3 rounded-full bg-terminal-maximize window-control group flex items-center justify-center">
+            <Plus
+              className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100"
+              strokeWidth={3}
+            />
+          </div>
+        </div>
+
+        <div className="flex-1 text-center text-terminal-title text-sm font-mono truncate px-4">
+          <span>
+            <span className="font-mono">&lt;programmer&gt;</span>.
+            <span className="animate-cursor-blink font-mono">_</span>
+          </span>
+          {lastCommand && (
+            <span>
+              <span className="text-terminal-muted font-mono">&nbsp;-&nbsp;</span>
+              <span className="text-terminal-prompt font-mono">~/{lastCommand}</span>
+            </span>
+          )}
+        </div>
+
+        <div className="relative" ref={dropdownRef}>
+          <button
+            id="userDropdown"
+            type="button"
+            onClick={e => {
+              e.preventDefault();
+              e.currentTarget.ariaExpanded = String(!dropdownOpen);
+              setDropdownOpen(!dropdownOpen);
+            }}
+            className="flex items-center space-x-1 text-terminal-title hover:text-terminal-prompt transition-colors py-1 px-2 rounded"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <User className="w-4 h-4" />
+            <span className="text-xs">{getUserDisplayName()}</span>
+            <ChevronDown className="w-3 h-3" />
+          </button>
+
+          {dropdownOpen && (
+            <div
+              className="absolute right-0 mt-1 w-48 rounded-md shadow-lg border border-terminal-border z-50 terminal-glass"
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="py-1 rounded-md bg-terminal-background-translucent">
+                {userEmail ? (
+                  <>
+                    <button
+                      className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
+                      onClick={handleProfileClick}
+                    >
+                      <User className="w-4 h-4 mr-2" />
+                      Profile
+                    </button>
+                    <button
+                      className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
+                      onClick={handleSettingsClick}
+                    >
+                      <Settings className="w-4 h-4 mr-2" />
+                      Settings
+                    </button>
+                    <div className="border-t border-terminal-border my-1"></div>
+                    <button
+                      className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
+                      onClick={handleLogout}
+                    >
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
+                      onClick={handleLoginClick}
+                    >
+                      <LogIn className="w-4 h-4 mr-2" />
+                      Login
+                    </button>
+                    <button
+                      className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
+                      onClick={handleSignupClick}
+                    >
+                      <User className="w-4 h-4 mr-2" />
+                      Sign Up
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
 export default TerminalHeader;

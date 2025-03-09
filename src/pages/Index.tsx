@@ -244,6 +244,7 @@ const Index = () => {
       <WallpaperProvider
         id="wallpaperContainer"
         className="wallpaper-container"
+        ref={wallpaperRef}
         wallpaper={wallpapers[currentWallpaper]}
       >
         <div id="terminalContainer" className="terminal-container" ref={terminalRef}>

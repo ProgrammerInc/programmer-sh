@@ -22,15 +22,26 @@ import { skillsCommand } from '@/utils/commands/skills-commands';
 import { themeCommand } from '@/utils/commands/theme-commands';
 import { wallpaperCommand } from '@/utils/commands/wallpaper-commands';
 import { welcomeCommand } from '@/utils/commands/welcome-commands';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { scrollToBottom } from './terminal-utils';
 
 export interface TerminalProps {
-  socialLinks?: SocialLink[];
+  containerRef?: React.RefObject<HTMLDivElement> | null;
+  contentRef?: React.RefObject<HTMLDivElement> | null;
+  headerRef?: React.RefObject<HTMLDivElement> | null;
+  footerRef?: React.RefObject<HTMLFormElement> | null;
   initialCommands?: string[];
+  socialLinks?: SocialLink[];
 }
 
-const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands = [] }) => {
+const Terminal: React.FC<TerminalProps> = ({
+  containerRef = null,
+  contentRef = null,
+  headerRef = null,
+  footerRef = null,
+  initialCommands = [],
+  socialLinks = []
+}) => {
   const [commandInput, setCommandInput] = useState<string>('');
 
   // Keep command history in localStorage to persist between page refreshes
@@ -65,7 +76,13 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
     console.log('History index updated:', historyIndex);
   }, [historyIndex]);
 
-  const terminalContentRef = useRef<HTMLDivElement>(null);
+  const terminalContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
+  const terminalContentRef = useRef<HTMLDivElement>(contentRef?.current || null);
+  const terminalHeaderRef = useRef<HTMLDivElement>(headerRef?.current || null);
+  const terminalFooterRef = useRef<HTMLFormElement>(footerRef?.current || null);
+
+  useImperativeHandle(containerRef, () => terminalContainerRef.current!);
+
   const { isAuthenticated } = useTerminalAuth();
 
   // Memoize the commands object to prevent unnecessary re-renders
@@ -469,8 +486,11 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
   };
 
   return (
-    <div className="flex flex-col h-full bg-terminal-background rounded-lg overflow-hidden terminal-glass">
-      <TerminalHeader lastCommand={lastCommand} socialLinks={socialLinks} />
+    <div
+      ref={terminalContainerRef}
+      className="flex flex-col h-full bg-terminal-background rounded-lg overflow-hidden terminal-glass"
+    >
+      <TerminalHeader ref={terminalHeaderRef} lastCommand={lastCommand} socialLinks={socialLinks} />
 
       <TerminalContent
         ref={terminalContentRef}
@@ -479,6 +499,7 @@ const Terminal: React.FC<TerminalProps> = ({ socialLinks = [], initialCommands =
       />
 
       <TerminalFooter
+        ref={terminalFooterRef}
         commandInput={commandInput}
         setCommandInput={setCommandInput}
         handleCommandSubmit={handleCommandSubmit}

@@ -95,4 +95,13 @@ export interface Wallpaper {
   theme?: ThemeType;
 }
 
+export interface WallpaperProps extends React.HTMLAttributes<HTMLDivElement> {
+  interactive?: boolean;
+  theme?: 'light' | 'dark';
+  animationRef?: React.RefObject<HTMLDivElement> | null;
+  containerRef?: React.RefObject<HTMLDivElement> | null;
+  contentRef?: React.RefObject<HTMLDivElement> | null;
+  wallpaper?: Wallpaper;
+}
+
 export default Wallpaper;
