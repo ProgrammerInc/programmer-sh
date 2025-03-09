@@ -39,6 +39,14 @@ export const cursors: Record<string, Cursor> = {
     animation: 'crosshair',
     animationType: 'reactbits'
   },
+  fairydust: {
+    id: 'fairydust',
+    name: 'Fairydust',
+    description: 'Fairydust cursor',
+    type: 'animation',
+    animation: 'fairydust',
+    animationType: 'cursify'
+  },
   rainbow: {
     id: 'rainbow',
     name: 'Rainbow',

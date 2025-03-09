@@ -7,6 +7,8 @@ import {
   CharacterCursorProps,
   Crosshair,
   CrosshairProps,
+  FairyDustCursor,
+  FairyDustCursorProps,
   RainbowCursor,
   RainbowCursorProps,
   Ribbons,
@@ -49,6 +51,7 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
     const splashContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const snowflakeContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const trailingContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
+    const fairydustContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
 
     // Connect the forwarded ref to our inner ref
     useImperativeHandle(ref, () => cursorContainerRef.current!);
@@ -97,6 +100,20 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
             color={currentColor}
             {...(currentCursor.animationProps as CrosshairProps)}
           />
+        )}
+        {currentCursor.type === 'animation' && currentCursor.animation === 'fairydust' && (
+          <div className="fairydust-cursor-container" ref={fairydustContainerRef}>
+            <FairyDustCursor
+              colors={['#FF0000', '#00FF00', '#0000FF']}
+              characterSet={['✨', '⭐', '🌟']}
+              particleSize={24}
+              particleCount={2}
+              gravity={0.015}
+              fadeSpeed={0.97}
+              initialVelocity={{ min: 0.7, max: 2.0 }}
+              {...(currentCursor.animationProps as FairyDustCursorProps)}
+            />
+          </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'rainbow' && (
           <div className="rainbow-cursor-container" ref={rainbowContainerRef}>

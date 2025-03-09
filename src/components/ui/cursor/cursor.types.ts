@@ -3,6 +3,7 @@ import {
   BubbleCursorProps,
   CharacterCursorProps,
   CrosshairProps,
+  FairyDustCursorProps,
   RainbowCursorProps,
   RibbonsProps,
   SnowflakeCursorProps,
@@ -25,6 +26,7 @@ export interface Cursor {
     | BubbleCursorProps
     | CharacterCursorProps
     | CrosshairProps
+    | FairyDustCursorProps
     | RainbowCursorProps
     | RibbonsProps
     | SnowflakeCursorProps

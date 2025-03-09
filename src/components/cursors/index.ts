@@ -3,6 +3,7 @@ export * from './bubble-cursor';
 export * from './character-cursor';
 export * from './click-spark';
 export * from './crosshair';
+export * from './fairydust-cursor';
 export * from './image-trail';
 export * from './pixel-trail';
 export * from './rainbow-cursor';
