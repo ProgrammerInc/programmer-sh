@@ -24,6 +24,8 @@ import {
   SpotlightCursorProps,
   SpringyCursor,
   SpringyCursorProps,
+  TextFlagCursor,
+  TextFlagCursorProps,
   TrailingCursor,
   TrailingCursorProps
 } from '@/components/cursors';
@@ -66,6 +68,7 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
     const splashContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const spotlightContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const springyContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
+    const textflagContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const trailingContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
 
     // Connect the forwarded ref to our inner ref
@@ -186,6 +189,14 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
         {currentCursor.type === 'animation' && currentCursor.animation === 'springy' && (
           <div className="springy-cursor-container" ref={springyContainerRef}>
             <SpringyCursor {...(currentCursor.animationProps as SpringyCursorProps)} />
+          </div>
+        )}
+        {currentCursor.type === 'animation' && currentCursor.animation === 'textflag' && (
+          <div className="textflag-cursor-container" ref={textflagContainerRef}>
+            <TextFlagCursor
+              color={currentColor}
+              {...(currentCursor.animationProps as TextFlagCursorProps)}
+            />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'trailing' && (

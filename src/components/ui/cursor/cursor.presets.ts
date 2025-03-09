@@ -127,6 +127,14 @@ export const cursors: Record<string, Cursor> = {
     animation: 'springy',
     animationType: 'cursify'
   },
+  textflag: {
+    id: 'textflag',
+    name: 'Textflag',
+    description: 'Textflag cursor',
+    type: 'animation',
+    animation: 'textflag',
+    animationType: 'cursify'
+  },
   trailing: {
     id: 'trailing',
     name: 'Trailing',

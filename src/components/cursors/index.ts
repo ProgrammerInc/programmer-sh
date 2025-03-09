@@ -16,4 +16,5 @@ export * from './snowflake-cursor';
 export * from './splash-cursor';
 export * from './spotlight-cursor';
 export * from './springy-cursor';
+export * from './textflag-cursor';
 export * from './trailing-cursor';
