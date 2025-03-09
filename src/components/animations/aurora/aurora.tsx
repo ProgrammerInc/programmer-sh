@@ -1,5 +1,6 @@
 import { Color, Mesh, Program, Renderer, Triangle } from 'ogl';
 import { useEffect, useRef } from 'react';
+import { StarsBackground } from '..';
 
 export const VERT = `#version 300 es
 in vec2 position;
@@ -108,15 +109,23 @@ void main() {
 `;
 
 export interface AuroraProps {
+  backgroundColor: string;
   colorStops?: string[];
   amplitude?: number;
   blend?: number;
   time?: number;
   speed?: number;
+  withStars?: boolean;
 }
 
 export function Aurora(props: AuroraProps) {
-  const { colorStops = ['#00d8ff', '#7cff67', '#00d8ff'], amplitude = 1.0, blend = 0.5 } = props;
+  const {
+    backgroundColor = 'transparent',
+    colorStops = ['#00d8ff', '#7cff67', '#00d8ff'],
+    amplitude = 1.0,
+    blend = 0.5,
+    withStars = false
+  } = props;
   const propsRef = useRef<AuroraProps>(props);
   propsRef.current = props;
 
@@ -135,7 +144,7 @@ export function Aurora(props: AuroraProps) {
     gl.clearColor(0, 0, 0, 0);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-    gl.canvas.style.backgroundColor = 'transparent';
+    gl.canvas.style.backgroundColor = backgroundColor;
 
     const colorStopsArray = colorStops.map(hex => {
       const c = new Color(hex);
@@ -197,9 +206,13 @@ export function Aurora(props: AuroraProps) {
       }
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-  }, [amplitude, blend, colorStops]);
+  }, [amplitude, backgroundColor, blend, colorStops]);
 
-  return <div ref={ctnDom} className="w-full h-full" />;
+  return (
+    <div ref={ctnDom} className="w-full h-full">
+      {withStars && <StarsBackground className="stars-background" />}
+    </div>
+  );
 }
 
 export default Aurora;
