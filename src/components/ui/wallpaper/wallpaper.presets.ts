@@ -367,17 +367,17 @@ const wallpapers: Record<string, Wallpaper> = {
     type: 'image',
     imageType: 'url',
     url: 'https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&q=80'
-  },
-  'world-map': {
-    id: 'world-map',
-    name: 'World Map',
-    description: 'World map background with animated lines',
-    type: 'animation',
-    animation: 'world-map',
-    animationType: 'aceternity',
-    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
-    gradientType: 'linear'
   }
+  // 'world-map': {
+  //   id: 'world-map',
+  //   name: 'World Map',
+  //   description: 'World map background with animated lines',
+  //   type: 'animation',
+  //   animation: 'world-map',
+  //   animationType: 'aceternity',
+  //   gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+  //   gradientType: 'linear'
+  // }
 };
 
 export default wallpapers;
