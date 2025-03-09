@@ -348,7 +348,11 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
           )}
           {animation === 'meteors' && (
             <div className="meteors-container">
-              <Meteors className="meteor" {...(animationProps as MeteorsProps)} />
+              <Meteors
+                className="meteor"
+                color={foregroundColor}
+                {...(animationProps as MeteorsProps)}
+              />
             </div>
           )}
           {animation === 'noise' && (
@@ -376,8 +380,16 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
           {animation === 'rain-drops' && <RainDrops {...(animationProps as RainDropsProps)} />}
           {animation === 'shooting-stars' && (
             <div className="shooting-stars-container">
-              <ShootingStars {...(animationProps[0] as ShootingStarsProps)} />
-              <StarsBackground {...(animationProps[1] as StarBackgroundProps)} />
+              <ShootingStars
+                className="absolute top-0 left-0 w-full h-full z-1"
+                starColor={foregroundColor}
+                trailColor={foregroundColor}
+                {...(animationProps[0] as ShootingStarsProps)}
+              />
+              <StarsBackground
+                className="absolute top-0 left-0 w-full h-full z-0"
+                {...(animationProps[1] as StarBackgroundProps)}
+              />
             </div>
           )}
           {animation === 'southern-lights' && (
