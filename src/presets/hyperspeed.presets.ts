@@ -1,4 +1,6 @@
-export const hyperspeedPresets = {
+import { HyperspeedOptions } from '@/components/animations/hyperspeed';
+
+export const hyperspeedPresets: Record<string, HyperspeedOptions> = {
   one: {
     onSpeedUp: () => {},
     onSlowDown: () => {},

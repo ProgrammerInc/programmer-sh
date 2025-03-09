@@ -1,9 +1,7 @@
 import { cn } from '@/lib/utils';
-import programmerIcon from '@/presets/qrcode.presets';
 import React from 'react';
 import { QRCode } from 'react-qrcode-logo';
 
-// Define the ImageSettings interface locally instead of importing it
 export interface ImageSettings {
   src: string;
   size?: number;
@@ -37,6 +35,7 @@ export interface QRCodeProps {
   size?: number;
   style?: React.CSSProperties;
   enableCORS?: boolean;
+  imageSettings?: ImageSettings;
 }
 
 export const QRCodeComponent: React.FC<QRCodeProps> = ({
@@ -54,6 +53,7 @@ export const QRCodeComponent: React.FC<QRCodeProps> = ({
     color: fgColor
   },
   enableCORS = false,
+  imageSettings,
   className,
   title = 'Scan QR Code to Save My Contact Information'
 }) => {
@@ -69,14 +69,14 @@ export const QRCodeComponent: React.FC<QRCodeProps> = ({
           enableCORS={enableCORS}
           eyeColor={eyeColor}
           eyeRadius={eyeRadius}
-          logoImage={programmerIcon.src}
-          logoWidth={programmerIcon.width}
-          logoHeight={programmerIcon.height}
-          logoPadding={programmerIcon.logoPadding}
-          logoPaddingStyle={programmerIcon.logoPaddingStyle}
+          logoImage={imageSettings?.src}
+          logoWidth={imageSettings?.width}
+          logoHeight={imageSettings?.height}
+          logoPadding={imageSettings?.logoPadding}
+          logoPaddingStyle={imageSettings?.logoPaddingStyle}
           qrStyle={qrStyle}
           quietZone={quietZone}
-          removeQrCodeBehindLogo={programmerIcon.removeQrCodeBehindLogo}
+          removeQrCodeBehindLogo={imageSettings?.removeQrCodeBehindLogo}
           size={size}
           style={style}
         />

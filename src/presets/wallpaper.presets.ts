@@ -1,4 +1,4 @@
-import Wallpaper from '../components/ui/wallpaper/wallpaper.types';
+import { Wallpaper } from '@/components/ui/wallpaper';
 
 // Predefined wallpapers
 const wallpapers: Record<string, Wallpaper> = {

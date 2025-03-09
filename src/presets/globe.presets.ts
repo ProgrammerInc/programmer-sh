@@ -1,4 +1,6 @@
-export const globeConfig = {
+import { GlobeConfig, GlobePosition } from '@/components/animations/globe';
+
+export const globeConfig: GlobeConfig = {
   pointSize: 4,
   globeColor: '#062056',
   showAtmosphere: true,
@@ -21,9 +23,9 @@ export const globeConfig = {
   autoRotateSpeed: 0.5
 };
 
-const colors = ['#06b6d4', '#3b82f6', '#6366f1'];
+const colors: string[] = ['#06b6d4', '#3b82f6', '#6366f1'];
 
-export const globeArcs = [
+export const globeArcs: GlobePosition[] = [
   {
     order: 1,
     startLat: -19.885592,

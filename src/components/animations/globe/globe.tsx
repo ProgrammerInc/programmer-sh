@@ -73,7 +73,7 @@ export function Globe({ globeConfig, data }: WorldProps) {
 
   const globeRef = useRef<ThreeGlobe | null>(null);
 
-  const defaultProps = {
+  const defaultProps: GlobeConfig = {
     pointSize: 1,
     atmosphereColor: '#ffffff',
     showAtmosphere: true,

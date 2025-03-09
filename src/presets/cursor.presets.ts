@@ -1,4 +1,4 @@
-import { Cursor } from '../components/ui/cursor/cursor.types';
+import { Cursor } from '@/components/ui/cursor';
 
 export const cursors: Record<string, Cursor> = {
   default: {
