@@ -1,4 +1,4 @@
-import wallpapers from '@/presets/wallpaper.presets';
+import wallpaperPresets from '@/presets/wallpaper.presets';
 import { Command, CommandResult } from './types';
 
 // Current wallpaper key in localStorage
@@ -17,7 +17,7 @@ export const setWallpaper = (id: string): void => {
   // Dispatch custom event for components to respond to wallpaper change
   document.dispatchEvent(
     new CustomEvent('wallpaperChange', {
-      detail: { wallpaperId: id, wallpaper: wallpapers[id] }
+      detail: { wallpaperId: id, wallpaper: wallpaperPresets[id] }
     })
   );
 };
@@ -51,10 +51,10 @@ export const wallpaperCommand: Command = {
       // Group wallpapers by their type
       const wallpapersByType: Record<
         string,
-        Array<[string, (typeof wallpapers)[keyof typeof wallpapers]]>
+        Array<[string, (typeof wallpaperPresets)[keyof typeof wallpaperPresets]]>
       > = {};
 
-      Object.entries(wallpapers).forEach(([id, wallpaper]) => {
+      Object.entries(wallpaperPresets).forEach(([id, wallpaper]) => {
         const type = wallpaper.type;
         if (!wallpapersByType[type]) {
           wallpapersByType[type] = [];
@@ -88,7 +88,7 @@ export const wallpaperCommand: Command = {
       });
 
       return {
-        content: `\nCurrent wallpaper: <span class="text-terminal-prompt">${wallpapers[currentWallpaper].id}</span>\n\nAvailable Wallpapers:\n${wallpaperOutput}\nUsage: <span class="command-link" data-command="wallpaper" data-placeholder="[name]">wallpaper [name]</span>\n\n`,
+        content: `\nCurrent wallpaper: <span class="text-terminal-prompt">${wallpaperPresets[currentWallpaper].id}</span>\n\nAvailable Wallpapers:\n${wallpaperOutput}\nUsage: <span class="command-link" data-command="wallpaper" data-placeholder="[name]">wallpaper [name]</span>\n\n`,
         isError: false,
         rawHTML: true
       };
@@ -96,7 +96,7 @@ export const wallpaperCommand: Command = {
 
     const requestedWallpaper = args.trim().toLowerCase();
 
-    if (!Object.keys(wallpapers).includes(requestedWallpaper)) {
+    if (!Object.keys(wallpaperPresets).includes(requestedWallpaper)) {
       return {
         content: `\nWallpaper <span class="text-terminal-prompt">${requestedWallpaper}</span> not found. Use <span class="command-link" data-command="wallpaper">wallpaper</span> to see available options.\n\n`,
         isError: true
@@ -105,7 +105,7 @@ export const wallpaperCommand: Command = {
 
     if (requestedWallpaper === currentWallpaper) {
       return {
-        content: `\nWallpaper is already set to <span class="text-terminal-prompt">${wallpapers[currentWallpaper].id}</span>.\n\n`,
+        content: `\nWallpaper is already set to <span class="text-terminal-prompt">${wallpaperPresets[currentWallpaper].id}</span>.\n\n`,
         isError: false
       };
     }
@@ -113,7 +113,7 @@ export const wallpaperCommand: Command = {
     setWallpaper(requestedWallpaper);
 
     return {
-      content: `\nWallpaper changed to <span class="text-terminal-prompt">${wallpapers[requestedWallpaper].id}</span>.\n\n`,
+      content: `\nWallpaper changed to <span class="text-terminal-prompt">${wallpaperPresets[requestedWallpaper].id}</span>.\n\n`,
       isError: false
     };
   }

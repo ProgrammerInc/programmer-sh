@@ -1,7 +1,7 @@
 import CursorProvider from '@/components/ui/cursor';
 import Terminal from '@/components/ui/terminal';
 import WallpaperProvider from '@/components/ui/wallpaper';
-import wallpapers from '@/presets/wallpaper.presets';
+import { default as wallpaperPresets, default as wallpapers } from '@/presets/wallpaper.presets';
 import { getCurrentCursor } from '@/utils/commands/cursor-commands';
 import { processThemeFromUrl } from '@/utils/commands/theme-commands';
 import { extractUrlParameters, validUrlCommands } from '@/utils/commands/url-command-handler';
@@ -245,7 +245,8 @@ const Index = () => {
         id="wallpaperContainer"
         className="wallpaper-container"
         ref={wallpaperRef}
-        wallpaper={wallpapers[currentWallpaper]}
+        wallpapers={wallpaperPresets}
+        wallpaper={currentWallpaper}
       >
         <div id="terminalContainer" className="terminal-container" ref={terminalRef}>
           <div

@@ -1,6 +1,6 @@
 import { Cursor } from '@/components/ui/cursor';
 
-export const cursors: Record<string, Cursor> = {
+export const cursorPresets: Record<string, Cursor> = {
   default: {
     id: 'default',
     name: 'Default',

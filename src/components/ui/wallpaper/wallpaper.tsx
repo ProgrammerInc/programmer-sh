@@ -67,7 +67,7 @@ import {
 } from '@/components/animations';
 import { hexToRgbArray } from '@/lib/utils';
 import { globeArcs, globeConfig } from '@/presets/globe.presets';
-import wallpapers from '@/presets/wallpaper.presets';
+import wallpaperPresets from '@/presets/wallpaper.presets';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { WallpaperProps } from './wallpaper.types';
 
@@ -83,7 +83,8 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
       style,
       interactive = true,
       theme = 'dark',
-      wallpaper = wallpapers.default
+      wallpaper = 'default',
+      wallpapers = wallpaperPresets
     },
     ref
   ) => {
@@ -91,47 +92,61 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
     const isInitialMount = useRef(true);
     useEffect(() => {
       if (isInitialMount.current) {
-        console.log('Current wallpaper:', wallpaper);
+        console.log('Current wallpaper:', wallpapers[wallpaper]);
         isInitialMount.current = false;
       }
-    }, [wallpaper]);
+    }, [wallpaper, wallpapers]);
+
+    // Default values
+    let backgroundColor = 'transparent';
+    let foregroundColor = theme === 'dark' ? '#64ffda' : '#000000';
+    let backgroundImage = 'none';
 
     // Wallpaper properties
-    const animation = wallpaper.animation || 'default';
-    const animationProps = wallpaper.animationProps || {};
-    const backgroundColor = wallpaper.backgroundColor || 'transparent';
-    const colorType = wallpaper.colorType || 'hex';
-    const foregroundColor: [number, number, number] | number | string =
-      wallpaper.foregroundColor ||
-      (theme === 'dark' || wallpaper.theme === 'dark' ? '#64ffda' : '#000000');
-    const gradient = wallpaper.gradient || 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)';
-    const gradientType = wallpaper.gradientType || 'linear';
-    const image = wallpaper.image;
-    const imageType = wallpaper.imageType || 'unsplash';
-    const mimeType = wallpaper.mimeType || 'image/png';
-    const url = wallpaper.url;
-    const wallpaperId = wallpaper.id || 'default';
-    const wallpaperRef = useRef<HTMLDivElement>(null);
-    const wallpaperContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
+    const currentWallpaper = wallpapers[wallpaper];
     const wallpaperAnimationRef = useRef<HTMLDivElement>(animationRef?.current || null);
+    const wallpaperContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const wallpaperContentRef = useRef<HTMLDivElement>(contentRef?.current || null);
-    const wallpaperType = wallpaper.type || 'image';
+    const background = currentWallpaper.background;
 
-    useImperativeHandle(ref, () => wallpaperRef.current!);
+    const { animation, colors, gradient, image, video } = background;
+
+    if (currentWallpaper.type === 'color') {
+      backgroundColor = colors[0].color;
+      foregroundColor = colors[1].color;
+    }
+
+    if (currentWallpaper.type === 'gradient') {
+      backgroundImage = `${gradient.type}-gradient(${gradient.gradient})`;
+    }
+
+    if (currentWallpaper.type === 'image') {
+      if (image.type === 'base64') {
+        backgroundImage = `url(data:${image.mimeType},${image.base64})`;
+      }
+
+      backgroundImage = `url(${image.url})`;
+    }
+
+    if (currentWallpaper.type === 'video') {
+      if (video.type === 'base64') {
+        backgroundImage = `url(data:${video.mimeType},${video.base64})`;
+      }
+
+      backgroundImage = `url(${video.url})`;
+    }
+
+    useImperativeHandle(ref, () => wallpaperContainerRef.current!);
 
     return (
       <div
         id={id}
-        className={`wallpaper-${wallpaperId} ${className}`}
-        data-wallpaper={wallpaperId}
-        ref={wallpaperRef}
+        className={`wallpaper-${currentWallpaper.id} ${className}`}
+        data-wallpaper={currentWallpaper.id}
+        ref={wallpaperContainerRef}
         style={{
           backgroundColor,
-          backgroundImage:
-            (wallpaperType === 'image' && imageType === 'url' && `url(${url})`) ||
-            (imageType === 'base64' && `url(data:${mimeType};${imageType},${image})`) ||
-            (wallpaperType === 'gradient' && `${gradientType}-gradient(${gradient})`) ||
-            'none',
+          backgroundImage,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -143,39 +158,39 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
           ...style
         }}
       >
-        {wallpaperType === 'animation' && (
+        {currentWallpaper.type === 'animation' && (
           <div
-            id={`${animation}-container`}
-            className={`animation-container ${animation}-container ${image ? 'wallpaper-image' : gradient ? 'wallpaper-gradient' : 'wallpaper-color'} wallpaper-${wallpaper.id}`}
+            id={`${animation.id}-container`}
+            className={`animation-container ${animation.id}-container ${image ? 'wallpaper-image' : gradient ? 'wallpaper-gradient' : 'wallpaper-color'} wallpaper-${currentWallpaper.id}`}
             ref={wallpaperAnimationRef}
           >
-            {animation === 'aurora' && (
+            {animation.id === 'aurora' && (
               <Aurora
                 colorStops={['#3A29FF', '#FF94B4', '#FF3232']}
                 blend={0.5}
                 amplitude={1.0}
                 speed={0.5}
-                {...(animationProps as AuroraProps)}
+                {...(animation.animationProps as AuroraProps)}
               />
             )}
-            {animation === 'background-beams' && (
-              <BackgroundBeams {...(animationProps as BackgroundBeamsProps)} />
+            {animation.id === 'background-beams' && (
+              <BackgroundBeams {...(animation.animationProps as BackgroundBeamsProps)} />
             )}
-            {animation === 'background-boxes' && (
-              <BackgroundBoxes {...(animationProps as BackgroundBoxesProps)} />
+            {animation.id === 'background-boxes' && (
+              <BackgroundBoxes {...(animation.animationProps as BackgroundBoxesProps)} />
             )}
-            {animation === 'background-lines' && (
-              <BackgroundLines {...(animationProps as BackgroundLinesProps)} />
+            {animation.id === 'background-lines' && (
+              <BackgroundLines {...(animation.animationProps as BackgroundLinesProps)} />
             )}
-            {animation === 'balatro' && (
+            {animation.id === 'balatro' && (
               <Balatro
                 isRotate={false}
                 mouseInteraction={interactive}
                 pixelFilter={700}
-                {...(animationProps as BalatroProps)}
+                {...(animation.animationProps as BalatroProps)}
               />
             )}
-            {animation === 'ballpit' && (
+            {animation.id === 'ballpit' && (
               <Ballpit
                 colors={[0x3a29ff, 0x6c01b4, 0xff0070, 0xffbd2d, 0x25c93f]}
                 ambientColor={0x1a1f2c}
@@ -188,10 +203,10 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                   clearcoatRoughness: 0.15
                 }}
                 followCursor={false}
-                {...(animationProps as BallpitProps)}
+                {...(animation.animationProps as BallpitProps)}
               />
             )}
-            {animation === 'dither' && (
+            {animation.id === 'dither' && (
               <Dither
                 waveColor={[0.5, 0.5, 0.5]}
                 disableAnimation={false}
@@ -201,31 +216,31 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 waveAmplitude={0.3}
                 waveFrequency={3}
                 waveSpeed={0.05}
-                {...(animationProps as DitherProps)}
+                {...(animation.animationProps as DitherProps)}
               />
             )}
-            {animation === 'globe' && (
+            {animation.id === 'globe' && (
               <World
                 data={globeArcs}
                 globeConfig={globeConfig}
-                {...(animationProps as WorldProps)}
+                {...(animation.animationProps as WorldProps)}
               />
             )}
-            {animation === 'gradient-animation' && (
-              <GradientAnimation {...(animationProps as GradientAnimationProps)} />
+            {animation.id === 'gradient-animation' && (
+              <GradientAnimation {...(animation.animationProps as GradientAnimationProps)} />
             )}
-            {animation === 'grid-distortion' && (
+            {animation.id === 'grid-distortion' && (
               <GridDistortion
-                imageSrc={wallpaper.url}
+                imageSrc={image.url}
                 grid={10}
                 mouse={0.1}
                 strength={0.15}
                 relaxation={0.9}
                 className="grid-distortion"
-                {...(animationProps as GridDistortionProps)}
+                {...(animation.animationProps as GridDistortionProps)}
               />
             )}
-            {animation === 'grid-motion' && (
+            {animation.id === 'grid-motion' && (
               <GridMotion
                 items={[
                   'Terminal',
@@ -253,10 +268,10 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                   'Scalable'
                 ]}
                 gradientColor="rgba(30, 30, 30, 0.8)"
-                {...(animationProps as GridMotionProps)}
+                {...(animation.animationProps as GridMotionProps)}
               />
             )}
-            {animation === 'hyperspeed' && (
+            {animation.id === 'hyperspeed' && (
               <Hyperspeed
                 effectOptions={{
                   onSpeedUp: () => {},
@@ -295,48 +310,48 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                     sticks: 0x03b3c3
                   }
                 }}
-                {...(animationProps as HyperspeedProps)}
+                {...(animation.animationProps as HyperspeedProps)}
               />
             )}
-            {animation === 'iridescence' && (
+            {animation.id === 'iridescence' && (
               <Iridescence
                 color={[1, 1, 1]}
                 mouseReact={false}
                 amplitude={0.1}
                 speed={1.0}
-                {...(animationProps as IridescenceProps)}
+                {...(animation.animationProps as IridescenceProps)}
               />
             )}
-            {animation === 'letter-glitch' && (
+            {animation.id === 'letter-glitch' && (
               <LetterGlitch
                 glitchColors={['#2b4539', '#61dca3', '#61b3dc']}
                 glitchSpeed={50}
                 centerVignette={false}
                 outerVignette={true}
                 smooth={true}
-                {...(animationProps as LetterGlitchProps)}
+                {...(animation.animationProps as LetterGlitchProps)}
               />
             )}
-            {animation === 'lightning' && (
+            {animation.id === 'lightning' && (
               <Lightning
                 hue={220}
                 xOffset={0}
                 speed={1}
                 intensity={1}
                 size={1}
-                {...(animationProps as LightningProps)}
+                {...(animation.animationProps as LightningProps)}
               />
             )}
-            {animation === 'liquid-chrome' && (
+            {animation.id === 'liquid-chrome' && (
               <LiquidChrome
                 baseColor={[0.3, 0.2, 0.5]}
                 speed={0.25}
                 amplitude={0.6}
                 interactive={interactive}
-                {...(animationProps as LiquidChromeProps)}
+                {...(animation.animationProps as LiquidChromeProps)}
               />
             )}
-            {animation === 'magnet-lines' && (
+            {animation.id === 'magnet-lines' && (
               <MagnetLines
                 rows={9}
                 columns={9}
@@ -345,29 +360,29 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 lineWidth="0.8vmin"
                 lineHeight="9vmin"
                 baseAngle={0}
-                {...(animationProps as MagnetLinesProps)}
+                {...(animation.animationProps as MagnetLinesProps)}
               />
             )}
-            {animation === 'meteors' && (
+            {animation.id === 'meteors' && (
               <div className="meteors-container">
                 <Meteors
                   className="meteor"
                   color={foregroundColor}
-                  {...(animationProps as MeteorsProps)}
+                  {...(animation.animationProps as MeteorsProps)}
                 />
               </div>
             )}
-            {animation === 'noise' && (
+            {animation.id === 'noise' && (
               <Noise
                 patternSize={250}
                 patternScaleX={1}
                 patternScaleY={1}
                 patternRefreshInterval={2}
                 patternAlpha={15}
-                {...(animationProps as NoiseProps)}
+                {...(animation.animationProps as NoiseProps)}
               />
             )}
-            {animation === 'particles' && (
+            {animation.id === 'particles' && (
               <Particles
                 particleColors={[foregroundColor]}
                 particleCount={2000}
@@ -376,28 +391,30 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 particleBaseSize={50}
                 disableRotation={true}
                 moveParticlesOnHover={false}
-                {...(animationProps as ParticlesProps)}
+                {...(animation.animationProps as ParticlesProps)}
               />
             )}
-            {animation === 'rain-drops' && <RainDrops {...(animationProps as RainDropsProps)} />}
-            {animation === 'shooting-stars' && (
+            {animation.id === 'rain-drops' && (
+              <RainDrops {...(animation.animationProps as RainDropsProps)} />
+            )}
+            {animation.id === 'shooting-stars' && (
               <div className="shooting-stars-container">
                 <ShootingStars
                   className="shooting-stars absolute top-0 left-0 w-full h-full z-1"
                   starColor={foregroundColor}
                   trailColor={foregroundColor}
-                  {...(animationProps[0] as ShootingStarsProps)}
+                  {...(animation.animationProps[0] as ShootingStarsProps)}
                 />
                 <StarsBackground
                   className="stars-background absolute top-0 left-0 w-full h-full z-0"
-                  {...(animationProps[1] as StarBackgroundProps)}
+                  {...(animation.animationProps[1] as StarBackgroundProps)}
                 />
               </div>
             )}
-            {animation === 'southern-lights' && (
-              <AuroraBackground {...(animationProps as AuroraBackgroundProps)} />
+            {animation.id === 'southern-lights' && (
+              <AuroraBackground {...(animation.animationProps as AuroraBackgroundProps)} />
             )}
-            {animation === 'sparkles' && (
+            {animation.id === 'sparkles' && (
               <Sparkles
                 background="transparent"
                 minSize={0.6}
@@ -405,37 +422,42 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 particleDensity={100}
                 className="w-full h-full"
                 particleColor={foregroundColor}
-                {...(animationProps as SparklesProps)}
+                {...(animation.animationProps as SparklesProps)}
               />
             )}
-            {animation === 'spotlight' && <Spotlight {...(animationProps as SpotlightProps)} />}
-            {animation === 'squares' && (
+            {animation.id === 'spotlight' && (
+              <Spotlight {...(animation.animationProps as SpotlightProps)} />
+            )}
+            {animation.id === 'squares' && (
               <Squares
                 speed={0.5}
                 squareSize={35}
                 direction="down" // up, down, left, right, diagonal
                 borderColor={foregroundColor}
                 hoverFillColor={backgroundColor}
-                {...(animationProps as SquaresProps)}
+                {...(animation.animationProps as SquaresProps)}
               />
             )}
-            {animation === 'threads' && (
+            {animation.id === 'threads' && (
               <Threads
                 amplitude={3}
                 color={
-                  colorType === 'hex'
+                  colors[1].type === 'hex'
                     ? (hexToRgbArray(foregroundColor) as [number, number, number])
                     : (foregroundColor as unknown as [number, number, number])
                 }
                 distance={0}
                 enableMouseInteraction={interactive}
-                {...(animationProps as ThreadsProps)}
+                {...(animation.animationProps as ThreadsProps)}
               />
             )}
-            {animation === 'vortex' && (
-              <Vortex backgroundColor={backgroundColor} {...(animationProps as VortexProps)} />
+            {animation.id === 'vortex' && (
+              <Vortex
+                backgroundColor={backgroundColor}
+                {...(animation.animationProps as VortexProps)}
+              />
             )}
-            {animation === 'waves' && (
+            {animation.id === 'waves' && (
               <Waves
                 lineColor={foregroundColor}
                 backgroundColor={backgroundColor}
@@ -448,16 +470,16 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 maxCursorMove={120}
                 xGap={12}
                 yGap={36}
-                {...(animationProps as WavesProps)}
+                {...(animation.animationProps as WavesProps)}
               />
             )}
-            {animation === 'wavy-background' && (
+            {animation.id === 'wavy-background' && (
               <WavyBackground
                 backgroundColor={backgroundColor}
-                {...(animationProps as WavyBackgroundProps)}
+                {...(animation.animationProps as WavyBackgroundProps)}
               />
             )}
-            {animation === 'world-map' && (
+            {animation.id === 'world-map' && (
               <WorldMap
                 dots={[
                   {
@@ -466,7 +488,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                   }
                 ]}
                 lineColor={foregroundColor}
-                {...(animationProps as WorldMapProps)}
+                {...(animation.animationProps as WorldMapProps)}
               />
             )}
           </div>

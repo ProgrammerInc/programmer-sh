@@ -1,6 +1,6 @@
 import { ImageSettings } from '@/components/ui/qr-code';
 
-export const qrcodeLogos: Record<string, ImageSettings> = {
+export const qrcodePresets: Record<string, ImageSettings> = {
   programmerIcon: {
     src: '/images/programmer-icon-transparent.png',
     height: 69,
@@ -14,4 +14,4 @@ export const qrcodeLogos: Record<string, ImageSettings> = {
   }
 };
 
-export default qrcodeLogos;
+export default qrcodePresets;

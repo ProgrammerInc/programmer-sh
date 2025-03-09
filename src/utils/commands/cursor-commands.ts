@@ -1,4 +1,4 @@
-import { cursors } from '@/presets/cursor.presets';
+import { cursorPresets } from '@/presets/cursor.presets';
 import { Command, CommandResult } from './types';
 
 // Current cursor key in localStorage
@@ -17,7 +17,7 @@ export const setCursor = (id: string): void => {
   // Dispatch custom event for components to respond to cursor change
   document.dispatchEvent(
     new CustomEvent('cursorChange', {
-      detail: { cursorId: id, cursor: cursors[id] }
+      detail: { cursorId: id, cursor: cursorPresets[id] }
     })
   );
 };
@@ -48,7 +48,7 @@ export const cursorCommand: Command = {
     const currentCursor = getCurrentCursor();
 
     if (!args) {
-      const availableCursors = Object.entries(cursors)
+      const availableCursors = Object.entries(cursorPresets)
         .map(
           ([id, cursor]) =>
             `\n&nbsp;&nbsp;- <span class="command-link" data-command="cursor ${cursor.id}">${cursor.id}</span>: ${cursor.description}`
@@ -56,14 +56,14 @@ export const cursorCommand: Command = {
         .join('');
 
       return {
-        content: `\nCurrent cursor: <span class="text-terminal-prompt">${cursors[currentCursor].id}</span>\n\nAvailable Cursors:\n${availableCursors}\n\nUsage: <span class="command-link" data-command="cursor" data-placeholder="[name]">cursor [name]</span>\n\n`,
+        content: `\nCurrent cursor: <span class="text-terminal-prompt">${cursorPresets[currentCursor].id}</span>\n\nAvailable Cursors:\n${availableCursors}\n\nUsage: <span class="command-link" data-command="cursor" data-placeholder="[name]">cursor [name]</span>\n\n`,
         isError: false
       };
     }
 
     const requestedCursor = args.trim().toLowerCase();
 
-    if (!Object.keys(cursors).includes(requestedCursor)) {
+    if (!Object.keys(cursorPresets).includes(requestedCursor)) {
       return {
         content: `\nCursor <span class="text-terminal-prompt">${requestedCursor}</span> not found. Use <span class="command-link" data-command="cursor">cursor</span> to see available options.\n\n`,
         isError: true
@@ -72,7 +72,7 @@ export const cursorCommand: Command = {
 
     if (requestedCursor === currentCursor) {
       return {
-        content: `\nCursor is already set to <span class="text-terminal-prompt">${cursors[currentCursor].id}</span>.\n\n`,
+        content: `\nCursor is already set to <span class="text-terminal-prompt">${cursorPresets[currentCursor].id}</span>.\n\n`,
         isError: false
       };
     }
@@ -80,7 +80,7 @@ export const cursorCommand: Command = {
     setCursor(requestedCursor);
 
     return {
-      content: `\nCursor changed to <span class="text-terminal-prompt">${cursors[requestedCursor].id}</span>.\n\n`,
+      content: `\nCursor changed to <span class="text-terminal-prompt">${cursorPresets[requestedCursor].id}</span>.\n\n`,
       isError: false
     };
   }

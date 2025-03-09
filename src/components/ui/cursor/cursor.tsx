@@ -32,7 +32,7 @@ import {
   TrailingCursor,
   TrailingCursorProps
 } from '@/components/cursors';
-import { cursors } from '@/presets/cursor.presets';
+import { cursorPresets } from '@/presets/cursor.presets';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { Cursor, CursorProps } from './cursor.types';
 
@@ -49,7 +49,7 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
     },
     ref
   ) => {
-    const currentCursor: Cursor = cursors[cursor] || cursors.default;
+    const currentCursor: Cursor = cursorPresets[cursor] || cursorPresets.default;
     const currentTheme: 'light' | 'dark' = theme;
     const currentColor = color || (currentTheme === 'dark' ? '#64ffda' : '#f1f1f1');
 
