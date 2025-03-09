@@ -164,7 +164,15 @@ export default {
           from: { transform: 'translateX(0%)' },
           to: { transform: 'translateX(-50%)' }
         },
-        moveHorizontal: {
+        meteor: {
+          '0%': { transform: 'rotate(215deg) translateX(0)', opacity: '1' },
+          '70%': { opacity: '1' },
+          '100%': {
+            transform: 'rotate(215deg) translateX(-500px)',
+            opacity: '0'
+          }
+        },
+        'move-horizontal': {
           '0%': {
             transform: 'translateX(-50%) translateY(-10%)'
           },
@@ -175,7 +183,7 @@ export default {
             transform: 'translateX(-50%) translateY(-10%)'
           }
         },
-        moveInCircle: {
+        'move-in-circle': {
           '0%': {
             transform: 'rotate(0deg)'
           },
@@ -186,7 +194,7 @@ export default {
             transform: 'rotate(360deg)'
           }
         },
-        moveVertical: {
+        'move-vertical': {
           '0%': {
             transform: 'translateY(-50%)'
           },
@@ -237,16 +245,17 @@ export default {
         'glow-pulse': 'glow-pulse 2s infinite',
         gradient: 'gradient 8s linear infinite',
         marquee: 'marquee 15s linear infinite',
+        'meteor-effect': 'meteor 5s linear infinite',
         'scale-up': 'scale-up 0.2s ease-out',
         shine: 'shine 5s linear infinite',
         'star-movement-bottom': 'star-movement-bottom 6s linear infinite',
         'star-movement-top': 'star-movement-top 6s linear infinite',
         spotlight: 'spotlight 2s ease .75s 1 forwards',
-        first: 'moveVertical 30s ease infinite',
-        second: 'moveInCircle 20s reverse infinite',
-        third: 'moveInCircle 40s linear infinite',
-        fourth: 'moveHorizontal 40s ease infinite',
-        fifth: 'moveInCircle 20s ease infinite'
+        first: 'move-vertical 30s ease infinite',
+        second: 'move-in-circle 20s reverse infinite',
+        third: 'move-in-circle 40s linear infinite',
+        fourth: 'move-horizontal 40s ease infinite',
+        fifth: 'move-in-circle 20s ease infinite'
       },
       fontFamily: {
         mono: ['JetBrains Mono', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', 'monospace']

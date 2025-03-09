@@ -214,6 +214,16 @@ const wallpapers: Record<string, Wallpaper> = {
     gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
     gradientType: 'linear'
   },
+  meteors: {
+    id: 'meteors',
+    name: 'Meteors',
+    description: 'Meteors streaming across the screen',
+    type: 'animation',
+    animation: 'meteors',
+    animationType: 'aceternity',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
+  },
   mountains: {
     id: 'mountains',
     name: 'Mountains',

@@ -34,6 +34,8 @@ import {
   LiquidChromeProps,
   MagnetLines,
   MagnetLinesProps,
+  Meteors,
+  MeteorsProps,
   Noise,
   NoiseProps,
   Particles,
@@ -341,6 +343,11 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               baseAngle={0}
               {...(animationProps as MagnetLinesProps)}
             />
+          )}
+          {animation === 'meteors' && (
+            <div className="meteors-container">
+              <Meteors className="meteor" {...(animationProps as MeteorsProps)} />
+            </div>
           )}
           {animation === 'noise' && (
             <Noise

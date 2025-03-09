@@ -15,6 +15,7 @@ import {
   LetterGlitchProps,
   LightningProps,
   MagnetLinesProps,
+  MeteorsProps,
   NoiseProps,
   ParticlesProps,
   RainDropsProps,
@@ -56,7 +57,6 @@ export interface Wallpaper {
     | BalatroProps
     | BallpitProps
     | DitherProps
-    | WorldProps
     | GradientAnimationProps
     | GridDistortionProps
     | GridMotionProps
@@ -66,6 +66,7 @@ export interface Wallpaper {
     | LightningProps
     | LiquidChromeProps
     | MagnetLinesProps
+    | MeteorsProps
     | NoiseProps
     | ParticlesProps
     | RainDropsProps
@@ -76,6 +77,7 @@ export interface Wallpaper {
     | VortexProps
     | WavesProps
     | WavyBackgroundProps
+    | WorldProps
     | WorldMapProps;
   backgroundColor?: string;
   backgroundGradient?: string;

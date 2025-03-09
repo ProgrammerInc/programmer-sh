@@ -30,6 +30,7 @@ export * from './magnet';
 export * from './magnet-lines';
 export * from './meta-balls';
 export * from './metallic-paint';
+export * from './meteors';
 export * from './noise';
 export * from './orb';
 export * from './particles';
