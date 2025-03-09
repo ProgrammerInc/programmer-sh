@@ -383,13 +383,13 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
             {animation === 'shooting-stars' && (
               <div className="shooting-stars-container">
                 <ShootingStars
-                  className="absolute top-0 left-0 w-full h-full z-1"
+                  className="shooting-stars absolute top-0 left-0 w-full h-full z-1"
                   starColor={foregroundColor}
                   trailColor={foregroundColor}
                   {...(animationProps[0] as ShootingStarsProps)}
                 />
                 <StarsBackground
-                  className="absolute top-0 left-0 w-full h-full z-0"
+                  className="stars-background absolute top-0 left-0 w-full h-full z-0"
                   {...(animationProps[1] as StarBackgroundProps)}
                 />
               </div>

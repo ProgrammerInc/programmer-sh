@@ -1,14 +1,21 @@
 import { cn } from '@/lib/utils';
+import { StarsBackground } from '..';
 
 export interface MeteorsProps extends React.HTMLAttributes<HTMLDivElement> {
   color?: string;
   number?: number;
   className?: string;
+  withStars?: boolean;
 }
 
-export const Meteors = ({ color = '#64ffda', number, className }: MeteorsProps) => {
+export const Meteors = ({
+  color = '#64ffda',
+  number,
+  className,
+  withStars = true
+}: MeteorsProps) => {
   const meteors = new Array(number || 50).fill(true);
-  return meteors.map((el, idx) => (
+  const meteorsHtml = meteors.map((el, idx) => (
     <span
       key={'meteor' + idx}
       className={cn(
@@ -25,6 +32,17 @@ export const Meteors = ({ color = '#64ffda', number, className }: MeteorsProps) 
       }}
     ></span>
   ));
+
+  if (withStars) {
+    return (
+      <div className="meteors-container">
+        {meteorsHtml}
+        <StarsBackground className="stars-background" />
+      </div>
+    );
+  }
+
+  return <div className="meteors-container">{meteorsHtml}</div>;
 };
 
 export default Meteors;
