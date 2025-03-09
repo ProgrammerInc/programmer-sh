@@ -1,4 +1,6 @@
 import {
+  ArrowCursor,
+  ArrowCursorProps,
   BlobCursor,
   BlobCursorProps,
   BubbleCursor,
@@ -52,6 +54,7 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
 
     // Cursor debugging - only log once
     const isInitialMount = useRef(true);
+    const arrowContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const blobContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const bubbleContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const canvasContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
@@ -89,6 +92,14 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           ...style
         }}
       >
+        {currentCursor.type === 'animation' && currentCursor.animation === 'arrow' && (
+          <div className="arrow-cursor-container" ref={arrowContainerRef}>
+            <ArrowCursor
+              fgColor={currentColor}
+              {...(currentCursor.animationProps as ArrowCursorProps)}
+            />
+          </div>
+        )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'blob' && (
           <div className="blob-cursor-container" ref={blobContainerRef}>
             <BlobCursor {...(currentCursor.animationProps as BlobCursorProps)} />

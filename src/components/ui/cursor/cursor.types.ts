@@ -1,4 +1,5 @@
 import {
+  ArrowCursorProps,
   BlobCursorProps,
   BubbleCursorProps,
   CharacterCursorProps,
@@ -26,6 +27,7 @@ export interface Cursor {
   type: CursorType;
   animation?: string;
   animationProps?:
+    | ArrowCursorProps
     | BlobCursorProps
     | BubbleCursorProps
     | CharacterCursorProps

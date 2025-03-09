@@ -7,6 +7,14 @@ export const cursors: Record<string, Cursor> = {
     description: 'Default cursor',
     type: 'default'
   },
+  arrow: {
+    id: 'arrow',
+    name: 'Arrow',
+    description: 'Arrow cursor',
+    type: 'animation',
+    animation: 'arrow',
+    animationType: 'cursify'
+  },
   // blob: {
   //   id: 'blob',
   //   name: 'Blob',

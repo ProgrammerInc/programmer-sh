@@ -1,3 +1,4 @@
+export * from './arrow-cursor';
 export * from './blob-cursor';
 export * from './bubble-cursor';
 export * from './canvas-cursor';
