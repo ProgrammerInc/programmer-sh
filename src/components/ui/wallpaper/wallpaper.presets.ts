@@ -28,38 +28,18 @@ const wallpapers: Record<string, Wallpaper> = {
   },
   aurora: {
     id: 'aurora',
-    name: 'Aurora',
-    description: 'Northern Lights in the night sky',
+    name: 'Aurora Borealis',
+    description: 'Aurora borealis in the night sky',
     type: 'animation',
     animation: 'aurora',
     animationType: 'reactbits'
   },
-  'background-beams': {
-    id: 'background-beams',
-    name: 'Background Beams',
+  beams: {
+    id: 'beams',
+    name: 'Beams',
     description: 'Beams that animate in a wave pattern',
     type: 'animation',
     animation: 'background-beams',
-    animationType: 'aceternity',
-    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
-    gradientType: 'linear'
-  },
-  'background-boxes': {
-    id: 'background-boxes',
-    name: 'Background Boxes',
-    description: 'Boxes that change color with mouse movement',
-    type: 'animation',
-    animation: 'background-boxes',
-    animationType: 'aceternity',
-    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
-    gradientType: 'linear'
-  },
-  'background-lines': {
-    id: 'background-lines',
-    name: 'Background Lines',
-    description: 'Lines that animate in a wave pattern',
-    type: 'animation',
-    animation: 'background-lines',
     animationType: 'aceternity',
     gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
     gradientType: 'linear'
@@ -204,6 +184,16 @@ const wallpapers: Record<string, Wallpaper> = {
     animation: 'liquid-chrome',
     animationType: 'reactbits'
   },
+  'little-boxes': {
+    id: 'little-boxes',
+    name: 'Little Boxes',
+    description: 'Boxes that change color with mouse movement',
+    type: 'animation',
+    animation: 'background-boxes',
+    animationType: 'aceternity',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
+  },
   'magnet-lines': {
     id: 'magnet-lines',
     name: 'Magnet Lines',
@@ -283,7 +273,7 @@ const wallpapers: Record<string, Wallpaper> = {
   'southern-lights': {
     id: 'southern-lights',
     name: 'Southern Lights',
-    description: 'Another aurora background animation',
+    description: 'Southern lights in the night sky',
     type: 'animation',
     animation: 'southern-lights',
     animationType: 'aceternity',
@@ -360,6 +350,16 @@ const wallpapers: Record<string, Wallpaper> = {
   //   gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
   //   gradientType: 'linear'
   // },
+  'wavy-lines': {
+    id: 'wavy-lines',
+    name: 'Wavy Lines',
+    description: 'Lines that animate in a wave pattern',
+    type: 'animation',
+    animation: 'background-lines',
+    animationType: 'aceternity',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
+  },
   workspace: {
     id: 'workspace',
     name: 'Workspace',
