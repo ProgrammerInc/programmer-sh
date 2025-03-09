@@ -3,6 +3,8 @@ import {
   BlobCursorProps,
   BubbleCursor,
   BubbleCursorProps,
+  CharacterCursor,
+  CharacterCursorProps,
   Crosshair,
   CrosshairProps,
   RainbowCursor,
@@ -37,6 +39,7 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
     const isInitialMount = useRef(true);
     const blobContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const bubbleContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
+    const characterContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const crosshairContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const cursorContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const rainbowContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
@@ -74,6 +77,14 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
               strokeStyle={currentColor}
               wrapperElement={bubbleContainerRef.current}
               {...(currentCursor.animationProps as BubbleCursorProps)}
+            />
+          </div>
+        )}
+        {currentCursor.type === 'animation' && currentCursor.animation === 'character' && (
+          <div className="character-cursor-container" ref={characterContainerRef}>
+            <CharacterCursor
+              colors={[currentColor]}
+              {...(currentCursor.animationProps as CharacterCursorProps)}
             />
           </div>
         )}

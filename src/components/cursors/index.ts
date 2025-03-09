@@ -1,5 +1,6 @@
 export * from './blob-cursor';
 export * from './bubble-cursor';
+export * from './character-cursor';
 export * from './click-spark';
 export * from './crosshair';
 export * from './image-trail';

@@ -1,6 +1,7 @@
 import {
   BlobCursorProps,
   BubbleCursorProps,
+  CharacterCursorProps,
   CrosshairProps,
   RainbowCursorProps,
   RibbonsProps,
@@ -21,6 +22,7 @@ export interface Cursor {
   animationProps?:
     | BlobCursorProps
     | BubbleCursorProps
+    | CharacterCursorProps
     | CrosshairProps
     | RainbowCursorProps
     | RibbonsProps

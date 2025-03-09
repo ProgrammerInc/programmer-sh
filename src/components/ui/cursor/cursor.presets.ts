@@ -23,6 +23,14 @@ export const cursors: Record<string, Cursor> = {
     animation: 'bubble',
     animationType: 'cursify'
   },
+  character: {
+    id: 'character',
+    name: 'Character',
+    description: 'Character cursor',
+    type: 'animation',
+    animation: 'character',
+    animationType: 'cursify'
+  },
   crosshair: {
     id: 'crosshair',
     name: 'Crosshair',
