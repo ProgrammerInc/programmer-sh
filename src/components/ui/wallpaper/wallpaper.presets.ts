@@ -37,7 +37,7 @@ const wallpapers: Record<string, Wallpaper> = {
   'background-lines': {
     id: 'background-lines',
     name: 'Background Lines',
-    description: 'Background Lines - lines that animate in a wave pattern',
+    description: 'Lines that animate in a wave pattern',
     type: 'animation',
     animation: 'background-lines',
     animationType: 'aceternity',
@@ -123,7 +123,7 @@ const wallpapers: Record<string, Wallpaper> = {
   'grid-distortion': {
     id: 'grid-distortion',
     name: 'Grid Distortion',
-    description: 'Grid Distortion - a twisted grid of tiles flipping and rotating',
+    description: 'A twisted grid of tiles flipping and rotating',
     type: 'animation',
     animation: 'grid-distortion',
     animationType: 'reactbits',
@@ -143,7 +143,7 @@ const wallpapers: Record<string, Wallpaper> = {
   hyperspeed: {
     id: 'hyperspeed',
     name: 'Hyperspeed',
-    description: 'Hyperspeed - streams of light race across the screen',
+    description: 'Streams of light race across the screen',
     type: 'animation',
     animation: 'hyperspeed',
     animationType: 'reactbits',
@@ -153,7 +153,7 @@ const wallpapers: Record<string, Wallpaper> = {
   iridescence: {
     id: 'iridescence',
     name: 'Iridescence',
-    description: 'Iridescence - waves of iridescence',
+    description: 'Waves of liquid light',
     type: 'animation',
     animation: 'iridescence',
     animationType: 'reactbits'
@@ -177,7 +177,7 @@ const wallpapers: Record<string, Wallpaper> = {
   'liquid-chrome': {
     id: 'liquid-chrome',
     name: 'Liquid Chrome',
-    description: 'Liquid Chrome - monochrome waves of liquid metal',
+    description: 'Purples waves of liquid metal',
     type: 'animation',
     animation: 'liquid-chrome',
     animationType: 'reactbits'
@@ -185,7 +185,7 @@ const wallpapers: Record<string, Wallpaper> = {
   'magnet-lines': {
     id: 'magnet-lines',
     name: 'Magnet Lines',
-    description: 'Magnet Lines - magnet lines follows the cursor across the screen',
+    description: 'Magnet lines follow the cursor across the screen',
     type: 'animation',
     animation: 'magnet-lines',
     animationType: 'reactbits',
@@ -203,7 +203,7 @@ const wallpapers: Record<string, Wallpaper> = {
   noise: {
     id: 'noise',
     name: 'Noise',
-    description: 'Noise - animated noise',
+    description: 'Animated noise background',
     type: 'animation',
     animation: 'noise',
     animationType: 'reactbits',
@@ -213,7 +213,7 @@ const wallpapers: Record<string, Wallpaper> = {
   ocean: {
     id: 'ocean',
     name: 'Ocean',
-    description: 'Ocean wave at beach',
+    description: 'Underwater view from the ocean',
     type: 'image',
     imageType: 'url',
     url: 'https://images.unsplash.com/photo-1530053969600-caed2596d242?auto=format&fit=crop&q=80'
@@ -221,7 +221,7 @@ const wallpapers: Record<string, Wallpaper> = {
   particles: {
     id: 'particles',
     name: 'Particles',
-    description: 'Particles - lucy in the sky with diamonds',
+    description: 'Particles animation background',
     type: 'animation',
     animation: 'particles',
     animationType: 'reactbits',
@@ -231,7 +231,7 @@ const wallpapers: Record<string, Wallpaper> = {
   'shooting-stars': {
     id: 'shooting-stars',
     name: 'Shooting Stars',
-    description: 'Shooting stars - animated shooting stars',
+    description: 'Lucy in the sky with diamonds',
     type: 'animation',
     animation: 'shooting-stars',
     animationType: 'aceternity',
@@ -241,7 +241,7 @@ const wallpapers: Record<string, Wallpaper> = {
   squares: {
     id: 'squares',
     name: 'Squares',
-    description: 'Squares - animated squares',
+    description: 'Animated squares background',
     type: 'animation',
     animation: 'squares',
     animationType: 'reactbits',
@@ -261,15 +261,17 @@ const wallpapers: Record<string, Wallpaper> = {
   vortex: {
     id: 'vortex',
     name: 'Vortex',
-    description: 'Vortex - animated vortex',
+    description: 'Particle vortex animation',
     type: 'animation',
     animation: 'vortex',
-    animationType: 'aceternity'
+    animationType: 'aceternity',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
   },
   waves: {
     id: 'waves',
     name: 'Waves',
-    description: 'Waves - trippy psychedelic liquid animation wallpaper',
+    description: 'Trippy psychedelic liquid animation',
     type: 'animation',
     animation: 'waves',
     animationType: 'reactbits',
@@ -279,15 +281,17 @@ const wallpapers: Record<string, Wallpaper> = {
   'wavy-background': {
     id: 'wavy-background',
     name: 'Wavy Background',
-    description: 'Wavy Background - animated wavy background',
+    description: 'Wavy background animation',
     type: 'animation',
     animation: 'wavy-background',
-    animationType: 'aceternity'
+    animationType: 'aceternity',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
   },
   workspace: {
     id: 'workspace',
     name: 'Workspace',
-    description: 'Clean workspace desktop wallpaper',
+    description: 'Clean workspace desktop',
     type: 'image',
     imageType: 'url',
     url: 'https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&q=80'
@@ -295,10 +299,12 @@ const wallpapers: Record<string, Wallpaper> = {
   'world-map': {
     id: 'world-map',
     name: 'World Map',
-    description: 'World Map - animated world map',
+    description: 'World map animation',
     type: 'animation',
     animation: 'world-map',
-    animationType: 'aceternity'
+    animationType: 'aceternity',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
   }
 };
 
