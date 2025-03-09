@@ -36,6 +36,8 @@ import {
   NoiseProps,
   Particles,
   ParticlesProps,
+  RainDrops,
+  RainDropsProps,
   ShootingStars,
   ShootingStarsProps,
   Squares,
@@ -358,6 +360,7 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               {...(animationProps as ParticlesProps)}
             />
           )}
+          {animation === 'rain-drops' && <RainDrops {...(animationProps as RainDropsProps)} />}
           {animation === 'shooting-stars' && (
             <div className="shooting-stars-container">
               <ShootingStars {...(animationProps[0] as ShootingStarsProps)} />

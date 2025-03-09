@@ -16,6 +16,7 @@ import {
   MagnetLinesProps,
   NoiseProps,
   ParticlesProps,
+  RainDropsProps,
   ShootingStarsProps,
   SquaresProps,
   StarBackgroundProps,
@@ -64,6 +65,7 @@ export interface Wallpaper {
     | MagnetLinesProps
     | NoiseProps
     | ParticlesProps
+    | RainDropsProps
     | SquaresProps
     | [ShootingStarsProps, StarBackgroundProps]
     | ThreadsProps

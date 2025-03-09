@@ -250,6 +250,16 @@ const wallpapers: Record<string, Wallpaper> = {
     gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
     gradientType: 'linear'
   },
+  'rain-drops': {
+    id: 'rain-drops',
+    name: 'Rain Drops',
+    description: 'Raindrops falling from the sky',
+    type: 'animation',
+    animation: 'rain-drops',
+    animationType: 'aceternity',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
+  },
   'shooting-stars': {
     id: 'shooting-stars',
     name: 'Shooting Stars',

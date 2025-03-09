@@ -33,6 +33,7 @@ export * from './noise';
 export * from './orb';
 export * from './particles';
 export * from './pixel-transition';
+export * from './rain-drops';
 export * from './rotating-text';
 export * from './scroll-float';
 export * from './scroll-reveal';
