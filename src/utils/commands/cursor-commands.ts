@@ -1,4 +1,4 @@
-import { cursors } from '@/components/ui/cursor/cursor.presets';
+import { cursors } from '@/presets/cursor.presets';
 import { Command, CommandResult } from './types';
 
 // Current cursor key in localStorage

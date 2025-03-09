@@ -223,3 +223,5 @@ export const hyperspeedPresets = {
     }
   }
 };
+
+export default hyperspeedPresets;

@@ -1,4 +1,4 @@
-import wallpapers from '@/components/ui/wallpaper/wallpaper.presets';
+import wallpapers from '@/presets/wallpaper.presets';
 import { Command, CommandResult } from './types';
 
 // Current wallpaper key in localStorage
@@ -63,11 +63,9 @@ export const wallpaperCommand: Command = {
       });
 
       // Define the display order and titles for types
-      const typeDisplayOrder = ['animation', 'gradient', 'color', 'image', 'video'];
+      const typeDisplayOrder = ['animation', 'image', 'video'];
       const typeDisplayNames: Record<string, string> = {
         animation: 'Animation',
-        gradient: 'Gradient',
-        color: 'Color',
         image: 'Image',
         video: 'Video'
       };

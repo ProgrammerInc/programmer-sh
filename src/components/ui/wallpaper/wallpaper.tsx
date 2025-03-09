@@ -65,10 +65,10 @@ import {
   WorldMapProps,
   WorldProps
 } from '@/components/animations';
-import { globeArcs, globeConfig } from '@/components/animations/globe/globe.presets';
 import { hexToRgbArray } from '@/lib/utils';
+import { globeArcs, globeConfig } from '@/presets/globe.presets';
+import wallpapers from '@/presets/wallpaper.presets';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import wallpapers from './wallpaper.presets';
 import { WallpaperProps } from './wallpaper.types';
 
 export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(

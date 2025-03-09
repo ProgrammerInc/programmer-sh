@@ -32,8 +32,8 @@ import {
   TrailingCursor,
   TrailingCursorProps
 } from '@/components/cursors';
+import { cursors } from '@/presets/cursor.presets';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { cursors } from './cursor.presets';
 import { Cursor, CursorProps } from './cursor.types';
 
 export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(

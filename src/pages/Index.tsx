@@ -1,7 +1,7 @@
 import CursorProvider from '@/components/ui/cursor';
 import Terminal from '@/components/ui/terminal';
 import WallpaperProvider from '@/components/ui/wallpaper';
-import wallpapers from '@/components/ui/wallpaper/wallpaper.presets';
+import wallpapers from '@/presets/wallpaper.presets';
 import { getCurrentCursor } from '@/utils/commands/cursor-commands';
 import { processThemeFromUrl } from '@/utils/commands/theme-commands';
 import { extractUrlParameters, validUrlCommands } from '@/utils/commands/url-command-handler';
