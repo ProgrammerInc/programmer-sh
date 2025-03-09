@@ -2,13 +2,15 @@
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useEffect, useRef, useState } from 'react';
+import { StarsBackground } from '..';
 
 export interface RainDropsProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
+  withStars?: boolean;
 }
 
-export const RainDrops = ({ children, className }: RainDropsProps) => {
+export const RainDrops = ({ children, className, withStars = true }: RainDropsProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const parentRef = useRef<HTMLDivElement>(null);
 
@@ -84,6 +86,7 @@ export const RainDrops = ({ children, className }: RainDropsProps) => {
       ))}
 
       {children}
+      {withStars && <StarsBackground className="stars-background" />}
       <div
         ref={containerRef}
         className="absolute bottom-0 bg-neutral-100 w-full inset-x-0 pointer-events-none"
