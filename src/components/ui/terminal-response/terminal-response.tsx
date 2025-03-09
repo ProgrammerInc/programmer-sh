@@ -1,4 +1,4 @@
-import { useTypingEffect } from '@/lib/typingEffect';
+import { useTypingEffect } from '@/lib/typing-effect';
 import { cn } from '@/lib/utils';
 import React from 'react';
 import AnimatedContent from './animated-content';

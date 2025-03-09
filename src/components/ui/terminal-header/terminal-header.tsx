@@ -1,8 +1,7 @@
-
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
 import { supabase } from '@/integrations/supabase/client';
 import { isIncognitoMode } from '@/lib/incognito';
-import { SocialLink } from '@/types/socialLinks';
+import { SocialLink } from '@/types/social-links';
 import { ChevronDown, LogIn, LogOut, Minus, Plus, Settings, User, X } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 

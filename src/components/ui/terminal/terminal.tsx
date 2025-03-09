@@ -3,25 +3,25 @@ import { TerminalFooter } from '@/components/ui/terminal-footer';
 import { TerminalHeader } from '@/components/ui/terminal-header';
 import { useCommandExecution } from '@/hooks/use-command-execution';
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
-import { SocialLink } from '@/types/socialLinks';
+import { SocialLink } from '@/types/social-links';
 import {
   loginCommand,
   logoutCommand,
   profileCommand,
   signupCommand,
   whoamiCommand
-} from '@/utils/commands/authCommands';
-import { cursorCommand } from '@/utils/commands/cursorCommand';
-import { educationCommand } from '@/utils/commands/educationCommand';
-import { experienceCommand } from '@/utils/commands/experienceCommand';
-import { clearCommand, echoCommand, helpCommand } from '@/utils/commands/helpCommand';
-import { aboutCommand, contactCommand } from '@/utils/commands/informationCommands';
-import { projectsCommand } from '@/utils/commands/projectsCommand';
-import { resumeCommand } from '@/utils/commands/resumeCommand';
-import { skillsCommand } from '@/utils/commands/skillsCommand';
-import { themeCommand } from '@/utils/commands/themeCommand';
-import { wallpaperCommand } from '@/utils/commands/wallpaperCommand';
-import { welcomeCommand } from '@/utils/commands/welcomeCommand';
+} from '@/utils/commands/auth-commands';
+import { cursorCommand } from '@/utils/commands/cursor-commands';
+import { educationCommand } from '@/utils/commands/education-commands';
+import { experienceCommand } from '@/utils/commands/experience-commands';
+import { clearCommand, echoCommand, helpCommand } from '@/utils/commands/help-commands';
+import { aboutCommand, contactCommand } from '@/utils/commands/information-commands';
+import { projectsCommand } from '@/utils/commands/projects-commands';
+import { resumeCommand } from '@/utils/commands/resume-commands';
+import { skillsCommand } from '@/utils/commands/skills-commands';
+import { themeCommand } from '@/utils/commands/theme-commands';
+import { wallpaperCommand } from '@/utils/commands/wallpaper-commands';
+import { welcomeCommand } from '@/utils/commands/welcome-commands';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { scrollToBottom } from './terminal-utils';
 

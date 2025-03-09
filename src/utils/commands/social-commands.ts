@@ -1,4 +1,4 @@
-import { fetchSocialLinks } from '@/utils/database/socialLinksService';
+import { fetchSocialLinks } from '@/utils/database/social-links-service';
 import { Command, CommandResult } from './types';
 
 export const socialCommand: Command = {

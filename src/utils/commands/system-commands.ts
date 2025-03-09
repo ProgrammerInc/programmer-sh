@@ -1,5 +1,5 @@
 import { Command } from './types';
-import { welcomeCommand } from './welcomeCommand';
+import { welcomeCommand } from './welcome-commands';
 
 export const clearCommand: Command = {
   name: 'clear',

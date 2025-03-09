@@ -1,6 +1,6 @@
 import { HistoryItem } from '@/components/ui/terminal-history';
 import { processCommand } from '@/utils/commands';
-import { getSpecificCommandHelp } from '@/utils/commands/helpCommand';
+import { getSpecificCommandHelp } from '@/utils/commands/help-commands';
 import { useCallback, useEffect, useState } from 'react';
 
 export const useCommandProcessor = (

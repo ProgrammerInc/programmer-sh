@@ -1,2 +1,2 @@
-export * from './portfolioServices';
-export * from './socialLinksService';
+export * from './portfolio-services';
+export * from './social-links-service';

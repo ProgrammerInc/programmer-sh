@@ -4,21 +4,21 @@ import {
   profileCommand,
   signupCommand,
   whoamiCommand
-} from './authCommands';
-import { cursorCommand } from './cursorCommand';
-import { educationCommand } from './educationCommand';
-import { experienceCommand } from './experienceCommand';
-import { helpCommand } from './helpCommand';
-import { aboutCommand, contactCommand } from './informationCommands';
-import { projectsCommand } from './projectsCommand';
-import { resumeCommand } from './resumeCommand';
-import { skillsCommand } from './skillsCommand';
-import { socialCommand } from './socialCommand';
-import { clearCommand, dateCommand, echoCommand, historyCommand } from './systemCommands';
-import { themeCommand } from './themeCommand';
+} from './auth-commands';
+import { cursorCommand } from './cursor-commands';
+import { educationCommand } from './education-commands';
+import { experienceCommand } from './experience-commands';
+import { helpCommand } from './help-commands';
+import { aboutCommand, contactCommand } from './information-commands';
+import { projectsCommand } from './projects-commands';
+import { resumeCommand } from './resume-commands';
+import { skillsCommand } from './skills-commands';
+import { socialCommand } from './social-commands';
+import { clearCommand, dateCommand, echoCommand, historyCommand } from './system-commands';
+import { themeCommand } from './theme-commands';
 import { Command } from './types';
-import { wallpaperCommand } from './wallpaperCommand';
-import { welcomeCommand } from './welcomeCommand';
+import { wallpaperCommand } from './wallpaper-commands';
+import { welcomeCommand } from './welcome-commands';
 
 // Export a function to get all available commands
 export const getCommands = (): Record<string, Command> => {

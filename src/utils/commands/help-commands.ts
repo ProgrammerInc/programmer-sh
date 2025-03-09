@@ -1,5 +1,5 @@
 import { Command, CommandResult } from './types';
-import { welcomeCommand } from './welcomeCommand';
+import { welcomeCommand } from './welcome-commands';
 
 export interface CommandHelp {
   name: string;

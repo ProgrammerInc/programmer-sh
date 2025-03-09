@@ -2,10 +2,10 @@ import CursorProvider from '@/components/ui/cursor';
 import Terminal from '@/components/ui/terminal';
 import WallpaperProvider from '@/components/ui/wallpaper';
 import wallpapers from '@/components/ui/wallpaper/wallpaper.presets';
-import { getCurrentCursor } from '@/utils/commands/cursorCommand';
-import { processThemeFromUrl } from '@/utils/commands/themeCommand';
-import { extractUrlParameters, validUrlCommands } from '@/utils/commands/urlCommandHandler';
-import { getCurrentWallpaper } from '@/utils/commands/wallpaperCommand';
+import { getCurrentCursor } from '@/utils/commands/cursor-commands';
+import { processThemeFromUrl } from '@/utils/commands/theme-commands';
+import { extractUrlParameters, validUrlCommands } from '@/utils/commands/url-command-handler';
+import { getCurrentWallpaper } from '@/utils/commands/wallpaper-commands';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 

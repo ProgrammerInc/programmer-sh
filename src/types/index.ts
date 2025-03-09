@@ -1,2 +1,2 @@
-export * from './portfolioData';
-export * from './socialLinks';
+export * from './portfolio-data';
+export * from './social-links';
