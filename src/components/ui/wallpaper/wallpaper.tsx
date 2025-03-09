@@ -366,7 +366,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
               <div className="meteors-container">
                 <Meteors
                   className="meteor"
-                  color={foregroundColor}
+                  // color={foregroundColor}
                   {...(animation.animationProps as MeteorsProps)}
                 />
               </div>
