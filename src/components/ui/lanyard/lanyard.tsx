@@ -15,8 +15,8 @@ import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
-import cardGLB from './card.glb';
-import lanyard from './lanyard.png';
+import cardGLB from '@/data/card.glb';
+import lanyard from '@/data/lanyard.png';
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 
