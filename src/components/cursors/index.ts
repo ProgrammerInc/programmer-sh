@@ -9,3 +9,4 @@ export * from './rainbow-cursor';
 export * from './ribbons';
 export * from './snowflake-cursor';
 export * from './splash-cursor';
+export * from './trailing-cursor';

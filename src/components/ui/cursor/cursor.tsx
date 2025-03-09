@@ -12,7 +12,9 @@ import {
   Ribbons,
   RibbonsProps,
   SnowflakeCursor,
-  SplashCursor
+  SplashCursor,
+  TrailingCursor,
+  TrailingCursorProps
 } from '@/components/cursors';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { cursors } from './cursor.presets';
@@ -46,6 +48,7 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
     const ribbonsContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const splashContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const snowflakeContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
+    const trailingContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
 
     // Connect the forwarded ref to our inner ref
     useImperativeHandle(ref, () => cursorContainerRef.current!);
@@ -121,6 +124,11 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
         {currentCursor.type === 'animation' && currentCursor.animation === 'splash' && (
           <div className="splash-cursor-container" ref={splashContainerRef}>
             <SplashCursor />
+          </div>
+        )}
+        {currentCursor.type === 'animation' && currentCursor.animation === 'trailing' && (
+          <div className="trailing-cursor-container" ref={trailingContainerRef}>
+            <TrailingCursor {...(currentCursor.animationProps as TrailingCursorProps)} />
           </div>
         )}
       </div>

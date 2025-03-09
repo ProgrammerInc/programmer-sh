@@ -5,7 +5,8 @@ import {
   CrosshairProps,
   RainbowCursorProps,
   RibbonsProps,
-  SnowflakeCursorProps
+  SnowflakeCursorProps,
+  TrailingCursorProps
 } from '@/components/cursors';
 import { RefObject } from 'react';
 
@@ -26,7 +27,8 @@ export interface Cursor {
     | CrosshairProps
     | RainbowCursorProps
     | RibbonsProps
-    | SnowflakeCursorProps;
+    | SnowflakeCursorProps
+    | TrailingCursorProps;
   animationType?: string;
   theme?: 'light' | 'dark';
   url?: string;

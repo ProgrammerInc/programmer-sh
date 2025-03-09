@@ -70,5 +70,13 @@ export const cursors: Record<string, Cursor> = {
     type: 'animation',
     animation: 'splash',
     animationType: 'reactbits'
+  },
+  trailing: {
+    id: 'trailing',
+    name: 'Trailing',
+    description: 'Trailing cursor',
+    type: 'animation',
+    animation: 'trailing',
+    animationType: 'cursify'
   }
 };
