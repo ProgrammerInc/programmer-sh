@@ -3,6 +3,7 @@ import {
   BlobCursorProps,
   BubbleCursor,
   BubbleCursorProps,
+  CanvasCursor,
   CharacterCursor,
   CharacterCursorProps,
   Crosshair,
@@ -43,6 +44,7 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
     const isInitialMount = useRef(true);
     const blobContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const bubbleContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
+    const canvasContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const characterContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const crosshairContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const cursorContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
@@ -84,6 +86,11 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
               wrapperElement={bubbleContainerRef.current}
               {...(currentCursor.animationProps as BubbleCursorProps)}
             />
+          </div>
+        )}
+        {currentCursor.type === 'animation' && currentCursor.animation === 'canvas' && (
+          <div className="canvas-cursor-container" ref={canvasContainerRef}>
+            <CanvasCursor />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'character' && (

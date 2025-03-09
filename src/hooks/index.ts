@@ -1,3 +1,4 @@
+export * from './use-canvas-cursor';
 export * from './use-command-processor';
 export * from './use-is-mobile';
 export * from './use-mouse';

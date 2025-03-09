@@ -23,6 +23,14 @@ export const cursors: Record<string, Cursor> = {
     animation: 'bubble',
     animationType: 'cursify'
   },
+  canvas: {
+    id: 'canvas',
+    name: 'Canvas',
+    description: 'Canvas cursor',
+    type: 'animation',
+    animation: 'canvas',
+    animationType: 'cursify'
+  },
   character: {
     id: 'character',
     name: 'Character',
