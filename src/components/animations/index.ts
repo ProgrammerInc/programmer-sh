@@ -1,3 +1,4 @@
+export * from './3d-card';
 export * from './animated-content';
 export * from './ascii-text';
 export * from './aurora';
