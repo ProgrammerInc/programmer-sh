@@ -103,6 +103,14 @@ export const cursors: Record<string, Cursor> = {
     animation: 'splash',
     animationType: 'reactbits'
   },
+  spotlight: {
+    id: 'spotlight',
+    name: 'Spotlight',
+    description: 'Spotlight cursor',
+    type: 'animation',
+    animation: 'spotlight',
+    animationType: 'cursify'
+  },
   trailing: {
     id: 'trailing',
     name: 'Trailing',

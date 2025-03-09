@@ -19,6 +19,8 @@ import {
   RippleCursorProps,
   SnowflakeCursor,
   SplashCursor,
+  SpotlightCursor,
+  SpotlightCursorProps,
   TrailingCursor,
   TrailingCursorProps
 } from '@/components/cursors';
@@ -56,8 +58,9 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
     const rainbowContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const ribbonsContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const rippleContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const splashContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const snowflakeContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
+    const splashContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
+    const spotlightContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const trailingContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
 
     // Connect the forwarded ref to our inner ref
@@ -163,6 +166,11 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
         {currentCursor.type === 'animation' && currentCursor.animation === 'splash' && (
           <div className="splash-cursor-container" ref={splashContainerRef}>
             <SplashCursor />
+          </div>
+        )}
+        {currentCursor.type === 'animation' && currentCursor.animation === 'spotlight' && (
+          <div className="spotlight-cursor-container" ref={spotlightContainerRef}>
+            <SpotlightCursor {...(currentCursor.animationProps as SpotlightCursorProps)} />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'trailing' && (
