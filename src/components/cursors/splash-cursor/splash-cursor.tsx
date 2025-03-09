@@ -2,13 +2,13 @@
 'use client';
 import { useEffect, useRef } from 'react';
 
-interface ColorRGB {
+export interface ColorRGB {
   r: number;
   g: number;
   b: number;
 }
 
-interface SplashCursorProps {
+export interface SplashCursorProps {
   SIM_RESOLUTION?: number;
   DYE_RESOLUTION?: number;
   CAPTURE_RESOLUTION?: number;
@@ -53,7 +53,7 @@ function pointerPrototype(): Pointer {
   };
 }
 
-export default function SplashCursor({
+export function SplashCursor({
   SIM_RESOLUTION = 128,
   DYE_RESOLUTION = 1440,
   CAPTURE_RESOLUTION = 512,
@@ -1401,3 +1401,5 @@ export default function SplashCursor({
     </div>
   );
 }
+
+export default SplashCursor;

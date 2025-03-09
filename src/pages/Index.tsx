@@ -16,6 +16,13 @@ const Index = () => {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [initialCommands, setInitialCommands] = useState<string[]>([]);
+
+  // Container refs for primary components
+  const containerRef = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const terminalRef = useRef<HTMLDivElement>(null);
+  const wallpaperRef = useRef<HTMLDivElement>(null);
+
   // Use refs to track initialization status
   const cursorInitialized = useRef(false);
   const wallpaperInitialized = useRef(false);
@@ -233,13 +240,13 @@ const Index = () => {
   const wallpaperClasses = getWallpaperClasses();
 
   return (
-    <div className={wallpaperClasses}>
+    <div id="indexContainer" className={wallpaperClasses} ref={containerRef}>
       <WallpaperProvider
         id="wallpaperContainer"
         className="wallpaper-container"
         wallpaper={wallpapers[currentWallpaper]}
       >
-        <div id="terminalContainer" className="terminal-container">
+        <div id="terminalContainer" className="terminal-container" ref={terminalRef}>
           <div
             className={`h-[80vh] w-[80vw] max-w-4xl transition-all duration-1000 ease-out terminal-glow-shadow ${
               isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
@@ -249,7 +256,7 @@ const Index = () => {
           </div>
         </div>
       </WallpaperProvider>
-      <CursorProvider cursor={currentCursor} />
+      <CursorProvider containerRef={containerRef} cursor={currentCursor} />
     </div>
   );
 };

@@ -15,6 +15,14 @@ export const cursors: Record<string, Cursor> = {
   //   animation: 'blob',
   //   animationType: 'reactbits'
   // },
+  bubble: {
+    id: 'bubble',
+    name: 'Bubble',
+    description: 'Bubble cursor',
+    type: 'animation',
+    animation: 'bubble',
+    animationType: 'cursify'
+  },
   crosshair: {
     id: 'crosshair',
     name: 'Crosshair',

@@ -20,7 +20,7 @@ export interface CrosshairProps {
   containerRef?: RefObject<HTMLElement>;
 }
 
-const Crosshair: React.FC<CrosshairProps> = ({ color = 'white', containerRef = null }) => {
+export const Crosshair: React.FC<CrosshairProps> = ({ color = 'white', containerRef = null }) => {
   const cursorRef = useRef<HTMLDivElement>(null);
   const lineHorizontalRef = useRef<HTMLDivElement>(null);
   const lineVerticalRef = useRef<HTMLDivElement>(null);

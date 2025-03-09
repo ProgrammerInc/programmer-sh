@@ -16,7 +16,7 @@ export interface RibbonsProps {
   backgroundColor?: number[];
 }
 
-const Ribbons: React.FC<RibbonsProps> = ({
+export const Ribbons: React.FC<RibbonsProps> = ({
   colors = ['#ff9346', '#7cff67', '#ffee51', '#00d8ff'],
   baseSpring = 0.03,
   baseFriction = 0.9,

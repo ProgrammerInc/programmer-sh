@@ -73,6 +73,9 @@ import Wallpaper from './wallpaper.types';
 export interface WallpaperProps extends React.HTMLAttributes<HTMLDivElement> {
   interactive?: boolean;
   theme?: 'light' | 'dark';
+  animationRef?: React.RefObject<HTMLDivElement> | null;
+  containerRef?: React.RefObject<HTMLDivElement> | null;
+  contentRef?: React.RefObject<HTMLDivElement> | null;
   wallpaper?: Wallpaper;
 }
 
@@ -93,6 +96,9 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
   id = 'wallpaperContainer',
   className = 'wallpaper-container',
   children,
+  animationRef,
+  containerRef,
+  contentRef,
   style,
   interactive = true,
   theme = 'dark',
@@ -113,7 +119,8 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
   const backgroundColor = wallpaper.backgroundColor || 'transparent';
   const colorType = wallpaper.colorType || 'hex';
   const foregroundColor: [number, number, number] | number | string =
-    wallpaper.foregroundColor || '#64ffda';
+    wallpaper.foregroundColor ||
+    (theme === 'dark' || wallpaper.theme === 'dark' ? '#64ffda' : '#000000');
   const gradient = wallpaper.gradient || 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)';
   const gradientType = wallpaper.gradientType || 'linear';
   const image = wallpaper.image;
@@ -121,6 +128,9 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
   const mimeType = wallpaper.mimeType || 'image/png';
   const url = wallpaper.url;
   const wallpaperId = wallpaper.id || 'default';
+  const wallpaperRef = useRef<HTMLDivElement>(containerRef?.current || null);
+  const wallpaperAnimationRef = useRef<HTMLDivElement>(animationRef?.current || null);
+  const wallpaperContentRef = useRef<HTMLDivElement>(contentRef?.current || null);
   const wallpaperType = wallpaper.type || 'image';
 
   return (
@@ -128,6 +138,7 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
       id={id}
       className={`wallpaper-${wallpaperId} ${className}`}
       data-wallpaper={wallpaperId}
+      ref={wallpaperRef}
       style={{
         backgroundColor,
         backgroundImage:
@@ -150,6 +161,7 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
         <div
           id={`${animation}-container`}
           className={`animation-container ${animation}-container ${image ? 'wallpaper-image' : gradient ? 'wallpaper-gradient' : 'wallpaper-color'} wallpaper-${wallpaper.id}`}
+          ref={wallpaperAnimationRef}
         >
           {animation === 'aurora' && (
             <Aurora
@@ -469,7 +481,7 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
           )}
         </div>
       )}
-      <div id="wallpaperContent" className="wallpaper-content">
+      <div id="wallpaperContent" className="wallpaper-content" ref={wallpaperContentRef}>
         {children}
       </div>
     </div>
