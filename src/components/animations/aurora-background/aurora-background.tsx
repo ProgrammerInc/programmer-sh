@@ -1,16 +1,19 @@
 'use client';
 import { cn } from '@/lib/utils';
 import React, { ReactNode } from 'react';
+import { StarsBackground } from '..';
 
 export interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
   children: ReactNode;
   showRadialGradient?: boolean;
+  withStars?: boolean;
 }
 
 export const AuroraBackground = ({
   className,
   children,
   showRadialGradient = true,
+  withStars = true,
   ...props
 }: AuroraBackgroundProps) => {
   return (
@@ -48,6 +51,7 @@ export const AuroraBackground = ({
           ></div>
         </div>
         {children}
+        {withStars && <StarsBackground className="stars-background" />}
       </div>
     </main>
   );
