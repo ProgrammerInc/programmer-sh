@@ -1,5 +1,6 @@
 'use client';
 import { motion } from 'motion/react';
+import { StarsBackground } from '..';
 
 export interface SpotlightProps {
   gradientFirst?: string;
@@ -11,6 +12,7 @@ export interface SpotlightProps {
   smallWidth?: number;
   duration?: number;
   xOffset?: number;
+  withStars?: boolean;
 }
 
 export const Spotlight = ({
@@ -22,7 +24,8 @@ export const Spotlight = ({
   height = 1380,
   smallWidth = 240,
   duration = 7,
-  xOffset = 100
+  xOffset = 100,
+  withStars = false
 }: SpotlightProps = {}) => {
   return (
     <motion.div
@@ -122,6 +125,7 @@ export const Spotlight = ({
           className={`absolute top-0 right-0 origin-top-right`}
         />
       </motion.div>
+      {withStars && <StarsBackground className="stars-background" />}
     </motion.div>
   );
 };
