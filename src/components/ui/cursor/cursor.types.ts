@@ -2,6 +2,7 @@ import {
   BlobCursorProps,
   BubbleCursorProps,
   CrosshairProps,
+  RainbowCursorProps,
   RibbonsProps,
   SnowflakeCursorProps
 } from '@/components/cursors';
@@ -21,6 +22,7 @@ export interface Cursor {
     | BlobCursorProps
     | BubbleCursorProps
     | CrosshairProps
+    | RainbowCursorProps
     | RibbonsProps
     | SnowflakeCursorProps;
   animationType?: string;

@@ -31,6 +31,14 @@ export const cursors: Record<string, Cursor> = {
     animation: 'crosshair',
     animationType: 'reactbits'
   },
+  rainbow: {
+    id: 'rainbow',
+    name: 'Rainbow',
+    description: 'Rainbow cursor',
+    type: 'animation',
+    animation: 'rainbow',
+    animationType: 'cursify'
+  },
   // ribbons: {
   //   id: 'ribbons',
   //   name: 'Ribbons',

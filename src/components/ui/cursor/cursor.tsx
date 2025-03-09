@@ -5,6 +5,8 @@ import {
   BubbleCursorProps,
   Crosshair,
   CrosshairProps,
+  RainbowCursor,
+  RainbowCursorProps,
   Ribbons,
   RibbonsProps,
   SnowflakeCursor,
@@ -37,6 +39,7 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
     const bubbleContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const crosshairContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const cursorContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
+    const rainbowContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const ribbonsContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const splashContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const snowflakeContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
@@ -80,6 +83,11 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
             color={currentColor}
             {...(currentCursor.animationProps as CrosshairProps)}
           />
+        )}
+        {currentCursor.type === 'animation' && currentCursor.animation === 'rainbow' && (
+          <div className="rainbow-cursor-container" ref={rainbowContainerRef}>
+            <RainbowCursor {...(currentCursor.animationProps as RainbowCursorProps)} />
+          </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'ribbons' && (
           <div className="ribbons-cursor-container" ref={ribbonsContainerRef}>
