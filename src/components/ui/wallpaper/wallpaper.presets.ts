@@ -310,16 +310,16 @@ const wallpapers: Record<string, Wallpaper> = {
     gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
     gradientType: 'linear'
   },
-  'wavy-background': {
-    id: 'wavy-background',
-    name: 'Wavy Background',
-    description: 'Animated wavy background',
-    type: 'animation',
-    animation: 'wavy-background',
-    animationType: 'aceternity',
-    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
-    gradientType: 'linear'
-  },
+  // 'wavy-background': {
+  //   id: 'wavy-background',
+  //   name: 'Wavy Background',
+  //   description: 'Animated wavy background',
+  //   type: 'animation',
+  //   animation: 'wavy-background',
+  //   animationType: 'aceternity',
+  //   gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+  //   gradientType: 'linear'
+  // },
   workspace: {
     id: 'workspace',
     name: 'Workspace',
