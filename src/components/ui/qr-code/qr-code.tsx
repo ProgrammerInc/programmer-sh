@@ -1,4 +1,4 @@
-import programmerIcon from '@/lib/qrcode-logos';
+import programmerIcon from '@/components/ui/qr-code/qrcode.presets';
 import { cn } from '@/lib/utils';
 import React from 'react';
 import { QRCode } from 'react-qrcode-logo';
