@@ -1,6 +1,7 @@
 export * from './use-command-processor';
 export * from './use-is-mobile';
 export * from './use-mouse-enter';
+export * from './use-outside-click';
 export * from './use-social-links';
 export * from './use-terminal-auth';
 export * from './use-terminal-history';

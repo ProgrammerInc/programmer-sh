@@ -1,6 +1,7 @@
 export * from './3d-card';
 export * from './3d-pin';
 export * from './animated-content';
+export * from './animated-modal';
 export * from './ascii-text';
 export * from './aurora';
 export * from './aurora-background';
