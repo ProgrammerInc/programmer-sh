@@ -6,6 +6,7 @@ export * from './character-cursor';
 export * from './click-spark';
 export * from './crosshair';
 export * from './fairydust-cursor';
+export * from './glitch-cursor';
 export * from './gradient-cursor';
 export * from './image-trail';
 export * from './neon-cursor';

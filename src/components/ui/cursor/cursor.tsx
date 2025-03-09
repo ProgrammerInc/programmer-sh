@@ -12,6 +12,7 @@ import {
   CrosshairProps,
   FairyDustCursor,
   FairyDustCursorProps,
+  GlitchCursor,
   GradientCursor,
   NeonCursor,
   RainbowCursor,
@@ -62,6 +63,7 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
     const crosshairContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const cursorContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const fairydustContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
+    const glitchContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const gradientContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const neonContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const rainbowContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
@@ -147,6 +149,11 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
               initialVelocity={{ min: 0.7, max: 2.0 }}
               {...(currentCursor.animationProps as FairyDustCursorProps)}
             />
+          </div>
+        )}
+        {currentCursor.type === 'animation' && currentCursor.animation === 'glitch' && (
+          <div className="glitch-cursor-container" ref={glitchContainerRef}>
+            <GlitchCursor />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'gradient' && (

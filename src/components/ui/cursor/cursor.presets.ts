@@ -63,6 +63,14 @@ export const cursors: Record<string, Cursor> = {
     animation: 'fairydust',
     animationType: 'cursify'
   },
+  // glitch: {
+  //   id: 'glitch',
+  //   name: 'Glitch',
+  //   description: 'Glitch cursor',
+  //   type: 'animation',
+  //   animation: 'glitch',
+  //   animationType: 'cursify'
+  // },
   gradient: {
     id: 'gradient',
     name: 'Gradient',

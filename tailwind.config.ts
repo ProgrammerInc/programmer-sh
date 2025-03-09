@@ -151,6 +151,13 @@ export default {
           '95%': { 'clip-path': 'inset(25% 0 35% 0)' },
           '100%': { 'clip-path': 'inset(30% 0 40% 0)' }
         },
+        'glitch-overlay': {
+          '0%': { transform: 'translateX(0)' },
+          '25%': { transform: 'translateX(-5px)' },
+          '50%': { transform: 'translateX(5px)' },
+          '75%': { transform: 'translateX(-2px)' },
+          '100%': { transform: 'translateX(0)' }
+        },
         'glow-pulse': {
           '0%, 100%': { boxShadow: '0 0 5px rgba(100, 255, 218, 0.5)' },
           '50%': { boxShadow: '0 0 20px rgba(100, 255, 218, 0.8)' }
