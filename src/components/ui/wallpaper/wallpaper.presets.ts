@@ -34,6 +34,16 @@ const wallpapers: Record<string, Wallpaper> = {
     animation: 'aurora',
     animationType: 'reactbits'
   },
+  'background-beams': {
+    id: 'background-beams',
+    name: 'Background Beams',
+    description: 'Beams that animate in a wave pattern',
+    type: 'animation',
+    animation: 'background-beams',
+    animationType: 'aceternity',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
+  },
   'background-boxes': {
     id: 'background-boxes',
     name: 'Background Boxes',
