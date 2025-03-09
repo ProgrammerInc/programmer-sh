@@ -15,14 +15,10 @@ import { resumeCommand } from './resumeCommand';
 import { skillsCommand } from './skillsCommand';
 import { socialCommand } from './socialCommand';
 import { clearCommand, dateCommand, echoCommand, historyCommand } from './systemCommands';
+import { themeCommand } from './themeCommand';
 import { Command } from './types';
-import { initializeTheme, themeCommand } from './themeCommand';
-import { initializeWallpaper, wallpaperCommand } from './wallpaperCommand';
+import { wallpaperCommand } from './wallpaperCommand';
 import { welcomeCommand } from './welcomeCommand';
-
-// Initialize settings
-initializeTheme();
-initializeWallpaper();
 
 // Export a function to get all available commands
 export const getCommands = (): Record<string, Command> => {
