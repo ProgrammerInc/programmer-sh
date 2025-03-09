@@ -11,6 +11,7 @@ import {
   FairyDustCursor,
   FairyDustCursorProps,
   GradientCursor,
+  NeonCursor,
   RainbowCursor,
   RainbowCursorProps,
   Ribbons,
@@ -57,6 +58,7 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
     const cursorContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const fairydustContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const gradientContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
+    const neonContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const rainbowContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const ribbonsContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const rippleContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
@@ -136,6 +138,11 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
         {currentCursor.type === 'animation' && currentCursor.animation === 'gradient' && (
           <div className="gradient-cursor-container" ref={gradientContainerRef}>
             <GradientCursor />
+          </div>
+        )}
+        {currentCursor.type === 'animation' && currentCursor.animation === 'neon' && (
+          <div className="neon-cursor-container" ref={neonContainerRef}>
+            <NeonCursor />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'rainbow' && (

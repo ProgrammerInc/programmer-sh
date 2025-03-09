@@ -63,6 +63,14 @@ export const cursors: Record<string, Cursor> = {
     animation: 'gradient',
     animationType: 'cursify'
   },
+  // neon: {
+  //   id: 'neon',
+  //   name: 'Neon',
+  //   description: 'Neon cursor',
+  //   type: 'animation',
+  //   animation: 'neon',
+  //   animationType: 'cursify'
+  // },
   rainbow: {
     id: 'rainbow',
     name: 'Rainbow',

@@ -7,6 +7,7 @@ export * from './crosshair';
 export * from './fairydust-cursor';
 export * from './gradient-cursor';
 export * from './image-trail';
+export * from './neon-cursor';
 export * from './pixel-trail';
 export * from './rainbow-cursor';
 export * from './ribbons';
