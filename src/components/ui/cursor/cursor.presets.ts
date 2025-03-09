@@ -39,6 +39,14 @@ export const cursors: Record<string, Cursor> = {
   //   animation: 'ribbons',
   //   animationType: 'reactbits'
   // },
+  snowflake: {
+    id: 'snowflake',
+    name: 'Snowflake',
+    description: 'Snowflake cursor',
+    type: 'animation',
+    animation: 'snowflake',
+    animationType: 'cursify'
+  },
   splash: {
     id: 'splash',
     name: 'Splash',

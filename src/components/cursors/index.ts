@@ -5,4 +5,5 @@ export * from './crosshair';
 export * from './image-trail';
 export * from './pixel-trail';
 export * from './ribbons';
+export * from './snowflake-cursor';
 export * from './splash-cursor';

@@ -7,6 +7,7 @@ import {
   CrosshairProps,
   Ribbons,
   RibbonsProps,
+  SnowflakeCursor,
   SplashCursor
 } from '@/components/cursors';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
@@ -38,6 +39,7 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
     const cursorContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const ribbonsContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const splashContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
+    const snowflakeContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
 
     // Connect the forwarded ref to our inner ref
     useImperativeHandle(ref, () => cursorContainerRef.current!);
@@ -90,6 +92,11 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
               enableShaderEffect={true}
               {...(currentCursor.animationProps as RibbonsProps)}
             />
+          </div>
+        )}
+        {currentCursor.type === 'animation' && currentCursor.animation === 'snowflake' && (
+          <div className="snowflake-cursor-container" ref={snowflakeContainerRef}>
+            <SnowflakeCursor />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'splash' && (

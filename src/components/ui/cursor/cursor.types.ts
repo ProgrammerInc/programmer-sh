@@ -2,7 +2,8 @@ import {
   BlobCursorProps,
   BubbleCursorProps,
   CrosshairProps,
-  RibbonsProps
+  RibbonsProps,
+  SnowflakeCursorProps
 } from '@/components/cursors';
 import { RefObject } from 'react';
 
@@ -16,7 +17,12 @@ export interface Cursor {
   description: string;
   type: CursorType;
   animation?: string;
-  animationProps?: BlobCursorProps | BubbleCursorProps | CrosshairProps | RibbonsProps;
+  animationProps?:
+    | BlobCursorProps
+    | BubbleCursorProps
+    | CrosshairProps
+    | RibbonsProps
+    | SnowflakeCursorProps;
   animationType?: string;
   theme?: 'light' | 'dark';
   url?: string;
