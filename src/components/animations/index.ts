@@ -1,4 +1,5 @@
 export * from './3d-card';
+export * from './3d-pin';
 export * from './animated-content';
 export * from './ascii-text';
 export * from './aurora';
