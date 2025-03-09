@@ -43,6 +43,7 @@ export * from './scroll-velocity';
 export * from './shape-blur';
 export * from './shiny-text';
 export * from './shooting-stars';
+export * from './sparkles';
 export * from './split-text';
 export * from './spotlight';
 export * from './squares';

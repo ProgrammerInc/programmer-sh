@@ -44,6 +44,8 @@ import {
   RainDropsProps,
   ShootingStars,
   ShootingStarsProps,
+  Sparkles,
+  SparklesProps,
   Spotlight,
   SpotlightProps,
   Squares,
@@ -380,6 +382,17 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
           )}
           {animation === 'southern-lights' && (
             <AuroraBackground {...(animationProps as AuroraBackgroundProps)} />
+          )}
+          {animation === 'sparkles' && (
+            <Sparkles
+              background="transparent"
+              minSize={0.6}
+              maxSize={1.4}
+              particleDensity={100}
+              className="w-full h-full"
+              particleColor={foregroundColor}
+              {...(animationProps as SparklesProps)}
+            />
           )}
           {animation === 'spotlight' && <Spotlight {...(animationProps as SpotlightProps)} />}
           {animation === 'squares' && (

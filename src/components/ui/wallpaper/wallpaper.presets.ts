@@ -280,23 +280,23 @@ const wallpapers: Record<string, Wallpaper> = {
     gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
     gradientType: 'linear'
   },
-  squares: {
-    id: 'squares',
-    name: 'Squares',
-    description: 'Animated squares background',
-    type: 'animation',
-    animation: 'squares',
-    animationType: 'reactbits',
-    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
-    gradientType: 'linear'
-  },
   'southern-lights': {
     id: 'southern-lights',
     name: 'Southern Lights',
     description: 'Another aurora background animation',
     type: 'animation',
     animation: 'southern-lights',
-    animationType: 'reactbits',
+    animationType: 'aceternity',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
+  },
+  sparkles: {
+    id: 'sparkles',
+    name: 'Sparkles',
+    description: 'Sparkles animation background',
+    type: 'animation',
+    animation: 'sparkles',
+    animationType: 'aceternity',
     gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
     gradientType: 'linear'
   },
@@ -306,6 +306,16 @@ const wallpapers: Record<string, Wallpaper> = {
     description: 'A spotlight background animation',
     type: 'animation',
     animation: 'spotlight',
+    animationType: 'aceternity',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
+  },
+  squares: {
+    id: 'squares',
+    name: 'Squares',
+    description: 'Animated squares background',
+    type: 'animation',
+    animation: 'squares',
     animationType: 'reactbits',
     gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
     gradientType: 'linear'
