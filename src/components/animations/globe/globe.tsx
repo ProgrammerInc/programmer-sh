@@ -3,7 +3,7 @@
 
 'use client';
 import countries from '@/data/globe.json';
-import { genRandomNumbers, hexToRgb } from '@/lib/utils';
+import { genRandomNumbers, hexToRgbObject } from '@/lib/utils';
 import { OrbitControls } from '@react-three/drei';
 import { Canvas, extend, useThree } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
@@ -117,7 +117,7 @@ export function Globe({ globeConfig, data }: WorldProps) {
     const points = [];
     for (let i = 0; i < arcs.length; i++) {
       const arc = arcs[i];
-      const rgb = hexToRgb(arc.color, 'rgb', 1, 'object') as { r: number; g: number; b: number };
+      const rgb = hexToRgbObject(arc.color);
       points.push({
         size: defaultProps.pointSize,
         order: arc.order,

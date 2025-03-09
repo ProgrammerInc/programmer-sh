@@ -1,11 +1,13 @@
 import { Color, Mesh, Program, Renderer, Triangle } from 'ogl';
 import React, { useEffect, useRef } from 'react';
+import { StarsBackground } from '..';
 
 export interface ThreadsProps {
   color?: [number, number, number];
   amplitude?: number;
   distance?: number;
   enableMouseInteraction?: boolean;
+  withStars?: boolean;
 }
 
 const vertexShader = `
@@ -122,18 +124,12 @@ void main() {
 }
 `;
 
-export interface ThreadsProps {
-  color?: [number, number, number];
-  amplitude?: number;
-  distance?: number;
-  enableMouseInteraction?: boolean;
-}
-
 export const Threads: React.FC<ThreadsProps> = ({
   color = [1, 1, 1],
   amplitude = 1,
   distance = 0,
   enableMouseInteraction = false,
+  withStars = true,
   ...rest
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -227,7 +223,11 @@ export const Threads: React.FC<ThreadsProps> = ({
     };
   }, [color, amplitude, distance, enableMouseInteraction]);
 
-  return <div ref={containerRef} className="w-full h-full relative" {...rest} />;
+  return (
+    <div ref={containerRef} className="w-full h-full relative" {...rest}>
+      {withStars && <StarsBackground className="stars-background" />}
+    </div>
+  );
 };
 
 export default Threads;

@@ -66,7 +66,7 @@ import {
   WorldProps
 } from '@/components/animations';
 import { globeArcs, globeConfig } from '@/components/animations/globe/globe.presets';
-import { hexToRgb } from '@/lib/utils';
+import { hexToRgbArray } from '@/lib/utils';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import wallpapers from './wallpaper.presets';
 import { WallpaperProps } from './wallpaper.types';
@@ -424,7 +424,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 amplitude={3}
                 color={
                   colorType === 'hex'
-                    ? (hexToRgb(foregroundColor) as [number, number, number])
+                    ? (hexToRgbArray(foregroundColor) as [number, number, number])
                     : (foregroundColor as unknown as [number, number, number])
                 }
                 distance={0}
