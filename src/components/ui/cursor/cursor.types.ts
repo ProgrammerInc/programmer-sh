@@ -6,6 +6,7 @@ import {
   FairyDustCursorProps,
   RainbowCursorProps,
   RibbonsProps,
+  RippleCursorProps,
   SnowflakeCursorProps,
   TrailingCursorProps
 } from '@/components/cursors';
@@ -29,6 +30,7 @@ export interface Cursor {
     | FairyDustCursorProps
     | RainbowCursorProps
     | RibbonsProps
+    | RippleCursorProps
     | SnowflakeCursorProps
     | TrailingCursorProps;
   animationType?: string;

@@ -10,6 +10,7 @@ export * from './image-trail';
 export * from './pixel-trail';
 export * from './rainbow-cursor';
 export * from './ribbons';
+export * from './ripple-cursor';
 export * from './snowflake-cursor';
 export * from './splash-cursor';
 export * from './trailing-cursor';

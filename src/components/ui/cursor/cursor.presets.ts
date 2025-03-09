@@ -79,6 +79,14 @@ export const cursors: Record<string, Cursor> = {
   //   animation: 'ribbons',
   //   animationType: 'reactbits'
   // },
+  ripple: {
+    id: 'ripple',
+    name: 'Ripple',
+    description: 'Ripple cursor',
+    type: 'animation',
+    animation: 'ripple',
+    animationType: 'cursify'
+  },
   snowflake: {
     id: 'snowflake',
     name: 'Snowflake',

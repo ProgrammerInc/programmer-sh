@@ -15,6 +15,8 @@ import {
   RainbowCursorProps,
   Ribbons,
   RibbonsProps,
+  RippleCursor,
+  RippleCursorProps,
   SnowflakeCursor,
   SplashCursor,
   TrailingCursor,
@@ -53,6 +55,7 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
     const gradientContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const rainbowContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const ribbonsContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
+    const rippleContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const splashContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const snowflakeContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const trailingContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
@@ -145,6 +148,11 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
               enableShaderEffect={true}
               {...(currentCursor.animationProps as RibbonsProps)}
             />
+          </div>
+        )}
+        {currentCursor.type === 'animation' && currentCursor.animation === 'ripple' && (
+          <div className="ripple-cursor-container" ref={rippleContainerRef}>
+            <RippleCursor {...(currentCursor.animationProps as RippleCursorProps)} />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'snowflake' && (
