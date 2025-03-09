@@ -34,6 +34,16 @@ const wallpapers: Record<string, Wallpaper> = {
     animation: 'aurora',
     animationType: 'reactbits'
   },
+  'background-boxes': {
+    id: 'background-boxes',
+    name: 'Background Boxes',
+    description: 'Boxes that change color with mouse movement',
+    type: 'animation',
+    animation: 'background-boxes',
+    animationType: 'aceternity',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
+  },
   'background-lines': {
     id: 'background-lines',
     name: 'Background Lines',
@@ -273,7 +283,7 @@ const wallpapers: Record<string, Wallpaper> = {
   waves: {
     id: 'waves',
     name: 'Waves',
-    description: 'Trippy psychedelic liquid animation',
+    description: 'Trippy optical illusion animation',
     type: 'animation',
     animation: 'waves',
     animationType: 'reactbits',
@@ -283,7 +293,7 @@ const wallpapers: Record<string, Wallpaper> = {
   'wavy-background': {
     id: 'wavy-background',
     name: 'Wavy Background',
-    description: 'Wavy background animation',
+    description: 'Animated wavy background',
     type: 'animation',
     animation: 'wavy-background',
     animationType: 'aceternity',
@@ -301,7 +311,7 @@ const wallpapers: Record<string, Wallpaper> = {
   'world-map': {
     id: 'world-map',
     name: 'World Map',
-    description: 'World map animation',
+    description: 'World map background with animated lines',
     type: 'animation',
     animation: 'world-map',
     animationType: 'aceternity',

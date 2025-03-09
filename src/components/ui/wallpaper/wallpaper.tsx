@@ -2,6 +2,8 @@
 import {
   Aurora,
   AuroraProps,
+  BackgroundBoxes,
+  BackgroundBoxesProps,
   BackgroundLines,
   BackgroundLinesProps,
   Balatro,
@@ -145,6 +147,9 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               speed={0.5}
               {...(animationProps as AuroraProps)}
             />
+          )}
+          {animation === 'background-boxes' && (
+            <BackgroundBoxes {...(animationProps as BackgroundBoxesProps)} />
           )}
           {animation === 'background-lines' && (
             <BackgroundLines {...(animationProps as BackgroundLinesProps)} />
