@@ -43,6 +43,7 @@ export * from './shape-blur';
 export * from './shiny-text';
 export * from './shooting-stars';
 export * from './split-text';
+export * from './spotlight';
 export * from './squares';
 export * from './star-border';
 export * from './stars-background';

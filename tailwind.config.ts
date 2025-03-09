@@ -205,6 +205,16 @@ export default {
           '0%': { 'background-position': '100%' },
           '100%': { 'background-position': '-100%' }
         },
+        spotlight: {
+          '0%': {
+            opacity: '0',
+            transform: 'translate(-72%, -62%) scale(0.5)'
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translate(-50%,-40%) scale(1)'
+          }
+        },
         'star-movement-bottom': {
           '0%': { transform: 'translateX(0) rotate(0)' },
           '100%': { transform: 'translateX(-100vw) rotate(360deg)' }
@@ -231,6 +241,7 @@ export default {
         shine: 'shine 5s linear infinite',
         'star-movement-bottom': 'star-movement-bottom 6s linear infinite',
         'star-movement-top': 'star-movement-top 6s linear infinite',
+        spotlight: 'spotlight 2s ease .75s 1 forwards',
         first: 'moveVertical 30s ease infinite',
         second: 'moveInCircle 20s reverse infinite',
         third: 'moveInCircle 40s linear infinite',

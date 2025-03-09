@@ -42,6 +42,8 @@ import {
   RainDropsProps,
   ShootingStars,
   ShootingStarsProps,
+  Spotlight,
+  SpotlightProps,
   Squares,
   SquaresProps,
   StarBackgroundProps,
@@ -369,6 +371,10 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               <StarsBackground {...(animationProps[1] as StarBackgroundProps)} />
             </div>
           )}
+          {animation === 'southern-lights' && (
+            <AuroraBackground {...(animationProps as AuroraBackgroundProps)} />
+          )}
+          {animation === 'spotlight' && <Spotlight {...(animationProps as SpotlightProps)} />}
           {animation === 'squares' && (
             <Squares
               speed={0.5}
@@ -378,9 +384,6 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               hoverFillColor={backgroundColor}
               {...(animationProps as SquaresProps)}
             />
-          )}
-          {animation === 'southern-lights' && (
-            <AuroraBackground {...(animationProps as AuroraBackgroundProps)} />
           )}
           {animation === 'threads' && (
             <Threads

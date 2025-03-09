@@ -290,6 +290,16 @@ const wallpapers: Record<string, Wallpaper> = {
     gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
     gradientType: 'linear'
   },
+  spotlight: {
+    id: 'spotlight',
+    name: 'Spotlight',
+    description: 'A spotlight background animation',
+    type: 'animation',
+    animation: 'spotlight',
+    animationType: 'reactbits',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
+  },
   threads: {
     id: 'threads',
     name: 'Threads',

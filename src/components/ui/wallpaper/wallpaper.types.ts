@@ -19,6 +19,7 @@ import {
   ParticlesProps,
   RainDropsProps,
   ShootingStarsProps,
+  SpotlightProps,
   SquaresProps,
   StarBackgroundProps,
   ThreadsProps,
@@ -68,8 +69,9 @@ export interface Wallpaper {
     | NoiseProps
     | ParticlesProps
     | RainDropsProps
-    | SquaresProps
     | [ShootingStarsProps, StarBackgroundProps]
+    | SpotlightProps
+    | SquaresProps
     | ThreadsProps
     | VortexProps
     | WavesProps
