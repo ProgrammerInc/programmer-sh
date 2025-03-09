@@ -43,14 +43,12 @@ import {
   RainDrops,
   RainDropsProps,
   ShootingStars,
-  ShootingStarsProps,
   Sparkles,
   SparklesProps,
   Spotlight,
   SpotlightProps,
   Squares,
   SquaresProps,
-  StarBackgroundProps,
   StarsBackground,
   Threads,
   ThreadsProps,
@@ -98,6 +96,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
     }, [wallpaper, wallpapers]);
 
     // Default values
+    const colorType = 'hex';
     let backgroundColor = 'transparent';
     let foregroundColor = theme === 'dark' ? '#64ffda' : '#000000';
     let backgroundImage = 'none';
@@ -403,11 +402,11 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                   className="shooting-stars absolute top-0 left-0 w-full h-full z-1"
                   starColor={foregroundColor}
                   trailColor={foregroundColor}
-                  {...(animation.animationProps[0] as ShootingStarsProps)}
+                  // {...(animation.animationProps[0] as ShootingStarsProps)}
                 />
                 <StarsBackground
                   className="stars-background absolute top-0 left-0 w-full h-full z-0"
-                  {...(animation.animationProps[1] as StarBackgroundProps)}
+                  // {...(animation.animationProps[1] as StarBackgroundProps)}
                 />
               </div>
             )}
@@ -442,7 +441,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
               <Threads
                 amplitude={3}
                 color={
-                  colors[1].type === 'hex'
+                  colorType === 'hex'
                     ? (hexToRgbArray(foregroundColor) as [number, number, number])
                     : (foregroundColor as unknown as [number, number, number])
                 }

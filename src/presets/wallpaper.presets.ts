@@ -178,20 +178,20 @@ const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
-  globe: {
-    id: 'globe',
-    name: 'Globe',
-    description: 'A globe of the world',
-    type: 'animation',
-    background: {
-      id: 'globe',
-      type: 'animation',
-      animation: {
-        id: 'globe',
-        type: 'aceternity'
-      }
-    }
-  },
+  // globe: {
+  //   id: 'globe',
+  //   name: 'Globe',
+  //   description: 'A globe of the world',
+  //   type: 'animation',
+  //   background: {
+  //     id: 'globe',
+  //     type: 'animation',
+  //     animation: {
+  //       id: 'globe',
+  //       type: 'aceternity'
+  //     }
+  //   }
+  // },
   gradient: {
     id: 'gradient',
     name: 'Gradient',
@@ -241,20 +241,20 @@ const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
-  'grid-motion': {
-    id: 'grid-motion',
-    name: 'Grid Motion',
-    description: 'Animated grid of moving elements',
-    type: 'animation',
-    background: {
-      id: 'grid-motion',
-      type: 'animation',
-      animation: {
-        id: 'grid-motion',
-        type: 'reactbits'
-      }
-    }
-  },
+  // 'grid-motion': {
+  //   id: 'grid-motion',
+  //   name: 'Grid Motion',
+  //   description: 'Animated grid of moving elements',
+  //   type: 'animation',
+  //   background: {
+  //     id: 'grid-motion',
+  //     type: 'animation',
+  //     animation: {
+  //       id: 'grid-motion',
+  //       type: 'reactbits'
+  //     }
+  //   }
+  // },
   hyperspeed: {
     id: 'hyperspeed',
     name: 'Hyperspeed',
@@ -629,25 +629,25 @@ const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
-  'wavy-background': {
-    id: 'wavy-background',
-    name: 'Wavy Background',
-    description: 'Animated wavy background',
-    type: 'animation',
-    background: {
-      id: 'wavy-background',
-      type: 'animation',
-      animation: {
-        id: 'wavy-background',
-        type: 'aceternity'
-      },
-      gradient: {
-        id: 'default',
-        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
-        type: 'linear'
-      }
-    }
-  },
+  // 'wavy-background': {
+  //   id: 'wavy-background',
+  //   name: 'Wavy Background',
+  //   description: 'Animated wavy background',
+  //   type: 'animation',
+  //   background: {
+  //     id: 'wavy-background',
+  //     type: 'animation',
+  //     animation: {
+  //       id: 'wavy-background',
+  //       type: 'aceternity'
+  //     },
+  //     gradient: {
+  //       id: 'default',
+  //       gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+  //       type: 'linear'
+  //     }
+  //   }
+  // },
   'wavy-lines': {
     id: 'wavy-lines',
     name: 'Wavy Lines',
@@ -682,26 +682,26 @@ const wallpaperPresets: Record<string, Wallpaper> = {
         url: 'https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&q=80'
       }
     }
-  },
-  'world-map': {
-    id: 'world-map',
-    name: 'World Map',
-    description: 'World map background with animated lines',
-    type: 'animation',
-    background: {
-      id: 'world-map',
-      type: 'animation',
-      animation: {
-        id: 'world-map',
-        type: 'aceternity'
-      },
-      gradient: {
-        id: 'default',
-        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
-        type: 'linear'
-      }
-    }
   }
+  // 'world-map': {
+  //   id: 'world-map',
+  //   name: 'World Map',
+  //   description: 'World map background with animated lines',
+  //   type: 'animation',
+  //   background: {
+  //     id: 'world-map',
+  //     type: 'animation',
+  //     animation: {
+  //       id: 'world-map',
+  //       type: 'aceternity'
+  //     },
+  //     gradient: {
+  //       id: 'default',
+  //       gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+  //       type: 'linear'
+  //     }
+  //   }
+  // }
 };
 
 export default wallpaperPresets;
