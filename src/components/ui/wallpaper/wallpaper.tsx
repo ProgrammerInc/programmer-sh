@@ -1,6 +1,8 @@
 'use client';
 import {
   Aurora,
+  AuroraBackground,
+  AuroraBackgroundProps,
   AuroraProps,
   BackgroundBeams,
   BackgroundBeamsProps,
@@ -376,6 +378,9 @@ export const WallpaperProvider: React.FC<WallpaperProps> = ({
               hoverFillColor={backgroundColor}
               {...(animationProps as SquaresProps)}
             />
+          )}
+          {animation === 'southern-lights' && (
+            <AuroraBackground {...(animationProps as AuroraBackgroundProps)} />
           )}
           {animation === 'threads' && (
             <Threads

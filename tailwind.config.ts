@@ -104,6 +104,14 @@ export default {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' }
         },
+        aurora: {
+          from: {
+            backgroundPosition: '50% 50%, 50% 50%'
+          },
+          to: {
+            backgroundPosition: '350% 50%, 350% 50%'
+          }
+        },
         'cursor-blink': {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0' }
@@ -207,13 +215,9 @@ export default {
         }
       },
       animation: {
-        first: 'moveVertical 30s ease infinite',
-        second: 'moveInCircle 20s reverse infinite',
-        third: 'moveInCircle 40s linear infinite',
-        fourth: 'moveHorizontal 40s ease infinite',
-        fifth: 'moveInCircle 20s ease infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        aurora: 'aurora 60s linear infinite',
         'cursor-blink': 'cursor-blink 1s infinite',
         'text-typing': 'text-typing 3.5s steps(40, end)',
         'fade-in': 'fade-in 0.5s ease-out',
@@ -226,7 +230,12 @@ export default {
         'scale-up': 'scale-up 0.2s ease-out',
         shine: 'shine 5s linear infinite',
         'star-movement-bottom': 'star-movement-bottom 6s linear infinite',
-        'star-movement-top': 'star-movement-top 6s linear infinite'
+        'star-movement-top': 'star-movement-top 6s linear infinite',
+        first: 'moveVertical 30s ease infinite',
+        second: 'moveInCircle 20s reverse infinite',
+        third: 'moveInCircle 40s linear infinite',
+        fourth: 'moveHorizontal 40s ease infinite',
+        fifth: 'moveInCircle 20s ease infinite'
       },
       fontFamily: {
         mono: ['JetBrains Mono', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', 'monospace']

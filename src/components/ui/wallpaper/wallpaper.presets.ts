@@ -280,6 +280,16 @@ const wallpapers: Record<string, Wallpaper> = {
     gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
     gradientType: 'linear'
   },
+  'southern-lights': {
+    id: 'southern-lights',
+    name: 'Southern Lights',
+    description: 'Another aurora background animation',
+    type: 'animation',
+    animation: 'southern-lights',
+    animationType: 'reactbits',
+    gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+    gradientType: 'linear'
+  },
   threads: {
     id: 'threads',
     name: 'Threads',

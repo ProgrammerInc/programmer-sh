@@ -1,4 +1,5 @@
 import {
+  AuroraBackgroundProps,
   AuroraProps,
   BackgroundBeamsProps,
   BackgroundBoxesProps,
@@ -47,6 +48,7 @@ export interface Wallpaper {
   animationType?: AnimationType;
   animationProps?:
     | AuroraProps
+    | AuroraBackgroundProps
     | BackgroundBeamsProps
     | BackgroundBoxesProps
     | BackgroundLinesProps
