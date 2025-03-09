@@ -1,3 +1,5 @@
+export * from './3d-card';
+export * from './3d-pin';
 export * from './accordion';
 export * from './alert';
 export * from './alert-dialog';
