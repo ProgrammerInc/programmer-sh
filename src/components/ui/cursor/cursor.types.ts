@@ -9,6 +9,7 @@ import {
   RippleCursorProps,
   SnowflakeCursorProps,
   SpotlightCursorProps,
+  SpringyCursorProps,
   TrailingCursorProps
 } from '@/components/cursors';
 import { RefObject } from 'react';
@@ -34,6 +35,7 @@ export interface Cursor {
     | RippleCursorProps
     | SnowflakeCursorProps
     | SpotlightCursorProps
+    | SpringyCursorProps
     | TrailingCursorProps;
   animationType?: string;
   theme?: 'light' | 'dark';

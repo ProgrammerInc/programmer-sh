@@ -111,6 +111,14 @@ export const cursors: Record<string, Cursor> = {
     animation: 'spotlight',
     animationType: 'cursify'
   },
+  springy: {
+    id: 'springy',
+    name: 'Springy',
+    description: 'Springy cursor',
+    type: 'animation',
+    animation: 'springy',
+    animationType: 'cursify'
+  },
   trailing: {
     id: 'trailing',
     name: 'Trailing',
