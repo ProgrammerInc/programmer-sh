@@ -17,10 +17,10 @@ const Index = () => {
   const location = useLocation();
   console.log('🔍 DEBUG - URL Command from useParams:', urlCommand);
   console.log('🔍 DEBUG - Location pathname:', location.pathname);
-  
+
   const [isLoading, setIsLoading] = useState(true);
   const [initialCommands, setInitialCommands] = useState<string[]>([]);
-  
+
   // We'll use the existing terminalRef for direct command execution
 
   // Container refs for primary components
@@ -43,7 +43,7 @@ const Index = () => {
 
     return 'default';
   });
-  
+
   // Define currentCommand state before we use it in the effect
   const [currentCommand, setCurrentCommand] = useState<string>(urlCommand || 'welcome');
 
@@ -61,13 +61,13 @@ const Index = () => {
   useEffect(() => {
     const titleCommand = currentCommand || 'welcome';
     document.title = `~/${titleCommand} - <programmer>._`;
-    
+
     // Also make sure to set loading to false after title update
     if (isLoading) {
       setTimeout(() => setIsLoading(false), 100);
     }
   }, [currentCommand, isLoading]);
-  
+
   // MUCH more direct execution of URL commands - guaranteed to work
   // This completely overrides the initialCommands mechanism for URL commands
   useEffect(() => {
@@ -75,55 +75,55 @@ const Index = () => {
     if (!urlCommand) {
       return; // No command from route, use normal flow
     }
-    
+
     // We have a URL command - do a hard reset of the initial commands
     // This takes precedence over anything else
     console.log('⚡️ FORCING URL COMMAND EXECUTION:', urlCommand);
-    
+
     // Normalize the command
     const normalizedCommand = urlCommand.toLowerCase();
-    
+
     // CRITICAL: Set initial commands directly - this overrides any other logic
     // and guarantees the command will be executed when the terminal mounts
     setInitialCommands([normalizedCommand]);
-    
+
     // Also mark as processed to prevent other effects from changing it
     commandsProcessed.current = true;
     urlCommandExecuted.current = true;
-    
+
     // Set the current command for the page title
     setCurrentCommand(normalizedCommand);
   }, [urlCommand, setInitialCommands]);
 
   // Add a ref to track if commands have been processed
   const commandsProcessed = useRef(false);
-  
+
   // Create a separate flag to track if a URL command was specifically executed
   // This helps us ensure URL commands are definitely executed
   const urlCommandExecuted = useRef(false);
-  
+
   // Simple effect that directly checks the URL for commands when mounting
   useEffect(() => {
     // Check if we have a command in the URL path (most reliable method)
     const pathParts = window.location.pathname.split('/');
     // Get the part after the first slash
     const pathCommand = pathParts[1];
-    
+
     console.log('URL check ->', window.location.pathname);
     console.log('URL command:', pathCommand);
-    
+
     // If we found a command in the path, set it to execute
     if (pathCommand && pathCommand.length > 0) {
       const normalizedCommand = pathCommand.toLowerCase();
       console.log('Setting URL command to execute:', normalizedCommand);
-      
+
       // Set the initial commands to execute this command
       setInitialCommands([normalizedCommand]);
-      
+
       // Update the title
       setCurrentCommand(normalizedCommand);
     }
-  }, []);  // Empty dependency array - run once on mount
+  }, []); // Empty dependency array - run once on mount
 
   useEffect(() => {
     // Only process commands once to prevent duplicate execution
@@ -138,12 +138,12 @@ const Index = () => {
 
     // Process URL parameters - capture both the route parameter and any query parameters
     const currentUrl = location.pathname + location.search;
-    
+
     // Extract command and theme from URL as fallback
     const { command: extractedCommand, theme } = extractUrlParameters(currentUrl);
-    
+
     console.log('💡 Command extracted from URL:', extractedCommand);
-    
+
     // Use urlCommand if available, otherwise try extractedCommand as fallback
     const commandParam = urlCommand || extractedCommand;
 
@@ -321,6 +321,28 @@ const Index = () => {
     return classes.join(' ');
   }, [currentWallpaper]);
 
+  const backgroundStyle = useMemo(() => {
+    const style: React.CSSProperties = {};
+    const wallpaper = wallpaperPresets[currentWallpaper];
+    const background = wallpaper.background;
+
+    const { colors, gradient, image, video } = background;
+
+    style.background = 'none';
+    style.backgroundColor = colors && colors.length > 0 ? colors[0].color : 'transparent';
+    style.backgroundImage =
+      gradient && gradient.gradient
+        ? `url(${gradient.gradient})`
+        : image && image.url
+          ? `url(${image.url})`
+          : 'none';
+    style.backgroundSize = 'cover';
+    style.backgroundPosition = 'center';
+    style.backgroundRepeat = 'no-repeat';
+
+    return style;
+  }, [currentWallpaper]);
+
   const MemoizedWallpaper = useMemo(
     () => (
       <WallpaperProvider
@@ -331,7 +353,7 @@ const Index = () => {
         wallpaper={currentWallpaper}
       />
     ),
-    [wallpaperRef, currentWallpaper]
+    [currentWallpaper, wallpaperRef]
   );
 
   const MemoizedCursor = useMemo(
@@ -344,17 +366,14 @@ const Index = () => {
       id="indexContainer"
       className={wallpaperClasses}
       ref={containerRef}
-      style={{ position: 'relative' }}
+      style={{ position: 'relative', ...backgroundStyle }}
     >
       {MemoizedWallpaper}
       <div id="terminalContainer" className="terminal-container" ref={terminalRef}>
         <div
           className={`h-[80vh] w-[80vw] max-w-4xl transition-all duration-500 ease-out terminal-glow-shadow opacity-100 scale-100`}
         >
-          <Terminal 
-            initialCommands={initialCommands} 
-            key={initialCommands.join('-')}
-          />
+          <Terminal initialCommands={initialCommands} key={initialCommands.join('-')} />
         </div>
       </div>
       {MemoizedCursor}

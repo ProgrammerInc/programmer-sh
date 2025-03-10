@@ -135,15 +135,68 @@ export const getSpecificCommandHelp = (commandName: string): string => {
   // Find which category the command belongs to
   const category = commandCategories.find(cat => Object.keys(cat.commands).includes(commandName));
 
-  if (commandName in allCommands) {
-    if (allCommands[commandName].placeholder) {
-      return `\n<span class="text-terminal-prompt command-link" data-command="${commandName}" data-placeholder="${allCommands[commandName].placeholder}">${commandName}</span>: ${allCommands[commandName].description}${category ? ` (Category: ${category.name})` : ''}\n\n`;
-    } else {
-      return `\n<span class="text-terminal-prompt command-link" data-command="${commandName}">${commandName}</span>: ${allCommands[commandName].description}${category ? ` (Category: ${category.name})` : ''}\n\n`;
-    }
+  if (!(commandName in allCommands)) {
+    return `Command not found: ${commandName}`;
   }
 
-  return `Command not found: ${commandName}`;
+  // Start building a detailed help display for the command
+  let helpContent = `<div class="command-help">\n`;
+
+  // Command title and basic information
+  helpContent += `<div>Command: <span class="text-terminal-prompt">${commandName}</span></div>`;
+  helpContent += `<div>Description: ${allCommands[commandName].description}</div>`;
+
+  // Category information
+  if (category) {
+    helpContent += `<div>Category: <span class="text-terminal-prompt">${category.name}</span></div>`;
+  }
+
+  // Usage section
+  if (allCommands[commandName].placeholder) {
+    helpContent += `<div>Usage: <span class="text-terminal-prompt">${commandName} ${allCommands[commandName].placeholder}</span></div>
+`;
+  } else {
+    helpContent += `<div>Usage: <span class="text-terminal-prompt">${commandName}</span></div>
+`;
+  }
+
+  // Examples section - tailored for each command
+  helpContent += `<div>Examples:</div>`;
+
+  // Add command-specific examples
+  switch (commandName) {
+    case 'help':
+      helpContent += `<div class="ml-4"><div><span class="command-link" data-command="help">help</span> - Show all available commands</div><div><span class="command-link" data-command="help projects">help projects</span> - Show detailed help for the 'projects' command</div></div>`;
+      break;
+    case 'projects':
+      helpContent += `<div class="ml-4"><div><span class="command-link" data-command="projects">projects</span> - List all projects</div><div><span class="command-link" data-command="projects programmer-news">projects programmer-news</span> - Show details for project with name 'programmer-news'</div></div>`;
+      break;
+    case 'echo':
+      helpContent += `<div class="ml-4"><div><span class="command-link" data-command="echo Hello World">echo Hello World</span> - Display 'Hello World' in the terminal</div></div>`;
+      break;
+    case 'cursor':
+      helpContent += `<div class="ml-4"><div><span class="command-link" data-command="cursor">cursor</span> - Show available cursor styles</div><div><span class="command-link" data-command="cursor pointer">cursor pointer</span> - Change to pointer cursor</div></div>`;
+      break;
+    case 'wallpaper':
+      helpContent += `<div class="ml-4"><div><span class="command-link" data-command="wallpaper">wallpaper</span> - Show available wallpapers</div><div><span class="command-link" data-command="wallpaper space">wallpaper space</span> - Change to space wallpaper</div></div>`;
+      break;
+    case 'theme':
+      helpContent += `<div class="ml-4"><div><span class="command-link" data-command="theme dark">theme dark</span> - Switch to dark theme</div><div><span class="command-link" data-command="theme light">theme light</span> - Switch to light theme</div></div>`;
+      break;
+    case 'about':
+      helpContent += `<div class="ml-4"><div><span class="command-link" data-command="about">about</span> - Display information about me</div></div>`;
+      break;
+    case 'clear':
+      helpContent += `<div class="ml-4"><div><span class="command-link" data-command="clear">clear</span> - Clear the terminal output and history</div></div>`;
+      break;
+    default:
+      helpContent += `<div class="ml-4"><div><span class="command-link" data-command="${commandName}">${commandName}</span> - Execute the ${commandName} command</div></div>`;
+  }
+
+  // Close the command-help div
+  helpContent += `</div>\n`;
+
+  return helpContent;
 };
 
 export const helpCommand: Command = {

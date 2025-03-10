@@ -106,6 +106,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
     const wallpaperAnimationRef = useRef<HTMLDivElement>(animationRef?.current || null);
     const wallpaperContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const wallpaperContentRef = useRef<HTMLDivElement>(contentRef?.current || null);
+    const wallpaperVideoRef = useRef<HTMLVideoElement>(null);
     const background = currentWallpaper.background;
 
     const { animation, colors, gradient, image, video } = background;
@@ -491,6 +492,16 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
               />
             )}
           </div>
+        )}
+        {currentWallpaper.type === 'video' && (
+          <video
+            ref={wallpaperVideoRef}
+            src={video.url}
+            autoPlay
+            muted
+            loop
+            className="wallpaper-video"
+          />
         )}
         <div id="wallpaperContent" className="wallpaper-content" ref={wallpaperContentRef}>
           {children}

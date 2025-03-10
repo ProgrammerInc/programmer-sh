@@ -24,7 +24,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
   alley: {
     id: 'alley',
     name: 'Alley',
-    description: 'A city alley at night',
+    description: 'A Japanese city alley at night',
     type: 'image',
     background: {
       id: 'alley',
@@ -34,6 +34,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1551641506-ee5bf4cb45f1?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  andromeda: {
+    id: 'andromeda',
+    name: 'Andromeda',
+    description: 'A view of the Andromeda galaxy',
+    type: 'image',
+    background: {
+      id: 'andromeda',
+      type: 'image',
+      image: {
+        id: 'andromeda',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1543722530-d2c3201371e7?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -111,6 +127,12 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       animation: {
         id: 'ballpit',
         type: 'reactbits'
+      },
+      image: {
+        id: 'arcade',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -162,10 +184,49 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  eclipse: {
+    id: 'eclipse',
+    name: 'Eclipse',
+    description: 'A solar eclipse',
+    type: 'image',
+    background: {
+      id: 'eclipse',
+      type: 'image',
+      image: {
+        id: 'eclipse',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1529788295308-1eace6f67388?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  earth: {
+    id: 'earth',
+    name: 'Earth',
+    description: 'A view of the Earth from space',
+    type: 'image',
+    background: {
+      id: 'earth',
+      type: 'image',
+      colors: [
+        {
+          id: 'default',
+          color: '#000000',
+          type: 'hex'
+        }
+      ],
+      image: {
+        id: 'earth',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   fog: {
     id: 'fog',
     name: 'Fog',
-    description: 'Foggy mountain summit',
+    description: 'Foggy forest in the early morning',
     type: 'image',
     background: {
       id: 'fog',
@@ -388,6 +449,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  'milky-way': {
+    id: 'milky-way',
+    name: 'Milky Way',
+    description: 'A view of the Milky Way galaxy',
+    type: 'image',
+    background: {
+      id: 'milky-way',
+      type: 'image',
+      image: {
+        id: 'milky-way',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1538370965046-79c0d6907d47?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   mountains: {
     id: 'mountains',
     name: 'Mountains',
@@ -515,6 +592,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  space: {
+    id: 'space',
+    name: 'Space',
+    description: 'The view from the edge of outer space',
+    type: 'image',
+    background: {
+      id: 'space',
+      type: 'image',
+      image: {
+        id: 'space',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1534996858221-380b92700493?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   sparkles: {
     id: 'sparkles',
     name: 'Sparkles',
@@ -569,6 +662,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'default',
         gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
         type: 'linear'
+      }
+    }
+  },
+  'starry-night': {
+    id: 'starry-night',
+    name: 'Starry Night',
+    description: 'A starry night background',
+    type: 'image',
+    background: {
+      id: 'starry-night',
+      type: 'image',
+      image: {
+        id: 'starry-night',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1592636120953-3d2b28ebfd69?auto=format&fit=crop&q=80'
       }
     }
   },
