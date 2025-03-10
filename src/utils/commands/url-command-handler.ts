@@ -31,7 +31,15 @@ export const extractUrlParameters = (url: string) => {
 
     // Extract command from path (remove leading slash)
     const path = urlObj.pathname;
-    const command = path.startsWith('/') ? path.substring(1) : path;
+    // Clean up the path to extract just the command
+    // Remove leading slash and split on any additional slashes
+    // to get just the first path segment
+    let command = '';
+    if (path && path !== '/') {
+      const pathWithoutLeadingSlash = path.startsWith('/') ? path.substring(1) : path;
+      // Split by slash and take only the first segment
+      command = pathWithoutLeadingSlash.split('/')[0];
+    }
 
     // Extract theme parameter if present
     const theme = urlObj.searchParams.get('theme') || '';

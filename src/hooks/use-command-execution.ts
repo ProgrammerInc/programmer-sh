@@ -10,7 +10,9 @@ export const useCommandExecution = (commands: Record<string, Command>) => {
 
   const executeCommand = useCallback(
     (commandStr: string) => {
-      console.log('Execute command called with:', commandStr);
+      // Use a cleaner display name for logging by removing prefixes
+      const displayCommand = commandStr.replace(/^(__init_|__event_|__url_)/, '');
+      console.log('Execute command called with:', displayCommand);
 
       if (!commandStr) {
         console.warn('Attempted to execute empty command');
@@ -53,7 +55,7 @@ export const useCommandExecution = (commands: Record<string, Command>) => {
       const commandParts = cleanCommand.split(' ');
       const commandName = commandParts[0].toLowerCase(); // Force lowercase for consistent matching
 
-      console.log('Attempting to execute command:', commandName, 'from original:', commandStr);
+      console.log('Attempting to execute command:', commandName);
       console.log('Available commands:', Object.keys(commands));
 
       // Only add commands to history if:

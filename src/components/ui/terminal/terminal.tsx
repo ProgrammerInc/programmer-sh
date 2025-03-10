@@ -157,6 +157,10 @@ const Terminal: React.FC<TerminalProps> = ({
   // Use a separate effect with a ref to prevent repeated execution of initial commands
   const initialCommandsExecuted = useRef(false);
   useEffect(() => {
+    // Debug the initialization
+    console.log('Terminal initialization check - executeCommand exists:', !!executeCommand);
+    console.log('Terminal initialization check - initialCommands:', initialCommands);
+    
     // Only run this effect when executeCommand is defined and we haven't executed the commands yet
     if (!executeCommand || initialCommandsExecuted.current) {
       return;
@@ -191,6 +195,10 @@ const Terminal: React.FC<TerminalProps> = ({
       // First clear the terminal
       setCommandOutput('');
 
+      // To ensure URL commands execute properly, we use a different approach
+      // First clear the terminal
+      setCommandOutput('');
+
       // Then execute each command with a fixed delay between them
       initialCommands.forEach((cmd, index) => {
         // Normalize command and mark URL commands to ensure proper handling
@@ -200,7 +208,7 @@ const Terminal: React.FC<TerminalProps> = ({
         // Use longer delays to ensure commands execute in order
         setTimeout(
           () => {
-            console.log(`Executing URL command ${index}:`, prefixedCommand);
+            console.log(`Executing URL command ${index}:`, command);
             try {
               // Use the prefixed command to ensure proper URL command handling
               executeCommand(prefixedCommand);
