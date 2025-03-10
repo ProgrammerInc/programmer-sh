@@ -321,28 +321,6 @@ const Index = () => {
     return classes.join(' ');
   }, [currentWallpaper]);
 
-  const backgroundStyle = useMemo(() => {
-    const style: React.CSSProperties = {};
-    const wallpaper = wallpaperPresets[currentWallpaper];
-    const background = wallpaper.background;
-
-    const { colors, gradient, image, video } = background;
-
-    style.background = 'none';
-    style.backgroundColor = colors && colors.length > 0 ? colors[0].color : 'transparent';
-    style.backgroundImage =
-      gradient && gradient.gradient
-        ? `url(${gradient.gradient})`
-        : image && image.url
-          ? `url(${image.url})`
-          : 'none';
-    style.backgroundSize = 'cover';
-    style.backgroundPosition = 'center';
-    style.backgroundRepeat = 'no-repeat';
-
-    return style;
-  }, [currentWallpaper]);
-
   const MemoizedWallpaper = useMemo(
     () => (
       <WallpaperProvider
@@ -362,12 +340,7 @@ const Index = () => {
   );
 
   return (
-    <div
-      id="indexContainer"
-      className={wallpaperClasses}
-      ref={containerRef}
-      style={{ position: 'relative', ...backgroundStyle }}
-    >
+    <div id="indexContainer" className={wallpaperClasses} ref={containerRef}>
       {MemoizedWallpaper}
       <div id="terminalContainer" className="terminal-container" ref={terminalRef}>
         <div

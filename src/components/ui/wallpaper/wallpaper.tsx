@@ -95,12 +95,6 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
       }
     }, [wallpaper, wallpapers]);
 
-    // Default values
-    const colorType = 'hex';
-    let backgroundColor = 'transparent';
-    let foregroundColor = theme === 'dark' ? '#64ffda' : '#000000';
-    let backgroundImage = 'none';
-
     // Wallpaper properties
     const currentWallpaper = wallpapers[wallpaper];
     const wallpaperAnimationRef = useRef<HTMLDivElement>(animationRef?.current || null);
@@ -108,33 +102,28 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
     const wallpaperContentRef = useRef<HTMLDivElement>(contentRef?.current || null);
     const wallpaperVideoRef = useRef<HTMLVideoElement>(null);
     const background = currentWallpaper.background;
+    const backgroundStyles: React.CSSProperties = { ...style };
 
     const { animation, colors, gradient, image, video } = background;
 
-    if (currentWallpaper.type === 'color') {
-      backgroundColor = colors[0].color;
-      foregroundColor = colors[1].color;
-    }
+    // Default values
+    const colorType = 'hex';
+    const foregroundColor = theme === 'dark' ? '#64ffda' : '#000000';
+    const backgroundColor = colors && colors.length > 0 ? colors[0].color : 'transparent';
+    const backgroundImage =
+      gradient && gradient.gradient
+        ? `${gradient.type}-gradient(${gradient.gradient})`
+        : image && image.url
+          ? `url(${image.url})`
+          : 'none';
 
-    if (currentWallpaper.type === 'gradient') {
-      backgroundImage = `${gradient.type}-gradient(${gradient.gradient})`;
-    }
-
-    if (currentWallpaper.type === 'image') {
-      if (image.type === 'base64') {
-        backgroundImage = `url(data:${image.mimeType},${image.base64})`;
-      }
-
-      backgroundImage = `url(${image.url})`;
-    }
-
-    if (currentWallpaper.type === 'video') {
-      if (video.type === 'base64') {
-        backgroundImage = `url(data:${video.mimeType},${video.base64})`;
-      }
-
-      backgroundImage = `url(${video.url})`;
-    }
+    backgroundStyles.color = foregroundColor;
+    backgroundStyles.background = 'none';
+    backgroundStyles.backgroundColor = backgroundColor;
+    backgroundStyles.backgroundImage = backgroundImage;
+    backgroundStyles.backgroundSize = 'cover';
+    backgroundStyles.backgroundPosition = 'center';
+    backgroundStyles.backgroundRepeat = 'no-repeat';
 
     useImperativeHandle(ref, () => wallpaperContainerRef.current!);
 
@@ -145,17 +134,12 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
         data-wallpaper={currentWallpaper.id}
         ref={wallpaperContainerRef}
         style={{
-          backgroundColor,
-          backgroundImage,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
           position: 'absolute',
           top: 0,
           left: 0,
           width: '100%',
           height: '100%',
-          ...style
+          ...backgroundStyles
         }}
       >
         {currentWallpaper.type === 'animation' && (
