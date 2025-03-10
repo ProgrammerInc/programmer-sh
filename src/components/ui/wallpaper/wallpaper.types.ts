@@ -7,6 +7,7 @@ import {
   BalatroProps,
   BallpitProps,
   BlobBackgroundProps,
+  CosmicSceneProps,
   DitherProps,
   GradientAnimationProps,
   GradientMeshProps,
@@ -113,6 +114,7 @@ export interface WallpaperAnimation {
     | BalatroProps
     | BallpitProps
     | BlobBackgroundProps
+    | CosmicSceneProps
     | DitherProps
     | GradientAnimationProps
     | GradientMeshProps

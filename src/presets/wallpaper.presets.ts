@@ -507,6 +507,25 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  'cosmic-scene': {
+    id: 'cosmic-scene',
+    name: 'Cosmic Scene',
+    description: 'A view of the cosmic scene',
+    type: 'animation',
+    background: {
+      id: 'cosmic-scene',
+      type: 'animation',
+      animation: {
+        id: 'cosmic-scene',
+        type: 'artifact-ui'
+      },
+      gradient: {
+        id: 'default',
+        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+        type: 'linear'
+      }
+    }
+  },
   dallas: {
     id: 'dallas',
     name: 'Dallas',

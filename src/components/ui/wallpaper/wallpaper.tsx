@@ -16,6 +16,8 @@ import {
   BallpitProps,
   BlobBackground,
   BlobBackgroundProps,
+  CosmicScene,
+  CosmicSceneProps,
   Dither,
   DitherProps,
   GradientAnimation,
@@ -210,6 +212,13 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
               <BlobBackground
                 blobs={defaultBlobs}
                 {...(animation.animationProps as BlobBackgroundProps)}
+              />
+            )}
+            {animation.id === 'cosmic-scene' && (
+              <CosmicScene
+                colorScheme="neon"
+                overlayOpacity={0.2}
+                {...(animation.animationProps as CosmicSceneProps)}
               />
             )}
             {animation.id === 'dither' && (

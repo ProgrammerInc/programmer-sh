@@ -116,10 +116,6 @@ export default {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0' }
         },
-        'text-typing': {
-          from: { width: '0' },
-          to: { width: '100%' }
-        },
         'fade-in': {
           from: { opacity: '0', transform: 'translateY(10px)' },
           to: { opacity: '1', transform: 'translateY(0)' }
@@ -127,6 +123,22 @@ export default {
         'fade-out': {
           from: { opacity: '1' },
           to: { opacity: '0' }
+        },
+        flicker: {
+          '0%': { '--webkit-mask-position': '50% 50%, 4px 50%', maskPosition: '50% 50%, 4px 50%' },
+          '25%': {
+            '--webkit-mask-position': '50% 50%, 2.75px 50%',
+            maskPosition: '50% 50%, 2.75px 50%'
+          },
+          '50%': {
+            '--webkit-mask-position': '50% 50%, 1.5px 50%',
+            maskPosition: '50% 50%, 1.5px 50%'
+          },
+          '75%': {
+            '--webkit-mask-position': '50% 50%, 0.75px 50%',
+            maskPosition: '50% 50%, 0.75px 50%'
+          },
+          '100%': { '--webkit-mask-position': '50% 50%, 0 50%', maskPosition: '50% 50%, 0 50%' }
         },
         glitch: {
           '0%': { 'clip-path': 'inset(20% 0 50% 0)' },
@@ -242,6 +254,34 @@ export default {
         'star-movement-top': {
           '0%': { transform: 'translateX(0) rotate(0)' },
           '100%': { transform: 'translateX(100vw) rotate(360deg)' }
+        },
+        'text-typing': {
+          from: { width: '0' },
+          to: { width: '100%' }
+        },
+        'crosshatch-shift': {
+          '0%': { transform: 'rotate(0deg)' },
+          '50%': { transform: 'rotate(45deg)' },
+          '100%': { transform: 'rotate(0deg)' }
+        },
+        'diamonds-shift': {
+          '0%': { transform: 'translateX(0) translateY(0) scale(1)' },
+          '50%': { transform: 'translateX(25%) translateY(25%) scale(0.8)' },
+          '100%': { transform: 'translateX(0) translateY(0) scale(1)' }
+        },
+        'dots-shift': {
+          '0%, 100%': { transform: 'rotate(0deg)' },
+          '50%': { transform: 'rotate(180deg)' }
+        },
+        'lines-shift': {
+          '0%': { transform: 'translateX(0) translateY(0)' },
+          '50%': { transform: 'translateX(50%) translateY(50%)' },
+          '100%': { transform: 'translateX(0) translateY(0)' }
+        },
+        'squares-shift': {
+          '0%': { transform: 'translateX(0) translateY(0) rotate(0deg)' },
+          '50%': { transform: 'translateX(25%) translateY(25%) rotate(180deg)' },
+          '100%': { transform: 'translateX(0) translateY(0) rotate(360deg)' }
         }
       },
       animation: {
@@ -249,9 +289,9 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out',
         aurora: 'aurora 60s linear infinite',
         'cursor-blink': 'cursor-blink 1s infinite',
-        'text-typing': 'text-typing 3.5s steps(40, end)',
         'fade-in': 'fade-in 0.5s ease-out',
         'fade-out': 'fade-out 0.5s ease-out',
+        flicker: 'flicker 30s cubic-bezier(0.45, 0, 0.55, 1) infinite',
         'glitch-after': 'glitch var(--after-duration) infinite linear alternate-reverse',
         'glitch-before': 'glitch var(--before-duration) infinite linear alternate-reverse',
         'glow-pulse': 'glow-pulse 2s infinite',
@@ -260,9 +300,15 @@ export default {
         'meteor-effect': 'meteor 5s linear infinite',
         'scale-up': 'scale-up 0.2s ease-out',
         shine: 'shine 5s linear infinite',
+        spotlight: 'spotlight 2s ease .75s 1 forwards',
         'star-movement-bottom': 'star-movement-bottom 6s linear infinite',
         'star-movement-top': 'star-movement-top 6s linear infinite',
-        spotlight: 'spotlight 2s ease .75s 1 forwards',
+        'text-typing': 'text-typing 3.5s steps(40, end)',
+        'crosshatch-shift': 'crosshatch-shift 20s linear infinite',
+        'diamonds-shift': 'diamonds-shift 20s linear infinite',
+        'dots-shift': 'dots-shift 20s linear infinite',
+        'lines-shift': 'lines-shift 20s linear infinite',
+        'squares-shift': 'squares-shift 20s linear infinite',
         first: 'move-vertical 30s ease infinite',
         second: 'move-in-circle 20s reverse infinite',
         third: 'move-in-circle 40s linear infinite',

@@ -11,6 +11,7 @@ export * from './ballpit';
 export * from './blob-background';
 export * from './blur-text';
 export * from './circular-text';
+export * from './cosmic-scene';
 export * from './count-up';
 export * from './decrypted-text';
 export * from './dither';
