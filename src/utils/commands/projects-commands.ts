@@ -38,7 +38,7 @@ Technologies: ${project.technologies
       )
       .join(', ')}
 
-<span class="text-terminal-prompt">Tip:</span> Type <span class="command-link" data-command="project ${project.id}">project ${project.id}</span> for more details.
+<span class="text-terminal-prompt">Tip:</span> Type <span class="command-link" data-command="projects ${project.id}">projects ${project.id}</span> for more details.
 `
   )
   .join('\n<hr class="terminal-divider" />')}\n`,
@@ -65,13 +65,13 @@ Technologies: ${project.technologies
 
         return {
           content: `
-<strong>Project:</strong> <span class="text-terminal-prompt">${project.title}</span>
-<strong>Description:</strong> ${project.description}
+Project: <span class="text-terminal-prompt">${project.title}</span>
+Description: ${project.description}
 
-<strong>Highlights:</strong>
-${project.highlights.map(highlight => `  - ${highlight}`).join('\n')}
+Highlights:
+${project.highlights.map(highlight => `&nbsp;&nbsp;- ${highlight}`).join('\n')}
 
-<strong>Technologies:</strong> ${project.technologies
+Technologies: ${project.technologies
             .sort()
             .map(
               tech =>
@@ -79,9 +79,8 @@ ${project.highlights.map(highlight => `  - ${highlight}`).join('\n')}
             )
             .join(', ')}
 
-${project.github_url ? `<strong>GitHub:</strong> <a class="text-terminal-link hover:underline" href="${project.github_url}" target="_blank">${project.github_url.replace('https://', '')}</a>` : ''}
-${project.url ? `<strong>Website:</strong> <a class="text-terminal-link hover:underline" href="${project.url}" target="_blank">${project.url}</a>` : ''}
-`,
+${project.github_url ? `GitHub: <a class="text-terminal-link hover:underline" href="${project.github_url}" target="_blank">${project.github_url.replace('https://', '')}</a>` : ''}
+${project.url ? `Website: <a class="text-terminal-link hover:underline" href="${project.url}" target="_blank">${project.url}</a>` : ''}\n\n`,
           isError: false
         };
       }
