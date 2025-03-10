@@ -7,6 +7,7 @@ import {
   BackgroundLinesProps,
   BalatroProps,
   BallpitProps,
+  BeamPortalProps,
   BlobBackgroundProps,
   CosmicSceneProps,
   DitherProps,
@@ -119,6 +120,7 @@ export interface WallpaperAnimation {
     | BackgroundLinesProps
     | BalatroProps
     | BallpitProps
+    | BeamPortalProps
     | BlobBackgroundProps
     | CosmicSceneProps
     | DitherProps

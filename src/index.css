@@ -48,6 +48,14 @@
     );
     --default-foreground: #f1f1f1;
 
+    /* Beam Portal Animations */
+    --animate-beam-drop: beam-drop 7s cubic-bezier(0.4, 0.26, 0, 0.97) infinite;
+    --animate-beam-wave: beam-wave 10s ease-in-out infinite;
+    --animate-beam-pulse: beam-pulse 4s ease-in-out infinite;
+    --animate-beam-zigzag: beam-zigzag 6s ease-in-out infinite;
+    --animate-beam-shimmer: beam-shimmer 7s linear infinite;
+    --animate-spin: spin 10s linear infinite;
+
     /* Terminal specific colors */
     --terminal-background: #1a1f2c;
     --terminal-background-translucent: rgba(26, 31, 44, 0.95);
@@ -364,6 +372,7 @@
   .background-lines-container,
   .balatro-container,
   .ballpit-container,
+  .beam-portal-container,
   .blob-background-container,
   .cosmic-scene-container,
   .dither-container,
@@ -409,6 +418,85 @@
   }
 }
 
+@keyframes beam-drop {
+  0% {
+    opacity: 0;
+
+    --offset: -100%;
+  }
+  5% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+
+    --offset: 100%;
+  }
+}
+
+@keyframes beam-wave {
+  0% {
+    --wave-offset: -20px;
+  }
+  50% {
+    --wave-offset: 20px;
+  }
+  100% {
+    --wave-offset: -20px;
+  }
+}
+
+@keyframes beam-pulse {
+  0% {
+    opacity: 0.3;
+
+    --pulse-scale: 0.95;
+  }
+  50% {
+    opacity: 1;
+
+    --pulse-scale: 1.05;
+  }
+  100% {
+    opacity: 0.3;
+
+    --pulse-scale: 0.95;
+  }
+}
+
+@keyframes beam-zigzag {
+  0% {
+    --zigzag-offset: -20px;
+  }
+  25% {
+    --zigzag-offset: 20px;
+  }
+  50% {
+    --zigzag-offset: -20px;
+  }
+  75% {
+    --zigzag-offset: 20px;
+  }
+  100% {
+    --zigzag-offset: -20px;
+  }
+}
+
+@keyframes beam-shimmer {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+
 @keyframes glow {
   0%,
   100% {
@@ -418,5 +506,14 @@
   50% {
     opacity: var(--glow-opacity, 0.8);
     transform: scale(1.15);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }

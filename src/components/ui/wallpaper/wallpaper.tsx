@@ -16,6 +16,8 @@ import {
   BalatroProps,
   Ballpit,
   BallpitProps,
+  BeamPortal,
+  BeamPortalProps,
   BlobBackground,
   BlobBackgroundProps,
   CosmicScene,
@@ -234,6 +236,15 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 }}
                 followCursor={false}
                 {...(animation.animationProps as BallpitProps)}
+              />
+            )}
+            {animation.id === 'beam-portal' && (
+              <BeamPortal
+                colorScheme="aurora"
+                pattern="radial"
+                intensity="active"
+                shimmer={true}
+                {...(animation.animationProps as BeamPortalProps)}
               />
             )}
             {animation.id === 'blob-background' && (

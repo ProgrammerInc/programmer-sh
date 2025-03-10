@@ -232,6 +232,25 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  'beam-portal': {
+    id: 'beam-portal',
+    name: 'Beam Portal',
+    description: 'A portal of beams',
+    type: 'animation',
+    background: {
+      id: 'beam-portal',
+      type: 'animation',
+      animation: {
+        id: 'beam-portal',
+        type: 'artifact-ui'
+      },
+      gradient: {
+        id: 'default',
+        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+        type: 'linear'
+      }
+    }
+  },
   beams: {
     id: 'beams',
     name: 'Beams',

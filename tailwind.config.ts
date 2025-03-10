@@ -112,6 +112,41 @@ export default {
             backgroundPosition: '350% 50%, 350% 50%'
           }
         },
+        'beam-drop': {
+          '0%': {
+            opacity: '0',
+            '--offset': '-100%'
+          },
+          '5%': {
+            opacity: '1'
+          },
+          '90%': {
+            opacity: '1'
+          },
+          '100%': {
+            opacity: '0',
+            '--offset': '100%'
+          }
+        },
+        'beam-pulse': {
+          '0%': {
+            opacity: '0.3',
+            '--pulse-scale': '0.95'
+          },
+          '50%': {
+            opacity: '1',
+            '--pulse-scale': '1.05'
+          },
+          '100%': {
+            opacity: '0.3',
+            '--pulse-scale': '0.95'
+          }
+        },
+        'beam-shimmer': {
+          '0%': { opacity: '0.3' },
+          '50%': { opacity: '1' },
+          '100%': { opacity: '0.3' }
+        },
         blink: {
           '50%': { opacity: '0.6' }
         },
@@ -250,6 +285,10 @@ export default {
           '0%': { 'background-position': '100%' },
           '100%': { 'background-position': '-100%' }
         },
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' }
+        },
         spotlight: {
           '0%': {
             opacity: '0',
@@ -301,6 +340,11 @@ export default {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         aurora: 'aurora 60s linear infinite',
+        'beam-drop': 'beam-drop 7s cubic-bezier(0.4, 0.26, 0, 0.97) infinite',
+        'beam-pulse': 'beam-pulse 4s ease-in-out infinite',
+        'beam-shimmer': 'beam-shimmer 7s linear infinite',
+        'beam-wave': 'beam-wave 10s ease-in-out infinite',
+        'beam-zigzag': 'beam-zigzag 6s ease-in-out infinite',
         blink: 'blink 2s linear infinite',
         'cursor-blink': 'cursor-blink 1s infinite',
         'fade-in': 'fade-in 0.5s ease-out',
@@ -314,6 +358,7 @@ export default {
         'meteor-effect': 'meteor 5s linear infinite',
         'scale-up': 'scale-up 0.2s ease-out',
         shine: 'shine 5s linear infinite',
+        spin: 'spin 10s linear infinite',
         spotlight: 'spotlight 2s ease .75s 1 forwards',
         'star-movement-bottom': 'star-movement-bottom 6s linear infinite',
         'star-movement-top': 'star-movement-top 6s linear infinite',

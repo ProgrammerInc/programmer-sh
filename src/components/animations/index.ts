@@ -9,6 +9,7 @@ export * from './background-boxes';
 export * from './background-lines';
 export * from './balatro';
 export * from './ballpit';
+export * from './beam-portal';
 export * from './blob-background';
 export * from './blur-text';
 export * from './circular-text';
