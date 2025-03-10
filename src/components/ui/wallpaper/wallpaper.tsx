@@ -54,6 +54,8 @@ import {
   NoiseProps,
   ParticleNetwork,
   ParticleNetworkProps,
+  ParticleVeil,
+  ParticleVeilProps,
   Particles,
   ParticlesProps,
   RainDrops,
@@ -473,6 +475,29 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 disableRotation={true}
                 moveParticlesOnHover={false}
                 {...(animation.animationProps as ParticlesProps)}
+              />
+            )}
+            {animation.id === 'particle-veil' && (
+              <ParticleVeil
+                className="absolute inset-0"
+                particleCount={200}
+                particleColors={[
+                  '#22c55e', // Neon green
+                  '#06b6d4', // Cyan
+                  '#3b82f6', // Bright blue
+                  '#10b981', // Emerald
+                  '#ec4899', // Pink
+                  '#f97316', // Orange
+                  '#f59e0b', // Yellow
+                  '#ef4444', // Red
+                  '#d946ef', // Lavender
+                  '#8b5cf6', // Indigo
+                  '#7f1d1d' // Burnt umber
+                ]}
+                interactionRadius={120}
+                speed={0.8}
+                sizeRange={[2, 5]}
+                {...(animation.animationProps as ParticleVeilProps)}
               />
             )}
             {animation.id === 'rain-drops' && (

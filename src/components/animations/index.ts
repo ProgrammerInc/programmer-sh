@@ -42,6 +42,7 @@ export * from './meteors';
 export * from './noise';
 export * from './orb';
 export * from './particle-network';
+export * from './particle-veil';
 export * from './particles';
 export * from './pixel-transition';
 export * from './rain-drops';

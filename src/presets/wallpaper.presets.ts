@@ -1828,6 +1828,25 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  'particle-veil': {
+    id: 'particle-veil',
+    name: 'Particle Veil',
+    description: 'A particle veil animation background',
+    type: 'animation',
+    background: {
+      id: 'particle-veil',
+      type: 'animation',
+      animation: {
+        id: 'particle-veil',
+        type: 'artifact-ui'
+      },
+      gradient: {
+        id: 'default',
+        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+        type: 'linear'
+      }
+    }
+  },
   party: {
     id: 'party',
     name: 'Party',

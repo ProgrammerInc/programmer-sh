@@ -26,6 +26,7 @@ import {
   MeteorsProps,
   NoiseProps,
   ParticleNetworkProps,
+  ParticleVeilProps,
   ParticlesProps,
   RainDropsProps,
   ShootingStarsProps,
@@ -138,6 +139,7 @@ export interface WallpaperAnimation {
     | NoiseProps
     | ParticleNetworkProps
     | ParticlesProps
+    | ParticleVeilProps
     | RainDropsProps
     | [ShootingStarsProps, StarBackgroundProps]
     | SparklesProps
