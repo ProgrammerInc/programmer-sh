@@ -144,7 +144,7 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
             <BubbleCursor
               fillStyle={currentColor}
               strokeStyle={currentColor}
-              wrapperElement={cursorContainerRef.current}
+              wrapperElement={nestedContainerRef.current}
               {...(currentCursor.animationProps as BubbleCursorProps)}
             />
           </div>
