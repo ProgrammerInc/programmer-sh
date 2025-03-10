@@ -161,6 +161,14 @@
 
   .command-link {
     @apply text-terminal-link hover:text-terminal-prompt transition-colors duration-200 cursor-pointer underline-offset-4 hover:underline;
+    
+    /* Add keyboard navigation styles */
+    outline: none; /* Remove default focus outline */
+  }
+  
+  /* Custom focus styles for better keyboard navigation */
+  .command-link:focus-visible {
+    @apply outline-dashed outline-1 outline-terminal-prompt px-1 rounded-sm;
   }
 
   .command-button {

@@ -242,6 +242,27 @@ const Terminal: React.FC<TerminalProps> = ({
 
   // Set up event listeners only once on mount
   useEffect(() => {
+    // Create a debounce mechanism to prevent duplicate command executions
+    let lastCommandExecution = {
+      command: '',
+      timestamp: 0
+    };
+    
+    const isRecentlyExecuted = (command: string) => {
+      const now = Date.now();
+      const isDuplicate = lastCommandExecution.command === command;
+      const isRecent = (now - lastCommandExecution.timestamp) < 500; // 500ms debounce window
+      
+      return isDuplicate && isRecent;
+    };
+    
+    const updateCommandExecution = (command: string) => {
+      lastCommandExecution = {
+        command,
+        timestamp: Date.now()
+      };
+    };
+
     // Handle the clearCommandHistory event to reset command history
     const handleClearHistory = () => {
       console.log('Clearing command history');
@@ -260,6 +281,15 @@ const Terminal: React.FC<TerminalProps> = ({
     const handleExecuteCommand = (event: Event) => {
       const { command } = (event as CustomEvent).detail;
       if (command) {
+        // Check if this command was recently executed to prevent duplicates
+        if (isRecentlyExecuted(command)) {
+          console.log('Preventing duplicate command execution:', command);
+          return;
+        }
+        
+        // Mark this command as executed
+        updateCommandExecution(command);
+        
         setCommandInput(command);
         executeCommand(command);
         // Clear input after execution
@@ -293,6 +323,15 @@ const Terminal: React.FC<TerminalProps> = ({
             }
           }, 50);
         } else {
+          // Check if this command was recently executed to prevent duplicates
+          if (isRecentlyExecuted(command)) {
+            console.log('Preventing duplicate link command execution:', command);
+            return;
+          }
+          
+          // Mark this command as executed
+          updateCommandExecution(command);
+          
           // Set the input field to show the command
           setCommandInput(command);
 
@@ -397,40 +436,8 @@ const Terminal: React.FC<TerminalProps> = ({
     setTimeout(() => focusInputField(), 250);
   };
 
-  // Add event handler for keyboard accessibility of command links (Enter or Space)
-  useEffect(() => {
-    const handleCommandLinkKeyboard = (e: KeyboardEvent) => {
-      // Only handle keyboard events
-      const keyEvent = e as KeyboardEvent;
-      if ((keyEvent.key === 'Enter' || keyEvent.key === ' ') && document.activeElement) {
-        const target = document.activeElement as HTMLElement;
-        if (target.classList.contains('command-link')) {
-          e.preventDefault();
-          const command = target.getAttribute('data-command');
-          if (command) {
-            // Execute the command with the __event_ prefix to prevent loops
-            executeCommandRef.current(`__event_${command}`);
-            // Clear the input field after executing the command
-            setCommandInput('');
-            // Focus the input field after execution
-            setTimeout(() => focusInputField(), 250);
-          }
-        }
-      }
-    };
-
-    // Add only keyboard event listener (click is handled in terminal-content.tsx)
-    const terminalContent = terminalContentRef.current;
-    if (terminalContent) {
-      terminalContent.addEventListener('keydown', handleCommandLinkKeyboard);
-    }
-
-    return () => {
-      if (terminalContent) {
-        terminalContent.removeEventListener('keydown', handleCommandLinkKeyboard);
-      }
-    };
-  }, []);
+  // NOTE: Keyboard navigation for command links is now handled in terminal-content.tsx
+  // We don't need this handler anymore, as it was causing duplicate command execution
 
   // Handle arrow key navigation through command history
   const handleHistoryNavigation = (direction: 'up' | 'down') => {
