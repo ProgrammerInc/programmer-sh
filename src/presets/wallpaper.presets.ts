@@ -232,6 +232,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  'circuit-board': {
+    id: 'circuit-board',
+    name: 'Circuit Board',
+    description: 'PCB circuit board of electronic device',
+    type: 'image',
+    background: {
+      id: 'circuit-board',
+      type: 'image',
+      image: {
+        id: 'circuit-board',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1562408590-e32931084e23?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   code: {
     id: 'code',
     name: 'Code',
@@ -244,7 +260,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'code',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1533709752211-118fcaf03312?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -367,6 +383,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  'face-paint': {
+    id: 'face-paint',
+    name: 'Face Paint',
+    description: 'A face painted in glow-in-the-dark neon colors',
+    type: 'image',
+    background: {
+      id: 'face-paint',
+      type: 'image',
+      image: {
+        id: 'face-paint',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1485796826113-174aa68fd81b?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   ferrari: {
     id: 'ferrari',
     name: 'Ferrari',
@@ -399,6 +431,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  // gear: {
+  //   id: 'gear',
+  //   name: 'Gear',
+  //   description: 'A photo of military gear and equipment',
+  //   type: 'image',
+  //   background: {
+  //     id: 'gear',
+  //     type: 'image',
+  //     image: {
+  //       id: 'gear',
+  //       mimeType: 'image/avif',
+  //       type: 'url',
+  //       url: 'https://images.unsplash.com/photo-1713648129187-806efa50163b?auto=format&fit=crop&q=80'
+  //     }
+  //   }
+  // },
   'glass-orb': {
     id: 'glass-orb',
     name: 'Glass Orb',
@@ -412,6 +460,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1589149098258-3e9102cd63d3?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  glasses: {
+    id: 'glasses',
+    name: 'Glasses',
+    description: 'A pair of glasses on a desk in front of computer monitors',
+    type: 'image',
+    background: {
+      id: 'glasses',
+      type: 'image',
+      image: {
+        id: 'glasses',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -537,6 +601,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1692154600992-463fa9b27abd?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  html: {
+    id: 'html',
+    name: 'HTML',
+    description: 'A wallpaper of website HTML code',
+    type: 'image',
+    background: {
+      id: 'html',
+      type: 'image',
+      image: {
+        id: 'html',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -818,6 +898,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  motherboard: {
+    id: 'motherboard',
+    name: 'Motherboard',
+    description: 'Macro photography of a laptop motherboard',
+    type: 'image',
+    background: {
+      id: 'motherboard',
+      type: 'image',
+      image: {
+        id: 'motherboard',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   mountains: {
     id: 'mountains',
     name: 'Mountains',
@@ -863,6 +959,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1584345604476-8ec5e12e42dd?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  nebula: {
+    id: 'nebula',
+    name: 'California Nebula',
+    description: 'A view of the California nebula in the constellation Perseus.',
+    type: 'image',
+    background: {
+      id: 'nebula',
+      type: 'image',
+      image: {
+        id: 'nebula',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1734917141553-274732d788cb?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -949,6 +1061,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1593958812614-2db6a598c71c?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  peak: {
+    id: 'peak',
+    name: 'Peak',
+    description: 'Parco Naturale Tre Cime Mountain Peak in Italy',
+    type: 'image',
+    background: {
+      id: 'peak',
+      type: 'image',
+      image: {
+        id: 'peak',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1740507619572-ac180ca2630f?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -1118,6 +1246,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  'sig-sauer': {
+    id: 'sig-sauer',
+    name: 'Sig Sauer',
+    description: 'A close-up photo of a Sig Sauer 9mm pistol and bullets',
+    type: 'image',
+    background: {
+      id: 'sig-sauer',
+      type: 'image',
+      image: {
+        id: 'sig-sauer',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1713648129175-85687077e6e6?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   'slot-machines': {
     id: 'slot-machines',
     name: 'Slot Machines',
@@ -1226,6 +1370,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  'star-trail': {
+    id: 'star-trail',
+    name: 'Star Trail',
+    description: 'Star Trail Granite Outdoors Outback',
+    type: 'image',
+    background: {
+      id: 'star-trail',
+      type: 'image',
+      image: {
+        id: 'star-trail',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1734903899558-463366085cb7?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   'starry-night': {
     id: 'starry-night',
     name: 'Starry Night',
@@ -1289,7 +1449,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'times-square',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1739382121077-7a20fed13566?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -1433,6 +1593,38 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  wordpress: {
+    id: 'wordpress',
+    name: 'WordPress',
+    description: 'A close-up photo of a WordPress PHP code',
+    type: 'image',
+    background: {
+      id: 'wordpress',
+      type: 'image',
+      image: {
+        id: 'wordpress',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  workbench: {
+    id: 'workbench',
+    name: 'Workbench',
+    description: 'A photo of a workbench with military gear and a shotgun',
+    type: 'image',
+    background: {
+      id: 'workbench',
+      type: 'image',
+      image: {
+        id: 'workbench',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1636136368699-cc412bb977d5?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   workspace: {
     id: 'workspace',
     name: 'Workspace',
@@ -1481,6 +1673,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1621259182065-7bd8bbff1f20?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  yosemite: {
+    id: 'yosemite',
+    name: 'Yosemite',
+    description: 'A close-up photo of Yosemite National Park',
+    type: 'image',
+    background: {
+      id: 'yosemite',
+      type: 'image',
+      image: {
+        id: 'yosemite',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1498429089284-41f8cf3ffd39?auto=format&fit=crop&q=80'
       }
     }
   }
