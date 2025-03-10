@@ -30,6 +30,8 @@ import {
   GridMotionProps,
   GridPattern,
   GridPatternProps,
+  HyperspaceHero,
+  HyperspaceHeroProps,
   Hyperspeed,
   HyperspeedProps,
   Iridescence,
@@ -302,6 +304,15 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 animate={false}
                 className="dark:opacity-80"
                 {...(animation.animationProps as GridPatternProps)}
+              />
+            )}
+            {animation.id === 'hyperspace-hero' && (
+              <HyperspaceHero
+                text="Programmer.SH"
+                textColor="linear-gradient(135deg, #8a2be2, #ff69b4)"
+                starCount={400}
+                speed={2}
+                {...(animation.animationProps as HyperspaceHeroProps)}
               />
             )}
             {animation.id === 'hyperspeed' && (

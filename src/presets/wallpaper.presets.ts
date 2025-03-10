@@ -1048,6 +1048,25 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  'hyperspace-hero': {
+    id: 'hyperspace-hero',
+    name: 'Hyperspace Hero',
+    description: 'A hero animation background',
+    type: 'animation',
+    background: {
+      id: 'hyperspace-hero',
+      type: 'animation',
+      animation: {
+        id: 'hyperspace-hero',
+        type: 'artifact-ui'
+      },
+      gradient: {
+        id: 'default',
+        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+        type: 'linear'
+      }
+    }
+  },
   hyperspeed: {
     id: 'hyperspeed',
     name: 'Hyperspeed',

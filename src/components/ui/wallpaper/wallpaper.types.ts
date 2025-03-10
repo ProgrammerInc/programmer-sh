@@ -14,6 +14,7 @@ import {
   GridDistortionProps,
   GridMotionProps,
   GridPatternProps,
+  HyperspaceHeroProps,
   HyperspeedProps,
   IridescenceProps,
   LetterGlitchProps,
@@ -123,6 +124,7 @@ export interface WallpaperAnimation {
     | GridDistortionProps
     | GridMotionProps
     | GridPatternProps
+    | HyperspaceHeroProps
     | HyperspeedProps
     | IridescenceProps
     | LetterGlitchProps

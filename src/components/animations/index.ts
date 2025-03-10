@@ -26,6 +26,7 @@ export * from './gradient-text';
 export * from './grid-distortion';
 export * from './grid-motion';
 export * from './grid-pattern';
+export * from './hyperspace-hero';
 export * from './hyperspeed';
 export * from './iridescence';
 export * from './letter-glitch';
