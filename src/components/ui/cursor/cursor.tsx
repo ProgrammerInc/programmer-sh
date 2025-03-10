@@ -14,6 +14,8 @@ import {
   FairyDustCursorProps,
   GlitchCursor,
   GradientCursor,
+  MagicTrailCursor,
+  MagicTrailCursorProps,
   NeonCursor,
   RainbowCursor,
   RainbowCursorProps,
@@ -56,6 +58,7 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
     // Cursor debugging - only log once
     const isInitialMount = useRef(true);
     const cursorContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
+    const magicTrailCursorRef = useRef<HTMLDivElement>(null);
     const nestedContainerRef = useRef<HTMLDivElement>(null);
 
     // Connect the forwarded ref to our inner ref
@@ -258,10 +261,34 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
             <GradientCursor />
           </div>
         )}
+        {currentCursor.type === 'animation' && currentCursor.animation === 'magic-trail' && (
+          <div
+            className="magic-trail-cursor-container"
+            ref={nestedContainerRef}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
+          >
+            <MagicTrailCursor
+              containerRef={cursorContainerRef}
+              particleCount={50}
+              trailLength={35}
+              smoothing={0.8}
+              {...(currentCursor.animationProps as MagicTrailCursorProps)}
+            />
+          </div>
+        )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'neon' && (
           <div
             className="neon-cursor-container"
-            ref={nestedContainerRef}
+            ref={containerRef}
             style={{
               position: 'absolute',
               top: 0,

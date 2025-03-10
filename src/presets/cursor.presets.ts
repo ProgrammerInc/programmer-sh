@@ -79,6 +79,14 @@ export const cursorPresets: Record<string, Cursor> = {
     animation: 'gradient',
     animationType: 'cursify'
   },
+  'magic-trail': {
+    id: 'magic-trail',
+    name: 'Magic Trail',
+    description: 'Magic trail cursor',
+    type: 'animation',
+    animation: 'magic-trail',
+    animationType: 'artifact-ui'
+  },
   // neon: {
   //   id: 'neon',
   //   name: 'Neon',

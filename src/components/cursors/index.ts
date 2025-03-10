@@ -9,6 +9,7 @@ export * from './fairydust-cursor';
 export * from './glitch-cursor';
 export * from './gradient-cursor';
 export * from './image-trail';
+export * from './magic-trail-cursor';
 export * from './neon-cursor';
 export * from './pixel-trail';
 export * from './rainbow-cursor';

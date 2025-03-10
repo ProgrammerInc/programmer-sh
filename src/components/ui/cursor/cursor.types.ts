@@ -5,6 +5,7 @@ import {
   CharacterCursorProps,
   CrosshairProps,
   FairyDustCursorProps,
+  MagicTrailCursorProps,
   RainbowCursorProps,
   RibbonsProps,
   RippleCursorProps,
@@ -33,6 +34,7 @@ export interface Cursor {
     | CharacterCursorProps
     | CrosshairProps
     | FairyDustCursorProps
+    | MagicTrailCursorProps
     | RainbowCursorProps
     | RibbonsProps
     | RippleCursorProps
