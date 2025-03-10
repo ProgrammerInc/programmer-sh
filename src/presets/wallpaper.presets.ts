@@ -187,7 +187,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
   boombox: {
     id: 'boombox',
     name: 'Boombox',
-    description: '',
+    description: 'A person laying behind a vintage boombox',
     type: 'image',
     background: {
       id: 'boombox',
@@ -308,7 +308,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'disc-jockey',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1594623930572-300a3011d9ae?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -936,6 +936,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  party: {
+    id: 'party',
+    name: 'Party',
+    description: 'A colorful party background',
+    type: 'image',
+    background: {
+      id: 'party',
+      type: 'image',
+      image: {
+        id: 'party',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1593958812614-2db6a598c71c?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   piano: {
     id: 'piano',
     name: 'Piano',
@@ -1016,6 +1032,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'default',
         gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
         type: 'linear'
+      }
+    }
+  },
+  rave: {
+    id: 'rave',
+    name: 'Rave Party',
+    description: 'A rave party background',
+    type: 'image',
+    background: {
+      id: 'rave',
+      type: 'image',
+      image: {
+        id: 'rave',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80'
       }
     }
   },
