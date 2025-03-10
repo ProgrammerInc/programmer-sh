@@ -442,10 +442,11 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'meteors',
         type: 'aceternity'
       },
-      gradient: {
-        id: 'default',
-        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
-        type: 'linear'
+      image: {
+        id: 'starry-night',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1509773896068-7fd415d91e2e?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -677,7 +678,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'starry-night',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1592636120953-3d2b28ebfd69?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1509773896068-7fd415d91e2e?auto=format&fit=crop&q=80'
       }
     }
   },

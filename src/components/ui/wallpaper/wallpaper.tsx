@@ -349,11 +349,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
             )}
             {animation.id === 'meteors' && (
               <div className="meteors-container">
-                <Meteors
-                  className="meteor"
-                  // color={foregroundColor}
-                  {...(animation.animationProps as MeteorsProps)}
-                />
+                <Meteors className="meteor" {...(animation.animationProps as MeteorsProps)} />
               </div>
             )}
             {animation.id === 'noise' && (
