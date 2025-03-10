@@ -2400,6 +2400,25 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  // 'swarm-effect': {
+  //   id: 'swarm-effect',
+  //   name: 'Swarm Effect',
+  //   description: 'A swarm of particles',
+  //   type: 'animation',
+  //   background: {
+  //     id: 'swarm-effect',
+  //     type: 'animation',
+  //     animation: {
+  //       id: 'swarm-effect',
+  //       type: 'artifact-ui'
+  //     },
+  //     gradient: {
+  //       id: 'default',
+  //       gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+  //       type: 'linear'
+  //     }
+  //   }
+  // },
   sydney: {
     id: 'sydney',
     name: 'Sydney',

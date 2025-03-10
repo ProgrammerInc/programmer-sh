@@ -56,6 +56,7 @@ export * from './spotlight';
 export * from './squares';
 export * from './star-border';
 export * from './stars-background';
+export * from './swarm-effect';
 export * from './text-pressure';
 export * from './threads';
 export * from './true-focus';

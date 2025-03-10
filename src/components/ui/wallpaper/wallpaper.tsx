@@ -62,6 +62,8 @@ import {
   Squares,
   SquaresProps,
   StarsBackground,
+  SwarmEffect,
+  SwarmEffectProps,
   Threads,
   ThreadsProps,
   Vortex,
@@ -474,6 +476,18 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 borderColor={foregroundColor}
                 hoverFillColor={backgroundColor}
                 {...(animation.animationProps as SquaresProps)}
+              />
+            )}
+            {animation.id === 'swarm-effect' && (
+              <SwarmEffect
+                src="/placeholder.svg"
+                particleSize={2}
+                particleSpacing={4}
+                particleColor="hsl(210, 100%, 60%)"
+                displacementRadius={50}
+                hoverEffect="scatter"
+                className="h-[400px] w-full"
+                {...(animation.animationProps as SwarmEffectProps)}
               />
             )}
             {animation.id === 'threads' && (

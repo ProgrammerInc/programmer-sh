@@ -31,6 +31,7 @@ import {
   SpotlightProps,
   SquaresProps,
   StarBackgroundProps,
+  SwarmEffectProps,
   ThreadsProps,
   VortexProps,
   WavesProps,
@@ -135,6 +136,7 @@ export interface WallpaperAnimation {
     | SphereAnimationProps
     | SpotlightProps
     | SquaresProps
+    | SwarmEffectProps
     | ThreadsProps
     | VortexProps
     | WavesProps
