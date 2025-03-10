@@ -332,7 +332,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'hyperspeed',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1588032786045-59cefda005c0?auto=format&fit=crop&q=80'
       }
     }
   },
