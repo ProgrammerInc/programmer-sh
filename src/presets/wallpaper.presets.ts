@@ -2390,6 +2390,25 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  'starry-background': {
+    id: 'starry-background',
+    name: 'Starry Background',
+    description: 'A starry background animation',
+    type: 'animation',
+    background: {
+      id: 'starry-background',
+      type: 'animation',
+      animation: {
+        id: 'starry-background',
+        type: 'artifact-ui'
+      },
+      gradient: {
+        id: 'default',
+        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+        type: 'linear'
+      }
+    }
+  },
   'starry-night': {
     id: 'starry-night',
     name: 'Starry Night',

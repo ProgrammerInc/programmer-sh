@@ -173,6 +173,16 @@ export default {
           '75%': { transform: 'translateX(-2px)' },
           '100%': { transform: 'translateX(0)' }
         },
+        glow: {
+          '0%, 100%': {
+            opacity: 'var(--base-opacity, 0.1)',
+            transform: 'scale(1)'
+          },
+          '50%': {
+            opacity: 'var(--glow-opacity, 0.8)',
+            transform: 'scale(1.15)'
+          }
+        },
         'glow-pulse': {
           '0%, 100%': { boxShadow: '0 0 5px rgba(100, 255, 218, 0.5)' },
           '50%': { boxShadow: '0 0 20px rgba(100, 255, 218, 0.8)' }

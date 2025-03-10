@@ -65,6 +65,8 @@ import {
   SquaresProps,
   Starfall,
   StarfallProps,
+  StarryBackground,
+  StarryBackgroundProps,
   StarsBackground,
   SwarmEffect,
   SwarmEffectProps,
@@ -496,6 +498,9 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 className="opacity-70"
                 {...(animation.animationProps as StarfallProps)}
               />
+            )}
+            {animation.id === 'starry-background' && (
+              <StarryBackground {...(animation.animationProps as StarryBackgroundProps)} />
             )}
             {animation.id === 'swarm-effect' && (
               <SwarmEffect

@@ -389,6 +389,7 @@
   .spotlight-container,
   .squares-container,
   .starfall-container,
+  .starry-background-container,
   .swarm-effect-container,
   .threads-container,
   .vortex-container,
@@ -402,5 +403,17 @@
     left: 0;
     overflow: hidden;
     z-index: 0;
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    opacity: var(--base-opacity, 0.1);
+    transform: scale(1);
+  }
+  50% {
+    opacity: var(--glow-opacity, 0.8);
+    transform: scale(1.15);
   }
 }
