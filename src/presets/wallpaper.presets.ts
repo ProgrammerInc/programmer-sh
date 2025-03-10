@@ -1,7 +1,7 @@
 import { Wallpaper } from '@/components/ui/wallpaper';
 
 // Predefined wallpapers
-const wallpaperPresets: Record<string, Wallpaper> = {
+export const wallpaperPresets: Record<string, Wallpaper> = {
   default: {
     id: 'default',
     name: 'Default',

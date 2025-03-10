@@ -1,12 +1,12 @@
 import CursorProvider from '@/components/ui/cursor';
 import Terminal from '@/components/ui/terminal';
 import WallpaperProvider from '@/components/ui/wallpaper';
-import { default as wallpaperPresets, default as wallpapers } from '@/presets/wallpaper.presets';
+import { wallpaperPresets } from '@/presets/wallpaper.presets';
 import { getCurrentCursor } from '@/utils/commands/cursor-commands';
 import { processThemeFromUrl } from '@/utils/commands/theme-commands';
 import { extractUrlParameters, validUrlCommands } from '@/utils/commands/url-command-handler';
 import { getCurrentWallpaper } from '@/utils/commands/wallpaper-commands';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
 export const HISTORY_STORAGE_KEY = 'terminal_command_history';
@@ -31,18 +31,23 @@ const Index = () => {
   const [currentCursor, setCursor] = useState<string>(() => {
     if (!cursorInitialized.current) {
       cursorInitialized.current = true;
+
       return getCurrentCursor();
     }
+
     return 'default';
   });
 
   const [currentWallpaper, setCurrentWallpaper] = useState<string>(() => {
     if (!wallpaperInitialized.current) {
       wallpaperInitialized.current = true;
+
       return getCurrentWallpaper();
     }
-    return 'particles';
+
+    return 'default';
   });
+
   const [currentCommand, setCurrentCommand] = useState<string>(urlCommand || 'welcome');
 
   // Update the document title when the current command changes
@@ -59,6 +64,7 @@ const Index = () => {
     if (commandsProcessed.current) {
       return;
     }
+
     commandsProcessed.current = true;
 
     console.log('Processing URL commands with urlCommand:', urlCommand);
@@ -214,51 +220,61 @@ const Index = () => {
     };
   }, []);
 
-  // Get wallpaper class names
-  const getWallpaperClasses = () => {
-    const wallpaper = wallpapers[currentWallpaper];
+  const wallpaperClasses = useMemo(() => {
+    const wallpaper = wallpaperPresets[currentWallpaper];
     const classes = ['wallpaper-container'];
 
     if (wallpaper.type === 'animation') {
       classes.push('wallpaper-animation');
-    } else if (wallpaper.type === 'gradient') {
-      classes.push('wallpaper-gradient');
     } else if (wallpaper.type === 'color') {
       classes.push('wallpaper-color');
+    } else if (wallpaper.type === 'gradient') {
+      classes.push('wallpaper-gradient');
     } else if (wallpaper.type === 'image') {
       classes.push('wallpaper-image');
+    } else if (wallpaper.type === 'video') {
+      classes.push('wallpaper-video');
+    }
 
-      // Add specific wallpaper class based on ID
-      if (wallpaper.id) {
-        classes.push(`wallpaper-${wallpaper.id}`);
-      }
+    // Add specific wallpaper class based on ID
+    if (wallpaper.id) {
+      classes.push(`wallpaper-${wallpaper.id}`);
     }
 
     return classes.join(' ');
-  };
+  }, [currentWallpaper]);
 
-  const wallpaperClasses = getWallpaperClasses();
-
-  return (
-    <div id="indexContainer" className={wallpaperClasses} ref={containerRef}>
+  const MemoizedWallpaper = useMemo(
+    () => (
       <WallpaperProvider
         id="wallpaperContainer"
         className="wallpaper-container"
         ref={wallpaperRef}
         wallpapers={wallpaperPresets}
         wallpaper={currentWallpaper}
-      >
-        <div id="terminalContainer" className="terminal-container" ref={terminalRef}>
-          <div
-            className={`h-[80vh] w-[80vw] max-w-4xl transition-all duration-1000 ease-out terminal-glow-shadow ${
-              isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
-            }`}
-          >
-            <Terminal initialCommands={initialCommands} />
-          </div>
+      />
+    ),
+    [wallpaperRef, currentWallpaper]
+  );
+
+  const MemoizedCursor = useMemo(
+    () => <CursorProvider containerRef={containerRef} cursor={currentCursor} />,
+    [containerRef, currentCursor]
+  );
+
+  return (
+    <div id="indexContainer" className={wallpaperClasses} ref={containerRef}>
+      {MemoizedWallpaper}
+      <div id="terminalContainer" className="terminal-container" ref={terminalRef}>
+        <div
+          className={`h-[80vh] w-[80vw] max-w-4xl transition-all duration-1000 ease-out terminal-glow-shadow ${
+            isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+          }`}
+        >
+          <Terminal initialCommands={initialCommands} />
         </div>
-      </WallpaperProvider>
-      <CursorProvider containerRef={containerRef} cursor={currentCursor} />
+      </div>
+      {MemoizedCursor}
     </div>
   );
 };
