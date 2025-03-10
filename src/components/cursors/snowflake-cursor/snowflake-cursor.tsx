@@ -33,6 +33,8 @@ export const SnowflakeCursor: React.FC<SnowflakeCursorProps> = ({ element }) => 
     canvas.style.top = '0';
     canvas.style.left = '0';
     canvas.style.pointerEvents = 'none';
+    canvas.style.zIndex = '99999'; // Force high z-index
+    canvas.style.transform = 'translateZ(0)'; // Create stacking context with hardware acceleration
 
     targetElement.appendChild(canvas);
     canvasRef.current = canvas;

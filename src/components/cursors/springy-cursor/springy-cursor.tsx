@@ -48,6 +48,8 @@ export const SpringyCursor: React.FC<SpringyCursorProps> = ({ emoji = '🍆', wr
       canvas.style.top = '0px';
       canvas.style.left = '0px';
       canvas.style.pointerEvents = 'none';
+      canvas.style.zIndex = '99999'; // Force high z-index
+      canvas.style.transform = 'translateZ(0)'; // Create stacking context with hardware acceleration
 
       if (wrapperElement) {
         canvas.style.position = 'absolute';

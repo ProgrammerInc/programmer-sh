@@ -59,6 +59,8 @@ export const TextFlagCursor: React.FC<TextFlagCursorProps> = options => {
       canvas.style.top = '0px';
       canvas.style.left = '0px';
       canvas.style.pointerEvents = 'none';
+      canvas.style.zIndex = '99999'; // Force high z-index
+      canvas.style.transform = 'translateZ(0)'; // Create stacking context with hardware acceleration
 
       if (hasWrapperEl) {
         canvas.style.position = 'absolute';

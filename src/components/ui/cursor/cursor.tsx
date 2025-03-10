@@ -80,7 +80,10 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           width: '100%',
           height: '100%',
           pointerEvents: 'none',
-          zIndex: 9999,
+          zIndex: 10000 /* Ensure this is higher than any other element */,
+          isolation: 'isolate' /* Creates a new stacking context */,
+          transform: 'translateZ(0)' /* Force hardware acceleration and create stacking context */,
+          willChange: 'transform' /* Hint to browser to optimize this element */,
           ...style
         }}
       >
@@ -88,7 +91,16 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="arrow-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <ArrowCursor
               fgColor={currentColor}
@@ -100,7 +112,16 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="blob-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <BlobCursor {...(currentCursor.animationProps as BlobCursorProps)} />
           </div>
@@ -109,12 +130,21 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="bubble-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <BubbleCursor
               fillStyle={currentColor}
               strokeStyle={currentColor}
-              wrapperElement={nestedContainerRef.current}
+              wrapperElement={cursorContainerRef.current}
               {...(currentCursor.animationProps as BubbleCursorProps)}
             />
           </div>
@@ -123,7 +153,16 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="canvas-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <CanvasCursor />
           </div>
@@ -132,7 +171,16 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="character-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <CharacterCursor
               colors={[currentColor]}
@@ -151,7 +199,16 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="fairydust-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <FairyDustCursor
               colors={['#FF0000', '#00FF00', '#0000FF']}
@@ -169,7 +226,16 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="glitch-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <GlitchCursor />
           </div>
@@ -178,7 +244,16 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="gradient-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <GradientCursor />
           </div>
@@ -187,7 +262,16 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="neon-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <NeonCursor />
           </div>
@@ -196,7 +280,16 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="rainbow-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <RainbowCursor {...(currentCursor.animationProps as RainbowCursorProps)} />
           </div>
@@ -205,7 +298,16 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="ribbons-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <Ribbons
               baseThickness={30}
@@ -222,7 +324,16 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="ripple-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <RippleCursor
               color={currentColor}
@@ -234,7 +345,16 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="snowflake-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <SnowflakeCursor />
           </div>
@@ -243,7 +363,16 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="splash-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <SplashCursor />
           </div>
@@ -252,7 +381,16 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="spotlight-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <SpotlightCursor {...(currentCursor.animationProps as SpotlightCursorProps)} />
           </div>
@@ -261,7 +399,16 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="springy-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <SpringyCursor {...(currentCursor.animationProps as SpringyCursorProps)} />
           </div>
@@ -270,7 +417,16 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="textflag-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <TextFlagCursor
               color={currentColor}
@@ -282,7 +438,16 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           <div
             className="trailing-cursor-container"
             ref={nestedContainerRef}
-            style={{ position: 'relative', zIndex: 'inherit' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10000,
+              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
+              isolation: 'isolate'
+            }}
           >
             <TrailingCursor {...(currentCursor.animationProps as TrailingCursorProps)} />
           </div>

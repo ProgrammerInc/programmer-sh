@@ -130,8 +130,10 @@
 }
 
 @layer utilities {
+  /* Cursor must always be above all content */
   .cursor-container {
     pointer-events: none;
+    z-index: 10000 !important;
   }
 
   .terminal-container {
@@ -144,12 +146,20 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 7;
+    z-index: 5;
+    
+    /* Terminal must have lower z-index than cursor animations */
   }
 
+  /* Terminal glass with specific z-index to ensure it doesn't interfere with cursor */
   .terminal-glass {
     background-color: var(--terminal-background-translucent);
     @apply backdrop-blur-md border border-terminal-border shadow-[0_8px_32px_rgba(0,0,0,0.5)];
+    
+    /* Critical fix: backdrop filters create their own stacking context */
+    
+    /* Ensure this is well below the cursor z-index of 10000 */
+    z-index: 50;
   }
 
   .typing-animation {
