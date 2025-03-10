@@ -3,6 +3,7 @@ export * from './animated-modal';
 export * from './ascii-text';
 export * from './aurora';
 export * from './aurora-background';
+export * from './aurora-canvas';
 export * from './background-beams';
 export * from './background-boxes';
 export * from './background-lines';

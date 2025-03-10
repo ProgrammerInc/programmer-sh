@@ -3,6 +3,8 @@ import {
   Aurora,
   AuroraBackground,
   AuroraBackgroundProps,
+  AuroraCanvas,
+  AuroraCanvasProps,
   AuroraProps,
   BackgroundBeams,
   BackgroundBeamsProps,
@@ -179,6 +181,24 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 amplitude={1.0}
                 speed={0.5}
                 {...(animation.animationProps as AuroraProps)}
+              />
+            )}
+            {animation.id === 'aurora-canvas' && (
+              <AuroraCanvas
+                colors={[
+                  '#4f46e5',
+                  '#0ea5e9',
+                  '#6366f1',
+                  '#8b5cf6',
+                  '#ec4899',
+                  '#f43f5e',
+                  '#f59e0b',
+                  '#10b981',
+                  '#3b82f6',
+                  '#a855f7'
+                ]}
+                speed={0.15}
+                {...(animation.animationProps as AuroraCanvasProps)}
               />
             )}
             {animation.id === 'background-beams' && (

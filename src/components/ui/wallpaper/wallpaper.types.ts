@@ -1,5 +1,6 @@
 import {
   AuroraBackgroundProps,
+  AuroraCanvasProps,
   AuroraProps,
   BackgroundBeamsProps,
   BackgroundBoxesProps,
@@ -111,6 +112,7 @@ export interface WallpaperAnimation {
   animationProps?:
     | AuroraProps
     | AuroraBackgroundProps
+    | AuroraCanvasProps
     | BackgroundBeamsProps
     | BackgroundBoxesProps
     | BackgroundLinesProps

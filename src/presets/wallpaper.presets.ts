@@ -147,6 +147,25 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  'aurora-canvas': {
+    id: 'aurora-canvas',
+    name: 'Aurora Canvas',
+    description: 'Aurora borealis in the night sky',
+    type: 'animation',
+    background: {
+      id: 'aurora-canvas',
+      type: 'animation',
+      animation: {
+        id: 'aurora-canvas',
+        type: 'aceternity'
+      },
+      gradient: {
+        id: 'default',
+        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+        type: 'linear'
+      }
+    }
+  },
   austin: {
     id: 'austin',
     name: 'Austin',
