@@ -56,6 +56,7 @@ export * from './split-text';
 export * from './spotlight';
 export * from './squares';
 export * from './star-border';
+export * from './starfall';
 export * from './stars-background';
 export * from './swarm-effect';
 export * from './text-pressure';

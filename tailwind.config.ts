@@ -112,6 +112,9 @@ export default {
             backgroundPosition: '350% 50%, 350% 50%'
           }
         },
+        blink: {
+          '50%': { opacity: '0.6' }
+        },
         'cursor-blink': {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0' }
@@ -288,6 +291,7 @@ export default {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         aurora: 'aurora 60s linear infinite',
+        blink: 'blink 2s linear infinite',
         'cursor-blink': 'cursor-blink 1s infinite',
         'fade-in': 'fade-in 0.5s ease-out',
         'fade-out': 'fade-out 0.5s ease-out',

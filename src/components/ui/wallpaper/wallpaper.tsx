@@ -63,6 +63,8 @@ import {
   SpotlightProps,
   Squares,
   SquaresProps,
+  Starfall,
+  StarfallProps,
   StarsBackground,
   SwarmEffect,
   SwarmEffectProps,
@@ -485,6 +487,14 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 borderColor={foregroundColor}
                 hoverFillColor={backgroundColor}
                 {...(animation.animationProps as SquaresProps)}
+              />
+            )}
+            {animation.id === 'starfall' && (
+              <Starfall
+                starCount={20}
+                primaryColor={foregroundColor}
+                className="opacity-70"
+                {...(animation.animationProps as StarfallProps)}
               />
             )}
             {animation.id === 'swarm-effect' && (

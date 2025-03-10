@@ -2371,6 +2371,25 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  starfall: {
+    id: 'starfall',
+    name: 'Starfall',
+    description: 'Starfall animation',
+    type: 'animation',
+    background: {
+      id: 'starfall',
+      type: 'animation',
+      animation: {
+        id: 'starfall',
+        type: 'artifact-ui'
+      },
+      gradient: {
+        id: 'default',
+        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+        type: 'linear'
+      }
+    }
+  },
   'starry-night': {
     id: 'starry-night',
     name: 'Starry Night',
