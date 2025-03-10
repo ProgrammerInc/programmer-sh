@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import { cn, hexToRgbArray } from '@/lib/utils';
+import { hexToRgbArray } from '@/lib/utils';
 import React, { useEffect, useReducer } from 'react';
 
 // Define the shape of a ripple object
-export interface Ripple {
+interface Ripple {
   id: string;
   x: number;
   y: number;
@@ -20,10 +20,10 @@ export interface RippleCursorProps {
 }
 
 // Type for the reducer's state
-export type RippleState = Ripple[];
+type RippleState = Ripple[];
 
 // Type for the reducer's actions
-export type RippleAction =
+type RippleAction =
   | { type: 'ADD_RIPPLE'; payload: Ripple }
   | { type: 'REMOVE_RIPPLE'; payload: string };
 
@@ -47,7 +47,6 @@ export const RippleCursor: React.FC<RippleCursorProps> = ({
   color = '#64ffda'
 }) => {
   const [ripples, dispatch] = useReducer(rippleReducer, []);
-  const rgbColor = hexToRgbArray(color);
 
   // Event handler for mouse movements
   const handleMouseMove = (e: MouseEvent): void => {
@@ -72,19 +71,19 @@ export const RippleCursor: React.FC<RippleCursorProps> = ({
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [duration, handleMouseMove]);
+  }, [duration]);
+
+  const rgbColor = hexToRgbArray(color);
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen pointer-events-none overflow-hidden z-[9999]">
       {ripples.map(ripple => (
         <div
           key={ripple.id}
-          className={cn([
-            'absolute rounded-full bg-opacity-50 animate-ripple',
-            `bg-[${color}]`,
-            `shadow-[0_0_10px_rgba(${rgbColor[0]},${rgbColor[1]},${rgbColor[2]},0.7),0_0_20px_rgba(${rgbColor[0]},${rgbColor[1]},${rgbColor[2]},0.4)]`
-          ])}
+          className="absolute rounded-full bg-opacity-50 animate-ripple"
           style={{
+            backgroundColor: color,
+            boxShadow: `0 0 10px rgba(${rgbColor.join(',')}, 0.7), 0 0 20px rgba(${rgbColor.join(',')}, 0.4)`,
             left: `${ripple.x}px`,
             top: `${ripple.y}px`,
             width: `${maxSize}px`,

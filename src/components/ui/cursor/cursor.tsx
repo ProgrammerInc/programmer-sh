@@ -55,26 +55,8 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
 
     // Cursor debugging - only log once
     const isInitialMount = useRef(true);
-    const arrowContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const blobContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const bubbleContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const canvasContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const characterContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const crosshairContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const cursorContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const fairydustContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const glitchContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const gradientContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const neonContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const rainbowContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const ribbonsContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const rippleContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const snowflakeContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const splashContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const spotlightContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const springyContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const textflagContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
-    const trailingContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
+    const nestedContainerRef = useRef<HTMLDivElement>(null);
 
     // Connect the forwarded ref to our inner ref
     useImperativeHandle(ref, () => cursorContainerRef.current!);
@@ -82,6 +64,7 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
     useEffect(() => {
       if (isInitialMount.current) {
         console.log('Current cursor:', currentCursor);
+
         isInitialMount.current = false;
       }
     }, [currentCursor, cursor]);
@@ -91,11 +74,22 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
         className={className}
         ref={cursorContainerRef}
         style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+          zIndex: 9999,
           ...style
         }}
       >
         {currentCursor.type === 'animation' && currentCursor.animation === 'arrow' && (
-          <div className="arrow-cursor-container" ref={arrowContainerRef}>
+          <div
+            className="arrow-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
             <ArrowCursor
               fgColor={currentColor}
               {...(currentCursor.animationProps as ArrowCursorProps)}
@@ -103,27 +97,43 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'blob' && (
-          <div className="blob-cursor-container" ref={blobContainerRef}>
+          <div
+            className="blob-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
             <BlobCursor {...(currentCursor.animationProps as BlobCursorProps)} />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'bubble' && (
-          <div className="bubble-cursor-container" ref={bubbleContainerRef}>
+          <div
+            className="bubble-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
             <BubbleCursor
               fillStyle={currentColor}
               strokeStyle={currentColor}
-              wrapperElement={bubbleContainerRef.current}
+              wrapperElement={nestedContainerRef.current}
               {...(currentCursor.animationProps as BubbleCursorProps)}
             />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'canvas' && (
-          <div className="canvas-cursor-container" ref={canvasContainerRef}>
+          <div
+            className="canvas-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
             <CanvasCursor />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'character' && (
-          <div className="character-cursor-container" ref={characterContainerRef}>
+          <div
+            className="character-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
             <CharacterCursor
               colors={[currentColor]}
               {...(currentCursor.animationProps as CharacterCursorProps)}
@@ -132,13 +142,17 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'crosshair' && (
           <Crosshair
-            containerRef={crosshairContainerRef}
+            containerRef={nestedContainerRef}
             color={currentColor}
             {...(currentCursor.animationProps as CrosshairProps)}
           />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'fairydust' && (
-          <div className="fairydust-cursor-container" ref={fairydustContainerRef}>
+          <div
+            className="fairydust-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
             <FairyDustCursor
               colors={['#FF0000', '#00FF00', '#0000FF']}
               characterSet={['✨', '⭐', '🌟']}
@@ -152,27 +166,47 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'glitch' && (
-          <div className="glitch-cursor-container" ref={glitchContainerRef}>
+          <div
+            className="glitch-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
             <GlitchCursor />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'gradient' && (
-          <div className="gradient-cursor-container" ref={gradientContainerRef}>
+          <div
+            className="gradient-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
             <GradientCursor />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'neon' && (
-          <div className="neon-cursor-container" ref={neonContainerRef}>
+          <div
+            className="neon-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
             <NeonCursor />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'rainbow' && (
-          <div className="rainbow-cursor-container" ref={rainbowContainerRef}>
+          <div
+            className="rainbow-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
             <RainbowCursor {...(currentCursor.animationProps as RainbowCursorProps)} />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'ribbons' && (
-          <div className="ribbons-cursor-container" ref={ribbonsContainerRef}>
+          <div
+            className="ribbons-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
             <Ribbons
               baseThickness={30}
               colors={[currentColor]}
@@ -185,32 +219,59 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'ripple' && (
-          <div className="ripple-cursor-container" ref={rippleContainerRef}>
-            <RippleCursor {...(currentCursor.animationProps as RippleCursorProps)} />
+          <div
+            className="ripple-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
+            <RippleCursor
+              color={currentColor}
+              {...(currentCursor.animationProps as RippleCursorProps)}
+            />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'snowflake' && (
-          <div className="snowflake-cursor-container" ref={snowflakeContainerRef}>
+          <div
+            className="snowflake-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
             <SnowflakeCursor />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'splash' && (
-          <div className="splash-cursor-container" ref={splashContainerRef}>
+          <div
+            className="splash-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
             <SplashCursor />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'spotlight' && (
-          <div className="spotlight-cursor-container" ref={spotlightContainerRef}>
+          <div
+            className="spotlight-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
             <SpotlightCursor {...(currentCursor.animationProps as SpotlightCursorProps)} />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'springy' && (
-          <div className="springy-cursor-container" ref={springyContainerRef}>
+          <div
+            className="springy-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
             <SpringyCursor {...(currentCursor.animationProps as SpringyCursorProps)} />
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'textflag' && (
-          <div className="textflag-cursor-container" ref={textflagContainerRef}>
+          <div
+            className="textflag-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
             <TextFlagCursor
               color={currentColor}
               {...(currentCursor.animationProps as TextFlagCursorProps)}
@@ -218,7 +279,11 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
           </div>
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'trailing' && (
-          <div className="trailing-cursor-container" ref={trailingContainerRef}>
+          <div
+            className="trailing-cursor-container"
+            ref={nestedContainerRef}
+            style={{ position: 'relative', zIndex: 'inherit' }}
+          >
             <TrailingCursor {...(currentCursor.animationProps as TrailingCursorProps)} />
           </div>
         )}

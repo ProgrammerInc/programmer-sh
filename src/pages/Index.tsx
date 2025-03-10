@@ -263,7 +263,12 @@ const Index = () => {
   );
 
   return (
-    <div id="indexContainer" className={wallpaperClasses} ref={containerRef}>
+    <div
+      id="indexContainer"
+      className={wallpaperClasses}
+      ref={containerRef}
+      style={{ position: 'relative' }}
+    >
       {MemoizedWallpaper}
       <div id="terminalContainer" className="terminal-container" ref={terminalRef}>
         <div
