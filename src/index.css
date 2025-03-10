@@ -48,6 +48,13 @@
     );
     --default-foreground: #f1f1f1;
 
+    /* Grid patterns */
+    --animate-dots-shift: dots-shift 20s linear infinite;
+    --animate-lines-shift: lines-shift 20s linear infinite;
+    --animate-squares-shift: squares-shift 20s linear infinite;
+    --animate-crosshatch-shift: crosshatch-shift 20s linear infinite;
+    --animate-diamonds-shift: diamonds-shift 20s linear infinite;
+
     /* Terminal specific colors */
     --terminal-background: #1a1f2c;
     --terminal-background-translucent: rgba(26, 31, 44, 0.95);
@@ -363,18 +370,23 @@
   .background-lines-container,
   .balatro-container,
   .ballpit-container,
+  .blob-background-container,
   .dither-container,
   .globe-container,
   .gradient-container,
   .gradient-animation-container,
+  .gradient-mesh-container,
   .grid-distortion-container,
+  .grid-pattern-container,
   .hyperspeed-container,
   .iridescence-container,
   .letter-glitch-container,
   .lightning-container,
   .liquid-chrome-container,
   .magnet-lines-container,
+  .mesh-matrix-container,
   .meteors-container,
+  .particle-network-container,
   .particles-container,
   .rain-drops-container,
   .shooting-stars-container,
@@ -394,5 +406,75 @@
     left: 0;
     overflow: hidden;
     z-index: 0;
+  }
+}
+
+@keyframes dots-shift {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes lines-shift {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(50%) translateY(50%);
+  }
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+}
+
+@keyframes squares-shift {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(25%) translateY(25%) rotate(180deg);
+  }
+  100% {
+    transform: translateX(0) translateY(0) rotate(360deg);
+  }
+}
+
+@keyframes crosshatch-shift {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes diamonds-shift {
+  0% {
+    transform: translateX(0) translateY(0) scale(1);
+  }
+  50% {
+    transform: translateX(25%) translateY(25%) scale(0.8);
+  }
+  100% {
+    transform: translateX(0) translateY(0) scale(1);
+  }
+}
+
+@keyframes gradient-animation {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.5) rotate(180deg);
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
   }
 }

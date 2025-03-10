@@ -167,6 +167,11 @@ export default {
           '50%': { backgroundPosition: '100% 50%' },
           '100%': { backgroundPosition: '0% 50%' }
         },
+        'gradient-animation': {
+          '0%': { transform: 'scale(1) rotate(0deg)' },
+          '50%': { transform: 'scale(1.5) rotate(180deg)' },
+          '100%': { transform: 'scale(1) rotate(360deg)' }
+        },
         marquee: {
           from: { transform: 'translateX(0%)' },
           to: { transform: 'translateX(-50%)' }

@@ -6,21 +6,28 @@ import {
   BackgroundLinesProps,
   BalatroProps,
   BallpitProps,
+  BlobBackgroundProps,
   DitherProps,
   GradientAnimationProps,
+  GradientMeshProps,
   GridDistortionProps,
   GridMotionProps,
+  GridPatternProps,
   HyperspeedProps,
   IridescenceProps,
   LetterGlitchProps,
   LightningProps,
+  LiquidChromeProps,
   MagnetLinesProps,
+  MeshMatrixProps,
   MeteorsProps,
   NoiseProps,
+  ParticleNetworkProps,
   ParticlesProps,
   RainDropsProps,
   ShootingStarsProps,
   SparklesProps,
+  SphereAnimationProps,
   SpotlightProps,
   SquaresProps,
   StarBackgroundProps,
@@ -31,11 +38,10 @@ import {
   WorldMapProps,
   WorldProps
 } from '@/components/animations';
-import { LiquidChromeProps } from '@/components/animations/liquid-chrome';
 import { CSSProperties } from 'react';
 
 export type AspectRatioType = '16:9' | '4:3' | '1:1';
-export type AnimationType = 'aceternity' | 'css' | 'react' | 'reactbits' | 'three';
+export type AnimationType = 'aceternity' | 'artifact-ui' | 'css' | 'react' | 'reactbits' | 'three';
 export type ColorType = 'hex' | 'rgb' | 'rgba' | 'hsl' | 'hsla';
 export type GradientType = 'linear' | 'radial';
 export type ImageType = 'base64' | 'file' | 'url';
@@ -105,22 +111,28 @@ export interface WallpaperAnimation {
     | BackgroundLinesProps
     | BalatroProps
     | BallpitProps
+    | BlobBackgroundProps
     | DitherProps
     | GradientAnimationProps
+    | GradientMeshProps
     | GridDistortionProps
     | GridMotionProps
+    | GridPatternProps
     | HyperspeedProps
     | IridescenceProps
     | LetterGlitchProps
     | LightningProps
     | LiquidChromeProps
     | MagnetLinesProps
+    | MeshMatrixProps
     | MeteorsProps
     | NoiseProps
+    | ParticleNetworkProps
     | ParticlesProps
     | RainDropsProps
     | [ShootingStarsProps, StarBackgroundProps]
     | SparklesProps
+    | SphereAnimationProps
     | SpotlightProps
     | SquaresProps
     | ThreadsProps

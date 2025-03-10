@@ -14,14 +14,20 @@ import {
   BalatroProps,
   Ballpit,
   BallpitProps,
+  BlobBackground,
+  BlobBackgroundProps,
   Dither,
   DitherProps,
   GradientAnimation,
   GradientAnimationProps,
+  GradientMesh,
+  GradientMeshProps,
   GridDistortion,
   GridDistortionProps,
   GridMotion,
   GridMotionProps,
+  GridPattern,
+  GridPatternProps,
   Hyperspeed,
   HyperspeedProps,
   Iridescence,
@@ -34,10 +40,14 @@ import {
   LiquidChromeProps,
   MagnetLines,
   MagnetLinesProps,
+  MeshMatrix,
+  MeshMatrixProps,
   Meteors,
   MeteorsProps,
   Noise,
   NoiseProps,
+  ParticleNetwork,
+  ParticleNetworkProps,
   Particles,
   ParticlesProps,
   RainDrops,
@@ -45,6 +55,8 @@ import {
   ShootingStars,
   Sparkles,
   SparklesProps,
+  SphereAnimation,
+  SphereAnimationProps,
   Spotlight,
   SpotlightProps,
   Squares,
@@ -64,9 +76,11 @@ import {
   WorldProps
 } from '@/components/animations';
 import { hexToRgb } from '@/lib/utils';
+import defaultBlobs from '@/presets/blob.presets';
 import { globeArcs, globeConfig } from '@/presets/globe.presets';
 import wallpaperPresets from '@/presets/wallpaper.presets';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+
 import { WallpaperProps } from './wallpaper.types';
 
 export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
@@ -190,6 +204,12 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 {...(animation.animationProps as BallpitProps)}
               />
             )}
+            {animation.id === 'blob-background' && (
+              <BlobBackground
+                blobs={defaultBlobs}
+                {...(animation.animationProps as BlobBackgroundProps)}
+              />
+            )}
             {animation.id === 'dither' && (
               <Dither
                 waveColor={[0.5, 0.5, 0.5]}
@@ -212,6 +232,9 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
             )}
             {animation.id === 'gradient-animation' && (
               <GradientAnimation {...(animation.animationProps as GradientAnimationProps)} />
+            )}
+            {animation.id === 'gradient-mesh' && (
+              <GradientMesh {...(animation.animationProps as GradientMeshProps)} />
             )}
             {animation.id === 'grid-distortion' && (
               <GridDistortion
@@ -253,6 +276,17 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 ]}
                 gradientColor="rgba(30, 30, 30, 0.8)"
                 {...(animation.animationProps as GridMotionProps)}
+              />
+            )}
+            {animation.id === 'grid-pattern' && (
+              <GridPattern
+                gridType="dots"
+                gridSize={24}
+                opacity={0.6}
+                color={foregroundColor}
+                animate={false}
+                className="dark:opacity-80"
+                {...(animation.animationProps as GridPatternProps)}
               />
             )}
             {animation.id === 'hyperspeed' && (
@@ -347,6 +381,15 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 {...(animation.animationProps as MagnetLinesProps)}
               />
             )}
+            {animation.id === 'mesh-matrix' && (
+              <MeshMatrix
+                videoSrc="https://videos.pexels.com/video-files/3163534/3163534-sd_640_360_30fps.mp4"
+                meshColor={foregroundColor}
+                meshDensity={25}
+                distortionIntensity={1.5}
+                {...(animation.animationProps as MeshMatrixProps)}
+              />
+            )}
             {animation.id === 'meteors' && (
               <div className="meteors-container">
                 <Meteors className="meteor" {...(animation.animationProps as MeteorsProps)} />
@@ -360,6 +403,18 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 patternRefreshInterval={2}
                 patternAlpha={15}
                 {...(animation.animationProps as NoiseProps)}
+              />
+            )}
+            {animation.id === 'particle-network' && (
+              <ParticleNetwork
+                particleCount={120}
+                particleSize={2}
+                particleColor={foregroundColor}
+                lineColor={foregroundColor}
+                maxDistance={100}
+                speed={0.5}
+                interactive={true}
+                {...(animation.animationProps as ParticleNetworkProps)}
               />
             )}
             {animation.id === 'particles' && (
@@ -404,6 +459,9 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 particleColor={foregroundColor}
                 {...(animation.animationProps as SparklesProps)}
               />
+            )}
+            {animation.id === 'sphere-animation' && (
+              <SphereAnimation {...(animation.animationProps as SphereAnimationProps)} />
             )}
             {animation.id === 'spotlight' && (
               <Spotlight {...(animation.animationProps as SpotlightProps)} />

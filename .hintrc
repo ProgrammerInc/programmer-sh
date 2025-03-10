@@ -8,7 +8,11 @@
       "default",
       {
         "ignore": [
-          "-webkit-text-size-adjust"
+          "-webkit-text-size-adjust",
+          "user-select",
+          "overscroll-behavior",
+          "overscroll-behavior: none",
+          "overscroll-behavior: contain"
         ]
       }
     ]

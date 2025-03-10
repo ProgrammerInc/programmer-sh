@@ -21,6 +21,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  ai: {
+    id: 'ai',
+    name: 'Artificial Intelligence',
+    description: 'Mockup of an A.I. processor chip with gold traces',
+    type: 'image',
+    background: {
+      id: 'ai',
+      type: 'image',
+      image: {
+        id: 'ai',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1739036868260-c26b292cd85d?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   alley: {
     id: 'alley',
     name: 'Alley',
@@ -49,7 +65,23 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'andromeda',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1604423203943-54721eff418a?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1736210811075-7509d5023a4a?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  apollo: {
+    id: 'apollo',
+    name: 'Apollo',
+    description: 'Astronaut Buzz Aldrin on the lunar surface during the Apollo 11 mission',
+    type: 'image',
+    background: {
+      id: 'apollo',
+      type: 'image',
+      image: {
+        id: 'apollo',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614726365930-627c75da663e?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -66,6 +98,38 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  astronaut: {
+    id: 'astronaut',
+    name: 'Astronaut',
+    description: 'An astronaut taking a selfie from space',
+    type: 'image',
+    background: {
+      id: 'astronaut',
+      type: 'image',
+      image: {
+        id: 'astronaut',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1447433909565-04bfc496fe73?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  atlanta: {
+    id: 'atlanta',
+    name: 'Atlanta',
+    description: 'A view of the Atlanta skyline',
+    type: 'image',
+    background: {
+      id: 'atlanta',
+      type: 'image',
+      image: {
+        id: 'atlanta',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1606416357029-8cc2e025682e?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -168,6 +232,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  berlin: {
+    id: 'berlin',
+    name: 'Berlin',
+    description: 'A view of the Berlin city skyline',
+    type: 'image',
+    background: {
+      id: 'berlin',
+      type: 'image',
+      image: {
+        id: 'berlin',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   'binary-heart': {
     id: 'binary-heart',
     name: 'Binary Heart',
@@ -181,6 +261,57 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1569396116180-210c182bedb8?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  'black-cat': {
+    id: 'black-cat',
+    name: 'Black Cat',
+    description: 'Macro photography of a black cat',
+    type: 'image',
+    background: {
+      id: 'black-cat',
+      type: 'image',
+      image: {
+        id: 'black-cat',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1503431128871-cd250803fa41?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  blackbird: {
+    id: 'blackbird',
+    name: 'SR-71 Blackbird',
+    description: 'An ariel view of SR-71 Blackbird above snow-capped mountains',
+    type: 'image',
+    background: {
+      id: 'blackbird',
+      type: 'image',
+      image: {
+        id: 'blackbird',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614121174144-bd53a169780e?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  'blob-background': {
+    id: 'blob-background',
+    name: 'Blob Background',
+    description: 'A blob background animation',
+    type: 'animation',
+    background: {
+      id: 'blob-background',
+      type: 'animation',
+      animation: {
+        id: 'blob-background',
+        type: 'artifact-ui'
+      },
+      gradient: {
+        id: 'default',
+        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+        type: 'linear'
       }
     }
   },
@@ -200,6 +331,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  california: {
+    id: 'california',
+    name: 'California',
+    description: 'A view of the Bixby Creek Bridge on Hwy 1 in California',
+    type: 'image',
+    background: {
+      id: 'california',
+      type: 'image',
+      image: {
+        id: 'california',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1578325413871-62d979ef9629?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   camaro: {
     id: 'camaro',
     name: 'Camaro',
@@ -216,6 +363,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  camping: {
+    id: 'camping',
+    name: 'Camping',
+    description: 'A photo of a dog sitting in front of a campfire',
+    type: 'image',
+    background: {
+      id: 'camping',
+      type: 'image',
+      image: {
+        id: 'camping',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1520869422133-f2ac1279d8b4?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   'cassette-tapes': {
     id: 'cassette-tapes',
     name: 'Cassette Tapes',
@@ -229,6 +392,38 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1605731414532-6b26976cc153?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  charlotte: {
+    id: 'charlotte',
+    name: 'Charlotte',
+    description: 'A view of the Charlotte city skyline at sunset',
+    type: 'image',
+    background: {
+      id: 'charlotte',
+      type: 'image',
+      image: {
+        id: 'charlotte',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1507810670121-b08efd787765?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  chicago: {
+    id: 'chicago',
+    name: 'Chicago',
+    description: 'A view of the Chicago city skyline at night',
+    type: 'image',
+    background: {
+      id: 'chicago',
+      type: 'image',
+      image: {
+        id: 'chicago',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1581373449483-37449f962b6c?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -296,6 +491,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  continents: {
+    id: 'continents',
+    name: 'Continents',
+    description: 'A Flat Earth view of the continents from space with clouds',
+    type: 'image',
+    background: {
+      id: 'continents',
+      type: 'image',
+      image: {
+        id: 'continents',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614728672820-e88260ce6d0d?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   dallas: {
     id: 'dallas',
     name: 'Dallas',
@@ -309,6 +520,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1625950019503-cae6a7825762?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  denver: {
+    id: 'denver',
+    name: 'Denver',
+    description: 'A view of the Denver skyline',
+    type: 'image',
+    background: {
+      id: 'denver',
+      type: 'image',
+      image: {
+        id: 'denver',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1602800458591-eddda28a498b?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -344,6 +571,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  dubai: {
+    id: 'dubai',
+    name: 'Dubai',
+    description: 'A view of the Dubai skyline at night',
+    type: 'image',
+    background: {
+      id: 'dubai',
+      type: 'image',
+      image: {
+        id: 'dubai',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/flagged/photo-1559717201-fbb671ff56b7?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   eclipse: {
     id: 'eclipse',
     name: 'Eclipse',
@@ -363,7 +606,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
   earth: {
     id: 'earth',
     name: 'Earth',
-    description: 'A view of the Earth from space',
+    description: 'A photo of Earth from space taken by NASA',
     type: 'image',
     background: {
       id: 'earth',
@@ -380,6 +623,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  earthrise: {
+    id: 'earthrise',
+    name: 'Earthrise',
+    description: 'The rising Earth greeted the Apollo 8 astronauts on December 24, 1968',
+    type: 'image',
+    background: {
+      id: 'earthrise',
+      type: 'image',
+      image: {
+        id: 'earthrise',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -411,7 +670,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'ferrari',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1614200179396-2bdb77ebf81b?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -428,6 +687,54 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1578147063111-9ffec96050cd?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  'for-all-mankind': {
+    id: 'for-all-mankind',
+    name: 'For All Mankind',
+    description: 'A photo of a footprint on lunar regolith from Apollo 11',
+    type: 'image',
+    background: {
+      id: 'for-all-mankind',
+      type: 'image',
+      image: {
+        id: 'for-all-mankind',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614314266357-8a2e58059af5?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  forest: {
+    id: 'forest',
+    name: 'Forest',
+    description: 'A dirt road leading into a dense forest',
+    type: 'image',
+    background: {
+      id: 'forest',
+      type: 'image',
+      image: {
+        id: 'forest',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1739361133037-77be66a4ea6a?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  'garden-of-gods': {
+    id: 'garden-of-gods',
+    name: 'Garden of Gods',
+    description: 'Photo of the night sky and the milky way from the Garden of the Gods',
+    type: 'image',
+    background: {
+      id: 'garden-of-gods',
+      type: 'image',
+      image: {
+        id: 'garden-of-gods',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1637278643503-3a49c91b7000?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -493,6 +800,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
   //     }
   //   }
   // },
+  'golden-gate': {
+    id: 'golden-gate',
+    name: 'Golden Gate',
+    description: 'Photo of the Golden Gate Bridge in San Francisco, California',
+    type: 'image',
+    background: {
+      id: 'golden-gate',
+      type: 'image',
+      image: {
+        id: 'golden-gate',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1449034446853-66c86144b0ad?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   gradient: {
     id: 'gradient',
     name: 'Gradient',
@@ -519,6 +842,25 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       animation: {
         id: 'gradient-animation',
         type: 'aceternity'
+      }
+    }
+  },
+  'gradient-mesh': {
+    id: 'gradient-mesh',
+    name: 'Gradient Mesh',
+    description: 'A gradient mesh background',
+    type: 'animation',
+    background: {
+      id: 'gradient-mesh',
+      type: 'animation',
+      animation: {
+        id: 'gradient-mesh',
+        type: 'artifact-ui'
+      },
+      gradient: {
+        id: 'default',
+        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+        type: 'linear'
       }
     }
   },
@@ -556,6 +898,25 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
   //     }
   //   }
   // },
+  'grid-pattern': {
+    id: 'grid-pattern',
+    name: 'Grid Pattern',
+    description: 'A grid of repeating patterns',
+    type: 'animation',
+    background: {
+      id: 'grid-pattern',
+      type: 'animation',
+      animation: {
+        id: 'grid-pattern',
+        type: 'artifact-ui'
+      },
+      gradient: {
+        id: 'default',
+        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+        type: 'linear'
+      }
+    }
+  },
   guitar: {
     id: 'guitar',
     name: 'Guitar',
@@ -588,6 +949,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  'hong-kong': {
+    id: 'hong-kong',
+    name: 'Hong Kong',
+    description: 'A view of the Hong Kong skyline at night',
+    type: 'image',
+    background: {
+      id: 'hong-kong',
+      type: 'image',
+      image: {
+        id: 'hong-kong',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1536599018102-9f803c140fc1?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   houston: {
     id: 'houston',
     name: 'Houston',
@@ -617,6 +994,38 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  hummingbird: {
+    id: 'hummingbird',
+    name: 'Hummingbird',
+    description: 'Hummingbird approaching a bird feeder',
+    type: 'image',
+    background: {
+      id: 'hummingbird',
+      type: 'image',
+      image: {
+        id: 'hummingbird',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1729547846218-bd20bc595fd2?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  hurricane: {
+    id: 'hurricane',
+    name: 'Hurricane',
+    description: 'A giant hurricane as seen from space',
+    type: 'image',
+    background: {
+      id: 'hurricane',
+      type: 'image',
+      image: {
+        id: 'hurricane',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1457327289196-f38b88d97147?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -654,6 +1063,38 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  iss: {
+    id: 'iss',
+    name: 'ISS',
+    description: 'The International Space Station orbiting the Earth',
+    type: 'image',
+    background: {
+      id: 'iss',
+      type: 'image',
+      image: {
+        id: 'iss',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614314007212-0257d6e2f7d8?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  jupiter: {
+    id: 'jupiter',
+    name: 'Jupiter',
+    description: 'Jupiter as seen from the Hubble Space Telescope',
+    type: 'image',
+    background: {
+      id: 'jupiter',
+      type: 'image',
+      image: {
+        id: 'jupiter',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614314169000-4cf229a1db33?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   lamborghini: {
     id: 'lamborghini',
     name: 'Lamborghini',
@@ -667,6 +1108,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1571607388263-1044f9ea01dd?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  'las-vegas': {
+    id: 'las-vegas',
+    name: 'Las Vegas',
+    description: 'A view of the Las Vegas skyline at night',
+    type: 'image',
+    background: {
+      id: 'las-vegas',
+      type: 'image',
+      image: {
+        id: 'las-vegas',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -747,6 +1204,38 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  london: {
+    id: 'london',
+    name: 'London',
+    description: 'A view of the London city skyline at night',
+    type: 'image',
+    background: {
+      id: 'london',
+      type: 'image',
+      image: {
+        id: 'london',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1513026705753-bc3fffca8bf4?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  'los-angeles': {
+    id: 'los-angeles',
+    name: 'Los Angeles',
+    description: 'A view of the Los Angeles city skyline at night',
+    type: 'image',
+    background: {
+      id: 'los-angeles',
+      type: 'image',
+      image: {
+        id: 'los-angeles',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   macbook: {
     id: 'macbook',
     name: 'Macbook',
@@ -798,6 +1287,39 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  manhatten: {
+    id: 'manhatten',
+    name: 'Manhatten',
+    description: 'On top of the world, Manhatten from outer space at night',
+    type: 'image',
+    background: {
+      id: 'manhatten',
+      type: 'image',
+      image: {
+        id: 'manhatten',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1446776899648-aa78eefe8ed0?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  mars: {
+    id: 'mars',
+    name: 'Mars',
+    description:
+      'A simulated view of Mars as it would be seen from the Mars Global Surveyor spacecraft',
+    type: 'image',
+    background: {
+      id: 'mars',
+      type: 'image',
+      image: {
+        id: 'mars',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   mclaren: {
     id: 'mclaren',
     name: 'Mclaren P1',
@@ -811,6 +1333,44 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1555532686-d0fccaccadcf?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  mercury: {
+    id: 'mercury',
+    name: 'Mercury',
+    description: "Mariner 10's first image of Mercury from 3 million+ miles",
+    type: 'image',
+    background: {
+      id: 'mercury',
+      type: 'image',
+      image: {
+        id: 'mercury',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614724723656-457e78e0b50b?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  'mesh-matrix': {
+    id: 'mesh-matrix',
+    name: 'Mesh Matrix',
+    description: 'A mesh matrix background animation',
+    type: 'animation',
+    background: {
+      id: 'mesh-matrix',
+      type: 'animation',
+      animation: {
+        id: 'mesh-matrix',
+        type: 'artifact-ui',
+        animationProps: {
+          videoSrc: 'https://videos.pexels.com/video-files/3163534/3163534-sd_640_360_30fps.mp4'
+        }
+      },
+      gradient: {
+        id: 'default',
+        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+        type: 'linear'
       }
     }
   },
@@ -834,19 +1394,35 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
-  mexico: {
-    id: 'mexico',
-    name: 'Mexico',
-    description: 'A view of a lively Mexican street',
+  'mexico-city': {
+    id: 'mexico-city',
+    name: 'Mexico City',
+    description: 'A view of the Mexican City skyline at night',
     type: 'image',
     background: {
-      id: 'mexico',
+      id: 'mexico-city',
       type: 'image',
       image: {
-        id: 'mexico',
+        id: 'mexico-city',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1601585144584-2a53183be14c?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  miami: {
+    id: 'miami',
+    name: 'Miami',
+    description: 'A view of Miami at night',
+    type: 'image',
+    background: {
+      id: 'miami',
+      type: 'image',
+      image: {
+        id: 'miami',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1530686577637-0ccce382b327?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -895,6 +1471,38 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1518972559570-7cc1309f3229?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  moon: {
+    id: 'moon',
+    name: 'Moon',
+    description: 'A photo of a Moon crater close-up',
+    type: 'image',
+    background: {
+      id: 'moon',
+      type: 'image',
+      image: {
+        id: 'moon',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1446941611757-91d2c3bd3d45?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  'moon-buggy': {
+    id: 'moon-buggy',
+    name: 'Moon Buggy',
+    description: 'Apollo 17 astronaut Gene Cernan on a lunar rover in 1972',
+    type: 'image',
+    background: {
+      id: 'moon-buggy',
+      type: 'image',
+      image: {
+        id: 'moon-buggy',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614315517650-3771cf72d18a?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -962,10 +1570,42 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  nasa: {
+    id: 'nasa',
+    name: 'NASA',
+    description: 'NASA Kennedy Space Center in Cape Canaveral, Florida',
+    type: 'image',
+    background: {
+      id: 'nasa',
+      type: 'image',
+      image: {
+        id: 'nasa',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614728611996-806169502cf1?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  nashville: {
+    id: 'nashville',
+    name: 'Nashville',
+    description: 'A view of the Nashville skyline',
+    type: 'image',
+    background: {
+      id: 'nashville',
+      type: 'image',
+      image: {
+        id: 'nashville',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1545419913-775e3e82c7db?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   nebula: {
     id: 'nebula',
-    name: 'California Nebula',
-    description: 'A view of the California nebula in the constellation Perseus.',
+    name: 'Carina Nebula',
+    description: 'Carina Nebula located in the Carina–Sagittarius Arm of the Milky Way',
     type: 'image',
     background: {
       id: 'nebula',
@@ -974,7 +1614,23 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'nebula',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1734917141553-274732d788cb?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1462332420958-a05d1e002413?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  neptune: {
+    id: 'neptune',
+    name: 'Neptune',
+    description: 'Neptune as seen from Voyager II in 1989',
+    type: 'image',
+    background: {
+      id: 'neptune',
+      type: 'image',
+      image: {
+        id: 'neptune',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614728423169-3f65fd722b7e?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -1021,6 +1677,73 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       animation: {
         id: 'noise',
         type: 'reactbits'
+      },
+      gradient: {
+        id: 'default',
+        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+        type: 'linear'
+      }
+    }
+  },
+  orlando: {
+    id: 'orlando',
+    name: 'Orlando',
+    description: 'A view of the Orlando skyline',
+    type: 'image',
+    background: {
+      id: 'orlando',
+      type: 'image',
+      image: {
+        id: 'orlando',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1532375672241-878084a41e96?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  'outer-space': {
+    id: 'outer-space',
+    name: 'Outer Space',
+    description: 'A photo of earth from outer space at night',
+    type: 'image',
+    background: {
+      id: 'outer-space',
+      type: 'image',
+      image: {
+        id: 'outer-space',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  paris: {
+    id: 'paris',
+    name: 'Paris',
+    description: 'A view of the Paris skyline with the Eiffel Tower at sunset',
+    type: 'image',
+    background: {
+      id: 'paris',
+      type: 'image',
+      image: {
+        id: 'paris',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1605701877331-645ad05dcb97?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  'particle-network': {
+    id: 'particle-network',
+    name: 'Particle Network',
+    description: 'A particle network animation background',
+    type: 'animation',
+    background: {
+      id: 'particle-network',
+      type: 'animation',
+      animation: {
+        id: 'particle-network',
+        type: 'artifact-ui'
       },
       gradient: {
         id: 'default',
@@ -1080,6 +1803,38 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  philadelphia: {
+    id: 'philadelphia',
+    name: 'Philadelphia',
+    description: 'Early morning in the city of brotherly love, Philadelphia, Pennsylvania',
+    type: 'image',
+    background: {
+      id: 'philadelphia',
+      type: 'image',
+      image: {
+        id: 'philadelphia',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1569761316261-9a8696fa2ca3?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  phoenix: {
+    id: 'phoenix',
+    name: 'Phoenix',
+    description: 'A view of the Phoenix skyline at sunset',
+    type: 'image',
+    background: {
+      id: 'phoenix',
+      type: 'image',
+      image: {
+        id: 'phoenix',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1616474648384-9e956216d1b7?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   piano: {
     id: 'piano',
     name: 'Piano',
@@ -1109,6 +1864,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1560369457-fb1181a7ac4c?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  pluto: {
+    id: 'pluto',
+    name: 'Pluto',
+    description: 'Pluto as seen from the New Horizons spacecraft in 2015',
+    type: 'image',
+    background: {
+      id: 'pluto',
+      type: 'image',
+      image: {
+        id: 'pluto',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614314107768-6018061b5b72?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -1211,6 +1982,38 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  rome: {
+    id: 'rome',
+    name: 'Rome',
+    description: 'A view of the Rome skyline',
+    type: 'image',
+    background: {
+      id: 'rome',
+      type: 'image',
+      image: {
+        id: 'rome',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1531572753322-ad063cecc140?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  'salt-lake-city': {
+    id: 'salt-lake-city',
+    name: 'Salt Lake City',
+    description: 'A photo of the Salt Lake City skyline at night',
+    type: 'image',
+    background: {
+      id: 'salt-lake-city',
+      type: 'image',
+      image: {
+        id: 'salt-lake-city',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1682146575150-c960ddbc1ace?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   'san-antonio': {
     id: 'san-antonio',
     name: 'San Antonio',
@@ -1224,6 +2027,102 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1579053301200-93b5ef0c0b3a?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  'san-diego': {
+    id: 'san-diego',
+    name: 'San Diego',
+    description: 'A photo of the San Diego skyline at night',
+    type: 'image',
+    background: {
+      id: 'san-diego',
+      type: 'image',
+      image: {
+        id: 'san-diego',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1547001286-e2ff1572e4d9?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  'san-francisco': {
+    id: 'san-francisco',
+    name: 'San Francisco',
+    description: 'A photo of the Sunrise over San Francisco',
+    type: 'image',
+    background: {
+      id: 'san-francisco',
+      type: 'image',
+      image: {
+        id: 'san-francisco',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1576764225594-96ad970efffa?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  'san-jose': {
+    id: 'san-jose',
+    name: 'San Jose',
+    description: 'A photo of the San Jose skyline at night',
+    type: 'image',
+    background: {
+      id: 'san-jose',
+      type: 'image',
+      image: {
+        id: 'san-jose',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1605435010177-8e96475610a4?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  saturn: {
+    id: 'saturn',
+    name: 'Saturn',
+    description: 'Saturn as seen from the Cassini–Huygens mission',
+    type: 'image',
+    background: {
+      id: 'saturn',
+      type: 'image',
+      image: {
+        id: 'saturn',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  seattle: {
+    id: 'seattle',
+    name: 'Seattle',
+    description: 'A photo of the Seattle waterfront',
+    type: 'image',
+    background: {
+      id: 'seattle',
+      type: 'image',
+      image: {
+        id: 'seattle',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1535581652167-3a26c90bbf86?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  shanghai: {
+    id: 'shanghai',
+    name: 'Shanghai',
+    description: 'A view of the Shanghai skyline',
+    type: 'image',
+    background: {
+      id: 'shanghai',
+      type: 'image',
+      image: {
+        id: 'shanghai',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1548919973-5cef591cdbc9?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -1278,6 +2177,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  snow: {
+    id: 'snow',
+    name: 'Snow',
+    description: 'A snow-covered forest filled with lots of trees',
+    type: 'image',
+    background: {
+      id: 'snow',
+      type: 'image',
+      image: {
+        id: 'snow',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1738081359154-44d50176b2d0?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   'southern-lights': {
     id: 'southern-lights',
     name: 'Southern Lights',
@@ -1313,6 +2228,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  'space-shuttle': {
+    id: 'space-shuttle',
+    name: 'Space Shuttle',
+    description: 'The Space Shuttle Challenger launching from Complex 39',
+    type: 'image',
+    background: {
+      id: 'space-shuttle',
+      type: 'image',
+      image: {
+        id: 'space-shuttle',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614728263952-84ea256f9679?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   sparkles: {
     id: 'sparkles',
     name: 'Sparkles',
@@ -1324,6 +2255,25 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       animation: {
         id: 'sparkles',
         type: 'aceternity'
+      },
+      gradient: {
+        id: 'default',
+        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+        type: 'linear'
+      }
+    }
+  },
+  'sphere-animation': {
+    id: 'sphere-animation',
+    name: 'Sphere Animation',
+    description: 'A sphere animation background',
+    type: 'animation',
+    background: {
+      id: 'sphere-animation',
+      type: 'animation',
+      animation: {
+        id: 'sphere-animation',
+        type: 'artifact-ui'
       },
       gradient: {
         id: 'default',
@@ -1370,6 +2320,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  squirrel: {
+    id: 'squirrel',
+    name: 'Staring Squirrel',
+    description: 'A brown squirrel on a black background staring at the camera',
+    type: 'image',
+    background: {
+      id: 'squirrel',
+      type: 'image',
+      image: {
+        id: 'squirrel',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1504006833117-8886a355efbf?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   'star-trail': {
     id: 'star-trail',
     name: 'Star Trail',
@@ -1402,6 +2368,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  sun: {
+    id: 'sun',
+    name: 'Sun',
+    description: 'A corona mass ejection erupts from our sun on August 31, 2012',
+    type: 'image',
+    background: {
+      id: 'sun',
+      type: 'image',
+      image: {
+        id: 'sun',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614642264762-d0a3b8bf3700?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   sunset: {
     id: 'sunset',
     name: 'Sunset',
@@ -1415,6 +2397,38 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         mimeType: 'image/avif',
         type: 'url',
         url: 'https://images.unsplash.com/photo-1542159919831-40fb0656b45a?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  sydney: {
+    id: 'sydney',
+    name: 'Sydney',
+    description: 'A Birds Eye View of Sydney, Australia',
+    type: 'image',
+    background: {
+      id: 'sydney',
+      type: 'image',
+      image: {
+        id: 'sydney',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1546268060-2592ff93ee24?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  tampa: {
+    id: 'tampa',
+    name: 'Tampa',
+    description: 'A view of the Tampa skyline',
+    type: 'image',
+    background: {
+      id: 'tampa',
+      type: 'image',
+      image: {
+        id: 'tampa',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1561063139-e183e66909c4?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -1453,10 +2467,26 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  toronto: {
+    id: 'toronto',
+    name: 'Toronto',
+    description: 'A view of the Toronto skyline as seen from Olympic Island',
+    type: 'image',
+    background: {
+      id: 'toronto',
+      type: 'image',
+      image: {
+        id: 'toronto',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1571642376444-52558bb8cee2?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   tokyo: {
     id: 'tokyo',
     name: 'Tokyo',
-    description: 'A photo of an old Tokyo alley way',
+    description: 'A photo of the busy people of Tokyo in the streets',
     type: 'image',
     background: {
       id: 'tokyo',
@@ -1465,7 +2495,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'tokyo',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1551641506-ee5bf4cb45f1?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -1501,6 +2531,70 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  'united-states': {
+    id: 'united-states',
+    name: 'United States',
+    description: 'A view of the United States from space',
+    type: 'image',
+    background: {
+      id: 'united-states',
+      type: 'image',
+      image: {
+        id: 'united-states',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  uranus: {
+    id: 'uranus',
+    name: 'Uranus',
+    description: 'Uranus as seen from the Voyager 2 mission',
+    type: 'image',
+    background: {
+      id: 'uranus',
+      type: 'image',
+      image: {
+        id: 'uranus',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614732484003-ef9881555dc3?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  venice: {
+    id: 'venice',
+    name: 'Venice',
+    description: 'A view of the Venice city canals at sunset',
+    type: 'image',
+    background: {
+      id: 'venice',
+      type: 'image',
+      image: {
+        id: 'venice',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1453747063559-36695c8771bd?auto=format&fit=crop&q=80'
+      }
+    }
+  },
+  venus: {
+    id: 'venus',
+    name: 'Venus',
+    description: 'Venus captured by the Mariner 10 spacecraft in early 1974',
+    type: 'image',
+    background: {
+      id: 'venus',
+      type: 'image',
+      image: {
+        id: 'venus',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1614726365723-498aa67c5f7b?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   'vinyl-records': {
     id: 'vinyl-records',
     name: 'Vinyl Records',
@@ -1533,6 +2627,22 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'default',
         gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
         type: 'linear'
+      }
+    }
+  },
+  'washington-dc': {
+    id: 'washington-dc',
+    name: 'Washington DC',
+    description: 'Photo of the Washington Monument with Cherry Blossom Trees in Washington, DC',
+    type: 'image',
+    background: {
+      id: 'washington-dc',
+      type: 'image',
+      image: {
+        id: 'washington-dc',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1574365379583-54937ea00cb8?auto=format&fit=crop&q=80'
       }
     }
   },
