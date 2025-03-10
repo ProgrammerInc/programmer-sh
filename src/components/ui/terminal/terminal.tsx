@@ -242,6 +242,21 @@ const Terminal: React.FC<TerminalProps> = ({
 
   // Set up event listeners only once on mount
   useEffect(() => {
+    // Handle the clearCommandHistory event to reset command history
+    const handleClearHistory = () => {
+      console.log('Clearing command history');
+      // Clear the history state
+      setCommandHistory([]);
+      // Reset the history index and temp input
+      setHistoryIndex(-1);
+      setTempInput('');
+      // Clear localStorage history too
+      localStorage.removeItem('terminal_history');
+      // Update refs
+      commandHistoryRef.current = [];
+      historyIndexRef.current = -1;
+    };
+    
     const handleExecuteCommand = (event: Event) => {
       const { command } = (event as CustomEvent).detail;
       if (command) {
@@ -325,10 +340,12 @@ const Terminal: React.FC<TerminalProps> = ({
 
     document.addEventListener('executeCommand', handleExecuteCommand);
     document.addEventListener('executeCommandFromLink', handleExecuteCommandFromLink);
+    document.addEventListener('clearCommandHistory', handleClearHistory);
 
     return () => {
       document.removeEventListener('executeCommand', handleExecuteCommand);
       document.removeEventListener('executeCommandFromLink', handleExecuteCommandFromLink);
+      document.removeEventListener('clearCommandHistory', handleClearHistory);
     };
   }, [executeCommand]);
 

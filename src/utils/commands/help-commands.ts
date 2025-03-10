@@ -190,13 +190,14 @@ export const helpCommand: Command = {
 
 export const clearCommand: Command = {
   name: 'clear',
-  description: 'Clear the terminal',
+  description: 'Clear the terminal and command history',
   execute: (): CommandResult => {
-    // Return a special command result that signals to clear the terminal
+    // Return a special command result that signals to clear the terminal and history
     // and then follows with the welcome command output
     return {
       content: '',
       isError: false,
+      clearHistory: true, // Signal to also clear command history
       runAfterClear: welcomeCommand.execute()
     };
   }

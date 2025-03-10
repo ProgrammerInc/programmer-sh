@@ -4,8 +4,9 @@ export interface CommandResult {
   isAsync?: boolean;
   asyncResolver?: () => Promise<CommandResult>;
   rawHTML?: boolean;
+  clearHistory?: boolean;
+  noHistory?: boolean;
   runAfterClear?: CommandResult;
-  noHistory?: boolean; // When true, command will not be added to history (for large outputs)
 }
 
 // Command interface
