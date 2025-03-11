@@ -60,10 +60,42 @@ export const historyCommand: Command = {
   name: 'history',
   description: 'Show command history',
   execute: () => {
-    // This is a placeholder - the actual implementation happens in the hook
-    return {
-      content: '<HISTORY_PLACEHOLDER>',
-      isError: false
-    };
+    // Try to get command history from localStorage
+    try {
+      const savedHistory = localStorage.getItem('terminal_command_history');
+      
+      if (savedHistory) {
+        const parsedHistory = JSON.parse(savedHistory);
+        
+        if (Array.isArray(parsedHistory) && parsedHistory.length > 0) {
+          // Format the history display
+          const historyDisplay = parsedHistory
+            .map((item, index) => {
+              const cmd = item.command || 'unknown';
+              return `  ${index + 1}. <strong><span class="command-link" data-command="${cmd}">${cmd}</span></strong>`;
+            })
+            .join('\n');
+          
+          return {
+            content: historyDisplay.length > 0 
+              ? `Command History:\n\n${historyDisplay}` 
+              : 'No command history available.',
+            isError: false
+          };
+        }
+      }
+      
+      // If we got here, there's no history or it couldn't be parsed
+      return {
+        content: 'No command history available.',
+        isError: false
+      };
+    } catch (error) {
+      console.error('Error fetching command history:', error);
+      return {
+        content: 'Error fetching command history. Please try again later.',
+        isError: true
+      };
+    }
   }
 };

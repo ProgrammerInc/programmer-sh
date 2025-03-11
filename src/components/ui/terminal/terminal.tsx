@@ -107,7 +107,43 @@ const Terminal: React.FC<TerminalProps> = ({
       experience: experienceCommand,
       projects: projectsCommand,
       resume: resumeCommand,
-      education: educationCommand
+      education: educationCommand,
+      // Add history command with a direct implementation
+      history: {
+        name: 'history',
+        description: 'Show command history',
+        execute: () => {
+          try {
+            const savedHistory = localStorage.getItem('terminal_history');
+            if (savedHistory) {
+              const parsedHistory = JSON.parse(savedHistory);
+              if (Array.isArray(parsedHistory) && parsedHistory.length > 0) {
+                const historyDisplay = parsedHistory
+                  .map((cmd, index) => `  ${index + 1}. <strong><span class="command-link" data-command="${cmd}">${cmd}</span></strong>`)
+                  .join('\n');
+                
+                return {
+                  content: `Command History:\n\n${historyDisplay}`,
+                  isError: false,
+                  rawHTML: true
+                };
+              }
+            }
+            
+            // No history available
+            return {
+              content: 'No command history available.',
+              isError: false
+            };
+          } catch (error) {
+            console.error('Error fetching command history:', error);
+            return {
+              content: 'Error fetching command history. Please try again later.',
+              isError: true
+            };
+          }
+        }
+      }
     }),
     []
   );

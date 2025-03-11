@@ -35,7 +35,11 @@ export const commandCategories: CommandCategory[] = [
       },
       clear: {
         name: 'Clear',
-        description: 'Clear the terminal'
+        description: 'Clear the terminal history'
+      },
+      history: {
+        name: 'History',
+        description: 'Show the terminal history'
       }
     }
   },
@@ -88,7 +92,7 @@ export const commandCategories: CommandCategory[] = [
       },
       skills: {
         name: 'Skills',
-        description: 'View my technical skills'
+        description: 'Browse my technical skills'
       },
       resume: {
         name: 'Resume',
@@ -104,6 +108,11 @@ export const commandCategories: CommandCategory[] = [
     name: 'Personalization',
     description: 'Customize your terminal experience',
     commands: {
+      theme: {
+        name: 'Theme',
+        description: 'Change the terminal theme',
+        placeholder: '[dark|light]'
+      },
       cursor: {
         name: 'Cursor',
         description: 'Change the cursor style',
@@ -111,13 +120,8 @@ export const commandCategories: CommandCategory[] = [
       },
       wallpaper: {
         name: 'Wallpaper',
-        description: 'Change the terminal wallpaper',
+        description: 'Change the background wallpaper',
         placeholder: '[name]'
-      },
-      theme: {
-        name: 'Theme',
-        description: 'Change the terminal theme',
-        placeholder: '[dark|light]'
       }
     }
   }
@@ -167,6 +171,9 @@ export const getSpecificCommandHelp = (commandName: string): string => {
   switch (commandName) {
     case 'help':
       helpContent += `<div class="ml-4"><div><span class="command-link" data-command="help">help</span> - Show all available commands</div><div><span class="command-link" data-command="help projects">help projects</span> - Show detailed help for the 'projects' command</div></div>`;
+      break;
+    case 'history':
+      helpContent += `<div class="ml-4"><div><span class="command-link" data-command="history">history</span> - Display your command history</div></div>`;
       break;
     case 'projects':
       helpContent += `<div class="ml-4"><div><span class="command-link" data-command="projects">projects</span> - List all projects</div><div><span class="command-link" data-command="projects programmer-news">projects programmer-news</span> - Show details for project with name 'programmer-news'</div></div>`;
@@ -271,5 +278,51 @@ export const echoCommand: Command = {
       content: args,
       isError: false
     };
+  }
+};
+
+export const historyCommand: Command = {
+  name: 'history',
+  description: 'Show command history',
+  execute: (): CommandResult => {
+    // Try to get command history from localStorage
+    try {
+      const savedHistory = localStorage.getItem('terminal_command_history');
+
+      if (savedHistory) {
+        const parsedHistory = JSON.parse(savedHistory);
+
+        if (Array.isArray(parsedHistory) && parsedHistory.length > 0) {
+          // Format the history display
+          const historyDisplay = parsedHistory
+            .map((item, index) => {
+              const cmd = item.command || 'unknown';
+              return `  ${index + 1}. <strong><span class="command-link" data-command="${cmd}">${cmd}</span></strong>`;
+            })
+            .join('\n');
+
+          return {
+            content:
+              historyDisplay.length > 0
+                ? `Command History:\n\n${historyDisplay}`
+                : 'No command history available.',
+            isError: false,
+            rawHTML: true
+          };
+        }
+      }
+
+      // If we got here, there's no history or it couldn't be parsed
+      return {
+        content: 'No command history available.',
+        isError: false
+      };
+    } catch (error) {
+      console.error('Error fetching command history:', error);
+      return {
+        content: 'Error fetching command history. Please try again later.',
+        isError: true
+      };
+    }
   }
 };
