@@ -1428,28 +1428,28 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
-  'mesh-matrix': {
-    id: 'mesh-matrix',
-    name: 'Mesh Matrix',
-    description: 'A mesh matrix background animation',
-    type: 'animation',
-    background: {
-      id: 'mesh-matrix',
-      type: 'animation',
-      animation: {
-        id: 'mesh-matrix',
-        type: 'artifact-ui',
-        animationProps: {
-          videoSrc: 'https://videos.pexels.com/video-files/3163534/3163534-sd_640_360_30fps.mp4'
-        }
-      },
-      gradient: {
-        id: 'default',
-        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
-        type: 'linear'
-      }
-    }
-  },
+  // 'mesh-matrix': {
+  //   id: 'mesh-matrix',
+  //   name: 'Mesh Matrix',
+  //   description: 'A mesh matrix background animation',
+  //   type: 'animation',
+  //   background: {
+  //     id: 'mesh-matrix',
+  //     type: 'animation',
+  //     animation: {
+  //       id: 'mesh-matrix',
+  //       type: 'artifact-ui',
+  //       animationProps: {
+  //         videoSrc: 'https://videos.pexels.com/video-files/3163534/3163534-sd_640_360_30fps.mp4'
+  //       }
+  //     },
+  //     gradient: {
+  //       id: 'default',
+  //       gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+  //       type: 'linear'
+  //     }
+  //   }
+  // },
   meteors: {
     id: 'meteors',
     name: 'Meteors',
