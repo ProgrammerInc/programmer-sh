@@ -1,6 +1,7 @@
 import { Command } from './types';
 import { welcomeCommand } from './welcome-commands';
 
+// Clear command
 export const clearCommand: Command = {
   name: 'clear',
   description: 'Clear the terminal',
@@ -15,6 +16,7 @@ export const clearCommand: Command = {
   }
 };
 
+// Echo command
 export const echoCommand: Command = {
   name: 'echo',
   description: 'Echo a message back to the terminal',
@@ -26,6 +28,7 @@ export const echoCommand: Command = {
         isError: false
       };
     }
+
     return {
       content: args,
       isError: false
@@ -33,6 +36,7 @@ export const echoCommand: Command = {
   }
 };
 
+// Date command
 export const dateCommand: Command = {
   name: 'date',
   description: 'Display the current date and time',
@@ -56,6 +60,7 @@ export const dateCommand: Command = {
   }
 };
 
+// Privacy command
 export const privacyCommand: Command = {
   name: 'privacy',
   description: 'Display the privacy policy',
@@ -66,7 +71,7 @@ export const privacyCommand: Command = {
         <p>Last Updated: March 11, 2025</p>
         
         <h3>1. Introduction</h3>
-        <p>Welcome to the Privacy Policy for the Programmer.SH website. This document explains how we collect, use, and protect your information when you use our terminal-based portfolio website.</p>
+        <p>Welcome to the Privacy Policy for the &lt;programmer&gt;.sh website. This document explains how we collect, use, and protect your information when you use our terminal-based portfolio website.</p>
         
         <h3>2. Information We Collect</h3>
         <p>We collect minimal information to provide and improve our services:</p>
@@ -111,47 +116,62 @@ export const privacyCommand: Command = {
   }
 };
 
-export const historyCommand: Command = {
-  name: 'history',
-  description: 'Show command history',
+// Terms and Conditions command
+export const termsCommand: Command = {
+  name: 'terms',
+  description: 'Display terms and conditions',
   execute: () => {
-    // Try to get command history from localStorage
-    try {
-      const savedHistory = localStorage.getItem('terminal_command_history');
-
-      if (savedHistory) {
-        const parsedHistory = JSON.parse(savedHistory);
-
-        if (Array.isArray(parsedHistory) && parsedHistory.length > 0) {
-          // Format the history display
-          const historyDisplay = parsedHistory
-            .map((item, index) => {
-              const cmd = item.command || 'unknown';
-              return `  ${index + 1}. <strong><span class="command-link" data-command="${cmd}">${cmd}</span></strong>`;
-            })
-            .join('\n');
-
-          return {
-            content:
-              historyDisplay.length > 0
-                ? `Command History:\n\n${historyDisplay}`
-                : 'No command history available.',
-            isError: false
-          };
-        }
-      }
-
-      // If we got here, there's no history or it couldn't be parsed
-      return {
-        content: 'No command history available.',
-        isError: false
-      };
-    } catch (error) {
-      console.error('Error fetching command history:', error);
-      return {
-        content: 'Error fetching command history. Please try again later.',
-        isError: true
-      };
-    }
+    return {
+      content: `<div class="privacy-policy">
+        <h2>Terms and Conditions</h2>
+        <p>Last Updated: March 11, 2025</p>
+        
+        <h3>1. Acceptance of Terms</h3>
+        <p>By accessing and using &lt;programmer&gt;.sh, you accept and agree to be bound by the terms and conditions of this agreement. If you do not agree to these terms, please do not use this website.</p>
+        
+        <h3>2. Use License</h3>
+        <p>Permission is granted to temporarily view the materials on &lt;programmer&gt;.sh for personal, non-commercial use only. This is the grant of a license, not a transfer of title, and under this license you may not:</p>
+        <ul>
+          <li>Modify or copy the materials</li>
+          <li>Use the materials for any commercial purpose</li>
+          <li>Attempt to decompile or reverse engineer any software contained on the website</li>
+          <li>Remove any copyright or other proprietary notations from the materials</li>
+          <li>Transfer the materials to another person or "mirror" the materials on any other server</li>
+        </ul>
+        <p>This license shall automatically terminate if you violate any of these restrictions and may be terminated at any time. Upon terminating your viewing of these materials, you must destroy any downloaded materials in your possession.</p>
+        
+        <h3>3. Disclaimer</h3>
+        <p>The materials on &lt;programmer&gt;.sh are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property.</p>
+        
+        <h3>4. Limitations</h3>
+        <p>In no event shall &lt;programmer&gt;.sh or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on the website, even if we or an authorized representative has been notified orally or in writing of the possibility of such damage.</p>
+        
+        <h3>5. Accuracy of Materials</h3>
+        <p>The materials appearing on &lt;programmer&gt;.sh could include technical, typographical, or photographic errors. We do not warrant that any of the materials on this website are accurate, complete, or current. We may make changes to the materials at any time without notice.</p>
+        
+        <h3>6. Links</h3>
+        <p>We have not reviewed all of the sites linked to this website and are not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by us. Use of any such linked website is at the user's own risk.</p>
+        
+        <h3>7. Modifications</h3>
+        <p>We may revise these terms of service at any time without notice. By using this website, you are agreeing to be bound by the current version of these terms and conditions.</p>
+        
+        <h3>8. Governing Law</h3>
+        <p>These terms and conditions are governed by and construed in accordance with the laws of the United States, and you irrevocably submit to the exclusive jurisdiction of the courts in that location.</p>
+        
+        <h3>9. Contact Us</h3>
+        <p>If you have any questions about these Terms and Conditions, please contact us at <a href="mailto:terms@programmer.sh" target="_blank" class="text-terminal-link hover:underline">terms@programmer.sh</a></p>
+      </div>`,
+      isError: false,
+      rawHTML: true
+    };
   }
+};
+
+// Group all system commands
+export const systemCommands = {
+  clear: clearCommand,
+  echo: echoCommand,
+  date: dateCommand,
+  privacy: privacyCommand,
+  terms: termsCommand
 };

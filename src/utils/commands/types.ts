@@ -43,7 +43,9 @@ export const commandNames = [
   'wallpaper',
   'cursor',
   'profile',
-  'signup'
+  'signup',
+  'privacy',
+  'terms'
 ] as const;
 
 export type CommandName = (typeof commandNames)[number];

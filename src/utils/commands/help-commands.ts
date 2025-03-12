@@ -44,6 +44,10 @@ export const commandCategories: CommandCategory[] = [
       privacy: {
         name: 'Privacy',
         description: 'Display the privacy policy'
+      },
+      terms: {
+        name: 'Terms',
+        description: 'Display terms and conditions'
       }
     }
   },

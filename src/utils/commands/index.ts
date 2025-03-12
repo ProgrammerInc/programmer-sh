@@ -14,7 +14,7 @@ import { projectsCommand } from './projects-commands';
 import { resumeCommand } from './resume-commands';
 import { skillsCommand } from './skills-commands';
 import { socialCommand } from './social-commands';
-import { clearCommand, dateCommand, echoCommand, privacyCommand } from './system-commands';
+import { clearCommand, dateCommand, echoCommand, privacyCommand, termsCommand } from './system-commands';
 import { themeCommand } from './theme-commands';
 import { Command } from './types';
 import { wallpaperCommand } from './wallpaper-commands';
@@ -60,6 +60,7 @@ export const getCommands = (): Record<string, Command> => {
     echo: echoCommand,
     date: dateCommand,
     privacy: privacyCommand,
+    terms: termsCommand,
     // Use direct implementation instead of imported historyCommand
     history: directHistoryCommand,
     cursor: cursorCommand,
