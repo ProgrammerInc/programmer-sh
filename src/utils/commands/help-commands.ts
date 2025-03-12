@@ -207,6 +207,9 @@ export const getSpecificCommandHelp = (commandName: string): string => {
     case 'privacy':
       helpContent += `<div class="ml-4"><div><span class="command-link" data-command="privacy">privacy</span> - Display the privacy policy</div></div>`;
       break;
+    case 'terms':
+      helpContent += `<div class="ml-4"><div><span class="command-link" data-command="terms">terms</span> - Display terms and conditions</div></div>`;
+      break;
     default:
       helpContent += `<div class="ml-4"><div><span class="command-link" data-command="${commandName}">${commandName}</span> - Execute the ${commandName} command</div></div>`;
   }

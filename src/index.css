@@ -260,20 +260,6 @@
     list-style-position: outside;
   }
 
-  /* Command help styling */
-  .command-help {
-    background-color: var(--terminal-muted-30);
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: var(--terminal-paragraph-spacing);
-    border-left: 3px solid var(--terminal-command);
-  }
-
-  .command-help div {
-    margin-bottom: 0.5rem;
-    line-height: 1.5;
-  }
-
   /* Generic content blocks */
   .terminal-card {
     background-color: var(--terminal-muted-30);
