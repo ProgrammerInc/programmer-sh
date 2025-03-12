@@ -35,6 +35,14 @@ interface TimerRecord {
   label: string;
 }
 
+// Type for performance measures
+interface PerformanceMeasureOptions {
+  detail?: unknown;
+  start?: string | number;
+  duration?: number;
+  end?: string | number;
+}
+
 export class Logger {
   private static instance: Logger;
   private config: LoggerConfig;
@@ -177,6 +185,182 @@ export class Logger {
       console.table(data, columns);
     } else {
       console.table(data);
+    }
+  }
+
+  /**
+   * Create a performance mark in the browser's performance timeline
+   * @param markName The name of the performance mark
+   * @param markOptions Optional mark options containing detailed data
+   */
+  public mark(markName: string, markOptions?: { detail?: unknown }): void {
+    if (!this.config.enabled) return;
+    
+    try {
+      performance.mark(markName, markOptions);
+      
+      // Only log in debug mode
+      if (this.config.level >= LogLevel.DEBUG) {
+        const timestamp = this.getTimestamp();
+        if (this.config.useColors) {
+          console.log(`%c${timestamp} MARK:`, 'color: #9b59b6', `Created mark '${markName}'`);
+        } else {
+          console.log(`${timestamp} MARK:`, `Created mark '${markName}'`);
+        }
+      }
+    } catch (error) {
+      this.warn(`Error creating performance mark '${markName}':`, error);
+    }
+  }
+
+  /**
+   * Create a performance measure between two marks
+   * @param measureName The name of the performance measure
+   * @param startMarkName The name of the start mark
+   * @param endMarkName The name of the end mark
+   * @param options Optional measure options
+   */
+  public measure(
+    measureName: string, 
+    startMarkName?: string, 
+    endMarkName?: string, 
+    options?: PerformanceMeasureOptions
+  ): void {
+    if (!this.config.enabled) return;
+
+    try {
+      // Handle the different measure API patterns
+      if (startMarkName && options) {
+        // If we have both mark names and options, merge them properly
+        // Create a new options object with the mark names as start/end
+        const mergedOptions: PerformanceMeasureOptions = {
+          ...options,
+          start: startMarkName,
+          end: endMarkName
+        };
+        performance.measure(measureName, mergedOptions);
+      } 
+      // If only options are provided (no mark names)
+      else if (options && (options.start || options.end || options.duration)) {
+        performance.measure(measureName, options);
+      }
+      // If we have mark names but no options
+      else if (startMarkName) {
+        performance.measure(measureName, startMarkName, endMarkName);
+      } 
+      // Just the measure name without start/end marks
+      else {
+        performance.measure(measureName);
+      }
+
+      // Get the measure data if available
+      let measureData: PerformanceEntry | undefined;
+      try {
+        const entries = performance.getEntriesByName(measureName, 'measure');
+        if (entries.length > 0) {
+          measureData = entries[entries.length - 1];
+        }
+      } catch (error) {
+        // Ignore errors in getting measure data
+      }
+
+      // Log the measure at INFO level
+      if (this.config.level >= LogLevel.INFO) {
+        const timestamp = this.getTimestamp();
+        const duration = measureData ? `${measureData.duration.toFixed(2)}ms` : 'unknown';
+        const markInfo = startMarkName && endMarkName ? 
+          `from '${startMarkName}' to '${endMarkName}'` : 
+          startMarkName ? `from '${startMarkName}'` : '';
+          
+        if (this.config.useColors) {
+          console.log(
+            `%c${timestamp} MEASURE:`, 
+            'color: #9b59b6', 
+            `'${measureName}' ${markInfo} - Duration: ${duration}`
+          );
+        } else {
+          console.log(
+            `${timestamp} MEASURE:`, 
+            `'${measureName}' ${markInfo} - Duration: ${duration}`
+          );
+        }
+      }
+    } catch (error) {
+      this.warn(`Error creating performance measure '${measureName}':`, error);
+    }
+  }
+
+  /**
+   * Clear all performance marks, or specific ones if markName is provided
+   * @param markName Optional name of the mark to clear
+   */
+  public clearMarks(markName?: string): void {
+    if (!this.config.enabled) return;
+    
+    try {
+      if (markName) {
+        performance.clearMarks(markName);
+        if (this.config.level >= LogLevel.DEBUG) {
+          this.debug(`Cleared performance mark '${markName}'`);
+        }
+      } else {
+        performance.clearMarks();
+        if (this.config.level >= LogLevel.DEBUG) {
+          this.debug('Cleared all performance marks');
+        }
+      }
+    } catch (error) {
+      this.warn('Error clearing performance marks:', error);
+    }
+  }
+
+  /**
+   * Clear all performance measures, or specific ones if measureName is provided
+   * @param measureName Optional name of the measure to clear
+   */
+  public clearMeasures(measureName?: string): void {
+    if (!this.config.enabled) return;
+    
+    try {
+      if (measureName) {
+        performance.clearMeasures(measureName);
+        if (this.config.level >= LogLevel.DEBUG) {
+          this.debug(`Cleared performance measure '${measureName}'`);
+        }
+      } else {
+        performance.clearMeasures();
+        if (this.config.level >= LogLevel.DEBUG) {
+          this.debug('Cleared all performance measures');
+        }
+      }
+    } catch (error) {
+      this.warn('Error clearing performance measures:', error);
+    }
+  }
+
+  /**
+   * Get a list of performance entries filtered by name and type
+   * @param name Optional name to filter entries by
+   * @param entryType Optional type to filter entries by
+   * @returns Array of performance entries
+   */
+  public getPerformanceEntries(
+    name?: string, 
+    entryType?: 'mark' | 'measure' | 'resource' | 'navigation' | 'paint' | 'longtask'
+  ): PerformanceEntry[] {
+    if (!this.config.enabled) return [];
+    
+    try {
+      if (name && entryType) {
+        return performance.getEntriesByName(name, entryType);
+      } else if (entryType) {
+        return performance.getEntriesByType(entryType);
+      } else {
+        return performance.getEntries();
+      }
+    } catch (error) {
+      this.warn('Error getting performance entries:', error);
+      return [];
     }
   }
 
@@ -416,6 +600,73 @@ export class ChildLogger {
     this.parent.group(`[${this.prefix}] Table Output`);
     this.parent.table(data, columns);
     this.parent.groupEnd();
+  }
+
+  public mark(markName: string, markOptions?: { detail?: unknown }): void {
+    // Add prefix to mark name for organization
+    this.parent.mark(`${this.prefix}:${markName}`, markOptions);
+  }
+
+  public measure(
+    measureName: string, 
+    startMarkName?: string, 
+    endMarkName?: string, 
+    options?: PerformanceMeasureOptions
+  ): void {
+    // Add prefix to measure name for organization
+    const prefixedMeasureName = `${this.prefix}:${measureName}`;
+    
+    // If using mark names, add prefix to them only if they don't already have one
+    const prefixedStartMark = startMarkName ? 
+      (startMarkName.includes(':') ? startMarkName : `${this.prefix}:${startMarkName}`) : 
+      undefined;
+      
+    const prefixedEndMark = endMarkName ? 
+      (endMarkName.includes(':') ? endMarkName : `${this.prefix}:${endMarkName}`) : 
+      undefined;
+    
+    // Handle the different cases for combining options and mark names correctly
+    if (prefixedStartMark && options) {
+      // If we have both mark names and options, create merged options
+      const mergedOptions: PerformanceMeasureOptions = {
+        ...options,
+        start: prefixedStartMark,
+        end: prefixedEndMark
+      };
+      this.parent.measure(prefixedMeasureName, undefined, undefined, mergedOptions);
+    } else {
+      // Otherwise use the standard approach
+      this.parent.measure(prefixedMeasureName, prefixedStartMark, prefixedEndMark, options);
+    }
+  }
+
+  public clearMarks(markName?: string): void {
+    if (markName) {
+      // Add prefix to mark name
+      this.parent.clearMarks(`${this.prefix}:${markName}`);
+    } else {
+      // Without a specific mark name, we'd clear all marks which isn't what we want
+      // So we warn about this instead
+      this.parent.warn(`ChildLogger ${this.prefix}: clearMarks() without a specific mark name would clear all marks. Provide a mark name to clear prefixed marks.`);
+    }
+  }
+
+  public clearMeasures(measureName?: string): void {
+    if (measureName) {
+      // Add prefix to measure name
+      this.parent.clearMeasures(`${this.prefix}:${measureName}`);
+    } else {
+      // Without a specific measure name, we'd clear all measures which isn't what we want
+      // So we warn about this instead
+      this.parent.warn(`ChildLogger ${this.prefix}: clearMeasures() without a specific measure name would clear all measures. Provide a measure name to clear prefixed measures.`);
+    }
+  }
+
+  public getPerformanceEntries(
+    name?: string, 
+    entryType?: 'mark' | 'measure' | 'resource' | 'navigation' | 'paint' | 'longtask'
+  ): PerformanceEntry[] {
+    return this.parent.getPerformanceEntries(name, entryType);
   }
 
   public time(label: string): void {

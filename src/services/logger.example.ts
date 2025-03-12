@@ -5,7 +5,260 @@
  * It shows various usage patterns and best practices.
  */
 
-import { logger, LogLevel, ChildLogger } from './logger';
+import { logger, LogLevel } from './logger';
+
+// Basic usage
+logger.debug('This is a debug message');
+logger.info('This is an info message');
+logger.warn('This is a warning message');
+logger.error('This is an error message');
+
+// Logging with context data
+logger.info('User logged in', { userId: 123, role: 'admin' });
+
+// Create a child logger for a specific component/feature
+const componentLogger = logger.createChildLogger('ExampleComponent');
+componentLogger.info('Component initialized');
+
+// Table logging for structured data
+const users = [
+  { id: 1, name: 'Alice', role: 'Admin', active: true },
+  { id: 2, name: 'Bob', role: 'User', active: false },
+  { id: 3, name: 'Charlie', role: 'User', active: true },
+];
+
+logger.info('Active users:');
+logger.table(users);
+
+// Only show specific columns
+logger.info('User roles:');
+logger.table(users, ['name', 'role']);
+
+// Performance timing with time/timeEnd
+logger.time('operationDuration');
+// Simulate some operation
+setTimeout(() => {
+  logger.timeEnd('operationDuration');
+}, 500);
+
+// Counter functionality
+function trackApiCalls(endpoint: string) {
+  logger.count('apiCalls', `API call to ${endpoint}`);
+  
+  // Simulate API call
+  return Promise.resolve({ success: true });
+}
+
+// Call the function multiple times
+trackApiCalls('/users');
+trackApiCalls('/products');
+trackApiCalls('/users');
+
+// Reset a specific counter
+logger.countReset('apiCalls');
+
+// Grouped logs
+logger.group('User Authentication');
+logger.info('Validating credentials...');
+logger.info('Authentication successful');
+logger.groupEnd();
+
+// Collapsed group
+logger.group('Detailed Debug Info', true); // true = collapsed
+logger.debug('Connection pool stats', { active: 5, idle: 10 });
+logger.debug('Cache hit ratio', { hits: 127, misses: 22 });
+logger.groupEnd();
+
+// Trace for debugging with stack traces
+function deepNestedFunction() {
+  logger.trace('Here\'s what led to this point', { context: 'debugging' });
+}
+
+function nestedFunction() {
+  deepNestedFunction();
+}
+
+function exampleFunction() {
+  nestedFunction();
+}
+
+exampleFunction();
+
+// Advanced example: API Request Logging
+function simulateApiRequest(url: string, method: string, data?: unknown) {
+  const requestLogger = logger.createChildLogger(`API:${method}`);
+  const requestId = `req_${Date.now()}`;
+  
+  requestLogger.group(`Request ${requestId}`);
+  requestLogger.info(`${method} ${url}`, { data });
+  
+  // Use time to measure request duration
+  requestLogger.time(requestId);
+  
+  // Simulate an API call
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const response = { success: true, data: { id: 123, name: 'Example' } };
+      
+      requestLogger.timeEnd(requestId);
+      requestLogger.info('Response received', response);
+      requestLogger.groupEnd();
+      
+      resolve(response);
+    }, 300);
+  });
+}
+
+function simulateErrorRequest(url: string) {
+  const requestLogger = logger.createChildLogger('API:ERROR');
+  
+  requestLogger.group(`Failed request`);
+  requestLogger.info(`GET ${url}`);
+  
+  setTimeout(() => {
+    try {
+      // Simulate an error
+      throw new Error('API connection timeout');
+    } catch (error) {
+      if (error instanceof Error) {
+        requestLogger.error('Request failed', {
+          message: error.message,
+          stack: error.stack
+        });
+      }
+      requestLogger.groupEnd();
+    }
+  }, 200);
+}
+
+// Examples of performance.mark() and performance.measure()
+
+// Example 1: Basic mark and measure
+logger.mark('startProcess');
+
+// Simulate some process
+setTimeout(() => {
+  logger.mark('endProcess');
+  logger.measure('totalProcessingTime', 'startProcess', 'endProcess');
+}, 600);
+
+// Example 2: Using measure with custom details
+logger.mark('dataFetch', { detail: { source: 'database', query: 'SELECT * FROM users' } });
+
+setTimeout(() => {
+  logger.mark('dataProcessed');
+  logger.measure(
+    'databaseOperation', 
+    'dataFetch', 
+    'dataProcessed', 
+    { detail: { recordsProcessed: 250 } }
+  );
+  
+  // Show how to retrieve performance entries
+  const measures = logger.getPerformanceEntries('databaseOperation', 'measure');
+  logger.info('Database operation metrics:', measures);
+}, 800);
+
+// Example 3: Multiple related operations with shared timing context
+function simulateComplexOperation() {
+  const perfLogger = logger.createChildLogger('PerformanceTest');
+  
+  perfLogger.mark('operationStart');
+  
+  // First sub-operation
+  setTimeout(() => {
+    perfLogger.mark('phase1Complete');
+    perfLogger.measure('phase1Duration', 'operationStart', 'phase1Complete');
+    
+    // Second sub-operation  
+    setTimeout(() => {
+      perfLogger.mark('phase2Complete');
+      perfLogger.measure('phase2Duration', 'phase1Complete', 'phase2Complete');
+      
+      // Final operation
+      setTimeout(() => {
+        perfLogger.mark('operationComplete');
+        
+        // Measure individual phases and total duration
+        perfLogger.measure('totalDuration', 'operationStart', 'operationComplete');
+        
+        // Log a summary of all the measurements
+        const allMeasures = perfLogger.getPerformanceEntries(undefined, 'measure')
+          .map(entry => ({
+            name: entry.name,
+            duration: `${entry.duration.toFixed(2)}ms`,
+            start: new Date(entry.startTime).toISOString()
+          }));
+          
+        perfLogger.group('Performance Summary');
+        perfLogger.table(allMeasures);
+        perfLogger.groupEnd();
+        
+        // Clean up performance entries
+        perfLogger.clearMarks();
+        perfLogger.clearMeasures();
+      }, 300);
+    }, 400);
+  }, 500);
+}
+
+simulateComplexOperation();
+
+// Example of a practical use case: Measuring animation frame performance
+// This would typically be used in an animation loop
+function simulateAnimationFrameTiming() {
+  const fpsLogger = logger.createChildLogger('AnimationPerformance');
+  let frameCount = 0;
+  let lastFrameTime = performance.now();
+  
+  function mockAnimationFrame(timestamp: number) {
+    // Mark frame start
+    const frameLabel = `frame${frameCount}`;
+    fpsLogger.mark(frameLabel);
+    
+    // Calculate time since last frame
+    const frameDelta = timestamp - lastFrameTime;
+    lastFrameTime = timestamp;
+    
+    // Simulate frame rendering work
+    const renderStart = performance.now();
+    
+    // Pretend we're doing complex rendering...
+    const renderWork = Math.sin(Math.sqrt(timestamp)) * 1000;
+    
+    // Measure the "work" we did this frame
+    const renderTime = performance.now() - renderStart;
+    
+    // Log frame statistics every 10th frame
+    if (frameCount % 10 === 0) {
+      fpsLogger.info(`Frame ${frameCount}`, {
+        fps: (1000 / frameDelta).toFixed(1),
+        frameDelta: `${frameDelta.toFixed(2)}ms`,
+        renderTime: `${renderTime.toFixed(2)}ms`
+      });
+    }
+    
+    frameCount++;
+    
+    // Continue for 50 frames
+    if (frameCount < 50) {
+      // In a real app, this would be requestAnimationFrame
+      setTimeout(() => mockAnimationFrame(performance.now()), 16.7); // ~60fps
+    } else {
+      fpsLogger.info('Animation complete', { totalFrames: frameCount });
+    }
+  }
+  
+  // Start the mock animation loop
+  mockAnimationFrame(performance.now());
+}
+
+simulateAnimationFrameTiming();
+
+// Run simulation examples
+simulateApiRequest('/api/users', 'GET');
+simulateApiRequest('/api/posts', 'POST', { title: 'New Post', body: 'Content here' });
+simulateErrorRequest('/api/settings');
 
 // Basic usage examples
 export function loggerExamples(): void {
@@ -34,7 +287,7 @@ export function loggerExamples(): void {
 }
 
 // Component-specific logger example
-export function createComponentLogger(componentName: string): ChildLogger {
+export function createComponentLogger(componentName: string): ReturnType<typeof logger.createChildLogger> {
   return logger.createChildLogger(componentName);
 }
 
