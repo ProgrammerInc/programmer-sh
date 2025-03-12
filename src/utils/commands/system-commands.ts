@@ -103,7 +103,7 @@ export const privacyCommand: Command = {
         <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.</p>
         
         <h3>8. Contact Us</h3>
-        <p>If you have any questions about this Privacy Policy, please contact us at privacy@programmer.sh</p>
+        <p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:privacy@programmer.sh" target="_blank" class="text-terminal-link hover:underline">privacy@programmer.sh</a></p>
       </div>`,
       isError: false,
       rawHTML: true
