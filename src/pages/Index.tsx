@@ -2,6 +2,7 @@ import CursorProvider from '@/components/ui/cursor';
 import Terminal from '@/components/ui/terminal';
 import WallpaperProvider from '@/components/ui/wallpaper';
 import { wallpaperPresets } from '@/presets/wallpaper.presets';
+import { logger } from '@/services/logger';
 import { getCurrentCursor } from '@/utils/commands/cursor-commands';
 import { processThemeFromUrl } from '@/utils/commands/theme-commands';
 import { extractUrlParameters, validUrlCommands } from '@/utils/commands/url-command-handler';
@@ -11,12 +12,15 @@ import { useLocation, useParams } from 'react-router-dom';
 
 export const HISTORY_STORAGE_KEY = 'terminal_command_history';
 
+// Create a dedicated logger for the Index component
+const indexLogger = logger.createChildLogger('Index');
+
 const Index = () => {
   // Get command from URL parameters
   const { command: urlCommand } = useParams<{ command?: string }>();
   const location = useLocation();
-  console.log('🔍 DEBUG - URL Command from useParams:', urlCommand);
-  console.log('🔍 DEBUG - Location pathname:', location.pathname);
+  indexLogger.debug('URL Command from useParams:', urlCommand);
+  indexLogger.debug('Location pathname:', location.pathname);
 
   const [isLoading, setIsLoading] = useState(true);
   const [initialCommands, setInitialCommands] = useState<string[]>([]);
@@ -78,7 +82,7 @@ const Index = () => {
 
     // We have a URL command - do a hard reset of the initial commands
     // This takes precedence over anything else
-    console.log('⚡️ FORCING URL COMMAND EXECUTION:', urlCommand);
+    indexLogger.info('FORCING URL COMMAND EXECUTION:', urlCommand);
 
     // Normalize the command
     const normalizedCommand = urlCommand.toLowerCase();
@@ -109,13 +113,13 @@ const Index = () => {
     // Get the part after the first slash
     const pathCommand = pathParts[1];
 
-    console.log('URL check ->', window.location.pathname);
-    console.log('URL command:', pathCommand);
+    indexLogger.debug('URL check ->', window.location.pathname);
+    indexLogger.debug('URL command:', pathCommand);
 
     // If we found a command in the path, set it to execute
     if (pathCommand && pathCommand.length > 0) {
       const normalizedCommand = pathCommand.toLowerCase();
-      console.log('Setting URL command to execute:', normalizedCommand);
+      indexLogger.info('Setting URL command to execute:', normalizedCommand);
 
       // Set the initial commands to execute this command
       setInitialCommands([normalizedCommand]);
@@ -133,8 +137,8 @@ const Index = () => {
 
     commandsProcessed.current = true;
 
-    console.log('💡 Processing URL commands with urlCommand:', urlCommand);
-    console.log('💡 Current path:', location.pathname);
+    indexLogger.info('Processing URL commands with urlCommand:', urlCommand);
+    indexLogger.info('Current path:', location.pathname);
 
     // Process URL parameters - capture both the route parameter and any query parameters
     const currentUrl = location.pathname + location.search;
@@ -142,13 +146,13 @@ const Index = () => {
     // Extract command and theme from URL as fallback
     const { command: extractedCommand, theme } = extractUrlParameters(currentUrl);
 
-    console.log('💡 Command extracted from URL:', extractedCommand);
+    indexLogger.info('Command extracted from URL:', extractedCommand);
 
     // Use urlCommand if available, otherwise try extractedCommand as fallback
     const commandParam = urlCommand || extractedCommand;
 
     // Log all parameters for debugging
-    console.log('URL parameters:', {
+    indexLogger.debug('URL parameters:', {
       urlCommand, // From useParams
       extractedCommand, // From URL extraction
       commandParam, // Final command parameter to use
@@ -167,17 +171,15 @@ const Index = () => {
     let commands: string[] = [];
 
     // Log what we're doing
-    console.log(
-      'Processing URL parameters with high priority - will NOT show welcome if URL command exists'
-    );
+    indexLogger.info('Processing URL parameters with high priority - will NOT show welcome if URL command exists');
 
     // Use the command from parameters (route or extracted)
     const commandToExecute = commandParam;
 
-    console.log('🚀 Final command to execute:', commandToExecute);
-    console.log('🚀 Valid URL commands array type:', typeof validUrlCommands);
-    console.log('🚀 Valid URL commands length:', validUrlCommands.length);
-    console.log('🚀 First few valid commands:', validUrlCommands.slice(0, 10));
+    indexLogger.info('Final command to execute:', commandToExecute);
+    indexLogger.info('Valid URL commands array type:', typeof validUrlCommands);
+    indexLogger.info('Valid URL commands length:', validUrlCommands.length);
+    indexLogger.info('First few valid commands:', validUrlCommands.slice(0, 10));
 
     // If we have a command from the URL, add it to our initial commands
     if (commandToExecute) {
@@ -192,11 +194,11 @@ const Index = () => {
         isValidCommand = validUrlCommands.some(cmd => cmd.toLowerCase() === normalizedCommand);
       }
 
-      console.log('Command to execute:', normalizedCommand);
-      console.log('Is valid command:', isValidCommand);
+      indexLogger.info('Command to execute:', normalizedCommand);
+      indexLogger.info('Is valid command:', isValidCommand);
 
       if (isValidCommand) {
-        console.log('Valid URL command found:', normalizedCommand);
+        indexLogger.info('Valid URL command found:', normalizedCommand);
         setCurrentCommand(normalizedCommand);
 
         // Either replace welcome or add after welcome
@@ -205,7 +207,7 @@ const Index = () => {
         } else {
           // Just execute the command directly
           commands = [normalizedCommand];
-          console.log('Setting commands to:', commands);
+          indexLogger.info('Setting commands to:', commands);
         }
       } else {
         // Hard-code some known commands as a fallback
@@ -220,10 +222,10 @@ const Index = () => {
         ];
 
         if (knownCommands.includes(normalizedCommand)) {
-          console.log('Using fallback for known command:', normalizedCommand);
+          indexLogger.info('Using fallback for known command:', normalizedCommand);
           commands = [normalizedCommand];
         } else {
-          console.warn('Invalid URL command:', normalizedCommand);
+          indexLogger.warn('Invalid URL command:', normalizedCommand);
           // If invalid command, we'll still show the welcome screen
           commands = ['welcome'];
           // Optionally show an error message about invalid command
@@ -234,11 +236,11 @@ const Index = () => {
       }
     } else {
       // If no URL command was provided, show welcome
-      console.log('No URL command found, showing welcome');
+      indexLogger.info('No URL command found, showing welcome');
       commands = ['welcome'];
     }
 
-    console.log('Initial commands to execute:', commands);
+    indexLogger.info('Initial commands to execute:', commands);
 
     setInitialCommands(commands);
 

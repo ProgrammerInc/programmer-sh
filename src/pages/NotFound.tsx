@@ -1,11 +1,15 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { logger } from '@/services/logger';
+
+// Create a dedicated logger for the NotFound component
+const notFoundLogger = logger.createChildLogger('NotFound');
 
 const NotFound = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.error('404 Error: User attempted to access non-existent route:', location.pathname);
+    notFoundLogger.error('404 Error: User attempted to access non-existent route:', location.pathname);
   }, [location.pathname]);
 
   return (
