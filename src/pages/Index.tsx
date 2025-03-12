@@ -171,7 +171,9 @@ const Index = () => {
     let commands: string[] = [];
 
     // Log what we're doing
-    indexLogger.info('Processing URL parameters with high priority - will NOT show welcome if URL command exists');
+    indexLogger.info(
+      'Processing URL parameters with high priority - will NOT show welcome if URL command exists'
+    );
 
     // Use the command from parameters (route or extracted)
     const commandToExecute = commandParam;

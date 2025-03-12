@@ -1,15 +1,17 @@
 /**
  * Logger Service
- * 
+ *
  * A centralized logging service for the application that provides consistent
  * logging functionality with environment-specific controls.
  */
+
+import { MemorySnapshot } from '../memory-tracker';
 
 enum LogLevel {
   ERROR = 0,
   WARN = 1,
   INFO = 2,
-  DEBUG = 3,
+  DEBUG = 3
 }
 
 interface LoggerConfig {
@@ -48,24 +50,31 @@ export class Logger {
   private config: LoggerConfig;
   private timestamp: boolean = true;
   private timers: Map<string, TimerRecord> = new Map();
+  private counters: Map<string, number> = new Map();
+
+  // Memory leak detection properties
+  private memorySnapshots: MemorySnapshot[] = [];
+  private memoryTrackingInterval: number | null = null;
+  private memoryThreshold: number = 10; // 10% growth triggers warning
+  private memoryMaxSamples: number = 100;
 
   // Environment-specific configurations
   private envConfigs: LoggerEnvironmentConfig = {
     development: {
       level: LogLevel.DEBUG,
       enabled: true,
-      useColors: true,
+      useColors: true
     },
     test: {
       level: LogLevel.INFO,
       enabled: true,
-      useColors: false,
+      useColors: false
     },
     production: {
-      level: LogLevel.WARN,  // Only warnings and errors in production
+      level: LogLevel.WARN, // Only warnings and errors in production
       enabled: true,
-      useColors: false,
-    },
+      useColors: false
+    }
   };
 
   private constructor() {
@@ -180,7 +189,7 @@ export class Logger {
     } else {
       console.log(`${timestamp} TABLE:`);
     }
-    
+
     if (columns) {
       console.table(data, columns);
     } else {
@@ -195,10 +204,10 @@ export class Logger {
    */
   public mark(markName: string, markOptions?: { detail?: unknown }): void {
     if (!this.config.enabled) return;
-    
+
     try {
       performance.mark(markName, markOptions);
-      
+
       // Only log in debug mode
       if (this.config.level >= LogLevel.DEBUG) {
         const timestamp = this.getTimestamp();
@@ -221,9 +230,9 @@ export class Logger {
    * @param options Optional measure options
    */
   public measure(
-    measureName: string, 
-    startMarkName?: string, 
-    endMarkName?: string, 
+    measureName: string,
+    startMarkName?: string,
+    endMarkName?: string,
     options?: PerformanceMeasureOptions
   ): void {
     if (!this.config.enabled) return;
@@ -239,7 +248,7 @@ export class Logger {
           end: endMarkName
         };
         performance.measure(measureName, mergedOptions);
-      } 
+      }
       // If only options are provided (no mark names)
       else if (options && (options.start || options.end || options.duration)) {
         performance.measure(measureName, options);
@@ -247,7 +256,7 @@ export class Logger {
       // If we have mark names but no options
       else if (startMarkName) {
         performance.measure(measureName, startMarkName, endMarkName);
-      } 
+      }
       // Just the measure name without start/end marks
       else {
         performance.measure(measureName);
@@ -268,19 +277,22 @@ export class Logger {
       if (this.config.level >= LogLevel.INFO) {
         const timestamp = this.getTimestamp();
         const duration = measureData ? `${measureData.duration.toFixed(2)}ms` : 'unknown';
-        const markInfo = startMarkName && endMarkName ? 
-          `from '${startMarkName}' to '${endMarkName}'` : 
-          startMarkName ? `from '${startMarkName}'` : '';
-          
+        const markInfo =
+          startMarkName && endMarkName
+            ? `from '${startMarkName}' to '${endMarkName}'`
+            : startMarkName
+              ? `from '${startMarkName}'`
+              : '';
+
         if (this.config.useColors) {
           console.log(
-            `%c${timestamp} MEASURE:`, 
-            'color: #9b59b6', 
+            `%c${timestamp} MEASURE:`,
+            'color: #9b59b6',
             `'${measureName}' ${markInfo} - Duration: ${duration}`
           );
         } else {
           console.log(
-            `${timestamp} MEASURE:`, 
+            `${timestamp} MEASURE:`,
             `'${measureName}' ${markInfo} - Duration: ${duration}`
           );
         }
@@ -296,7 +308,7 @@ export class Logger {
    */
   public clearMarks(markName?: string): void {
     if (!this.config.enabled) return;
-    
+
     try {
       if (markName) {
         performance.clearMarks(markName);
@@ -320,7 +332,7 @@ export class Logger {
    */
   public clearMeasures(measureName?: string): void {
     if (!this.config.enabled) return;
-    
+
     try {
       if (measureName) {
         performance.clearMeasures(measureName);
@@ -345,11 +357,11 @@ export class Logger {
    * @returns Array of performance entries
    */
   public getPerformanceEntries(
-    name?: string, 
+    name?: string,
     entryType?: 'mark' | 'measure' | 'resource' | 'navigation' | 'paint' | 'longtask'
   ): PerformanceEntry[] {
     if (!this.config.enabled) return [];
-    
+
     try {
       if (name && entryType) {
         return performance.getEntriesByName(name, entryType);
@@ -424,10 +436,10 @@ export class Logger {
    */
   public clearTimers(): void {
     if (!this.config.enabled) return;
-    
+
     const timerCount = this.timers.size;
     this.timers.clear();
-    
+
     if (this.config.level >= LogLevel.DEBUG) {
       this.debug(`Cleared ${timerCount} active timers`);
     }
@@ -438,8 +450,7 @@ export class Logger {
    * @param label The counter label
    * @param message Optional message to display
    */
-  private counters: Map<string, number> = new Map();
-  
+
   public count(label: string, message?: string): void {
     if (!this.config.enabled || this.config.level < LogLevel.DEBUG) return;
 
@@ -448,8 +459,10 @@ export class Logger {
     this.counters.set(label, current + 1);
 
     const timestamp = this.getTimestamp();
-    const countMessage = message ? `${message} - Count: ${current + 1}` : `${label}: ${current + 1}`;
-    
+    const countMessage = message
+      ? `${message} - Count: ${current + 1}`
+      : `${label}: ${current + 1}`;
+
     if (this.config.useColors) {
       console.log(`%c${timestamp} COUNT:`, 'color: #1abc9c', countMessage);
     } else {
@@ -577,7 +590,10 @@ export class Logger {
  * A child logger that adds a prefix to all log messages
  */
 export class ChildLogger {
-  constructor(private parent: Logger, private prefix: string) {}
+  constructor(
+    private parent: Logger,
+    private prefix: string
+  ) {}
 
   public debug(message: LogMessage, ...optionalParams: LogParams): void {
     this.parent.debug(`[${this.prefix}] ${message}`, ...optionalParams);
@@ -608,23 +624,27 @@ export class ChildLogger {
   }
 
   public measure(
-    measureName: string, 
-    startMarkName?: string, 
-    endMarkName?: string, 
+    measureName: string,
+    startMarkName?: string,
+    endMarkName?: string,
     options?: PerformanceMeasureOptions
   ): void {
     // Add prefix to measure name for organization
     const prefixedMeasureName = `${this.prefix}:${measureName}`;
-    
+
     // If using mark names, add prefix to them only if they don't already have one
-    const prefixedStartMark = startMarkName ? 
-      (startMarkName.includes(':') ? startMarkName : `${this.prefix}:${startMarkName}`) : 
-      undefined;
-      
-    const prefixedEndMark = endMarkName ? 
-      (endMarkName.includes(':') ? endMarkName : `${this.prefix}:${endMarkName}`) : 
-      undefined;
-    
+    const prefixedStartMark = startMarkName
+      ? startMarkName.includes(':')
+        ? startMarkName
+        : `${this.prefix}:${startMarkName}`
+      : undefined;
+
+    const prefixedEndMark = endMarkName
+      ? endMarkName.includes(':')
+        ? endMarkName
+        : `${this.prefix}:${endMarkName}`
+      : undefined;
+
     // Handle the different cases for combining options and mark names correctly
     if (prefixedStartMark && options) {
       // If we have both mark names and options, create merged options
@@ -647,7 +667,9 @@ export class ChildLogger {
     } else {
       // Without a specific mark name, we'd clear all marks which isn't what we want
       // So we warn about this instead
-      this.parent.warn(`ChildLogger ${this.prefix}: clearMarks() without a specific mark name would clear all marks. Provide a mark name to clear prefixed marks.`);
+      this.parent.warn(
+        `ChildLogger ${this.prefix}: clearMarks() without a specific mark name would clear all marks. Provide a mark name to clear prefixed marks.`
+      );
     }
   }
 
@@ -658,12 +680,14 @@ export class ChildLogger {
     } else {
       // Without a specific measure name, we'd clear all measures which isn't what we want
       // So we warn about this instead
-      this.parent.warn(`ChildLogger ${this.prefix}: clearMeasures() without a specific measure name would clear all measures. Provide a measure name to clear prefixed measures.`);
+      this.parent.warn(
+        `ChildLogger ${this.prefix}: clearMeasures() without a specific measure name would clear all measures. Provide a measure name to clear prefixed measures.`
+      );
     }
   }
 
   public getPerformanceEntries(
-    name?: string, 
+    name?: string,
     entryType?: 'mark' | 'measure' | 'resource' | 'navigation' | 'paint' | 'longtask'
   ): PerformanceEntry[] {
     return this.parent.getPerformanceEntries(name, entryType);

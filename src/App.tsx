@@ -4,6 +4,7 @@ import { TooltipProvider } from '@/components/ui/tooltip/tooltip';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LoggerDemo from './components/demo/logger-demo';
+import MemoryLeakDemo from './components/demo/memory-leak-demo';
 import WhyDidYouRenderDemo from './components/demo/wdyr-demo';
 import Index from './pages/Index';
 import NotFound from './pages/NotFound';
@@ -25,6 +26,7 @@ const App = () => (
           {/* Command routes - these will pass the command as a URL parameter */}
           <Route path="/:command" element={<Index />} />
           <Route path="/demo" element={<LoggerDemo />} />
+          <Route path="/demo/memory" element={<MemoryLeakDemo />} />
           <Route path="/demo/wdyr" element={<WhyDidYouRenderDemo />} />
           <Route path="/" element={<Index />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
