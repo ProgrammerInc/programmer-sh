@@ -4,6 +4,29 @@
  * with CSS variables for improved maintainability
  */
 
+body {
+  /* Override any global styles that might interfere with scrolling */
+  overflow-y: auto !important;
+  height: auto !important;
+  min-height: 100vh !important;
+}
+
+/* Wrapper to ensure proper page background and scrolling */
+.wdyr-page {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--color-gray-900, #1a202c);
+  position: absolute; /* Take the component out of normal flow */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto; /* Enable vertical scrolling */
+  z-index: 1; /* Ensure it's above other content but below modals/tooltips */
+  display: flex;
+  flex-direction: column;
+}
+
 .wdyr-demo-container {
   --wdyr-bg-color: var(--color-gray-900, #1a202c);
   --wdyr-text-color: var(--color-white, #ffffff);
@@ -16,7 +39,16 @@
   background-color: var(--wdyr-bg-color);
   color: var(--wdyr-text-color);
   max-width: 48rem;
-  margin: 2rem auto;
+  width: 100%;
+  margin: 0 auto; /* Horizontal centering */
+  flex: 1; /* Allow container to grow within the flex parent */
+}
+
+/* When content is too small, still take up full height */
+@media (min-height: 800px) {
+  .wdyr-demo-container {
+    margin: 2rem auto;
+  }
 }
 
 .wdyr-heading {
@@ -49,6 +81,13 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   margin-bottom: 1.5rem;
+}
+
+/* Make grid responsive on smaller screens */
+@media (max-width: 640px) {
+  .wdyr-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .wdyr-panel {
@@ -102,6 +141,7 @@
   padding: 0.75rem;
   border-radius: 0.25rem;
   font-size: 0.875rem;
+  margin-bottom: 2rem; /* Add bottom margin for better spacing */
 }
 
 .wdyr-code-sample {
@@ -112,6 +152,11 @@
   overflow-x: auto;
   white-space: pre;
   font-family: monospace;
+}
+
+/* Extra space to ensure scrolling */
+.wdyr-spacer {
+  height: 30vh;
 }
 
 .wdyr-button {
