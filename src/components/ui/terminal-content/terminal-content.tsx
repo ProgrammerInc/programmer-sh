@@ -1,12 +1,14 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { cn } from '@/lib/utils';
 
 export interface TerminalContentProps {
   commandOutput: string;
   setScrollToBottom: () => void;
+  className?: string;
 }
 
 export const TerminalContent = forwardRef<HTMLDivElement, TerminalContentProps>(
-  ({ commandOutput, setScrollToBottom }, ref) => {
+  ({ commandOutput, setScrollToBottom, className }, ref) => {
     // Local ref for event handlers
     const contentRef = useRef<HTMLDivElement>(null);
 
@@ -143,7 +145,11 @@ export const TerminalContent = forwardRef<HTMLDivElement, TerminalContentProps>(
     return (
       <div
         ref={contentRef}
-        className="flex-grow overflow-y-scroll terminal-content-height terminal-scrollbar px-4 py-2 font-mono text-sm bg-terminal-background"
+        className={cn(
+          "flex-grow overflow-y-scroll terminal-content-height terminal-scrollbar px-4 py-2 font-mono text-sm bg-terminal-background",
+          "terminal-command-result", // Add animation for smoother transitions
+          className
+        )}
         dangerouslySetInnerHTML={{ __html: commandOutput }}
       />
     );

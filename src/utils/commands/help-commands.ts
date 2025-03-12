@@ -40,6 +40,10 @@ export const commandCategories: CommandCategory[] = [
       history: {
         name: 'History',
         description: 'Show the terminal history'
+      },
+      privacy: {
+        name: 'Privacy',
+        description: 'Display the privacy policy'
       }
     }
   },
@@ -195,6 +199,9 @@ export const getSpecificCommandHelp = (commandName: string): string => {
       break;
     case 'clear':
       helpContent += `<div class="ml-4"><div><span class="command-link" data-command="clear">clear</span> - Clear the terminal output and history</div></div>`;
+      break;
+    case 'privacy':
+      helpContent += `<div class="ml-4"><div><span class="command-link" data-command="privacy">privacy</span> - Display the privacy policy</div></div>`;
       break;
     default:
       helpContent += `<div class="ml-4"><div><span class="command-link" data-command="${commandName}">${commandName}</span> - Execute the ${commandName} command</div></div>`;

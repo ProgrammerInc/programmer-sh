@@ -19,6 +19,7 @@ import { aboutCommand, contactCommand } from '@/utils/commands/information-comma
 import { projectsCommand } from '@/utils/commands/projects-commands';
 import { resumeCommand } from '@/utils/commands/resume-commands';
 import { skillsCommand } from '@/utils/commands/skills-commands';
+import { privacyCommand } from '@/utils/commands/system-commands';
 import { themeCommand } from '@/utils/commands/theme-commands';
 import { wallpaperCommand } from '@/utils/commands/wallpaper-commands';
 import { welcomeCommand } from '@/utils/commands/welcome-commands';
@@ -143,7 +144,8 @@ const Terminal: React.FC<TerminalProps> = ({
             };
           }
         }
-      }
+      },
+      privacy: privacyCommand
     }),
     []
   );

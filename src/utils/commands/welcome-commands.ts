@@ -14,7 +14,7 @@ export const welcomeCommand: Command = {
   description: 'Display the welcome message',
   execute: (): CommandResult => {
     return {
-      content: `<div class="font-mono text-xs md:text-sm mt-4"><pre><span class="text-terminal-prompt">${ASCIIArt.join('\n')}</span></pre></div>
+      content: `<div class="ascii-art font-mono text-xs md:text-sm mt-4"><pre><span class="text-terminal-prompt">${ASCIIArt.join('\n')}</span></pre></div>
       <div class="font-mono text-xs md:text-sm mb-4">
         Welcome to the <span class="text-terminal-prompt">&lt;programmer&gt;</span><span class="text-terminal-prompt">.</span><span class="text-terminal-prompt animate-cursor-blink">_</span> portfolio.
 
