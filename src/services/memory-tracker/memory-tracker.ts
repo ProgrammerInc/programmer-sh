@@ -405,3 +405,5 @@ export class MemoryTracker {
 
 // Export singleton instance for direct use
 export const memoryTracker = MemoryTracker.getInstance();
+
+export default MemoryTracker;
