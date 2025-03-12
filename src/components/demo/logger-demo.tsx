@@ -208,6 +208,24 @@ export default function LoggerDemo() {
         </Link>
       </div>
 
+      <div className="mt-6 p-4 bg-green-900 text-white rounded">
+        <h3 className="text-lg font-semibold mb-2">Memory Tracker Integration</h3>
+        <p className="mb-2">
+          The application includes a Memory Tracker service to help identify potential memory leaks
+          and monitor memory usage in real-time.
+        </p>
+        <p className="mb-4 text-green-200">
+          Use Chrome DevTools to see detailed memory usage statistics while interacting with the
+          demo.
+        </p>
+        <Link
+          to="/demo/memory"
+          className="inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+        >
+          View Memory Tracker Demo
+        </Link>
+      </div>
+
       <div className="mt-4 p-2 bg-gray-100 rounded">
         <p className="text-sm text-black">Open the browser console to see the logged output</p>
         <p className="text-sm text-gray-600">
