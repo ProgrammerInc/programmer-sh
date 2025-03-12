@@ -1,3 +1,7 @@
+// Import wdyr (why-did-you-render) to track unnecessary re-renders
+// This import must be first!
+import './wdyr';
+
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';

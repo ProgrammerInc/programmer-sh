@@ -7,6 +7,7 @@
 
 import { logger } from '@/services/logger';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 // Create a component-specific logger instance
 const demoLogger = logger.createChildLogger('LoggerDemo');
@@ -48,15 +49,21 @@ interface ButtonProps {
   color?: string;
 }
 
-const DemoButton = ({ label, onClick, color = '#3498db' }: ButtonProps) => (
-  <button
-    className="px-4 py-2 m-2 rounded text-white"
-    style={{ backgroundColor: color }}
-    onClick={onClick}
-  >
-    {label}
-  </button>
-);
+// Demo button component
+function DemoButton({ label, onClick, color = '#3498db' }: ButtonProps) {
+  return (
+    <button
+      className="px-4 py-2 m-2 rounded text-white"
+      style={{ backgroundColor: color }}
+      onClick={onClick}
+    >
+      {label}
+    </button>
+  );
+}
+
+// Set this static property to enable why-did-you-render tracking
+DemoButton.whyDidYouRender = true;
 
 export default function LoggerDemo() {
   const [count, setCount] = useState(0);
@@ -210,6 +217,23 @@ export default function LoggerDemo() {
           onClick={handlePerformanceDemo} 
           color="#16a085" 
         />
+      </div>
+      
+      <div className="mt-6 p-4 bg-blue-900 text-white rounded">
+        <h3 className="text-lg font-semibold mb-2">Why Did You Render Integration</h3>
+        <p className="mb-2">
+          The application now includes the Why-Did-You-Render package to help identify unnecessary 
+          re-renders and optimize component performance.
+        </p>
+        <p className="mb-4 text-blue-200">
+          Open the console and look for logs with the 🔍 [WDYR] prefix to see tracked re-renders.
+        </p>
+        <Link 
+          to="/demo/wdyr" 
+          className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+        >
+          View Why-Did-You-Render Demo
+        </Link>
       </div>
       
       <div className="mt-4 p-2 bg-gray-100 rounded">
