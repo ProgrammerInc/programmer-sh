@@ -75,10 +75,10 @@
     --terminal-border: rgba(76, 86, 106, 0.3);
 
     /* Terminal content spacing variables */
-    --terminal-paragraph-spacing: 1rem;
-    --terminal-heading-spacing: 1.5rem;
-    --terminal-list-spacing: 0.5rem;
-    --terminal-section-spacing: 2rem;
+    --terminal-paragraph-spacing: 0rem;
+    --terminal-heading-spacing: 0rem;
+    --terminal-list-spacing: 0rem;
+    --terminal-section-spacing: 0rem;
   }
 
   .light-theme {
@@ -211,13 +211,12 @@
   .terminal-content-height h5,
   .terminal-content-height h6 {
     color: var(--terminal-prompt);
-    margin-top: var(--terminal-heading-spacing);
-    margin-bottom: calc(var(--terminal-heading-spacing) / 2);
-    font-weight: 700;
-    line-height: 1.2;
+    line-height: normal;
+    margin: 0;
+    padding: 0;
   }
 
-  .terminal-content-height h1 {
+  /* .terminal-content-height h1 {
     font-size: 1.5rem;
   }
 
@@ -227,28 +226,32 @@
 
   .terminal-content-height h3 {
     font-size: 1.1rem;
-  }
+  } */
 
   /* Paragraph styling */
   .terminal-content-height p {
-    margin-bottom: var(--terminal-paragraph-spacing);
-    line-height: 1.6;
+    line-height: normal;
+    margin: 0;
+    padding: 0;
   }
 
   /* List styling */
   .terminal-content-height ul,
   .terminal-content-height ol {
-    margin-bottom: var(--terminal-paragraph-spacing);
-    padding-left: 1.5rem;
+    line-height: normal;
+    margin: 0;
+    padding: 0;
+    padding-left: 2rem;
   }
 
   .terminal-content-height li {
-    margin-bottom: var(--terminal-list-spacing);
-    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    line-height: normal;
   }
 
   .terminal-content-height ul li {
-    list-style-type: disc;
+    list-style-type: square;
     list-style-position: outside;
   }
 
@@ -617,10 +620,10 @@
   /* Responsive adjustments for smaller screens */
   @media (max-width: 640px) {
     .terminal-content-height h1 {
-      font-size: 1.3rem;
+      font-size: 1rem;
     }
     .terminal-content-height h2 {
-      font-size: 1.2rem;
+      font-size: 1rem;
     }
     .terminal-content-height h3 {
       font-size: 1rem;
@@ -629,9 +632,6 @@
     .terminal-content-height code,
     .terminal-content-height table {
       font-size: 0.85em;
-    }
-    .privacy-policy {
-      padding: 0.75rem;
     }
   }
 
