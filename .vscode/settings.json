@@ -58,6 +58,7 @@
     "bokeh",
     "browserslist",
     "bufferutil",
+    "Cajj",
     "Camaro",
     "Canv",
     "cashapp",
@@ -69,6 +70,7 @@
     "Cime",
     "Clearcoat",
     "clsx",
+    "cmwi",
     "cnoise",
     "colord",
     "Compressa",
@@ -152,6 +154,7 @@
     "loongarch",
     "lottiefiles",
     "lucide",
+    "lvbl",
     "maath",
     "Macbook",
     "machu",
@@ -171,7 +174,9 @@
     "Naturale",
     "neoncursor",
     "newpos",
+    "Njcu",
     "njsproj",
+    "Nlbn",
     "noopener",
     "noreferrer",
     "nowrap",
@@ -208,6 +213,7 @@
     "rlogin",
     "rogrammer",
     "rollup",
+    "Rwczov",
     "Santorini",
     "sauer",
     "Scikit",
@@ -219,6 +225,7 @@
     "slogin",
     "SMAA",
     "snoise",
+    "sntrys",
     "SOCIALPROFILE",
     "spacex",
     "spherize",
@@ -239,6 +246,7 @@
     "tiktok",
     "timespan",
     "tinycolor",
+    "Toqe",
     "Travelled",
     "tricontour",
     "trippy",
@@ -276,5 +284,8 @@
     "Zmwqpdbkhao",
     "zustand",
     "zxzx"
-  ]
+  ],
+  "[dotenv]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  }
 }

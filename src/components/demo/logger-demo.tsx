@@ -226,6 +226,22 @@ export default function LoggerDemo() {
         </Link>
       </div>
 
+      <div className="mt-6 p-4 bg-purple-900 text-white rounded">
+        <h3 className="text-lg font-semibold mb-2">Sentry Integration</h3>
+        <p className="mb-2">
+          The application integrates Sentry for comprehensive error tracking, performance monitoring, and session replay.
+        </p>
+        <p className="mb-4 text-purple-200">
+          Track errors, monitor performance issues, and gain insights into user sessions with Sentry's powerful tools.
+        </p>
+        <Link
+          to="/demo/sentry"
+          className="inline-block px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors"
+        >
+          View Sentry Demo
+        </Link>
+      </div>
+
       <div className="mt-4 p-2 bg-gray-100 rounded">
         <p className="text-sm text-black">Open the browser console to see the logged output</p>
         <p className="text-sm text-gray-600">
