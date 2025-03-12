@@ -6,44 +6,16 @@
  */
 
 import { MemorySnapshot } from '../memory-tracker';
-
-enum LogLevel {
-  ERROR = 0,
-  WARN = 1,
-  INFO = 2,
-  DEBUG = 3
-}
-
-interface LoggerConfig {
-  level: LogLevel;
-  enabled: boolean;
-  useColors: boolean;
-}
-
-type LoggerEnvironmentConfig = {
-  [key: string]: LoggerConfig;
-};
-
-// Define types for logging messages and parameters
-type LogMessage = string | number | boolean | object | null | undefined;
-type LogParams = Array<LogMessage>;
-
-// Type for tabular data logging
-type TableData = Record<string, unknown>[] | Record<string, unknown>;
-
-// Type for performance timing
-interface TimerRecord {
-  start: number;
-  label: string;
-}
-
-// Type for performance measures
-interface PerformanceMeasureOptions {
-  detail?: unknown;
-  start?: string | number;
-  duration?: number;
-  end?: string | number;
-}
+import {
+  LogLevel,
+  LogMessage,
+  LogParams,
+  LoggerConfig,
+  LoggerEnvironmentConfig,
+  PerformanceMeasureOptions,
+  TableData,
+  TimerRecord
+} from './logger.types';
 
 export class Logger {
   private static instance: Logger;
@@ -512,6 +484,34 @@ export class Logger {
   public groupEnd(): void {
     if (!this.config.enabled) return;
     console.groupEnd();
+  }
+
+  /**
+   * Start a JavaScript CPU profile with the given name
+   * @param name Optional name for the profile
+   */
+  public profile(name?: string): void {
+    if (!this.config.enabled) return;
+
+    if (name) {
+      console.profile(name);
+    } else {
+      console.profile();
+    }
+  }
+
+  /**
+   * Stop the JavaScript CPU profile with the given name
+   * @param name Optional name for the profile to end (should match the name used in profile())
+   */
+  public profileEnd(name?: string): void {
+    if (!this.config.enabled) return;
+
+    if (name) {
+      console.profileEnd(name);
+    } else {
+      console.profileEnd();
+    }
   }
 
   /**
