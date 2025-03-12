@@ -26,10 +26,20 @@ type LoggerEnvironmentConfig = {
 type LogMessage = string | number | boolean | object | null | undefined;
 type LogParams = Array<LogMessage>;
 
+// Type for tabular data logging
+type TableData = Record<string, unknown>[] | Record<string, unknown>;
+
+// Type for performance timing
+interface TimerRecord {
+  start: number;
+  label: string;
+}
+
 export class Logger {
   private static instance: Logger;
   private config: LoggerConfig;
   private timestamp: boolean = true;
+  private timers: Map<string, TimerRecord> = new Map();
 
   // Environment-specific configurations
   private envConfigs: LoggerEnvironmentConfig = {
@@ -149,6 +159,142 @@ export class Logger {
   }
 
   /**
+   * Log tabular data in a table format
+   * @param data The data to display in a table
+   * @param columns Optional array of column names to include
+   */
+  public table(data: TableData, columns?: string[]): void {
+    if (!this.config.enabled || this.config.level < LogLevel.INFO) return;
+
+    const timestamp = this.getTimestamp();
+    if (this.config.useColors) {
+      console.log(`%c${timestamp} TABLE:`, 'color: #3498db');
+    } else {
+      console.log(`${timestamp} TABLE:`);
+    }
+    
+    if (columns) {
+      console.table(data, columns);
+    } else {
+      console.table(data);
+    }
+  }
+
+  /**
+   * Start a timer for performance measurement
+   * @param label The name of the timer
+   */
+  public time(label: string): void {
+    if (!this.config.enabled) return;
+
+    // If timer already exists, warn and restart
+    if (this.timers.has(label)) {
+      this.warn(`Timer '${label}' already exists. Restarting.`);
+    }
+
+    this.timers.set(label, {
+      start: performance.now(),
+      label
+    });
+
+    // Only log in debug mode
+    if (this.config.level >= LogLevel.DEBUG) {
+      const timestamp = this.getTimestamp();
+      if (this.config.useColors) {
+        console.log(`%c${timestamp} TIME:`, 'color: #9b59b6', `Started timer '${label}'`);
+      } else {
+        console.log(`${timestamp} TIME:`, `Started timer '${label}'`);
+      }
+    }
+  }
+
+  /**
+   * End a timer and log the duration
+   * @param label The name of the timer to end
+   */
+  public timeEnd(label: string): void {
+    if (!this.config.enabled) return;
+
+    const timer = this.timers.get(label);
+    if (!timer) {
+      this.warn(`Timer '${label}' does not exist`);
+      return;
+    }
+
+    const duration = performance.now() - timer.start;
+    this.timers.delete(label);
+
+    // Always log timeEnd results at INFO level or higher
+    if (this.config.level >= LogLevel.INFO) {
+      const timestamp = this.getTimestamp();
+      if (this.config.useColors) {
+        console.log(`%c${timestamp} TIME:`, 'color: #9b59b6', `${label}: ${duration.toFixed(2)}ms`);
+      } else {
+        console.log(`${timestamp} TIME:`, `${label}: ${duration.toFixed(2)}ms`);
+      }
+    }
+  }
+
+  /**
+   * Clear all active timers
+   */
+  public clearTimers(): void {
+    if (!this.config.enabled) return;
+    
+    const timerCount = this.timers.size;
+    this.timers.clear();
+    
+    if (this.config.level >= LogLevel.DEBUG) {
+      this.debug(`Cleared ${timerCount} active timers`);
+    }
+  }
+
+  /**
+   * Log with count of how many times this has been called with the same label
+   * @param label The counter label
+   * @param message Optional message to display
+   */
+  private counters: Map<string, number> = new Map();
+  
+  public count(label: string, message?: string): void {
+    if (!this.config.enabled || this.config.level < LogLevel.DEBUG) return;
+
+    // Initialize or increment counter
+    const current = this.counters.get(label) || 0;
+    this.counters.set(label, current + 1);
+
+    const timestamp = this.getTimestamp();
+    const countMessage = message ? `${message} - Count: ${current + 1}` : `${label}: ${current + 1}`;
+    
+    if (this.config.useColors) {
+      console.log(`%c${timestamp} COUNT:`, 'color: #1abc9c', countMessage);
+    } else {
+      console.log(`${timestamp} COUNT:`, countMessage);
+    }
+  }
+
+  /**
+   * Reset a specific counter or all counters
+   * @param label Optional counter label to reset, resets all if not specified
+   */
+  public countReset(label?: string): void {
+    if (!this.config.enabled) return;
+
+    if (label) {
+      this.counters.delete(label);
+      if (this.config.level >= LogLevel.DEBUG) {
+        this.debug(`Counter '${label}' reset`);
+      }
+    } else {
+      const counterCount = this.counters.size;
+      this.counters.clear();
+      if (this.config.level >= LogLevel.DEBUG) {
+        this.debug(`All counters reset (${counterCount} counters)`);
+      }
+    }
+  }
+
+  /**
    * Log a group of messages
    * @param label The group label
    * @param collapsed Whether the group should be collapsed by default
@@ -202,6 +348,45 @@ export class Logger {
   public createChildLogger(prefix: string): ChildLogger {
     return new ChildLogger(this, prefix);
   }
+
+  /**
+   * Log a trace with stack trace information
+   * @param message The message to log
+   * @param optionalParams Additional parameters to log
+   */
+  public trace(message: LogMessage, ...optionalParams: LogParams): void {
+    if (!this.config.enabled || this.config.level < LogLevel.DEBUG) return;
+
+    const timestamp = this.getTimestamp();
+    if (this.config.useColors) {
+      console.trace(`%c${timestamp} TRACE:`, 'color: #8a8a8a', message, ...optionalParams);
+    } else {
+      console.trace(`${timestamp} TRACE:`, message, ...optionalParams);
+    }
+  }
+
+  /**
+   * Log a message at the specified level
+   * @param level The log level
+   * @param message The message to log
+   * @param optionalParams Additional parameters to log
+   */
+  public log(level: LogLevel, message: LogMessage, ...optionalParams: LogParams): void {
+    switch (level) {
+      case LogLevel.ERROR:
+        this.error(message, ...optionalParams);
+        break;
+      case LogLevel.WARN:
+        this.warn(message, ...optionalParams);
+        break;
+      case LogLevel.INFO:
+        this.info(message, ...optionalParams);
+        break;
+      case LogLevel.DEBUG:
+        this.debug(message, ...optionalParams);
+        break;
+    }
+  }
 }
 
 /**
@@ -224,6 +409,39 @@ export class ChildLogger {
 
   public error(message: LogMessage, ...optionalParams: LogParams): void {
     this.parent.error(`[${this.prefix}] ${message}`, ...optionalParams);
+  }
+
+  public table(data: TableData, columns?: string[]): void {
+    // For table data, we don't modify the data itself, but we add the prefix to the label
+    this.parent.group(`[${this.prefix}] Table Output`);
+    this.parent.table(data, columns);
+    this.parent.groupEnd();
+  }
+
+  public time(label: string): void {
+    this.parent.time(`[${this.prefix}] ${label}`);
+  }
+
+  public timeEnd(label: string): void {
+    this.parent.timeEnd(`[${this.prefix}] ${label}`);
+  }
+
+  public count(label: string, message?: string): void {
+    this.parent.count(`[${this.prefix}] ${label}`, message);
+  }
+
+  public countReset(label?: string): void {
+    if (label) {
+      this.parent.countReset(`[${this.prefix}] ${label}`);
+    } else {
+      // If no label, we can't reset only this prefix's counters
+      // so we just forward the call
+      this.parent.countReset();
+    }
+  }
+
+  public trace(message: LogMessage, ...optionalParams: LogParams): void {
+    this.parent.trace(`[${this.prefix}] ${message}`, ...optionalParams);
   }
 
   public group(label: string, collapsed: boolean = false): void {

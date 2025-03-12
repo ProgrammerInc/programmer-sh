@@ -59,6 +59,117 @@ export function terminalLoggerExample(): void {
   }
 }
 
+// Table logging examples
+export function tableLoggingExamples(): void {
+  const componentLogger = createComponentLogger('TableDemo');
+  
+  // Simple object table
+  const user = {
+    id: 123,
+    name: 'User Name',
+    email: 'user@example.com',
+    lastLogin: new Date(),
+    isActive: true,
+    role: 'admin'
+  };
+  
+  logger.table(user);
+  
+  // Array of objects table
+  const users = [
+    { id: 123, name: 'User One', role: 'admin', lastActivity: '2 mins ago' },
+    { id: 124, name: 'User Two', role: 'editor', lastActivity: '5 hours ago' },
+    { id: 125, name: 'User Three', role: 'viewer', lastActivity: '2 days ago' }
+  ];
+  
+  // Log all data
+  logger.table(users);
+  
+  // Log only specific columns
+  componentLogger.table(users, ['name', 'role']);
+}
+
+// Performance timing examples
+export function performanceTimingExamples(): void {
+  const perfLogger = createComponentLogger('Performance');
+  
+  // Basic timer usage
+  logger.time('simpleOperation');
+  // Simulate work
+  for (let i = 0; i < 1000000; i++) {
+    // Busy wait
+  }
+  logger.timeEnd('simpleOperation');
+  
+  // Component-specific timer
+  perfLogger.time('dataProcessing');
+  // Simulate async work
+  setTimeout(() => {
+    perfLogger.timeEnd('dataProcessing');
+    perfLogger.info('Data processing complete');
+  }, 500);
+  
+  // Timer that doesn't exist
+  logger.timeEnd('nonExistentTimer'); // Will produce a warning
+  
+  // Multiple timers
+  logger.time('totalOperation');
+  
+  logger.time('step1');
+  // Simulate work for step 1
+  setTimeout(() => {
+    logger.timeEnd('step1');
+    
+    logger.time('step2');
+    // Simulate work for step 2
+    setTimeout(() => {
+      logger.timeEnd('step2');
+      logger.timeEnd('totalOperation');
+    }, 300);
+  }, 200);
+}
+
+// Counter examples
+export function counterExamples(): void {
+  const clickLogger = createComponentLogger('ClickTracker');
+  
+  // Simple counter
+  for (let i = 0; i < 5; i++) {
+    logger.count('buttonClicks');
+  }
+  
+  // Counter with custom message
+  for (let i = 0; i < 3; i++) {
+    clickLogger.count('modalOpens', 'User opened modal');
+  }
+  
+  // Reset specific counter
+  logger.countReset('buttonClicks');
+  
+  // Count again after reset
+  logger.count('buttonClicks'); // Will show 1
+  
+  // Reset all counters
+  logger.countReset();
+}
+
+// Trace example for debugging
+export function traceExamples(): void {
+  function nestedFunction() {
+    logger.trace('Stack trace');
+  }
+  
+  function intermediateFunction() {
+    nestedFunction();
+  }
+  
+  intermediateFunction();
+  
+  // Component-specific trace
+  const debugLogger = createComponentLogger('Debugger');
+  debugLogger.trace('Component-specific trace');
+}
+
 // Production configuration example
 export function configureProductionLogging(): void {
   // For production, we might want to disable debug logs
@@ -69,4 +180,51 @@ export function configureProductionLogging(): void {
   
   // Maybe disable timestamps for certain contexts
   logger.setTimestampEnabled(false);
+}
+
+// Combined example showing practical usage
+export function practicalLoggingExample(): void {
+  const apiLogger = createComponentLogger('APIClient');
+  
+  // Log the start of an API request
+  apiLogger.info('Starting API request', { endpoint: '/api/data', method: 'GET' });
+  
+  // Time the API call
+  apiLogger.time('apiCall');
+  
+  // Simulate API call
+  setTimeout(() => {
+    // API call completed
+    apiLogger.timeEnd('apiCall');
+    
+    // Log response details in a table
+    const responseData = {
+      status: 200,
+      headers: {
+        'content-type': 'application/json',
+        'cache-control': 'no-cache'
+      },
+      data: {
+        items: 42,
+        page: 1,
+        totalPages: 5
+      }
+    };
+    
+    // Group the response information
+    apiLogger.group('API Response');
+    apiLogger.info('Response received');
+    apiLogger.table(responseData);
+    
+    // Log performance metrics
+    apiLogger.group('Performance', true);
+    apiLogger.info('Network time: 120ms');
+    apiLogger.info('Parse time: 5ms');
+    apiLogger.groupEnd();
+    
+    apiLogger.groupEnd(); // End API Response group
+    
+    // Count this API call
+    apiLogger.count('apiCalls', 'API requests made');
+  }, 750);
 }

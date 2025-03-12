@@ -122,7 +122,7 @@ export const termsCommand: Command = {
   description: 'Display terms and conditions',
   execute: () => {
     return {
-      content: `<div class="privacy-policy">
+      content: `<div class="terms-and-conditions">
         <h2>Terms and Conditions</h2>
         <p>Last Updated: March 11, 2025</p>
         

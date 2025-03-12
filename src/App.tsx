@@ -3,6 +3,7 @@ import { Toaster } from '@/components/ui/toaster/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip/tooltip';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import LoggerDemo from './components/demo/logger-demo';
 import Index from './pages/Index';
 import NotFound from './pages/NotFound';
 
@@ -22,6 +23,7 @@ const App = () => (
         <Routes>
           {/* Command routes - these will pass the command as a URL parameter */}
           <Route path="/:command" element={<Index />} />
+          <Route path="/demo" element={<LoggerDemo />} />
           <Route path="/" element={<Index />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
