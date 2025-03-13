@@ -1,5 +1,6 @@
 import { gsap } from 'gsap';
 import React, { FC, useEffect, useRef } from 'react';
+import './grid-motion.css';
 
 export interface GridMotionProps {
   items?: (string | React.ReactNode)[];
@@ -17,6 +18,11 @@ export const GridMotion: FC<GridMotionProps> = ({ items = [], gradientColor = 'b
   const combinedItems = items.length > 0 ? items.slice(0, totalItems) : defaultItems;
 
   useEffect(() => {
+    // Set the CSS variable for gradient color
+    if (gridRef.current) {
+      gridRef.current.style.setProperty('--grid-motion-gradient-color', gradientColor);
+    }
+
     gsap.ticker.lagSmoothing(0);
 
     const handleMouseMove = (e: MouseEvent): void => {
@@ -52,49 +58,40 @@ export const GridMotion: FC<GridMotionProps> = ({ items = [], gradientColor = 'b
       window.removeEventListener('mousemove', handleMouseMove);
       removeAnimationLoop();
     };
-  }, []);
+  }, [gradientColor]);
 
   return (
-    <div ref={gridRef} className="h-full w-full overflow-hidden">
-      <section
-        className="w-full h-screen overflow-hidden relative flex items-center justify-center"
-        style={{
-          background: `radial-gradient(circle, ${gradientColor} 0%, transparent 100%)`
-        }}
-      >
-        {/* Noise overlay */}
-        <div className="absolute inset-0 pointer-events-none z-[4] bg-[url('../../../assets/noise.png')] bg-[length:250px]"></div>
-        <div className="gap-4 flex-none relative w-[150vw] h-[150vh] grid grid-rows-4 grid-cols-1 rotate-[-15deg] origin-center z-[2]">
+    <div ref={gridRef} className="grid-motion-container">
+      <section className="grid-motion-section">
+        {/* Noise overlay - now using proper asset path */}
+        <div className="grid-motion-noise-overlay" style={{ backgroundImage: 'url(/assets/noise.png)' }}></div>
+        <div className="grid-motion-grid">
           {Array.from({ length: 4 }, (_, rowIndex) => (
             <div
               key={rowIndex}
-              className="grid gap-4 grid-cols-7"
-              style={{ willChange: 'transform, filter' }}
-              ref={el => (rowRefs.current[rowIndex] = el)}
+              className="grid-motion-row"
+              ref={(el) => (rowRefs.current[rowIndex] = el)}
             >
-              {Array.from({ length: 7 }, (_, itemIndex) => {
-                const content = combinedItems[rowIndex * 7 + itemIndex];
-                return (
-                  <div key={itemIndex} className="relative">
-                    <div className="relative w-full h-full overflow-hidden rounded-[10px] bg-[#111] flex items-center justify-center text-white text-[1.5rem]">
-                      {typeof content === 'string' && content.startsWith('http') ? (
-                        <div
-                          className="w-full h-full bg-cover bg-center absolute top-0 left-0"
-                          style={{ backgroundImage: `url(${content})` }}
-                        ></div>
-                      ) : (
-                        <div className="p-4 text-center z-[1]">
-                          {content}
-                        </div>
-                      )}
+              {combinedItems.slice(rowIndex * 7, (rowIndex + 1) * 7).map((item, index) => (
+                <div
+                  key={index}
+                  className="grid-motion-item"
+                >
+                  {typeof item === 'string' && item.startsWith('http') ? (
+                    <div
+                      className="w-full h-full bg-cover bg-center absolute top-0 left-0"
+                      style={{ backgroundImage: `url(${item})` }}
+                    ></div>
+                  ) : (
+                    <div className="p-4 text-center z-[1]">
+                      {item}
                     </div>
-                  </div>
-                );
-              })}
+                  )}
+                </div>
+              ))}
             </div>
           ))}
         </div>
-        <div className="relative w-full h-full top-0 left-0 pointer-events-none"></div>
       </section>
     </div>
   );
