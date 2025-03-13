@@ -6,6 +6,7 @@ export * from './alert-dialog';
 export * from './animated-list';
 export * from './ascii-art';
 export * from './aspect-ratio';
+export * from './auth-modal';
 export * from './avatar';
 export * from './badge';
 export * from './bounce-cards';

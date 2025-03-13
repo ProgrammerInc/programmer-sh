@@ -1,6 +1,7 @@
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
 import { supabase } from '@/integrations/supabase/client';
 import { isIncognitoMode } from '@/lib/incognito';
+import { useAuthModal } from '@/hooks/use-auth-modal';
 import { SocialLink } from '@/types/social-links';
 import { ChevronDown, LogIn, LogOut, Minus, Plus, Settings, User, X } from 'lucide-react';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
@@ -14,11 +15,12 @@ export interface TerminalHeaderProps {
 export const TerminalHeader = forwardRef<HTMLDivElement, TerminalHeaderProps>(
   ({ lastCommand = '' }, ref) => {
     const { userEmail } = useTerminalAuth();
+    const { openModal, headerRef } = useAuthModal();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [isAnonymous, setIsAnonymous] = useState(false);
-    const headerRef = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
+    // Use the headerRef from context instead of local ref
     useImperativeHandle(ref, () => headerRef.current!);
 
     // Close dropdown when clicking outside
@@ -61,16 +63,12 @@ export const TerminalHeader = forwardRef<HTMLDivElement, TerminalHeaderProps>(
 
     const handleLoginClick = () => {
       setDropdownOpen(false);
-      // Dispatch a custom event to execute the login command
-      const event = new CustomEvent('executeCommand', { detail: { command: 'login' } });
-      document.dispatchEvent(event);
+      openModal('login');
     };
 
     const handleSignupClick = () => {
       setDropdownOpen(false);
-      // Dispatch a custom event to execute the signup command
-      const event = new CustomEvent('executeCommand', { detail: { command: 'signup' } });
-      document.dispatchEvent(event);
+      openModal('signup');
     };
 
     const handleProfileClick = () => {

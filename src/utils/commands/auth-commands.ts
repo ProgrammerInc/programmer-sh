@@ -5,70 +5,17 @@ import { Command, CommandResult } from './types';
 // Login command implementation
 export const loginCommand: Command = {
   name: 'login',
-  description: 'Log in to your account (usage: login <email> <password>)',
-  execute: (args?: string) => {
-    // Check if args is undefined or empty
-    if (!args || args.trim() === '') {
-      return {
-        content: 'Usage: login <email> <password>',
-        isError: true
-      };
-    }
-
-    const argArray = args.trim().split(/\s+/);
-    if (argArray.length < 2) {
-      return {
-        content: 'Usage: login <email> <password>',
-        isError: true
-      };
-    }
-
-    const email = argArray[0];
-    const password = argArray.slice(1).join(' '); // Allow spaces in password
-
-    if (!isValidEmail(email)) {
-      return {
-        content: 'Error: Please provide a valid email address.',
-        isError: true
-      };
-    }
-
+  description: 'Log in to your account',
+  execute: () => {
+    // Dispatch custom event to open the login modal
+    const event = new CustomEvent('openAuthModal', { 
+      detail: { mode: 'login' } 
+    });
+    document.dispatchEvent(event);
+    
     return {
-      content: `Attempting to log in as ${email}...`,
-      isAsync: true,
-      isError: false,
-      asyncResolver: async (): Promise<CommandResult> => {
-        try {
-          const { data, error } = await supabase.auth.signInWithPassword({
-            email,
-            password
-          });
-
-          if (error) {
-            return {
-              content: `Login failed: ${error.message}`,
-              isError: true
-            };
-          }
-
-          if (data.user) {
-            return {
-              content: `Successfully logged in as ${data.user.email}. Welcome back!`,
-              isError: false
-            };
-          } else {
-            return {
-              content: 'Login failed: Unknown error',
-              isError: true
-            };
-          }
-        } catch (error) {
-          return {
-            content: `Login failed: ${error instanceof Error ? error.message : String(error)}`,
-            isError: true
-          };
-        }
-      }
+      content: 'Opening login modal...',
+      isError: false
     };
   }
 };
@@ -76,87 +23,17 @@ export const loginCommand: Command = {
 // Signup command implementation
 export const signupCommand: Command = {
   name: 'signup',
-  description: 'Create a new account (usage: signup <email> <password>)',
-  execute: (args?: string) => {
-    // Check if args is undefined or empty
-    if (!args || args.trim() === '') {
-      return {
-        content: 'Usage: signup <email> <password>',
-        isError: true
-      };
-    }
-
-    const argArray = args.trim().split(/\s+/);
-    if (argArray.length < 2) {
-      return {
-        content: 'Usage: signup <email> <password>',
-        isError: true
-      };
-    }
-
-    const email = argArray[0];
-    const password = argArray.slice(1).join(' '); // Allow spaces in password
-
-    if (!isValidEmail(email)) {
-      return {
-        content: 'Error: Please provide a valid email address.',
-        isError: true
-      };
-    }
-
-    if (password.length < 6) {
-      return {
-        content: 'Error: Password must be at least 6 characters long.',
-        isError: true
-      };
-    }
-
+  description: 'Create a new account',
+  execute: () => {
+    // Dispatch custom event to open the signup modal
+    const event = new CustomEvent('openAuthModal', { 
+      detail: { mode: 'signup' } 
+    });
+    document.dispatchEvent(event);
+    
     return {
-      content: `Creating account for ${email}...`,
-      isAsync: true,
-      isError: false,
-      asyncResolver: async (): Promise<CommandResult> => {
-        try {
-          const { data, error } = await supabase.auth.signUp({
-            email,
-            password
-          });
-
-          if (error) {
-            return {
-              content: `Account creation failed: ${error.message}`,
-              isError: true
-            };
-          }
-
-          if (data.user) {
-            return {
-              content: `
-Account created successfully! 
-
-Email: ${data.user.email}
-User ID: ${data.user.id}
-
-A confirmation email has been sent to your email address.
-You might need to check your spam folder.
-
-Note: For testing purposes, you can disable email confirmation in Supabase.
-              `,
-              isError: false
-            };
-          } else {
-            return {
-              content: 'Account creation failed: Unknown error',
-              isError: true
-            };
-          }
-        } catch (error) {
-          return {
-            content: `Account creation failed: ${error instanceof Error ? error.message : String(error)}`,
-            isError: true
-          };
-        }
-      }
+      content: 'Opening signup modal...',
+      isError: false
     };
   }
 };
