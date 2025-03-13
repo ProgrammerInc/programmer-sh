@@ -5,15 +5,24 @@ import { TooltipProvider } from '@/components/ui/tooltip/tooltip';
 import { AuthModalProvider } from '@/contexts/auth-modal-context';
 import { useAuthModal } from '@/hooks/use-auth-modal';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import LoggerDemo from './components/demo/logger-demo';
-import MemoryLeakDemo from './components/demo/memory-leak-demo';
-import SentryDemo from './components/demo/sentry-demo';
-import WhyDidYouRenderDemo from './components/demo/wdyr-demo';
-import AuthCallback from './pages/AuthCallback';
-import Index from './pages/Index';
-import NotFound from './pages/NotFound';
+
+// Lazily load page components
+const Index = lazy(() => import('./pages/Index'));
+const LoggerDemo = lazy(() => import('./components/demo/logger-demo'));
+const MemoryLeakDemo = lazy(() => import('./components/demo/memory-leak-demo'));
+const SentryDemo = lazy(() => import('./components/demo/sentry-demo'));
+const WhyDidYouRenderDemo = lazy(() => import('./components/demo/wdyr-demo'));
+const AuthCallback = lazy(() => import('./pages/AuthCallback'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+
+// Loading component for Suspense fallback
+const LoadingSpinner = () => (
+  <div className="flex h-screen w-screen items-center justify-center">
+    <div className="h-16 w-16 animate-spin rounded-full border-b-2 border-t-2 border-purple-500"></div>
+  </div>
+);
 
 const queryClient = new QueryClient();
 
@@ -53,18 +62,20 @@ const App = () => (
             v7_startTransition: true
           }}
         >
-          <Routes>
-            {/* Command routes - these will pass the command as a URL parameter */}
-            <Route path="/:command" element={<Index />} />
-            <Route path="/demo" element={<LoggerDemo />} />
-            <Route path="/demo/memory" element={<MemoryLeakDemo />} />
-            <Route path="/demo/sentry" element={<SentryDemo />} />
-            <Route path="/demo/wdyr" element={<WhyDidYouRenderDemo />} />
-            <Route path="/auth/callback" element={<AuthCallback />} />
-            <Route path="/" element={<Index />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Routes>
+              {/* Command routes - these will pass the command as a URL parameter */}
+              <Route path="/:command" element={<Index />} />
+              <Route path="/demo" element={<LoggerDemo />} />
+              <Route path="/demo/memory" element={<MemoryLeakDemo />} />
+              <Route path="/demo/sentry" element={<SentryDemo />} />
+              <Route path="/demo/wdyr" element={<WhyDidYouRenderDemo />} />
+              <Route path="/auth/callback" element={<AuthCallback />} />
+              <Route path="/" element={<Index />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </BrowserRouter>
       </AuthModalProvider>
     </TooltipProvider>

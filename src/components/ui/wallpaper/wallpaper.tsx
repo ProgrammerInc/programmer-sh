@@ -1,43 +1,27 @@
 'use client';
 import {
   Aurora,
-  AuroraBackground,
-  AuroraBackgroundProps,
-  AuroraCanvas,
-  AuroraCanvasProps,
   AuroraProps,
-  BackgroundBeams,
-  BackgroundBeamsProps,
-  BackgroundBoxes,
-  BackgroundBoxesProps,
   BackgroundLines,
   BackgroundLinesProps,
   Balatro,
   BalatroProps,
-  Ballpit,
-  BallpitProps,
   BeamPortal,
   BeamPortalProps,
   BlobBackground,
   BlobBackgroundProps,
-  CosmicScene,
-  CosmicSceneProps,
   Dither,
   DitherProps,
   GradientAnimation,
   GradientAnimationProps,
   GradientMesh,
   GradientMeshProps,
-  GridDistortion,
-  GridDistortionProps,
   GridMotion,
   GridMotionProps,
   GridPattern,
   GridPatternProps,
   HyperspaceHero,
   HyperspaceHeroProps,
-  Hyperspeed,
-  HyperspeedProps,
   Iridescence,
   IridescenceProps,
   LetterGlitch,
@@ -48,18 +32,9 @@ import {
   LiquidChromeProps,
   MagnetLines,
   MagnetLinesProps,
-  MeshMatrix,
-  MeshMatrixProps,
-  Meteors,
-  MeteorsProps,
   Noise,
   NoiseProps,
-  ParticleNetwork,
-  ParticleNetworkProps,
-  ParticleVeil,
   ParticleVeilProps,
-  Particles,
-  ParticlesProps,
   RainDrops,
   RainDropsProps,
   ShootingStars,
@@ -74,28 +49,61 @@ import {
   Starfall,
   StarfallProps,
   StarryBackground,
-  StarryBackgroundProps,
   StarsBackground,
   SwarmEffect,
   SwarmEffectProps,
   Threads,
   ThreadsProps,
-  Vortex,
-  VortexProps,
   Waves,
   WavesProps,
   WavyBackground,
   WavyBackgroundProps,
-  World,
   WorldMap,
-  WorldMapProps,
-  WorldProps
+  WorldMapProps
 } from '@/components/animations';
+
+// Import types for lazy loaded components
+import type {
+  AuroraBackgroundProps,
+  AuroraCanvasProps,
+  BackgroundBeamsProps,
+  BackgroundBoxesProps,
+  BallpitProps,
+  CosmicSceneProps,
+  GlobeProps,
+  GridDistortionProps,
+  HyperspeedProps,
+  MeshMatrixProps,
+  MeteorsProps,
+  ParticleNetworkProps,
+  ParticlesProps,
+  VortexProps,
+} from '@/components/animations';
+
 import { hexToRgb } from '@/lib/utils';
 import defaultBlobs from '@/presets/blob.presets';
 import { globeArcs, globeConfig } from '@/presets/globe.presets';
 import wallpaperPresets from '@/presets/wallpaper.presets';
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { Suspense, forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import {
+  AnimationLoader,
+  LazyAuroraBackground,
+  LazyAuroraCanvas,
+  LazyBackgroundBeams,
+  LazyBackgroundBoxes,
+  LazyBallpit,
+  LazyCosmicScene,
+  LazyGlobe,
+  LazyGridDistortion,
+  LazyHyperspeed,
+  LazyMeshMatrix,
+  LazyMetalBalls,
+  LazyMeteors,
+  LazyParticleNetwork,
+  LazyParticles,
+  LazyParticleVeil,
+  LazyVortex
+} from '@/utils/lazy-components';
 
 import { WallpaperProps } from './wallpaper.types';
 
@@ -188,28 +196,34 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
               />
             )}
             {animation.id === 'aurora-canvas' && (
-              <AuroraCanvas
-                colors={[
-                  '#4f46e5',
-                  '#0ea5e9',
-                  '#6366f1',
-                  '#8b5cf6',
-                  '#ec4899',
-                  '#f43f5e',
-                  '#f59e0b',
-                  '#10b981',
-                  '#3b82f6',
-                  '#a855f7'
-                ]}
-                speed={0.15}
-                {...(animation.animationProps as AuroraCanvasProps)}
-              />
+              <Suspense fallback={<AnimationLoader />}>
+                <LazyAuroraCanvas {...(animation.animationProps as AuroraCanvasProps)} />
+              </Suspense>
+            )}
+            {animation.id === 'aurora-background' && (
+              <Suspense fallback={<AnimationLoader />}>
+                <LazyAuroraBackground 
+                  className="h-full w-full"
+                  showRadialGradient={true}
+                  withStars={true}
+                >
+                  <div className="h-full w-full" />
+                </LazyAuroraBackground>
+              </Suspense>
             )}
             {animation.id === 'background-beams' && (
-              <BackgroundBeams {...(animation.animationProps as BackgroundBeamsProps)} />
+              <Suspense fallback={<AnimationLoader />}>
+                <LazyBackgroundBeams
+                  {...(animation.animationProps as BackgroundBeamsProps)}
+                />
+              </Suspense>
             )}
             {animation.id === 'background-boxes' && (
-              <BackgroundBoxes {...(animation.animationProps as BackgroundBoxesProps)} />
+              <Suspense fallback={<AnimationLoader />}>
+                <LazyBackgroundBoxes
+                  {...(animation.animationProps as BackgroundBoxesProps)}
+                />
+              </Suspense>
             )}
             {animation.id === 'background-lines' && (
               <BackgroundLines {...(animation.animationProps as BackgroundLinesProps)} />
@@ -223,20 +237,22 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
               />
             )}
             {animation.id === 'ballpit' && (
-              <Ballpit
-                colors={[0x3a29ff, 0x6c01b4, 0xff0070, 0xffbd2d, 0x25c93f]}
-                ambientColor={0x1a1f2c}
-                ambientIntensity={0}
-                lightIntensity={0}
-                materialParams={{
-                  metalness: 0.5,
-                  roughness: 0.5,
-                  clearcoat: 1,
-                  clearcoatRoughness: 0.15
-                }}
-                followCursor={false}
-                {...(animation.animationProps as BallpitProps)}
-              />
+              <Suspense fallback={<AnimationLoader />}>
+                <LazyBallpit
+                  colors={[0x3a29ff, 0x6c01b4, 0xff0070, 0xffbd2d, 0x25c93f]}
+                  ambientColor={0x1a1f2c}
+                  ambientIntensity={0}
+                  lightIntensity={0}
+                  materialParams={{
+                    metalness: 0.5,
+                    roughness: 0.5,
+                    clearcoat: 1,
+                    clearcoatRoughness: 0.15
+                  }}
+                  followCursor={false}
+                  {...(animation.animationProps as BallpitProps)}
+                />
+              </Suspense>
             )}
             {animation.id === 'beam-portal' && (
               <BeamPortal
@@ -254,11 +270,13 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
               />
             )}
             {animation.id === 'cosmic-scene' && (
-              <CosmicScene
-                colorScheme="neon"
-                overlayOpacity={0.2}
-                {...(animation.animationProps as CosmicSceneProps)}
-              />
+              <Suspense fallback={<AnimationLoader />}>
+                <LazyCosmicScene
+                  colorScheme="neon"
+                  overlayOpacity={0.2}
+                  {...(animation.animationProps as CosmicSceneProps)}
+                />
+              </Suspense>
             )}
             {animation.id === 'dither' && (
               <Dither
@@ -274,11 +292,13 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
               />
             )}
             {animation.id === 'globe' && (
-              <World
-                data={globeArcs}
-                globeConfig={globeConfig}
-                {...(animation.animationProps as WorldProps)}
-              />
+              <Suspense fallback={<AnimationLoader />}>
+                <LazyGlobe
+                  data={globeArcs}
+                  globeConfig={globeConfig}
+                  {...(animation.animationProps as GlobeProps)}
+                />
+              </Suspense>
             )}
             {animation.id === 'gradient-animation' && (
               <GradientAnimation {...(animation.animationProps as GradientAnimationProps)} />
@@ -287,15 +307,17 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
               <GradientMesh {...(animation.animationProps as GradientMeshProps)} />
             )}
             {animation.id === 'grid-distortion' && (
-              <GridDistortion
-                imageSrc={image.url}
-                grid={10}
-                mouse={0.1}
-                strength={0.15}
-                relaxation={0.9}
-                className="grid-distortion"
-                {...(animation.animationProps as GridDistortionProps)}
-              />
+              <Suspense fallback={<AnimationLoader />}>
+                <LazyGridDistortion
+                  imageSrc={image.url}
+                  grid={10}
+                  mouse={0.1}
+                  strength={0.15}
+                  relaxation={0.9}
+                  className="grid-distortion"
+                  {...(animation.animationProps as GridDistortionProps)}
+                />
+              </Suspense>
             )}
             {animation.id === 'grid-motion' && (
               <GridMotion
@@ -349,46 +371,48 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
               />
             )}
             {animation.id === 'hyperspeed' && (
-              <Hyperspeed
-                effectOptions={{
-                  onSpeedUp: () => {},
-                  onSlowDown: () => {},
-                  distortion: 'turbulentDistortion',
-                  length: 400,
-                  roadWidth: 10,
-                  islandWidth: 2,
-                  lanesPerRoad: 4,
-                  fov: 90,
-                  fovSpeedUp: 150,
-                  speedUp: 2,
-                  carLightsFade: 0.4,
-                  totalSideLightSticks: 20,
-                  lightPairsPerRoadWay: 40,
-                  shoulderLinesWidthPercentage: 0.05,
-                  brokenLinesWidthPercentage: 0.1,
-                  brokenLinesLengthPercentage: 0.5,
-                  lightStickWidth: [0.12, 0.5],
-                  lightStickHeight: [1.3, 1.7],
-                  movingAwaySpeed: [60, 80],
-                  movingCloserSpeed: [-120, -160],
-                  carLightsLength: [400 * 0.03, 400 * 0.2],
-                  carLightsRadius: [0.05, 0.14],
-                  carWidthPercentage: [0.3, 0.5],
-                  carShiftX: [-0.8, 0.8],
-                  carFloorSeparation: [0, 5],
-                  colors: {
-                    roadColor: 0x080808,
-                    islandColor: 0x0a0a0a,
-                    background: 0x000000,
-                    shoulderLines: 0xffffff,
-                    brokenLines: 0xffffff,
-                    leftCars: [0xd856bf, 0x6750a2, 0xc247ac],
-                    rightCars: [0x03b3c3, 0x0e5ea5, 0x324555],
-                    sticks: 0x03b3c3
-                  }
-                }}
-                {...(animation.animationProps as HyperspeedProps)}
-              />
+              <Suspense fallback={<AnimationLoader />}>
+                <LazyHyperspeed
+                  effectOptions={{
+                    onSpeedUp: () => {},
+                    onSlowDown: () => {},
+                    distortion: 'turbulentDistortion',
+                    length: 400,
+                    roadWidth: 10,
+                    islandWidth: 2,
+                    lanesPerRoad: 4,
+                    fov: 90,
+                    fovSpeedUp: 150,
+                    speedUp: 2,
+                    carLightsFade: 0.4,
+                    totalSideLightSticks: 20,
+                    lightPairsPerRoadWay: 40,
+                    shoulderLinesWidthPercentage: 0.05,
+                    brokenLinesWidthPercentage: 0.1,
+                    brokenLinesLengthPercentage: 0.5,
+                    lightStickWidth: [0.12, 0.5],
+                    lightStickHeight: [1.3, 1.7],
+                    movingAwaySpeed: [60, 80],
+                    movingCloserSpeed: [-120, -160],
+                    carLightsLength: [400 * 0.03, 400 * 0.2],
+                    carLightsRadius: [0.05, 0.14],
+                    carWidthPercentage: [0.3, 0.5],
+                    carShiftX: [-0.8, 0.8],
+                    carFloorSeparation: [0, 5],
+                    colors: {
+                      roadColor: 0x080808,
+                      islandColor: 0x0a0a0a,
+                      background: 0x000000,
+                      shoulderLines: 0xffffff,
+                      brokenLines: 0xffffff,
+                      leftCars: [0xd856bf, 0x6750a2, 0xc247ac],
+                      rightCars: [0x03b3c3, 0x0e5ea5, 0x324555],
+                      sticks: 0x03b3c3
+                    }
+                  }}
+                  {...(animation.animationProps as HyperspeedProps)}
+                />
+              </Suspense>
             )}
             {animation.id === 'iridescence' && (
               <Iridescence
@@ -441,18 +465,24 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
               />
             )}
             {animation.id === 'mesh-matrix' && (
-              <MeshMatrix
-                videoSrc="https://videos.pexels.com/video-files/3163534/3163534-sd_640_360_30fps.mp4"
-                meshColor={foregroundColor}
-                meshDensity={25}
-                distortionIntensity={1.5}
-                {...(animation.animationProps as MeshMatrixProps)}
-              />
+              <Suspense fallback={<AnimationLoader />}>
+                <LazyMeshMatrix
+                  videoSrc="https://videos.pexels.com/video-files/3163534/3163534-sd_640_360_30fps.mp4"
+                  meshColor={foregroundColor}
+                  meshDensity={25}
+                  distortionIntensity={1.5}
+                  {...(animation.animationProps as MeshMatrixProps)}
+                />
+              </Suspense>
             )}
             {animation.id === 'meteors' && (
-              <div className="meteors-container">
-                <Meteors className="meteor" {...(animation.animationProps as MeteorsProps)} />
-              </div>
+              <Suspense fallback={<AnimationLoader />}>
+                <LazyMeteors
+                  number={20}
+                  color="#fff"
+                  {...(animation.animationProps as MeteorsProps)}
+                />
+              </Suspense>
             )}
             {animation.id === 'noise' && (
               <Noise
@@ -465,51 +495,46 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
               />
             )}
             {animation.id === 'particle-network' && (
-              <ParticleNetwork
-                particleCount={120}
-                particleSize={2}
-                particleColor={foregroundColor}
-                lineColor={foregroundColor}
-                maxDistance={100}
-                speed={0.5}
-                interactive={true}
-                {...(animation.animationProps as ParticleNetworkProps)}
-              />
+              <Suspense fallback={<AnimationLoader />}>
+                <LazyParticleNetwork
+                  particleCount={120}
+                  particleSize={2}
+                  particleColor={foregroundColor}
+                  lineColor={foregroundColor}
+                  maxDistance={100}
+                  speed={0.5}
+                  interactive={true}
+                  {...(animation.animationProps as ParticleNetworkProps)}
+                />
+              </Suspense>
             )}
             {animation.id === 'particles' && (
-              <Particles
-                particleColors={[foregroundColor]}
-                particleCount={2000}
-                particleSpread={5}
-                speed={0.2}
-                particleBaseSize={50}
-                disableRotation={true}
-                moveParticlesOnHover={false}
-                {...(animation.animationProps as ParticlesProps)}
-              />
+              <Suspense fallback={<AnimationLoader />}>
+                <LazyParticles
+                  particleColors={[foregroundColor]}
+                  particleCount={2000}
+                  particleSpread={5}
+                  speed={0.2}
+                  particleBaseSize={50}
+                  disableRotation={true}
+                  moveParticlesOnHover={false}
+                  className="w-full h-full"
+                  {...(animation.animationProps as ParticlesProps)}
+                />
+              </Suspense>
             )}
             {animation.id === 'particle-veil' && (
-              <ParticleVeil
-                className="absolute inset-0"
-                particleCount={200}
-                particleColors={[
-                  '#22c55e', // Neon green
-                  '#06b6d4', // Cyan
-                  '#3b82f6', // Bright blue
-                  '#10b981', // Emerald
-                  '#ec4899', // Pink
-                  '#f97316', // Orange
-                  '#f59e0b', // Yellow
-                  '#ef4444', // Red
-                  '#d946ef', // Lavender
-                  '#8b5cf6', // Indigo
-                  '#7f1d1d' // Burnt umber
-                ]}
-                interactionRadius={120}
-                speed={0.8}
-                sizeRange={[2, 5]}
-                {...(animation.animationProps as ParticleVeilProps)}
-              />
+              <Suspense fallback={<AnimationLoader />}>
+                <LazyParticleVeil
+                  className={`particle-veil-container w-full h-full ${animation.id}`}
+                  particleCount={200}
+                  particleColors={[foregroundColor]}
+                  interactionRadius={120}
+                  speed={0.8}
+                  sizeRange={[2, 5]}
+                  {...(animation.animationProps as ParticleVeilProps)}
+                />
+              </Suspense>
             )}
             {animation.id === 'rain-drops' && (
               <RainDrops {...(animation.animationProps as RainDropsProps)} />
@@ -529,7 +554,15 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
               </div>
             )}
             {animation.id === 'southern-lights' && (
-              <AuroraBackground {...(animation.animationProps as AuroraBackgroundProps)} />
+              <Suspense fallback={<AnimationLoader />}>
+                <LazyAuroraBackground 
+                  className="h-full w-full"
+                  showRadialGradient={true}
+                  withStars={true}
+                >
+                  <div className="h-full w-full" />
+                </LazyAuroraBackground>
+              </Suspense>
             )}
             {animation.id === 'sparkles' && (
               <Sparkles
@@ -567,7 +600,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
               />
             )}
             {animation.id === 'starry-background' && (
-              <StarryBackground {...(animation.animationProps as StarryBackgroundProps)} />
+              <StarryBackground />
             )}
             {animation.id === 'swarm-effect' && (
               <SwarmEffect
@@ -595,10 +628,12 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
               />
             )}
             {animation.id === 'vortex' && (
-              <Vortex
-                backgroundColor={backgroundColor}
-                {...(animation.animationProps as VortexProps)}
-              />
+              <Suspense fallback={<AnimationLoader />}>
+                <LazyVortex
+                  backgroundColor={backgroundColor}
+                  {...(animation.animationProps as VortexProps)}
+                />
+              </Suspense>
             )}
             {animation.id === 'waves' && (
               <Waves
