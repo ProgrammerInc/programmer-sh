@@ -2,6 +2,7 @@
 import type { Config } from 'tailwindcss';
 import tailwindcssAnimate from 'tailwindcss-animate';
 import { default as flattenColorPalette } from 'tailwindcss/lib/util/flattenColorPalette';
+import { gradientPlugin } from './src/utils/tailwind-plugins';
 
 function addVariablesForColors({ addBase, theme }: any) {
   const allColors = flattenColorPalette(theme('colors'));
@@ -382,6 +383,6 @@ export default {
       }
     }
   },
-  plugins: [tailwindcssAnimate, addVariablesForColors],
+  plugins: [tailwindcssAnimate, addVariablesForColors, gradientPlugin],
   safelist: ['group', 'group-hover:opacity-100']
 } satisfies Config;

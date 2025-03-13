@@ -7,8 +7,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "build:dev": "vite build --mode development",
+    "build": "NODE_OPTIONS=--max_old_space_size=4096 vite build",
+    "build:dev": "NODE_OPTIONS=--max_old_space_size=4096 vite build --mode development",
     "lint": "eslint .",
     "lint:css": "stylelint \"**/*.css\"",
     "lint:all": "npm run lint && npm run lint:css",
@@ -122,6 +122,7 @@
     "stylelint-config-tailwindcss": "^1.0.0",
     "stylelint-order": "^6.0.4",
     "tailwindcss": "^3.4.11",
+    "terser": "^5.39.0",
     "typescript": "~5.7.0",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1"
