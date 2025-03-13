@@ -19,10 +19,13 @@ export default defineConfig(({ mode }) => ({
       output: {
         // Enhance chunking strategy
         manualChunks: (id) => {
-          // Core vendor libs
+          // Core vendor libs - CRITICAL: Keep all React packages together
           if (id.includes('node_modules/react') || 
               id.includes('node_modules/react-dom') || 
-              id.includes('node_modules/react-router-dom')) {
+              id.includes('node_modules/react-router') || 
+              id.includes('node_modules/scheduler') ||
+              id.includes('node_modules/@remix-run') ||
+              id.includes('node_modules/use-sync-external-store')) {
             return 'react-vendor';
           }
           
@@ -116,5 +119,5 @@ export default defineConfig(({ mode }) => ({
       '@': path.resolve(__dirname, './src')
     }
   },
-  assetsInclude: ['**/*.glb']
+  assetsInclude: ['**/*.glb'] // Restore this for 3D model loading
 }));
