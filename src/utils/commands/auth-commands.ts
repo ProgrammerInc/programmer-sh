@@ -1,4 +1,3 @@
-import { isValidEmail } from '@/lib/utils';
 import { supabase } from '../../integrations/supabase/client';
 import { Command, CommandResult } from './types';
 
@@ -8,11 +7,11 @@ export const loginCommand: Command = {
   description: 'Log in to your account',
   execute: () => {
     // Dispatch custom event to open the login modal
-    const event = new CustomEvent('openAuthModal', { 
-      detail: { mode: 'login' } 
+    const event = new CustomEvent('openAuthModal', {
+      detail: { mode: 'login' }
     });
     document.dispatchEvent(event);
-    
+
     return {
       content: 'Opening login modal...',
       isError: false
@@ -26,11 +25,11 @@ export const signupCommand: Command = {
   description: 'Create a new account',
   execute: () => {
     // Dispatch custom event to open the signup modal
-    const event = new CustomEvent('openAuthModal', { 
-      detail: { mode: 'signup' } 
+    const event = new CustomEvent('openAuthModal', {
+      detail: { mode: 'signup' }
     });
     document.dispatchEvent(event);
-    
+
     return {
       content: 'Opening signup modal...',
       isError: false
