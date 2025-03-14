@@ -1,5 +1,9 @@
+import { createFeatureLogger } from '@/services/logger/logger.utils';
 import wallpaperPresets from '@/presets/wallpaper.presets';
 import { Command, CommandResult } from './command.types';
+
+// Create a dedicated logger for wallpaper commands
+const wallpaperLogger = createFeatureLogger('WallpaperCommands');
 
 // Current wallpaper key in localStorage
 export const WALLPAPER_STORAGE_KEY = 'terminal_wallpaper';
@@ -37,7 +41,7 @@ export const initializeWallpaper = (): void => {
 
   // Mark as initialized
   wallpaperInitialized = true;
-  console.log('Wallpaper initialized');
+  wallpaperLogger.info('Wallpaper initialized', { wallpaper: currentWallpaper });
 };
 
 // Wallpaper command
@@ -87,6 +91,11 @@ export const wallpaperCommand: Command = {
         }
       });
 
+      wallpaperLogger.debug('Listed available wallpapers', { 
+        current: currentWallpaper,
+        totalAvailable: Object.keys(wallpaperPresets).length
+      });
+
       return {
         content: `\nCurrent wallpaper: <span class="text-terminal-prompt">${wallpaperPresets[currentWallpaper].id}</span>\n\nAvailable Wallpapers:\n${wallpaperOutput}\nUsage: <span class="command-link" data-command="wallpaper" data-placeholder="[name]">wallpaper [name]</span>\n\n`,
         isError: false,
@@ -97,24 +106,30 @@ export const wallpaperCommand: Command = {
     const requestedWallpaper = args.trim().toLowerCase();
 
     if (!Object.keys(wallpaperPresets).includes(requestedWallpaper)) {
+      wallpaperLogger.warn('Wallpaper not found', { requested: requestedWallpaper });
       return {
         content: `\nWallpaper <span class="text-terminal-prompt">${requestedWallpaper}</span> not found. Use <span class="command-link" data-command="wallpaper">wallpaper</span> to see available options.\n\n`,
-        isError: true
+        isError: true,
+        rawHTML: true
       };
     }
 
-    if (requestedWallpaper === currentWallpaper) {
-      return {
-        content: `\nWallpaper is already set to <span class="text-terminal-prompt">${wallpaperPresets[currentWallpaper].id}</span>.\n\n`,
-        isError: false
-      };
-    }
-
+    // Set the wallpaper
     setWallpaper(requestedWallpaper);
+    
+    wallpaperLogger.info('Wallpaper changed', { 
+      from: currentWallpaper, 
+      to: requestedWallpaper 
+    });
 
     return {
-      content: `\nWallpaper changed to <span class="text-terminal-prompt">${wallpaperPresets[requestedWallpaper].id}</span>.\n\n`,
-      isError: false
+      content: `\nWallpaper changed to <span class="text-terminal-prompt">${requestedWallpaper}</span>.\n\n`,
+      isError: false,
+      rawHTML: true,
+      metadata: {
+        previousWallpaper: currentWallpaper,
+        newWallpaper: requestedWallpaper
+      }
     };
   }
 };

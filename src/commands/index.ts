@@ -5,7 +5,7 @@ import {
   signupCommand,
   whoamiCommand
 } from './auth-commands';
-import { Command } from './command.types';
+import { Command, CommandResult } from './command.types';
 import { cursorCommand } from './cursor-commands';
 import { educationCommand } from './education-commands';
 import { experienceCommand } from './experience-commands';
@@ -25,6 +25,10 @@ import {
 import { themeCommand } from './theme-commands';
 import { wallpaperCommand } from './wallpaper-commands';
 import { welcomeCommand } from './welcome-commands';
+import { createFeatureLogger } from '@/services/logger/logger.utils';
+
+// Create a dedicated logger for command processing
+const commandLogger = createFeatureLogger('CommandProcessor');
 
 // Export a function to get all available commands
 export const getCommands = (): Record<string, Command> => {
@@ -83,13 +87,13 @@ const DIRECT_COMMANDS = {
   welcome: welcomeCommand
 };
 
-export const processCommand = (commandString: string) => {
-  console.log('RAW COMMAND INPUT:', commandString);
+export const processCommand = (commandString: string): CommandResult => {
+  commandLogger.debug('Processing command input', { raw: commandString });
 
   // Special direct handling for 'history' command regardless of case or spaces
   // This is a brute force approach when other methods have failed
   if (commandString && commandString.trim().toLowerCase() === 'history') {
-    console.log('HISTORY COMMAND DETECTED, BYPASSING NORMAL PROCESSING');
+    commandLogger.info('History command detected, bypassing normal processing');
 
     // Return a hardcoded history response
     return {
@@ -117,7 +121,7 @@ export const processCommand = (commandString: string) => {
   const commandName = tokens[0].toLowerCase();
   const args = tokens.slice(1).join(' ');
 
-  console.log('Processing command:', commandName, 'with args:', args);
+  commandLogger.debug('Command parsed', { command: commandName, args });
 
   // Simple case handling for clear which we know works
   if (commandName === 'clear') {
@@ -131,19 +135,21 @@ export const processCommand = (commandString: string) => {
 
   // Look up command in registry
   const commands = getCommands();
-  console.log('Available commands:', Object.keys(commands));
+  commandLogger.debug('Looking up command', { available: Object.keys(commands).length });
 
   if (commandName in commands) {
-    console.log('Found command in registry:', commandName);
+    commandLogger.info('Executing command', { command: commandName, hasArgs: !!args });
     return commands[commandName].execute(args);
   }
 
   // Special case for 'project' command
   if (commandName === 'project') {
+    commandLogger.debug('Redirecting project -> projects command');
     return projectsCommand.execute(args);
   }
 
   // Unknown command
+  commandLogger.warn('Command not found', { attempted: commandName });
   return {
     content: `Command not found: ${commandName}. Type 'help' to see available commands.`,
     isError: true

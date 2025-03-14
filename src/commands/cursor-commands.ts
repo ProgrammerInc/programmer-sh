@@ -1,5 +1,9 @@
 import { cursorPresets } from '@/presets/cursor.presets';
+import { createFeatureLogger } from '@/services/logger/logger.utils';
 import { Command, CommandResult } from './command.types';
+
+// Create a dedicated logger for cursor commands
+const cursorLogger = createFeatureLogger('CursorCommands');
 
 // Current cursor key in localStorage
 export const CURSOR_STORAGE_KEY = 'terminal_cursor';
@@ -37,7 +41,7 @@ export const initializeCursor = (): void => {
 
   // Mark as initialized
   cursorInitialized = true;
-  console.log('Cursor initialized');
+  cursorLogger.info('Cursor initialized', { cursor: currentCursor });
 };
 
 // Cursor command

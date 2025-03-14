@@ -1,6 +1,10 @@
 import { ensureHttps } from '@/utils/app.utils';
 import type { SocialLink } from '../../types/social-links.types';
 import { fetchProfile } from './portfolio.services';
+import { createServiceLogger, logError } from '@/services/logger/logger.utils';
+
+// Create a dedicated logger for social links service
+const socialLinksLogger = createServiceLogger('SocialLinks');
 
 // Fetch social links from the profile
 export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
@@ -8,7 +12,7 @@ export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
     const profile = await fetchProfile();
 
     if (!profile) {
-      console.error('Could not fetch profile for social links');
+      logError('Could not fetch profile for social links', new Error('Profile data not available'), 'SocialLinks');
       return [];
     }
 
@@ -54,10 +58,10 @@ export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
       });
     }
 
-    // console.log('Fetched social links:', socialLinks); // Debug log
+    socialLinksLogger.debug('Fetched social links', { count: socialLinks.length });
     return socialLinks;
   } catch (error) {
-    console.error('Error fetching social links:', error);
+    logError('Error fetching social links', error, 'SocialLinks');
     return [];
   }
 };

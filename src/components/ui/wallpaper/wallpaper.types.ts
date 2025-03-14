@@ -111,6 +111,7 @@ export interface WallpaperAnimation {
   id: string;
   name?: string;
   description?: string;
+  url?: string;
   animationProps?:
     | AuroraProps
     | AuroraBackgroundProps

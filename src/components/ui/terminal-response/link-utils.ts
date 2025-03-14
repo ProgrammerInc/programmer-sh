@@ -1,32 +1,42 @@
 'use client';
 
+import { createComponentLogger } from '@/services/logger/logger.utils';
 import React from 'react';
 import { LinkMatch } from './terminal-response.types';
+
+// Create a dedicated logger for link utilities
+const linkLogger = createComponentLogger('TerminalLinkUtils');
 
 // Process URL links
 export function processUrlLinks(text: string): LinkMatch[] {
   const matches: LinkMatch[] = [];
+
+  if (!text) {
+    return matches;
+  }
 
   // URL regex pattern
   const urlPattern = /https?:\/\/[^\s<>"']+/g;
   let match;
 
   while ((match = urlPattern.exec(text)) !== null) {
-    matches.push({
-      index: match.index,
-      length: match[0].length,
-      content: React.createElement(
-        'a',
-        {
-          href: match[0],
-          target: '_blank',
-          rel: 'noopener noreferrer',
-          className: 'text-terminal-link hover:underline'
-        },
-        match[0]
-      ),
-      type: 'url'
-    });
+    if (match && match.index !== undefined && match[0]) {
+      matches.push({
+        index: match.index,
+        length: match[0].length,
+        content: React.createElement(
+          'a',
+          {
+            href: match[0],
+            target: '_blank',
+            rel: 'noopener noreferrer',
+            className: 'text-terminal-link hover:underline'
+          },
+          match[0]
+        ),
+        type: 'url'
+      });
+    }
   }
 
   return matches;
@@ -36,24 +46,30 @@ export function processUrlLinks(text: string): LinkMatch[] {
 export function processEmailLinks(text: string): LinkMatch[] {
   const matches: LinkMatch[] = [];
 
+  if (!text) {
+    return matches;
+  }
+
   // Email regex pattern
   const emailPattern = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
   let match;
 
   while ((match = emailPattern.exec(text)) !== null) {
-    matches.push({
-      index: match.index,
-      length: match[0].length,
-      content: React.createElement(
-        'a',
-        {
-          href: `mailto:${match[0]}`,
-          className: 'text-terminal-link hover:underline'
-        },
-        match[0]
-      ),
-      type: 'email'
-    });
+    if (match && match.index !== undefined && match[0]) {
+      matches.push({
+        index: match.index,
+        length: match[0].length,
+        content: React.createElement(
+          'a',
+          {
+            href: `mailto:${match[0]}`,
+            className: 'text-terminal-link hover:underline'
+          },
+          match[0]
+        ),
+        type: 'email'
+      });
+    }
   }
 
   return matches;
@@ -66,75 +82,86 @@ export function processCommandLinks(
 ): LinkMatch[] {
   const matches: LinkMatch[] = [];
 
+  if (!text) {
+    return matches;
+  }
+
   // Command link pattern: [[command]]
   const commandPattern = /\[\[(.*?)\]\]/g;
   let match;
 
   while ((match = commandPattern.exec(text)) !== null) {
-    const command = match[1];
+    if (match && match.index !== undefined && match[1]) {
+      const command = match[1];
 
-    matches.push({
-      index: match.index,
-      length: match[0].length,
-      content: React.createElement(
-        'a',
-        {
-          onClick: e => {
-            e.preventDefault();
-            onCommandClick?.(command);
-          },
-          onKeyDown: e => {
-            if (e.key === 'Enter' || e.key === ' ') {
+      matches.push({
+        index: match.index,
+        length: match[0].length,
+        content: React.createElement(
+          'a',
+          {
+            onClick: (e: React.MouseEvent) => {
               e.preventDefault();
               onCommandClick?.(command);
-            }
+              linkLogger.debug('Command link clicked', { command });
+            },
+            onKeyDown: (e: React.KeyboardEvent) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onCommandClick?.(command);
+                linkLogger.debug('Command link activated via keyboard', { command, key: e.key });
+              }
+            },
+            href: '#',
+            role: 'button',
+            tabIndex: 0,
+            'data-command': command,
+            className: 'command-link text-terminal-command cursor-pointer hover:underline'
           },
-          href: '#',
-          role: 'button',
-          tabIndex: 0,
-          'data-command': command,
-          className: 'command-link text-terminal-command cursor-pointer hover:underline'
-        },
-        command
-      ),
-      type: 'command'
-    });
+          command
+        ),
+        type: 'command'
+      });
+    }
   }
 
-  // Also detect HTML command links like <span class="command-link" data-command="help">help</span>
-  // Also handle a tags that might already be in the content
-  const htmlCommandLinkRegex =
-    /<(span|a) class="command-link"(?: data-command="(.*?)")?>([^<]+)<\/(span|a)>/g;
+  // Also process HTML links with class="command-link"
+  const htmlCommandLinkPattern = /<span\s+class="command-link"\s+data-command="([^"]+)"[^>]*>([^<]+)<\/span>/g;
 
-  while ((match = htmlCommandLinkRegex.exec(text)) !== null) {
-    const command = match[2] || match[3]; // Use data-command if available, otherwise use the text content
+  while ((match = htmlCommandLinkPattern.exec(text)) !== null) {
+    if (match && match.index !== undefined && match[1] && match[2]) {
+      const command = match[1];
+      const label = match[2];
 
-    matches.push({
-      index: match.index,
-      length: match[0].length,
-      content: React.createElement(
-        'a',
-        {
-          onClick: e => {
-            e.preventDefault();
-            onCommandClick?.(command);
-          },
-          onKeyDown: e => {
-            if (e.key === 'Enter' || e.key === ' ') {
+      matches.push({
+        index: match.index,
+        length: match[0].length,
+        content: React.createElement(
+          'a',
+          {
+            onClick: (e: React.MouseEvent) => {
               e.preventDefault();
               onCommandClick?.(command);
-            }
+              linkLogger.debug('HTML command link clicked', { command });
+            },
+            onKeyDown: (e: React.KeyboardEvent) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onCommandClick?.(command);
+                linkLogger.debug('HTML command link activated via keyboard', { command, key: e.key });
+              }
+            },
+            href: '#',
+            role: 'button',
+            tabIndex: 0,
+            'data-command': command,
+            className: 'command-link text-terminal-command cursor-pointer hover:underline'
           },
-          href: '#',
-          role: 'button',
-          tabIndex: 0,
-          'data-command': command,
-          className: 'command-link text-terminal-command cursor-pointer hover:underline'
-        },
-        match[3] // Use the text content for display
-      ),
-      type: 'command'
-    });
+          label
+        ),
+        type: 'command'
+      });
+    }
   }
 
   return matches;
@@ -144,28 +171,33 @@ export function processCommandLinks(
 export function processPhoneLinks(text: string): LinkMatch[] {
   const matches: LinkMatch[] = [];
 
-  // Phone number pattern (US format)
-  // This handles formats like: +1 (123) 456-7890, 123-456-7890, (123) 456-7890
-  const phonePattern = /(\+\d{1,3}[\s-]?)?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4}/g;
+  if (!text) {
+    return matches;
+  }
+
+  // Phone number pattern (basic international format)
+  const phonePattern = /\+?\d{1,4}[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}/g;
   let match;
 
   while ((match = phonePattern.exec(text)) !== null) {
-    // Format phone number for tel: link (remove non-digit characters)
-    const phoneForLink = match[0].replace(/\D/g, '');
-
-    matches.push({
-      index: match.index,
-      length: match[0].length,
-      content: React.createElement(
-        'a',
-        {
-          href: `tel:${phoneForLink}`,
-          className: 'text-terminal-link hover:underline'
-        },
-        match[0]
-      ),
-      type: 'phone'
-    });
+    if (match && match.index !== undefined && match[0]) {
+      // Clean the phone number for the href
+      const cleanPhone = match[0].replace(/[^\d+]/g, '');
+      
+      matches.push({
+        index: match.index,
+        length: match[0].length,
+        content: React.createElement(
+          'a',
+          {
+            href: `tel:${cleanPhone}`,
+            className: 'text-terminal-link hover:underline'
+          },
+          match[0]
+        ),
+        type: 'phone'
+      });
+    }
   }
 
   return matches;
@@ -176,48 +208,75 @@ export function processLinks(
   text: string,
   onCommandClick?: (command: string) => void
 ): React.ReactNode[] {
-  if (!text) return [text];
-
-  // Collect all matches from different link types
-  const urlMatches = processUrlLinks(text);
-  const emailMatches = processEmailLinks(text);
-  const commandMatches = processCommandLinks(text, onCommandClick);
-  const phoneMatches = processPhoneLinks(text);
-
-  // Combine all matches
-  const allMatches = [...urlMatches, ...emailMatches, ...commandMatches, ...phoneMatches].sort(
-    (a, b) => a.index - b.index
-  );
-
-  // If no matches, return the original text
-  if (allMatches.length === 0) {
+  if (!text) {
+    linkLogger.debug('No text provided to process links');
     return [text];
   }
 
-  // Build result with links
-  const result: React.ReactNode[] = [];
-  let lastIndex = 0;
+  try {
+    // Collect all matches from different link types
+    const urlMatches = processUrlLinks(text);
+    const emailMatches = processEmailLinks(text);
+    const commandMatches = processCommandLinks(text, onCommandClick);
+    const phoneMatches = processPhoneLinks(text);
 
-  allMatches.forEach((match, i) => {
-    // Add text before the match
-    if (match.index > lastIndex) {
-      result.push(text.substring(lastIndex, match.index));
+    // Combine all matches
+    const allMatches = [...urlMatches, ...emailMatches, ...commandMatches, ...phoneMatches].sort(
+      (a, b) => a.index - b.index
+    );
+
+    linkLogger.debug('Processed links', { 
+      total: allMatches.length,
+      urls: urlMatches.length,
+      emails: emailMatches.length,
+      commands: commandMatches.length,
+      phones: phoneMatches.length
+    });
+
+    // If no matches, return the original text
+    if (allMatches.length === 0) {
+      return [text];
     }
 
-    // Add the link component with a key
-    const element = match.content as React.ReactElement;
-    result.push(React.cloneElement(element, { key: `link-${i}` }));
+    // Build result with links
+    const result: React.ReactNode[] = [];
+    let lastIndex = 0;
 
-    // Update last index
-    lastIndex = match.index + match.length;
-  });
+    allMatches.forEach((match, i) => {
+      // Type guard to ensure match has all required properties
+      if (typeof match.index !== 'number' || match.content === undefined) {
+        linkLogger.warn('Invalid match found, skipping', { matchIndex: i });
+        return;
+      }
 
-  // Add any remaining text after the last match
-  if (lastIndex < text.length) {
-    result.push(text.substring(lastIndex));
+      // Add text before the match
+      if (match.index > lastIndex) {
+        result.push(text.substring(lastIndex, match.index));
+      }
+
+      // Add the link component with a key
+      const element = match.content as React.ReactElement;
+      if (React.isValidElement(element)) {
+        result.push(React.cloneElement(element, { key: `link-${i}` }));
+      } else {
+        linkLogger.warn('Invalid React element in match content', { matchIndex: i });
+        result.push(text.substring(match.index, match.index + match.length));
+      }
+
+      // Update last index
+      lastIndex = match.index + match.length;
+    });
+
+    // Add any remaining text after the last match
+    if (lastIndex < text.length) {
+      result.push(text.substring(lastIndex));
+    }
+
+    return result;
+  } catch (error) {
+    linkLogger.error('Error processing links', { error });
+    return [text]; // Return original text in case of error
   }
-
-  return result;
 }
 
 // Utility function to convert text with links to React elements

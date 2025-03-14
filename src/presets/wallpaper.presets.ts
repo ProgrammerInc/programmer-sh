@@ -1,5 +1,8 @@
 import { Wallpaper } from '@/components/ui/wallpaper';
 
+// Default placeholder image URL for animations requiring an image source
+const DEFAULT_ANIMATION_IMAGE_URL = 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&q=80';
+
 // Predefined wallpapers
 export const wallpaperPresets: Record<string, Wallpaper> = {
   default: {
@@ -13,7 +16,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'particles',
-        type: 'reactbits'
+        type: 'reactbits',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -152,7 +156,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'aurora',
-        type: 'reactbits'
+        type: 'reactbits',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       }
     }
   },
@@ -167,7 +172,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'aurora-canvas',
-        type: 'aceternity'
+        type: 'aceternity',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -189,7 +195,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'austin',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1531218150217-54595bc2b934?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1531218150217-b08efd787d91?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -204,7 +210,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'balatro',
-        type: 'reactbits'
+        type: 'reactbits',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       }
     }
   },
@@ -219,7 +226,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'ballpit',
-        type: 'reactbits'
+        type: 'reactbits',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       image: {
         id: 'arcade',
@@ -257,7 +265,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'beam-portal',
-        type: 'artifact-ui'
+        type: 'artifact-ui',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -277,7 +286,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'background-beams',
-        type: 'aceternity'
+        type: 'aceternity',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -365,7 +375,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'blob-background',
-        type: 'artifact-ui'
+        type: 'artifact-ui',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -472,7 +483,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'charlotte',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1507810670121-b08efd787765?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1507810670121-b8472da7d918?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -523,7 +534,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'code',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1533709752211-118fcaf03312?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1533709752211-489689fd1ca8?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -589,7 +600,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'cosmic-scene',
-        type: 'artifact-ui'
+        type: 'artifact-ui',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -754,7 +766,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'face-paint',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1485796826113-174aa68fd81b?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1485796826113-f38b88d97147?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -788,7 +800,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'fog',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1578147063111-9ffec96050cd?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1578147063111-9a8696fa2ca3?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -905,7 +917,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'globe',
-        type: 'aceternity'
+        type: 'aceternity',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       }
     }
   },
@@ -953,7 +966,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'gradient-animation',
-        type: 'aceternity'
+        type: 'aceternity',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       }
     }
   },
@@ -968,7 +982,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'gradient-mesh',
-        type: 'artifact-ui'
+        type: 'artifact-ui',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -988,7 +1003,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'grid-distortion',
-        type: 'reactbits'
+        type: 'reactbits',
+        url: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80'
       },
       image: {
         id: 'tokyo',
@@ -1009,7 +1025,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'grid-motion',
-        type: 'reactbits'
+        type: 'reactbits',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       }
     }
   },
@@ -1024,7 +1041,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'grid-pattern',
-        type: 'artifact-ui'
+        type: 'artifact-ui',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -1163,7 +1181,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'hyperspace-hero',
-        type: 'artifact-ui'
+        type: 'artifact-ui',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -1183,7 +1202,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'hyperspeed',
-        type: 'reactbits'
+        type: 'reactbits',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       image: {
         id: 'hyperspeed',
@@ -1204,7 +1224,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'iridescence',
-        type: 'reactbits'
+        type: 'reactbits',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       }
     }
   },
@@ -1272,7 +1293,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'las-vegas',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1581351721010-8ec5e12e42dd?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -1304,7 +1325,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'letter-glitch',
-        type: 'reactbits'
+        type: 'reactbits',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       }
     }
   },
@@ -1319,7 +1341,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'lightning',
-        type: 'reactbits'
+        type: 'reactbits',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       }
     }
   },
@@ -1334,7 +1357,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'liquid-chrome',
-        type: 'reactbits'
+        type: 'reactbits',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       }
     }
   },
@@ -1349,7 +1373,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'background-boxes',
-        type: 'aceternity'
+        type: 'aceternity',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -1388,7 +1413,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'los-angeles',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1444723121867-91d2c3bd3d45?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -1437,7 +1462,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'magnet-lines',
-        type: 'reactbits'
+        type: 'reactbits',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -1459,7 +1485,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'manhatten',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1446776899648-aa78eefe8ed0?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -1527,9 +1553,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       animation: {
         id: 'mesh-matrix',
         type: 'artifact-ui',
-        animationProps: {
-          videoSrc: 'https://videos.pexels.com/video-files/3163534/3163534-sd_640_360_30fps.mp4'
-        }
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -1549,7 +1573,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'meteors',
-        type: 'aceternity'
+        type: 'aceternity',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       image: {
         id: 'starry-night',
@@ -1589,7 +1614,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'miami',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1530686577637-0ccce382b327?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1530686577637-775e3e82c7db?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -1708,7 +1733,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'mountains',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1454496522488-43490279c0fa?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -1859,7 +1884,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'noise',
-        type: 'reactbits'
+        type: 'reactbits',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -1930,7 +1956,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'particle-network',
-        type: 'artifact-ui'
+        type: 'artifact-ui',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -1950,7 +1977,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'particles',
-        type: 'reactbits'
+        type: 'reactbits',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -1970,7 +1998,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'particle-veil',
-        type: 'artifact-ui'
+        type: 'artifact-ui',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -1992,7 +2021,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'party',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1593958812614-2db6a598c71c?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -2143,7 +2172,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'rain-drops',
-        type: 'aceternity'
+        type: 'aceternity',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -2367,7 +2397,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'shooting-stars',
-        type: 'aceternity'
+        type: 'aceternity',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -2438,7 +2469,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'southern-lights',
-        type: 'aceternity'
+        type: 'aceternity',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -2492,7 +2524,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'sparkles',
-        type: 'aceternity'
+        type: 'aceternity',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -2512,7 +2545,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'sphere-animation',
-        type: 'artifact-ui'
+        type: 'artifact-ui',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -2532,7 +2566,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'spotlight',
-        type: 'aceternity'
+        type: 'aceternity',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -2552,7 +2587,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'squares',
-        type: 'reactbits'
+        type: 'reactbits',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -2574,7 +2610,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'squirrel',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1504006833117-8886a355efbf?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1504006833117-cc412bb977d5?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -2606,7 +2642,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'starfall',
-        type: 'artifact-ui'
+        type: 'artifact-ui',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -2626,7 +2663,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'starry-background',
-        type: 'artifact-ui'
+        type: 'artifact-ui',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -2697,7 +2735,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'swarm-effect',
-        type: 'artifact-ui'
+        type: 'artifact-ui',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -2751,7 +2790,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'threads',
-        type: 'reactbits'
+        type: 'reactbits',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -2941,7 +2981,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'vortex',
-        type: 'aceternity'
+        type: 'aceternity',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -2978,7 +3019,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'waves',
-        type: 'reactbits'
+        type: 'reactbits',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -2998,7 +3040,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'wavy-background',
-        type: 'aceternity'
+        type: 'aceternity',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -3018,7 +3061,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'background-lines',
-        type: 'aceternity'
+        type: 'aceternity',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',
@@ -3074,7 +3118,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'workspace',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1497032623322-86f99bcd76bc?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -3089,7 +3133,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       type: 'animation',
       animation: {
         id: 'world-map',
-        type: 'aceternity'
+        type: 'aceternity',
+        url: DEFAULT_ANIMATION_IMAGE_URL
       },
       gradient: {
         id: 'default',

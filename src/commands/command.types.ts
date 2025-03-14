@@ -7,6 +7,7 @@ export interface CommandResult {
   clearHistory?: boolean;
   noHistory?: boolean;
   runAfterClear?: CommandResult;
+  metadata?: Record<string, string | number | boolean | string[] | number[] | null | undefined>; // Using specific types instead of 'any'
 }
 
 // Command interface

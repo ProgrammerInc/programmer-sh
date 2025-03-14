@@ -1,17 +1,24 @@
+import { createFeatureLogger } from '@/services/logger/logger.utils';
 import { Command, CommandResult } from './command.types';
+
+// Create a dedicated logger for theme commands
+const themeLogger = createFeatureLogger('ThemeCommands');
+
+// Theme storage key for consistency
+export const THEME_STORAGE_KEY = 'terminal_theme';
 
 // Theme options
 export type ThemeOption = 'dark' | 'light';
 
 // Get current theme from localStorage or default to dark
 export const getCurrentTheme = (): ThemeOption => {
-  const savedTheme = localStorage.getItem('terminal_theme');
+  const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
   return (savedTheme as ThemeOption) || 'dark';
 };
 
 // Set theme in localStorage and apply to document
 export const setTheme = (theme: ThemeOption): void => {
-  localStorage.setItem('terminal_theme', theme);
+  localStorage.setItem(THEME_STORAGE_KEY, theme);
   const isDark = theme === 'dark';
 
   // Apply theme to the document
@@ -37,9 +44,9 @@ export const processThemeFromUrl = (themeParam: string): void => {
 
   if (normalizedTheme === 'dark' || normalizedTheme === 'light') {
     setTheme(normalizedTheme as ThemeOption);
-    console.log(`Theme set from URL parameter: ${normalizedTheme}`);
+    themeLogger.info(`Theme set from URL parameter`, { theme: normalizedTheme });
   } else {
-    console.warn(`Invalid theme parameter: ${themeParam}. Using current theme.`);
+    themeLogger.warn(`Invalid theme parameter`, { param: themeParam, using: getCurrentTheme() });
   }
 };
 
@@ -58,7 +65,7 @@ export const initializeTheme = (): void => {
 
   // Mark as initialized
   themeInitialized = true;
-  console.log('Theme initialized');
+  themeLogger.info('Theme initialized', { theme: currentTheme });
 };
 
 // Theme command
@@ -92,6 +99,7 @@ export const themeCommand: Command = {
     }
 
     setTheme(newTheme as ThemeOption);
+    themeLogger.info('Theme changed', { from: currentTheme, to: newTheme });
 
     return {
       content: `\nTheme switched to <span class="text-terminal-prompt">${newTheme}</span> mode.\n\n`,
