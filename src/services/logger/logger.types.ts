@@ -1,3 +1,9 @@
+/**
+ * Logger Types
+ *
+ * Type definitions for the logger service
+ */
+
 export enum LogLevel {
   ERROR = 0,
   WARN = 1,

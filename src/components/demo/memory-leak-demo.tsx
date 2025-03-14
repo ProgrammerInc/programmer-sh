@@ -5,7 +5,7 @@
  * using the memory tracker service.
  */
 
-import { logger } from '@/services/logger/logger';
+import { logger } from '@/services/logger';
 import { MemorySnapshot, memoryTracker } from '@/services/memory-tracker';
 import { useCallback, useEffect, useState } from 'react';
 import './memory-leak-demo.css';

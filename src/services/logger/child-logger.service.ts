@@ -1,8 +1,21 @@
-import { Logger, LogLevel } from './logger';
-import { LogMessage, LogParams, PerformanceMeasureOptions, TableData } from './logger.types';
+/**
+ * Child Logger Service
+ *
+ * A specialized logger that adds a prefix to all log messages
+ */
+
+import { Logger } from './logger.service';
+import {
+  LogLevel,
+  LogMessage,
+  LogParams,
+  PerformanceMeasureOptions,
+  TableData
+} from './logger.types';
 
 /**
- * A child logger that adds a prefix to all log messages
+ * A child logger that adds a prefix to all log messages for better organization
+ * and component-specific logging
  */
 export class ChildLogger {
   constructor(
@@ -10,26 +23,44 @@ export class ChildLogger {
     private prefix: string
   ) {}
 
+  /**
+   * Log a debug message with the child prefix
+   */
   public debug(message: LogMessage, ...optionalParams: LogParams): void {
     this.parent.debug(`[${this.prefix}] ${message}`, ...optionalParams);
   }
 
+  /**
+   * Log a message at the specified level with the child prefix
+   */
   public log(level: LogLevel, message: LogMessage, ...optionalParams: LogParams): void {
     this.parent.log(level, `[${this.prefix}] ${message}`, ...optionalParams);
   }
 
+  /**
+   * Log an info message with the child prefix
+   */
   public info(message: LogMessage, ...optionalParams: LogParams): void {
     this.parent.info(`[${this.prefix}] ${message}`, ...optionalParams);
   }
 
+  /**
+   * Log a warning message with the child prefix
+   */
   public warn(message: LogMessage, ...optionalParams: LogParams): void {
     this.parent.warn(`[${this.prefix}] ${message}`, ...optionalParams);
   }
 
+  /**
+   * Log an error message with the child prefix
+   */
   public error(message: LogMessage, ...optionalParams: LogParams): void {
     this.parent.error(`[${this.prefix}] ${message}`, ...optionalParams);
   }
 
+  /**
+   * Display tabular data with the child prefix
+   */
   public table(data: TableData, columns?: string[]): void {
     // For table data, we don't modify the data itself, but we add the prefix to the label
     this.parent.group(`[${this.prefix}] Table Output`);
@@ -37,11 +68,17 @@ export class ChildLogger {
     this.parent.groupEnd();
   }
 
+  /**
+   * Create a performance mark with the child prefix
+   */
   public mark(markName: string, markOptions?: { detail?: unknown }): void {
     // Add prefix to mark name for organization
     this.parent.mark(`${this.prefix}:${markName}`, markOptions);
   }
 
+  /**
+   * Create a performance measure with the child prefix
+   */
   public measure(
     measureName: string,
     startMarkName?: string,
@@ -79,6 +116,9 @@ export class ChildLogger {
     }
   }
 
+  /**
+   * Clear performance marks with the child prefix
+   */
   public clearMarks(markName?: string): void {
     if (markName) {
       // Add prefix to mark name
@@ -92,6 +132,9 @@ export class ChildLogger {
     }
   }
 
+  /**
+   * Clear performance measures with the child prefix
+   */
   public clearMeasures(measureName?: string): void {
     if (measureName) {
       // Add prefix to measure name
@@ -105,6 +148,9 @@ export class ChildLogger {
     }
   }
 
+  /**
+   * Get performance entries that match the specified name and type
+   */
   public getPerformanceEntries(
     name?: string,
     entryType?: 'mark' | 'measure' | 'resource' | 'navigation' | 'paint' | 'longtask'
@@ -112,18 +158,30 @@ export class ChildLogger {
     return this.parent.getPerformanceEntries(name, entryType);
   }
 
+  /**
+   * Start a timer with the child prefix
+   */
   public time(label: string): void {
     this.parent.time(`[${this.prefix}] ${label}`);
   }
 
+  /**
+   * End a timer with the child prefix
+   */
   public timeEnd(label: string): void {
     this.parent.timeEnd(`[${this.prefix}] ${label}`);
   }
 
+  /**
+   * Increment a counter with the child prefix
+   */
   public count(label: string, message?: string): void {
     this.parent.count(`[${this.prefix}] ${label}`, message);
   }
 
+  /**
+   * Reset a counter with the child prefix
+   */
   public countReset(label?: string): void {
     if (label) {
       this.parent.countReset(`[${this.prefix}] ${label}`);
@@ -134,28 +192,38 @@ export class ChildLogger {
     }
   }
 
+  /**
+   * Log a stack trace with the child prefix
+   */
   public trace(message: LogMessage, ...optionalParams: LogParams): void {
     this.parent.trace(`[${this.prefix}] ${message}`, ...optionalParams);
   }
 
+  /**
+   * Create a log group with the child prefix
+   */
   public group(label: string, collapsed: boolean = false): void {
     this.parent.group(`[${this.prefix}] ${label}`, collapsed);
   }
 
+  /**
+   * End the current log group
+   */
   public groupEnd(): void {
     this.parent.groupEnd();
   }
 
+  /**
+   * Start a performance profile
+   */
   public profile(label: string): void {
     this.parent.profile(label);
   }
 
+  /**
+   * End a performance profile
+   */
   public profileEnd(label: string): void {
     this.parent.profileEnd(label);
   }
 }
-
-// Export LogLevel enum for configuration
-export { LogLevel };
-
-export default ChildLogger;

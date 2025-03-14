@@ -7,7 +7,7 @@
  * @see https://github.com/welldone-software/why-did-you-render
  */
 
-import { logger } from '@/services/logger/logger';
+import { logger } from '@/services/logger';
 
 // Create a dedicated logger instance for WDYR
 const wdyrLogger = logger.createChildLogger('WDYR');

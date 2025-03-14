@@ -5,7 +5,7 @@
  * It shows various usage patterns and best practices.
  */
 
-import { logger, LogLevel } from './logger';
+import { logger, LogLevel } from './logger.service';
 
 // Basic usage
 logger.debug('This is a debug message');

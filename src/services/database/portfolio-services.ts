@@ -7,6 +7,10 @@ import {
   Project,
   Skill
 } from '../../types/portfolio-data';
+import { createServiceLogger, logError } from '../logger/logger.utils';
+
+// Create a dedicated logger for database services
+const dbLogger = createServiceLogger('PortfolioService');
 
 // Fetch profile data
 export const fetchProfile = async (): Promise<Profile | null> => {
@@ -19,7 +23,7 @@ export const fetchProfile = async (): Promise<Profile | null> => {
 
     if (profileError) throw profileError;
     if (!profileData) {
-      console.error('No profile data found in the database');
+      dbLogger.error('No profile data found in the database');
       return null;
     }
 
@@ -73,7 +77,7 @@ export const fetchProfile = async (): Promise<Profile | null> => {
 
     // Make sure email is always present
     if (!contact.email) {
-      console.error('Email is required but not found in the database');
+      dbLogger.error('Email is required but not found in the database');
       contact.email = 'missing@email.com'; // Fallback value
     }
 
@@ -91,7 +95,7 @@ export const fetchProfile = async (): Promise<Profile | null> => {
       education: [] // Will be filled by fetchEducation
     };
   } catch (error) {
-    console.error('Error fetching profile:', error);
+    logError('Error fetching profile:', error, 'PortfolioService');
     return null;
   }
 };
@@ -112,7 +116,7 @@ export const fetchExperience = async (): Promise<Experience[]> => {
 
     if (experienceError) throw experienceError;
     if (!experienceData || experienceData.length === 0) {
-      console.error('No experience data found in the database');
+      dbLogger.error('No experience data found in the database');
       return [];
     }
 
@@ -127,7 +131,7 @@ export const fetchExperience = async (): Promise<Experience[]> => {
       )
     }));
   } catch (error) {
-    console.error('Error fetching experience:', error);
+    logError('Error fetching experience:', error, 'PortfolioService');
     return [];
   }
 };
@@ -149,7 +153,7 @@ export const fetchProjects = async (): Promise<Project[]> => {
 
     if (projectsError) throw projectsError;
     if (!projectsData || projectsData.length === 0) {
-      console.error('No projects data found in the database');
+      dbLogger.error('No projects data found in the database');
       return [];
     }
 
@@ -166,7 +170,7 @@ export const fetchProjects = async (): Promise<Project[]> => {
       )
     }));
   } catch (error) {
-    console.error('Error fetching projects:', error);
+    logError('Error fetching projects:', error, 'PortfolioService');
     return [];
   }
 };
@@ -180,7 +184,7 @@ export const fetchEducation = async (): Promise<Education[]> => {
 
     if (educationError) throw educationError;
     if (!educationData || educationData.length === 0) {
-      console.error('No education data found in the database');
+      dbLogger.error('No education data found in the database');
       return [];
     }
 
@@ -191,7 +195,7 @@ export const fetchEducation = async (): Promise<Education[]> => {
       details: edu.details
     }));
   } catch (error) {
-    console.error('Error fetching education:', error);
+    logError('Error fetching education:', error, 'PortfolioService');
     return [];
   }
 };
@@ -201,7 +205,7 @@ export const fetchPortfolioData = async (): Promise<Profile | null> => {
   try {
     const profile = await fetchProfile();
     if (!profile) {
-      console.error('Could not fetch profile data');
+      dbLogger.error('Could not fetch profile data');
       return null;
     }
 
@@ -217,7 +221,7 @@ export const fetchPortfolioData = async (): Promise<Profile | null> => {
 
     return profile;
   } catch (error) {
-    console.error('Error fetching complete portfolio data:', error);
+    logError('Error fetching complete portfolio data:', error, 'PortfolioService');
     return null;
   }
 };
@@ -259,7 +263,7 @@ export const fetchProjectById = async (projectId: string): Promise<Project | nul
       )
     };
   } catch (error) {
-    console.error(`Error fetching project with ID ${projectId}:`, error);
+    logError(`Error fetching project with ID ${projectId}:`, error, 'PortfolioService');
     return null;
   }
 };
