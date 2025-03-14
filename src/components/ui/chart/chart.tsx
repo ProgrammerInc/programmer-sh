@@ -3,7 +3,7 @@
 import * as React from 'react';
 import * as RechartsPrimitive from 'recharts';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/app.utils';
 import styles from './chart.module.css';
 
 // Format: { THEME_NAME: CSS_SELECTOR }
@@ -69,7 +69,8 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
       {Object.entries(THEMES).map(([theme, prefix]) => {
         const cssVars = colorConfig
           .map(([key, itemConfig]) => {
-            const color = itemConfig.theme?.[theme as keyof typeof itemConfig.theme] || itemConfig.color;
+            const color =
+              itemConfig.theme?.[theme as keyof typeof itemConfig.theme] || itemConfig.color;
             return color ? `--color-${key}: ${color};` : null;
           })
           .filter(Boolean)
@@ -79,11 +80,7 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
 
         const selector = `${prefix} [data-chart=${id}]`;
 
-        return (
-          <style key={`chart-style-${theme}-${id}`}>
-            {`${selector} { ${cssVars} }`}
-          </style>
-        );
+        return <style key={`chart-style-${theme}-${id}`}>{`${selector} { ${cssVars} }`}</style>;
       })}
     </>
   );

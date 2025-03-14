@@ -1,5 +1,5 @@
 import wallpaperPresets from '@/presets/wallpaper.presets';
-import { Command, CommandResult } from './types';
+import { Command, CommandResult } from './command.types';
 
 // Current wallpaper key in localStorage
 export const WALLPAPER_STORAGE_KEY = 'terminal_wallpaper';

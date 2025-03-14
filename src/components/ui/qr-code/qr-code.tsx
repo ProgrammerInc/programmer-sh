@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/app.utils';
 import React from 'react';
 import { QRCode } from 'react-qrcode-logo';
 

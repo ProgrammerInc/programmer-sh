@@ -1,5 +1,5 @@
 // Import getCommands function from the main commands file
-import { getCommands } from '.';
+import { getCommands } from '../commands';
 
 // Get all commands and log them for debugging
 const allCommands = getCommands();

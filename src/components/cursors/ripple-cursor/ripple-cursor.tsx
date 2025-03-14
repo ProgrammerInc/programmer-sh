@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import { hexToRgbArray } from '@/lib/utils';
+import { hexToRgbArray } from '@/utils/app.utils';
 import React, { useEffect, useReducer } from 'react';
 
 // Define the shape of a ripple object

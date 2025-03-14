@@ -1,10 +1,10 @@
 import { getCurrentCursor } from '@/commands/cursor-commands';
 import { processThemeFromUrl } from '@/commands/theme-commands';
-import { extractUrlParameters, validUrlCommands } from '@/commands/url-command-handler';
 import { getCurrentWallpaper } from '@/commands/wallpaper-commands';
 import CursorProvider from '@/components/ui/cursor';
 import Terminal from '@/components/ui/terminal';
 import WallpaperProvider from '@/components/ui/wallpaper';
+import { extractUrlParameters, validUrlCommands } from '@/lib/url-command-handler';
 import { wallpaperPresets } from '@/presets/wallpaper.presets';
 import { logger } from '@/services/logger';
 import { useEffect, useMemo, useRef, useState } from 'react';

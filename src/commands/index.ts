@@ -5,6 +5,7 @@ import {
   signupCommand,
   whoamiCommand
 } from './auth-commands';
+import { Command } from './command.types';
 import { cursorCommand } from './cursor-commands';
 import { educationCommand } from './education-commands';
 import { experienceCommand } from './experience-commands';
@@ -22,7 +23,6 @@ import {
   termsCommand
 } from './system-commands';
 import { themeCommand } from './theme-commands';
-import { Command } from './types';
 import { wallpaperCommand } from './wallpaper-commands';
 import { welcomeCommand } from './welcome-commands';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/supabase.client';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Github, Lock, Mail, Twitter, X } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';

@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/app.utils';
 import React, { useEffect, useRef, useState } from 'react';
 
 export interface SwarmEffectProps extends React.HTMLAttributes<HTMLDivElement> {

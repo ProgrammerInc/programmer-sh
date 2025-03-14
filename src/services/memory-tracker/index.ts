@@ -1,1 +1,1 @@
-export * from './memory-tracker';
+export * from './memory-tracker.service';

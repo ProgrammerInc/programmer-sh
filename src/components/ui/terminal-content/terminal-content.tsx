@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/app.utils';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { parseHtml } from '../terminal-response/html-parser';
 

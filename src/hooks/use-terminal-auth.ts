@@ -1,4 +1,4 @@
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/supabase.client';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 

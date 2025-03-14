@@ -1,5 +1,5 @@
-import { fetchProfile } from '../services/database/portfolio-services';
-import { Command, CommandResult } from './types';
+import { fetchProfile } from '../services/database/portfolio.services';
+import { Command, CommandResult } from './command.types';
 // Skills command implementation
 export const skillsCommand: Command = {
   name: 'skills',

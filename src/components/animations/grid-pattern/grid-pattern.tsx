@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/app.utils';
 import React from 'react';
 
 export interface GridPatternProps extends React.HTMLAttributes<HTMLDivElement> {

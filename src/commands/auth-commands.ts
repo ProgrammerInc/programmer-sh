@@ -1,5 +1,5 @@
-import { supabase } from '../integrations/supabase/client';
-import { Command, CommandResult } from './types';
+import { supabase } from '../integrations/supabase/supabase.client';
+import { Command, CommandResult } from './command.types';
 
 // Login command implementation
 export const loginCommand: Command = {

@@ -1,4 +1,4 @@
-import { supabase } from '../../integrations/supabase/client';
+import { supabase } from '../../integrations/supabase/supabase.client';
 import {
   Contact,
   Education,
@@ -6,7 +6,7 @@ import {
   Profile,
   Project,
   Skill
-} from '../../types/portfolio-data';
+} from '../../types/portfolio-data.types';
 import { createServiceLogger, logError } from '../logger/logger.utils';
 
 // Create a dedicated logger for database services

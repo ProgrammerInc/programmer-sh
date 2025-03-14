@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/app.utils';
 import React from 'react';
 import { StarsBackground } from '..';
 import './meteors.css';
@@ -24,7 +24,7 @@ export const Meteors = ({ color, number, className, withStars = true }: MeteorsP
     if (color) {
       document.documentElement.style.setProperty('--meteor-from-color', color);
     }
-    
+
     return () => {
       // Cleanup
       if (color) {
@@ -46,7 +46,7 @@ export const Meteors = ({ color, number, className, withStars = true }: MeteorsP
         top: 0,
         left: Math.floor(Math.random() * (1920 - -1920) + -1920) + 'px',
         animationDelay: Math.random() * (0.8 - 0.2) + 0.2 + 's',
-        animationDuration: Math.floor(Math.random() * (10 - 2) + 2) + 's',
+        animationDuration: Math.floor(Math.random() * (10 - 2) + 2) + 's'
       }}
     />
   ));
@@ -60,11 +60,7 @@ export const Meteors = ({ color, number, className, withStars = true }: MeteorsP
     );
   }
 
-  return (
-    <div className="meteors-container">
-      {meteorsHtml}
-    </div>
-  );
+  return <div className="meteors-container">{meteorsHtml}</div>;
 };
 
 export default Meteors;

@@ -1,4 +1,4 @@
-import { Command } from '@/commands/types';
+import { Command } from '@/commands/command.types';
 import { renderCommandOutput } from '@/components/ui/terminal/terminal-utils';
 import { useCallback, useState } from 'react';
 

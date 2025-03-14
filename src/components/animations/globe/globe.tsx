@@ -3,7 +3,7 @@
 'use client';
 
 import countries from '@/data/globe.json';
-import { genRandomNumbers, hexToRgbObject } from '@/lib/utils';
+import { genRandomNumbers, hexToRgbObject } from '@/utils/app.utils';
 import { OrbitControls } from '@react-three/drei';
 import { Canvas, extend, useThree } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';

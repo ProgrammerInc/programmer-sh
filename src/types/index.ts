@@ -1,2 +1,2 @@
-export * from './portfolio-data';
-export * from './social-links';
+export * from './portfolio-data.types';
+export * from './social-links.types';

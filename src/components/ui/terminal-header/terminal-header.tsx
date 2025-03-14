@@ -2,9 +2,9 @@
 
 import { useAuthModal } from '@/hooks/use-auth-modal';
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
-import { supabase } from '@/integrations/supabase/client';
-import { isIncognitoMode } from '@/lib/incognito';
-import { SocialLink } from '@/types/social-links';
+import { supabase } from '@/integrations/supabase/supabase.client';
+import { isIncognitoMode } from '@/lib/is-incognito-mode';
+import { SocialLink } from '@/types/social-links.types';
 import { ChevronDown, LogIn, LogOut, Minus, Plus, Settings, User, X } from 'lucide-react';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 

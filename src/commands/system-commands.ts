@@ -1,4 +1,4 @@
-import { Command } from './types';
+import { Command } from './command.types';
 import { welcomeCommand } from './welcome-commands';
 
 // Clear command

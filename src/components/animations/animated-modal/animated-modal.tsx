@@ -2,7 +2,7 @@
 
 import { useOutsideClick } from '@/hooks';
 import useModal, { ModalContext } from '@/hooks/use-modal';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/app.utils';
 import { AnimatePresence, motion } from 'motion/react';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 

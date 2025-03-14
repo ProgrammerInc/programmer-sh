@@ -1,6 +1,6 @@
 import { processCommand } from '../commands';
 
 export * from '../commands';
-export * from '../commands/types';
+export * from '../commands/command.types';
 
 export default processCommand;

@@ -1,5 +1,5 @@
-import { supabase } from '@/integrations/supabase/client';
-import { CommandResult } from './types';
+import { supabase } from '@/integrations/supabase/supabase.client';
+import { CommandResult } from './command.types';
 
 // Define message types
 export interface Message {

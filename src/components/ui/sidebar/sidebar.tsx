@@ -17,7 +17,7 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip/tooltip';
 import { useIsMobile } from '@/hooks/use-is-mobile';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/app.utils';
 import styles from './sidebar.module.css';
 
 import {

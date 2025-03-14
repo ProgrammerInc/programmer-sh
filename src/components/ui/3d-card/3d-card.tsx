@@ -2,7 +2,7 @@
 'use client';
 
 import useMouseEnter, { MouseEnterContext } from '@/hooks/use-mouse-enter';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/app.utils';
 import React, { useEffect, useRef, useState } from 'react';
 
 export const CardContainer = ({

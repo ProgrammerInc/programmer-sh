@@ -1,5 +1,5 @@
-import { fetchProfile } from '../services/database/portfolio-services';
-import { Command, CommandResult } from './types';
+import { fetchProfile } from '../services/database/portfolio.services';
+import { Command, CommandResult } from './command.types';
 
 // About command implementation
 export const aboutCommand: Command = {

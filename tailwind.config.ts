@@ -2,7 +2,7 @@
 import type { Config } from 'tailwindcss';
 import tailwindcssAnimate from 'tailwindcss-animate';
 import { default as flattenColorPalette } from 'tailwindcss/lib/util/flattenColorPalette';
-import { gradientPlugin } from './src/utils/tailwind-plugins';
+import { gradientPlugin } from './tailwind.plugins';
 
 function addVariablesForColors({ addBase, theme }: any) {
   const allColors = flattenColorPalette(theme('colors'));

@@ -98,10 +98,10 @@ import {
   LazyParticles,
   LazyVortex
 } from '@/lib/lazy-components';
-import { hexToRgb } from '@/lib/utils';
 import defaultBlobs from '@/presets/blob.presets';
 import { globeArcs, globeConfig } from '@/presets/globe.presets';
 import wallpaperPresets from '@/presets/wallpaper.presets';
+import { hexToRgb } from '@/utils/app.utils';
 import { Suspense, forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
 import { WallpaperProps } from './wallpaper.types';

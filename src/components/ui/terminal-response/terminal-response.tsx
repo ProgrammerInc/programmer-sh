@@ -1,7 +1,7 @@
 'use client';
 
 import { useTypingEffect } from '@/lib/typing-effect';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/app.utils';
 import React from 'react';
 import AnimatedContent from './animated-content';
 import HtmlContent from './html-content';

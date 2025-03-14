@@ -9,10 +9,10 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 // Lazily load page components
 const Index = lazy(() => import('./pages/Index'));
-const LoggerDemo = lazy(() => import('./components/demo/logger-demo'));
-const MemoryLeakDemo = lazy(() => import('./components/demo/memory-leak-demo'));
-const SentryDemo = lazy(() => import('./components/demo/sentry-demo'));
-const WhyDidYouRenderDemo = lazy(() => import('./components/demo/wdyr-demo'));
+const LoggerDemo = lazy(() => import('./components/demos/logger-demo'));
+const MemoryLeakDemo = lazy(() => import('./components/demos/memory-leak-demo'));
+const SentryDemo = lazy(() => import('./components/demos/sentry-demo'));
+const WhyDidYouRenderDemo = lazy(() => import('./components/demos/wdyr-demo'));
 const AuthCallback = lazy(() => import('./pages/AuthCallback'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 

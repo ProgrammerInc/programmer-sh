@@ -1,6 +1,6 @@
-import { ensureHttps } from '@/lib/utils';
-import type { SocialLink } from '../../types/social-links';
-import { fetchProfile } from './portfolio-services';
+import { ensureHttps } from '@/utils/app.utils';
+import type { SocialLink } from '../../types/social-links.types';
+import { fetchProfile } from './portfolio.services';
 
 // Fetch social links from the profile
 export const fetchSocialLinks = async (): Promise<SocialLink[]> => {

@@ -1,5 +1,5 @@
 import { cursorPresets } from '@/presets/cursor.presets';
-import { Command, CommandResult } from './types';
+import { Command, CommandResult } from './command.types';
 
 // Current cursor key in localStorage
 export const CURSOR_STORAGE_KEY = 'terminal_cursor';

@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/app.utils';
 import anime from 'animejs';
 import { useEffect, useMemo, useRef } from 'react';
 

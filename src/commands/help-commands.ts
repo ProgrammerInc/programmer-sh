@@ -1,4 +1,4 @@
-import { Command, CommandResult } from './types';
+import { Command, CommandResult } from './command.types';
 import { welcomeCommand } from './welcome-commands';
 
 export interface CommandHelp {

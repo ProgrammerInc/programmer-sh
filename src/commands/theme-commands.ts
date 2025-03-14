@@ -1,4 +1,4 @@
-import { Command, CommandResult } from './types';
+import { Command, CommandResult } from './command.types';
 
 // Theme options
 export type ThemeOption = 'dark' | 'light';

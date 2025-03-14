@@ -1,2 +1,2 @@
-export * from './client';
-export * from './types';
+export * from './supabase.client';
+export * from './supabase.types';

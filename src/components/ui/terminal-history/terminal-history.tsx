@@ -1,7 +1,7 @@
 'use client';
 
 import { getCommands } from '@/commands';
-import { Command } from '@/commands/types';
+import { Command } from '@/commands/command.types';
 import React, { useMemo } from 'react';
 import TerminalResponse from '../terminal-response';
 

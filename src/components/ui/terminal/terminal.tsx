@@ -24,7 +24,7 @@ import { TerminalFooter } from '@/components/ui/terminal-footer';
 import { TerminalHeader } from '@/components/ui/terminal-header';
 import { useCommandExecution } from '@/hooks/use-command-execution';
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
-import { SocialLink } from '@/types/social-links';
+import { SocialLink } from '@/types/social-links.types';
 import { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { scrollToBottom } from './terminal-utils';
 

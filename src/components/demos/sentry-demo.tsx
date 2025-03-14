@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { logger } from '@/services/logger';
-import { clearUserContext, sendTestError, setUserContext, trackEvent } from '@/utils/sentry-utils';
+import { clearUserContext, sendTestError, setUserContext, trackEvent } from '@/utils/sentry.utils';
 import * as Sentry from '@sentry/react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';

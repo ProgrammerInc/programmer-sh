@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import { initializeTheme } from './commands/theme-commands.ts';
 import { initializeWallpaper } from './commands/wallpaper-commands.ts';
-import SentryErrorBoundary from './components/error/sentry/sentry-error.boundary.tsx';
+import SentryErrorBoundary from './components/errors/sentry/sentry-error.boundary.tsx';
 import './index.css';
 
 // Initialize Sentry
