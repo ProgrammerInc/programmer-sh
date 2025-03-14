@@ -2,6 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { parseHtml } from '../terminal-response/html-parser';
 
 export interface TerminalContentProps {
   commandOutput: string;
@@ -156,8 +157,9 @@ export const TerminalContent = forwardRef<HTMLDivElement, TerminalContentProps>(
           'terminal-command-result', // Add animation for smoother transitions
           className
         )}
-        dangerouslySetInnerHTML={{ __html: commandOutput }}
-      />
+      >
+        {parseHtml(commandOutput)}
+      </div>
     );
   }
 );

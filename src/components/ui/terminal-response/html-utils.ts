@@ -1,10 +1,5 @@
 'use client';
 
-// Helper function to create a dangerously set HTML component with proper typings
-export const createMarkup = (htmlContent: string) => {
-  return { __html: htmlContent };
-};
-
 // Helper function to detect if content contains actual HTML tags
 // Excludes command-link spans which are handled separately
 export const containsHtmlTags = (content: string): boolean => {
@@ -25,5 +20,3 @@ export const containsHtmlTags = (content: string): boolean => {
 
   return result;
 };
-
-export default createMarkup;

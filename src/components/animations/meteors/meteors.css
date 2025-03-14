@@ -1,0 +1,4 @@
+/* Meteor animation custom styling */
+.meteor-custom-gradient::before {
+  background-image: linear-gradient(to right, var(--meteor-from-color), transparent) !important;
+}
