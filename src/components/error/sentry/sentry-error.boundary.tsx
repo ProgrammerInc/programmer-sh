@@ -1,20 +1,20 @@
 import { Button } from '@/components/ui/button/button';
 import * as Sentry from '@sentry/react';
-import { Component, PropsWithChildren } from 'react';
+import { Component, ErrorInfo, PropsWithChildren } from 'react';
 
-interface ErrorBoundaryState {
+export interface ErrorBoundaryState {
   hasError: boolean;
   error: Error | null;
   eventId: string | null;
 }
 
-class SentryErrorBoundary extends Component<PropsWithChildren, ErrorBoundaryState> {
+export class SentryErrorBoundary extends Component<PropsWithChildren, ErrorBoundaryState> {
   constructor(props: PropsWithChildren) {
     super(props);
     this.state = {
       hasError: false,
       error: null,
-      eventId: null,
+      eventId: null
     };
   }
 
@@ -22,13 +22,16 @@ class SentryErrorBoundary extends Component<PropsWithChildren, ErrorBoundaryStat
     return {
       hasError: true,
       error,
-      eventId: null,
+      eventId: null
     };
   }
 
-  componentDidCatch(error: Error, errorInfo: any): void {
-    Sentry.withScope((scope) => {
-      scope.setExtras(errorInfo);
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    Sentry.withScope(scope => {
+      // Convert ErrorInfo to a plain object that Sentry accepts
+      scope.setExtras({
+        componentStack: errorInfo.componentStack
+      });
       const eventId = Sentry.captureException(error);
       this.setState({ eventId });
     });
@@ -65,14 +68,18 @@ class SentryErrorBoundary extends Component<PropsWithChildren, ErrorBoundaryStat
                 />
               </svg>
             </div>
-            <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">Something went wrong</h1>
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+              Something went wrong
+            </h1>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              We've encountered an error and our team has been notified. You can try reloading the page or report this
-              issue.
+              We've encountered an error and our team has been notified. You can try reloading the
+              page or report this issue.
             </p>
             {this.state.error && (
               <div className="mb-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-md overflow-auto text-left">
-                <p className="text-sm font-mono text-red-600 dark:text-red-400">{this.state.error.toString()}</p>
+                <p className="text-sm font-mono text-red-600 dark:text-red-400">
+                  {this.state.error.toString()}
+                </p>
               </div>
             )}
             <div className="flex flex-col space-y-3">

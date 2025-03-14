@@ -1,7 +1,9 @@
+'use client';
+
+import { useAuthModal } from '@/hooks/use-auth-modal';
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
 import { supabase } from '@/integrations/supabase/client';
 import { isIncognitoMode } from '@/lib/incognito';
-import { useAuthModal } from '@/hooks/use-auth-modal';
 import { SocialLink } from '@/types/social-links';
 import { ChevronDown, LogIn, LogOut, Minus, Plus, Settings, User, X } from 'lucide-react';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';

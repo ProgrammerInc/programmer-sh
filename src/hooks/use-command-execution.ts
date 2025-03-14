@@ -1,5 +1,5 @@
+import { Command } from '@/commands/types';
 import { renderCommandOutput } from '@/components/ui/terminal/terminal-utils';
-import { Command } from '@/utils/commands/types';
 import { useCallback, useState } from 'react';
 
 export const useCommandExecution = (commands: Record<string, Command>) => {
@@ -163,14 +163,14 @@ export const useCommandExecution = (commands: Record<string, Command>) => {
           if (commandName === 'clear') {
             // For clear command, just clear output
             setCommandOutput('');
-            
+
             // Check if we should also clear command history
             if (cmdResult.clearHistory) {
               // Dispatch an event to notify the Terminal component to clear history
               const clearHistoryEvent = new CustomEvent('clearCommandHistory');
               document.dispatchEvent(clearHistoryEvent);
             }
-            
+
             if (cmdResult.runAfterClear) {
               setTimeout(() => {
                 // Always show welcome without any prefixes

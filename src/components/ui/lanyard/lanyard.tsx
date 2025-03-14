@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
+
 import { Environment, Lightformer, useGLTF, useTexture } from '@react-three/drei';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
 import {

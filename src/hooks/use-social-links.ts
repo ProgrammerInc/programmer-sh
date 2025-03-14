@@ -1,5 +1,5 @@
+import { fetchSocialLinks } from '@/services/database/social-links-service';
 import type { SocialLink } from '@/types/social-links';
-import { fetchSocialLinks } from '@/utils/database/social-links-service';
 import { useEffect, useState } from 'react';
 
 export const useSocialLinks = () => {

@@ -1,4 +1,5 @@
 'use client';
+
 import {
   Aurora,
   AuroraProps,
@@ -64,7 +65,6 @@ import {
 
 // Import types for lazy loaded components
 import type {
-  AuroraBackgroundProps,
   AuroraCanvasProps,
   BackgroundBeamsProps,
   BackgroundBoxesProps,
@@ -77,14 +77,9 @@ import type {
   MeteorsProps,
   ParticleNetworkProps,
   ParticlesProps,
-  VortexProps,
+  VortexProps
 } from '@/components/animations';
 
-import { hexToRgb } from '@/lib/utils';
-import defaultBlobs from '@/presets/blob.presets';
-import { globeArcs, globeConfig } from '@/presets/globe.presets';
-import wallpaperPresets from '@/presets/wallpaper.presets';
-import { Suspense, forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import {
   AnimationLoader,
   LazyAuroraBackground,
@@ -97,13 +92,17 @@ import {
   LazyGridDistortion,
   LazyHyperspeed,
   LazyMeshMatrix,
-  LazyMetalBalls,
   LazyMeteors,
   LazyParticleNetwork,
-  LazyParticles,
   LazyParticleVeil,
+  LazyParticles,
   LazyVortex
-} from '@/utils/lazy-components';
+} from '@/lib/lazy-components';
+import { hexToRgb } from '@/lib/utils';
+import defaultBlobs from '@/presets/blob.presets';
+import { globeArcs, globeConfig } from '@/presets/globe.presets';
+import wallpaperPresets from '@/presets/wallpaper.presets';
+import { Suspense, forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
 import { WallpaperProps } from './wallpaper.types';
 
@@ -202,7 +201,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
             )}
             {animation.id === 'aurora-background' && (
               <Suspense fallback={<AnimationLoader />}>
-                <LazyAuroraBackground 
+                <LazyAuroraBackground
                   className="h-full w-full"
                   showRadialGradient={true}
                   withStars={true}
@@ -213,16 +212,12 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
             )}
             {animation.id === 'background-beams' && (
               <Suspense fallback={<AnimationLoader />}>
-                <LazyBackgroundBeams
-                  {...(animation.animationProps as BackgroundBeamsProps)}
-                />
+                <LazyBackgroundBeams {...(animation.animationProps as BackgroundBeamsProps)} />
               </Suspense>
             )}
             {animation.id === 'background-boxes' && (
               <Suspense fallback={<AnimationLoader />}>
-                <LazyBackgroundBoxes
-                  {...(animation.animationProps as BackgroundBoxesProps)}
-                />
+                <LazyBackgroundBoxes {...(animation.animationProps as BackgroundBoxesProps)} />
               </Suspense>
             )}
             {animation.id === 'background-lines' && (
@@ -555,7 +550,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
             )}
             {animation.id === 'southern-lights' && (
               <Suspense fallback={<AnimationLoader />}>
-                <LazyAuroraBackground 
+                <LazyAuroraBackground
                   className="h-full w-full"
                   showRadialGradient={true}
                   withStars={true}
@@ -599,9 +594,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 {...(animation.animationProps as StarfallProps)}
               />
             )}
-            {animation.id === 'starry-background' && (
-              <StarryBackground />
-            )}
+            {animation.id === 'starry-background' && <StarryBackground />}
             {animation.id === 'swarm-effect' && (
               <SwarmEffect
                 src="/placeholder.svg"

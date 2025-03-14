@@ -1,3 +1,4 @@
+export * from './blob.presets';
 export * from './cursor.presets';
 export * from './globe.presets';
 export * from './hyperspeed.presets';

@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+'use client';
+
 import { PanInfo, motion, useAnimation, useMotionValue, useTransform } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 

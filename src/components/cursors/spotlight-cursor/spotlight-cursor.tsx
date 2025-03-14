@@ -1,4 +1,5 @@
 'use client';
+
 import useSpotlightEffect, { SpotlightConfig } from '@/hooks/use-spotlight-effect';
 import { HTMLAttributes } from 'react';
 

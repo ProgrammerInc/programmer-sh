@@ -1,3 +1,5 @@
+'use client';
+
 import { motion, useInView } from 'framer-motion';
 import React, { MouseEventHandler, ReactNode, UIEvent, useEffect, useRef, useState } from 'react';
 

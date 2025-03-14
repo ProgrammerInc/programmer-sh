@@ -1,3 +1,5 @@
+'use client';
+
 import { gsap } from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { EffectComposer } from 'postprocessing';
@@ -685,7 +687,7 @@ export class Z extends InstancedMesh {
   physics: W;
   ambientLight?: AmbientLight;
   light?: PointLight;
-  
+
   declare setColorAt: (index: number, color: Color) => void;
   declare instanceColor: InstancedBufferAttribute | null;
   declare setMatrixAt: (index: number, matrix: Matrix4) => void;

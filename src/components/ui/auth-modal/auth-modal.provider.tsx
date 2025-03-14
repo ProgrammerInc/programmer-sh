@@ -1,16 +1,8 @@
-import React, { createContext, useRef, useState } from 'react';
+'use client';
 
-type AuthMode = 'login' | 'signup';
-
-interface AuthModalContextType {
-  isModalOpen: boolean;
-  modalMode: AuthMode;
-  openModal: (mode: AuthMode) => void;
-  closeModal: () => void;
-  headerRef: React.RefObject<HTMLDivElement>;
-}
-
-const AuthModalContext = createContext<AuthModalContextType | undefined>(undefined);
+import { useRef, useState } from 'react';
+import { AuthModalContext } from './auth-modal.context';
+import { AuthMode } from './auth-modal.types';
 
 export const AuthModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,4 +29,4 @@ export const AuthModalProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   return <AuthModalContext.Provider value={value}>{children}</AuthModalContext.Provider>;
 };
 
-export { AuthModalContext };
+export default AuthModalProvider;

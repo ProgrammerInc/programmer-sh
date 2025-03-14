@@ -30,7 +30,7 @@ export const useTerminalHistory = (isInitializing: boolean) => {
 
           if (Array.isArray(parsedHistory) && parsedHistory.length > 0) {
             const formattedHistory = parsedHistory.map(
-              (item: { command: string, timestamp: string }) => ({
+              (item: { command: string; timestamp: string }) => ({
                 command: item.command,
                 timestamp: new Date(item.timestamp)
                 // No result property - we're only storing commands now
@@ -73,10 +73,11 @@ export const useTerminalHistory = (isInitializing: boolean) => {
   useEffect(() => {
     if (history.length > 0 && historyLoaded) {
       // Limit history size before saving to localStorage
-      const limitedHistory = history.length > MAX_HISTORY_LENGTH 
-        ? history.slice(history.length - MAX_HISTORY_LENGTH) 
-        : history;
-      
+      const limitedHistory =
+        history.length > MAX_HISTORY_LENGTH
+          ? history.slice(history.length - MAX_HISTORY_LENGTH)
+          : history;
+
       try {
         // Prepare history for storage - only save command and timestamp
         const storableHistory = limitedHistory.map(item => ({
@@ -147,13 +148,14 @@ export const useTerminalHistory = (isInitializing: boolean) => {
       // Also trim any oversized commands
       const trimmedHistory = newHistory.map(item => ({
         ...item,
-        command: item.command.length > MAX_COMMAND_LENGTH 
-          ? item.command.substring(0, MAX_COMMAND_LENGTH) + '...' 
-          : item.command,
+        command:
+          item.command.length > MAX_COMMAND_LENGTH
+            ? item.command.substring(0, MAX_COMMAND_LENGTH) + '...'
+            : item.command,
         // No longer storing output - we'll re-execute the command when needed
         timestamp: item.timestamp || new Date()
       }));
-      
+
       if (trimmedHistory.length > MAX_HISTORY_LENGTH) {
         setHistory(trimmedHistory.slice(trimmedHistory.length - MAX_HISTORY_LENGTH));
       } else {

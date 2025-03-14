@@ -1,3 +1,5 @@
+'use client';
+
 import { shaderMaterial, useTrailTexture } from '@react-three/drei';
 import { Canvas, CanvasProps, ThreeEvent, useThree } from '@react-three/fiber';
 import React, { useMemo } from 'react';

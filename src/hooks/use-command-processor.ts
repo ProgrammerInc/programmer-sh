@@ -1,6 +1,6 @@
+import { processCommand } from '@/commands';
+import { getSpecificCommandHelp } from '@/commands/help-commands';
 import { HistoryItem } from '@/components/ui/terminal-history';
-import { processCommand } from '@/utils/commands';
-import { getSpecificCommandHelp } from '@/utils/commands/help-commands';
 import { useCallback, useEffect, useState } from 'react';
 
 export const useCommandProcessor = (
@@ -44,26 +44,28 @@ export const useCommandProcessor = (
       // Special handling for history command
       if (commandString.trim().toLowerCase() === 'history') {
         // Replace placeholder with actual history
-        const historyOutput = Array.isArray(commandHistory) && commandHistory.length > 0 ?
-          commandHistory
-          .map(
-            (cmd, index) => {
-              try {
-                const helpText = getSpecificCommandHelp(cmd);
-                const helpLines = helpText ? helpText.split('\n') : [];
-                const description = helpLines.length > 1 ? 
-                  helpLines[1].trim().replace(`<strong class="text-terminal-prompt">${cmd}</strong>: `, '') : 
-                  'No description available';
-                
-                return `  ${index + 1}. <strong><span class="command-link" data-command="${cmd}">${cmd}</span>: </strong>${description}`;
-              } catch (error) {
-                console.error(`Error processing history item for command ${cmd}:`, error);
-                return `  ${index + 1}. <strong><span class="command-link" data-command="${cmd}">${cmd}</span>: </strong>Command information unavailable`;
-              }
-            }
-          )
-          .join('\n')
-          : '';
+        const historyOutput =
+          Array.isArray(commandHistory) && commandHistory.length > 0
+            ? commandHistory
+                .map((cmd, index) => {
+                  try {
+                    const helpText = getSpecificCommandHelp(cmd);
+                    const helpLines = helpText ? helpText.split('\n') : [];
+                    const description =
+                      helpLines.length > 1
+                        ? helpLines[1]
+                            .trim()
+                            .replace(`<strong class="text-terminal-prompt">${cmd}</strong>: `, '')
+                        : 'No description available';
+
+                    return `  ${index + 1}. <strong><span class="command-link" data-command="${cmd}">${cmd}</span>: </strong>${description}`;
+                  } catch (error) {
+                    console.error(`Error processing history item for command ${cmd}:`, error);
+                    return `  ${index + 1}. <strong><span class="command-link" data-command="${cmd}">${cmd}</span>: </strong>Command information unavailable`;
+                  }
+                })
+                .join('\n')
+            : '';
 
         result = {
           content:

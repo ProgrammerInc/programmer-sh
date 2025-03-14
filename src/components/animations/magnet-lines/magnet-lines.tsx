@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+'use client';
+
 import React, { CSSProperties, useEffect, useRef } from 'react';
 
 export interface MagnetLinesProps {

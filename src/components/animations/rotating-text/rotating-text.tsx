@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+'use client';
+
 import { AnimatePresence, Transition, motion } from 'framer-motion';
 import React, {
   forwardRef,
@@ -8,17 +10,6 @@ import React, {
   useMemo,
   useState
 } from 'react';
-
-// Add type declaration for Intl.Segmenter using interface augmentation
-declare global {
-  interface Intl {
-    Segmenter: {
-      new (locale: string, options?: { granularity: 'grapheme' | 'word' | 'sentence' }): {
-        segment(input: string): Iterable<{ segment: string; index: number; input: string }>
-      }
-    }
-  }
-}
 
 function cn(...classes: (string | undefined | null | boolean)[]): string {
   return classes.filter(Boolean).join(' ');
@@ -87,7 +78,10 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
         try {
           // Use type assertion to tell TypeScript that Segmenter exists
           const segmenter = new (Intl as any).Segmenter('en', { granularity: 'grapheme' });
-          return Array.from(segmenter.segment(text), (segment: { segment: string }) => segment.segment);
+          return Array.from(
+            segmenter.segment(text),
+            (segment: { segment: string }) => segment.segment
+          );
         } catch (e) {
           // Fallback if Segmenter throws an error
           console.warn('Intl.Segmenter error, falling back to Array.from:', e);

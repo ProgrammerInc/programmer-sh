@@ -1,3 +1,5 @@
+'use client';
+
 export class BubbleParticle {
   lifeSpan: number;
   initialLifeSpan: number;

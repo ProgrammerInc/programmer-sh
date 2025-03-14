@@ -1,3 +1,5 @@
+'use client';
+
 import { CSSProperties, FC } from 'react';
 
 export interface GlitchTextProps {

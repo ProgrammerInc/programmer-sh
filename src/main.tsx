@@ -5,14 +5,14 @@ import './wdyr';
 import * as Sentry from '@sentry/react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
-import SentryErrorBoundary from './components/error/SentryErrorBoundary';
+import { initializeTheme } from './commands/theme-commands.ts';
+import { initializeWallpaper } from './commands/wallpaper-commands.ts';
+import SentryErrorBoundary from './components/error/sentry/sentry-error.boundary.tsx';
 import './index.css';
-import { initializeTheme } from './utils/commands/theme-commands.ts';
-import { initializeWallpaper } from './utils/commands/wallpaper-commands.ts';
 
 // Initialize Sentry
 Sentry.init({
-  dsn: 'https://fc1e4b1a9b5a3f5256d7fab163d0c69f@o1312187.ingest.us.sentry.io/4508963397304320',
+  dsn: import.meta.env.VITE_SENTRY_DSN,
   integrations: [
     // Enable automatic instrumentation
     Sentry.browserTracingIntegration(),

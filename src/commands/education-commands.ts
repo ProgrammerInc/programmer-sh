@@ -1,4 +1,4 @@
-import { fetchEducation } from '../database/portfolio-services';
+import { fetchEducation } from '../services/database/portfolio-services';
 import { Command, CommandResult } from './types';
 
 export const educationCommand: Command = {

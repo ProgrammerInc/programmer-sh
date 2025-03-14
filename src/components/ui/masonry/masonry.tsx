@@ -1,3 +1,5 @@
+'use client';
+
 import { a, useTransition } from '@react-spring/web';
 import { useEffect, useMemo, useRef, useState } from 'react';
 

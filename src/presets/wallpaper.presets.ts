@@ -6,6 +6,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'default',
     name: 'Default',
     description: 'Default wallpaper',
+    enabled: true,
     type: 'default',
     background: {
       id: 'default',
@@ -25,6 +26,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'ai',
     name: 'Artificial Intelligence',
     description: 'Mockup of an A.I. processor chip with gold traces',
+    enabled: true,
     type: 'image',
     background: {
       id: 'ai',
@@ -41,6 +43,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'alley',
     name: 'Alley',
     description: 'A photo of an alley at night',
+    enabled: true,
     type: 'image',
     background: {
       id: 'alley',
@@ -57,6 +60,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'andromeda',
     name: 'Andromeda',
     description: 'A view of the Andromeda galaxy',
+    enabled: true,
     type: 'image',
     background: {
       id: 'andromeda',
@@ -73,6 +77,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'apollo',
     name: 'Apollo',
     description: 'Astronaut Buzz Aldrin on the lunar surface during the Apollo 11 mission',
+    enabled: true,
     type: 'image',
     background: {
       id: 'apollo',
@@ -89,6 +94,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'arcade',
     name: 'Arcade',
     description: 'An arcade filled with neon lights and machines',
+    enabled: true,
     type: 'image',
     background: {
       id: 'arcade',
@@ -105,6 +111,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'astronaut',
     name: 'Astronaut',
     description: 'An astronaut taking a selfie from space',
+    enabled: true,
     type: 'image',
     background: {
       id: 'astronaut',
@@ -121,6 +128,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'atlanta',
     name: 'Atlanta',
     description: 'A view of the Atlanta skyline',
+    enabled: true,
     type: 'image',
     background: {
       id: 'atlanta',
@@ -137,6 +145,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'aurora',
     name: 'Aurora Borealis',
     description: 'Aurora borealis in the night sky',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'aurora',
@@ -151,6 +160,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'aurora-canvas',
     name: 'Aurora Canvas',
     description: 'Aurora borealis in the night sky',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'aurora-canvas',
@@ -170,6 +180,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'austin',
     name: 'Austin',
     description: 'A view of the Austin skyline',
+    enabled: true,
     type: 'image',
     background: {
       id: 'austin',
@@ -186,6 +197,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'balatro',
     name: 'Balatro',
     description: 'Balatro - a rainbow of colors',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'balatro',
@@ -200,6 +212,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'ballpit',
     name: 'Ballpit',
     description: 'A ball pit of many colorful balls',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'ballpit',
@@ -220,6 +233,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'beach',
     name: 'Beach',
     description: 'A beach with sand and sea',
+    enabled: true,
     type: 'image',
     background: {
       id: 'beach',
@@ -236,6 +250,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'beam-portal',
     name: 'Beam Portal',
     description: 'A portal of beams',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'beam-portal',
@@ -255,6 +270,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'beams',
     name: 'Beams',
     description: 'Beams that animate in a wave pattern',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'beams',
@@ -274,6 +290,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'berlin',
     name: 'Berlin',
     description: 'A view of the Berlin city skyline',
+    enabled: true,
     type: 'image',
     background: {
       id: 'berlin',
@@ -290,6 +307,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'binary-heart',
     name: 'Binary Heart',
     description: 'A heart wallpaper made from binary code',
+    enabled: true,
     type: 'image',
     background: {
       id: 'binary-heart',
@@ -306,6 +324,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'black-cat',
     name: 'Black Cat',
     description: 'Macro photography of a black cat',
+    enabled: true,
     type: 'image',
     background: {
       id: 'black-cat',
@@ -322,6 +341,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'blackbird',
     name: 'SR-71 Blackbird',
     description: 'An ariel view of SR-71 Blackbird above snow-capped mountains',
+    enabled: true,
     type: 'image',
     background: {
       id: 'blackbird',
@@ -338,6 +358,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'blob-background',
     name: 'Blob Background',
     description: 'A blob background animation',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'blob-background',
@@ -357,6 +378,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'boombox',
     name: 'Boombox',
     description: 'A person laying behind a vintage boombox',
+    enabled: true,
     type: 'image',
     background: {
       id: 'boombox',
@@ -373,6 +395,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'california',
     name: 'California',
     description: 'A view of the Bixby Creek Bridge on Hwy 1 in California',
+    enabled: true,
     type: 'image',
     background: {
       id: 'california',
@@ -389,6 +412,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'camaro',
     name: 'Camaro',
     description: 'A photo of a Blue &amp; Black Chevrolet Camaro in the desert',
+    enabled: true,
     type: 'image',
     background: {
       id: 'camaro',
@@ -405,6 +429,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'camping',
     name: 'Camping',
     description: 'A photo of a dog sitting in front of a campfire',
+    enabled: true,
     type: 'image',
     background: {
       id: 'camping',
@@ -421,6 +446,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'cassette-tapes',
     name: 'Cassette Tapes',
     description: 'A wallpaper of audio cassette tapes',
+    enabled: true,
     type: 'image',
     background: {
       id: 'cassette-tapes',
@@ -437,6 +463,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'charlotte',
     name: 'Charlotte',
     description: 'A view of the Charlotte city skyline at sunset',
+    enabled: true,
     type: 'image',
     background: {
       id: 'charlotte',
@@ -453,6 +480,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'chicago',
     name: 'Chicago',
     description: 'A view of the Chicago city skyline at night',
+    enabled: true,
     type: 'image',
     background: {
       id: 'chicago',
@@ -469,6 +497,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'circuit-board',
     name: 'Circuit Board',
     description: 'PCB circuit board of electronic device',
+    enabled: true,
     type: 'image',
     background: {
       id: 'circuit-board',
@@ -485,6 +514,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'code',
     name: 'Code',
     description: 'Colorful code on a computer monitor',
+    enabled: true,
     type: 'image',
     background: {
       id: 'code',
@@ -501,6 +531,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'colorado',
     name: 'Colorado',
     description: 'A view of the Rockies in Colorado',
+    enabled: true,
     type: 'image',
     background: {
       id: 'colorado',
@@ -517,6 +548,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'concert',
     name: 'Concert',
     description: 'A photo of a concert',
+    enabled: true,
     type: 'image',
     background: {
       id: 'concert',
@@ -533,6 +565,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'continents',
     name: 'Continents',
     description: 'A Flat Earth view of the continents from space with clouds',
+    enabled: true,
     type: 'image',
     background: {
       id: 'continents',
@@ -549,6 +582,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'cosmic-scene',
     name: 'Cosmic Scene',
     description: 'A view of the cosmic scene',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'cosmic-scene',
@@ -568,6 +602,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'dallas',
     name: 'Dallas',
     description: 'A view of the Dallas skyline',
+    enabled: true,
     type: 'image',
     background: {
       id: 'dallas',
@@ -584,6 +619,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'denver',
     name: 'Denver',
     description: 'A view of the Denver skyline',
+    enabled: true,
     type: 'image',
     background: {
       id: 'denver',
@@ -600,6 +636,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'disc-jockey',
     name: 'Disc Jockey',
     description: 'A close-up photo of a Disc Jockey playing turntables',
+    enabled: true,
     type: 'image',
     background: {
       id: 'disc-jockey',
@@ -616,6 +653,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'drummer',
     name: 'Drummer',
     description: 'A drummer playing drums',
+    enabled: true,
     type: 'image',
     background: {
       id: 'drummer',
@@ -632,6 +670,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'dubai',
     name: 'Dubai',
     description: 'A view of the Dubai skyline at night',
+    enabled: true,
     type: 'image',
     background: {
       id: 'dubai',
@@ -648,6 +687,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'eclipse',
     name: 'Eclipse',
     description: 'A solar eclipse',
+    enabled: true,
     type: 'image',
     background: {
       id: 'eclipse',
@@ -664,6 +704,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'earth',
     name: 'Earth',
     description: 'A photo of Earth from space taken by NASA',
+    enabled: true,
     type: 'image',
     background: {
       id: 'earth',
@@ -687,6 +728,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'earthrise',
     name: 'Earthrise',
     description: 'The rising Earth greeted the Apollo 8 astronauts on December 24, 1968',
+    enabled: true,
     type: 'image',
     background: {
       id: 'earthrise',
@@ -703,6 +745,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'face-paint',
     name: 'Face Paint',
     description: 'A face painted in glow-in-the-dark neon colors',
+    enabled: true,
     type: 'image',
     background: {
       id: 'face-paint',
@@ -719,6 +762,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'ferrari',
     name: 'Ferrari',
     description: 'The tail light of a Ferrari 458 on the streets of London',
+    enabled: true,
     type: 'image',
     background: {
       id: 'ferrari',
@@ -735,6 +779,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'fog',
     name: 'Fog',
     description: 'Foggy forest in the early morning',
+    enabled: true,
     type: 'image',
     background: {
       id: 'fog',
@@ -751,6 +796,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'for-all-mankind',
     name: 'For All Mankind',
     description: 'A photo of a footprint on lunar regolith from Apollo 11',
+    enabled: true,
     type: 'image',
     background: {
       id: 'for-all-mankind',
@@ -767,6 +813,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'forest',
     name: 'Forest',
     description: 'A dirt road leading into a dense forest',
+    enabled: true,
     type: 'image',
     background: {
       id: 'forest',
@@ -783,6 +830,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'garden-of-gods',
     name: 'Garden of Gods',
     description: 'Photo of the night sky and the milky way from the Garden of the Gods',
+    enabled: true,
     type: 'image',
     background: {
       id: 'garden-of-gods',
@@ -795,26 +843,28 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
-  // gear: {
-  //   id: 'gear',
-  //   name: 'Gear',
-  //   description: 'A photo of military gear and equipment',
-  //   type: 'image',
-  //   background: {
-  //     id: 'gear',
-  //     type: 'image',
-  //     image: {
-  //       id: 'gear',
-  //       mimeType: 'image/avif',
-  //       type: 'url',
-  //       url: 'https://images.unsplash.com/photo-1713648129187-806efa50163b?auto=format&fit=crop&q=80'
-  //     }
-  //   }
-  // },
+  gear: {
+    id: 'gear',
+    name: 'Gear',
+    description: 'A photo of military gear and equipment',
+    enabled: true,
+    type: 'image',
+    background: {
+      id: 'gear',
+      type: 'image',
+      image: {
+        id: 'gear',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1713648129187-806efa50163b?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   'glass-orb': {
     id: 'glass-orb',
     name: 'Glass Orb',
     description: 'A glass orb reflecting colorful light',
+    enabled: true,
     type: 'image',
     background: {
       id: 'glass-orb',
@@ -831,6 +881,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'glasses',
     name: 'Glasses',
     description: 'A pair of glasses on a desk in front of computer monitors',
+    enabled: true,
     type: 'image',
     background: {
       id: 'glasses',
@@ -843,24 +894,26 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
-  // globe: {
-  //   id: 'globe',
-  //   name: 'Globe',
-  //   description: 'A globe of the world',
-  //   type: 'animation',
-  //   background: {
-  //     id: 'globe',
-  //     type: 'animation',
-  //     animation: {
-  //       id: 'globe',
-  //       type: 'aceternity'
-  //     }
-  //   }
-  // },
+  globe: {
+    id: 'globe',
+    name: 'Globe',
+    description: 'A globe of the world',
+    enabled: false,
+    type: 'animation',
+    background: {
+      id: 'globe',
+      type: 'animation',
+      animation: {
+        id: 'globe',
+        type: 'aceternity'
+      }
+    }
+  },
   'golden-gate': {
     id: 'golden-gate',
     name: 'Golden Gate',
     description: 'Photo of the Golden Gate Bridge in San Francisco, California',
+    enabled: true,
     type: 'image',
     background: {
       id: 'golden-gate',
@@ -877,6 +930,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'gradient',
     name: 'Gradient',
     description: 'A simple gradient background',
+    enabled: true,
     type: 'gradient',
     background: {
       id: 'default',
@@ -892,6 +946,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'gradient-animation',
     name: 'Gradient Animation',
     description: 'A gradient animation background',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'gradient-animation',
@@ -906,6 +961,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'gradient-mesh',
     name: 'Gradient Mesh',
     description: 'A gradient mesh background',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'gradient-mesh',
@@ -925,6 +981,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'grid-distortion',
     name: 'Grid Distortion',
     description: 'A twisted grid of tiles flipping and rotating',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'grid-distortion',
@@ -941,24 +998,26 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
-  // 'grid-motion': {
-  //   id: 'grid-motion',
-  //   name: 'Grid Motion',
-  //   description: 'Animated grid of moving elements',
-  //   type: 'animation',
-  //   background: {
-  //     id: 'grid-motion',
-  //     type: 'animation',
-  //     animation: {
-  //       id: 'grid-motion',
-  //       type: 'reactbits'
-  //     }
-  //   }
-  // },
+  'grid-motion': {
+    id: 'grid-motion',
+    name: 'Grid Motion',
+    description: 'Animated grid of moving elements',
+    enabled: false,
+    type: 'animation',
+    background: {
+      id: 'grid-motion',
+      type: 'animation',
+      animation: {
+        id: 'grid-motion',
+        type: 'reactbits'
+      }
+    }
+  },
   'grid-pattern': {
     id: 'grid-pattern',
     name: 'Grid Pattern',
     description: 'A grid of repeating patterns',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'grid-pattern',
@@ -978,6 +1037,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'guitar',
     name: 'Guitar',
     description: 'A guitarist playing his guitar',
+    enabled: true,
     type: 'image',
     background: {
       id: 'guitar',
@@ -994,6 +1054,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'home-studio',
     name: 'Home Studio',
     description: 'A view of a home studio',
+    enabled: true,
     type: 'image',
     background: {
       id: 'home-studio',
@@ -1010,6 +1071,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'hong-kong',
     name: 'Hong Kong',
     description: 'A view of the Hong Kong skyline at night',
+    enabled: true,
     type: 'image',
     background: {
       id: 'hong-kong',
@@ -1026,6 +1088,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'houston',
     name: 'Houston',
     description: 'A view of the Houston skyline',
+    enabled: true,
     type: 'image',
     background: {
       id: 'houston',
@@ -1042,6 +1105,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'html',
     name: 'HTML',
     description: 'A wallpaper of website HTML code',
+    enabled: true,
     type: 'image',
     background: {
       id: 'html',
@@ -1058,6 +1122,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'hummingbird',
     name: 'Hummingbird',
     description: 'Hummingbird approaching a bird feeder',
+    enabled: true,
     type: 'image',
     background: {
       id: 'hummingbird',
@@ -1074,6 +1139,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'hurricane',
     name: 'Hurricane',
     description: 'A giant hurricane as seen from space',
+    enabled: true,
     type: 'image',
     background: {
       id: 'hurricane',
@@ -1090,6 +1156,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'hyperspace-hero',
     name: 'Hyperspace Hero',
     description: 'A hero animation background',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'hyperspace-hero',
@@ -1109,6 +1176,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'hyperspeed',
     name: 'Hyperspeed',
     description: 'Streams of light race across the screen',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'hyperspeed',
@@ -1129,6 +1197,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'iridescence',
     name: 'Iridescence',
     description: 'Waves of liquid light',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'iridescence',
@@ -1143,6 +1212,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'iss',
     name: 'ISS',
     description: 'The International Space Station orbiting the Earth',
+    enabled: true,
     type: 'image',
     background: {
       id: 'iss',
@@ -1159,6 +1229,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'jupiter',
     name: 'Jupiter',
     description: 'Jupiter as seen from the Hubble Space Telescope',
+    enabled: true,
     type: 'image',
     background: {
       id: 'jupiter',
@@ -1175,6 +1246,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'lamborghini',
     name: 'Lamborghini',
     description: 'A photo of a Lamborghini in the desert',
+    enabled: true,
     type: 'image',
     background: {
       id: 'lamborghini',
@@ -1191,6 +1263,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'las-vegas',
     name: 'Las Vegas',
     description: 'A view of the Las Vegas skyline at night',
+    enabled: true,
     type: 'image',
     background: {
       id: 'las-vegas',
@@ -1207,6 +1280,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'leopard',
     name: 'Leopard',
     description: 'A grayscale photo of a majestic leopard',
+    enabled: true,
     type: 'image',
     background: {
       id: 'leopard',
@@ -1223,6 +1297,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'letter-glitch',
     name: 'Letter Glitch',
     description: "There's a glitch in the matrix",
+    enabled: true,
     type: 'animation',
     background: {
       id: 'letter-glitch',
@@ -1237,6 +1312,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'lightning',
     name: 'Lightning',
     description: 'Lightning across in the sky',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'lightning',
@@ -1251,6 +1327,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'liquid-chrome',
     name: 'Liquid Chrome',
     description: 'Purples waves of liquid metal',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'liquid-chrome',
@@ -1265,6 +1342,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'little-boxes',
     name: 'Little Boxes',
     description: 'Boxes that change color with mouse movement',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'little-boxes',
@@ -1284,6 +1362,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'london',
     name: 'London',
     description: 'A view of the London city skyline at night',
+    enabled: true,
     type: 'image',
     background: {
       id: 'london',
@@ -1300,6 +1379,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'los-angeles',
     name: 'Los Angeles',
     description: 'A view of the Los Angeles city skyline at night',
+    enabled: true,
     type: 'image',
     background: {
       id: 'los-angeles',
@@ -1316,6 +1396,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'macbook',
     name: 'Macbook',
     description: 'A colorful photo of an Apple Macbook computer',
+    enabled: true,
     type: 'image',
     background: {
       id: 'macbook',
@@ -1332,6 +1413,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'machu-pichu',
     name: 'Machu Pichu',
     description: 'A view of the Machu Pichu ruins',
+    enabled: true,
     type: 'image',
     background: {
       id: 'machu-pichu',
@@ -1348,6 +1430,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'magnet-lines',
     name: 'Magnet Lines',
     description: 'Magnet lines follow the cursor across the screen',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'magnet-lines',
@@ -1367,6 +1450,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'manhatten',
     name: 'Manhatten',
     description: 'On top of the world, Manhatten from outer space at night',
+    enabled: true,
     type: 'image',
     background: {
       id: 'manhatten',
@@ -1384,6 +1468,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     name: 'Mars',
     description:
       'A simulated view of Mars as it would be seen from the Mars Global Surveyor spacecraft',
+    enabled: true,
     type: 'image',
     background: {
       id: 'mars',
@@ -1400,6 +1485,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'mclaren',
     name: 'Mclaren P1',
     description: 'A photo of a McLaren P1 in action',
+    enabled: true,
     type: 'image',
     background: {
       id: 'mclaren',
@@ -1416,6 +1502,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'mercury',
     name: 'Mercury',
     description: "Mariner 10's first image of Mercury from 3 million+ miles",
+    enabled: true,
     type: 'image',
     background: {
       id: 'mercury',
@@ -1428,32 +1515,34 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
-  // 'mesh-matrix': {
-  //   id: 'mesh-matrix',
-  //   name: 'Mesh Matrix',
-  //   description: 'A mesh matrix background animation',
-  //   type: 'animation',
-  //   background: {
-  //     id: 'mesh-matrix',
-  //     type: 'animation',
-  //     animation: {
-  //       id: 'mesh-matrix',
-  //       type: 'artifact-ui',
-  //       animationProps: {
-  //         videoSrc: 'https://videos.pexels.com/video-files/3163534/3163534-sd_640_360_30fps.mp4'
-  //       }
-  //     },
-  //     gradient: {
-  //       id: 'default',
-  //       gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
-  //       type: 'linear'
-  //     }
-  //   }
-  // },
+  'mesh-matrix': {
+    id: 'mesh-matrix',
+    name: 'Mesh Matrix',
+    description: 'A mesh matrix background animation',
+    enabled: false,
+    type: 'animation',
+    background: {
+      id: 'mesh-matrix',
+      type: 'animation',
+      animation: {
+        id: 'mesh-matrix',
+        type: 'artifact-ui',
+        animationProps: {
+          videoSrc: 'https://videos.pexels.com/video-files/3163534/3163534-sd_640_360_30fps.mp4'
+        }
+      },
+      gradient: {
+        id: 'default',
+        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+        type: 'linear'
+      }
+    }
+  },
   meteors: {
     id: 'meteors',
     name: 'Meteors',
     description: 'Meteors streaming across the screen',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'meteors',
@@ -1474,6 +1563,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'mexico-city',
     name: 'Mexico City',
     description: 'A view of the Mexican City skyline at night',
+    enabled: true,
     type: 'image',
     background: {
       id: 'mexico-city',
@@ -1490,6 +1580,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'miami',
     name: 'Miami',
     description: 'A view of Miami at night',
+    enabled: true,
     type: 'image',
     background: {
       id: 'miami',
@@ -1506,6 +1597,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'microphone',
     name: 'Microphone',
     description: 'A close-up image of a microphone with bokeh lights',
+    enabled: true,
     type: 'image',
     background: {
       id: 'microphone',
@@ -1522,6 +1614,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'milky-way',
     name: 'Milky Way',
     description: 'A view of the Milky Way galaxy',
+    enabled: true,
     type: 'image',
     background: {
       id: 'milky-way',
@@ -1538,6 +1631,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'mixer',
     name: 'Mixer',
     description: 'A close-up photo of a music recording mixer',
+    enabled: true,
     type: 'image',
     background: {
       id: 'mixer',
@@ -1554,6 +1648,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'moon',
     name: 'Moon',
     description: 'A photo of a Moon crater close-up',
+    enabled: true,
     type: 'image',
     background: {
       id: 'moon',
@@ -1570,6 +1665,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'moon-buggy',
     name: 'Moon Buggy',
     description: 'Apollo 17 astronaut Gene Cernan on a lunar rover in 1972',
+    enabled: true,
     type: 'image',
     background: {
       id: 'moon-buggy',
@@ -1586,6 +1682,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'motherboard',
     name: 'Motherboard',
     description: 'Macro photography of a laptop motherboard',
+    enabled: true,
     type: 'image',
     background: {
       id: 'motherboard',
@@ -1602,6 +1699,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'mountains',
     name: 'Mountains',
     description: "Bird's eye view of green mountains",
+    enabled: true,
     type: 'image',
     background: {
       id: 'mountains',
@@ -1618,6 +1716,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'music',
     name: 'Music',
     description: 'A wall covered with vinyl records',
+    enabled: true,
     type: 'image',
     background: {
       id: 'music',
@@ -1634,6 +1733,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'mustang',
     name: 'Mustang',
     description: 'A photo of a 1972 Ford Mustang Mach 1 on asphalt road',
+    enabled: true,
     type: 'image',
     background: {
       id: 'mustang',
@@ -1650,6 +1750,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'nasa',
     name: 'NASA',
     description: 'NASA Kennedy Space Center in Cape Canaveral, Florida',
+    enabled: true,
     type: 'image',
     background: {
       id: 'nasa',
@@ -1666,6 +1767,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'nashville',
     name: 'Nashville',
     description: 'A view of the Nashville skyline',
+    enabled: true,
     type: 'image',
     background: {
       id: 'nashville',
@@ -1681,7 +1783,8 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
   nebula: {
     id: 'nebula',
     name: 'Carina Nebula',
-    description: 'Carina Nebula located in the Carina–Sagittarius Arm of the Milky Way',
+    description: 'Carina Nebula located in the Carina&hyphen;Sagittarius Arm of the Milky Way',
+    enabled: true,
     type: 'image',
     background: {
       id: 'nebula',
@@ -1698,6 +1801,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'neptune',
     name: 'Neptune',
     description: 'Neptune as seen from Voyager II in 1989',
+    enabled: true,
     type: 'image',
     background: {
       id: 'neptune',
@@ -1714,6 +1818,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'new-york',
     name: 'New York',
     description: 'A view of the New York skyline',
+    enabled: true,
     type: 'image',
     background: {
       id: 'new-york',
@@ -1730,6 +1835,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'nintendo',
     name: 'Nintendo Switch',
     description: 'A close-up image of a Nintendo Switch Console',
+    enabled: true,
     type: 'image',
     background: {
       id: 'nintendo',
@@ -1746,6 +1852,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'noise',
     name: 'Noise',
     description: 'Animated noise background',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'noise',
@@ -1765,6 +1872,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'orlando',
     name: 'Orlando',
     description: 'A view of the Orlando skyline',
+    enabled: true,
     type: 'image',
     background: {
       id: 'orlando',
@@ -1781,6 +1889,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'outer-space',
     name: 'Outer Space',
     description: 'A photo of earth from outer space at night',
+    enabled: true,
     type: 'image',
     background: {
       id: 'outer-space',
@@ -1797,6 +1906,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'paris',
     name: 'Paris',
     description: 'A view of the Paris skyline with the Eiffel Tower at sunset',
+    enabled: true,
     type: 'image',
     background: {
       id: 'paris',
@@ -1813,6 +1923,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'particle-network',
     name: 'Particle Network',
     description: 'A particle network animation background',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'particle-network',
@@ -1832,6 +1943,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'particles',
     name: 'Particles',
     description: 'Particles animation background',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'particles',
@@ -1851,6 +1963,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'particle-veil',
     name: 'Particle Veil',
     description: 'A particle veil animation background',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'particle-veil',
@@ -1870,6 +1983,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'party',
     name: 'Party',
     description: 'A colorful party background',
+    enabled: true,
     type: 'image',
     background: {
       id: 'party',
@@ -1886,6 +2000,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'peak',
     name: 'Peak',
     description: 'Parco Naturale Tre Cime Mountain Peak in Italy',
+    enabled: true,
     type: 'image',
     background: {
       id: 'peak',
@@ -1902,6 +2017,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'philadelphia',
     name: 'Philadelphia',
     description: 'Early morning in the city of brotherly love, Philadelphia, Pennsylvania',
+    enabled: true,
     type: 'image',
     background: {
       id: 'philadelphia',
@@ -1918,6 +2034,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'phoenix',
     name: 'Phoenix',
     description: 'A view of the Phoenix skyline at sunset',
+    enabled: true,
     type: 'image',
     background: {
       id: 'phoenix',
@@ -1934,6 +2051,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'piano',
     name: 'Piano',
     description: 'A close-up photo of a hand playing a piano',
+    enabled: true,
     type: 'image',
     background: {
       id: 'piano',
@@ -1950,6 +2068,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'playstation',
     name: 'PlayStation Controller',
     description: 'A close-up image of a PlayStation controller',
+    enabled: true,
     type: 'image',
     background: {
       id: 'playstation',
@@ -1966,6 +2085,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'pluto',
     name: 'Pluto',
     description: 'Pluto as seen from the New Horizons spacecraft in 2015',
+    enabled: true,
     type: 'image',
     background: {
       id: 'pluto',
@@ -1982,6 +2102,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'porsche',
     name: 'Porsche',
     description: 'A photo of a Black &amp; Gray Porsche 911 on asphalt',
+    enabled: true,
     type: 'image',
     background: {
       id: 'porsche',
@@ -1998,6 +2119,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'racing',
     name: 'Racing',
     description: 'A shot from the New Year’s Race on Circuit Zandvoort',
+    enabled: true,
     type: 'image',
     background: {
       id: 'racing',
@@ -2014,6 +2136,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'rain-drops',
     name: 'Rain Drops',
     description: 'Raindrops falling from the sky',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'rain-drops',
@@ -2033,6 +2156,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'rave',
     name: 'Rave Party',
     description: 'A rave party background',
+    enabled: true,
     type: 'image',
     background: {
       id: 'rave',
@@ -2049,6 +2173,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'recording-studio',
     name: 'Recording Studio',
     description: 'A recording studio',
+    enabled: true,
     type: 'image',
     background: {
       id: 'recording-studio',
@@ -2065,6 +2190,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'retro-gaming',
     name: 'Retro Gaming',
     description: 'A retro gaming background',
+    enabled: true,
     type: 'image',
     background: {
       id: 'retro-gaming',
@@ -2081,6 +2207,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'rome',
     name: 'Rome',
     description: 'A view of the Rome skyline',
+    enabled: true,
     type: 'image',
     background: {
       id: 'rome',
@@ -2097,6 +2224,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'salt-lake-city',
     name: 'Salt Lake City',
     description: 'A photo of the Salt Lake City skyline at night',
+    enabled: true,
     type: 'image',
     background: {
       id: 'salt-lake-city',
@@ -2113,6 +2241,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'san-antonio',
     name: 'San Antonio',
     description: 'A photo of the San Antonio river walk',
+    enabled: true,
     type: 'image',
     background: {
       id: 'san-antonio',
@@ -2129,6 +2258,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'san-diego',
     name: 'San Diego',
     description: 'A photo of the San Diego skyline at night',
+    enabled: true,
     type: 'image',
     background: {
       id: 'san-diego',
@@ -2145,6 +2275,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'san-francisco',
     name: 'San Francisco',
     description: 'A photo of the Sunrise over San Francisco',
+    enabled: true,
     type: 'image',
     background: {
       id: 'san-francisco',
@@ -2161,6 +2292,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'san-jose',
     name: 'San Jose',
     description: 'A photo of the San Jose skyline at night',
+    enabled: true,
     type: 'image',
     background: {
       id: 'san-jose',
@@ -2177,6 +2309,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'saturn',
     name: 'Saturn',
     description: 'Saturn as seen from the Cassini–Huygens mission',
+    enabled: true,
     type: 'image',
     background: {
       id: 'saturn',
@@ -2193,6 +2326,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'seattle',
     name: 'Seattle',
     description: 'A photo of the Seattle waterfront',
+    enabled: true,
     type: 'image',
     background: {
       id: 'seattle',
@@ -2209,6 +2343,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'shanghai',
     name: 'Shanghai',
     description: 'A view of the Shanghai skyline',
+    enabled: true,
     type: 'image',
     background: {
       id: 'shanghai',
@@ -2225,6 +2360,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'shooting-stars',
     name: 'Shooting Stars',
     description: 'Lucy in the sky with diamonds',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'shooting-stars',
@@ -2244,6 +2380,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'sig-sauer',
     name: 'Sig Sauer',
     description: 'A close-up photo of a Sig Sauer 9mm pistol and bullets',
+    enabled: true,
     type: 'image',
     background: {
       id: 'sig-sauer',
@@ -2260,6 +2397,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'slot-machines',
     name: 'Slot Machines',
     description: 'Neon lights of slot machines light up a dark room',
+    enabled: true,
     type: 'image',
     background: {
       id: 'slot-machines',
@@ -2276,6 +2414,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'snow',
     name: 'Snow',
     description: 'A snow-covered forest filled with lots of trees',
+    enabled: true,
     type: 'image',
     background: {
       id: 'snow',
@@ -2292,6 +2431,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'southern-lights',
     name: 'Southern Lights',
     description: 'Southern lights in the night sky',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'southern-lights',
@@ -2311,6 +2451,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'space',
     name: 'Space',
     description: 'The view from the edge of outer space',
+    enabled: true,
     type: 'image',
     background: {
       id: 'space',
@@ -2327,6 +2468,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'space-shuttle',
     name: 'Space Shuttle',
     description: 'The Space Shuttle Challenger launching from Complex 39',
+    enabled: true,
     type: 'image',
     background: {
       id: 'space-shuttle',
@@ -2343,6 +2485,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'sparkles',
     name: 'Sparkles',
     description: 'Sparkles animation background',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'sparkles',
@@ -2362,6 +2505,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'sphere-animation',
     name: 'Sphere Animation',
     description: 'A sphere animation background',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'sphere-animation',
@@ -2381,6 +2525,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'spotlight',
     name: 'Spotlight',
     description: 'A spotlight background animation',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'spotlight',
@@ -2400,6 +2545,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'squares',
     name: 'Squares',
     description: 'Animated squares background',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'squares',
@@ -2419,6 +2565,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'squirrel',
     name: 'Staring Squirrel',
     description: 'A brown squirrel on a black background staring at the camera',
+    enabled: true,
     type: 'image',
     background: {
       id: 'squirrel',
@@ -2435,6 +2582,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'star-trail',
     name: 'Star Trail',
     description: 'Star Trail Granite Outdoors Outback',
+    enabled: true,
     type: 'image',
     background: {
       id: 'star-trail',
@@ -2451,6 +2599,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'starfall',
     name: 'Starfall',
     description: 'Starfall animation',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'starfall',
@@ -2470,6 +2619,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'starry-background',
     name: 'Starry Background',
     description: 'A starry background animation',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'starry-background',
@@ -2489,6 +2639,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'starry-night',
     name: 'Starry Night',
     description: 'A starry night background',
+    enabled: true,
     type: 'image',
     background: {
       id: 'starry-night',
@@ -2505,6 +2656,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'sun',
     name: 'Sun',
     description: 'A corona mass ejection erupts from our sun on August 31, 2012',
+    enabled: true,
     type: 'image',
     background: {
       id: 'sun',
@@ -2521,6 +2673,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'sunset',
     name: 'Sunset',
     description: 'A view of the sunset',
+    enabled: true,
     type: 'image',
     background: {
       id: 'sunset',
@@ -2533,29 +2686,31 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
-  // 'swarm-effect': {
-  //   id: 'swarm-effect',
-  //   name: 'Swarm Effect',
-  //   description: 'A swarm of particles',
-  //   type: 'animation',
-  //   background: {
-  //     id: 'swarm-effect',
-  //     type: 'animation',
-  //     animation: {
-  //       id: 'swarm-effect',
-  //       type: 'artifact-ui'
-  //     },
-  //     gradient: {
-  //       id: 'default',
-  //       gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
-  //       type: 'linear'
-  //     }
-  //   }
-  // },
+  'swarm-effect': {
+    id: 'swarm-effect',
+    name: 'Swarm Effect',
+    description: 'A swarm of particles',
+    enabled: false,
+    type: 'animation',
+    background: {
+      id: 'swarm-effect',
+      type: 'animation',
+      animation: {
+        id: 'swarm-effect',
+        type: 'artifact-ui'
+      },
+      gradient: {
+        id: 'default',
+        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+        type: 'linear'
+      }
+    }
+  },
   sydney: {
     id: 'sydney',
     name: 'Sydney',
     description: 'A Birds Eye View of Sydney, Australia',
+    enabled: true,
     type: 'image',
     background: {
       id: 'sydney',
@@ -2572,6 +2727,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'tampa',
     name: 'Tampa',
     description: 'A view of the Tampa skyline',
+    enabled: true,
     type: 'image',
     background: {
       id: 'tampa',
@@ -2588,6 +2744,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'threads',
     name: 'Threads',
     description: 'The threads of fate on your desktop',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'threads',
@@ -2607,6 +2764,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'times-square',
     name: 'Times Square',
     description: 'A view of Times Square at night',
+    enabled: true,
     type: 'image',
     background: {
       id: 'times-square',
@@ -2623,6 +2781,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'toronto',
     name: 'Toronto',
     description: 'A view of the Toronto skyline as seen from Olympic Island',
+    enabled: true,
     type: 'image',
     background: {
       id: 'toronto',
@@ -2639,6 +2798,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'tokyo',
     name: 'Tokyo',
     description: 'A photo of the busy people of Tokyo in the streets',
+    enabled: true,
     type: 'image',
     background: {
       id: 'tokyo',
@@ -2655,6 +2815,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'turntable',
     name: 'Turntable',
     description: 'A close-up photo of a vinyl turntable',
+    enabled: true,
     type: 'image',
     background: {
       id: 'turntable',
@@ -2671,6 +2832,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'underwater',
     name: 'Underwater',
     description: 'Underwater view of the ocean',
+    enabled: true,
     type: 'image',
     background: {
       id: 'underwater',
@@ -2687,6 +2849,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'united-states',
     name: 'United States',
     description: 'A view of the United States from space',
+    enabled: true,
     type: 'image',
     background: {
       id: 'united-states',
@@ -2703,6 +2866,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'uranus',
     name: 'Uranus',
     description: 'Uranus as seen from the Voyager 2 mission',
+    enabled: true,
     type: 'image',
     background: {
       id: 'uranus',
@@ -2719,6 +2883,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'venice',
     name: 'Venice',
     description: 'A view of the Venice city canals at sunset',
+    enabled: true,
     type: 'image',
     background: {
       id: 'venice',
@@ -2735,6 +2900,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'venus',
     name: 'Venus',
     description: 'Venus captured by the Mariner 10 spacecraft in early 1974',
+    enabled: true,
     type: 'image',
     background: {
       id: 'venus',
@@ -2751,6 +2917,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'vinyl-records',
     name: 'Vinyl Records',
     description: 'A close-up image of vinyl records',
+    enabled: true,
     type: 'image',
     background: {
       id: 'vinyl-record',
@@ -2767,6 +2934,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'vortex',
     name: 'Vortex',
     description: 'Particle vortex animation',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'vortex',
@@ -2786,6 +2954,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'washington-dc',
     name: 'Washington DC',
     description: 'Photo of the Washington Monument with Cherry Blossom Trees in Washington, DC',
+    enabled: true,
     type: 'image',
     background: {
       id: 'washington-dc',
@@ -2802,6 +2971,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'waves',
     name: 'Waves',
     description: 'Trippy optical illusion animation',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'waves',
@@ -2817,29 +2987,31 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
-  // 'wavy-background': {
-  //   id: 'wavy-background',
-  //   name: 'Wavy Background',
-  //   description: 'Animated wavy background',
-  //   type: 'animation',
-  //   background: {
-  //     id: 'wavy-background',
-  //     type: 'animation',
-  //     animation: {
-  //       id: 'wavy-background',
-  //       type: 'aceternity'
-  //     },
-  //     gradient: {
-  //       id: 'default',
-  //       gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
-  //       type: 'linear'
-  //     }
-  //   }
-  // },
+  'wavy-background': {
+    id: 'wavy-background',
+    name: 'Wavy Background',
+    description: 'Animated wavy background',
+    enabled: false,
+    type: 'animation',
+    background: {
+      id: 'wavy-background',
+      type: 'animation',
+      animation: {
+        id: 'wavy-background',
+        type: 'aceternity'
+      },
+      gradient: {
+        id: 'default',
+        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+        type: 'linear'
+      }
+    }
+  },
   'wavy-lines': {
     id: 'wavy-lines',
     name: 'Wavy Lines',
     description: 'Lines that animate in a wave pattern',
+    enabled: true,
     type: 'animation',
     background: {
       id: 'wavy-lines',
@@ -2859,6 +3031,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'wordpress',
     name: 'WordPress',
     description: 'A close-up photo of a WordPress PHP code',
+    enabled: false,
     type: 'image',
     background: {
       id: 'wordpress',
@@ -2875,6 +3048,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'workbench',
     name: 'Workbench',
     description: 'A photo of a workbench with military gear and a shotgun',
+    enabled: true,
     type: 'image',
     background: {
       id: 'workbench',
@@ -2891,6 +3065,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'workspace',
     name: 'Workspace',
     description: 'Clean workspace desktop',
+    enabled: true,
     type: 'image',
     background: {
       id: 'workspace',
@@ -2903,29 +3078,31 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
-  // 'world-map': {
-  //   id: 'world-map',
-  //   name: 'World Map',
-  //   description: 'World map background with animated lines',
-  //   type: 'animation',
-  //   background: {
-  //     id: 'world-map',
-  //     type: 'animation',
-  //     animation: {
-  //       id: 'world-map',
-  //       type: 'aceternity'
-  //     },
-  //     gradient: {
-  //       id: 'default',
-  //       gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
-  //       type: 'linear'
-  //     }
-  //   }
-  // }
+  'world-map': {
+    id: 'world-map',
+    name: 'World Map',
+    description: 'World map background with animated lines',
+    enabled: false,
+    type: 'animation',
+    background: {
+      id: 'world-map',
+      type: 'animation',
+      animation: {
+        id: 'world-map',
+        type: 'aceternity'
+      },
+      gradient: {
+        id: 'default',
+        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
+        type: 'linear'
+      }
+    }
+  },
   xbox: {
     id: 'xbox',
     name: 'Xbox Console',
     description: 'A close-up image of an Xbox One Series X console',
+    enabled: true,
     type: 'image',
     background: {
       id: 'xbox',
@@ -2942,6 +3119,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     id: 'yosemite',
     name: 'Yosemite',
     description: 'A close-up photo of Yosemite National Park',
+    enabled: true,
     type: 'image',
     background: {
       id: 'yosemite',

@@ -1,4 +1,5 @@
 'use client';
+
 import useCanvasCursor from '@/hooks/use-canvas-cursor';
 
 export const CanvasCursor = () => {

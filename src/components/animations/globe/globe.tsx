@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-
 'use client';
+
 import countries from '@/data/globe.json';
 import { genRandomNumbers, hexToRgbObject } from '@/lib/utils';
 import { OrbitControls } from '@react-three/drei';

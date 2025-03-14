@@ -1,3 +1,5 @@
+'use client';
+
 import { Color, Polyline, Renderer, Transform, Vec3 } from 'ogl';
 import React, { useEffect, useRef } from 'react';
 

@@ -23,3 +23,16 @@ declare global {
     }
   }
 }
+
+declare global {
+  interface Intl {
+    Segmenter: {
+      new (
+        locale: string,
+        options?: { granularity: 'grapheme' | 'word' | 'sentence' }
+      ): {
+        segment(input: string): Iterable<{ segment: string; index: number; input: string }>;
+      };
+    };
+  }
+}

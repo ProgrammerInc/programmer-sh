@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { LinkMatch } from './types';
+import { LinkMatch } from './terminal-response.types';
 
 // Process URL links
 export function processUrlLinks(text: string): LinkMatch[] {
@@ -77,11 +79,11 @@ export function processCommandLinks(
       content: React.createElement(
         'a',
         {
-          onClick: (e) => {
+          onClick: e => {
             e.preventDefault();
             onCommandClick?.(command);
           },
-          onKeyDown: (e) => {
+          onKeyDown: e => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               onCommandClick?.(command);
@@ -113,11 +115,11 @@ export function processCommandLinks(
       content: React.createElement(
         'a',
         {
-          onClick: (e) => {
+          onClick: e => {
             e.preventDefault();
             onCommandClick?.(command);
           },
-          onKeyDown: (e) => {
+          onKeyDown: e => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               onCommandClick?.(command);

@@ -1,11 +1,10 @@
-import { AuthModal } from '@/components/ui/auth-modal/auth-modal';
+import { AuthModal, AuthModalProvider } from '@/components/ui/auth-modal';
 import { Toaster as Sonner } from '@/components/ui/sonner/sonner';
 import { Toaster } from '@/components/ui/toaster/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip/tooltip';
-import { AuthModalProvider } from '@/contexts/auth-modal-context';
 import { useAuthModal } from '@/hooks/use-auth-modal';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { lazy, Suspense, useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 // Lazily load page components

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { logger } from '@/services/logger/logger';
 import { clearUserContext, sendTestError, setUserContext, trackEvent } from '@/utils/sentry-utils';
 import * as Sentry from '@sentry/react';

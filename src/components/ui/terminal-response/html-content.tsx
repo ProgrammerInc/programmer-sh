@@ -1,8 +1,10 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import React from 'react';
 import { containsHtmlTags, createMarkup } from './html-utils';
 import { convertLinksToAnchors } from './link-utils';
-import { HtmlContentProps } from './types';
+import { HtmlContentProps } from './terminal-response.types';
 
 export const HtmlContent: React.FC<HtmlContentProps> = ({
   content,

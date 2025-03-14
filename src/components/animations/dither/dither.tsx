@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+'use client';
+
 import { Canvas, ThreeEvent, useFrame, useThree } from '@react-three/fiber';
 import { EffectComposer, wrapEffect } from '@react-three/postprocessing';
 import { Effect } from 'postprocessing';

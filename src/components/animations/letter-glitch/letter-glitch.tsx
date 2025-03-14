@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef } from 'react';
 import styles from './letter-glitch.module.css';
 
@@ -8,6 +10,7 @@ export interface LetterGlitchProps {
   outerVignette?: boolean;
   smooth?: boolean;
 }
+
 export const LetterGlitch = ({
   glitchColors = ['#2b4539', '#61dca3', '#61b3dc'],
   glitchSpeed = 50,

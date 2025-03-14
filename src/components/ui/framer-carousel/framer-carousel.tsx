@@ -1,3 +1,5 @@
+'use client';
+
 import { PanInfo, motion, useMotionValue, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { FiCircle, FiCode, FiFileText, FiLayers, FiLayout } from 'react-icons/fi';

@@ -33,7 +33,7 @@ body {
   --wdyr-border-radius: 0.5rem;
   --wdyr-spacing-base: 1.5rem;
   --wdyr-code-bg: var(--color-gray-800, #2d3748);
-  
+
   padding: var(--wdyr-spacing-base);
   border-radius: var(--wdyr-border-radius);
   background-color: var(--wdyr-bg-color);

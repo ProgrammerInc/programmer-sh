@@ -1,7 +1,9 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import React from 'react';
 import { convertLinksToAnchors } from './link-utils';
-import { AnimatedContentProps } from './types';
+import { AnimatedContentProps } from './terminal-response.types';
 
 export const AnimatedContent: React.FC<AnimatedContentProps> = ({
   displayText,

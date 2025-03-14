@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useEffect, useRef } from 'react';
 
 export interface CharacterParticle {

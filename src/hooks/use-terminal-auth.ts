@@ -1,4 +1,3 @@
-
 import { supabase } from '@/integrations/supabase/client';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
@@ -12,7 +11,7 @@ export const useTerminalAuth = () => {
       try {
         setLoading(true);
         const { data, error } = await supabase.auth.getSession();
-        
+
         if (!error && data.session) {
           setUserEmail(data.session.user.email);
           console.log('User is logged in:', data.session.user.email);
@@ -28,7 +27,7 @@ export const useTerminalAuth = () => {
 
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       setUserEmail(session?.user?.email || null);
-      
+
       if (event === 'SIGNED_IN') {
         console.log('User signed in:', session?.user.email);
         toast.success(`Signed in as ${session?.user.email}`);
@@ -110,14 +109,14 @@ export const useTerminalAuth = () => {
     }
   };
 
-  return { 
-    userEmail, 
-    setUserEmail, 
-    loading, 
-    login, 
-    signup, 
-    logout, 
-    isAuthenticated: !!userEmail 
+  return {
+    userEmail,
+    setUserEmail,
+    loading,
+    login,
+    signup,
+    logout,
+    isAuthenticated: !!userEmail
   };
 };
 

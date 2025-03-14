@@ -1,3 +1,5 @@
+'use client';
+
 import Matter from 'matter-js';
 import { useEffect, useRef, useState } from 'react';
 

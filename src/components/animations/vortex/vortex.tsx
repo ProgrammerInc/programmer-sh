@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+'use client';
+
 import { cn } from '@/lib/utils';
 import { motion } from 'motion/react';
 import { useEffect, useRef } from 'react';

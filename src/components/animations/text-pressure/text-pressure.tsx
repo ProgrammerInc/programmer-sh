@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+'use client';
+
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export interface TextPressureProps {
   text?: string;

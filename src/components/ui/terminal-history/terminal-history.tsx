@@ -1,7 +1,9 @@
+'use client';
+
+import { getCommands } from '@/commands';
+import { Command } from '@/commands/types';
 import React, { useMemo } from 'react';
 import TerminalResponse from '../terminal-response';
-import { getCommands } from '@/utils/commands';
-import { Command } from '@/utils/commands/types';
 
 export interface HistoryItem {
   command: string;
@@ -24,7 +26,7 @@ export const TerminalHistory: React.FC<TerminalHistoryProps> = ({ history, onCom
       return {};
     }
   }, []);
-  
+
   // Helper function to execute a command and get its result
   const executeCommand = (commandStr: string) => {
     try {
@@ -32,24 +34,24 @@ export const TerminalHistory: React.FC<TerminalHistoryProps> = ({ history, onCom
       if (!commandStr || commandStr.trim() === '') {
         return { content: '', isError: false };
       }
-      
+
       const commandParts = commandStr.split(' ');
       const commandName = commandParts[0];
       const args = commandParts.slice(1).join(' ');
-      
+
       // Special handling for clear command - don't actually clear when viewing history
       if (commandName.toLowerCase() === 'clear') {
-        return { 
-          content: '<i>Terminal was cleared</i>', 
-          isError: false 
+        return {
+          content: '<i>Terminal was cleared</i>',
+          isError: false
         };
       }
-      
+
       if (commandName in commands) {
         const command: Command = commands[commandName];
         return command.execute(args);
       }
-      
+
       // Return error for unknown commands
       return {
         content: `Command not found: ${commandName}`,
@@ -63,24 +65,20 @@ export const TerminalHistory: React.FC<TerminalHistoryProps> = ({ history, onCom
       };
     }
   };
-  
+
   return (
     <>
       {history.map((item, index) => {
         // Execute the command to get its result - handle potential errors gracefully
         const result = executeCommand(item.command);
-        
+
         return (
           <div key={index} className="mb-4">
             <div className="flex items-center mb-1">
               <span className="text-terminal-prompt font-mono mr-2">~$</span>
               <span className="text-terminal-foreground font-mono">{item.command}</span>
             </div>
-            <TerminalResponse
-              response={result}
-              animate={false}
-              onCommandClick={onCommandClick}
-            />
+            <TerminalResponse response={result} animate={false} onCommandClick={onCommandClick} />
           </div>
         );
       })}

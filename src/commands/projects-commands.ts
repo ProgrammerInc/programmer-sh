@@ -1,4 +1,4 @@
-import { fetchProjectById, fetchProjects } from '../database/portfolio-services';
+import { fetchProjectById, fetchProjects } from '../services/database/portfolio-services';
 import { Command, CommandResult } from './types';
 
 export const projectsCommand: Command = {

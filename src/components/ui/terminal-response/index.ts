@@ -5,6 +5,6 @@ export * from './html-content';
 export * from './html-utils';
 export * from './link-utils';
 export * from './terminal-response';
-export * from './types';
+export * from './terminal-response.types';
 
 export default TerminalResponse;

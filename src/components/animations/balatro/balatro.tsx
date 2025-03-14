@@ -1,3 +1,5 @@
+'use client';
+
 import { hexToVec4 } from '@/lib/utils';
 import { Mesh, Program, Renderer, Triangle } from 'ogl';
 import { useEffect, useRef } from 'react';

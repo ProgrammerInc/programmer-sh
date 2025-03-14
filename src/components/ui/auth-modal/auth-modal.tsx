@@ -1,18 +1,12 @@
+'use client';
+
 import { useTerminalAuth } from '@/hooks/use-terminal-auth';
 import { supabase } from '@/integrations/supabase/client';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Github, Lock, Mail, Twitter, X } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
-
-export type AuthMode = 'login' | 'signup';
-
-export interface AuthModalProps {
-  isOpen: boolean;
-  mode: AuthMode;
-  anchorRef: React.RefObject<HTMLDivElement>;
-  onClose: () => void;
-}
+import { AuthModalProps, AuthMode } from './auth-modal.types';
 
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, mode, anchorRef, onClose }) => {
   const [currentMode, setCurrentMode] = useState<AuthMode>(mode);

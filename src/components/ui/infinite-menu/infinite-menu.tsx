@@ -1,3 +1,5 @@
+'use client';
+
 import { mat4, quat, vec2, vec3 } from 'gl-matrix';
 import { FC, MutableRefObject, useEffect, useRef, useState } from 'react';
 

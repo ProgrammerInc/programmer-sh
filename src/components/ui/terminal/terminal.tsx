@@ -1,28 +1,30 @@
-import { TerminalContent } from '@/components/ui/terminal-content';
-import { TerminalFooter } from '@/components/ui/terminal-footer';
-import { TerminalHeader } from '@/components/ui/terminal-header';
-import { useCommandExecution } from '@/hooks/use-command-execution';
-import { useTerminalAuth } from '@/hooks/use-terminal-auth';
-import { SocialLink } from '@/types/social-links';
+'use client';
+
 import {
   loginCommand,
   logoutCommand,
   profileCommand,
   signupCommand,
   whoamiCommand
-} from '@/utils/commands/auth-commands';
-import { cursorCommand } from '@/utils/commands/cursor-commands';
-import { educationCommand } from '@/utils/commands/education-commands';
-import { experienceCommand } from '@/utils/commands/experience-commands';
-import { clearCommand, echoCommand, helpCommand } from '@/utils/commands/help-commands';
-import { aboutCommand, contactCommand } from '@/utils/commands/information-commands';
-import { projectsCommand } from '@/utils/commands/projects-commands';
-import { resumeCommand } from '@/utils/commands/resume-commands';
-import { skillsCommand } from '@/utils/commands/skills-commands';
-import { privacyCommand, termsCommand } from '@/utils/commands/system-commands';
-import { themeCommand } from '@/utils/commands/theme-commands';
-import { wallpaperCommand } from '@/utils/commands/wallpaper-commands';
-import { welcomeCommand } from '@/utils/commands/welcome-commands';
+} from '@/commands/auth-commands';
+import { cursorCommand } from '@/commands/cursor-commands';
+import { educationCommand } from '@/commands/education-commands';
+import { experienceCommand } from '@/commands/experience-commands';
+import { clearCommand, echoCommand, helpCommand } from '@/commands/help-commands';
+import { aboutCommand, contactCommand } from '@/commands/information-commands';
+import { projectsCommand } from '@/commands/projects-commands';
+import { resumeCommand } from '@/commands/resume-commands';
+import { skillsCommand } from '@/commands/skills-commands';
+import { privacyCommand, termsCommand } from '@/commands/system-commands';
+import { themeCommand } from '@/commands/theme-commands';
+import { wallpaperCommand } from '@/commands/wallpaper-commands';
+import { welcomeCommand } from '@/commands/welcome-commands';
+import { TerminalContent } from '@/components/ui/terminal-content';
+import { TerminalFooter } from '@/components/ui/terminal-footer';
+import { TerminalHeader } from '@/components/ui/terminal-header';
+import { useCommandExecution } from '@/hooks/use-command-execution';
+import { useTerminalAuth } from '@/hooks/use-terminal-auth';
+import { SocialLink } from '@/types/social-links';
 import { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { scrollToBottom } from './terminal-utils';
 
@@ -120,9 +122,12 @@ const Terminal: React.FC<TerminalProps> = ({
               const parsedHistory = JSON.parse(savedHistory);
               if (Array.isArray(parsedHistory) && parsedHistory.length > 0) {
                 const historyDisplay = parsedHistory
-                  .map((cmd, index) => `  ${index + 1}. <strong><span class="command-link" data-command="${cmd}">${cmd}</span></strong>`)
+                  .map(
+                    (cmd, index) =>
+                      `  ${index + 1}. <strong><span class="command-link" data-command="${cmd}">${cmd}</span></strong>`
+                  )
                   .join('\n');
-                
+
                 return {
                   content: `Command History:\n\n${historyDisplay}`,
                   isError: false,
@@ -130,7 +135,7 @@ const Terminal: React.FC<TerminalProps> = ({
                 };
               }
             }
-            
+
             // No history available
             return {
               content: 'No command history available.',
@@ -199,7 +204,7 @@ const Terminal: React.FC<TerminalProps> = ({
     // Debug the initialization
     console.log('Terminal initialization check - executeCommand exists:', !!executeCommand);
     console.log('Terminal initialization check - initialCommands:', initialCommands);
-    
+
     // Only run this effect when executeCommand is defined and we haven't executed the commands yet
     if (!executeCommand || initialCommandsExecuted.current) {
       return;
@@ -294,15 +299,15 @@ const Terminal: React.FC<TerminalProps> = ({
       command: '',
       timestamp: 0
     };
-    
+
     const isRecentlyExecuted = (command: string) => {
       const now = Date.now();
       const isDuplicate = lastCommandExecution.command === command;
-      const isRecent = (now - lastCommandExecution.timestamp) < 500; // 500ms debounce window
-      
+      const isRecent = now - lastCommandExecution.timestamp < 500; // 500ms debounce window
+
       return isDuplicate && isRecent;
     };
-    
+
     const updateCommandExecution = (command: string) => {
       lastCommandExecution = {
         command,
@@ -324,7 +329,7 @@ const Terminal: React.FC<TerminalProps> = ({
       commandHistoryRef.current = [];
       historyIndexRef.current = -1;
     };
-    
+
     const handleExecuteCommand = (event: Event) => {
       const { command } = (event as CustomEvent).detail;
       if (command) {
@@ -333,10 +338,10 @@ const Terminal: React.FC<TerminalProps> = ({
           console.log('Preventing duplicate command execution:', command);
           return;
         }
-        
+
         // Mark this command as executed
         updateCommandExecution(command);
-        
+
         setCommandInput(command);
         executeCommand(command);
         // Clear input after execution
@@ -375,10 +380,10 @@ const Terminal: React.FC<TerminalProps> = ({
             console.log('Preventing duplicate link command execution:', command);
             return;
           }
-          
+
           // Mark this command as executed
           updateCommandExecution(command);
-          
+
           // Set the input field to show the command
           setCommandInput(command);
 

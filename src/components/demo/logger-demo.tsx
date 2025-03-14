@@ -229,10 +229,12 @@ export default function LoggerDemo() {
       <div className="mt-6 p-4 bg-purple-900 text-white rounded">
         <h3 className="text-lg font-semibold mb-2">Sentry Integration</h3>
         <p className="mb-2">
-          The application integrates Sentry for comprehensive error tracking, performance monitoring, and session replay.
+          The application integrates Sentry for comprehensive error tracking, performance
+          monitoring, and session replay.
         </p>
         <p className="mb-4 text-purple-200">
-          Track errors, monitor performance issues, and gain insights into user sessions with Sentry's powerful tools.
+          Track errors, monitor performance issues, and gain insights into user sessions with
+          Sentry's powerful tools.
         </p>
         <Link
           to="/demo/sentry"

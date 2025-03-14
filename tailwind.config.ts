@@ -151,9 +151,23 @@ export default {
         blink: {
           '50%': { opacity: '0.6' }
         },
+        'crosshatch-shift': {
+          '0%': { transform: 'rotate(0deg)' },
+          '50%': { transform: 'rotate(45deg)' },
+          '100%': { transform: 'rotate(0deg)' }
+        },
         'cursor-blink': {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0' }
+        },
+        'diamonds-shift': {
+          '0%': { transform: 'translateX(0) translateY(0) scale(1)' },
+          '50%': { transform: 'translateX(25%) translateY(25%) scale(0.8)' },
+          '100%': { transform: 'translateX(0) translateY(0) scale(1)' }
+        },
+        'dots-shift': {
+          '0%, 100%': { transform: 'rotate(0deg)' },
+          '50%': { transform: 'rotate(180deg)' }
         },
         'fade-in': {
           from: { opacity: '0', transform: 'translateY(10px)' },
@@ -233,6 +247,11 @@ export default {
           '50%': { transform: 'scale(1.5) rotate(180deg)' },
           '100%': { transform: 'scale(1) rotate(360deg)' }
         },
+        'lines-shift': {
+          '0%': { transform: 'translateX(0) translateY(0)' },
+          '50%': { transform: 'translateX(50%) translateY(50%)' },
+          '100%': { transform: 'translateX(0) translateY(0)' }
+        },
         marquee: {
           from: { transform: 'translateX(0%)' },
           to: { transform: 'translateX(-50%)' }
@@ -300,6 +319,11 @@ export default {
             transform: 'translate(-50%,-40%) scale(1)'
           }
         },
+        'squares-shift': {
+          '0%': { transform: 'translateX(0) translateY(0) rotate(0deg)' },
+          '50%': { transform: 'translateX(25%) translateY(25%) rotate(180deg)' },
+          '100%': { transform: 'translateX(0) translateY(0) rotate(360deg)' }
+        },
         'star-movement-bottom': {
           '0%': { transform: 'translateX(0) rotate(0)' },
           '100%': { transform: 'translateX(-100vw) rotate(360deg)' }
@@ -311,30 +335,6 @@ export default {
         'text-typing': {
           from: { width: '0' },
           to: { width: '100%' }
-        },
-        'crosshatch-shift': {
-          '0%': { transform: 'rotate(0deg)' },
-          '50%': { transform: 'rotate(45deg)' },
-          '100%': { transform: 'rotate(0deg)' }
-        },
-        'diamonds-shift': {
-          '0%': { transform: 'translateX(0) translateY(0) scale(1)' },
-          '50%': { transform: 'translateX(25%) translateY(25%) scale(0.8)' },
-          '100%': { transform: 'translateX(0) translateY(0) scale(1)' }
-        },
-        'dots-shift': {
-          '0%, 100%': { transform: 'rotate(0deg)' },
-          '50%': { transform: 'rotate(180deg)' }
-        },
-        'lines-shift': {
-          '0%': { transform: 'translateX(0) translateY(0)' },
-          '50%': { transform: 'translateX(50%) translateY(50%)' },
-          '100%': { transform: 'translateX(0) translateY(0)' }
-        },
-        'squares-shift': {
-          '0%': { transform: 'translateX(0) translateY(0) rotate(0deg)' },
-          '50%': { transform: 'translateX(25%) translateY(25%) rotate(180deg)' },
-          '100%': { transform: 'translateX(0) translateY(0) rotate(360deg)' }
         }
       },
       animation: {
@@ -347,33 +347,33 @@ export default {
         'beam-wave': 'beam-wave 10s ease-in-out infinite',
         'beam-zigzag': 'beam-zigzag 6s ease-in-out infinite',
         blink: 'blink 2s linear infinite',
+        'crosshatch-shift': 'crosshatch-shift 20s linear infinite',
         'cursor-blink': 'cursor-blink 1s infinite',
+        'diamonds-shift': 'diamonds-shift 20s linear infinite',
+        'dots-shift': 'dots-shift 20s linear infinite',
         'fade-in': 'fade-in 0.5s ease-out',
         'fade-out': 'fade-out 0.5s ease-out',
+        fifth: 'move-in-circle 20s ease infinite',
+        first: 'move-vertical 30s ease infinite',
         flicker: 'flicker 30s cubic-bezier(0.45, 0, 0.55, 1) infinite',
+        fourth: 'move-horizontal 40s ease infinite',
         'glitch-after': 'glitch var(--after-duration) infinite linear alternate-reverse',
         'glitch-before': 'glitch var(--before-duration) infinite linear alternate-reverse',
         'glow-pulse': 'glow-pulse 2s infinite',
         gradient: 'gradient 8s linear infinite',
+        'lines-shift': 'lines-shift 20s linear infinite',
         marquee: 'marquee 15s linear infinite',
         'meteor-effect': 'meteor 5s linear infinite',
         'scale-up': 'scale-up 0.2s ease-out',
+        second: 'move-in-circle 20s reverse infinite',
         shine: 'shine 5s linear infinite',
         spin: 'spin 10s linear infinite',
         spotlight: 'spotlight 2s ease .75s 1 forwards',
+        'squares-shift': 'squares-shift 20s linear infinite',
         'star-movement-bottom': 'star-movement-bottom 6s linear infinite',
         'star-movement-top': 'star-movement-top 6s linear infinite',
         'text-typing': 'text-typing 3.5s steps(40, end)',
-        'crosshatch-shift': 'crosshatch-shift 20s linear infinite',
-        'diamonds-shift': 'diamonds-shift 20s linear infinite',
-        'dots-shift': 'dots-shift 20s linear infinite',
-        'lines-shift': 'lines-shift 20s linear infinite',
-        'squares-shift': 'squares-shift 20s linear infinite',
-        first: 'move-vertical 30s ease infinite',
-        second: 'move-in-circle 20s reverse infinite',
-        third: 'move-in-circle 40s linear infinite',
-        fourth: 'move-horizontal 40s ease infinite',
-        fifth: 'move-in-circle 20s ease infinite'
+        third: 'move-in-circle 40s linear infinite'
       },
       fontFamily: {
         mono: ['JetBrains Mono', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', 'monospace']

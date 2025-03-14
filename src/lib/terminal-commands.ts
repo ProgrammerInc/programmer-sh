@@ -1,6 +1,6 @@
-import { processCommand } from '../utils/commands';
+import { processCommand } from '../commands';
 
-export * from '../utils/commands';
-export * from '../utils/commands/types';
+export * from '../commands';
+export * from '../commands/types';
 
 export default processCommand;

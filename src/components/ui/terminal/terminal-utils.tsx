@@ -1,3 +1,5 @@
+'use client';
+
 export const renderCommandOutput = (command: string, output: string, rawHTML: boolean = false) => {
   const commandHeader = `<div class="mb-1"><span class="text-terminal-prompt">guest@programmer.sh:~$&nbsp;</span>${command}</div>`;
 

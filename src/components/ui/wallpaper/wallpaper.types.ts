@@ -11,6 +11,7 @@ import {
   BlobBackgroundProps,
   CosmicSceneProps,
   DitherProps,
+  GlobeProps,
   GradientAnimationProps,
   GradientMeshProps,
   GridDistortionProps,
@@ -43,8 +44,7 @@ import {
   VortexProps,
   WavesProps,
   WavyBackgroundProps,
-  WorldMapProps,
-  WorldProps
+  WorldMapProps
 } from '@/components/animations';
 import { CSSProperties } from 'react';
 
@@ -124,6 +124,7 @@ export interface WallpaperAnimation {
     | BlobBackgroundProps
     | CosmicSceneProps
     | DitherProps
+    | GlobeProps
     | GradientAnimationProps
     | GradientMeshProps
     | GridDistortionProps
@@ -155,7 +156,6 @@ export interface WallpaperAnimation {
     | VortexProps
     | WavesProps
     | WavyBackgroundProps
-    | WorldProps
     | WorldMapProps;
   type: AnimationType;
 }
@@ -265,6 +265,7 @@ export interface Wallpaper {
   id: string;
   name?: string;
   description?: string;
+  enabled: boolean;
   background: WallpaperBackground;
   theme?: WallpaperThemeType;
   type: WallpaperType;

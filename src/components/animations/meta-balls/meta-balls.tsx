@@ -1,3 +1,5 @@
+'use client';
+
 import { Camera, Mesh, Program, Renderer, Transform, Triangle, Vec3 } from 'ogl';
 import React, { useEffect, useRef } from 'react';
 

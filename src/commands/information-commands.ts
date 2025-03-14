@@ -1,4 +1,4 @@
-import { fetchProfile } from '../database/portfolio-services';
+import { fetchProfile } from '../services/database/portfolio-services';
 import { Command, CommandResult } from './types';
 
 // About command implementation

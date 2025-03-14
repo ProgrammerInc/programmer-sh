@@ -1,12 +1,12 @@
+import { getCurrentCursor } from '@/commands/cursor-commands';
+import { processThemeFromUrl } from '@/commands/theme-commands';
+import { extractUrlParameters, validUrlCommands } from '@/commands/url-command-handler';
+import { getCurrentWallpaper } from '@/commands/wallpaper-commands';
 import CursorProvider from '@/components/ui/cursor';
 import Terminal from '@/components/ui/terminal';
 import WallpaperProvider from '@/components/ui/wallpaper';
 import { wallpaperPresets } from '@/presets/wallpaper.presets';
 import { logger } from '@/services/logger';
-import { getCurrentCursor } from '@/utils/commands/cursor-commands';
-import { processThemeFromUrl } from '@/utils/commands/theme-commands';
-import { extractUrlParameters, validUrlCommands } from '@/utils/commands/url-command-handler';
-import { getCurrentWallpaper } from '@/utils/commands/wallpaper-commands';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 

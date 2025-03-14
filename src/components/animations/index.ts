@@ -44,6 +44,6 @@ export type { HyperspeedProps } from './hyperspeed';
 export type { MeshMatrixProps } from './mesh-matrix';
 export type { MeteorsProps } from './meteors';
 export type { ParticleNetworkProps } from './particle-network';
-export type { ParticlesProps } from './particles';
 export type { ParticleVeilProps } from './particle-veil';
+export type { ParticlesProps } from './particles';
 export type { VortexProps } from './vortex';

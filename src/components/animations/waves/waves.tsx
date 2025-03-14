@@ -1,3 +1,5 @@
+'use client';
+
 import React, { CSSProperties, useEffect, useRef } from 'react';
 import styles from './waves.module.css';
 
@@ -10,6 +12,7 @@ class Grad {
     this.y = y;
     this.z = z;
   }
+
   dot2(x: number, y: number): number {
     return this.x * x + this.y * y;
   }

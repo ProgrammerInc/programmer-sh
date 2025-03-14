@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
+
 import { cn } from '@/lib/utils';
 import type { Container, SingleOrMultiple } from '@tsparticles/engine';
 import Particles, { initParticlesEngine } from '@tsparticles/react';

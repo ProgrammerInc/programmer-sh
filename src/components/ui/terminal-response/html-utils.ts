@@ -1,3 +1,5 @@
+'use client';
+
 // Helper function to create a dangerously set HTML component with proper typings
 export const createMarkup = (htmlContent: string) => {
   return { __html: htmlContent };

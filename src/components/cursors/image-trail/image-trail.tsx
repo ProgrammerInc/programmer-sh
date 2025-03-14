@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+'use client';
+
 import { gsap } from 'gsap';
 import { useEffect, useRef } from 'react';
 

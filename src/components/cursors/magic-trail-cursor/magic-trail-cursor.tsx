@@ -79,9 +79,13 @@ export function MagicTrailCursor({
 
     const handleMouseMove = (e: MouseEvent) => {
       // For document.body, use clientX/Y directly; otherwise calculate relative position
-      const x = container === document.body ? e.clientX : e.clientX - container.getBoundingClientRect().left;
-      const y = container === document.body ? e.clientY : e.clientY - container.getBoundingClientRect().top;
-      
+      const x =
+        container === document.body
+          ? e.clientX
+          : e.clientX - container.getBoundingClientRect().left;
+      const y =
+        container === document.body ? e.clientY : e.clientY - container.getBoundingClientRect().top;
+
       // Set bounds check based on container
       const width = container === document.body ? window.innerWidth : container.clientWidth;
       const height = container === document.body ? window.innerHeight : container.clientHeight;
@@ -236,16 +240,16 @@ export function MagicTrailCursor({
 
     updateCanvasSize();
     window.addEventListener('resize', updateCanvasSize);
-    
+
     // Add mouse tracking at document level for best coverage
     document.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseleave', handleMouseLeave);
-    
+
     // Initialize with a position to avoid null values
     targetPos.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
     mousePos.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    
+
     animate();
 
     return () => {

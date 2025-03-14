@@ -1,4 +1,5 @@
 'use client';
+
 import { useOutsideClick } from '@/hooks';
 import useModal, { ModalContext } from '@/hooks/use-modal';
 import { cn } from '@/lib/utils';

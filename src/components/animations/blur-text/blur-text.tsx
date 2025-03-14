@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+'use client';
+
 import { SpringValue, animated, useSprings } from '@react-spring/web';
 import { useEffect, useRef, useState } from 'react';
 

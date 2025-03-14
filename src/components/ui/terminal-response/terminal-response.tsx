@@ -1,9 +1,11 @@
+'use client';
+
 import { useTypingEffect } from '@/lib/typing-effect';
 import { cn } from '@/lib/utils';
 import React from 'react';
 import AnimatedContent from './animated-content';
 import HtmlContent from './html-content';
-import { TerminalResponseProps } from './types';
+import { TerminalResponseProps } from './terminal-response.types';
 
 export const TerminalResponse: React.FC<TerminalResponseProps> = ({
   response,
