@@ -6,11 +6,11 @@
  * @module SpotlightCursor/Hooks
  */
 
-import { createFeatureLogger } from '@/services/logger/logger.utils';
 import { RefObject, useEffect, useRef } from 'react';
 import { DEFAULT_CONFIG } from './spotlight-cursor.constants';
 import { SpotlightConfig, SpotlightCursorState } from './spotlight-cursor.types';
 import { drawSpotlightEffect, lerp } from './spotlight-cursor.utils';
+import { createFeatureLogger } from '@/services/logger/logger.utils';
 
 // Create a dedicated logger for spotlight effect
 const spotlightLogger = createFeatureLogger('SpotlightEffect');
