@@ -97,11 +97,14 @@ export interface WebGLExtensions {
  * Generic WebGL Extension type
  */
 export interface WebGLExtension {
+  // Using Record<string, unknown> instead of index signature
+  // This allows extensions to have properties with specific values
   [key: string]: unknown;
+  HALF_FLOAT_OES?: number;
 }
 
 /**
- * WebGL extensions and context information
+ * WebGL context and extensions
  */
 export interface WebGLContext {
   gl: WebGLRenderingContext;

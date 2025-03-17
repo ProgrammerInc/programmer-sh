@@ -6,7 +6,8 @@ import {
   FramebufferType,
   Material,
   SimulationConfig,
-  WebGLContext
+  WebGLContext,
+  WebGLExtensions
 } from './splash-cursor.types';
 
 /**
@@ -238,7 +239,7 @@ export function createDoubleFBO(
   magFilter: number = context.gl.LINEAR
 ) {
   const { gl, ext } = context;
-  let filtering = type === FramebufferType.HALF_FLOAT ? gl.NEAREST : minFilter;
+  const filtering = type === FramebufferType.HALF_FLOAT ? gl.NEAREST : minFilter;
   
   let fbo1 = createFBO(context, width, height, format, type, filtering, magFilter);
   let fbo2 = createFBO(context, width, height, format, type, filtering, magFilter);
@@ -298,12 +299,13 @@ export function createFBO(
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
   
   let internalFormat = format;
-  let dataType = gl.UNSIGNED_BYTE;
+  let dataType: 5121 | number = gl.UNSIGNED_BYTE;
   
   if (type === FramebufferType.HALF_FLOAT) {
     if (ext.textureHalfFloat) {
       internalFormat = gl.RGBA;
-      dataType = ext.textureHalfFloat.HALF_FLOAT_OES;
+      // Use optional chaining and nullish coalescing for safer access to WebGL extension properties
+      dataType = (ext.textureHalfFloat?.HALF_FLOAT_OES ?? gl.UNSIGNED_BYTE) as 5121;
     } else {
       internalFormat = gl.RGBA;
       dataType = gl.UNSIGNED_BYTE;
@@ -312,7 +314,7 @@ export function createFBO(
   
   if (type === FramebufferType.FLOAT) {
     if (ext.textureFloat) {
-      dataType = gl.FLOAT;
+      dataType = gl.FLOAT as 5121;
     } else {
       dataType = gl.UNSIGNED_BYTE;
     }
@@ -385,7 +387,7 @@ export function supportsLinearFiltering(gl: WebGLRenderingContext): boolean {
  * @param gl - WebGL rendering context
  * @returns Object with required extensions
  */
-export function initializeExtensions(gl: WebGLRenderingContext) {
+export function initializeExtensions(gl: WebGLRenderingContext): WebGLExtensions {
   const textureFloat = gl.getExtension('OES_texture_float');
   const textureHalfFloat = gl.getExtension('OES_texture_half_float');
   const textureHalfFloatLinear = gl.getExtension('OES_texture_half_float_linear');
@@ -400,7 +402,7 @@ export function initializeExtensions(gl: WebGLRenderingContext) {
     textureHalfFloat,
     textureHalfFloatLinear,
     supportLinearFiltering
-  };
+  } as WebGLExtensions;
 }
 
 /**

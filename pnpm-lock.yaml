@@ -279,6 +279,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.5.3)
+      caniuse-lite:
+        specifier: ^1.0.30001705
+        version: 1.0.30001705
       eslint:
         specifier: ^9.21.0
         version: 9.21.0(jiti@1.21.7)
