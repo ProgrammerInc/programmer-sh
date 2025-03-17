@@ -40,15 +40,15 @@ export const commandCategories: CommandCategory[] = [
         name: 'Welcome',
         description: 'Show the welcome message'
       },
-      echo: {
-        name: 'Echo',
-        description: 'Echo a message back to the terminal',
-        placeholder: '[message]'
-      },
-      clear: {
-        name: 'Clear',
-        description: 'Clear the terminal history'
-      },
+      // echo: {
+      //   name: 'Echo',
+      //   description: 'Echo a message back to the terminal',
+      //   placeholder: '[message]'
+      // },
+      // clear: {
+      //   name: 'Clear',
+      //   description: 'Clear the terminal history'
+      // },
       history: {
         name: 'History',
         description: 'Show the terminal history'

@@ -11,12 +11,6 @@ import { DEFAULT_CONFIG } from './spotlight-cursor.constants';
 import { SpotlightConfig, SpotlightCursorState } from './spotlight-cursor.types';
 import { drawSpotlightEffect, lerp } from './spotlight-cursor.utils';
 
-// Import the logger directly to avoid circular dependency issues
-import { logger } from '@/services/logger/logger.service';
-
-// Create a dedicated logger for spotlight effect
-const spotlightLogger = logger.createChildLogger('SpotlightEffect');
-
 /**
  * Hook for managing the SpotlightCursor state and behavior
  *
@@ -55,14 +49,12 @@ export function useSpotlightCursor(
   // Initialize/cleanup the cursor system
   useEffect(() => {
     try {
-      spotlightLogger.debug('Initializing spotlight effect');
+      console.debug('Initializing spotlight effect');
 
       // Prevent execution if prefers-reduced-motion is enabled
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
       if (prefersReducedMotion.matches) {
-        spotlightLogger.debug(
-          'Reduced motion preference detected, not initializing spotlight effect'
-        );
+        console.debug('Reduced motion preference detected, not initializing spotlight effect');
         return;
       }
 
@@ -76,13 +68,13 @@ export function useSpotlightCursor(
       // Initialize canvas
       const canvas = canvasRef.current;
       if (!canvas) {
-        spotlightLogger.error('Canvas element not found');
+        console.error('Canvas element not found');
         return;
       }
 
       const ctx = canvas.getContext('2d');
       if (!ctx) {
-        spotlightLogger.error('Could not get 2D context from canvas');
+        console.error('Could not get 2D context from canvas');
         return;
       }
 
@@ -99,10 +91,10 @@ export function useSpotlightCursor(
 
           canvas.width = window.innerWidth;
           canvas.height = window.innerHeight;
-          spotlightLogger.debug('Canvas resized', { width: canvas.width, height: canvas.height });
+          console.debug('Canvas resized', { width: canvas.width, height: canvas.height });
         } catch (error) {
           const errorMessage = error instanceof Error ? error.message : String(error);
-          spotlightLogger.error('Error resizing canvas', { error: errorMessage });
+          console.error('Error resizing canvas', { error: errorMessage });
         }
       };
 
@@ -115,7 +107,7 @@ export function useSpotlightCursor(
           state.isHovered = true;
         } catch (error) {
           const errorMessage = error instanceof Error ? error.message : String(error);
-          spotlightLogger.error('Error handling mouse move', { error: errorMessage });
+          console.error('Error handling mouse move', { error: errorMessage });
         }
       };
 
@@ -126,7 +118,7 @@ export function useSpotlightCursor(
           state.isHovered = false;
         } catch (error) {
           const errorMessage = error instanceof Error ? error.message : String(error);
-          spotlightLogger.error('Error handling mouse leave', { error: errorMessage });
+          console.error('Error handling mouse leave', { error: errorMessage });
         }
       };
 
@@ -146,7 +138,7 @@ export function useSpotlightCursor(
           state.animationFrame = requestAnimationFrame(render);
         } catch (error) {
           const errorMessage = error instanceof Error ? error.message : String(error);
-          spotlightLogger.error('Error during render loop', { error: errorMessage });
+          console.error('Error during render loop', { error: errorMessage });
           // Try to keep the animation going despite errors
           state.animationFrame = requestAnimationFrame(render);
         }
@@ -159,7 +151,7 @@ export function useSpotlightCursor(
       document.addEventListener('mouseleave', handleMouseLeave);
       render();
 
-      spotlightLogger.debug('Spotlight effect initialized');
+      console.debug('Spotlight effect initialized');
 
       // Cleanup function
       return () => {
@@ -176,15 +168,15 @@ export function useSpotlightCursor(
           }
 
           state.context = null;
-          spotlightLogger.debug('Spotlight effect cleanup complete');
+          console.debug('Spotlight effect cleanup complete');
         } catch (error) {
           const errorMessage = error instanceof Error ? error.message : String(error);
-          spotlightLogger.error('Error during spotlight effect cleanup', { error: errorMessage });
+          console.error('Error during spotlight effect cleanup', { error: errorMessage });
         }
       };
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
-      spotlightLogger.error('Error setting up spotlight effect', { error: errorMessage });
+      console.error('Error setting up spotlight effect', { error: errorMessage });
       return () => {}; // Empty cleanup function
     }
   }, [canvasRef]);

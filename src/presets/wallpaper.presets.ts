@@ -276,14 +276,14 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
-  beams: {
-    id: 'beams',
-    name: 'Beams',
+  'background-beams': {
+    id: 'background-beams',
+    name: 'Background Beams',
     description: 'Beams that animate in a wave pattern',
     enabled: true,
     type: 'animation',
     background: {
-      id: 'beams',
+      id: 'background-beams',
       type: 'animation',
       animation: {
         id: 'background-beams',
