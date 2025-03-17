@@ -1,5 +1,8 @@
-import RippleCursor from './ripple-cursor';
+/**
+ * Ripple cursor component that creates circular ripple effects following cursor movement.
+ *
+ * @module
+ */
 
-export * from './ripple-cursor';
-
-export default RippleCursor;
+export { RippleCursor, default } from './ripple-cursor';
+export type { RippleCursorProps } from './ripple-cursor.types';

@@ -1,0 +1,31 @@
+/**
+ * CSS Styles for the Sparkles animation component
+ */
+
+.sparkles-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.sparkles-particles-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+/* Custom classes for different sparkle styles */
+.sparkles-dense {
+  --particle-density: 200;
+}
+
+.sparkles-sparse {
+  --particle-density: 50;
+}
+
+.sparkles-fast {
+  --particle-speed: 6;
+}
+
+.sparkles-slow {
+  --particle-speed: 2;
+}

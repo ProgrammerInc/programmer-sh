@@ -1,6 +1,7 @@
-import { getCurrentCursor } from '@/commands/cursor-commands';
-import { processThemeFromUrl } from '@/commands/theme-commands';
-import { getCurrentWallpaper } from '@/commands/wallpaper-commands';
+import { CommandName } from '@/commands/command.types';
+import { getCurrentCursor } from '@/commands/cursor.commands';
+import { processThemeFromUrl } from '@/commands/theme.commands';
+import { getCurrentWallpaper } from '@/commands/wallpaper.commands';
 import CursorProvider from '@/components/ui/cursor';
 import Terminal from '@/components/ui/terminal';
 import WallpaperProvider from '@/components/ui/wallpaper';
@@ -130,6 +131,19 @@ const Index = () => {
   }, []); // Empty dependency array - run once on mount
 
   useEffect(() => {
+    console.log('[Index] Initializing...');
+
+    // Process URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const themeParam = params.get('theme');
+    if (themeParam) {
+      processThemeFromUrl(themeParam);
+    }
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
     // Only process commands once to prevent duplicate execution
     if (commandsProcessed.current) {
       return;
@@ -189,7 +203,7 @@ const Index = () => {
       const normalizedCommand = commandToExecute.toLowerCase();
 
       // Check if exact command exists
-      let isValidCommand = validUrlCommands.includes(normalizedCommand);
+      let isValidCommand = validUrlCommands.includes(normalizedCommand as CommandName);
 
       // If not found, try case-insensitive search
       if (!isValidCommand) {
@@ -201,7 +215,8 @@ const Index = () => {
 
       if (isValidCommand) {
         indexLogger.info('Valid URL command found:', normalizedCommand);
-        setCurrentCommand(normalizedCommand);
+        // Type assertion is safe here because we've verified the command exists in validUrlCommands
+        setCurrentCommand(normalizedCommand as CommandName);
 
         // Either replace welcome or add after welcome
         if (normalizedCommand === 'welcome') {

@@ -1,103 +1,57 @@
 'use client';
 
-import { useInView, useMotionValue, useSpring } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { memo } from 'react';
+import {
+  DEFAULT_CLASS_NAME,
+  DEFAULT_DELAY,
+  DEFAULT_DIRECTION,
+  DEFAULT_DURATION,
+  DEFAULT_FROM,
+  DEFAULT_SEPARATOR,
+  DEFAULT_START_WHEN
+} from './count-up.constants';
+import { useCountAnimation, useNumberFormatter } from './count-up.hooks';
+import { CountUpProps } from './count-up.types';
 
-export interface CountUpProps {
-  to: number;
-  from?: number;
-  direction?: 'up' | 'down';
-  delay?: number;
-  duration?: number;
-  className?: string;
-  startWhen?: boolean;
-  separator?: string;
-  onStart?: () => void;
-  onEnd?: () => void;
-}
-
-export default function CountUp({
+/**
+ * CountUp component animates a number from one value to another
+ * with configurable animation settings
+ *
+ * @param props Component properties
+ * @returns Animated counting number
+ */
+export const CountUp = memo(function CountUp({
   to,
-  from = 0,
-  direction = 'up',
-  delay = 0,
-  duration = 2, // Duration of the animation in seconds
-  className = '',
-  startWhen = true,
-  separator = '',
+  from = DEFAULT_FROM,
+  direction = DEFAULT_DIRECTION,
+  delay = DEFAULT_DELAY,
+  duration = DEFAULT_DURATION,
+  className = DEFAULT_CLASS_NAME,
+  startWhen = DEFAULT_START_WHEN,
+  separator = DEFAULT_SEPARATOR,
   onStart,
   onEnd
 }: CountUpProps) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const motionValue = useMotionValue(direction === 'down' ? to : from);
+  // Initialize motion value based on direction
+  const initialValue = direction === 'down' ? to : from;
+  const targetValue = direction === 'down' ? from : to;
 
-  // Calculate damping and stiffness based on duration
-  const damping = 20 + 40 * (1 / duration); // Adjust this formula for finer control
-  const stiffness = 100 * (1 / duration); // Adjust this formula for finer control
+  // Use custom formatter hook
+  const formatNumber = useNumberFormatter(separator);
 
-  const springValue = useSpring(motionValue, {
-    damping,
-    stiffness
+  // Use custom animation hook
+  const { ref } = useCountAnimation({
+    initialValue,
+    targetValue,
+    duration,
+    delay,
+    startWhen,
+    onStart,
+    onEnd,
+    formatNumber
   });
 
-  const isInView = useInView(ref, { once: true, margin: '0px' });
+  return <span className={className} ref={ref} />;
+});
 
-  // Set initial text content to the initial value based on direction
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.textContent = String(direction === 'down' ? to : from);
-    }
-  }, [from, to, direction]);
-
-  // Start the animation when in view and startWhen is true
-  useEffect(() => {
-    if (isInView && startWhen) {
-      if (typeof onStart === 'function') {
-        onStart();
-      }
-
-      const timeoutId = setTimeout(() => {
-        motionValue.set(direction === 'down' ? from : to);
-      }, delay * 1000);
-
-      const durationTimeoutId = setTimeout(
-        () => {
-          if (typeof onEnd === 'function') {
-            onEnd();
-          }
-        },
-        delay * 1000 + duration * 1000
-      );
-
-      return () => {
-        clearTimeout(timeoutId);
-        clearTimeout(durationTimeoutId);
-      };
-    }
-  }, [isInView, startWhen, motionValue, direction, from, to, delay, onStart, onEnd, duration]);
-
-  // Update text content with formatted number on spring value change
-  useEffect(() => {
-    const unsubscribe = springValue.on('change', latest => {
-      if (ref.current) {
-        const options = {
-          useGrouping: !!separator,
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0
-        };
-
-        const formattedNumber = Intl.NumberFormat('en-US', options).format(
-          Number(latest.toFixed(0))
-        );
-
-        ref.current.textContent = separator
-          ? formattedNumber.replace(/,/g, separator)
-          : formattedNumber;
-      }
-    });
-
-    return () => unsubscribe();
-  }, [springValue, separator]);
-
-  return <span className={`${className}`} ref={ref} />;
-}
+export default CountUp;

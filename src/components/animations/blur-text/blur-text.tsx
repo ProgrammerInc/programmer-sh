@@ -1,24 +1,31 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { SpringValue, animated, useSprings } from '@react-spring/web';
-import { useEffect, useRef, useState } from 'react';
+import { SpringValue, animated, useTrail } from '@react-spring/web';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  DEFAULT_FROM_BOTTOM,
+  DEFAULT_FROM_TOP,
+  DEFAULT_SPRING_CONFIG,
+  DEFAULT_TO
+} from './blur-text.constants';
+import { BlurTextProps } from './blur-text.types';
 
-export interface BlurTextProps {
-  text?: string;
-  delay?: number;
-  className?: string;
-  animateBy?: 'words' | 'letters';
-  direction?: 'top' | 'bottom';
-  threshold?: number;
-  rootMargin?: string;
-  animationFrom?: Record<string, any>;
-  animationTo?: Record<string, any>[];
-  easing?: (t: number) => number | string;
-  onAnimationComplete?: () => void;
+// Define style properties type for the animated span
+interface AnimatedStyle {
+  filter: SpringValue<string>;
+  opacity: SpringValue<number>;
+  transform: SpringValue<string>;
+  [key: string]: SpringValue<unknown> | SpringValue<string> | SpringValue<number>;
 }
 
-const BlurText: React.FC<BlurTextProps> = ({
+/**
+ * A component that animates text with a blur effect when it enters the viewport.
+ * Text can be animated by words or individual letters with configurable animations.
+ *
+ * @param props - Component properties
+ * @returns Memoized React component with animated text elements
+ */
+export const BlurText = memo(function BlurText({
   text = '',
   delay = 200,
   className = '',
@@ -28,29 +35,26 @@ const BlurText: React.FC<BlurTextProps> = ({
   rootMargin = '0px',
   animationFrom,
   animationTo,
-  easing = 'easeOutCubic',
+  easing = DEFAULT_SPRING_CONFIG.easing,
   onAnimationComplete
-}) => {
-  const elements = animateBy === 'words' ? text.split(' ') : text.split('');
+}: BlurTextProps) {
+  // Split text into elements that will be animated
+  const elements = useMemo(
+    () => (animateBy === 'words' ? text.split(' ') : text.split('')),
+    [text, animateBy]
+  );
+
   const [inView, setInView] = useState(false);
   const ref = useRef<HTMLParagraphElement>(null);
-  const animatedCount = useRef(0);
+  const animationCompleted = useRef(false);
 
   // Default animations based on direction
-  const defaultFrom: Record<string, any> =
-    direction === 'top'
-      ? { filter: 'blur(10px)', opacity: 0, transform: 'translate3d(0,-50px,0)' }
-      : { filter: 'blur(10px)', opacity: 0, transform: 'translate3d(0,50px,0)' };
+  const defaultFrom = useMemo(
+    () => (direction === 'top' ? DEFAULT_FROM_TOP : DEFAULT_FROM_BOTTOM),
+    [direction]
+  );
 
-  const defaultTo: Record<string, any>[] = [
-    {
-      filter: 'blur(5px)',
-      opacity: 0.5,
-      transform: direction === 'top' ? 'translate3d(0,5px,0)' : 'translate3d(0,-5px,0)'
-    },
-    { filter: 'blur(0px)', opacity: 1, transform: 'translate3d(0,0,0)' }
-  ];
-
+  // Setup intersection observer to trigger animation when element is in view
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -71,40 +75,44 @@ const BlurText: React.FC<BlurTextProps> = ({
     return () => observer.disconnect();
   }, [threshold, rootMargin]);
 
-  const springs = useSprings(
-    elements.length,
-    elements.map((_, i) => ({
-      from: animationFrom || defaultFrom,
-      to: inView
-        ? async (next: (arg: Record<string, SpringValue<any>>) => Promise<void>) => {
-            for (const step of animationTo || defaultTo) {
-              await next(step);
-            }
-            animatedCount.current += 1;
-            if (animatedCount.current === elements.length && onAnimationComplete) {
-              onAnimationComplete();
-            }
-          }
-        : animationFrom || defaultFrom,
-      delay: i * delay,
-      config: { easing: easing as any }
-    }))
-  );
+  // Use trail animation for smoother sequence effect
+  const trail = useTrail<AnimatedStyle>(elements.length, {
+    from: animationFrom || defaultFrom,
+    to: inView ? animationTo?.[0] || DEFAULT_TO : animationFrom || defaultFrom,
+    config: {
+      ...DEFAULT_SPRING_CONFIG,
+      easing
+    },
+    delay: inView ? delay : 0,
+    onRest: () => {
+      if (!animationCompleted.current && onAnimationComplete) {
+        animationCompleted.current = true;
+        onAnimationComplete();
+      }
+    }
+  });
+
+  // Create base class name with flexibility for custom styling
+  const baseClassName = useMemo(() => {
+    return `blur-text ${className} flex flex-wrap`;
+  }, [className]);
+
+  // Style for animated spans
+  const spanClassName = 'inline-block transition-transform will-change-[transform,filter,opacity]';
 
   return (
-    <p ref={ref} className={`blur-text ${className} flex flex-wrap`}>
-      {springs.map((props, index) => (
-        <animated.span
-          key={index}
-          style={props}
-          className="inline-block transition-transform will-change-[transform,filter,opacity]"
-        >
+    <p ref={ref} className={baseClassName}>
+      {trail.map((style, index) => (
+        <animated.span key={index} style={style} className={spanClassName}>
           {elements[index] === ' ' ? '\u00A0' : elements[index]}
           {animateBy === 'words' && index < elements.length - 1 && '\u00A0'}
         </animated.span>
       ))}
     </p>
   );
-};
+});
+
+// Add displayName to help with debugging
+BlurText.displayName = 'BlurText';
 
 export default BlurText;

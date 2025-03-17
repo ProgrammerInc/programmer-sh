@@ -1,5 +1,9 @@
-import GradientCursor from './gradient-cursor';
+/**
+ * GradientCursor
+ *
+ * Index file for the gradient cursor component
+ *
+ * @module GradientCursor
+ */
 
-export * from './gradient-cursor';
-
-export default GradientCursor;
+export { GradientCursor, default } from './gradient-cursor';

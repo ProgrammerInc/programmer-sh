@@ -1,125 +1,62 @@
 'use client';
 
-import { cn } from '@/utils/app.utils';
-import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useRef } from 'react';
 
-export interface StarProps {
-  x: number;
-  y: number;
-  radius: number;
-  opacity: number;
-  twinkleSpeed: number | null;
-}
+import { DEFAULT_SETTINGS } from './stars-background.constants';
+import { useAnimationLoop, useCanvasSetup, useStars } from './stars-background.hooks';
+import styles from './stars-background.module.css';
+import { StarsBackgroundProps } from './stars-background.types';
+import { createClassNames } from './stars-background.utils';
 
-export interface StarBackgroundProps {
-  starDensity?: number;
-  allStarsTwinkle?: boolean;
-  twinkleProbability?: number;
-  minTwinkleSpeed?: number;
-  maxTwinkleSpeed?: number;
-  className?: string;
-}
-
-export const StarsBackground: React.FC<StarBackgroundProps> = ({
-  starDensity = 0.00015,
-  allStarsTwinkle = true,
-  twinkleProbability = 0.7,
-  minTwinkleSpeed = 0.5,
-  maxTwinkleSpeed = 1,
+/**
+ * StarsBackground component that renders an animated starry background on a canvas
+ *
+ * Creates a canvas with randomly generated stars that can twinkle based on configuration
+ *
+ * @param props - Component properties
+ * @returns A React component with animated stars on a canvas
+ */
+export const StarsBackgroundComponent = ({
+  starDensity = DEFAULT_SETTINGS.STAR_DENSITY,
+  allStarsTwinkle = DEFAULT_SETTINGS.ALL_STARS_TWINKLE,
+  twinkleProbability = DEFAULT_SETTINGS.TWINKLE_PROBABILITY,
+  minTwinkleSpeed = DEFAULT_SETTINGS.MIN_TWINKLE_SPEED,
+  maxTwinkleSpeed = DEFAULT_SETTINGS.MAX_TWINKLE_SPEED,
   className
-}) => {
-  const [stars, setStars] = useState<StarProps[]>([]);
-  const canvasRef: RefObject<HTMLCanvasElement> = useRef<HTMLCanvasElement>(null);
+}: StarsBackgroundProps) => {
+  // Ref for the canvas element
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const generateStars = useCallback(
-    (width: number, height: number): StarProps[] => {
-      const area = width * height;
-      const numStars = Math.floor(area * starDensity);
-      return Array.from({ length: numStars }, () => {
-        const shouldTwinkle = allStarsTwinkle || Math.random() < twinkleProbability;
-        return {
-          x: Math.random() * width,
-          y: Math.random() * height,
-          radius: Math.random() * 0.05 + 0.5,
-          opacity: Math.random() * 0.5 + 0.5,
-          twinkleSpeed: shouldTwinkle
-            ? minTwinkleSpeed + Math.random() * (maxTwinkleSpeed - minTwinkleSpeed)
-            : null
-        };
-      });
-    },
-    [starDensity, allStarsTwinkle, twinkleProbability, minTwinkleSpeed, maxTwinkleSpeed]
-  );
+  // Setup canvas dimensions and handle resizing
+  const { dimensions, isSetup } = useCanvasSetup(canvasRef);
 
-  useEffect(() => {
-    const updateStars = () => {
-      if (canvasRef.current) {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        const { width, height } = canvas.getBoundingClientRect();
-        canvas.width = width;
-        canvas.height = height;
-        setStars(generateStars(width, height));
-      }
-    };
-
-    updateStars();
-
-    const resizeObserver = new ResizeObserver(updateStars);
-    if (canvasRef.current) {
-      resizeObserver.observe(canvasRef.current);
-    }
-
-    return () => {
-      if (canvasRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        resizeObserver.unobserve(canvasRef.current);
-      }
-    };
-  }, [
+  // Generate and manage stars
+  const { stars, setStars } = useStars(
+    dimensions,
     starDensity,
     allStarsTwinkle,
     twinkleProbability,
     minTwinkleSpeed,
-    maxTwinkleSpeed,
-    generateStars
-  ]);
+    maxTwinkleSpeed
+  );
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+  // Setup animation loop for rendering stars
+  useAnimationLoop(canvasRef, stars, setStars);
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+  // Create combined class names for the canvas
+  const canvasClassName = createClassNames(styles['stars-background-canvas'], className);
 
-    let animationFrameId: number;
-
-    const render = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      stars.forEach(star => {
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
-        ctx.fill();
-
-        if (star.twinkleSpeed !== null) {
-          star.opacity = 0.5 + Math.abs(Math.sin((Date.now() * 0.001) / star.twinkleSpeed) * 0.5);
-        }
-      });
-
-      animationFrameId = requestAnimationFrame(render);
-    };
-
-    render();
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [stars]);
-
-  return <canvas ref={canvasRef} className={cn('h-full w-full absolute inset-0', className)} />;
+  return <canvas ref={canvasRef} className={canvasClassName} />;
 };
+
+/**
+ * Memoized StarsBackground component for optimal performance
+ */
+export const StarsBackground = memo(StarsBackgroundComponent);
+
+/**
+ * Set display name for debugging purposes
+ */
+StarsBackground.displayName = 'StarsBackground';
 
 export default StarsBackground;

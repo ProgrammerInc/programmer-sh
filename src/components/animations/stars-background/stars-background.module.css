@@ -1,0 +1,20 @@
+/**
+ * CSS module for the Stars Background animation component
+ */
+
+.stars-background-canvas {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  inset: 0;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}

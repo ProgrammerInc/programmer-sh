@@ -1,0 +1,26 @@
+/**
+ * CSS Styles for the ShinyText animation component
+ */
+
+.shiny-text-container {
+  display: inline-block;
+  text-align: left;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: var(--shiny-text-color, #b5b5b5a4);
+}
+
+.shiny-text-animated {
+  animation-name: shine;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

@@ -1,5 +1,9 @@
-import AuroraBackground from './aurora-background';
+/**
+ * AuroraBackground component creates a background with animated aurora particles.
+ *
+ * @module AuroraBackground
+ */
 
-export * from './aurora-background';
-
-export default AuroraBackground;
+export { AuroraBackground, default } from './aurora-background';
+export * as AuroraBackgroundStyles from './aurora-background.module.css';
+export type { AuroraAnimationConfig, AuroraBackgroundProps } from './aurora-background.types';

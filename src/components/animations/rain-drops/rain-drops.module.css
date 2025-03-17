@@ -1,0 +1,64 @@
+/**
+ * Styles for the Rain Drops animation component
+ */
+
+.rain-drops__container {
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.rain-drops__beam {
+  position: absolute;
+  left: 0;
+  top: 20px;
+  margin: auto;
+  height: 56px; /* 3.5rem = 14px * 4 = 56px */
+  width: 1px;
+  border-radius: 9999px;
+  background: linear-gradient(to top, transparent, #8b5cf6, #6366f1);
+}
+
+.rain-drops__explosion {
+  position: absolute;
+  z-index: 50;
+  height: 8px;
+  width: 8px;
+}
+
+.rain-drops__explosion-glow {
+  position: absolute;
+  top: 0;
+  margin: auto;
+  height: 8px;
+  width: 40px;
+  border-radius: 9999px;
+  background: linear-gradient(to right, transparent, #6366f1, transparent);
+  filter: blur(2px);
+}
+
+.rain-drops__explosion-particle {
+  position: absolute;
+  height: 4px;
+  width: 4px;
+  border-radius: 9999px;
+  background: linear-gradient(to bottom, #6366f1, #8b5cf6);
+}
+
+.rain-drops__surface {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #f5f5f5;
+  pointer-events: none;
+}
+
+.rain-drops__stars {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}

@@ -1,5 +1,9 @@
-import FollowCursor from './follow-cursor';
+/**
+ * FollowCursor component creates interactive elements that follow cursor movement
+ * with optional tilt, zoom, and drag effects.
+ *
+ * @module FollowCursor
+ */
 
-export * from './follow-cursor';
-
-export default FollowCursor;
+export { FollowCursor, default } from './follow-cursor';
+export type { FollowCursorProps } from './follow-cursor.types';

@@ -1,4 +1,4 @@
-.starBorder {
+.star-border {
   position: relative;
   display: inline-block;
   padding: 1px;
@@ -6,7 +6,8 @@
   border-radius: 20px;
 }
 
-.starMovementBottom {
+/* Star movement - bottom */
+.star-movement-bottom {
   position: absolute;
   width: 300%;
   height: 50%;
@@ -19,7 +20,8 @@
   background: radial-gradient(circle, var(--star-color, white), transparent 10%);
 }
 
-.starMovementTop {
+/* Star movement - top */
+.star-movement-top {
   position: absolute;
   width: 300%;
   height: 50%;
@@ -32,6 +34,7 @@
   background: radial-gradient(circle, var(--star-color, white), transparent 10%);
 }
 
+/* Content container */
 .content {
   position: relative;
   z-index: 1;
@@ -44,6 +47,7 @@
   border-radius: 20px;
 }
 
+/* Star movement keyframes */
 @keyframes star-movement-bottom {
   0% {
     transform: translateX(0) rotate(0);
@@ -60,4 +64,47 @@
   100% {
     transform: translateX(100vw) rotate(360deg);
   }
+}
+
+/* Compatibility classes for existing code that might be using global classes */
+.star-border-container {
+  display: inline-block;
+  padding: 1px 0;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.border-gradient-bottom {
+  position: absolute;
+  width: 300%;
+  height: 50%;
+  opacity: 0.7;
+  bottom: -11px;
+  right: -250%;
+  border-radius: 50%;
+  animation: star-movement-bottom linear infinite alternate;
+}
+
+.border-gradient-top {
+  position: absolute;
+  opacity: 0.7;
+  width: 300%;
+  height: 50%;
+  top: -10px;
+  left: -250%;
+  border-radius: 50%;
+  animation: star-movement-top linear infinite alternate;
+}
+
+.inner-content {
+  position: relative;
+  background: linear-gradient(to bottom, #060606, #111);
+  border: 1px solid #222;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  padding: 16px 26px;
+  border-radius: 20px;
+  z-index: 8;
 }

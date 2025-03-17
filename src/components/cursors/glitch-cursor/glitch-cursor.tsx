@@ -1,47 +1,42 @@
+/**
+ * GlitchCursor
+ *
+ * Glitch cursor component that creates a glitch effect around the cursor
+ *
+ * @module GlitchCursor
+ */
+
 'use client';
 
-import { useMouse } from '@/hooks/use-mouse';
-import { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useGlitchCursorHooks } from './glitch-cursor.hooks';
 
+/**
+ * GlitchCursor component that creates an interactive glitch effect around the cursor
+ * The effect intensifies based on mouse movement speed and is triggered when hovering
+ * over specific elements
+ *
+ * @returns React component
+ */
 export const GlitchCursor: React.FC = () => {
-  const [mouseState, ref] = useMouse();
-  const [glitchActive, setGlitchActive] = useState(false);
-  const [glitchOffsets, setGlitchOffsets] = useState([]);
-  const [intensity, setIntensity] = useState(1);
+  const { mouseState, containerRef, stateRef, setGlitchActive, handleMouseSpeed } =
+    useGlitchCursorHooks();
 
+  // Force re-render when glitch offsets change
   useEffect(() => {
-    let interval;
-    if (glitchActive) {
-      interval = setInterval(() => {
-        const newOffsets = Array(5)
-          .fill(0)
-          .map(() => ({
-            x: (Math.random() - 0.5) * 20 * intensity,
-            y: (Math.random() - 0.5) * 20 * intensity,
-            scale: 0.8 + Math.random() * 0.4,
-            rotation: (Math.random() - 0.5) * 45 * intensity,
-            opacity: 0.5 + Math.random() * 0.5,
-            hue: Math.random() * 360
-          }));
-        setGlitchOffsets(newOffsets);
-      }, 50);
-    } else {
-      setGlitchOffsets([]);
-    }
+    const interval = setInterval(() => {
+      // This empty interval forces React to re-render periodically
+      // to show updated glitch offsets from the stateRef
+    }, 50);
     return () => clearInterval(interval);
-  }, [glitchActive, intensity]);
-
-  const handleMouseSpeed = e => {
-    const speed = Math.sqrt(Math.pow(e.movementX, 2) + Math.pow(e.movementY, 2));
-    setIntensity(Math.min(Math.max(speed / 10, 1), 3));
-  };
+  }, []);
 
   return (
-    <div className="relative w-full h-full " ref={ref} onMouseMove={handleMouseSpeed}>
+    <div className="relative w-full h-full" ref={containerRef} onMouseMove={handleMouseSpeed}>
       {mouseState.x !== null && mouseState.y !== null && (
         <>
           {/* Glitch layers */}
-          {glitchOffsets.map((offset, index) => (
+          {stateRef.current.glitchOffsets.map((offset, index) => (
             <div
               key={index}
               className="fixed pointer-events-none mix-blend-screen"
@@ -77,7 +72,7 @@ export const GlitchCursor: React.FC = () => {
           </div>
 
           {/* Static effect overlay */}
-          {glitchActive && (
+          {stateRef.current.glitchActive && (
             <div
               className="fixed pointer-events-none mix-blend-screen"
               style={{
@@ -97,12 +92,12 @@ export const GlitchCursor: React.FC = () => {
       <div className="flex flex-col items-center justify-center h-full gap-8">
         <button
           className={`px-8 py-4 bg-red-600/30 text-white rounded-lg transition-all duration-300 relative overflow-hidden
-            ${glitchActive ? 'animate-pulse' : ''}`}
+            ${stateRef.current.glitchActive ? 'animate-pulse' : ''}`}
           onMouseEnter={() => setGlitchActive(true)}
           onMouseLeave={() => setGlitchActive(false)}
         >
           Trigger Glitch
-          {glitchActive && (
+          {stateRef.current.glitchActive && (
             <div className="absolute inset-0 bg-red-500/20 animate-glitch-overlay" />
           )}
         </button>

@@ -1,5 +1,9 @@
-import GlitchCursor from './glitch-cursor';
+/**
+ * GlitchCursor
+ *
+ * Index file for the glitch cursor component
+ *
+ * @module GlitchCursor
+ */
 
-export * from './glitch-cursor';
-
-export default GlitchCursor;
+export { GlitchCursor, default } from './glitch-cursor';

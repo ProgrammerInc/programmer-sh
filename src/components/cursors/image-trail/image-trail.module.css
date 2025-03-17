@@ -1,0 +1,21 @@
+/**
+ * Styles for the ImageTrail component
+ */
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+.image {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  transform-origin: center center;
+  transition: opacity 0.5s ease-out;
+}

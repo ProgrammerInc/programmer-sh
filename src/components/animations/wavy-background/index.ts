@@ -1,5 +1,12 @@
-import WavyBackground from './wavy-background';
+/**
+ * Wavy Background Animation Component
+ *
+ * Exports an interactive animation with wavy background lines created using simplex noise,
+ * featuring customizable colors, blur effects, and animation speeds.
+ *
+ * @module WavyBackground
+ */
 
-export * from './wavy-background';
-
-export default WavyBackground;
+export { WavyBackground, default } from './wavy-background';
+export * as WavyBackgroundStyles from './wavy-background.module.css';
+export type { WavyBackgroundProps } from './wavy-background.types';

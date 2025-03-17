@@ -1,69 +1,44 @@
 'use client';
 
-import React from 'react';
+import { memo, useRef } from 'react';
 
-export interface StarryBackgroundProps {
-  backgroundColor?: string;
-  className?: string;
-  children?: React.ReactNode;
-  noiseOpacity?: number;
-  enableParallax?: boolean;
-}
+import { DEFAULT_SETTINGS } from './starry-background.constants';
+import { useParallaxEffect, useStars } from './starry-background.hooks';
+import styles from './starry-background.module.css';
+import { StarryBackgroundProps } from './starry-background.types';
+import { calculateParallaxTransform, calculateStarStyle } from './starry-background.utils';
 
-export function StarryBackground({
-  backgroundColor = '#050510',
+/**
+ * StarryBackground component creates an animated background with stars and optional parallax effect
+ *
+ * @param props - Component properties
+ * @returns A React component with animated stars background
+ */
+export const StarryBackgroundComponent = ({
+  backgroundColor = DEFAULT_SETTINGS.BACKGROUND_COLOR,
   className = '',
   children,
-  noiseOpacity = 0.06,
-  enableParallax = false
-}: StarryBackgroundProps) {
-  const starCount = 180;
+  noiseOpacity = DEFAULT_SETTINGS.NOISE_OPACITY,
+  enableParallax = DEFAULT_SETTINGS.ENABLE_PARALLAX
+}: StarryBackgroundProps) => {
+  // Reference to the container for parallax effect
+  const parallaxRef = useRef<HTMLDivElement>(null);
 
-  const starProperties = React.useMemo(
-    () =>
-      Array.from({ length: starCount }, () => ({
-        isGlowing: Math.random() < 0.15,
-        baseOpacity: Math.random() * 0.2 + 0.1,
-        size: Math.random() < 0.05 ? 4 : Math.random() < 0.15 ? 3 : 2,
-        glowIntensity: Math.random() * 0.2 + 0.1,
-        animationDelay: `${Math.random() * -20}s`,
-        animationDuration: `${Math.random() * 2 + 2}s`,
-        parallaxLayer: Math.floor(Math.random() * 3)
-      })),
-    []
-  );
+  // Generate stars with custom hook
+  const stars = useStars(DEFAULT_SETTINGS.STAR_COUNT);
 
-  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
-  const parallaxRef = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    if (!enableParallax) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!parallaxRef.current) return;
-
-      const rect = parallaxRef.current.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-      setMousePosition({ x, y });
-    };
-
-    const element = parallaxRef.current;
-    if (element) {
-      element.addEventListener('mousemove', handleMouseMove);
-      return () => element.removeEventListener('mousemove', handleMouseMove);
-    }
-  }, [enableParallax]);
+  // Handle parallax effect with custom hook
+  const mousePosition = useParallaxEffect(parallaxRef, enableParallax);
 
   return (
     <div
       ref={parallaxRef}
-      className={`relative h-full w-full overflow-hidden ${className}`}
+      className={`${styles['starry-background-container']} ${className}`}
       style={{ backgroundColor }}
     >
+      {/* Noise overlay */}
       <div
-        className="absolute inset-0 h-full w-full"
+        className={styles['starry-background-noise']}
         style={{
           opacity: noiseOpacity,
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
@@ -71,43 +46,37 @@ export function StarryBackground({
         }}
       />
 
-      <div className="absolute inset-0 grid grid-cols-[repeat(18,1fr)] grid-rows-[repeat(10,1fr)] p-4">
-        {starProperties.map((props, i) => (
+      {/* Stars grid */}
+      <div className={styles['starry-background-stars-grid']}>
+        {stars.map((props, i) => (
           <div
             key={i}
-            className="relative flex items-center justify-center"
+            className={styles['starry-background-star-container']}
             style={
               enableParallax
-                ? {
-                    transform: `translate(${mousePosition.x * (props.parallaxLayer + 1) * -3}px, ${mousePosition.y * (props.parallaxLayer + 1) * -3}px)`,
-                    transition: 'transform 0.1s ease-out'
-                  }
+                ? calculateParallaxTransform(mousePosition, props.parallaxLayer)
                 : undefined
             }
           >
-            <div
-              className={`rounded-full bg-white`}
-              style={{
-                width: `${props.size}px`,
-                height: `${props.size}px`,
-                opacity: props.baseOpacity,
-                ...(props.isGlowing && {
-                  animation: `glow ${props.animationDuration} ease-in-out infinite`,
-                  animationDelay: props.animationDelay,
-                  boxShadow: `0 0 ${props.glowIntensity * 3}px rgba(255,255,255,${
-                    props.glowIntensity * 0.8
-                  })`
-                })
-              }}
-            />
+            <div className={styles['starry-background-star']} style={calculateStarStyle(props)} />
           </div>
         ))}
       </div>
 
       {/* Content */}
-      {children && <div className="relative z-10 h-full w-full">{children}</div>}
+      {children && <div className={styles['starry-background-content']}>{children}</div>}
     </div>
   );
-}
+};
+
+/**
+ * Memoized StarryBackground component for optimal performance
+ */
+export const StarryBackground = memo(StarryBackgroundComponent);
+
+/**
+ * Set display name for debugging purposes
+ */
+StarryBackground.displayName = 'StarryBackground';
 
 export default StarryBackground;

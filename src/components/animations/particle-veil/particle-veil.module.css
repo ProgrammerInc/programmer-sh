@@ -1,0 +1,8 @@
+/**
+ * CSS Module for the Particle Veil animation component
+ */
+
+.particle-veil-container {
+  height: 100%;
+  width: 100%;
+}

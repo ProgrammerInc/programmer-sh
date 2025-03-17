@@ -1,103 +1,74 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
+import { ANIMATION_SETTINGS, CSS_CLASSES, DEFAULT_SETTINGS } from './true-focus.constants';
+import { useAutomaticFocus, useFocusRect, useManualFocusHandlers } from './true-focus.hooks';
+import styles from './true-focus.module.css';
+import { TrueFocusProps } from './true-focus.types';
 
-export interface TrueFocusProps {
-  sentence?: string;
-  manualMode?: boolean;
-  blurAmount?: number;
-  borderColor?: string;
-  glowColor?: string;
-  animationDuration?: number;
-  pauseBetweenAnimations?: number;
-}
-
-interface FocusRect {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
-const TrueFocus: React.FC<TrueFocusProps> = ({
-  sentence = 'True Focus',
-  manualMode = false,
-  blurAmount = 5,
-  borderColor = 'green',
-  glowColor = 'rgba(0, 255, 0, 0.6)',
-  animationDuration = 0.5,
-  pauseBetweenAnimations = 1
-}) => {
+/**
+ * True Focus component creates an interactive animation that focuses on words in a sentence
+ *
+ * The component displays a sentence and animates focus between words by blurring all words
+ * except the currently focused one. A highlight frame moves to surround the focused word.
+ *
+ * @param props - Component properties
+ * @returns A React component with interactive focus animation
+ */
+export const TrueFocusComponent = ({
+  sentence = DEFAULT_SETTINGS.SENTENCE,
+  manualMode = DEFAULT_SETTINGS.MANUAL_MODE,
+  blurAmount = DEFAULT_SETTINGS.BLUR_AMOUNT,
+  borderColor = DEFAULT_SETTINGS.BORDER_COLOR,
+  glowColor = DEFAULT_SETTINGS.GLOW_COLOR,
+  animationDuration = DEFAULT_SETTINGS.ANIMATION_DURATION,
+  pauseBetweenAnimations = DEFAULT_SETTINGS.PAUSE_BETWEEN_ANIMATIONS,
+  className,
+  ...rest
+}: TrueFocusProps) => {
+  // Split the sentence into words
   const words = sentence.split(' ');
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [lastActiveIndex, setLastActiveIndex] = useState<number | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  // References to DOM elements
+  const containerRef = useRef<HTMLDivElement>(null);
   const wordRefs = useRef<(HTMLSpanElement | null)[]>([]);
-  const [focusRect, setFocusRect] = useState<FocusRect>({ x: 0, y: 0, width: 0, height: 0 });
 
-  useEffect(() => {
-    if (!manualMode) {
-      const interval = setInterval(
-        () => {
-          setCurrentIndex(prev => (prev + 1) % words.length);
-        },
-        (animationDuration + pauseBetweenAnimations) * 1000
-      );
+  // Manage automatic focus cycling
+  const { currentIndex, setCurrentIndex, lastActiveIndex, setLastActiveIndex } = useAutomaticFocus(
+    words,
+    manualMode,
+    animationDuration,
+    pauseBetweenAnimations
+  );
 
-      return () => clearInterval(interval);
-    }
-  }, [manualMode, animationDuration, pauseBetweenAnimations, words.length]);
+  // Calculate focus rectangle position and dimensions
+  const focusRect = useFocusRect(containerRef, wordRefs, currentIndex, words.length);
 
-  useEffect(() => {
-    if (currentIndex === null || currentIndex === -1) return;
-    if (!wordRefs.current[currentIndex] || !containerRef.current) return;
+  // Handle mouse interactions for manual mode
+  const { handleMouseEnter, handleMouseLeave } = useManualFocusHandlers(
+    manualMode,
+    setCurrentIndex,
+    setLastActiveIndex,
+    lastActiveIndex
+  );
 
-    const parentRect = containerRef.current.getBoundingClientRect();
-    const activeRect = wordRefs.current[currentIndex]!.getBoundingClientRect();
-
-    setFocusRect({
-      x: activeRect.left - parentRect.left,
-      y: activeRect.top - parentRect.top,
-      width: activeRect.width,
-      height: activeRect.height
-    });
-  }, [currentIndex, words.length]);
-
-  const handleMouseEnter = (index: number) => {
-    if (manualMode) {
-      setLastActiveIndex(index);
-      setCurrentIndex(index);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (manualMode) {
-      setCurrentIndex(lastActiveIndex!);
-    }
-  };
+  // Combine class names
+  const containerClassName = [styles[CSS_CLASSES.CONTAINER], className].filter(Boolean).join(' ');
 
   return (
-    <div className="relative flex gap-4 justify-center items-center flex-wrap" ref={containerRef}>
+    <div className={containerClassName} ref={containerRef} {...rest}>
       {words.map((word, index) => {
         const isActive = index === currentIndex;
         return (
           <span
             key={index}
             ref={el => (wordRefs.current[index] = el)}
-            className="relative text-[3rem] font-black cursor-pointer"
-            style={
-              {
-                filter: manualMode
-                  ? isActive
-                    ? `blur(0px)`
-                    : `blur(${blurAmount}px)`
-                  : isActive
-                    ? `blur(0px)`
-                    : `blur(${blurAmount}px)`,
-                transition: `filter ${animationDuration}s ease`
-              } as React.CSSProperties
-            }
+            className={styles[CSS_CLASSES.WORD]}
+            style={{
+              filter: isActive ? 'blur(0px)' : `blur(${blurAmount}px)`,
+              transition: `filter ${animationDuration}s ease`
+            }}
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
           >
@@ -107,7 +78,7 @@ const TrueFocus: React.FC<TrueFocusProps> = ({
       })}
 
       <motion.div
-        className="absolute top-0 left-0 pointer-events-none box-border border-0"
+        className={styles[CSS_CLASSES.HIGHLIGHT]}
         animate={{
           x: focusRect.x,
           y: focusRect.y,
@@ -116,7 +87,8 @@ const TrueFocus: React.FC<TrueFocusProps> = ({
           opacity: currentIndex >= 0 ? 1 : 0
         }}
         transition={{
-          duration: animationDuration
+          duration: animationDuration,
+          ...ANIMATION_SETTINGS.TRANSITION
         }}
         style={
           {
@@ -126,36 +98,41 @@ const TrueFocus: React.FC<TrueFocusProps> = ({
         }
       >
         <span
-          className="absolute w-4 h-4 border-[3px] rounded-[3px] top-[-10px] left-[-10px] border-r-0 border-b-0"
+          className={`${styles[CSS_CLASSES.CORNER]} ${styles[CSS_CLASSES.CORNER_TOP_LEFT]}`}
           style={{
             borderColor: 'var(--border-color)',
-            filter: 'drop-shadow(0 0 4px var(--border-color))'
+            filter: 'drop-shadow(0 0 4px var(--glow-color))'
           }}
-        ></span>
+        />
         <span
-          className="absolute w-4 h-4 border-[3px] rounded-[3px] top-[-10px] right-[-10px] border-l-0 border-b-0"
+          className={`${styles[CSS_CLASSES.CORNER]} ${styles[CSS_CLASSES.CORNER_TOP_RIGHT]}`}
           style={{
             borderColor: 'var(--border-color)',
-            filter: 'drop-shadow(0 0 4px var(--border-color))'
+            filter: 'drop-shadow(0 0 4px var(--glow-color))'
           }}
-        ></span>
+        />
         <span
-          className="absolute w-4 h-4 border-[3px] rounded-[3px] bottom-[-10px] left-[-10px] border-r-0 border-t-0"
+          className={`${styles[CSS_CLASSES.CORNER]} ${styles[CSS_CLASSES.CORNER_BOTTOM_LEFT]}`}
           style={{
             borderColor: 'var(--border-color)',
-            filter: 'drop-shadow(0 0 4px var(--border-color))'
+            filter: 'drop-shadow(0 0 4px var(--glow-color))'
           }}
-        ></span>
+        />
         <span
-          className="absolute w-4 h-4 border-[3px] rounded-[3px] bottom-[-10px] right-[-10px] border-l-0 border-t-0"
+          className={`${styles[CSS_CLASSES.CORNER]} ${styles[CSS_CLASSES.CORNER_BOTTOM_RIGHT]}`}
           style={{
             borderColor: 'var(--border-color)',
-            filter: 'drop-shadow(0 0 4px var(--border-color))'
+            filter: 'drop-shadow(0 0 4px var(--glow-color))'
           }}
-        ></span>
+        />
       </motion.div>
     </div>
   );
 };
+
+/**
+ * True Focus component
+ */
+export const TrueFocus = TrueFocusComponent;
 
 export default TrueFocus;

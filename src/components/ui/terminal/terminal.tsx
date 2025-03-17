@@ -6,27 +6,27 @@ import {
   profileCommand,
   signupCommand,
   whoamiCommand
-} from '@/commands/auth-commands';
-import { cursorCommand } from '@/commands/cursor-commands';
-import { educationCommand } from '@/commands/education-commands';
-import { experienceCommand } from '@/commands/experience-commands';
-import { clearCommand, echoCommand, helpCommand } from '@/commands/help-commands';
-import { aboutCommand, contactCommand } from '@/commands/information-commands';
-import { projectsCommand } from '@/commands/projects-commands';
-import { resumeCommand } from '@/commands/resume-commands';
-import { skillsCommand } from '@/commands/skills-commands';
-import { privacyCommand, termsCommand } from '@/commands/system-commands';
-import { themeCommand } from '@/commands/theme-commands';
-import { wallpaperCommand } from '@/commands/wallpaper-commands';
-import { welcomeCommand } from '@/commands/welcome-commands';
+} from '@/commands/auth.commands';
+import { cursorCommand } from '@/commands/cursor.commands';
+import { educationCommand } from '@/commands/education.commands';
+import { experienceCommand } from '@/commands/experience.commands';
+import { clearCommand, echoCommand, helpCommand } from '@/commands/help.commands';
+import { aboutCommand, contactCommand } from '@/commands/information.commands';
+import { projectsCommand } from '@/commands/projects.commands';
+import { resumeCommand } from '@/commands/resume.commands';
+import { skillsCommand } from '@/commands/skills.commands';
+import { privacyCommand, termsCommand } from '@/commands/system.commands';
+import { themeCommand } from '@/commands/theme.commands';
+import { wallpaperCommand } from '@/commands/wallpaper.commands';
+import { welcomeCommand } from '@/commands/welcome.commands';
 import { TerminalContent } from '@/components/ui/terminal-content';
 import { TerminalFooter } from '@/components/ui/terminal-footer';
 import { TerminalHeader } from '@/components/ui/terminal-header';
-import { useCommandExecution } from '@/hooks/use-command-execution';
-import { useTerminalAuth } from '@/hooks/use-terminal-auth';
+import { useCommandExecution } from '@/hooks/use-command-execution.hook';
+import { useTerminalAuth } from '@/hooks/use-terminal-auth.hook';
 import { SocialLink } from '@/types/social-links.types';
+import { scrollToBottom } from '@/utils/terminal.utils';
 import { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
-import { scrollToBottom } from './terminal-utils';
 
 export interface TerminalProps {
   containerRef?: React.RefObject<HTMLDivElement> | null;

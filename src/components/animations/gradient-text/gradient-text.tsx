@@ -1,26 +1,35 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { memo } from 'react';
+import {
+  DEFAULT_ANIMATION_SPEED,
+  DEFAULT_GRADIENT_COLORS,
+  DEFAULT_SHOW_BORDER
+} from './gradient-text.constants';
+import {
+  useBorderGradientStyle,
+  useGradientStyle,
+  useInnerBorderStyle,
+  useTextGradientStyle
+} from './gradient-text.hooks';
+import { GradientTextProps } from './gradient-text.types';
 
-export interface GradientTextProps {
-  children: ReactNode;
-  className?: string;
-  colors?: string[];
-  animationSpeed?: number;
-  showBorder?: boolean;
-}
-
-export default function GradientText({
+/**
+ * GradientText component that applies an animated gradient to text
+ * and optionally adds a matching gradient border
+ */
+const GradientText = memo(function GradientText({
   children,
   className = '',
-  colors = ['#ffaa40', '#9c40ff', '#ffaa40'],
-  animationSpeed = 8,
-  showBorder = false
+  colors = DEFAULT_GRADIENT_COLORS,
+  animationSpeed = DEFAULT_ANIMATION_SPEED,
+  showBorder = DEFAULT_SHOW_BORDER
 }: GradientTextProps) {
-  const gradientStyle = {
-    backgroundImage: `linear-gradient(to right, ${colors.join(', ')})`,
-    animationDuration: `${animationSpeed}s`
-  };
+  // Use custom hooks to generate the different styles
+  const gradientStyle = useGradientStyle(colors, animationSpeed);
+  const textGradientStyle = useTextGradientStyle(gradientStyle);
+  const borderGradientStyle = useBorderGradientStyle(gradientStyle);
+  const innerBorderStyle = useInnerBorderStyle();
 
   return (
     <div
@@ -29,34 +38,25 @@ export default function GradientText({
       {showBorder && (
         <div
           className="absolute inset-0 bg-cover z-0 pointer-events-none animate-gradient"
-          style={{
-            ...gradientStyle,
-            backgroundSize: '300% 100%'
-          }}
+          style={borderGradientStyle}
         >
           <div
             className="absolute inset-0 bg-black rounded-[1.25rem] z-[-1]"
-            style={{
-              width: 'calc(100% - 2px)',
-              height: 'calc(100% - 2px)',
-              left: '50%',
-              top: '50%',
-              transform: 'translate(-50%, -50%)'
-            }}
+            style={innerBorderStyle}
           ></div>
         </div>
       )}
       <div
         className="inline-block relative z-2 text-transparent bg-cover animate-gradient"
-        style={{
-          ...gradientStyle,
-          backgroundClip: 'text',
-          WebkitBackgroundClip: 'text',
-          backgroundSize: '300% 100%'
-        }}
+        style={textGradientStyle}
       >
         {children}
       </div>
     </div>
   );
-}
+});
+
+// Add named export for index.ts compatibility
+export { GradientText };
+
+export default GradientText;

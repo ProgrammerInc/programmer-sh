@@ -1,21 +1,49 @@
+/**
+ * Rainbow Cursor Component
+ *
+ * A colorful cursor effect that creates a rainbow trail following the mouse movements.
+ * Features color cycling, size pulsing, and customizable trail properties.
+ *
+ * @module RainbowCursor
+ */
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import React, { useEffect, useRef } from 'react';
 
+/**
+ * Props for configuring the RainbowCursor component
+ */
 export interface RainbowCursorProps {
+  /** Optional target element to attach the cursor to (defaults to document body) */
   element?: HTMLElement;
+  /** Number of particles in the trail */
   length?: number;
+  /** Array of colors for the rainbow effect */
   colors?: string[];
+  /** Size of each particle */
   size?: number;
+  /** Speed at which the trail follows the cursor */
   trailSpeed?: number;
+  /** Speed at which colors cycle through the palette */
   colorCycleSpeed?: number;
+  /** Blur effect applied to the particles */
   blur?: number;
+  /** Speed of the size pulsing effect */
   pulseSpeed?: number;
+  /** Minimum size during pulsing (as a percentage of size) */
   pulseMin?: number;
+  /** Maximum size during pulsing (as a percentage of size) */
   pulseMax?: number;
 }
 
+/**
+ * RainbowCursor component creates a colorful trail of particles that follow
+ * the mouse cursor with smooth animations and color transitions.
+ *
+ * @param props - Configuration options for the rainbow cursor
+ * @returns React component
+ */
 export const RainbowCursor: React.FC<RainbowCursorProps> = ({
   element,
   length = 20,

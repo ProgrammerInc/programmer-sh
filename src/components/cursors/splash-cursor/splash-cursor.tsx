@@ -1,32 +1,63 @@
+/**
+ * Splash Cursor Component
+ *
+ * A fluid dynamics simulation effect for the cursor that creates a splash/ripple effect
+ * using WebGL and canvas rendering techniques.
+ *
+ * @module SplashCursor
+ */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useEffect, useRef } from 'react';
 
+/**
+ * Represents an RGB color with values between 0 and 1
+ */
 export interface ColorRGB {
   r: number;
   g: number;
   b: number;
 }
 
+/**
+ * Configuration options for the SplashCursor component
+ */
 export interface SplashCursorProps {
+  /** Simulation resolution (higher values = more detailed but more resource intensive) */
   SIM_RESOLUTION?: number;
+  /** Dye resolution (higher values = more detailed but more resource intensive) */
   DYE_RESOLUTION?: number;
+  /** Capture resolution for effects */
   CAPTURE_RESOLUTION?: number;
+  /** Rate at which density dissipates */
   DENSITY_DISSIPATION?: number;
+  /** Rate at which velocity dissipates */
   VELOCITY_DISSIPATION?: number;
+  /** Pressure value for simulation */
   PRESSURE?: number;
+  /** Number of iterations for pressure calculation */
   PRESSURE_ITERATIONS?: number;
+  /** Curl value for simulation */
   CURL?: number;
+  /** Splat radius for pointer interactions */
   SPLAT_RADIUS?: number;
+  /** Splat force for pointer interactions */
   SPLAT_FORCE?: number;
+  /** Enable shading for a more realistic effect */
   SHADING?: boolean;
+  /** Speed at which colors update */
   COLOR_UPDATE_SPEED?: number;
+  /** Background color for the simulation */
   BACK_COLOR?: ColorRGB;
+  /** Enable transparency for the simulation */
   TRANSPARENT?: boolean;
 }
 
-interface Pointer {
+/**
+ * Represents a pointer/cursor position in the simulation
+ */
+export interface Pointer {
   id: number;
   texcoordX: number;
   texcoordY: number;
@@ -39,6 +70,11 @@ interface Pointer {
   color: ColorRGB;
 }
 
+/**
+ * Creates a default pointer object with initial values
+ * 
+ * @returns A new pointer object with default values
+ */
 function pointerPrototype(): Pointer {
   return {
     id: -1,
@@ -54,6 +90,13 @@ function pointerPrototype(): Pointer {
   };
 }
 
+/**
+ * SplashCursor component that creates a fluid dynamics simulation effect
+ * following the mouse cursor.
+ *
+ * @param props - Configuration options for the splash cursor effect
+ * @returns React component that renders the fluid simulation
+ */
 export function SplashCursor({
   SIM_RESOLUTION = 128,
   DYE_RESOLUTION = 1440,

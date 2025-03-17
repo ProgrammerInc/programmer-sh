@@ -1,5 +1,8 @@
-import BlobBackground from './blob-background';
+/**
+ * BlobBackground component creates a background with animated blobs.
+ *
+ * @module BlobBackground
+ */
 
-export * from './blob-background';
-
-export default BlobBackground;
+export { BlobBackground, default } from './blob-background';
+export type { BlobBackgroundProps } from './blob-background.types';

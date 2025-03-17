@@ -1,5 +1,11 @@
-import FuzzyText from './fuzzy-text';
+/**
+ * Fuzzy Text animation component
+ *
+ * This component creates a text with a fuzzy effect that can be customized
+ * with different colors, speeds, and intensities.
+ *
+ * @module FuzzyText
+ */
 
-export * from './fuzzy-text';
-
-export default FuzzyText;
+export { FuzzyText, default } from './fuzzy-text';
+export type { FuzzyTextProps } from './fuzzy-text.types';

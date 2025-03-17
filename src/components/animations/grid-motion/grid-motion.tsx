@@ -1,91 +1,68 @@
 'use client';
 
-import { gsap } from 'gsap';
-import React, { FC, useEffect, useRef } from 'react';
-import './grid-motion.css';
+import { memo, useRef } from 'react';
+import { DEFAULT_GRADIENT_COLOR, NOISE_TEXTURE_PATH } from './grid-motion.constants';
+import {
+  useCombinedItems,
+  useDefaultItems,
+  useGradientColor,
+  useGridMotionAnimation,
+  useGridMousePosition,
+  useRenderedRows
+} from './grid-motion.hooks';
+import styles from './grid-motion.module.css';
+import { GridMotionProps } from './grid-motion.types';
 
-export interface GridMotionProps {
-  items?: (string | React.ReactNode)[];
-  gradientColor?: string;
-}
-
-export const GridMotion: FC<GridMotionProps> = ({ items = [], gradientColor = 'black' }) => {
+/**
+ * GridMotion component creates a responsive grid with mouse-interactive motion effect.
+ * Items in the grid move in alternating directions based on mouse position.
+ *
+ * @param props - Component properties
+ * @returns Memoized React component with interactive grid motion effect
+ */
+const GridMotionComponent = ({
+  items = [],
+  gradientColor = DEFAULT_GRADIENT_COLOR
+}: GridMotionProps) => {
   const gridRef = useRef<HTMLDivElement>(null);
   const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const mouseXRef = useRef<number>(window.innerWidth / 2);
 
-  // Ensure the grid has 28 items (4 rows x 7 columns) by default
-  const totalItems = 28;
-  const defaultItems = Array.from({ length: totalItems }, (_, index) => `Item ${index + 1}`);
-  const combinedItems = items.length > 0 ? items.slice(0, totalItems) : defaultItems;
+  // Get mouse position for interactive effects
+  const mouseX = useGridMousePosition();
 
-  useEffect(() => {
-    // Set the CSS variable for gradient color
-    if (gridRef.current) {
-      gridRef.current.style.setProperty('--grid-motion-gradient-color', gradientColor);
-    }
+  // Create and combine items
+  const defaultItems = useDefaultItems();
+  const combinedItems = useCombinedItems(items, defaultItems);
 
-    gsap.ticker.lagSmoothing(0);
+  // Apply grid motion animation based on mouse position
+  useGridMotionAnimation(rowRefs, mouseX);
 
-    const handleMouseMove = (e: MouseEvent): void => {
-      mouseXRef.current = e.clientX;
-    };
+  // Set gradient color CSS variable
+  useGradientColor(gridRef, gradientColor);
 
-    const updateMotion = (): void => {
-      const maxMoveAmount = 300;
-      const baseDuration = 0.8; // Base duration for inertia
-      const inertiaFactors = [0.6, 0.4, 0.3, 0.2]; // Different inertia for each row, outer rows slower
-
-      rowRefs.current.forEach((row, index) => {
-        if (row) {
-          const direction = index % 2 === 0 ? 1 : -1;
-          const moveAmount =
-            ((mouseXRef.current / window.innerWidth) * maxMoveAmount - maxMoveAmount / 2) *
-            direction;
-
-          gsap.to(row, {
-            x: moveAmount,
-            duration: baseDuration + inertiaFactors[index % inertiaFactors.length],
-            ease: 'power3.out',
-            overwrite: 'auto'
-          });
-        }
-      });
-    };
-
-    const removeAnimationLoop = gsap.ticker.add(updateMotion);
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      removeAnimationLoop();
-    };
-  }, [gradientColor]);
+  // Get rendered rows with their content
+  const renderedRows = useRenderedRows(combinedItems, rowRefs);
 
   return (
-    <div ref={gridRef} className="grid-motion-container">
-      <section className="grid-motion-section">
-        {/* Noise overlay - now using proper asset path */}
+    <div ref={gridRef} className={styles['container']}>
+      <section className={styles['section']}>
+        {/* Noise overlay - using proper asset path */}
         <div
-          className="grid-motion-noise-overlay"
-          style={{ backgroundImage: 'url(/assets/noise.png)' }}
+          className={styles['noise-overlay']}
+          style={{ backgroundImage: `url(${NOISE_TEXTURE_PATH})` }}
         ></div>
-        <div className="grid-motion-grid">
-          {Array.from({ length: 4 }, (_, rowIndex) => (
-            <div
-              key={rowIndex}
-              className="grid-motion-row"
-              ref={el => (rowRefs.current[rowIndex] = el)}
-            >
-              {combinedItems.slice(rowIndex * 7, (rowIndex + 1) * 7).map((item, index) => (
-                <div key={index} className="grid-motion-item">
-                  {typeof item === 'string' && item.startsWith('http') ? (
+        <div className={styles['grid']}>
+          {renderedRows.map(row => (
+            <div key={row.key} className={styles['row']} ref={row.ref}>
+              {row.items.map(item => (
+                <div key={item.key} className={styles['item']}>
+                  {typeof item.content === 'string' && item.content.startsWith('http') ? (
                     <div
                       className="w-full h-full bg-cover bg-center absolute top-0 left-0"
-                      style={{ backgroundImage: `url(${item})` }}
+                      style={{ backgroundImage: `url(${item.content})` }}
                     ></div>
                   ) : (
-                    <div className="p-4 text-center z-[1]">{item}</div>
+                    <div className="p-4 text-center z-[1]">{item.content}</div>
                   )}
                 </div>
               ))}
@@ -96,5 +73,8 @@ export const GridMotion: FC<GridMotionProps> = ({ items = [], gradientColor = 'b
     </div>
   );
 };
+
+// Create a memoized version of the component
+export const GridMotion = memo(GridMotionComponent);
 
 export default GridMotion;

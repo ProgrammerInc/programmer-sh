@@ -1,7 +1,7 @@
 'use client';
 
-import { useAuthModal } from '@/hooks/use-auth-modal';
-import { useTerminalAuth } from '@/hooks/use-terminal-auth';
+import { useAuthModal } from '@/hooks/use-auth-modal.hook';
+import { useTerminalAuth } from '@/hooks/use-terminal-auth.hook';
 import { supabase } from '@/integrations/supabase/supabase.client';
 import { isIncognitoMode } from '@/lib/is-incognito-mode';
 import { SocialLink } from '@/types/social-links.types';

@@ -1,65 +1,50 @@
 'use client';
 
 import { cn } from '@/utils/app.utils';
-import React from 'react';
+import { memo } from 'react';
+import {
+  DEFAULT_ACCENT_COLOR,
+  DEFAULT_ANIMATION_SPEED,
+  DEFAULT_BLUR_INTENSITY,
+  DEFAULT_PRIMARY_COLOR,
+  DEFAULT_SECONDARY_COLOR
+} from './gradient-mesh.constants';
+import { useGradientMeshStyle } from './gradient-mesh.hooks';
+import { GradientMeshProps } from './gradient-mesh.types';
 
-export interface GradientMeshProps extends React.HTMLAttributes<HTMLDivElement> {
-  /**
-   * Primary color for the gradient
-   * @default "#4f46e5"
-   */
-  primaryColor?: string;
-  /**
-   * Secondary color for the gradient
-   * @default "#9333ea"
-   */
-  secondaryColor?: string;
-  /**
-   * Accent color for additional depth
-   * @default "#ec4899"
-   */
-  accentColor?: string;
-  /**
-   * Animation speed in seconds
-   * @default 20
-   */
-  animationSpeed?: number;
-  /**
-   * Blur intensity for the gradient
-   * @default 100
-   */
-  blurIntensity?: number;
-}
-
-export function GradientMesh({
-  primaryColor = '#4f46e5',
-  secondaryColor = '#9333ea',
-  accentColor = '#ec4899',
-  animationSpeed = 20,
-  blurIntensity = 100,
+/**
+ * GradientMesh creates a visually appealing background with animated gradients
+ * that blend between primary, secondary, and accent colors.
+ *
+ * @param props - Component properties
+ * @returns Memoized React component with animated gradient background
+ */
+const GradientMesh = memo(function GradientMesh({
+  primaryColor = DEFAULT_PRIMARY_COLOR,
+  secondaryColor = DEFAULT_SECONDARY_COLOR,
+  accentColor = DEFAULT_ACCENT_COLOR,
+  animationSpeed = DEFAULT_ANIMATION_SPEED,
+  blurIntensity = DEFAULT_BLUR_INTENSITY,
   className,
   ...props
 }: GradientMeshProps) {
+  // Use custom hook to generate the gradient style
+  const gradientStyle = useGradientMeshStyle(
+    primaryColor,
+    secondaryColor,
+    accentColor,
+    animationSpeed,
+    blurIntensity
+  );
+
   return (
     <div className={cn('relative h-full w-full overflow-hidden', className)} {...props}>
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          background: `
-            radial-gradient(at 27% 37%, ${primaryColor} 0px, transparent 50%),
-            radial-gradient(at 97% 21%, ${secondaryColor} 0px, transparent 50%),
-            radial-gradient(at 52% 99%, ${accentColor} 0px, transparent 50%),
-            radial-gradient(at 10% 29%, ${primaryColor} 0px, transparent 50%),
-            radial-gradient(at 97% 96%, ${secondaryColor} 0px, transparent 50%),
-            radial-gradient(at 33% 50%, ${accentColor} 0px, transparent 50%),
-            radial-gradient(at 79% 53%, ${primaryColor} 0px, transparent 50%)
-          `,
-          filter: `blur(${blurIntensity}px)`,
-          animation: `gradient-animation ${animationSpeed}s ease infinite`
-        }}
-      />
+      <div className="absolute inset-0 z-0" style={gradientStyle} />
     </div>
   );
-}
+});
+
+// Add named export for index.ts compatibility
+export { GradientMesh };
 
 export default GradientMesh;

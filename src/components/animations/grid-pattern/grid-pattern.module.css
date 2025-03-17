@@ -1,0 +1,19 @@
+/* Grid pattern styles */
+.container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.pattern-container {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.pattern-rect {
+  transform-box: fill-box;
+  transform-origin: center;
+}

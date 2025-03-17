@@ -1,6 +1,8 @@
-import SnowflakeCursor from './snowflake-cursor';
+/**
+ * Snowflake cursor component that creates snowflake particles following cursor movement.
+ *
+ * @module
+ */
 
-export * from './snowflake-cursor';
-export * from './snowflake-particle';
-
-export default SnowflakeCursor;
+export { SnowflakeCursor, default } from './snowflake-cursor';
+export type { SnowflakeCursorProps } from './snowflake-cursor.types';

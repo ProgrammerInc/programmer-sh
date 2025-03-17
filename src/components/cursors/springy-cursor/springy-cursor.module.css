@@ -1,0 +1,12 @@
+/**
+ * Styles for the SpringyCursor component
+ */
+
+.springy-cursor-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translateZ(0);
+}

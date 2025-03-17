@@ -1,0 +1,25 @@
+/**
+ * CSS module for the Swarm Effect animation component
+ */
+
+.swarm-effect-container {
+  position: relative;
+  display: inline-block;
+}
+
+.swarm-effect-canvas {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  transition: opacity 0.3s ease;
+}
+
+.swarm-effect-hidden-image {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+}

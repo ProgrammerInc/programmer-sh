@@ -1,5 +1,11 @@
-import Magnet from './magnet';
+/**
+ * Magnet Animation Component
+ *
+ * A component that creates a magnetic effect, attracting elements to the mouse
+ * cursor when it gets close to them.
+ *
+ * @module Magnet
+ */
 
-export * from './magnet';
-
-export default Magnet;
+export { Magnet, default } from './magnet';
+export type { MagnetProps } from './magnet.types';

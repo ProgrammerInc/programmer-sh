@@ -1,0 +1,40 @@
+/**
+ * Text Pressure Animation Component Styles
+ */
+
+.text-pressure-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.text-pressure-title {
+  margin: 0;
+  font-weight: 100;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.text-pressure-title.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.text-pressure-title.stroke span {
+  position: relative;
+}
+
+.text-pressure-title.stroke span::after {
+  content: attr(data-char);
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: transparent;
+  z-index: -1;
+}
+
+.text-pressure-char {
+  display: inline-block;
+}

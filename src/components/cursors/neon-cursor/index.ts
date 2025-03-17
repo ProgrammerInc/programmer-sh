@@ -1,5 +1,8 @@
-import NeonCursor from './neon-cursor';
+/**
+ * Neon Cursor animation component that creates a glowing neon cursor effect.
+ *
+ * @module
+ */
 
-export * from './neon-cursor';
-
-export default NeonCursor;
+export { NeonCursor, default } from './neon-cursor';
+export type { NeonCursorProps } from './neon-cursor.types';

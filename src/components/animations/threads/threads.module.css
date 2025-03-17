@@ -1,0 +1,33 @@
+/**
+ * CSS module for the Threads animation component
+ */
+
+/* Main container styles */
+.threads-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+/* Canvas for the animation */
+.threads-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Stars background wrapper */
+.threads-stars-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}

@@ -1,0 +1,9 @@
+/**
+ * CSS Module for the AnimatedContent component
+ */
+
+/* Container for the animated content */
+.animated-content-container {
+  display: block;
+  width: 100%;
+}

@@ -1,0 +1,55 @@
+/**
+ * Styles for the Rotating Text animation component
+ */
+
+.rotating-text__container {
+  display: flex;
+  flex-wrap: wrap;
+  white-space: pre-wrap;
+  position: relative;
+}
+
+.rotating-text__flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  white-space: pre-wrap;
+  position: relative;
+}
+
+.rotating-text__flex-column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.rotating-text__split-level {
+  display: inline-flex;
+}
+
+.rotating-text__element-level {
+  display: inline-block;
+}
+
+.rotating-text__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.rotating-text__whitespace {
+  white-space: pre;
+}
+
+.rotating-text__inline-block {
+  display: inline-block;
+}
+
+.rotating-text__inline-flex {
+  display: inline-flex;
+}

@@ -1,12 +1,12 @@
+import * as TerminalUtils from '../../../utils/terminal.utils';
 import Terminal from './terminal';
-import * as TerminalUtils from './terminal-utils';
 
 // Named exports with alias to avoid ambiguity
 export { Terminal, TerminalUtils };
 
 // Export everything from component files
+export * from '../../../utils/terminal.utils';
 export * from './terminal';
-export * from './terminal-utils';
 
 // Default export
 export default Terminal;

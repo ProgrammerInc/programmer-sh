@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback, useMemo, memo } from 'react';
 
 export class Pixel {
   width: number;
@@ -105,19 +105,18 @@ export class Pixel {
   }
 }
 
+/**
+ * Adjusts animation speed based on user's motion preferences
+ * 
+ * @param value - Original speed value
+ * @param reducedMotion - Whether reduced motion is preferred
+ * @returns Adjusted speed value
+ */
 function getEffectiveSpeed(value: any, reducedMotion: any) {
-  const min = 0;
-  const max = 100;
-  const throttle = 0.001;
-  const parsed = parseInt(value, 10);
-
-  if (parsed <= min || reducedMotion) {
-    return min;
-  } else if (parsed >= max) {
-    return max * throttle;
-  } else {
-    return parsed * throttle;
+  if (reducedMotion) {
+    return value * 5;
   }
+  return value;
 }
 
 /**
@@ -126,33 +125,33 @@ function getEffectiveSpeed(value: any, reducedMotion: any) {
 const VARIANTS = {
   default: {
     activeColor: null,
-    gap: 5,
-    speed: 35,
-    colors: '#f8fafc,#f1f5f9,#cbd5e1',
+    gap: 15,
+    speed: 0.1,
+    colors: '#ef4444,#f59e0b,#84cc16,#10b981,#06b6d4,#6366f1,#8b5cf6,#d946ef',
     noFocus: false
   },
   blue: {
-    activeColor: '#e0f2fe',
-    gap: 10,
-    speed: 25,
-    colors: '#e0f2fe,#7dd3fc,#0ea5e9',
+    activeColor: null,
+    gap: 15,
+    speed: 0.1,
+    colors: '#0ea5e9,#0284c7,#0369a1,#075985',
     noFocus: false
   },
   yellow: {
-    activeColor: '#fef08a',
-    gap: 3,
-    speed: 20,
-    colors: '#fef08a,#fde047,#eab308',
+    activeColor: null,
+    gap: 15,
+    speed: 0.1,
+    colors: '#fcd34d,#fbbf24,#f59e0b,#d97706',
     noFocus: false
   },
   pink: {
-    activeColor: '#fecdd3',
-    gap: 6,
-    speed: 80,
-    colors: '#fecdd3,#fda4af,#e11d48',
-    noFocus: true
+    activeColor: null,
+    gap: 15,
+    speed: 0.1,
+    colors: '#f9a8d4,#f472b6,#ec4899,#db2777',
+    noFocus: false
   }
-};
+} as const;
 
 export interface PixelCardProps {
   variant?: 'default' | 'blue' | 'yellow' | 'pink';
@@ -164,7 +163,7 @@ export interface PixelCardProps {
   children: React.ReactNode;
 }
 
-export interface VariantConfig {
+interface VariantConfig {
   activeColor: string | null;
   gap: number;
   speed: number;
@@ -172,7 +171,13 @@ export interface VariantConfig {
   noFocus: boolean;
 }
 
-export default function PixelCard({
+/**
+ * PixelCard component creates a card with animated pixel effects on hover/focus
+ * 
+ * @param props - Component properties including styling and behavior options
+ * @returns A memoized React component with animated pixel effects
+ */
+function PixelCardComponent({
   variant = 'default',
   gap,
   speed,
@@ -184,19 +189,33 @@ export default function PixelCard({
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pixelsRef = useRef<Pixel[]>([]);
-  const animationRef = useRef<any>(null);
+  const animationRef = useRef<number | null>(null);
   const timePreviousRef = useRef(performance.now());
+  
+  // Check for reduced motion preference
   const reducedMotion = useRef(
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    typeof window !== 'undefined' ? 
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches : false
   ).current;
 
-  const variantCfg: VariantConfig = VARIANTS[variant] || VARIANTS.default;
-  const finalGap = gap ?? variantCfg.gap;
-  const finalSpeed = speed ?? variantCfg.speed;
-  const finalColors = colors ?? variantCfg.colors;
-  const finalNoFocus = noFocus ?? variantCfg.noFocus;
+  // Memoize configuration to prevent unnecessary recalculations
+  const { 
+    finalGap, 
+    finalSpeed, 
+    finalColors, 
+    finalNoFocus 
+  } = useMemo(() => {
+    const variantCfg: VariantConfig = VARIANTS[variant] || VARIANTS.default;
+    return {
+      finalGap: gap ?? variantCfg.gap,
+      finalSpeed: speed ?? variantCfg.speed,
+      finalColors: colors ?? variantCfg.colors,
+      finalNoFocus: noFocus ?? variantCfg.noFocus
+    };
+  }, [variant, gap, speed, colors, noFocus]);
 
-  const initPixels = () => {
+  // Initialize pixels - memoized with useCallback for stability
+  const initPixels = useCallback(() => {
     if (!containerRef.current || !canvasRef.current) return;
 
     const rect = containerRef.current.getBoundingClientRect();
@@ -234,10 +253,14 @@ export default function PixelCard({
       }
     }
     pixelsRef.current = pxs;
-  };
+  }, [finalGap, finalSpeed, finalColors, reducedMotion]);
 
-  const doAnimate = (fnName: keyof Pixel) => {
-    animationRef.current = requestAnimationFrame(() => doAnimate(fnName));
+  // Animation function with useCallback
+  const doAnimate = useCallback((fnName: keyof Pixel) => {
+    if (animationRef.current !== null) {
+      animationRef.current = requestAnimationFrame(() => doAnimate(fnName));
+    }
+    
     const timeNow = performance.now();
     const timePassed = timeNow - timePreviousRef.current;
     const timeInterval = 1000 / 60; // ~60 FPS
@@ -261,45 +284,67 @@ export default function PixelCard({
       }
     }
     if (allIdle) {
+      if (animationRef.current !== null) {
+        cancelAnimationFrame(animationRef.current);
+        animationRef.current = null;
+      }
+    }
+  }, []);
+
+  // Handle animation with useCallback
+  const handleAnimation = useCallback((name: keyof Pixel) => {
+    if (animationRef.current !== null) {
       cancelAnimationFrame(animationRef.current);
     }
-  };
-
-  const handleAnimation = (name: keyof Pixel) => {
-    cancelAnimationFrame(animationRef.current);
     animationRef.current = requestAnimationFrame(() => doAnimate(name));
-  };
+  }, [doAnimate]);
 
-  const onMouseEnter = () => handleAnimation('appear');
-  const onMouseLeave = () => handleAnimation('disappear');
-  const onFocus: React.FocusEventHandler<HTMLDivElement> = e => {
+  // Event handlers with useCallback
+  const onMouseEnter = useCallback(() => handleAnimation('appear'), [handleAnimation]);
+  const onMouseLeave = useCallback(() => handleAnimation('disappear'), [handleAnimation]);
+  
+  const onFocus = useCallback<React.FocusEventHandler<HTMLDivElement>>((e) => {
     if (e.currentTarget.contains(e.relatedTarget)) return;
     handleAnimation('appear');
-  };
-  const onBlur: React.FocusEventHandler<HTMLDivElement> = e => {
+  }, [handleAnimation]);
+  
+  const onBlur = useCallback<React.FocusEventHandler<HTMLDivElement>>((e) => {
     if (e.currentTarget.contains(e.relatedTarget)) return;
     handleAnimation('disappear');
-  };
+  }, [handleAnimation]);
+
+  // Container style with useMemo
+  const containerStyle = useMemo(() => (
+    `h-[400px] w-[300px] relative overflow-hidden grid place-items-center aspect-[4/5] border border-[#27272a] rounded-[25px] isolate transition-colors duration-200 ease-&lsqb;cubic-bezier(0.5,1,0.89,1)&rsqb; select-none ${className}`
+  ), [className]);
 
   useEffect(() => {
+    // Initialize pixels on mount
     initPixels();
+    
+    // Set up resize observer
     const observer = new ResizeObserver(() => {
       initPixels();
     });
+    
     if (containerRef.current) {
       observer.observe(containerRef.current);
     }
+    
+    // Cleanup function
     return () => {
       observer.disconnect();
-      cancelAnimationFrame(animationRef.current);
+      if (animationRef.current !== null) {
+        cancelAnimationFrame(animationRef.current);
+        animationRef.current = null;
+      }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [finalGap, finalSpeed, finalColors, finalNoFocus]);
+  }, [initPixels]);
 
   return (
     <div
       ref={containerRef}
-      className={`h-[400px] w-[300px] relative overflow-hidden grid place-items-center aspect-[4/5] border border-[#27272a] rounded-[25px] isolate transition-colors duration-200 ease-&lsqb;cubic-bezier(0.5,1,0.89,1)&rsqb; select-none ${className}`}
+      className={containerStyle}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onFocus={finalNoFocus ? undefined : onFocus}
@@ -311,3 +356,7 @@ export default function PixelCard({
     </div>
   );
 }
+
+// Export memoized component
+const PixelCard = memo(PixelCardComponent);
+export default PixelCard;

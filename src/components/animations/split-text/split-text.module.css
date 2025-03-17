@@ -1,0 +1,31 @@
+/**
+ * CSS Styles for the Split Text animation component
+ */
+
+.split-text-parent {
+  overflow: hidden;
+  display: inline;
+}
+
+.split-text-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.split-text-letter {
+  display: inline-block;
+  transform: translateZ(0);
+  transition-property: opacity, transform;
+  will-change: transform;
+}
+
+.split-text-space {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .split-text-letter {
+    transition: none !important;
+    transform: none !important;
+  }
+}

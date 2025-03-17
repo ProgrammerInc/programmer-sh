@@ -1,10 +1,8 @@
 import {
   AuroraBackgroundProps,
   AuroraCanvasProps,
-  AuroraProps,
   BackgroundBeamsProps,
   BackgroundBoxesProps,
-  BackgroundLinesProps,
   BalatroProps,
   BallpitProps,
   BeamPortalProps,
@@ -46,6 +44,8 @@ import {
   WavyBackgroundProps,
   WorldMapProps
 } from '@/components/animations';
+import { AuroraProps } from '@/components/animations/aurora/aurora.types';
+import { BackgroundLinesProps } from '@/components/animations/background-lines/background-lines.types';
 import { CSSProperties } from 'react';
 
 export type AspectRatioType = '16:9' | '4:3' | '1:1';

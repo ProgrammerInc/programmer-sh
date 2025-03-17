@@ -1,35 +1,42 @@
 'use client';
 
 import { cn } from '@/utils/app.utils';
-import React from 'react';
-import { convertLinksToAnchors } from './link-utils';
+import { convertLinksToAnchors } from '@/utils/link.utils';
+import React, { memo, useMemo } from 'react';
 import { AnimatedContentProps } from './terminal-response.types';
 
-export const AnimatedContent: React.FC<AnimatedContentProps> = ({
+/**
+ * AnimatedContent component for displaying terminal content with typing animation
+ */
+export const AnimatedContent = memo(({ 
+  className,
   displayText,
   isDone,
-  isError,
-  className,
-  onCommandClick
-}) => {
-  // For animated content, we can't easily make links clickable during animation
-  // so we only apply link conversion when animation is done
-  const renderedContent = !isDone
-    ? displayText
-    : convertLinksToAnchors(displayText, onCommandClick);
+  isError = false,
+  onCommandClick 
+}: AnimatedContentProps) => {
+  // Convert links to anchors when animation is complete
+  const processedContent = useMemo(() => {
+    if (!isDone) return displayText;
+    return convertLinksToAnchors(displayText, onCommandClick);
+  }, [displayText, isDone, onCommandClick]);
+
+  // Calculate container className only when dependencies change
+  const containerClassName = useMemo(() => {
+    return cn(
+      'whitespace-pre-wrap font-mono text-sm mb-4',
+      isError ? 'text-terminal-error' : 'text-terminal-foreground',
+      !isDone ? 'animate-pulse' : '',
+      className
+    );
+  }, [className, isError, isDone]);
 
   return (
     <div
-      className={cn(
-        'whitespace-pre-wrap font-mono text-sm mb-4',
-        isError ? 'text-terminal-error' : 'text-terminal-foreground',
-        !isDone ? 'animate-pulse' : '',
-        className
-      )}
-    >
-      {renderedContent}
-    </div>
+      className={containerClassName}
+      dangerouslySetInnerHTML={{ __html: processedContent }}
+    />
   );
-};
+});
 
-export default AnimatedContent;
+AnimatedContent.displayName = 'AnimatedContent';

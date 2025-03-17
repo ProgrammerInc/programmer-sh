@@ -1,5 +1,9 @@
-import Aurora from './aurora';
+/**
+ * Aurora component - A beautiful WebGL-based aurora borealis effect
+ *
+ * @module
+ */
 
-export * from './aurora';
-
-export default Aurora;
+export { Aurora, default } from './aurora';
+export * as AuroraStyles from './aurora.module.css';
+export type { AuroraProps } from './aurora.types';

@@ -1,5 +1,12 @@
-import Squares from './squares';
+/**
+ * Squares Animation Component
+ *
+ * This module exports a component that renders an animated grid of squares
+ * moving in a specified direction with hover effects.
+ *
+ * @module Squares
+ */
 
-export * from './squares';
-
-export default Squares;
+export { Squares, default } from './squares';
+export * as SquaresStyles from './squares.module.css';
+export type { SquaresProps } from './squares.types';

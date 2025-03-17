@@ -1,118 +1,49 @@
 'use client';
 
+import { FC, memo, useMemo, useRef } from 'react';
 import { cn } from '@/utils/app.utils';
-import React, { useEffect, useRef, useState } from 'react';
 
-export interface ShootingStar {
-  id: number;
-  x: number;
-  y: number;
-  angle: number;
-  scale: number;
-  speed: number;
-  distance: number;
-}
+import { CSS_CLASSES, DEFAULT_SHOOTING_STARS } from './shooting-stars.constants';
+import { useShootingStars } from './shooting-stars.hooks';
+import styles from './shooting-stars.module.css';
+import { ShootingStarsProps } from './shooting-stars.types';
 
-export interface ShootingStarsProps {
-  minSpeed?: number;
-  maxSpeed?: number;
-  minDelay?: number;
-  maxDelay?: number;
-  starColor?: string;
-  trailColor?: string;
-  starWidth?: number;
-  starHeight?: number;
-  className?: string;
-}
-
-const getRandomStartPoint = () => {
-  const side = Math.floor(Math.random() * 4);
-  const offset = Math.random() * window.innerWidth;
-
-  switch (side) {
-    case 0:
-      return { x: offset, y: 0, angle: 45 };
-    case 1:
-      return { x: window.innerWidth, y: offset, angle: 135 };
-    case 2:
-      return { x: offset, y: window.innerHeight, angle: 225 };
-    case 3:
-      return { x: 0, y: offset, angle: 315 };
-    default:
-      return { x: 0, y: 0, angle: 45 };
-  }
-};
-export const ShootingStars: React.FC<ShootingStarsProps> = ({
-  minSpeed = 10,
-  maxSpeed = 30,
-  minDelay = 1200,
-  maxDelay = 4200,
-  starColor = '#9E00FF',
-  trailColor = '#2EB9DF',
-  starWidth = 10,
-  starHeight = 1,
+/**
+ * ShootingStars component that renders animated shooting stars across the screen
+ *
+ * @param props - Component properties
+ * @returns React component
+ */
+export const ShootingStars: FC<ShootingStarsProps> = memo(function ShootingStars({
+  minSpeed = DEFAULT_SHOOTING_STARS.MIN_SPEED,
+  maxSpeed = DEFAULT_SHOOTING_STARS.MAX_SPEED,
+  minDelay = DEFAULT_SHOOTING_STARS.MIN_DELAY,
+  maxDelay = DEFAULT_SHOOTING_STARS.MAX_DELAY,
+  starColor = DEFAULT_SHOOTING_STARS.STAR_COLOR,
+  trailColor = DEFAULT_SHOOTING_STARS.TRAIL_COLOR,
+  starWidth = DEFAULT_SHOOTING_STARS.STAR_WIDTH,
+  starHeight = DEFAULT_SHOOTING_STARS.STAR_HEIGHT,
   className
-}) => {
-  const [star, setStar] = useState<ShootingStar | null>(null);
+}) {
   const svgRef = useRef<SVGSVGElement>(null);
+  
+  // Use our custom hook to manage the stars and animation
+  const { star, starTransform } = useShootingStars({
+    minSpeed,
+    maxSpeed,
+    minDelay,
+    maxDelay,
+    starWidth,
+    starHeight
+  });
 
-  useEffect(() => {
-    const createStar = () => {
-      const { x, y, angle } = getRandomStartPoint();
-      const newStar: ShootingStar = {
-        id: Date.now(),
-        x,
-        y,
-        angle,
-        scale: 1,
-        speed: Math.random() * (maxSpeed - minSpeed) + minSpeed,
-        distance: 0
-      };
-      setStar(newStar);
-
-      const randomDelay = Math.random() * (maxDelay - minDelay) + minDelay;
-      setTimeout(createStar, randomDelay);
-    };
-
-    createStar();
-
-    return () => {};
-  }, [minSpeed, maxSpeed, minDelay, maxDelay]);
-
-  useEffect(() => {
-    const moveStar = () => {
-      if (star) {
-        setStar(prevStar => {
-          if (!prevStar) return null;
-          const newX = prevStar.x + prevStar.speed * Math.cos((prevStar.angle * Math.PI) / 180);
-          const newY = prevStar.y + prevStar.speed * Math.sin((prevStar.angle * Math.PI) / 180);
-          const newDistance = prevStar.distance + prevStar.speed;
-          const newScale = 1 + newDistance / 100;
-          if (
-            newX < -20 ||
-            newX > window.innerWidth + 20 ||
-            newY < -20 ||
-            newY > window.innerHeight + 20
-          ) {
-            return null;
-          }
-          return {
-            ...prevStar,
-            x: newX,
-            y: newY,
-            distance: newDistance,
-            scale: newScale
-          };
-        });
-      }
-    };
-
-    const animationFrame = requestAnimationFrame(moveStar);
-    return () => cancelAnimationFrame(animationFrame);
-  }, [star]);
+  // Memoize the className
+  const svgClassName = useMemo(() => {
+    return cn(styles[CSS_CLASSES.CONTAINER], className);
+  }, [className]);
 
   return (
-    <svg ref={svgRef} className={cn('w-full h-full absolute inset-0', className)}>
+    <svg ref={svgRef} className={svgClassName} aria-hidden="true">
       {star && (
         <rect
           key={star.id}
@@ -120,20 +51,28 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
           y={star.y}
           width={starWidth * star.scale}
           height={starHeight}
+          className={styles[CSS_CLASSES.STAR]}
           fill="url(#gradient)"
-          transform={`rotate(${star.angle}, ${
-            star.x + (starWidth * star.scale) / 2
-          }, ${star.y + starHeight / 2})`}
+          transform={starTransform}
         />
       )}
       <defs>
-        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient 
+          id="gradient" 
+          x1="0%" 
+          y1="0%" 
+          x2="100%" 
+          y2="100%"
+          className={styles[CSS_CLASSES.GRADIENT]}
+        >
           <stop offset="0%" style={{ stopColor: trailColor, stopOpacity: 0 }} />
           <stop offset="100%" style={{ stopColor: starColor, stopOpacity: 1 }} />
         </linearGradient>
       </defs>
     </svg>
   );
-};
+});
+
+ShootingStars.displayName = 'ShootingStars';
 
 export default ShootingStars;

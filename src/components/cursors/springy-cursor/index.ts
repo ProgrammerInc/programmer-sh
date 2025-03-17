@@ -1,5 +1,10 @@
-import SpringyCursor from './springy-cursor';
+/**
+ * SpringyCursor Entry Point
+ *
+ * @module SpringyCursor
+ */
 
-export * from './springy-cursor';
-
-export default SpringyCursor;
+export { SpringyCursor, default } from './springy-cursor';
+export { DEFAULT_EMOJI } from './springy-cursor.constants';
+export * as SpringyCursorStyles from './springy-cursor.module.css';
+export type { SpringyCursorProps } from './springy-cursor.types';

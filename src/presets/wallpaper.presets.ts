@@ -1,7 +1,8 @@
 import { Wallpaper } from '@/components/ui/wallpaper';
 
 // Default placeholder image URL for animations requiring an image source
-const DEFAULT_ANIMATION_IMAGE_URL = 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&q=80';
+const DEFAULT_ANIMATION_IMAGE_URL =
+  'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&q=80';
 
 // Predefined wallpapers
 export const wallpaperPresets: Record<string, Wallpaper> = {
@@ -250,7 +251,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'beach',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1507525428034-bc3fffca8bf4?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -800,7 +801,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'fog',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1578147063111-9a8696fa2ca3?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1578147063111-9bc0b252726f?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -1098,7 +1099,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'hong-kong',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1536599018102-9f803c140fc1?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1536599018102-9bc0b252726f?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -1310,7 +1311,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'leopard',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1517825738774-7de9363ef735?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -1430,7 +1431,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'macbook',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1517336714731-bb934ecdc4ec?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -1924,7 +1925,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'outer-space',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1454496522488-43490279c0fa?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -2089,7 +2090,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'piano',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1433622070098-754fdf81c929?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1433622070098-36695c8771bd?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -2195,7 +2196,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'rave',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1514525253161-7a49c91b7000?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -2365,7 +2366,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'seattle',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1535581652167-3a26c90bbf86?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1535581652167-3a49c91b7000?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -2492,7 +2493,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'space',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1534996858221-380b92700493?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1534996858221-caed2596d242?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -2864,7 +2865,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'turntable',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1458560871784-56d23406c091?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1458560871784-556ac3a4c7e5?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -3118,7 +3119,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'workspace',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1497032623322-86f99bcd76bc?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1497032623322-36695c8771bd?auto=format&fit=crop&q=80'
       }
     }
   },
@@ -3173,7 +3174,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
         id: 'yosemite',
         mimeType: 'image/avif',
         type: 'url',
-        url: 'https://images.unsplash.com/photo-1498429089284-41f8cf3ffd39?auto=format&fit=crop&q=80'
+        url: 'https://images.unsplash.com/photo-1498429089284-38755b4803a6?auto=format&fit=crop&q=80'
       }
     }
   }

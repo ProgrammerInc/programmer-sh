@@ -1,64 +1,76 @@
 'use client';
 
-import { cn } from '@/utils/app.utils';
 import { motion } from 'motion/react';
-import React from 'react';
+import { memo, useCallback } from 'react';
+import { DEFAULT_ANIMATION } from './background-boxes.constants';
+import {
+  useBoxClassName,
+  useBoxesContainerClassName,
+  useColors,
+  useColumns,
+  useContainerStyle,
+  useIconClassName,
+  useRowClassName,
+  useRows
+} from './background-boxes.hooks';
+import { BackgroundBoxesProps } from './background-boxes.types';
+import { getRandomColor, shouldShowIcon } from './background-boxes.utils';
 
-export interface BackgroundBoxesProps extends React.HTMLAttributes<HTMLDivElement> {
-  className?: string;
-}
+/**
+ * BoxesCore component - internal implementation of BackgroundBoxes
+ *
+ * Renders a grid of interactive boxes with hover effects and 3D-like transformation
+ *
+ * @param props Component properties
+ * @returns JSX element
+ */
+const BoxesCore = ({
+  className,
+  rowCount = 150,
+  colCount = 100,
+  ...rest
+}: BackgroundBoxesProps) => {
+  // Use custom hooks for memoized values
+  const rows = useRows(rowCount);
+  const cols = useColumns(colCount);
+  const colors = useColors();
+  const containerStyle = useContainerStyle();
+  const containerClassName = useBoxesContainerClassName(className);
+  const rowClassName = useRowClassName();
+  const boxClassName = useBoxClassName();
+  const iconClassName = useIconClassName();
 
-export const BoxesCore = ({ className, ...rest }: BackgroundBoxesProps) => {
-  const rows = new Array(150).fill(1);
-  const cols = new Array(100).fill(1);
-  const colors = [
-    '--sky-300',
-    '--pink-300',
-    '--green-300',
-    '--yellow-300',
-    '--red-300',
-    '--purple-300',
-    '--blue-300',
-    '--indigo-300',
-    '--violet-300'
-  ];
-  const getRandomColor = () => {
-    return colors[Math.floor(Math.random() * colors.length)];
-  };
+  // Use useCallback for the function to prevent recreation on each render
+  const randomColor = useCallback(() => {
+    return getRandomColor(colors);
+  }, [colors]);
 
   return (
-    <div
-      style={{
-        transform: `translate(-40%,-60%) skewX(-48deg) skewY(14deg) scale(0.675) rotate(0deg) translateZ(0)`
-      }}
-      className={cn(
-        'absolute left-1/4 p-4 -top-1/4 flex  -translate-x-1/2 -translate-y-1/2 w-full h-full z-0 ',
-        className
-      )}
-      {...rest}
-    >
+    <div style={containerStyle} className={containerClassName} {...rest}>
+      <span className="sr-only">Decorative background grid animation</span>
       {rows.map((_, i) => (
-        <motion.div key={`row` + i} className="w-16 h-8  border-l  border-slate-700 relative">
+        <motion.div key={`row-${i}`} className={rowClassName}>
           {cols.map((_, j) => (
             <motion.div
               whileHover={{
-                backgroundColor: `var(${getRandomColor()})`,
-                transition: { duration: 0 }
+                backgroundColor: `var(${randomColor()})`,
+                transition: { duration: DEFAULT_ANIMATION.hoverDuration }
               }}
               animate={{
-                transition: { duration: 2 }
+                transition: { duration: DEFAULT_ANIMATION.animateDuration }
               }}
-              key={`col` + j}
-              className="w-16 h-8  border-r border-t border-slate-700 relative"
+              key={`col-${j}`}
+              className={boxClassName}
             >
-              {j % 2 === 0 && i % 2 === 0 ? (
+              {shouldShowIcon(i, j) ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="absolute h-6 w-10 -top-[14px] -left-[22px] text-slate-700 stroke-[1px] pointer-events-none"
+                  className={iconClassName}
+                  aria-hidden="true"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
                 </svg>
@@ -71,6 +83,35 @@ export const BoxesCore = ({ className, ...rest }: BackgroundBoxesProps) => {
   );
 };
 
-export const BackgroundBoxes = React.memo(BoxesCore);
+/**
+ * BackgroundBoxes component creates a grid of interactive boxes as a decorative background
+ *
+ * Features:
+ * - Renders a grid of boxes with a 3D-like transformation
+ * - Boxes have hover effects with random colors
+ * - Optimized with React.memo and useMemo for better performance
+ * - Supports both light and dark themes
+ *
+ * @example
+ * ```tsx
+ * // Basic usage
+ * <BackgroundBoxes />
+ *
+ * // Custom configuration
+ * <BackgroundBoxes
+ *   rowCount={100}
+ *   colCount={80}
+ *   className="my-custom-class"
+ * />
+ * ```
+ *
+ * @param props Component properties including className and HTML div attributes
+ * @returns Memoized React component
+ */
+export const BackgroundBoxes = memo(BoxesCore);
 
+// Add displayName to help with debugging
+BackgroundBoxes.displayName = 'BackgroundBoxes';
+
+// Export both as default and named export for different import patterns
 export default BackgroundBoxes;

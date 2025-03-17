@@ -1,90 +1,75 @@
+/**
+ * Scroll Float animation component
+ */
 'use client';
 
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import React, { ReactNode, RefObject, useEffect, useMemo, useRef } from 'react';
+import { memo, useMemo, useRef } from 'react';
 
-gsap.registerPlugin(ScrollTrigger);
+import {
+  CSS_CLASSES,
+  DEFAULT_ANIMATION_DURATION,
+  DEFAULT_EASE,
+  DEFAULT_SCROLL_END,
+  DEFAULT_SCROLL_START,
+  DEFAULT_STAGGER
+} from './scroll-float.constants';
+import { useScrollFloatAnimation } from './scroll-float.hooks';
+import styles from './scroll-float.module.css';
+import { ScrollFloatProps } from './scroll-float.types';
+import { cn, splitTextIntoChars } from './scroll-float.utils';
 
-export interface ScrollFloatProps {
-  children: ReactNode;
-  scrollContainerRef?: RefObject<HTMLElement>;
-  containerClassName?: string;
-  textClassName?: string;
-  animationDuration?: number;
-  ease?: string;
-  scrollStart?: string;
-  scrollEnd?: string;
-  stagger?: number;
-}
+/**
+ * ScrollFloat component that animates text with a floating effect triggered by scrolling
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <ScrollFloat>
+ *   Hello World
+ * </ScrollFloat>
+ * ```
+ */
+export const ScrollFloat = memo<ScrollFloatProps>(
+  ({
+    children,
+    scrollContainerRef,
+    containerClassName = '',
+    textClassName = '',
+    animationDuration = DEFAULT_ANIMATION_DURATION,
+    ease = DEFAULT_EASE,
+    scrollStart = DEFAULT_SCROLL_START,
+    scrollEnd = DEFAULT_SCROLL_END,
+    stagger = DEFAULT_STAGGER
+  }) => {
+    const containerRef = useRef<HTMLHeadingElement>(null);
 
-const ScrollFloat: React.FC<ScrollFloatProps> = ({
-  children,
-  scrollContainerRef,
-  containerClassName = '',
-  textClassName = '',
-  animationDuration = 1,
-  ease = 'back.inOut(2)',
-  scrollStart = 'center bottom+=50%',
-  scrollEnd = 'bottom bottom-=40%',
-  stagger = 0.03
-}) => {
-  const containerRef = useRef<HTMLHeadingElement>(null);
+    // Split text into individual character spans for animation
+    const splitText = useMemo(() => {
+      return splitTextIntoChars(children, styles[CSS_CLASSES.CHAR]);
+    }, [children]);
 
-  const splitText = useMemo(() => {
-    const text = typeof children === 'string' ? children : '';
-    return text.split('').map((char, index) => (
-      <span className="inline-block" key={index}>
-        {char === ' ' ? '\u00A0' : char}
-      </span>
-    ));
-  }, [children]);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    const scroller =
-      scrollContainerRef && scrollContainerRef.current ? scrollContainerRef.current : window;
-
-    const charElements = el.querySelectorAll('.inline-block');
-
-    gsap.fromTo(
-      charElements,
-      {
-        willChange: 'opacity, transform',
-        opacity: 0,
-        yPercent: 120,
-        scaleY: 2.3,
-        scaleX: 0.7,
-        transformOrigin: '50% 0%'
-      },
-      {
-        duration: animationDuration,
-        ease: ease,
-        opacity: 1,
-        yPercent: 0,
-        scaleY: 1,
-        scaleX: 1,
-        stagger: stagger,
-        scrollTrigger: {
-          trigger: el,
-          scroller,
-          start: scrollStart,
-          end: scrollEnd,
-          scrub: true
-        }
-      }
+    // Initialize scroll animation
+    useScrollFloatAnimation(
+      containerRef,
+      scrollContainerRef,
+      animationDuration,
+      ease,
+      scrollStart,
+      scrollEnd,
+      stagger
     );
-  }, [scrollContainerRef, animationDuration, ease, scrollStart, scrollEnd, stagger]);
 
-  return (
-    <h2 ref={containerRef} className={`my-5 overflow-hidden ${containerClassName}`}>
-      <span className={`inline-block text-[clamp(1.6rem,4vw,3rem)] leading-[1.5] ${textClassName}`}>
-        {splitText}
-      </span>
-    </h2>
-  );
-};
+    return (
+      <h2 ref={containerRef} className={cn(styles[CSS_CLASSES.CONTAINER], containerClassName)}>
+        {/* Hidden text for screen readers */}
+        <span className={styles['sr-only']}>{typeof children === 'string' ? children : ''}</span>
 
+        {/* Visible animated text */}
+        <span className={cn(styles[CSS_CLASSES.TEXT_WRAPPER], textClassName)}>{splitText}</span>
+      </h2>
+    );
+  }
+);
+
+ScrollFloat.displayName = 'ScrollFloat';
 export default ScrollFloat;

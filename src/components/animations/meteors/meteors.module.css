@@ -1,0 +1,55 @@
+/* Meteor animation custom styling */
+.meteor-custom-gradient::before {
+  background-image: linear-gradient(to right, var(--meteor-from-color), transparent) !important;
+}
+
+/* Default gradient for meteors when no custom color is provided */
+.meteor-default-gradient::before {
+  background-image: linear-gradient(to right, rgb(99, 102, 241), rgb(168, 85, 247), transparent);
+}
+
+.meteors-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* The meteor element styling */
+.meteor-element {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 9999px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+  z-index: 1;
+  animation: meteor-animation 5s linear infinite;
+  animation-delay: var(--meteor-delay, 0s);
+  animation-duration: var(--meteor-duration, 5s);
+}
+
+/* Define the meteor animation */
+@keyframes meteor-animation {
+  0% {
+    transform: rotate(215deg) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(215deg) translateX(-500px);
+    opacity: 0;
+  }
+}
+
+.stars-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}

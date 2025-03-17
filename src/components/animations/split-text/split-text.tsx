@@ -1,109 +1,94 @@
 'use client';
 
-import { SpringConfig, animated, useSprings } from '@react-spring/web';
-import { useEffect, useRef, useState } from 'react';
+import { animated } from '@react-spring/web';
+import { FC, memo } from 'react';
 
-export interface SplitTextProps {
-  text?: string;
-  className?: string;
-  delay?: number;
-  animationFrom?: { opacity: number; transform: string };
-  animationTo?: { opacity: number; transform: string };
-  easing?: SpringConfig['easing'];
-  threshold?: number;
-  rootMargin?: string;
-  textAlign?: 'left' | 'right' | 'center' | 'justify' | 'start' | 'end';
-  onLetterAnimationComplete?: () => void;
-}
+import { DEFAULT_ANIMATION, INTERSECTION, TEXT_STYLE } from './split-text.constants';
+import { useLetterAnimations, useProcessedText, useVisibilityObserver } from './split-text.hooks';
+import styles from './split-text.module.css';
+import { SplitTextProps } from './split-text.types';
+import {
+  calculateLetterIndex,
+  createContainerStyles,
+  createSpaceSpanStyles,
+  createWordSpanStyles
+} from './split-text.utils';
 
-const SplitText: React.FC<SplitTextProps> = ({
+/**
+ * SplitText component animates text by splitting it into individual characters
+ * and applying animations to each letter when scrolled into view
+ *
+ * @param props Component properties including text content and animation options
+ * @returns A memoized React component with animated split text effect
+ */
+const SplitTextComponent: FC<SplitTextProps> = ({
   text = '',
   className = '',
-  delay = 100,
-  animationFrom = { opacity: 0, transform: 'translate3d(0,40px,0)' },
-  animationTo = { opacity: 1, transform: 'translate3d(0,0,0)' },
+  delay = DEFAULT_ANIMATION.DELAY,
+  animationFrom = DEFAULT_ANIMATION.FROM,
+  animationTo = DEFAULT_ANIMATION.TO,
   easing = (t: number) => t,
-  threshold = 0.1,
-  rootMargin = '-100px',
-  textAlign = 'center',
+  threshold = INTERSECTION.THRESHOLD,
+  rootMargin = INTERSECTION.ROOT_MARGIN,
+  textAlign = TEXT_STYLE.ALIGN,
   onLetterAnimationComplete
 }) => {
-  const words = text.split(' ').map(word => word.split(''));
-  const letters = words.flat();
-  const [inView, setInView] = useState(false);
-  const ref = useRef<HTMLParagraphElement>(null);
-  const animatedCount = useRef(0);
+  // Process text into words and letters
+  const { words, letters } = useProcessedText(text);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          if (ref.current) {
-            observer.unobserve(ref.current);
-          }
-        }
-      },
-      { threshold, rootMargin }
-    );
+  // Setup visibility observer
+  const { ref, inView } = useVisibilityObserver(threshold, rootMargin);
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, [threshold, rootMargin]);
-
-  // Reset the animation counter when text changes
-  useEffect(() => {
-    animatedCount.current = 0;
-  }, [text]);
-
-  const springs = useSprings(
-    letters.length,
-    letters.map((_, i) => ({
-      from: animationFrom,
-      to: inView ? animationTo : animationFrom,
-      delay: i * delay,
-      config: { easing },
-      onRest: inView
-        ? () => {
-            animatedCount.current += 1;
-            if (animatedCount.current === letters.length && onLetterAnimationComplete) {
-              onLetterAnimationComplete();
-            }
-          }
-        : undefined
-    }))
+  // Setup letter animations
+  const springs = useLetterAnimations(
+    letters,
+    inView,
+    animationFrom,
+    animationTo,
+    delay,
+    easing,
+    onLetterAnimationComplete
   );
 
+  // Create memoized styles
+  const containerStyle = createContainerStyles(textAlign);
+  const wordSpanStyle = createWordSpanStyles();
+  const spaceSpanStyle = createSpaceSpanStyles();
+
   return (
-    <p
-      ref={ref}
-      className={`split-parent overflow-hidden inline ${className}`}
-      style={{ textAlign, whiteSpace: 'normal', wordWrap: 'break-word' }}
-    >
+    <p ref={ref} className={`${styles['split-text-parent']} ${className}`} style={containerStyle}>
       {words.map((word, wordIndex) => (
-        <span key={wordIndex} style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
+        <span key={wordIndex} style={wordSpanStyle} className={styles['split-text-word']}>
           {word.map((letter, letterIndex) => {
-            const index =
-              words.slice(0, wordIndex).reduce((acc, w) => acc + w.length, 0) + letterIndex;
+            const index = calculateLetterIndex(words, wordIndex, letterIndex);
 
             return (
               <animated.span
                 key={index}
                 style={springs[index]}
-                className="inline-block transform transition-opacity will-change-transform"
+                className={styles['split-text-letter']}
               >
                 {letter}
               </animated.span>
             );
           })}
-          <span style={{ display: 'inline-block', width: '0.3em' }}>&nbsp;</span>
+          <span style={spaceSpanStyle} className={styles['split-text-space']}>
+            &nbsp;
+          </span>
         </span>
       ))}
     </p>
   );
 };
+
+/**
+ * Memoized SplitText component for optimal performance
+ */
+export const SplitText = memo(SplitTextComponent);
+
+/**
+ * Set display name for debugging purposes
+ */
+SplitText.displayName = 'SplitText';
 
 export default SplitText;

@@ -1,0 +1,10 @@
+/**
+ * CSS Module for the Orb animation component
+ */
+
+.orb-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}

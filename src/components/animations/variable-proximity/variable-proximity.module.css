@@ -1,0 +1,34 @@
+/**
+ * Variable Proximity Animation Component Styles
+ */
+
+.variable-proximity-container {
+  display: inline;
+  font-family: 'Roboto Flex', sans-serif;
+}
+
+.variable-proximity-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.variable-proximity-letter {
+  display: inline-block;
+}
+
+.variable-proximity-space {
+  display: inline-block;
+}
+
+/* Screen reader only class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

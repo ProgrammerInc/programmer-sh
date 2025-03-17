@@ -1,0 +1,67 @@
+/**
+ * Background Boxes Component Styles
+ */
+
+.background-boxes-container {
+  position: absolute;
+  left: 25%;
+  padding: 1rem;
+  top: -25%;
+  display: flex;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.background-boxes-row {
+  width: 4rem;
+  height: 2rem;
+  border-left: 1px solid var(--slate-700);
+  position: relative;
+}
+
+.background-boxes-row:global(.dark) {
+  border-left-color: var(--slate-600);
+}
+
+.background-boxes-box {
+  width: 4rem;
+  height: 2rem;
+  border-right: 1px solid var(--slate-700);
+  border-top: 1px solid var(--slate-700);
+  position: relative;
+}
+
+.background-boxes-box:global(.dark) {
+  border-right-color: var(--slate-600);
+  border-top-color: var(--slate-600);
+}
+
+.background-boxes-icon {
+  position: absolute;
+  height: 1.5rem;
+  width: 2.5rem;
+  top: -14px;
+  left: -22px;
+  color: var(--slate-700);
+  stroke-width: 1px;
+  pointer-events: none;
+}
+
+.background-boxes-icon:global(.dark) {
+  color: var(--slate-500);
+}
+
+/* Accessible but visually hidden text for screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

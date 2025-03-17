@@ -1,19 +1,17 @@
 'use client';
 
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { FadeContentProps } from './fade-content.types';
 
-export interface FadeContentProps {
-  children: ReactNode;
-  blur?: boolean;
-  duration?: number;
-  easing?: string;
-  delay?: number;
-  threshold?: number;
-  initialOpacity?: number;
-  className?: string;
-}
-
-const FadeContent: React.FC<FadeContentProps> = ({
+/**
+ * A component that fades in its children when they enter the viewport
+ *
+ * @example
+ * <FadeContent blur={true} duration={800}>
+ *   <div>This content will fade in when scrolled into view</div>
+ * </FadeContent>
+ */
+export const FadeContent = memo(function FadeContent({
   children,
   blur = false,
   duration = 1000,
@@ -22,8 +20,8 @@ const FadeContent: React.FC<FadeContentProps> = ({
   threshold = 0.1,
   initialOpacity = 0,
   className = ''
-}) => {
-  const [inView, setInView] = useState(false);
+}: FadeContentProps) {
+  const [inView, setInView] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -31,8 +29,9 @@ const FadeContent: React.FC<FadeContentProps> = ({
     if (!element) return;
 
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
+      entries => {
+        const entry = entries[0];
+        if (entry && entry.isIntersecting) {
           observer.unobserve(element);
           setTimeout(() => {
             setInView(true);
@@ -44,22 +43,25 @@ const FadeContent: React.FC<FadeContentProps> = ({
 
     observer.observe(element);
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, [threshold, delay]);
 
+  const containerStyle = useMemo(
+    () => ({
+      opacity: inView ? 1 : initialOpacity,
+      transition: `opacity ${duration}ms ${easing}, filter ${duration}ms ${easing}`,
+      filter: blur ? (inView ? 'blur(0px)' : 'blur(10px)') : 'none'
+    }),
+    [inView, initialOpacity, duration, easing, blur]
+  );
+
   return (
-    <div
-      ref={ref}
-      className={className}
-      style={{
-        opacity: inView ? 1 : initialOpacity,
-        transition: `opacity ${duration}ms ${easing}, filter ${duration}ms ${easing}`,
-        filter: blur ? (inView ? 'blur(0px)' : 'blur(10px)') : 'none'
-      }}
-    >
+    <div ref={ref} className={className} style={containerStyle}>
       {children}
     </div>
   );
-};
+});
 
 export default FadeContent;

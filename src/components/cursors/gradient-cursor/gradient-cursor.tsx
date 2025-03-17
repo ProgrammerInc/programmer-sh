@@ -1,37 +1,29 @@
+/**
+ * GradientCursor
+ *
+ * Gradient cursor component that creates a colorful trail effect
+ * Colors change based on cursor position and particles fade over time
+ *
+ * @module GradientCursor
+ */
+
 'use client';
 
-import { useMouse } from '@/hooks/use-mouse';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import React from 'react';
+import { useGradientCursorHooks } from './gradient-cursor.hooks';
 
-export const GradientCursor = () => {
-  const [mouseState, ref] = useMouse();
-  const [hue, setHue] = useState(0);
-
-  const [particles, setParticles] = useState<
-    { id: number; x: number; y: number; size: number; intensity: number }[]
-  >([]);
-
-  useEffect(() => {
-    if (mouseState.x && mouseState.y) {
-      const newHue = (mouseState.x || 0) % 360;
-      setHue(newHue);
-
-      // Add multiple new particles
-      const newParticles = Array.from({ length: 3 }, () => ({
-        id: Date.now() + Math.random(),
-        x: mouseState.x + (Math.random() - 0.5) * 20,
-        y: mouseState.y + (Math.random() - 0.5) * 20,
-        size: Math.random() * 3 + 2, // Random size between 2 and 5
-        intensity: Math.random() * 0.5 + 0.5 // Random intensity between 0.5 and 1
-      }));
-
-      setParticles(prev => [...prev, ...newParticles].slice(-30)); // Keep last 30 particles
-    }
-  }, [mouseState.x, mouseState.y]);
+/**
+ * GradientCursor component that creates a colorful gradient trail effect following the cursor
+ * Colors change based on cursor position and particles fade over time
+ *
+ * @returns React component
+ */
+export const GradientCursor: React.FC = () => {
+  const { mouseState, containerRef, hue, particles } = useGradientCursorHooks();
 
   return (
-    <div className="relative w-full h-full " ref={ref}>
+    <div className="relative w-full h-full" ref={containerRef}>
       {mouseState.x !== null && mouseState.y !== null && (
         <>
           {/* Main cursor with gradient */}

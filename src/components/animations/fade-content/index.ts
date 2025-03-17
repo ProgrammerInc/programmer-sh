@@ -1,5 +1,8 @@
-import FadeContent from './fade-content';
+/**
+ * FadeContent component
+ *
+ * @module FadeContent
+ */
 
-export * from './fade-content';
-
-export default FadeContent;
+export { FadeContent, default } from './fade-content';
+export type { FadeContentProps } from './fade-content.types';

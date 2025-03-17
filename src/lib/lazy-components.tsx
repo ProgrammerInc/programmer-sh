@@ -12,67 +12,71 @@ const createLazyComponent = <T extends object>(
 };
 
 // Heavy Three.js animations
-export const LazyGlobe = createLazyComponent(() => import('@/components/animations/globe/globe'));
+export const LazyGlobe = createLazyComponent(() => import('@/components/animations/globe/globe.tsx'));
 
 export const LazyHyperspeed = createLazyComponent(
-  () => import('@/components/animations/hyperspeed/hyperspeed')
+  () => import(/* webpackChunkName: "hyperspeed-animation" */ '../components/animations/hyperspeed/hyperspeed.tsx')
 );
 
 export const LazyCosmicScene = createLazyComponent(
-  () => import('@/components/animations/cosmic-scene/cosmic-scene')
+  () => import('@/components/animations/cosmic-scene/cosmic-scene.tsx')
 );
 
 export const LazyMeshMatrix = createLazyComponent(
-  () => import('@/components/animations/mesh-matrix/mesh-matrix')
+  () => import('@/components/animations/mesh-matrix/mesh-matrix.tsx')
 );
 
 export const LazyGridDistortion = createLazyComponent(
-  () => import('@/components/animations/grid-distortion/grid-distortion')
+  () => import('@/components/animations/grid-distortion/grid-distortion.tsx')
 );
 
 export const LazyMetalBalls = createLazyComponent(
-  () => import('@/components/animations/meta-balls/meta-balls')
+  () => import('@/components/animations/meta-balls/meta-balls.tsx')
 );
 
 // Complex CPU-intensive animations
 export const LazyParticles = createLazyComponent(
-  () => import('@/components/animations/particles/particles')
+  () => import('@/components/animations/particles/particles.tsx')
 );
 
 export const LazyParticleNetwork = createLazyComponent(
-  () => import('@/components/animations/particle-network/particle-network')
+  () => import('@/components/animations/particle-network/particle-network.tsx')
 );
 
 export const LazyAuroraBackground = createLazyComponent(
-  () => import('@/components/animations/aurora-background/aurora-background')
+  () => import(/* webpackChunkName: "aurora-background-animation" */ '@/components/animations/aurora-background/aurora-background.tsx')
 );
 
 export const LazyAuroraCanvas = createLazyComponent(
-  () => import('@/components/animations/aurora-canvas/aurora-canvas')
+  () => import('@/components/animations/aurora-canvas/aurora-canvas.tsx')
 );
 
 export const LazyBackgroundBeams = createLazyComponent(
-  () => import('@/components/animations/background-beams/background-beams')
+  () => import('@/components/animations/background-beams/background-beams.tsx')
 );
 
 export const LazyBackgroundBoxes = createLazyComponent(
-  () => import('@/components/animations/background-boxes/background-boxes')
+  () => import('@/components/animations/background-boxes/background-boxes.tsx')
 );
 
 export const LazyBallpit = createLazyComponent(
-  () => import('@/components/animations/ballpit/ballpit')
+  () => import(/* webpackChunkName: "ballpit-animation" */ '@/components/animations/ballpit/ballpit.tsx')
+);
+
+export const LazyCrazyBallpit = createLazyComponent(
+  () => import(/* webpackChunkName: "crazy-ballpit-animation" */ '@/components/animations/crazy-ballpit/ballpit.tsx')
 );
 
 export const LazyMeteors = createLazyComponent(
-  () => import('@/components/animations/meteors/meteors')
+  () => import('@/components/animations/meteors/meteors.tsx')
 );
 
 export const LazyParticleVeil = createLazyComponent(
-  () => import('@/components/animations/particle-veil/particle-veil')
+  () => import('@/components/animations/particle-veil/particle-veil.tsx')
 );
 
 export const LazyVortex = createLazyComponent(
-  () => import('@/components/animations/vortex/vortex')
+  () => import('@/components/animations/vortex/vortex.tsx')
 );
 
 // Shared loading component for animation fallbacks

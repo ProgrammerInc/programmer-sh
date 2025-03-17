@@ -1,61 +1,79 @@
 'use client';
 
-import { cn } from '@/utils/app.utils';
-import React, { ReactNode } from 'react';
+import { memo } from 'react';
 import { StarsBackground } from '..';
+import { DEFAULT_AURORA_CONFIG } from './aurora-background.constants';
+import { useAuroraClassName, useContainerClassName } from './aurora-background.hooks';
+import styles from './aurora-background.module.css';
+import { AuroraBackgroundProps } from './aurora-background.types';
+import { cn } from './aurora-background.utils';
 
-export interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
-  children: ReactNode;
-  showRadialGradient?: boolean;
-  withStars?: boolean;
-}
+/**
+ * Aurora Background component that creates a colorful aurora effect with optional stars
+ *
+ * This component renders a vibrant aurora effect in the background with customizable
+ * gradient colors and optional starry background. Designed to create immersive
+ * atmospheric backgrounds for hero sections, landing pages, or special UI elements.
+ *
+ * @example
+ * ```tsx
+ * // Basic usage
+ * <AuroraBackground>
+ *   <h1>Welcome to my site</h1>
+ * </AuroraBackground>
+ *
+ * // Custom configuration
+ * <AuroraBackground
+ *   showRadialGradient={false}
+ *   withStars={true}
+ *   className="my-custom-class"
+ *   ariaLabel="Decorative aurora background"
+ * >
+ *   <div>Content goes here</div>
+ * </AuroraBackground>
+ * ```
+ */
+const AuroraBackground = memo(
+  ({
+    className,
+    children,
+    showRadialGradient = true,
+    withStars = true,
+    ariaLabel = 'Decorative aurora background effect',
+    ...props
+  }: AuroraBackgroundProps) => {
+    // Use custom hooks for memoized class names
+    const containerClassName = useContainerClassName(className);
+    const auroraClassName = useAuroraClassName(
+      showRadialGradient,
+      DEFAULT_AURORA_CONFIG.blurAmount,
+      DEFAULT_AURORA_CONFIG.opacity
+    );
 
-export const AuroraBackground = ({
-  className,
-  children,
-  showRadialGradient = true,
-  withStars = true,
-  ...props
-}: AuroraBackgroundProps) => {
-  return (
-    <main>
-      <div
-        className={cn(
-          'relative flex flex-col  h-[100vh] items-center justify-center transition-bg',
-          className
-        )}
-        {...props}
-      >
-        <div className="absolute inset-0 overflow-hidden">
-          <div
-            //   I'm sorry but this is what peak developer performance looks like // trigger warning
-            className={cn(
-              `
-            [--white-gradient:repeating-linear-gradient(100deg,var(--white)_0%,var(--white)_7%,var(--transparent)_10%,var(--transparent)_12%,var(--white)_16%)]
-            [--dark-gradient:repeating-linear-gradient(100deg,var(--black)_0%,var(--black)_7%,var(--transparent)_10%,var(--transparent)_12%,var(--black)_16%)]
-            [--aurora:repeating-linear-gradient(100deg,var(--blue-500)_10%,var(--indigo-300)_15%,var(--blue-300)_20%,var(--violet-200)_25%,var(--blue-400)_30%)]
-            [background-image:var(--white-gradient),var(--aurora)]
-            dark:[background-image:var(--dark-gradient),var(--aurora)]
-            [background-size:300%,_200%]
-            [background-position:50%_50%,50%_50%]
-            filter blur-[10px] invert dark:invert-0
-            after:content-[""] after:absolute after:inset-0 after:[background-image:var(--white-gradient),var(--aurora)] 
-            after:dark:[background-image:var(--dark-gradient),var(--aurora)]
-            after:[background-size:200%,_100%] 
-            after:animate-aurora after:[background-attachment:fixed] after:mix-blend-difference
-            pointer-events-none
-            absolute -inset-[10px] opacity-50 will-change-transform`,
+    // Alternative approach using CSS modules
+    const containerClassModules = cn(styles['aurora-container'], className);
+    const auroraClassModules = cn(
+      styles['aurora-effect'],
+      showRadialGradient && styles['aurora-effect-masked']
+    );
 
-              showRadialGradient &&
-                `[mask-image:radial-gradient(ellipse_at_100%_0%,black_10%,var(--transparent)_70%)]`
-            )}
-          ></div>
+    return (
+      <main>
+        <div className={containerClassName} role="region" aria-label={ariaLabel} {...props}>
+          <div className={styles.wrapper}>
+            <div className={auroraClassName} aria-hidden="true"></div>
+          </div>
+          {children}
+          {withStars && <StarsBackground className="stars-background" aria-hidden="true" />}
         </div>
-        {children}
-        {withStars && <StarsBackground className="stars-background" />}
-      </div>
-    </main>
-  );
-};
+      </main>
+    );
+  }
+);
 
+// Add displayName to help with debugging
+AuroraBackground.displayName = 'AuroraBackground';
+
+// Export both as default and named export for different import patterns
+export { AuroraBackground };
 export default AuroraBackground;

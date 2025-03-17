@@ -1,118 +1,54 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { cn } from '@/utils/app.utils';
-import { useEffect, useRef, useState } from 'react';
-import { createNoise3D } from 'simplex-noise';
+import { useRef } from 'react';
+import { CSS_CLASSES, DEFAULT_COLORS, DEFAULT_VALUES } from './wavy-background.constants';
+import { useSafariDetection, useWavyBackgroundAnimation } from './wavy-background.hooks';
+import type { WavyBackgroundProps } from './wavy-background.types';
 
-export interface WavyBackgroundProps {
-  children?: any;
-  className?: string;
-  containerClassName?: string;
-  colors?: string[];
-  waveWidth?: number;
-  backgroundFill?: string;
-  blur?: number;
-  speed?: 'slow' | 'fast';
-  waveOpacity?: number;
-  [key: string]: any;
-}
-
+/**
+ * WavyBackground component renders an animated wavy background using canvas
+ * and simplex noise with customizable colors and animation settings.
+ *
+ * @component
+ */
 export const WavyBackground = ({
   children,
   className,
   containerClassName,
-  colors,
+  colors = DEFAULT_COLORS,
   waveWidth,
   backgroundFill,
-  blur = 10,
-  speed = 'fast',
-  waveOpacity = 0.5,
+  blur = DEFAULT_VALUES.BLUR,
+  speed = DEFAULT_VALUES.SPEED,
+  waveOpacity = DEFAULT_VALUES.WAVE_OPACITY,
   ...props
 }: WavyBackgroundProps) => {
-  const noise = createNoise3D();
-  let w: number, h: number, nt: number, i: number, x: number, ctx: any, canvas: any;
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const getSpeed = () => {
-    switch (speed) {
-      case 'slow':
-        return 0.001;
-      case 'fast':
-        return 0.002;
-      default:
-        return 0.001;
-    }
-  };
+  const isSafari = useSafariDetection();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const init = () => {
-    canvas = canvasRef.current;
-    ctx = canvas.getContext('2d');
-    w = ctx.canvas.width = window.innerWidth;
-    h = ctx.canvas.height = window.innerHeight;
-    ctx.filter = `blur(${blur}px)`;
-    nt = 0;
-    window.onresize = function () {
-      w = ctx.canvas.width = window.innerWidth;
-      h = ctx.canvas.height = window.innerHeight;
-      ctx.filter = `blur(${blur}px)`;
-    };
-    render();
-  };
-
-  const waveColors = colors ?? ['#38bdf8', '#818cf8', '#c084fc', '#e879f9', '#22d3ee'];
-  const drawWave = (n: number) => {
-    nt += getSpeed();
-    for (i = 0; i < n; i++) {
-      ctx.beginPath();
-      ctx.lineWidth = waveWidth || 50;
-      ctx.strokeStyle = waveColors[i % waveColors.length];
-      for (x = 0; x < w; x += 5) {
-        const y = noise(x / 800, 0.3 * i, nt) * 100;
-        ctx.lineTo(x, y + h * 0.5); // adjust for height, currently at 50% of the container
-      }
-      ctx.stroke();
-      ctx.closePath();
-    }
-  };
-
-  let animationId: number;
-  const render = () => {
-    ctx.fillStyle = backgroundFill || 'black';
-    ctx.globalAlpha = waveOpacity || 0.5;
-    ctx.fillRect(0, 0, w, h);
-    drawWave(5);
-    animationId = requestAnimationFrame(render);
-  };
-
-  useEffect(() => {
-    init();
-    return () => {
-      cancelAnimationFrame(animationId);
-    };
-  }, [animationId, init]);
-
-  const [isSafari, setIsSafari] = useState(false);
-  useEffect(() => {
-    // I'm sorry but i have got to support it on safari.
-    setIsSafari(
-      typeof window !== 'undefined' &&
-        navigator.userAgent.includes('Safari') &&
-        !navigator.userAgent.includes('Chrome')
-    );
-  }, []);
+  // Initialize and run the animation
+  useWavyBackgroundAnimation(
+    canvasRef,
+    colors,
+    waveWidth,
+    backgroundFill,
+    blur,
+    speed,
+    waveOpacity
+  );
 
   return (
-    <div className={cn('h-screen flex flex-col items-center justify-center', containerClassName)}>
+    <div className={cn(CSS_CLASSES.CONTAINER, containerClassName)}>
       <canvas
-        className="absolute inset-0 z-0"
+        className={CSS_CLASSES.CANVAS}
         ref={canvasRef}
         id="canvas"
         style={{
           ...(isSafari ? { filter: `blur(${blur}px)` } : {})
         }}
-      ></canvas>
-      <div className={cn('relative z-10', className)} {...props}>
+      />
+      <div className={cn(CSS_CLASSES.CONTENT, className)} {...props}>
         {children}
       </div>
     </div>

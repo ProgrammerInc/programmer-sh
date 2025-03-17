@@ -2,27 +2,33 @@
 
 import {
   Aurora,
+  AuroraCanvasProps,
   AuroraProps,
+  BackgroundBeamsProps,
+  BackgroundBoxesProps,
   BackgroundLines,
   BackgroundLinesProps,
   Balatro,
   BalatroProps,
+  BallpitProps,
   BeamPortal,
-  BeamPortalProps,
   BlobBackground,
   BlobBackgroundProps,
+  CosmicSceneProps,
   Dither,
   DitherProps,
   GradientAnimation,
   GradientAnimationProps,
   GradientMesh,
   GradientMeshProps,
+  GridDistortionProps,
   GridMotion,
   GridMotionProps,
   GridPattern,
   GridPatternProps,
   HyperspaceHero,
   HyperspaceHeroProps,
+  HyperspeedProps,
   Iridescence,
   IridescenceProps,
   LetterGlitch,
@@ -33,9 +39,13 @@ import {
   LiquidChromeProps,
   MagnetLines,
   MagnetLinesProps,
+  MeshMatrixProps,
+  MeteorsProps,
   Noise,
   NoiseProps,
+  ParticleNetworkProps,
   ParticleVeilProps,
+  ParticlesProps,
   RainDrops,
   RainDropsProps,
   ShootingStars,
@@ -43,8 +53,8 @@ import {
   SparklesProps,
   SphereAnimation,
   SphereAnimationProps,
-  Spotlight,
-  SpotlightProps,
+  SpotlightEnhanced,
+  SpotlightNewProps,
   Squares,
   SquaresProps,
   Starfall,
@@ -55,30 +65,18 @@ import {
   SwarmEffectProps,
   Threads,
   ThreadsProps,
+  VortexProps,
   Waves,
   WavesProps,
   WavyBackground,
   WavyBackgroundProps,
   WorldMap,
-  WorldMapProps
+  WorldMapProps,
+  WorldProps
 } from '@/components/animations';
 
 // Import types for lazy loaded components
-import type {
-  AuroraCanvasProps,
-  BackgroundBeamsProps,
-  BackgroundBoxesProps,
-  BallpitProps,
-  CosmicSceneProps,
-  GlobeProps,
-  GridDistortionProps,
-  HyperspeedProps,
-  MeshMatrixProps,
-  MeteorsProps,
-  ParticleNetworkProps,
-  ParticlesProps,
-  VortexProps
-} from '@/components/animations';
+import type {} from '@/components/animations';
 
 import {
   AnimationLoader,
@@ -143,6 +141,13 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
 
     const { animation, colors, gradient, image, video } = background;
 
+    // Debug logging for wallpaper selection
+    useEffect(() => {
+      console.log('[Wallpaper Debug] Current wallpaper ID:', wallpaper);
+      console.log('[Wallpaper Debug] Current animation:', animation?.id || 'none');
+      console.log('[Wallpaper Debug] Background config:', background);
+    }, [wallpaper, background, animation]);
+
     // Default values
     const colorType = 'hex';
     const foregroundColor = theme === 'dark' ? '#64ffda' : '#000000';
@@ -185,6 +190,34 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
             className={`animation-container ${animation.id}-container ${image ? 'wallpaper-image' : gradient ? 'wallpaper-gradient' : 'wallpaper-color'} wallpaper-${currentWallpaper.id}`}
             ref={wallpaperAnimationRef}
           >
+            {/* Handle Southern Lights animation */}
+            {animation.id === 'southern-lights' && (
+              <Suspense fallback={<AnimationLoader />}>
+                <div className="h-full w-full overflow-hidden">
+                  <div
+                    className={`
+                      [--white-gradient:repeating-linear-gradient(100deg,var(--white)_0%,var(--white)_7%,var(--transparent)_10%,var(--transparent)_12%,var(--white)_16%)]
+                      [--dark-gradient:repeating-linear-gradient(100deg,var(--black)_0%,var(--black)_7%,var(--transparent)_10%,var(--transparent)_12%,var(--black)_16%)]
+                      [--aurora:repeating-linear-gradient(100deg,var(--blue-500)_10%,var(--indigo-300)_15%,var(--blue-300)_20%,var(--violet-200)_25%,var(--blue-400)_30%)]
+                      [background-image:var(--white-gradient),var(--aurora)]
+                      dark:[background-image:var(--dark-gradient),var(--aurora)]
+                      [background-size:300%,_200%]
+                      [background-position:50%_50%,50%_50%]
+                      filter blur-[10px] invert dark:invert-0
+                      after:content-[""] after:absolute after:inset-0 after:[background-image:var(--white-gradient),var(--aurora)] 
+                      after:dark:[background-image:var(--dark-gradient),var(--aurora)]
+                      after:[background-size:200%,_100%] 
+                      after:animate-aurora after:[background-attachment:fixed] after:mix-blend-difference
+                      pointer-events-none
+                      fixed inset-0 opacity-50 will-change-transform
+                      [mask-image:radial-gradient(ellipse_at_100%_0%,black_10%,var(--transparent)_70%)]
+                    `}
+                    aria-hidden="true"
+                  />
+                  <StarsBackground className="stars-background w-full h-full" aria-hidden="true" />
+                </div>
+              </Suspense>
+            )}
             {animation.id === 'aurora' && (
               <Aurora
                 colorStops={['#3A29FF', '#FF94B4', '#FF3232']}
@@ -234,10 +267,11 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
             {animation.id === 'ballpit' && (
               <Suspense fallback={<AnimationLoader />}>
                 <LazyBallpit
+                  className="w-full h-full block"
                   colors={[0x3a29ff, 0x6c01b4, 0xff0070, 0xffbd2d, 0x25c93f]}
                   ambientColor={0x1a1f2c}
-                  ambientIntensity={0}
-                  lightIntensity={0}
+                  ambientIntensity={0.2}
+                  lightIntensity={0.5}
                   materialParams={{
                     metalness: 0.5,
                     roughness: 0.5,
@@ -245,18 +279,13 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                     clearcoatRoughness: 0.15
                   }}
                   followCursor={false}
+                  count={100}
                   {...(animation.animationProps as BallpitProps)}
                 />
               </Suspense>
             )}
             {animation.id === 'beam-portal' && (
-              <BeamPortal
-                colorScheme="aurora"
-                pattern="radial"
-                intensity="active"
-                shimmer={true}
-                {...(animation.animationProps as BeamPortalProps)}
-              />
+              <BeamPortal colorScheme="aurora" pattern="radial" intensity="active" shimmer={true} />
             )}
             {animation.id === 'blob-background' && (
               <BlobBackground
@@ -289,9 +318,27 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
             {animation.id === 'globe' && (
               <Suspense fallback={<AnimationLoader />}>
                 <LazyGlobe
-                  data={globeArcs}
-                  globeConfig={globeConfig}
-                  {...(animation.animationProps as GlobeProps)}
+                  data={globeArcs.map(arc => ({
+                    ...arc,
+                    // Ensure all values are valid numbers
+                    startLat: Number.isFinite(arc.startLat) ? arc.startLat : 0,
+                    startLng: Number.isFinite(arc.startLng) ? arc.startLng : 0,
+                    endLat: Number.isFinite(arc.endLat) ? arc.endLat : 0,
+                    endLng: Number.isFinite(arc.endLng) ? arc.endLng : 0,
+                    arcAlt: Number.isFinite(arc.arcAlt) ? arc.arcAlt : 0.1,
+                    // Ensure color is never undefined
+                    color: arc.color || '#06b6d4'
+                  }))}
+                  globeConfig={{
+                    ...globeConfig,
+                    // Ensure lighting properties are never undefined
+                    ambientLight: globeConfig.ambientLight || '#ffffff',
+                    directionalLeftLight: globeConfig.directionalLeftLight || '#ffffff',
+                    directionalTopLight: globeConfig.directionalTopLight || '#ffffff',
+                    pointLight: globeConfig.pointLight || '#ffffff',
+                    // Apply animation props if available
+                    ...(animation.animationProps as WorldProps)?.globeConfig
+                  }}
                 />
               </Suspense>
             )}
@@ -548,17 +595,6 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 />
               </div>
             )}
-            {animation.id === 'southern-lights' && (
-              <Suspense fallback={<AnimationLoader />}>
-                <LazyAuroraBackground
-                  className="h-full w-full"
-                  showRadialGradient={true}
-                  withStars={true}
-                >
-                  <div className="h-full w-full" />
-                </LazyAuroraBackground>
-              </Suspense>
-            )}
             {animation.id === 'sparkles' && (
               <Sparkles
                 background="transparent"
@@ -574,7 +610,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
               <SphereAnimation {...(animation.animationProps as SphereAnimationProps)} />
             )}
             {animation.id === 'spotlight' && (
-              <Spotlight {...(animation.animationProps as SpotlightProps)} />
+              <SpotlightEnhanced {...(animation.animationProps as SpotlightNewProps)} />
             )}
             {animation.id === 'squares' && (
               <Squares
@@ -597,7 +633,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
             {animation.id === 'starry-background' && <StarryBackground />}
             {animation.id === 'swarm-effect' && (
               <SwarmEffect
-                src="/placeholder.svg"
+                src="/images/placeholder.svg"
                 particleSize={2}
                 particleSpacing={4}
                 particleColor="hsl(210, 100%, 60%)"
@@ -646,7 +682,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
             )}
             {animation.id === 'wavy-background' && (
               <WavyBackground
-                backgroundColor={backgroundColor}
+                backgroundFill={backgroundColor}
                 {...(animation.animationProps as WavyBackgroundProps)}
               />
             )}

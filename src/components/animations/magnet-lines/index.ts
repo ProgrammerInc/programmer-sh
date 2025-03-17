@@ -1,5 +1,11 @@
-import MagnetLines from './magnet-lines';
+/**
+ * Magnet Lines Animation Component
+ *
+ * A grid of lines that orient themselves toward the mouse pointer,
+ * creating a magnetic field-like effect.
+ *
+ * @module MagnetLines
+ */
 
-export * from './magnet-lines';
-
-export default MagnetLines;
+export { MagnetLines, default } from './magnet-lines';
+export type { MagnetLinesProps } from './magnet-lines.types';

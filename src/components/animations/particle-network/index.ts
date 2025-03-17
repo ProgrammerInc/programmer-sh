@@ -1,5 +1,12 @@
-import ParticleNetwork from './particle-network';
+/**
+ * Particle Network animation component
+ *
+ * This interactive canvas-based animation creates a network of particles
+ * that connect with lines when they come close to each other or to the cursor.
+ *
+ * @module ParticleNetwork
+ */
 
-export * from './particle-network';
-
-export default ParticleNetwork;
+export { ParticleNetwork, default } from './particle-network';
+export * as ParticleNetworkStyles from './particle-network.module.css';
+export type { ParticleNetworkProps } from './particle-network.types';

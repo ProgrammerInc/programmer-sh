@@ -1,0 +1,78 @@
+/**
+ * CSS Styles for the Spotlight animation component
+ */
+
+.spotlight-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.spotlight-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.spotlight-element {
+  position: absolute;
+  pointer-events: none;
+}
+
+.spotlight-left {
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+}
+
+.spotlight-right {
+  top: 0;
+  right: 0;
+  transform-origin: top right;
+}
+
+.spotlight-stars {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.motion-container {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+}
+
+.motion-side-container {
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 40;
+  pointer-events: none;
+}
+
+.motion-side-container-left {
+  left: 0;
+}
+
+.motion-side-container-right {
+  right: 0;
+}
+
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

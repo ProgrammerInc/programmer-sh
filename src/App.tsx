@@ -2,19 +2,29 @@ import { AuthModal, AuthModalProvider } from '@/components/ui/auth-modal';
 import { Toaster as Sonner } from '@/components/ui/sonner/sonner';
 import { Toaster } from '@/components/ui/toaster/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip/tooltip';
-import { useAuthModal } from '@/hooks/use-auth-modal';
+import { useAuthModal } from '@/hooks/use-auth-modal.hook';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-// Lazily load page components
-const Index = lazy(() => import('./pages/Index'));
-const LoggerDemo = lazy(() => import('./components/demos/logger-demo'));
-const MemoryLeakDemo = lazy(() => import('./components/demos/memory-leak-demo'));
-const SentryDemo = lazy(() => import('./components/demos/sentry-demo'));
-const WhyDidYouRenderDemo = lazy(() => import('./components/demos/wdyr-demo'));
-const AuthCallback = lazy(() => import('./pages/AuthCallback'));
-const NotFound = lazy(() => import('./pages/NotFound'));
+// Lazily load page components with explicit chunk names for better dynamic imports
+const Index = lazy(() => import(/* webpackChunkName: "index-page" */ './pages/Index.tsx'));
+const LoggerDemo = lazy(
+  () => import(/* webpackChunkName: "logger-demo" */ './components/demos/LoggerDemo.tsx')
+);
+const MemoryLeakDemo = lazy(
+  () => import(/* webpackChunkName: "memory-leak-demo" */ './components/demos/MemoryLeakDemo.tsx')
+);
+const SentryDemo = lazy(
+  () => import(/* webpackChunkName: "sentry-demo" */ './components/demos/SentryDemo.tsx')
+);
+const WhyDidYouRenderDemo = lazy(
+  () => import(/* webpackChunkName: "wdyr-demo" */ './components/demos/WDYRDemo.tsx')
+);
+const AuthCallback = lazy(
+  () => import(/* webpackChunkName: "auth-callback" */ './pages/AuthCallback.tsx')
+);
+const NotFound = lazy(() => import(/* webpackChunkName: "not-found" */ './pages/NotFound.tsx'));
 
 // Loading component for Suspense fallback
 const LoadingSpinner = () => (

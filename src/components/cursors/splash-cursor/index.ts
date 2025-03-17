@@ -1,5 +1,9 @@
-import SplashCursor from './splash-cursor';
+/**
+ * Splash Cursor component and related exports
+ *
+ * @module SplashCursor
+ */
 
-export * from './splash-cursor';
-
-export default SplashCursor;
+export { SplashCursor, default } from './splash-cursor';
+export * as SplashCursorStyles from './splash-cursor.module.css';
+export type { SplashCursorProps } from './splash-cursor.types';

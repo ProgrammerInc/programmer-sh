@@ -1,164 +1,356 @@
 'use client';
 
-import { useOutsideClick } from '@/hooks';
-import useModal, { ModalContext } from '@/hooks/use-modal';
+import useModal, { ModalContext } from '@/hooks/use-modal.hook';
 import { cn } from '@/utils/app.utils';
-import { AnimatePresence, motion } from 'motion/react';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { memo, useMemo, useRef, useState } from 'react';
+import { CSS_CLASSES, DEFAULT_VALUES } from './animated-modal.constants';
+import {
+  useBodyScrollLock,
+  useCloseHandler,
+  useEscapeKeyClose,
+  useModalAnimation,
+  useModalCallbacks,
+  useModalOutsideClick,
+  useOpenHandler,
+  useOverlayAnimation
+} from './animated-modal.hooks';
+import {
+  AnimatedModalProps,
+  AnimatedModalProviderProps,
+  ModalAnimationConfig,
+  ModalBodyProps,
+  ModalContentProps,
+  ModalFooterProps,
+  ModalHeaderProps,
+  ModalProps,
+  ModalTriggerProps,
+  OverlayProps
+} from './animated-modal.types';
 
-export const AnimatedModalProvider = ({ children }: { children: ReactNode }) => {
-  const [open, setOpen] = useState(false);
-
-  return <ModalContext.Provider value={{ open, setOpen }}>{children}</ModalContext.Provider>;
+/**
+ * Default animation configurations
+ */
+const defaultBackdropAnimation: ModalAnimationConfig = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, backdropFilter: 'blur(10px)' },
+  exit: { opacity: 0, backdropFilter: 'blur(0px)' }
 };
 
-export function Modal({ children }: { children: ReactNode }) {
-  return <AnimatedModalProvider>{children}</AnimatedModalProvider>;
-}
+const defaultModalAnimation: ModalAnimationConfig = {
+  initial: { opacity: 0, scale: 0.5, rotateX: 40, y: 40 },
+  animate: { opacity: 1, scale: 1, rotateX: 0, y: 0 },
+  exit: { opacity: 0, scale: 0.8, rotateX: 10 },
+  transition: { type: 'spring', stiffness: 260, damping: 15 }
+};
 
-export const ModalTrigger = ({
+/**
+ * AnimatedModalProvider component
+ *
+ * Provider component that manages modal state through context.
+ *
+ * @example
+ * ```tsx
+ * <AnimatedModalProvider>
+ *   <Modal>
+ *     <ModalTrigger>
+ *       <button>Open Modal</button>
+ *     </ModalTrigger>
+ *     <ModalBody>
+ *       <ModalContent>
+ *         <h2>Modal Title</h2>
+ *         <p>Modal content goes here</p>
+ *       </ModalContent>
+ *       <ModalFooter>
+ *         <button>Close</button>
+ *       </ModalFooter>
+ *     </ModalBody>
+ *   </Modal>
+ * </AnimatedModalProvider>
+ * ```
+ */
+const AnimatedModalProvider = memo(function AnimatedModalProvider({
   children,
-  className
-}: {
-  children: ReactNode;
-  className?: string;
-}) => {
-  const { setOpen } = useModal();
-  return (
-    <button
-      className={cn(
-        'px-4 py-2 rounded-md text-black dark:text-white text-center relative overflow-hidden',
-        className
-      )}
-      onClick={() => setOpen(true)}
-    >
-      {children}
-    </button>
-  );
-};
+  defaultOpen = DEFAULT_VALUES.DEFAULT_OPEN
+}: AnimatedModalProviderProps) {
+  const [open, setOpen] = useState<boolean>(defaultOpen);
 
-export const ModalBody = ({ children, className }: { children: ReactNode; className?: string }) => {
-  const { open } = useModal();
+  const contextValue = useMemo(() => ({ open, setOpen }), [open]);
 
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-  }, [open]);
+  return <ModalContext.Provider value={contextValue}>{children}</ModalContext.Provider>;
+});
 
-  const modalRef = useRef(null);
-  const { setOpen } = useModal();
-  useOutsideClick(modalRef, () => setOpen(false));
+AnimatedModalProvider.displayName = 'AnimatedModalProvider';
+
+/**
+ * AnimatedModal component
+ *
+ * Fully animated modal component with overlay, header, body, and footer sections.
+ *
+ * @example
+ * ```tsx
+ * <AnimatedModalProvider>
+ *   <ModalTrigger>
+ *     <button>Open Modal</button>
+ *   </ModalTrigger>
+ *   <AnimatedModal>
+ *     <ModalHeader>Modal Title</ModalHeader>
+ *     <ModalBody>
+ *       <p>Modal content goes here</p>
+ *     </ModalBody>
+ *     <ModalFooter>
+ *       <button>Close</button>
+ *     </ModalFooter>
+ *   </AnimatedModal>
+ * </AnimatedModalProvider>
+ * ```
+ */
+const AnimatedModal = memo(function AnimatedModal({
+  children,
+  className,
+  animation,
+  closeOnOutsideClick = DEFAULT_VALUES.CLOSE_ON_OUTSIDE_CLICK,
+  zIndex = DEFAULT_VALUES.Z_INDEX
+}: AnimatedModalProps) {
+  const { open, setOpen } = useModal();
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  // Close modal when clicking outside if closeOnOutsideClick is true
+  useModalOutsideClick(modalRef, closeOnOutsideClick, setOpen);
+
+  // Keyboard event handler for accessibility (Escape key close)
+  useEscapeKeyClose(open, setOpen);
+
+  // Control body scroll when modal is open
+  useBodyScrollLock(open);
+
+  // Merge custom animation config with defaults
+  const modalAnimation = useModalAnimation(animation);
 
   return (
     <AnimatePresence>
       {open && (
-        <motion.div
-          initial={{
-            opacity: 0
-          }}
-          animate={{
-            opacity: 1,
-            backdropFilter: 'blur(10px)'
-          }}
-          exit={{
-            opacity: 0,
-            backdropFilter: 'blur(0px)'
-          }}
-          className="fixed [perspective:800px] [transform-style:preserve-3d] inset-0 h-full w-full  flex items-center justify-center z-50"
-        >
-          <Overlay />
+        <div className={cn(CSS_CLASSES.CONTAINER)} style={{ zIndex }}>
+          <Overlay zIndex={zIndex - 1} />
 
           <motion.div
             ref={modalRef}
-            className={cn(
-              'min-h-[50%] max-h-[90%] md:max-w-[40%] bg-white dark:bg-neutral-950 border border-transparent dark:border-neutral-800 md:rounded-2xl relative z-50 flex flex-col flex-1 overflow-hidden',
-              className
-            )}
-            initial={{
-              opacity: 0,
-              scale: 0.5,
-              rotateX: 40,
-              y: 40
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              rotateX: 0,
-              y: 0
-            }}
-            exit={{
-              opacity: 0,
-              scale: 0.8,
-              rotateX: 10
-            }}
-            transition={{
-              type: 'spring',
-              stiffness: 260,
-              damping: 15
-            }}
+            className={cn(CSS_CLASSES.MODAL, className)}
+            initial={modalAnimation.initial}
+            animate={modalAnimation.animate}
+            exit={modalAnimation.exit}
+            transition={modalAnimation.transition}
+            role="dialog"
+            aria-modal="true"
+            tabIndex={-1}
           >
             <CloseIcon />
             {children}
           </motion.div>
-        </motion.div>
+        </div>
       )}
     </AnimatePresence>
   );
-};
+});
 
-export const ModalContent = ({
+AnimatedModal.displayName = 'AnimatedModal';
+
+/**
+ * Modal component
+ *
+ * Wrapper component that provides modal context to its children.
+ * Use this as the root component for your modal implementation.
+ *
+ * @example
+ * ```tsx
+ * <Modal>
+ *   <ModalTrigger>
+ *     <span>Open Modal</span>
+ *   </ModalTrigger>
+ *   <ModalBody>
+ *     <ModalContent>
+ *       <h2>Modal Title</h2>
+ *       <p>Modal content goes here</p>
+ *     </ModalContent>
+ *     <ModalFooter>
+ *       <button>Close</button>
+ *     </ModalFooter>
+ *   </ModalBody>
+ * </Modal>
+ * ```
+ */
+const Modal = memo(function Modal({
   children,
-  className
-}: {
-  children: ReactNode;
-  className?: string;
-}) => {
-  return <div className={cn('flex flex-col flex-1 p-8 md:p-10', className)}>{children}</div>;
-};
+  onOpen,
+  onClose,
+  closeOnEscape = DEFAULT_VALUES.CLOSE_ON_ESCAPE
+}: ModalProps) {
+  const [open, setOpen] = useState(false);
 
-export const ModalFooter = ({
-  children,
-  className
-}: {
-  children: ReactNode;
-  className?: string;
-}) => {
-  return (
-    <div className={cn('flex justify-end p-4 bg-gray-100 dark:bg-neutral-900', className)}>
-      {children}
-    </div>
-  );
-};
+  // Handle effects when open state changes
+  useModalCallbacks(open, onOpen, onClose);
 
-const Overlay = ({ className }: { className?: string }) => {
-  return (
-    <motion.div
-      initial={{
-        opacity: 0
-      }}
-      animate={{
-        opacity: 1,
-        backdropFilter: 'blur(10px)'
-      }}
-      exit={{
-        opacity: 0,
-        backdropFilter: 'blur(0px)'
-      }}
-      className={`fixed inset-0 h-full w-full bg-black bg-opacity-50 z-50 ${className}`}
-    ></motion.div>
-  );
-};
+  // Keyboard event handler for escape key
+  useEscapeKeyClose(open, setOpen, closeOnEscape);
 
-const CloseIcon = () => {
-  const { setOpen } = useModal();
+  return <ModalContext.Provider value={{ open, setOpen }}>{children}</ModalContext.Provider>;
+});
+
+Modal.displayName = 'Modal';
+
+/**
+ * ModalTrigger component
+ *
+ * Button component that triggers the modal to open when clicked.
+ *
+ * @example
+ * ```tsx
+ * <ModalTrigger className="custom-button-class">
+ *   <span>Open Modal</span>
+ * </ModalTrigger>
+ * ```
+ */
+const ModalTrigger = memo(function ModalTrigger({ children, className }: ModalTriggerProps) {
+  const handleClick = useOpenHandler();
+
   return (
     <button
-      onClick={() => setOpen(false)}
-      className="absolute top-4 right-4 group"
+      className={cn(CSS_CLASSES.TRIGGER, className)}
+      onClick={handleClick}
+      aria-haspopup="dialog"
+    >
+      {children}
+    </button>
+  );
+});
+
+ModalTrigger.displayName = 'ModalTrigger';
+
+/**
+ * ModalBody component
+ *
+ * Container for the modal content with animation effects.
+ * Handles modal animations, backdrop, and outside click behavior.
+ *
+ * @example
+ * ```tsx
+ * <ModalBody className="custom-modal-class">
+ *   <ModalContent>Content goes here</ModalContent>
+ * </ModalBody>
+ * ```
+ */
+const ModalBody = memo(function ModalBody({ children, className }: ModalBodyProps) {
+  return <div className={cn(CSS_CLASSES.BODY, className)}>{children}</div>;
+});
+
+ModalBody.displayName = 'ModalBody';
+
+/**
+ * ModalContent component
+ *
+ * Container for the actual modal content with customizable styling.
+ *
+ * @example
+ * ```tsx
+ * <ModalContent className="custom-content-class">
+ *   <ModalHeader>Title</ModalHeader>
+ *   <p>Modal content goes here</p>
+ *   <ModalFooter>
+ *     <button onClick={closeModal}>Close</button>
+ *   </ModalFooter>
+ * </ModalContent>
+ * ```
+ */
+const ModalContent = memo(function ModalContent({ children, className }: ModalContentProps) {
+  return <div className={cn(CSS_CLASSES.CONTENT, className)}>{children}</div>;
+});
+
+ModalContent.displayName = 'ModalContent';
+
+/**
+ * ModalHeader component
+ *
+ * Header component for modal with customizable styling.
+ *
+ * @example
+ * ```tsx
+ * <ModalHeader className="custom-header-class">
+ *   <h2>Modal Title</h2>
+ * </ModalHeader>
+ * ```
+ */
+const ModalHeader = memo(function ModalHeader({ children, className }: ModalHeaderProps) {
+  return <header className={cn(CSS_CLASSES.HEADER, className)}>{children}</header>;
+});
+
+ModalHeader.displayName = 'ModalHeader';
+
+/**
+ * ModalFooter component
+ *
+ * Component for styling the footer area of the modal, typically for action buttons.
+ *
+ * @example
+ * ```tsx
+ * <ModalFooter className="custom-footer-class">
+ *   <button onClick={closeModal}>Cancel</button>
+ *   <button onClick={handleSave}>Save</button>
+ * </ModalFooter>
+ * ```
+ */
+const ModalFooter = memo(function ModalFooter({ children, className }: ModalFooterProps) {
+  return <div className={cn(CSS_CLASSES.FOOTER, className)}>{children}</div>;
+});
+
+ModalFooter.displayName = 'ModalFooter';
+
+/**
+ * Overlay component
+ *
+ * Component for creating a background overlay when the modal is open.
+ *
+ * @example
+ * ```tsx
+ * <Overlay className="custom-overlay-class" />
+ * ```
+ */
+const Overlay = memo(function Overlay({
+  className,
+  animation,
+  zIndex = DEFAULT_VALUES.OVERLAY_Z_INDEX
+}: OverlayProps & { zIndex?: number }) {
+  // Merge custom animation config with defaults
+  const overlayAnimation = useOverlayAnimation(animation);
+
+  return (
+    <motion.div
+      className={cn(CSS_CLASSES.OVERLAY, className)}
+      style={{ zIndex }}
+      initial={overlayAnimation.initial}
+      animate={overlayAnimation.animate}
+      exit={overlayAnimation.exit}
+      transition={overlayAnimation.transition}
+      aria-hidden="true"
+    />
+  );
+});
+
+Overlay.displayName = 'Overlay';
+
+/**
+ * CloseIcon component
+ *
+ * Close button component for the modal that appears in the top-right corner.
+ */
+const CloseIcon = memo(function CloseIcon() {
+  const handleClick = useCloseHandler();
+
+  return (
+    <button
+      onClick={handleClick}
+      className={CSS_CLASSES.CLOSE_BUTTON}
       aria-label="Close modal"
+      type="button"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -170,14 +362,28 @@ const CloseIcon = () => {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="text-black dark:text-white h-4 w-4 group-hover:scale-125 group-hover:rotate-3 transition duration-200"
+        className={CSS_CLASSES.CLOSE_ICON}
       >
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M18 6l-12 12" />
-        <path d="M6 6l12 12" />
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
       </svg>
     </button>
   );
+});
+
+CloseIcon.displayName = 'CloseIcon';
+
+export {
+  AnimatedModal,
+  AnimatedModalProvider,
+  CloseIcon,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalTrigger,
+  Overlay
 };
 
-export default AnimatedModalProvider;
+export default AnimatedModal;

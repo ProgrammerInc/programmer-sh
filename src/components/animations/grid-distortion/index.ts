@@ -1,5 +1,11 @@
-import GridDistortion from './grid-distortion';
+/**
+ * Grid Distortion animation component
+ *
+ * This component creates a grid of animated items that respond to mouse/touch
+ * interactions, creating a dynamic and interactive effect.
+ *
+ * @module GridDistortion
+ */
 
-export * from './grid-distortion';
-
-export default GridDistortion;
+export { GridDistortion, default } from './grid-distortion';
+export type { GridDistortionProps } from './grid-distortion.types';

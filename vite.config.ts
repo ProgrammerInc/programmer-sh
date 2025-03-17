@@ -92,6 +92,11 @@ export default defineConfig(({ mode }) => ({
               return 'ui-demos';
             }
 
+            // Handle pages more explicitly - this helps with lazy loading
+            if (id.includes('src/pages/Index')) {
+              return 'page-index';
+            }
+
             for (const page of pageFiles) {
               if (id.includes(page)) {
                 // Convert page name from PascalCase to kebab case
@@ -143,6 +148,10 @@ export default defineConfig(({ mode }) => ({
       }
     }
   },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom'],
+    exclude: []
+  },
   preview: {
     host: '::',
     port: 8080
@@ -168,7 +177,8 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
-    }
+    },
+    extensions: ['.tsx', '.ts', '.jsx', '.js']
   },
   assetsInclude: ['**/*.glb'] // Added *.glb for 3D model loading
 }));

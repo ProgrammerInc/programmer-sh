@@ -1,0 +1,102 @@
+/**
+ * Gradient Animation Styles
+ */
+
+.gradient-container {
+  @apply h-screen w-screen relative overflow-hidden top-0 left-0;
+  background: linear-gradient(
+    40deg,
+    var(--gradient-background-start),
+    var(--gradient-background-end)
+  );
+}
+
+.gradients-wrapper {
+  @apply h-full w-full blur-lg;
+}
+
+.gradients-wrapper-safari {
+  @apply blur-2xl;
+}
+
+.gradients-wrapper-standard {
+  filter: url('#blurMe') blur(40px);
+}
+
+.gradient-element {
+  @apply absolute;
+  mix-blend-mode: var(--blending-value);
+  width: var(--size);
+  height: var(--size);
+  top: calc(50% - var(--size) / 2);
+  left: calc(50% - var(--size) / 2);
+}
+
+.first-gradient {
+  @apply opacity-100;
+  background: radial-gradient(circle at center, var(--first-color) 0, var(--first-color) 50%)
+    no-repeat;
+  transform-origin: center center;
+  animation: first 12s infinite;
+}
+
+.second-gradient {
+  @apply opacity-100;
+  background: radial-gradient(
+      circle at center,
+      rgba(var(--second-color), 0.8) 0,
+      rgba(var(--second-color), 0) 50%
+    )
+    no-repeat;
+  transform-origin: calc(50% - 400px);
+  animation: second 12s infinite;
+}
+
+.third-gradient {
+  @apply opacity-100;
+  background: radial-gradient(
+      circle at center,
+      rgba(var(--third-color), 0.8) 0,
+      rgba(var(--third-color), 0) 50%
+    )
+    no-repeat;
+  transform-origin: calc(50% + 400px);
+  animation: third 12s infinite;
+}
+
+.fourth-gradient {
+  @apply opacity-70;
+  background: radial-gradient(
+      circle at center,
+      rgba(var(--fourth-color), 0.8) 0,
+      rgba(var(--fourth-color), 0) 50%
+    )
+    no-repeat;
+  transform-origin: calc(50% - 200px);
+  animation: fourth 12s infinite;
+}
+
+.fifth-gradient {
+  @apply opacity-100;
+  background: radial-gradient(
+      circle at center,
+      rgba(var(--fifth-color), 0.8) 0,
+      rgba(var(--fifth-color), 0) 50%
+    )
+    no-repeat;
+  transform-origin: calc(50% - 800px) calc(50% + 800px);
+  animation: fifth 12s infinite;
+}
+
+.interactive-pointer {
+  @apply absolute opacity-70 w-full h-full -top-1/2 -left-1/2;
+  background: radial-gradient(
+      circle at center,
+      rgba(var(--pointer-color), 0.8) 0,
+      rgba(var(--pointer-color), 0) 50%
+    )
+    no-repeat;
+  mix-blend-mode: var(--blending-value);
+}
+
+/* Keyframes are defined in tailwind.config.js */

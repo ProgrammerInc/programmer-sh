@@ -1,83 +1,93 @@
 'use client';
 
-import { SpringConfig, animated, useSpring } from '@react-spring/web';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { cn } from '@/utils/app.utils';
+import { animated } from '@react-spring/web';
+import { memo, useRef } from 'react';
+import { CSS_CLASSES, DEFAULT_SPRING_CONFIG, DEFAULT_VALUES } from './animated-content.constants';
+import {
+  useAnimationSpring,
+  useIntersectionObserver,
+  useTransformValues
+} from './animated-content.hooks';
+import type { AnimatedContentProps } from './animated-content.types';
 
-export interface AnimatedContentProps {
-  children: ReactNode;
-  distance?: number;
-  direction?: 'vertical' | 'horizontal';
-  reverse?: boolean;
-  config?: SpringConfig;
-  initialOpacity?: number;
-  animateOpacity?: boolean;
-  scale?: number;
-  threshold?: number;
-  delay?: number;
-}
-
-const AnimatedContent: React.FC<AnimatedContentProps> = ({
+/**
+ * AnimatedContent component
+ *
+ * A component that animates its children when they enter the viewport.
+ * Can animate in different directions, distances, and with various spring configurations.
+ *
+ * @example
+ * ```tsx
+ * // Basic vertical animation (from bottom)
+ * <AnimatedContent>
+ *   <div>This content will slide up when in view</div>
+ * </AnimatedContent>
+ *
+ * // Horizontal animation from right
+ * <AnimatedContent direction="horizontal" distance={200}>
+ *   <div>This content will slide in from the right</div>
+ * </AnimatedContent>
+ *
+ * // Horizontal animation from left
+ * <AnimatedContent direction="horizontal" distance={200} reverse={true}>
+ *   <div>This content will slide in from the left</div>
+ * </AnimatedContent>
+ *
+ * // With custom spring configuration
+ * <AnimatedContent config={{ tension: 100, friction: 20 }}>
+ *   <div>This content has custom spring physics</div>
+ * </AnimatedContent>
+ *
+ * // With delay
+ * <AnimatedContent delay={500}>
+ *   <div>This content will animate after a 500ms delay</div>
+ * </AnimatedContent>
+ * ```
+ */
+export const AnimatedContent = memo(function AnimatedContent({
   children,
-  distance = 100,
-  direction = 'vertical',
-  reverse = false,
-  config = { tension: 50, friction: 25 },
-  initialOpacity = 0,
-  animateOpacity = true,
-  scale = 1,
-  threshold = 0.1,
-  delay = 0
-}) => {
-  const [inView, setInView] = useState(false);
-  const ref = useRef<HTMLDivElement | null>(null);
+  distance = DEFAULT_VALUES.DISTANCE,
+  direction = DEFAULT_VALUES.DIRECTION,
+  reverse = DEFAULT_VALUES.REVERSE,
+  config = DEFAULT_SPRING_CONFIG,
+  initialOpacity = DEFAULT_VALUES.INITIAL_OPACITY,
+  animateOpacity = DEFAULT_VALUES.ANIMATE_OPACITY,
+  scale = DEFAULT_VALUES.SCALE,
+  threshold = DEFAULT_VALUES.THRESHOLD,
+  delay = DEFAULT_VALUES.DELAY,
+  className
+}: AnimatedContentProps) {
+  const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
+  // Determine if the element is in view using the intersection observer
+  const inView = useIntersectionObserver(ref, threshold, delay);
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          observer.unobserve(element);
-          setTimeout(() => {
-            setInView(true);
-          }, delay);
-        }
-      },
-      { threshold }
-    );
+  // Calculate transform values based on animation parameters
+  const { initialTransform, finalTransform } = useTransformValues(
+    direction,
+    distance,
+    reverse,
+    scale
+  );
 
-    observer.observe(element);
-
-    return () => observer.disconnect();
-  }, [threshold, delay]);
-
-  const directions: Record<'vertical' | 'horizontal', string> = {
-    vertical: 'Y',
-    horizontal: 'X'
-  };
-
-  const springProps = useSpring({
-    from: {
-      transform: `translate${directions[direction]}(${
-        reverse ? `-${distance}px` : `${distance}px`
-      }) scale(${scale})`,
-      opacity: animateOpacity ? initialOpacity : 1
-    },
-    to: inView
-      ? {
-          transform: `translate${directions[direction]}(0px) scale(1)`,
-          opacity: 1
-        }
-      : undefined,
+  // Set up spring animation
+  const springProps = useAnimationSpring(
+    inView,
+    initialTransform,
+    finalTransform,
+    initialOpacity,
+    animateOpacity,
     config
-  });
+  );
 
   return (
-    <animated.div ref={ref} style={springProps}>
+    <animated.div ref={ref} style={springProps} className={cn(CSS_CLASSES.CONTAINER, className)}>
       {children}
     </animated.div>
   );
-};
+});
+
+AnimatedContent.displayName = 'AnimatedContent';
 
 export default AnimatedContent;

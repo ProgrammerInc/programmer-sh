@@ -1,5 +1,8 @@
-import Ribbons from './ribbons';
+/**
+ * Ribbons cursor component that creates flowing ribbon trails that follow the cursor.
+ *
+ * @module
+ */
 
-export * from './ribbons';
-
-export default Ribbons;
+export { Ribbons, default } from './ribbons';
+export type { RibbonsProps } from './ribbons.types';

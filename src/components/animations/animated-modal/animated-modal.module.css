@@ -1,0 +1,126 @@
+/**
+ * CSS Module for the AnimatedModal component
+ */
+
+/* Modal container */
+.modal-container {
+  position: fixed;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal content */
+.modal-content {
+  min-height: 50%;
+  max-height: 90%;
+  background-color: white;
+  border: 1px solid transparent;
+  border-radius: 1rem;
+  position: relative;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  perspective: 800px;
+  transform-style: preserve-3d;
+}
+
+/* Dark mode styling */
+:global(.dark) .modal-content {
+  background-color: rgb(10, 10, 10);
+  border-color: rgb(38, 38, 38);
+}
+
+/* Modal dialog body */
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: auto;
+}
+
+/* Modal dialog content area */
+.modal-content-area {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 2rem;
+}
+
+@media (min-width: 768px) {
+  .modal-content {
+    max-width: 40%;
+    border-radius: 1rem;
+  }
+
+  .modal-content-area {
+    padding: 2.5rem;
+  }
+}
+
+/* Modal header */
+.modal-header {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgb(243, 244, 246);
+}
+
+:global(.dark) .modal-header {
+  background-color: rgb(23, 23, 23);
+}
+
+/* Modal footer */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+  background-color: rgb(243, 244, 246);
+}
+
+:global(.dark) .modal-footer {
+  background-color: rgb(23, 23, 23);
+}
+
+/* Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Modal trigger button */
+.modal-trigger {
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Close button */
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.close-icon {
+  color: rgb(156, 163, 175);
+  transition: all 0.3s ease;
+}
+
+.close-icon:hover {
+  color: rgb(55, 65, 81);
+}
+
+:global(.dark) .close-icon:hover {
+  color: rgb(229, 231, 235);
+}

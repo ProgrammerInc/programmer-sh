@@ -1,5 +1,10 @@
-import MagicTrailCursor from './magic-trail-cursor';
+/**
+ * MagicTrailCursor
+ *
+ * Index file for the magic trail cursor component
+ *
+ * @module MagicTrailCursor
+ */
 
-export * from './magic-trail-cursor';
-
-export default MagicTrailCursor;
+export { MagicTrailCursor, default } from './magic-trail-cursor';
+export type { MagicTrailCursorProps } from './magic-trail-cursor.types';

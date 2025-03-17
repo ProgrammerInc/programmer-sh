@@ -48,14 +48,6 @@
     );
     --default-foreground: #f1f1f1;
 
-    /* Beam Portal Animations */
-    --animate-beam-drop: beam-drop 7s cubic-bezier(0.4, 0.26, 0, 0.97) infinite;
-    --animate-beam-wave: beam-wave 10s ease-in-out infinite;
-    --animate-beam-pulse: beam-pulse 4s ease-in-out infinite;
-    --animate-beam-zigzag: beam-zigzag 6s ease-in-out infinite;
-    --animate-beam-shimmer: beam-shimmer 7s linear infinite;
-    --animate-spin: spin 10s linear infinite;
-
     /* Terminal specific colors */
     --terminal-background: #1a1f2c;
     --terminal-background-translucent: rgba(26, 31, 44, 0.95);
@@ -144,12 +136,7 @@
 }
 
 @layer utilities {
-  /* Cursor must always be above all content */
-  .cursor-container {
-    pointer-events: none;
-    z-index: 10000 !important;
-  }
-
+  /* Terminal container */
   .terminal-container {
     background: none;
     display: flex;
@@ -175,11 +162,11 @@
   }
 
   .typing-animation {
-    @apply overflow-hidden whitespace-nowrap border-r-2 border-terminal-prompt animate-text-typing;
+    @apply overflow-hidden whitespace-nowrap border-r-2 border-terminal-prompt;
   }
 
   .typing-cursor {
-    @apply inline-block w-2 h-5 bg-terminal-prompt ml-1 animate-cursor-blink;
+    @apply inline-block w-2 h-5 bg-terminal-prompt ml-1;
   }
 
   .command-link {
@@ -215,18 +202,6 @@
     margin: 0;
     padding: 0;
   }
-
-  /* .terminal-content-height h1 {
-    font-size: 1.5rem;
-  }
-
-  .terminal-content-height h2 {
-    font-size: 1.3rem;
-  }
-
-  .terminal-content-height h3 {
-    font-size: 1.1rem;
-  } */
 
   /* Paragraph styling */
   .terminal-content-height p {
@@ -321,7 +296,6 @@
     bottom: -11px;
     right: -250%;
     border-radius: 50%;
-    animation: star-movement-bottom linear infinite alternate;
   }
 
   .border-gradient-top {
@@ -332,7 +306,6 @@
     top: -10px;
     left: -250%;
     border-radius: 50%;
-    animation: star-movement-top linear infinite alternate;
   }
 
   .inner-content {
@@ -389,9 +362,6 @@
 
   .terminal-divider {
     @apply border-t border-terminal-muted-30 mt-0 mb-0;
-
-    /* margin-left: -1rem;
-    margin-right: -1rem; */
   }
 
   .terminal-glow-shadow {
@@ -406,7 +376,7 @@
   }
 
   .window-control:hover {
-    @apply animate-scale-up;
+    @apply opacity-80;
   }
 
   .terminal-dropdown {
@@ -587,22 +557,6 @@
     outline-offset: 2px;
   }
 
-  /* Animation for command results */
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-      transform: translateY(5px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .terminal-command-result {
-    animation: fade-in 0.3s ease-out;
-  }
-
   /* Responsive adjustments for smaller screens */
   @media (max-width: 640px) {
     .terminal-content-height h1 {
@@ -618,106 +572,6 @@
     .terminal-content-height code,
     .terminal-content-height table {
       font-size: 0.85em;
-    }
-  }
-
-  @keyframes beam-drop {
-    0% {
-      opacity: 0;
-
-      --offset: -100%;
-    }
-    5% {
-      opacity: 1;
-    }
-    90% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-
-      --offset: 100%;
-    }
-  }
-
-  @keyframes beam-wave {
-    0% {
-      --wave-offset: -20px;
-    }
-    50% {
-      --wave-offset: 20px;
-    }
-    100% {
-      --wave-offset: -20px;
-    }
-  }
-
-  @keyframes beam-pulse {
-    0% {
-      opacity: 0.3;
-
-      --pulse-scale: 0.95;
-    }
-    50% {
-      opacity: 1;
-
-      --pulse-scale: 1.05;
-    }
-    100% {
-      opacity: 0.3;
-
-      --pulse-scale: 0.95;
-    }
-  }
-
-  @keyframes beam-zigzag {
-    0% {
-      --zigzag-offset: -20px;
-    }
-    25% {
-      --zigzag-offset: 20px;
-    }
-    50% {
-      --zigzag-offset: -20px;
-    }
-    75% {
-      --zigzag-offset: 20px;
-    }
-    100% {
-      --zigzag-offset: -20px;
-    }
-  }
-
-  @keyframes beam-shimmer {
-    0% {
-      opacity: 0.3;
-    }
-    50% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0.3;
-    }
-  }
-
-  @keyframes glow {
-    0%,
-    100% {
-      opacity: var(--base-opacity, 0.1);
-      transform: scale(1);
-    }
-    50% {
-      opacity: var(--glow-opacity, 0.8);
-      transform: scale(1.15);
-    }
-  }
-
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
     }
   }
 }

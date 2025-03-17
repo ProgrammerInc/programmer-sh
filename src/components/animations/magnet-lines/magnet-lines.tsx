@@ -1,87 +1,49 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 'use client';
 
-import React, { CSSProperties, useEffect, useRef } from 'react';
+import React from 'react';
+import {
+  DEFAULT_BASE_ANGLE,
+  DEFAULT_CLASS_NAME,
+  DEFAULT_COLUMNS,
+  DEFAULT_CONTAINER_SIZE,
+  DEFAULT_LINE_COLOR,
+  DEFAULT_LINE_HEIGHT,
+  DEFAULT_LINE_WIDTH,
+  DEFAULT_ROWS,
+  DEFAULT_STYLE
+} from './magnet-lines.constants';
+import { useMagnetLinesEffect } from './magnet-lines.hooks';
+import { MagnetLinesProps } from './magnet-lines.types';
+import { createGridSpans } from './magnet-lines.utils';
 
-export interface MagnetLinesProps {
-  rows?: number;
-  columns?: number;
-  containerSize?: string;
-  lineColor?: string;
-  lineWidth?: string;
-  lineHeight?: string;
-  baseAngle?: number;
-  className?: string;
-  style?: CSSProperties;
-}
-
-export const MagnetLines: React.FC<MagnetLinesProps> = ({
-  rows = 9,
-  columns = 9,
-  containerSize = '80vmin',
-  lineColor = '#efefef',
-  lineWidth = '1vmin',
-  lineHeight = '6vmin',
-  baseAngle = -10,
-  className = '',
-  style = {}
+/**
+ * MagnetLines Component
+ *
+ * A grid of lines that orient themselves toward the mouse pointer,
+ * creating a magnetic field-like effect.
+ *
+ * @param props Component props
+ * @returns A grid of lines that respond to mouse movement
+ */
+const MagnetLinesComponent: React.FC<MagnetLinesProps> = ({
+  rows = DEFAULT_ROWS,
+  columns = DEFAULT_COLUMNS,
+  containerSize = DEFAULT_CONTAINER_SIZE,
+  lineColor = DEFAULT_LINE_COLOR,
+  lineWidth = DEFAULT_LINE_WIDTH,
+  lineHeight = DEFAULT_LINE_HEIGHT,
+  baseAngle = DEFAULT_BASE_ANGLE,
+  className = DEFAULT_CLASS_NAME,
+  style = DEFAULT_STYLE
 }) => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  // Use our custom hook to manage the magnetic effect
+  const containerRef = useMagnetLinesEffect();
 
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const items = container.querySelectorAll<HTMLSpanElement>('span');
-
-    const onPointerMove = (pointer: { x: number; y: number }) => {
-      items.forEach(item => {
-        const rect = item.getBoundingClientRect();
-        const centerX = rect.x + rect.width / 2;
-        const centerY = rect.y + rect.height / 2;
-
-        const b = pointer.x - centerX;
-        const a = pointer.y - centerY;
-        const c = Math.sqrt(a * a + b * b) || 1;
-        const r = ((Math.acos(b / c) * 180) / Math.PI) * (pointer.y > centerY ? 1 : -1);
-
-        item.style.setProperty('--rotate', `${r}deg`);
-      });
-    };
-
-    const handlePointerMove = (e: PointerEvent) => {
-      onPointerMove({ x: e.x, y: e.y });
-    };
-
-    window.addEventListener('pointermove', handlePointerMove);
-
-    if (items.length) {
-      const middleIndex = Math.floor(items.length / 2);
-      const rect = items[middleIndex].getBoundingClientRect();
-      onPointerMove({ x: rect.x, y: rect.y });
-    }
-
-    return () => {
-      window.removeEventListener('pointermove', handlePointerMove);
-    };
-  }, []);
-
+  // Calculate total number of grid items
   const total = rows * columns;
-  const spans = Array.from({ length: total }, (_, i) => (
-    <span
-      key={i}
-      className="block origin-center"
-      style={{
-        backgroundColor: lineColor,
-        width: lineWidth,
-        height: lineHeight,
-        //@ts-ignore
-        '--rotate': `${baseAngle}deg`,
-        transform: 'rotate(var(--rotate))',
-        willChange: 'transform'
-      }}
-    />
-  ));
+
+  // Create grid spans using the utility function
+  const spans = createGridSpans(total, lineColor, lineWidth, lineHeight, baseAngle);
 
   return (
     <div
@@ -99,5 +61,11 @@ export const MagnetLines: React.FC<MagnetLinesProps> = ({
     </div>
   );
 };
+
+// Create memoized version of the component
+export const MagnetLines = React.memo(MagnetLinesComponent);
+
+// Add display name for better debugging
+MagnetLines.displayName = 'MagnetLines';
 
 export default MagnetLines;

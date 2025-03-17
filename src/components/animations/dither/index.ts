@@ -1,5 +1,8 @@
-import Dither from './dither';
+/**
+ * Dither component creates a dithering effect with optional tilt, zoom, and drag effects.
+ *
+ * @module Dither
+ */
 
-export * from './dither';
-
-export default Dither;
+export { Dither, default } from './dither';
+export type { DitherProps } from './dither.types';

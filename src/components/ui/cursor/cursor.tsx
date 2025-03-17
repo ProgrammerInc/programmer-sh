@@ -38,6 +38,7 @@ import {
 } from '@/components/cursors';
 import { cursorPresets } from '@/presets/cursor.presets';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { Cursor, CursorProps } from './cursor.types';
 
 export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
@@ -59,20 +60,44 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
 
     // Cursor debugging - only log once
     const isInitialMount = useRef(true);
+    const hasMounted = useRef(false);
     const cursorContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const magicTrailCursorRef = useRef<HTMLDivElement>(null);
     const nestedContainerRef = useRef<HTMLDivElement>(null);
+    const previousCursorContainer = useRef<HTMLDivElement | null>(null);
+
+    // Track when component is mounted to prevent cleanup errors
+    useEffect(() => {
+      hasMounted.current = true;
+      return () => {
+        hasMounted.current = false;
+      };
+    }, []);
 
     // Connect the forwarded ref to our inner ref
     useImperativeHandle(ref, () => cursorContainerRef.current!);
 
     useEffect(() => {
       if (isInitialMount.current) {
-        console.log('Current cursor:', currentCursor);
-
+        console.log('[Cursor] Initial render with cursor:', currentCursor);
         isInitialMount.current = false;
+      } else {
+        console.log('[Cursor] Cursor changed to:', currentCursor.animation || 'default');
       }
-    }, [currentCursor, cursor]);
+    }, [currentCursor]);
+
+    // When changing cursor, perform extra cleanup
+    useEffect(() => {
+      // This will clean up all event listeners and animations 
+      // when switching between cursor types
+      return () => {
+        // Clean up any global event listeners here if needed
+        if (hasMounted.current) {
+          console.log('[CursorProvider] Cleaning up cursor effect');
+        }
+      };
+    }, [cursor]);
+
     return (
       <div
         id={id}
@@ -93,393 +118,147 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
         }}
       >
         {currentCursor.type === 'animation' && currentCursor.animation === 'arrow' && (
-          <div
-            className="arrow-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <ArrowCursor
-              fgColor={currentColor}
-              {...(currentCursor.animationProps as ArrowCursorProps)}
-            />
-          </div>
+          <ArrowCursor
+            key={`arrow-cursor-${cursor}`}
+            fgColor={currentColor}
+            {...(currentCursor.animationProps as ArrowCursorProps)}
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'blob' && (
-          <div
-            className="blob-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <BlobCursor {...(currentCursor.animationProps as BlobCursorProps)} />
-          </div>
+          <BlobCursor 
+            key={`blob-cursor-${cursor}`}
+            {...(currentCursor.animationProps as BlobCursorProps)} 
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'bubble' && (
-          <div
-            className="bubble-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <BubbleCursor
-              fillStyle={currentColor}
-              strokeStyle={currentColor}
-              wrapperElement={nestedContainerRef.current}
-              {...(currentCursor.animationProps as BubbleCursorProps)}
-            />
-          </div>
+          <BubbleCursor
+            key={`bubble-cursor-${cursor}`}
+            fillStyle={currentColor}
+            strokeStyle={currentColor}
+            wrapperElement={nestedContainerRef.current}
+            {...(currentCursor.animationProps as BubbleCursorProps)}
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'canvas' && (
-          <div
-            className="canvas-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <CanvasCursor />
-          </div>
+          <CanvasCursor 
+            key={`canvas-cursor-${cursor}`}
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'character' && (
-          <div
-            className="character-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <CharacterCursor
-              colors={[currentColor]}
-              {...(currentCursor.animationProps as CharacterCursorProps)}
-            />
-          </div>
+          <CharacterCursor
+            key={`character-cursor-${cursor}`}
+            characters={['p', 'r', 'o', 'g', 'r', 'a', 'm', 'm', 'e', 'r']}
+            colors={[currentColor]}
+            wrapperElement={nestedContainerRef.current}
+            {...(currentCursor.animationProps as CharacterCursorProps)}
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'crosshair' && (
           <Crosshair
+            key={`crosshair-cursor-${cursor}`}
             containerRef={nestedContainerRef}
             color={currentColor}
             {...(currentCursor.animationProps as CrosshairProps)}
           />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'fairydust' && (
-          <div
-            className="fairydust-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <FairyDustCursor
-              colors={['#FF0000', '#00FF00', '#0000FF']}
-              characterSet={['✨', '⭐', '🌟']}
-              particleSize={24}
-              particleCount={2}
-              gravity={0.015}
-              fadeSpeed={0.97}
-              initialVelocity={{ min: 0.7, max: 2.0 }}
-              {...(currentCursor.animationProps as FairyDustCursorProps)}
-            />
-          </div>
+          <FairyDustCursor
+            key={`fairydust-cursor-${cursor}`}
+            colors={['#FF0000', '#00FF00', '#0000FF']}
+            characterSet={['✨', '⭐', '🌟']}
+            particleSize={24}
+            particleCount={2}
+            gravity={0.015}
+            fadeSpeed={0.97}
+            initialVelocity={{ min: 0.7, max: 2.0 }}
+            {...(currentCursor.animationProps as FairyDustCursorProps)}
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'glitch' && (
-          <div
-            className="glitch-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <GlitchCursor />
-          </div>
+          <GlitchCursor 
+            key={`glitch-cursor-${cursor}`}
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'gradient' && (
-          <div
-            className="gradient-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <GradientCursor />
-          </div>
+          <GradientCursor 
+            key={`gradient-cursor-${cursor}`}
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'magic-trail' && (
-          <div
-            className="magic-trail-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <MagicTrailCursor
-              containerRef={cursorContainerRef}
-              particleCount={50}
-              trailLength={35}
-              smoothing={0.8}
-              {...(currentCursor.animationProps as MagicTrailCursorProps)}
-            />
-          </div>
+          <MagicTrailCursor
+            key={`magic-trail-cursor-${cursor}`}
+            containerRef={cursorContainerRef}
+            particleCount={50}
+            trailLength={35}
+            smoothing={0.8}
+            {...(currentCursor.animationProps as MagicTrailCursorProps)}
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'neon' && (
-          <div
-            className="neon-cursor-container"
-            ref={containerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <NeonCursor />
-          </div>
+          <NeonCursor 
+            key={`neon-cursor-${cursor}`}
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'rainbow' && (
-          <div
-            className="rainbow-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <RainbowCursor {...(currentCursor.animationProps as RainbowCursorProps)} />
-          </div>
+          <RainbowCursor 
+            key={`rainbow-cursor-${cursor}`}
+            {...(currentCursor.animationProps as RainbowCursorProps)} 
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'ribbons' && (
-          <div
-            className="ribbons-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <Ribbons
-              baseThickness={30}
-              colors={[currentColor]}
-              speedMultiplier={0.5}
-              maxAge={500}
-              enableFade={false}
-              enableShaderEffect={true}
-              {...(currentCursor.animationProps as RibbonsProps)}
-            />
-          </div>
+          <Ribbons
+            key={`ribbons-cursor-${cursor}`}
+            baseThickness={30}
+            colors={[currentColor]}
+            speedMultiplier={0.5}
+            maxAge={500}
+            enableFade={false}
+            enableShaderEffect={true}
+            {...(currentCursor.animationProps as RibbonsProps)}
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'ripple' && (
-          <div
-            className="ripple-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <RippleCursor
-              color={currentColor}
-              {...(currentCursor.animationProps as RippleCursorProps)}
-            />
-          </div>
+          <RippleCursor
+            key={`ripple-cursor-${cursor}`}
+            color={currentColor}
+            {...(currentCursor.animationProps as RippleCursorProps)}
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'snowflake' && (
-          <div
-            className="snowflake-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <SnowflakeCursor />
-          </div>
+          <SnowflakeCursor 
+            key={`snowflake-cursor-${cursor}`}
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'splash' && (
-          <div
-            className="splash-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <SplashCursor />
-          </div>
+          <SplashCursor 
+            key={`splash-cursor-${cursor}`}
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'spotlight' && (
-          <div
-            className="spotlight-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <SpotlightCursor {...(currentCursor.animationProps as SpotlightCursorProps)} />
-          </div>
+          <SpotlightCursor 
+            key={`spotlight-cursor-${cursor}`}
+            {...(currentCursor.animationProps as SpotlightCursorProps)} 
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'springy' && (
-          <div
-            className="springy-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <SpringyCursor {...(currentCursor.animationProps as SpringyCursorProps)} />
-          </div>
+          <SpringyCursor 
+            key={`springy-cursor-${cursor}`}
+            {...(currentCursor.animationProps as SpringyCursorProps)} 
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'textflag' && (
-          <div
-            className="textflag-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <TextFlagCursor
-              color={currentColor}
-              {...(currentCursor.animationProps as TextFlagCursorProps)}
-            />
-          </div>
+          <TextFlagCursor
+            key={`textflag-cursor-${cursor}`}
+            text="Programmer.sh"
+            color={currentColor}
+            {...(currentCursor.animationProps as TextFlagCursorProps)}
+          />
         )}
         {currentCursor.type === 'animation' && currentCursor.animation === 'trailing' && (
-          <div
-            className="trailing-cursor-container"
-            ref={nestedContainerRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 10000,
-              transform: 'translateZ(9999px)' /* Force this to show on top with 3D transform */,
-              isolation: 'isolate'
-            }}
-          >
-            <TrailingCursor {...(currentCursor.animationProps as TrailingCursorProps)} />
-          </div>
+          <TrailingCursor 
+            key={`trailing-cursor-${cursor}`}
+            {...(currentCursor.animationProps as TrailingCursorProps)} 
+          />
         )}
       </div>
     );

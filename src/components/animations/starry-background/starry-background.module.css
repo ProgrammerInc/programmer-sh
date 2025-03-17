@@ -1,0 +1,58 @@
+/**
+ * CSS module for the Starry Background animation component
+ */
+
+.starry-background-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.starry-background-noise {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.starry-background-stars-grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(18, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  padding: 1rem;
+}
+
+.starry-background-star-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.starry-background-star {
+  border-radius: 9999px;
+  background-color: white;
+}
+
+.starry-background-content {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+}
+
+/* Animation for glowing stars */
+@keyframes glow {
+  0%,
+  100% {
+    opacity: 0.3;
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+  }
+}

@@ -1,4 +1,4 @@
-import { CommandResult } from '../../../commands/command.types';
+import { CommandResult } from '@/commands/command.types';
 
 export interface AnimatedContentProps {
   content: string;

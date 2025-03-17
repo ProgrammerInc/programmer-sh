@@ -1,160 +1,40 @@
+/**
+ * @fileoverview Crosshair cursor component that creates a dynamic crosshair
+ * @module Crosshair
+ */
+
 'use client';
 
-import { gsap } from 'gsap';
-import React, { RefObject, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { CrosshairProps } from './crosshair.types';
+import { useCrosshairHooks } from './crosshair.hooks';
 
-const lerp = (a: number, b: number, n: number): number => (1 - n) * a + n * b;
-
-const getMousePos = (e: Event, container?: HTMLElement | null): { x: number; y: number } => {
-  const mouseEvent = e as MouseEvent;
-  if (container) {
-    const bounds = container.getBoundingClientRect();
-    return {
-      x: mouseEvent.clientX - bounds.left,
-      y: mouseEvent.clientY - bounds.top
-    };
-  }
-  return { x: mouseEvent.clientX, y: mouseEvent.clientY };
-};
-
-export interface CrosshairProps {
-  color?: string;
-  containerRef?: RefObject<HTMLElement>;
-}
-
-export const Crosshair: React.FC<CrosshairProps> = ({ color = 'white', containerRef = null }) => {
+/**
+ * Crosshair component that creates a dynamic crosshair cursor
+ * This component displays horizontal and vertical lines that follow the cursor
+ * with special animation effects when hovering over links
+ *
+ * @param props - Component props
+ * @returns React component
+ */
+export const Crosshair: React.FC<CrosshairProps> = (props) => {
+  const { containerRef } = props;
   const cursorRef = useRef<HTMLDivElement>(null);
-  const lineHorizontalRef = useRef<HTMLDivElement>(null);
-  const lineVerticalRef = useRef<HTMLDivElement>(null);
-  const filterXRef = useRef<SVGFETurbulenceElement>(null);
-  const filterYRef = useRef<SVGFETurbulenceElement>(null);
-  const mouseRef = useRef({ x: 0, y: 0 });
 
+  // Get hooks and refs from the custom hook
+  const {
+    lineHorizontalRef,
+    lineVerticalRef,
+    filterXRef,
+    filterYRef,
+    setupCrosshair,
+    color
+  } = useCrosshairHooks(props);
+
+  // Setup crosshair effects
   useEffect(() => {
-    const handleMouseMove = (ev: Event) => {
-      const mouseEvent = ev as MouseEvent;
-      mouseRef.current = getMousePos(mouseEvent, containerRef?.current);
-      if (containerRef?.current) {
-        const bounds = containerRef.current.getBoundingClientRect();
-        if (
-          mouseEvent.clientX < bounds.left ||
-          mouseEvent.clientX > bounds.right ||
-          mouseEvent.clientY < bounds.top ||
-          mouseEvent.clientY > bounds.bottom
-        ) {
-          gsap.to([lineHorizontalRef.current, lineVerticalRef.current].filter(Boolean), {
-            opacity: 0
-          });
-        } else {
-          gsap.to([lineHorizontalRef.current, lineVerticalRef.current].filter(Boolean), {
-            opacity: 1
-          });
-        }
-      }
-    };
-
-    const target: HTMLElement | Window = containerRef?.current || window;
-    target.addEventListener('mousemove', handleMouseMove);
-
-    const renderedStyles: {
-      [key: string]: { previous: number; current: number; amt: number };
-    } = {
-      tx: { previous: 0, current: 0, amt: 0.15 },
-      ty: { previous: 0, current: 0, amt: 0.15 }
-    };
-
-    gsap.set([lineHorizontalRef.current, lineVerticalRef.current].filter(Boolean), { opacity: 0 });
-
-    const onMouseMove = (_ev: Event) => {
-      renderedStyles.tx.previous = renderedStyles.tx.current = mouseRef.current.x;
-      renderedStyles.ty.previous = renderedStyles.ty.current = mouseRef.current.y;
-
-      gsap.to([lineHorizontalRef.current, lineVerticalRef.current].filter(Boolean), {
-        duration: 0.9,
-        ease: 'Power3.easeOut',
-        opacity: 1
-      });
-
-      requestAnimationFrame(render);
-
-      target.removeEventListener('mousemove', onMouseMove);
-    };
-
-    target.addEventListener('mousemove', onMouseMove);
-
-    const primitiveValues = { turbulence: 0 };
-
-    const tl = gsap
-      .timeline({
-        paused: true,
-        onStart: () => {
-          if (lineHorizontalRef.current) {
-            lineHorizontalRef.current.style.filter = 'url(#filter-noise-x)';
-          }
-          if (lineVerticalRef.current) {
-            lineVerticalRef.current.style.filter = 'url(#filter-noise-y)';
-          }
-        },
-        onUpdate: () => {
-          if (filterXRef.current && filterYRef.current) {
-            filterXRef.current.setAttribute('baseFrequency', primitiveValues.turbulence.toString());
-            filterYRef.current.setAttribute('baseFrequency', primitiveValues.turbulence.toString());
-          }
-        },
-        onComplete: () => {
-          if (lineHorizontalRef.current && lineVerticalRef.current) {
-            lineHorizontalRef.current.style.filter = 'none';
-            lineVerticalRef.current.style.filter = 'none';
-          }
-        }
-      })
-      .to(primitiveValues, {
-        duration: 0.5,
-        ease: 'power1',
-        startAt: { turbulence: 1 },
-        turbulence: 0
-      });
-
-    const enter = () => tl.restart();
-    const leave = () => {
-      tl.progress(1).kill();
-    };
-
-    const render = () => {
-      renderedStyles.tx.current = mouseRef.current.x;
-      renderedStyles.ty.current = mouseRef.current.y;
-
-      for (const key in renderedStyles) {
-        const style = renderedStyles[key];
-        style.previous = lerp(style.previous, style.current, style.amt);
-      }
-
-      if (lineHorizontalRef.current && lineVerticalRef.current) {
-        gsap.set(lineVerticalRef.current, { x: renderedStyles.tx.previous });
-        gsap.set(lineHorizontalRef.current, { y: renderedStyles.ty.previous });
-      }
-
-      requestAnimationFrame(render);
-    };
-
-    const links: NodeListOf<HTMLAnchorElement> = containerRef?.current
-      ? containerRef.current.querySelectorAll('a')
-      : document.querySelectorAll('a');
-
-    links.forEach(link => {
-      link.addEventListener('mouseenter', enter);
-      link.addEventListener('mouseleave', leave);
-    });
-
-    return () => {
-      target.removeEventListener('mousemove', handleMouseMove);
-      target.removeEventListener('mousemove', onMouseMove);
-      links.forEach(link => {
-        link.removeEventListener('mouseenter', enter);
-        link.removeEventListener('mouseleave', leave);
-      });
-    };
-  }, [containerRef]);
+    return setupCrosshair();
+  }, [setupCrosshair]);
 
   return (
     <div

@@ -1,66 +1,74 @@
 'use client';
 
 import { cn } from '@/utils/app.utils';
-import React from 'react';
+import React, { memo } from 'react';
 import { StarsBackground } from '..';
-import './meteors.css';
+import { BASE_METEOR_CLASSES, DEFAULT_METEOR_COUNT } from './meteors.constants';
+import { useMeteorColor } from './meteors.hooks';
+import styles from './meteors.module.css';
+import { MeteorsProps } from './meteors.types';
+import {
+  getRandomMeteorDelay,
+  getRandomMeteorDuration,
+  getRandomMeteorPosition
+} from './meteors.utils';
 
-export interface MeteorsProps extends React.HTMLAttributes<HTMLDivElement> {
-  color?: string;
-  number?: number;
-  className?: string;
-  withStars?: boolean;
-}
+/**
+ * A component that renders animated meteors flying across the screen
+ *
+ * @example
+ * <Meteors
+ *   number={75}
+ *   color="#4c1d95"
+ *   withStars={true}
+ * />
+ *
+ * @param {MeteorsProps} props - The component props
+ * @returns The Meteors component with optional StarsBackground
+ */
+export const Meteors = memo<MeteorsProps>(
+  ({ color, number = DEFAULT_METEOR_COUNT, className, withStars = true, ...restProps }) => {
+    // Create the array of meteor elements
+    const meteors = new Array(number).fill(true);
 
-export const Meteors = ({ color, number, className, withStars = true }: MeteorsProps) => {
-  const meteors = new Array(number || 50).fill(true);
+    // Use the custom hook to manage meteor color CSS variable
+    useMeteorColor(color);
 
-  // Default Tailwind class when no custom color is provided
-  const defaultMeteorClass =
-    'before:bg-gradient-to-r before:from-indigo-500 before:via-purple-500 before:to-transparent';
+    // Generate the meteor elements
+    const meteorsHtml = meteors.map((_, idx) => (
+      <span
+        key={`meteor-${idx}`}
+        className={cn(
+          styles['meteor-element'],
+          ...BASE_METEOR_CLASSES,
+          color ? styles['meteor-custom-gradient'] : styles['meteor-default-gradient']
+        )}
+        style={
+          {
+            top: 0,
+            left: getRandomMeteorPosition(),
+            '--meteor-delay': getRandomMeteorDelay(),
+            '--meteor-duration': getRandomMeteorDuration()
+          } as React.CSSProperties
+        }
+      />
+    ));
 
-  // Set CSS variable for the custom color if needed
-  React.useEffect(() => {
-    if (color) {
-      document.documentElement.style.setProperty('--meteor-from-color', color);
-    }
-
-    return () => {
-      // Cleanup
-      if (color) {
-        document.documentElement.style.removeProperty('--meteor-from-color');
-      }
-    };
-  }, [color]);
-
-  const meteorsHtml = meteors.map((el, idx) => (
-    <span
-      key={'meteor' + idx}
-      className={cn(
-        'animate-meteor-effect absolute top-1/2 left-1/2 rounded-[9999px] bg-slate-500 shadow-[0_0_0_1px_#ffffff10] rotate-[215deg]',
-        "before:content-[''] before:absolute before:top-1/2 before:transform before:-translate-y-[50%] before:w-[50px] before:h-[1px]",
-        color ? 'meteor-custom-gradient' : defaultMeteorClass,
-        className
-      )}
-      style={{
-        top: 0,
-        left: Math.floor(Math.random() * (1920 - -1920) + -1920) + 'px',
-        animationDelay: Math.random() * (0.8 - 0.2) + 0.2 + 's',
-        animationDuration: Math.floor(Math.random() * (10 - 2) + 2) + 's'
-      }}
-    />
-  ));
-
-  if (withStars) {
+    // Render with or without stars background
     return (
-      <div className="meteors-container">
+      <div
+        className={cn(styles['meteors-container'], className)}
+        style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}
+        {...restProps}
+      >
+        {withStars && <StarsBackground className={styles['stars-background']} />}
         {meteorsHtml}
-        <StarsBackground className="stars-background" />
       </div>
     );
   }
+);
 
-  return <div className="meteors-container">{meteorsHtml}</div>;
-};
+// Add display name for better debugging
+Meteors.displayName = 'Meteors';
 
 export default Meteors;

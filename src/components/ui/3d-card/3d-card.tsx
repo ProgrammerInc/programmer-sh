@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import useMouseEnter, { MouseEnterContext } from '@/hooks/use-mouse-enter';
+import useMouseEnter, { MouseEnterContext } from '@/hooks/use-mouse-enter.hook';
 import { cn } from '@/utils/app.utils';
 import React, { useEffect, useRef, useState } from 'react';
 

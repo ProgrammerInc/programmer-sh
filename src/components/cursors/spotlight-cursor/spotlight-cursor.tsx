@@ -1,32 +1,45 @@
+/**
+ * SpotlightCursor Component
+ *
+ * A cursor component that creates a spotlight effect following the mouse cursor.
+ *
+ * @module SpotlightCursor
+ */
 'use client';
 
-import useSpotlightEffect, { SpotlightConfig } from '@/hooks/use-spotlight-effect';
-import { HTMLAttributes } from 'react';
+import { memo, useRef } from 'react';
+import { DEFAULT_CONFIG } from './spotlight-cursor.constants';
+import { useSpotlightCursor } from './spotlight-cursor.hooks';
+import styles from './spotlight-cursor.module.css';
+import { SpotlightCursorProps } from './spotlight-cursor.types';
 
-// Combine props with potential HTML canvas attributes
-export interface SpotlightCursorProps extends HTMLAttributes<HTMLCanvasElement> {
-  config?: SpotlightConfig;
-}
+/**
+ * SpotlightCursor component that creates a spotlight effect around the cursor.
+ *
+ * @param props - Component properties
+ * @returns JSX element
+ */
+export const SpotlightCursor = memo<SpotlightCursorProps>(({ config = {}, className, ...rest }) => {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-export const SpotlightCursor = ({ config = {}, className, ...rest }: SpotlightCursorProps) => {
-  // Provide default configuration if not specified
+  // Merge default config with user-provided config
   const spotlightConfig = {
-    radius: 200,
-    brightness: 0.15,
-    color: '#ffffff',
-    smoothing: 0.1,
+    ...DEFAULT_CONFIG,
     ...config
   };
 
-  const canvasRef = useSpotlightEffect(spotlightConfig);
+  // Use custom hook for cursor behavior
+  useSpotlightCursor(spotlightConfig, canvasRef);
 
   return (
     <canvas
       ref={canvasRef}
-      className={`fixed top-0 left-0 pointer-events-none z-[9999] w-full h-full ${className}`}
+      className={`${styles['spotlight-cursor-canvas']} ${className ?? ''}`}
       {...rest}
     />
   );
-};
+});
+
+SpotlightCursor.displayName = 'SpotlightCursor';
 
 export default SpotlightCursor;

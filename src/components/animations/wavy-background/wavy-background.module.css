@@ -1,0 +1,42 @@
+/**
+ * CSS Module for the WavyBackground component
+ */
+
+/* Container for the wavy background and content */
+.wavy-background-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* Container for the wavy background and content */
+.wavy-container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Canvas for wave rendering */
+.wavy-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Content container positioned on top of waves */
+.wavy-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}

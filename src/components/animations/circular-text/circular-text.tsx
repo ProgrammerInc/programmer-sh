@@ -1,53 +1,60 @@
 'use client';
 
-import { motion, useAnimation } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { memo, useCallback, useEffect, useMemo } from 'react';
+import {
+  DEFAULT_FONT_SIZE,
+  DEFAULT_ON_HOVER,
+  DEFAULT_SIZE,
+  DEFAULT_SPIN_DURATION
+} from './circular-text.constants';
+import { useCircularTextAnimation } from './circular-text.hooks';
+import { CircularTextProps } from './circular-text.types';
 
-export interface CircularTextProps {
-  text: string;
-  spinDuration?: number;
-  onHover?: 'slowDown' | 'speedUp' | 'pause' | 'goBonkers';
-  className?: string;
-}
-
-const getRotationTransition = (duration: number, from: number, loop: boolean = true) => ({
-  from: from,
-  to: from + 360,
-  ease: 'linear',
-  duration: duration,
-  type: 'tween',
-  repeat: loop ? Infinity : 0
-});
-
-const getTransition = (duration: number, from: number) => ({
-  rotate: getRotationTransition(duration, from),
-  scale: {
-    type: 'spring',
-    damping: 20,
-    stiffness: 300
-  }
-});
-
-const CircularText: React.FC<CircularTextProps> = ({
+/**
+ * CircularText component that displays text in a circular arrangement with animation.
+ * It can respond to hover events with various behaviors.
+ *
+ * @param props - Component properties
+ * @returns Memoized React component with circular text animation
+ */
+export const CircularText = memo(function CircularText({
   text,
-  spinDuration = 20,
-  onHover = 'speedUp',
-  className = ''
-}) => {
-  const letters = Array.from(text);
-  const controls = useAnimation();
-  const [currentRotation, setCurrentRotation] = useState(0);
+  spinDuration = DEFAULT_SPIN_DURATION,
+  onHover = DEFAULT_ON_HOVER,
+  className = '',
+  size = DEFAULT_SIZE,
+  fontSize = DEFAULT_FONT_SIZE
+}: CircularTextProps) {
+  // Convert text string to array of letters for individual placement
+  const letters = useMemo(() => Array.from(text), [text]);
 
+  // Use custom hook to manage animations
+  const { controls, currentRotation, setCurrentRotation, getTransition } =
+    useCircularTextAnimation(spinDuration);
+
+  // Container styles
+  const containerStyle = useMemo(
+    () => ({
+      width: size,
+      height: size
+    }),
+    [size]
+  );
+
+  // Start the default animation when component mounts or props change
   useEffect(() => {
     controls.start({
       rotate: currentRotation + 360,
       scale: 1,
       transition: getTransition(spinDuration, currentRotation)
     });
-  }, [spinDuration, controls, onHover, text, currentRotation]);
+  }, [spinDuration, controls, currentRotation, getTransition]);
 
-  const handleHoverStart = () => {
+  // Handle mouse hover start based on the onHover prop
+  const handleHoverStart = useCallback(() => {
     if (!onHover) return;
+
     switch (onHover) {
       case 'slowDown':
         controls.start({
@@ -83,20 +90,27 @@ const CircularText: React.FC<CircularTextProps> = ({
       default:
         break;
     }
-  };
+  }, [onHover, controls, currentRotation, getTransition, spinDuration]);
 
-  const handleHoverEnd = () => {
+  // Reset animation when mouse leaves
+  const handleHoverEnd = useCallback(() => {
     controls.start({
       rotate: currentRotation + 360,
       scale: 1,
       transition: getTransition(spinDuration, currentRotation)
     });
-  };
+  }, [controls, currentRotation, getTransition, spinDuration]);
+
+  // Generate class name for container
+  const containerClassName = useMemo(() => {
+    return `mx-auto rounded-full text-white font-black text-center cursor-pointer origin-center ${fontSize} ${className}`;
+  }, [className, fontSize]);
 
   return (
     <motion.div
       initial={{ rotate: 0 }}
-      className={`mx-auto rounded-full w-[200px] h-[200px] text-white font-black text-center cursor-pointer origin-center ${className}`}
+      className={containerClassName}
+      style={containerStyle}
       animate={controls}
       onUpdate={latest => setCurrentRotation(Number(latest.rotate))}
       onMouseEnter={handleHoverStart}
@@ -104,15 +118,16 @@ const CircularText: React.FC<CircularTextProps> = ({
     >
       {letters.map((letter, i) => {
         const rotation = (360 / letters.length) * i;
-        const factor = Number((Math.PI / letters.length).toFixed(0));
-        const x = factor * i;
-        const y = factor * i;
+        const factor = Number((Math.PI / letters.length).toFixed(2));
+        const radius = size / 2 - 30; // Adjust for better text placement
+        const x = radius * Math.cos((rotation * Math.PI) / 180);
+        const y = radius * Math.sin((rotation * Math.PI) / 180);
         const transform = `rotateZ(${rotation}deg) translate3d(${x}px, ${y}px, 0)`;
 
         return (
           <span
             key={i}
-            className="absolute inline-block inset-0 text-2xl transition-all duration-500 ease-&lsqb;cubic-bezier(0,0,0,1)&rsqb;"
+            className="absolute inline-block inset-0 transition-all duration-500 ease-&lsqb;cubic-bezier(0,0,0,1)&rsqb;"
             style={{ transform, WebkitTransform: transform }}
           >
             {letter}
@@ -121,6 +136,9 @@ const CircularText: React.FC<CircularTextProps> = ({
       })}
     </motion.div>
   );
-};
+});
+
+// Add displayName to help with debugging
+CircularText.displayName = 'CircularText';
 
 export default CircularText;

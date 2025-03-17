@@ -1,70 +1,59 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { SpringValue, animated, to, useSpring } from '@react-spring/web';
-import React, { ReactNode, useEffect, useRef } from 'react';
+import { memo, useRef } from 'react';
+import {
+  DEFAULT_ANIMATION_CONFIG,
+  DEFAULT_CARD_WIDTH,
+  DEFAULT_ENABLE_DRAG,
+  DEFAULT_ENABLE_TILT,
+  DEFAULT_ENABLE_ZOOM,
+  DEFAULT_HOVER_SCALE,
+  DEFAULT_OFFSET_X,
+  DEFAULT_PERSPECTIVE,
+  DEFAULT_ROTATION_FACTOR,
+  DEFAULT_WHEEL_CONFIG,
+  DEFAULT_ZOOM_SENSITIVITY
+} from './follow-cursor.constants';
+import {
+  SpringApi,
+  useMouseMoveHandler,
+  useMouseMoveListener,
+  useTouchInteraction,
+  useWheelHandler,
+  useWheelTransform
+} from './follow-cursor.hooks';
+import { FollowCursorProps, TouchState } from './follow-cursor.types';
 
-export interface FollowCursorProps {
-  children: ReactNode;
-  className?: string;
-  animationConfig?: {
-    mass?: number;
-    tension?: number;
-    friction?: number;
-    [key: string]: any;
-  };
-  hoverScale?: number;
-  offsetX?: number;
-  cardWidth?: string;
-  rotationFactor?: number;
-  perspective?: string;
-  zoomSensitivity?: number;
-  wheelConfig?: {
-    mass?: number;
-    tension?: number;
-    friction?: number;
-    [key: string]: any;
-  };
-  enableTilt?: boolean;
-  enableZoom?: boolean;
-  enableDrag?: boolean;
-}
-
-const calcX = (y: number, ly: number, containerCenterY: number, rotationFactor: number): number =>
-  -(y - ly - containerCenterY) / rotationFactor;
-
-const calcY = (x: number, lx: number, containerCenterX: number, rotationFactor: number): number =>
-  (x - lx - containerCenterX) / rotationFactor;
-
-const isMobile = (): boolean => /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-export interface TouchState {
-  startX?: number;
-  startY?: number;
-  offsetX?: number;
-  offsetY?: number;
-}
-
-const FollowCursor: React.FC<FollowCursorProps> = ({
+/**
+ * FollowCursor component creates interactive elements that follow cursor movement
+ * with optional tilt, zoom, and drag effects.
+ *
+ * @param props Component properties
+ * @returns Memoized React component that follows cursor movement
+ */
+export const FollowCursor = memo(function FollowCursor({
   children,
   className = '',
-  animationConfig = { mass: 5, tension: 350, friction: 40 },
-  hoverScale = 1.1,
-  offsetX = 20,
-  cardWidth = '200px',
-  rotationFactor = 20,
-  perspective = '300px',
-  zoomSensitivity = 200,
-  wheelConfig = { mass: 1, tension: 200, friction: 30 },
-  enableTilt = true,
-  enableZoom = true,
-  enableDrag = true
-}) => {
+  animationConfig = DEFAULT_ANIMATION_CONFIG,
+  hoverScale = DEFAULT_HOVER_SCALE,
+  offsetX = DEFAULT_OFFSET_X,
+  cardWidth = DEFAULT_CARD_WIDTH,
+  rotationFactor = DEFAULT_ROTATION_FACTOR,
+  perspective = DEFAULT_PERSPECTIVE,
+  zoomSensitivity = DEFAULT_ZOOM_SENSITIVITY,
+  wheelConfig = DEFAULT_WHEEL_CONFIG,
+  enableTilt = DEFAULT_ENABLE_TILT,
+  enableZoom = DEFAULT_ENABLE_ZOOM,
+  enableDrag = DEFAULT_ENABLE_DRAG
+}: FollowCursorProps) {
+  // Refs for DOM elements and touch state
   const domTarget = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const touchState = useRef<TouchState>({});
 
-  const [{ x, y, rotateX, rotateY, rotateZ, zoom, scale }, api] = useSpring(() => ({
+  // Initialize animation springs
+  const [springValues, api] = useSpring(() => ({
     rotateX: 0,
     rotateY: 0,
     rotateZ: 0,
@@ -75,164 +64,51 @@ const FollowCursor: React.FC<FollowCursorProps> = ({
     config: animationConfig
   }));
 
-  const [{ wheelY }, wheelApi] = useSpring(() => ({
+  const { x, y, rotateX, rotateY, rotateZ, zoom, scale } = springValues;
+
+  // Initialize wheel springs
+  const [wheelSpringValues, wheelApi] = useSpring(() => ({
     wheelY: 0,
     config: wheelConfig
   }));
 
-  // Touch handling logic
-  useEffect(() => {
-    if (!isMobile() || !domTarget.current || !enableDrag) return;
+  const { wheelY } = wheelSpringValues;
 
-    const card = domTarget.current;
-    let isDragging = false;
-    let pinchStartDistance = 0;
-    let pinchStartAngle = 0;
-    let initialZoom = 0;
-    let initialRotateZ = 0;
+  // Set up event handlers using custom hooks
+  const handleWheel = useWheelHandler(wheelY, wheelApi as SpringApi);
+  const handleMouseMove = useMouseMoveHandler({
+    api: api as SpringApi,
+    y,
+    x,
+    cardWidth,
+    offsetX,
+    hoverScale,
+    enableTilt,
+    rotationFactor,
+    containerRef
+  });
 
-    const handleTouchStart = (e: TouchEvent) => {
-      if (e.touches.length === 1) {
-        const touch = e.touches[0];
-        touchState.current = {
-          startX: touch.clientX,
-          startY: touch.clientY,
-          offsetX: x.get(),
-          offsetY: y.get()
-        };
-        isDragging = true;
-      } else if (e.touches.length === 2 && enableZoom) {
-        const touch1 = e.touches[0];
-        const touch2 = e.touches[1];
-        pinchStartDistance = Math.hypot(
-          touch2.clientX - touch1.clientX,
-          touch2.clientY - touch1.clientY
-        );
-        pinchStartAngle = Math.atan2(
-          touch2.clientY - touch1.clientY,
-          touch2.clientX - touch1.clientX
-        );
-        initialZoom = zoom.get();
-        initialRotateZ = rotateZ.get();
-      }
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (!isDragging && e.touches.length !== 2) return;
-
-      if (e.touches.length === 1 && isDragging) {
-        const touch = e.touches[0];
-        const deltaX = touch.clientX - (touchState.current.startX || 0);
-        const deltaY = touch.clientY - (touchState.current.startY || 0);
-
-        api.start({
-          x: (touchState.current.offsetX || 0) + deltaX,
-          y: (touchState.current.offsetY || 0) + deltaY,
-          rotateX: 0,
-          rotateY: 0,
-          scale: 1
-        });
-      } else if (e.touches.length === 2 && enableZoom) {
-        const touch1 = e.touches[0];
-        const touch2 = e.touches[1];
-        const currentDistance = Math.hypot(
-          touch2.clientX - touch1.clientX,
-          touch2.clientY - touch1.clientY
-        );
-        const currentAngle = Math.atan2(
-          touch2.clientY - touch1.clientY,
-          touch2.clientX - touch1.clientX
-        );
-
-        const zoomDelta = (currentDistance - pinchStartDistance) / zoomSensitivity;
-        const rotateDelta = currentAngle - pinchStartAngle;
-
-        api.start({
-          zoom: initialZoom + zoomDelta,
-          rotateZ: initialRotateZ + rotateDelta
-        });
-      }
-    };
-
-    const handleTouchEnd = () => {
-      isDragging = false;
-      api.start({ scale: hoverScale });
-    };
-
-    const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      wheelApi.start({
-        wheelY: wheelY.get() + e.deltaY,
-        immediate: true
-      });
-    };
-
-    card.addEventListener('touchstart', handleTouchStart, { passive: false });
-    card.addEventListener('touchmove', handleTouchMove, { passive: false });
-    card.addEventListener('touchend', handleTouchEnd);
-    if (enableZoom) card.addEventListener('wheel', handleWheel, { passive: false });
-
-    return () => {
-      card.removeEventListener('touchstart', handleTouchStart);
-      card.removeEventListener('touchmove', handleTouchMove);
-      card.removeEventListener('touchend', handleTouchEnd);
-      card.removeEventListener('wheel', handleWheel);
-    };
-  }, [
-    api,
+  // Set up touch interactions
+  useTouchInteraction({
+    domTarget,
+    api: api as SpringApi,
     x,
     y,
     zoom,
     rotateZ,
-    wheelY,
-    wheelApi,
     enableDrag,
     enableZoom,
     zoomSensitivity,
-    hoverScale
-  ]);
+    hoverScale,
+    handleWheel,
+    touchState
+  });
 
-  // Mouse movement logic
-  useEffect(() => {
-    if (!isMobile() && enableTilt) {
-      const handleMouseMove = (event: MouseEvent) => {
-        const container = containerRef.current;
-        if (!container) return;
+  // Set up mouse movement listener
+  useMouseMoveListener(handleMouseMove, enableTilt);
 
-        const rect = container.getBoundingClientRect();
-        const containerCenterX = rect.left + rect.width / 2;
-        const containerCenterY = rect.top + rect.height / 2;
-
-        const px = event.clientX;
-        const py = event.clientY;
-
-        const xPos = px - containerCenterX;
-        const yPos = py - containerCenterY;
-
-        const parsedCardWidth = parseFloat(cardWidth);
-        const calculatedWidth = container.offsetWidth * (parsedCardWidth / 100);
-        const calculatedOffset = calculatedWidth / 2 + offsetX;
-
-        api.start({
-          x: xPos + calculatedOffset,
-          y: yPos,
-          rotateX: enableTilt ? calcX(py, y.get(), containerCenterY, rotationFactor) : 0,
-          rotateY: enableTilt ? calcY(px, x.get(), containerCenterX, rotationFactor) : 0,
-          scale: hoverScale
-        });
-      };
-
-      window.addEventListener('mousemove', handleMouseMove);
-      return () => window.removeEventListener('mousemove', handleMouseMove);
-    }
-  }, [api, y, x, cardWidth, offsetX, hoverScale, enableTilt, rotationFactor]);
-
-  const wheelTransform = (yValue: number): string => {
-    const imgHeight = containerRef.current
-      ? containerRef.current.offsetWidth * (parseFloat(cardWidth) / 100) - 20
-      : window.innerWidth * 0.3 - 20;
-    return `translateY(${-imgHeight * (yValue < 0 ? 6 : 1) - (yValue % (imgHeight * 5))}px)`;
-  };
+  // Create wheel transform function
+  const wheelTransform = useWheelTransform(cardWidth, containerRef);
 
   return (
     <div className={`container ${className}`} ref={containerRef}>
@@ -254,6 +130,6 @@ const FollowCursor: React.FC<FollowCursorProps> = ({
       </animated.div>
     </div>
   );
-};
+});
 
 export default FollowCursor;

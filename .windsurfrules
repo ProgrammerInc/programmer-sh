@@ -1,0 +1,159 @@
+## My Project Preferences
+
+1. TypeScript for type safety
+2. Vite framework for development
+3. React (Vite) for the frontend
+4. Node.js (Vite) for the backend
+5. PNPM for package management
+6. Tailwind CSS for styling
+7. CSS modules for component styling
+8. Radix UI for UI components
+9. Markdown and MDX for documentation
+10. ESLint for code quality
+11. Stylelint for style quality
+12. VSCode/Windsurf/Cursor for IDE application
+13. EditorConfig for IDE configuration
+14. Prettier for code formatting
+15. Jest for testing
+16. Playwright for end-to-end testing
+17. Sentry for error tracking
+18. Snyk for security scanning
+19. DotENV for environment variables
+20. JSDoc for documentation
+21. OpenAPI for REST API documentation
+22. Storybook with MDX support for component documentation
+23. GitHub for version control
+24. Supabase PostgreSQL for database
+25. Netlify for deployment
+26. DRY (Don't Repeat Yourself) principles
+27. SOLID design principles
+28. Prefer component files to be in the same directory as the component
+29. Prefer separate files for each class or component or component group
+30. Prefer to break down files into smaller, focused files
+31. Prefer files to not exceed more than 200-300 lines (if possible)
+32. Prefer to lazy load large components like wallpaper animations (if possible)
+33. Prefer to cleanup and remove unused files after refactoring
+34. Prefer components to be in a `.tsx` file
+35. Prefer classes to be in a `.class.ts` or `.class.tsx` file
+36. Prefer commands to be in a `.commands.ts` or `.commands.tsx` file
+37. Prefer constants to be in a `.constants.ts` or `.constants.tsx` file
+38. Prefer context to be in a `.context.ts` or `.context.tsx` file
+39. Prefer hooks to be in a `.hooks.ts` or `.hooks.tsx` file
+40. Prefer CSS styles in a `.module.css` file over inline styles
+41. Prefer presets to be in a `.presets.ts` or `.presets.tsx` file
+42. Prefer providers to be in a `.provider.tsx` file
+43. Prefer reducers to be in a `.reducer.ts` or `.reducer.tsx` file
+44. Prefer enums, interfaces, and types to be in a `.types.ts` file
+45. Prefer services to be in a `.service.ts` or `.service.tsx` file
+46. Prefer stories to be in a `.stories.ts` or `.stories.tsx` file
+47. Prefer utils to be in a `.utils.ts` or `.utils.tsx` file
+48. Prefer variants to be in a `.variants.ts` or `.variants.tsx` file
+49. Prefer client code to be in a `.client.ts` file
+50. Prefer server code to be in a `.server.ts` file
+51. Prefer correct pluralization for file extensions, e.g. `.hook.ts` for a single hook and `.hooks.ts` for multiple hooks
+52. Use `.ts` for TypeScript files and `.tsx` for React TypeScript files
+53. Prefer to use `import` instead of `require` for imports
+54. Prefer `index.ts` files for exports
+55. Prefer to keep imports grouped at the top of the file
+56. Prefer to keep exports grouped at the bottom of the file
+57. Prefer to support both named and default exports
+58. Prefer to remove unused imports, functions, variables, and types
+59. Prefer proper usage of `use client` and `use server` directives
+60. Never use `any` type
+61. Never use `@ts-expect-error` or `@ts-ignore`
+62. Use `@/` alias for path imports over relative paths
+63. Sort imports alphabetically and group them by type
+64. Sort exports alphabetically
+65. Sort array elements alphabetically
+66. Sort object keys alphabetically
+67. Sort JSON alphabetically except for the `$schema`, `name` and `version` keys
+68. Sort package.json dependencies alphabetically
+69. Sort package.json devDependencies alphabetically
+70. Sort package.json scripts alphabetically
+71. Sort package.json workspaces alphabetically
+72. Prefer to refactor files alphabetically unless otherwise specified
+73. Use `git status` to check for existing changes while refactoring
+74. Use GraphQL over REST API integrations
+75. Use React best practices
+76. Use TypeScript best practices
+77. Use Tailwind CSS best practices
+78. Use ESLint best practices
+79. Use Stylelint best practices
+80. Use Markdownlint best practices
+81. Use Prettier best practices
+82. Use Jest best practices
+83. Use Supabase best practices
+84. Use Netlify best practices
+85. Use Sentry best practices
+86. Use Snyk best practices
+87. Use DotENV best practices
+88. Use JSDoc best practices
+89. Use OpenAPI best practices
+90. Use REST API best practices
+91. Use GraphQL API best practices
+92. Use GitHub best practices
+93. Use Markdown and MDX best practices
+94. Use Storybook best practices
+95. Use Accessibility best practices
+96. Use Performance best practices
+97. Use Security best practices
+98. Use SEO best practices
+99. Use JSON best practices
+100. Use HTML and CSS best practices
+101. Use Favicon, Apple Touch Icon, and other icons best practices
+102. Use Open Graph best practices
+103. Use Robots.txt best practices
+104. Use Sitemap.xml best practices
+105. Use RSS best practices
+106. Use Social Media integration best practices
+107. Use WebManifest best practices
+108. Use PostCSS Configuration best practices
+109. Use Vite Build best practices
+110. Use the custom logger service `@/services/logger` instead of `console` for debugging
+111. Use the custom memory tracker for memory usage monitoring
+112. Use wdyr (why-did-you-render) to track unnecessary re-renders
+
+## File naming conventions
+
+1. Use kebab-case for file names (e.g. `/src/services/my-service/my-service.service.ts`)
+2. Use PascalCase for page names (e.g. `/src/pages/MyPage.tsx`)
+3. Use camelCase for variable and function names (e.g. `myVariable` and `myFunction`)
+4. Use SNAKE_CASE for environment variables (e.g. `MY_ENVIRONMENT_VARIABLE`)
+
+## Directory structure
+
+```
+/public
+  /ascii
+  /assets
+    /common
+  /audio
+  /files
+  /fonts
+  /images
+  /icons
+  /videos
+/src
+  /commands
+  /components
+    /animations
+    /cursors
+    /demos
+    /ui
+  /data
+  /errors
+    /sentry
+  /integrations
+    /supabase
+  /lib
+  /pages
+  /presets
+  /services
+    /database
+    /logger
+    /memory-tracker
+  /types
+  /utils
+/supabase
+/uploads
+```

@@ -1,0 +1,33 @@
+/**
+ * Background Lines Component Styles
+ */
+
+.background-lines-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.background-lines-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.background-lines-path {
+  stroke-linecap: round;
+}
+
+/* Accessible but visually hidden text for screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

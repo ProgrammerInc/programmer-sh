@@ -1,5 +1,8 @@
-import RainbowCursor from './rainbow-cursor';
+/**
+ * RainbowCursor component for creating a rainbow cursor effect.
+ *
+ * @module RainbowCursor
+ */
 
-export * from './rainbow-cursor';
-
-export default RainbowCursor;
+export { RainbowCursor, default } from './rainbow-cursor';
+export type { RainbowCursorProps } from './rainbow-cursor.types';

@@ -1,52 +1,34 @@
 'use client';
 
-import DottedMap from 'dotted-map';
+import { cn } from '@/utils/app.utils';
 import { motion } from 'motion/react';
 import { useRef } from 'react';
+import { CSS_CLASSES, DEFAULT_VALUES, GRADIENT_STOPS, SVG_DIMENSIONS } from './world-map.constants';
+import { useDottedMapSVG } from './world-map.hooks';
+import type { MapConnection, WorldMapProps } from './world-map.types';
+import { createCurvedPath, projectMapPoint } from './world-map.utils';
 
-export interface WorldMapProps {
-  dots?: Array<{
-    start: { lat: number; lng: number; label?: string };
-    end: { lat: number; lng: number; label?: string };
-  }>;
-  draggable?: boolean;
-  lineColor?: string;
-  theme?: 'dark' | 'light';
-}
-
+/**
+ * WorldMap component displays an interactive world map with animated connection lines
+ * between different geographic points.
+ *
+ * @component
+ */
 export function WorldMap({
   dots = [],
-  draggable = false,
-  lineColor = '#0ea5e9',
-  theme = 'dark'
+  draggable = DEFAULT_VALUES.DRAGGABLE,
+  lineColor = DEFAULT_VALUES.LINE_COLOR,
+  theme = DEFAULT_VALUES.THEME,
+  className
 }: WorldMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
-  const map = new DottedMap({ height: 100, grid: 'diagonal' });
-
-  const svgMap = map.getSVG({
-    radius: 0.22,
-    color: theme === 'dark' ? '#f1f1f1' : '#2e3440',
-    shape: 'circle',
-    backgroundColor: 'transparent'
-  });
-
-  const projectPoint = (lat: number, lng: number) => {
-    const x = (lng + 180) * (800 / 360);
-    const y = (90 - lat) * (400 / 180);
-    return { x, y };
-  };
-
-  const createCurvedPath = (start: { x: number; y: number }, end: { x: number; y: number }) => {
-    const midX = (start.x + end.x) / 2;
-    const midY = Math.min(start.y, end.y) - 50;
-    return `M ${start.x} ${start.y} Q ${midX} ${midY} ${end.x} ${end.y}`;
-  };
-
+  const svgMap = useDottedMapSVG(theme);
+  
   return (
-    <div className="h-full w-full rounded-lg relative font-sans">
+    <div className={cn(CSS_CLASSES.CONTAINER, className)}>
       <img
         src={`data:image/svg+xml;utf8,${encodeURIComponent(svgMap)}`}
-        className="h-full w-full pointer-events-none select-none"
+        className={CSS_CLASSES.MAP_IMAGE}
         alt="world map"
         height="100vh"
         width="100vw"
@@ -54,12 +36,12 @@ export function WorldMap({
       />
       <svg
         ref={svgRef}
-        viewBox="0 0 800 400"
-        className="w-full h-full absolute inset-0 pointer-events-none select-none"
+        viewBox={`0 0 ${SVG_DIMENSIONS.WIDTH} ${SVG_DIMENSIONS.HEIGHT}`}
+        className={CSS_CLASSES.SVG_OVERLAY}
       >
-        {dots.map((dot, i) => {
-          const startPoint = projectPoint(dot.start.lat, dot.start.lng);
-          const endPoint = projectPoint(dot.end.lat, dot.end.lng);
+        {dots.map((dot: MapConnection, i: number) => {
+          const startPoint = projectMapPoint(dot.start);
+          const endPoint = projectMapPoint(dot.end);
           return (
             <g key={`path-group-${i}`}>
               <motion.path
@@ -74,54 +56,54 @@ export function WorldMap({
                   pathLength: 1
                 }}
                 transition={{
-                  duration: 1,
-                  delay: 0.5 * i,
-                  ease: 'easeOut'
+                  duration: DEFAULT_VALUES.ANIMATION.PATH_DURATION,
+                  delay: DEFAULT_VALUES.ANIMATION.PATH_DELAY_MULTIPLIER * i,
+                  ease: DEFAULT_VALUES.ANIMATION.PATH_EASE
                 }}
                 key={`start-upper-${i}`}
-              ></motion.path>
+              />
             </g>
           );
         })}
 
         <defs>
           <linearGradient id="path-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="white" stopOpacity="0" />
-            <stop offset="5%" stopColor={lineColor} stopOpacity="1" />
-            <stop offset="95%" stopColor={lineColor} stopOpacity="1" />
-            <stop offset="100%" stopColor="white" stopOpacity="0" />
+            <stop offset={GRADIENT_STOPS.START} stopColor="white" stopOpacity="0" />
+            <stop offset={GRADIENT_STOPS.FADE_IN} stopColor={lineColor} stopOpacity="1" />
+            <stop offset={GRADIENT_STOPS.FADE_OUT} stopColor={lineColor} stopOpacity="1" />
+            <stop offset={GRADIENT_STOPS.END} stopColor="white" stopOpacity="0" />
           </linearGradient>
         </defs>
 
-        {dots.map((dot, i) => (
+        {dots.map((dot: MapConnection, i: number) => (
           <g key={`points-group-${i}`}>
             <g key={`start-${i}`}>
               <circle
-                cx={projectPoint(dot.start.lat, dot.start.lng).x}
-                cy={projectPoint(dot.start.lat, dot.start.lng).y}
-                r="2"
+                cx={projectMapPoint(dot.start).x}
+                cy={projectMapPoint(dot.start).y}
+                r={DEFAULT_VALUES.ANIMATION.PULSE_RADIUS_FROM}
                 fill={lineColor}
               />
               <circle
-                cx={projectPoint(dot.start.lat, dot.start.lng).x}
-                cy={projectPoint(dot.start.lat, dot.start.lng).y}
-                r="2"
+                cx={projectMapPoint(dot.start).x}
+                cy={projectMapPoint(dot.start).y}
+                r={DEFAULT_VALUES.ANIMATION.PULSE_RADIUS_FROM}
                 fill={lineColor}
-                opacity="0.5"
+                opacity={DEFAULT_VALUES.ANIMATION.PULSE_OPACITY_FROM}
               >
                 <animate
                   attributeName="r"
-                  from="2"
-                  to="8"
-                  dur="1.5s"
+                  from={DEFAULT_VALUES.ANIMATION.PULSE_RADIUS_FROM.toString()}
+                  to={DEFAULT_VALUES.ANIMATION.PULSE_RADIUS_TO.toString()}
+                  dur={`${DEFAULT_VALUES.ANIMATION.PULSE_DURATION}s`}
                   begin="0s"
                   repeatCount="indefinite"
                 />
                 <animate
                   attributeName="opacity"
-                  from="0.5"
-                  to="0"
-                  dur="1.5s"
+                  from={DEFAULT_VALUES.ANIMATION.PULSE_OPACITY_FROM.toString()}
+                  to={DEFAULT_VALUES.ANIMATION.PULSE_OPACITY_TO.toString()}
+                  dur={`${DEFAULT_VALUES.ANIMATION.PULSE_DURATION}s`}
                   begin="0s"
                   repeatCount="indefinite"
                 />
@@ -129,31 +111,31 @@ export function WorldMap({
             </g>
             <g key={`end-${i}`}>
               <circle
-                cx={projectPoint(dot.end.lat, dot.end.lng).x}
-                cy={projectPoint(dot.end.lat, dot.end.lng).y}
-                r="2"
+                cx={projectMapPoint(dot.end).x}
+                cy={projectMapPoint(dot.end).y}
+                r={DEFAULT_VALUES.ANIMATION.PULSE_RADIUS_FROM}
                 fill={lineColor}
               />
               <circle
-                cx={projectPoint(dot.end.lat, dot.end.lng).x}
-                cy={projectPoint(dot.end.lat, dot.end.lng).y}
-                r="2"
+                cx={projectMapPoint(dot.end).x}
+                cy={projectMapPoint(dot.end).y}
+                r={DEFAULT_VALUES.ANIMATION.PULSE_RADIUS_FROM}
                 fill={lineColor}
-                opacity="0.5"
+                opacity={DEFAULT_VALUES.ANIMATION.PULSE_OPACITY_FROM}
               >
                 <animate
                   attributeName="r"
-                  from="2"
-                  to="8"
-                  dur="1.5s"
+                  from={DEFAULT_VALUES.ANIMATION.PULSE_RADIUS_FROM.toString()}
+                  to={DEFAULT_VALUES.ANIMATION.PULSE_RADIUS_TO.toString()}
+                  dur={`${DEFAULT_VALUES.ANIMATION.PULSE_DURATION}s`}
                   begin="0s"
                   repeatCount="indefinite"
                 />
                 <animate
                   attributeName="opacity"
-                  from="0.5"
-                  to="0"
-                  dur="1.5s"
+                  from={DEFAULT_VALUES.ANIMATION.PULSE_OPACITY_FROM.toString()}
+                  to={DEFAULT_VALUES.ANIMATION.PULSE_OPACITY_TO.toString()}
+                  dur={`${DEFAULT_VALUES.ANIMATION.PULSE_DURATION}s`}
                   begin="0s"
                   repeatCount="indefinite"
                 />

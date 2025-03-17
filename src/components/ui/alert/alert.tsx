@@ -1,52 +1,85 @@
 'use client';
 
-import { cva, type VariantProps } from 'class-variance-authority';
-import * as React from 'react';
-
 import { cn } from '@/utils/app.utils';
+import * as React from 'react';
+import { memo, useMemo } from 'react';
 
-const alertVariants = cva(
-  'relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground',
-  {
-    variants: {
-      variant: {
-        default: 'bg-background text-foreground',
-        destructive:
-          'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive'
-      }
-    },
-    defaultVariants: {
-      variant: 'default'
-    }
+import {
+  AlertDescriptionProps,
+  AlertProps,
+  AlertTitleProps
+} from './alert.types';
+import { alertVariants } from './alert.variants';
+
+/**
+ * Alert component for displaying important messages
+ * 
+ * @example
+ * ```tsx
+ * <Alert>
+ *   <AlertTitle>Heads up!</AlertTitle>
+ *   <AlertDescription>This is an alert message.</AlertDescription>
+ * </Alert>
+ * 
+ * <Alert variant="destructive">
+ *   <AlertTitle>Error</AlertTitle>
+ *   <AlertDescription>Something went wrong.</AlertDescription>
+ * </Alert>
+ * ```
+ */
+const Alert = memo(React.forwardRef<HTMLDivElement, AlertProps>(
+  ({ className, variant, ...props }, ref) => {
+    const alertClassName = useMemo(() => {
+      return cn(alertVariants({ variant }), className);
+    }, [variant, className]);
+
+    return <div ref={ref} role="alert" className={alertClassName} {...props} />;
   }
-);
-
-const Alert = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
->(({ className, variant, ...props }, ref) => (
-  <div ref={ref} role="alert" className={cn(alertVariants({ variant }), className)} {...props} />
 ));
 
 Alert.displayName = 'Alert';
 
-const AlertTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
-  ({ className, ...props }, ref) => (
-    <h5
-      ref={ref}
-      className={cn('mb-1 font-medium leading-none tracking-tight', className)}
-      {...props}
-    />
-  )
-);
+/**
+ * AlertTitle component for the heading of an alert
+ * 
+ * @example
+ * ```tsx
+ * <Alert>
+ *   <AlertTitle>Heads up!</AlertTitle>
+ * </Alert>
+ * ```
+ */
+const AlertTitle = memo(React.forwardRef<HTMLHeadingElement, AlertTitleProps>(
+  ({ className, ...props }, ref) => {
+    const titleClassName = useMemo(() => {
+      return cn('mb-1 font-medium leading-none tracking-tight', className);
+    }, [className]);
+
+    return <h5 ref={ref} className={titleClassName} {...props} />;
+  }
+));
 
 AlertTitle.displayName = 'AlertTitle';
 
-const AlertDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn('text-sm [&_p]:leading-relaxed', className)} {...props} />
+/**
+ * AlertDescription component for the content of an alert
+ * 
+ * @example
+ * ```tsx
+ * <Alert>
+ *   <AlertTitle>Heads up!</AlertTitle>
+ *   <AlertDescription>This is an alert message.</AlertDescription>
+ * </Alert>
+ * ```
+ */
+const AlertDescription = memo(React.forwardRef<HTMLParagraphElement, AlertDescriptionProps>(
+  ({ className, ...props }, ref) => {
+    const descriptionClassName = useMemo(() => {
+      return cn('text-sm [&_p]:leading-relaxed', className);
+    }, [className]);
+
+    return <div ref={ref} className={descriptionClassName} {...props} />;
+  }
 ));
 
 AlertDescription.displayName = 'AlertDescription';

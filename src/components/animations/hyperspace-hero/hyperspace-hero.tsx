@@ -1,160 +1,81 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { cn } from '@/utils/app.utils';
+import { memo, useEffect, useRef } from 'react';
+import {
+  DEFAULT_CLASS_NAME,
+  DEFAULT_SPEED,
+  DEFAULT_STAR_COUNT,
+  DEFAULT_TEXT,
+  DEFAULT_TEXT_COLOR
+} from './hyperspace-hero.constants';
+import { useDimensions, useHyperspaceAnimation, useStars } from './hyperspace-hero.hooks';
+import styles from './hyperspace-hero.module.css';
+import { HyperspaceHeroProps } from './hyperspace-hero.types';
 
-interface Star {
-  x: number;
-  y: number;
-  z: number;
-  px: number;
-  py: number;
-  size: number;
-  color: string;
-}
-
-export interface HyperspaceHeroProps {
-  text?: string;
-  textColor?: string;
-  starCount?: number;
-  speed?: number;
-  className?: string;
-}
-
-export function HyperspaceHero({
-  text = '30k',
-  textColor = 'linear-gradient(135deg, #8a2be2, #ff69b4)',
-  starCount = 400,
-  speed = 2,
-  className = ''
-}: HyperspaceHeroProps) {
+/**
+ * HyperspaceHero component that renders a starfield hyperspace animation with centered text
+ *
+ * @param props - Component properties
+ * @returns React component with hyperspace animation
+ */
+export const HyperspaceHeroComponent = ({
+  text = DEFAULT_TEXT,
+  textColor = DEFAULT_TEXT_COLOR,
+  starCount = DEFAULT_STAR_COUNT,
+  speed = DEFAULT_SPEED,
+  className = DEFAULT_CLASS_NAME
+}: HyperspaceHeroProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const starsRef = useRef<Star[]>([]);
-  const animationRef = useRef<number>(0);
 
-  const initStars = () => {
-    if (!canvasRef.current) return;
+  // Use our custom hooks to manage the animation
+  const { dimensions, handleResize } = useDimensions(canvasRef);
+  const { starsRef, initStars } = useStars(starCount, canvasRef, dimensions);
+  const { animate, animationRef } = useHyperspaceAnimation(canvasRef, starsRef, speed);
 
-    const width = canvasRef.current.width;
-    const height = canvasRef.current.height;
-    const stars: Star[] = [];
-
-    for (let i = 0; i < starCount; i++) {
-      const star: Star = {
-        x: Math.random() * width - width / 2,
-        y: Math.random() * height - height / 2,
-        z: Math.random() * 1000,
-        px: 0,
-        py: 0,
-        size: Math.random() * 1.5 + 0.5,
-        color: `rgba(${180 + Math.floor(Math.random() * 75)}, ${180 + Math.floor(Math.random() * 75)}, ${220 + Math.floor(Math.random() * 35)}, ${0.6 + Math.random() * 0.4})`
-      };
-      stars.push(star);
-    }
-
-    starsRef.current = stars;
-  };
-
-  const drawStars = () => {
-    if (!canvasRef.current) return;
-
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const width = canvas.width;
-    const height = canvas.height;
-    const centerX = width / 2;
-    const centerY = height / 2;
-
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, width, height);
-
-    starsRef.current.forEach(star => {
-      star.z -= speed;
-
-      if (star.z <= 0) {
-        star.z = 1000;
-        star.x = Math.random() * width - centerX;
-        star.y = Math.random() * height - centerY;
-      }
-
-      const factor = 200 / star.z;
-      star.px = star.x * factor + centerX;
-      star.py = star.y * factor + centerY;
-
-      const size = Math.min(star.size * (400 / star.z), 5);
-
-      const tailLength = Math.min(30 * (speed / 2), 30);
-      const prevFactor = 200 / (star.z + speed * 2);
-      const prevX = star.x * prevFactor + centerX;
-      const prevY = star.y * prevFactor + centerY;
-
-      const gradient = ctx.createLinearGradient(prevX, prevY, star.px, star.py);
-      gradient.addColorStop(0, 'transparent');
-      gradient.addColorStop(1, star.color);
-
-      ctx.beginPath();
-      ctx.moveTo(prevX, prevY);
-      ctx.lineTo(star.px, star.py);
-      ctx.strokeStyle = gradient;
-      ctx.lineWidth = size;
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.arc(star.px, star.py, size / 2, 0, Math.PI * 2);
-      ctx.fillStyle = star.color;
-      ctx.fill();
-    });
-  };
-
-  const animate = () => {
-    drawStars();
-    animationRef.current = requestAnimationFrame(animate);
-  };
-
+  // Initialize animation when dimensions are set
   useEffect(() => {
-    const handleResize = () => {
-      if (canvasRef.current && canvasRef.current.parentElement) {
-        const parent = canvasRef.current.parentElement;
-        const width = parent.clientWidth;
-        const height = parent.clientHeight;
+    if (dimensions.width > 0 && dimensions.height > 0) {
+      animate();
+    }
+  }, [dimensions, animate]);
 
-        setDimensions({ width, height });
-        canvasRef.current.width = width;
-        canvasRef.current.height = height;
-
-        initStars();
-      }
-    };
-
+  // Set up resize listener and initialize
+  useEffect(() => {
+    // Initial size adjustment
     handleResize();
+
+    // Add resize listener
     window.addEventListener('resize', handleResize);
 
+    // Cleanup resize listener
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [handleResize]);
 
+  // Initialize stars when dimensions change and handle cleanup
   useEffect(() => {
     if (dimensions.width > 0 && dimensions.height > 0) {
       initStars();
-      animate();
+
+      // Store ref value to avoid issues with stale refs in cleanup
+      const currentAnimRef = animationRef;
 
       return () => {
-        cancelAnimationFrame(animationRef.current);
+        if (currentAnimRef.current) {
+          cancelAnimationFrame(currentAnimRef.current);
+        }
       };
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dimensions]);
+  }, [dimensions, initStars, animationRef]);
 
   return (
-    <div className={`relative h-full w-full overflow-hidden ${className}`}>
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
-      <div className="absolute inset-0 flex items-center justify-center">
+    <div className={cn(styles.container, className)}>
+      <canvas ref={canvasRef} className={styles.canvas} />
+      <div className={styles['text-container']}>
         <h1
-          className="z-10 text-[7rem] font-bold leading-none"
+          className={styles.text}
           style={{
             backgroundImage: textColor,
             backgroundClip: 'text',
@@ -168,6 +89,9 @@ export function HyperspaceHero({
       </div>
     </div>
   );
-}
+};
+
+// Create a memoized version of the component for better performance
+export const HyperspaceHero = memo(HyperspaceHeroComponent);
 
 export default HyperspaceHero;

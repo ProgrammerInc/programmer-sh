@@ -1,5 +1,8 @@
-import CountUp from './count-up';
+/**
+ * CountUp component animates a number from one value to another
+ *
+ * @module CountUp
+ */
 
-export * from './count-up';
-
-export default CountUp;
+export { CountUp, default } from './count-up';
+export type { CountUpProps } from './count-up.types';
