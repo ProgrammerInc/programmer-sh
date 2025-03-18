@@ -1,15 +1,27 @@
 'use client';
 
-import { MotionValue, motion, useSpring, useTransform } from 'framer-motion';
-import { useEffect } from 'react';
+/**
+ * Counter component
+ * 
+ * A customizable animated counter that displays numbers with a rolling digit animation
+ */
 
-export interface NumberProps {
-  mv: MotionValue<number>;
-  number: number;
-  height: number;
-}
+import { motion, useSpring, useTransform } from 'framer-motion';
+import { memo, useEffect } from 'react';
 
-function Number({ mv, number, height }: NumberProps) {
+import styles from './counter.module.css';
+import {
+  CounterProps,
+  DigitProps,
+  NumberProps
+} from './counter.types';
+
+/**
+ * Number component renders a single digit (0-9) within a digit column
+ * 
+ * @param props - The component props
+ */
+const Number = memo(({ mv, number, height }: NumberProps) => {
   const y = useTransform(mv, latest => {
     const placeValue = latest % 10;
     const offset = (10 + number - placeValue) % 10;
@@ -20,28 +32,24 @@ function Number({ mv, number, height }: NumberProps) {
     return memo;
   });
 
-  const style: React.CSSProperties = {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  };
+  return (
+    <motion.span 
+      className={styles.number} 
+      style={{ y }}
+    >
+      {number}
+    </motion.span>
+  );
+});
 
-  return <motion.span style={{ ...style, y }}>{number}</motion.span>;
-}
+Number.displayName = 'Number';
 
-export interface DigitProps {
-  place: number;
-  value: number;
-  height: number;
-  digitStyle?: React.CSSProperties;
-}
-
-function Digit({ place, value, height, digitStyle }: DigitProps) {
+/**
+ * Digit component renders a column of numbers (0-9)
+ * 
+ * @param props - The component props
+ */
+const Digit = memo(({ place, value, height, digitStyle }: DigitProps) => {
   const valueRoundedToPlace = Math.floor(value / place);
   const animatedValue = useSpring(valueRoundedToPlace);
 
@@ -49,43 +57,29 @@ function Digit({ place, value, height, digitStyle }: DigitProps) {
     animatedValue.set(valueRoundedToPlace);
   }, [animatedValue, valueRoundedToPlace]);
 
-  const defaultStyle: React.CSSProperties = {
-    height,
-    position: 'relative',
-    width: '1ch',
-    fontVariantNumeric: 'tabular-nums'
-  };
-
   return (
-    <div style={{ ...defaultStyle, ...digitStyle }}>
+    <div 
+      className={styles.digit} 
+      style={{ 
+        height, 
+        ...digitStyle 
+      }}
+    >
       {Array.from({ length: 10 }, (_, i) => (
         <Number key={i} mv={animatedValue} number={i} height={height} />
       ))}
     </div>
   );
-}
+});
 
-export interface CounterProps {
-  value: number;
-  fontSize?: number;
-  padding?: number;
-  places?: number[];
-  gap?: number;
-  borderRadius?: number;
-  horizontalPadding?: number;
-  textColor?: string;
-  fontWeight?: React.CSSProperties['fontWeight'];
-  containerStyle?: React.CSSProperties;
-  counterStyle?: React.CSSProperties;
-  digitStyle?: React.CSSProperties;
-  gradientHeight?: number;
-  gradientFrom?: string;
-  gradientTo?: string;
-  topGradientStyle?: React.CSSProperties;
-  bottomGradientStyle?: React.CSSProperties;
-}
+Digit.displayName = 'Digit';
 
-export default function Counter({
+/**
+ * Counter component displays an animated rolling digit counter
+ * 
+ * @param props - The component props
+ */
+const Counter = memo(({
   value,
   fontSize = 100,
   padding = 0,
@@ -103,60 +97,66 @@ export default function Counter({
   gradientTo = 'transparent',
   topGradientStyle,
   bottomGradientStyle
-}: CounterProps) {
+}: CounterProps) => {
   const height = fontSize + padding;
 
-  const defaultContainerStyle: React.CSSProperties = {
-    position: 'relative',
-    display: 'inline-block'
-  };
-
-  const defaultCounterStyle: React.CSSProperties = {
+  // Compose styles with defaults and custom overrides
+  const computedCounterStyle = {
     fontSize,
-    display: 'flex',
-    gap: gap,
-    overflow: 'hidden',
-    borderRadius: borderRadius,
+    gap,
+    borderRadius,
     paddingLeft: horizontalPadding,
     paddingRight: horizontalPadding,
-    lineHeight: 1,
     color: textColor,
-    fontWeight: fontWeight
+    fontWeight,
+    ...counterStyle
   };
 
-  const gradientContainerStyle: React.CSSProperties = {
-    pointerEvents: 'none',
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0
-  };
-
-  const defaultTopGradientStyle: React.CSSProperties = {
+  const computedTopGradientStyle = {
     height: gradientHeight,
-    background: `linear-gradient(to bottom, ${gradientFrom}, ${gradientTo})`
+    background: `linear-gradient(to bottom, ${gradientFrom}, ${gradientTo})`,
+    ...topGradientStyle
   };
 
-  const defaultBottomGradientStyle: React.CSSProperties = {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
+  const computedBottomGradientStyle = {
     height: gradientHeight,
-    background: `linear-gradient(to top, ${gradientFrom}, ${gradientTo})`
+    background: `linear-gradient(to top, ${gradientFrom}, ${gradientTo})`,
+    ...bottomGradientStyle
   };
 
   return (
-    <div style={{ ...defaultContainerStyle, ...containerStyle }}>
-      <div style={{ ...defaultCounterStyle, ...counterStyle }}>
+    <div 
+      className={styles.container} 
+      style={containerStyle}
+    >
+      <div 
+        className={styles.counter} 
+        style={computedCounterStyle}
+      >
         {places.map(place => (
-          <Digit key={place} place={place} value={value} height={height} digitStyle={digitStyle} />
+          <Digit 
+            key={place} 
+            place={place} 
+            value={value} 
+            height={height} 
+            digitStyle={digitStyle} 
+          />
         ))}
       </div>
-      <div style={gradientContainerStyle}>
-        <div style={topGradientStyle ? topGradientStyle : defaultTopGradientStyle} />
-        <div style={bottomGradientStyle ? bottomGradientStyle : defaultBottomGradientStyle} />
+      <div className={styles['gradient-container']}>
+        <div 
+          className={styles['top-gradient']} 
+          style={computedTopGradientStyle} 
+        />
+        <div 
+          className={styles['bottom-gradient']} 
+          style={computedBottomGradientStyle} 
+        />
       </div>
     </div>
   );
-}
+});
+
+Counter.displayName = 'Counter';
+
+export default Counter;

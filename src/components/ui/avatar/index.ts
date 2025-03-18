@@ -1,5 +1,6 @@
 // Export avatar components and types
 export * from './avatar';
+export * from './avatar.components';
 export * from './avatar.types';
 
 // For backwards compatibility

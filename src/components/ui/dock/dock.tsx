@@ -2,45 +2,43 @@
 
 import {
   AnimatePresence,
-  MotionValue,
   motion,
+  MotionValue,
   useMotionValue,
   useSpring,
-  useTransform,
-  type SpringOptions
+  useTransform
 } from 'framer-motion';
-import React, { Children, cloneElement, useEffect, useMemo, useRef, useState } from 'react';
+import React, { Children, cloneElement, memo, useEffect, useMemo, useRef, useState } from 'react';
 
-export type DockItemData = {
-  icon: React.ReactNode;
-  label: React.ReactNode;
-  onClick: () => void;
-  className?: string;
-};
+import styles from './dock.module.css';
+import {
+  DockIconProps,
+  DockItemProps,
+  DockLabelProps,
+  DockProps
+} from './dock.types';
 
-export type DockProps = {
-  items: DockItemData[];
-  className?: string;
-  distance?: number;
-  panelHeight?: number;
-  baseItemSize?: number;
-  dockHeight?: number;
-  magnification?: number;
-  spring?: SpringOptions;
-};
-
-export type DockItemProps = {
-  className?: string;
-  children: React.ReactNode;
-  onClick?: () => void;
-  mouseX: MotionValue;
-  spring: SpringOptions;
-  distance: number;
-  baseItemSize: number;
-  magnification: number;
-};
-
-export function DockItem({
+/**
+ * Dock Item Component
+ * 
+ * An individual item in the dock that responds to mouse position for magnification effects.
+ * 
+ * @example
+ * ```tsx
+ * <DockItem
+ *   mouseX={mouseX}
+ *   spring={spring}
+ *   distance={200}
+ *   magnification={70}
+ *   baseItemSize={50}
+ *   onClick={() => alert('Clicked!')}
+ * >
+ *   <DockIcon><CommandIcon size={24} /></DockIcon>
+ *   <DockLabel>Command</DockLabel>
+ * </DockItem>
+ * ```
+ */
+export const DockItem = memo(function DockItem({
   children,
   className = '',
   onClick,
@@ -80,7 +78,7 @@ export function DockItem({
       onFocus={() => isHovered.set(1)}
       onBlur={() => isHovered.set(0)}
       onClick={onClick}
-      className={`relative inline-flex items-center justify-center rounded-full bg-[#060606] border-neutral-700 border-2 shadow-md ${className}`}
+      className={`${styles['dock-item']} ${className}`}
       tabIndex={0}
       role="button"
       aria-haspopup="true"
@@ -88,14 +86,23 @@ export function DockItem({
       {Children.map(children, child => cloneElement(child as React.ReactElement, { isHovered }))}
     </motion.div>
   );
-}
+});
 
-export type DockLabelProps = {
-  className?: string;
-  children: React.ReactNode;
-};
-
-export function DockLabel({ children, className = '', ...rest }: DockLabelProps) {
+/**
+ * Dock Label Component
+ * 
+ * Label that appears above a dock item when hovered.
+ * 
+ * @example
+ * ```tsx
+ * <DockLabel>Settings</DockLabel>
+ * ```
+ */
+export const DockLabel = memo(function DockLabel({
+  children,
+  className = '',
+  ...rest
+}: DockLabelProps) {
   const { isHovered } = rest as { isHovered: MotionValue<number> };
   const [isVisible, setIsVisible] = useState(false);
 
@@ -114,7 +121,7 @@ export function DockLabel({ children, className = '', ...rest }: DockLabelProps)
           animate={{ opacity: 1, y: -10 }}
           exit={{ opacity: 0, y: 0 }}
           transition={{ duration: 0.2 }}
-          className={`${className} absolute -top-6 left-1/2 w-fit whitespace-pre rounded-md border border-neutral-700 bg-[#060606] px-2 py-0.5 text-xs text-white`}
+          className={`${styles['dock-label']} ${className}`}
           role="tooltip"
           style={{ x: '-50%' }}
         >
@@ -123,18 +130,54 @@ export function DockLabel({ children, className = '', ...rest }: DockLabelProps)
       )}
     </AnimatePresence>
   );
-}
+});
 
-export type DockIconProps = {
-  className?: string;
-  children: React.ReactNode;
-};
+/**
+ * Dock Icon Component
+ * 
+ * Container for the icon in a dock item.
+ * 
+ * @example
+ * ```tsx
+ * <DockIcon><CommandIcon size={24} /></DockIcon>
+ * ```
+ */
+export const DockIcon = memo(function DockIcon({
+  children,
+  className = ''
+}: DockIconProps) {
+  return <div className={`${styles['dock-icon']} ${className}`}>{children}</div>;
+});
 
-export function DockIcon({ children, className = '' }: DockIconProps) {
-  return <div className={`flex items-center justify-center ${className}`}>{children}</div>;
-}
-
-export default function Dock({
+/**
+ * Dock Component
+ * 
+ * A macOS-style dock that provides a magnification effect when hovering over items.
+ * 
+ * @example
+ * ```tsx
+ * const dockItems = [
+ *   {
+ *     icon: <CommandIcon size={24} />,
+ *     label: 'Command',
+ *     onClick: () => setCommandOpen(true),
+ *   },
+ *   {
+ *     icon: <SettingsIcon size={24} />,
+ *     label: 'Settings',
+ *     onClick: () => setSettingsOpen(true),
+ *   }
+ * ];
+ * 
+ * <Dock
+ *   items={dockItems}
+ *   magnification={70}
+ *   baseItemSize={50}
+ *   distance={200}
+ * />
+ * ```
+ */
+const Dock = memo(function Dock({
   items,
   className = '',
   spring = { mass: 0.1, stiffness: 150, damping: 12 },
@@ -157,7 +200,7 @@ export default function Dock({
   return (
     <motion.div
       style={{ height, scrollbarWidth: 'none' }}
-      className="mx-2 flex max-w-full items-center"
+      className={styles['dock-container']}
     >
       <motion.div
         onMouseMove={({ pageX }) => {
@@ -168,7 +211,7 @@ export default function Dock({
           isHovered.set(0);
           mouseX.set(Infinity);
         }}
-        className={`${className} absolute bottom-2 left-1/2 transform -translate-x-1/2 flex items-end w-fit gap-4 rounded-2xl border-neutral-700 border-2 pb-2 px-4`}
+        className={`${styles['dock-panel']} ${className}`}
         style={{ height: panelHeight }}
         role="toolbar"
         aria-label="Application dock"
@@ -191,4 +234,13 @@ export default function Dock({
       </motion.div>
     </motion.div>
   );
-}
+});
+
+// Set display names for better debugging
+DockItem.displayName = 'DockItem';
+DockLabel.displayName = 'DockLabel';
+DockIcon.displayName = 'DockIcon';
+Dock.displayName = 'Dock';
+
+export { Dock };
+export default Dock;

@@ -1,0 +1,92 @@
+/* Rolling Gallery component styles */
+
+/* Main container */
+.container {
+  position: relative;
+  height: 500px;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Left gradient overlay */
+.left-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 48px;
+  z-index: 10;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, #060606 100%);
+}
+
+/* Right gradient overlay */
+.right-gradient {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 48px;
+  z-index: 10;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, #060606 100%);
+}
+
+/* Perspective container */
+.perspective-container {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+/* Carousel container */
+.carousel {
+  display: flex;
+  min-height: 200px;
+  cursor: grab;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+}
+
+/* Individual frame */
+.frame {
+  position: absolute;
+  display: flex;
+  height: fit-content;
+  align-items: center;
+  justify-content: center;
+  padding: 8%;
+  backface-visibility: hidden;
+}
+
+@media (min-width: 768px) {
+  .frame {
+    padding: 6%;
+  }
+}
+
+/* Image styling */
+.image {
+  pointer-events: none;
+  height: 120px;
+  width: 300px;
+  border-radius: 15px;
+  border: 3px solid white;
+  object-fit: cover;
+  transition: transform 0.3s ease-out;
+}
+
+/* Image hover effect */
+.frame:hover .image {
+  transform: scale(1.05);
+}
+
+/* Responsive styles for small screens */
+@media (max-width: 640px) {
+  .image {
+    height: 100px;
+    width: 220px;
+  }
+}

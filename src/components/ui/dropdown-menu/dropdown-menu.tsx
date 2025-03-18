@@ -6,6 +6,7 @@ import * as React from 'react';
 import { memo, useMemo } from 'react';
 
 import { cn } from '@/utils/app.utils';
+import styles from './dropdown-menu.module.css';
 import {
   DropdownMenuCheckboxItemProps,
   DropdownMenuContentProps,
@@ -42,6 +43,13 @@ DropdownMenu.displayName = 'DropdownMenu';
  * DropdownMenuTrigger Component
  * 
  * Button that opens the dropdown menu when clicked
+ * 
+ * @example
+ * ```tsx
+ * <DropdownMenuTrigger asChild>
+ *   <Button>Open Menu</Button>
+ * </DropdownMenuTrigger>
+ * ```
  */
 const DropdownMenuTrigger = memo(DropdownMenuPrimitive.Trigger) as typeof DropdownMenuPrimitive.Trigger;
 DropdownMenuTrigger.displayName = DropdownMenuPrimitive.Trigger.displayName;
@@ -50,6 +58,14 @@ DropdownMenuTrigger.displayName = DropdownMenuPrimitive.Trigger.displayName;
  * DropdownMenuGroup Component
  * 
  * Groups related menu items together
+ * 
+ * @example
+ * ```tsx
+ * <DropdownMenuGroup>
+ *   <DropdownMenuItem>Profile</DropdownMenuItem>
+ *   <DropdownMenuItem>Settings</DropdownMenuItem>
+ * </DropdownMenuGroup>
+ * ```
  */
 const DropdownMenuGroup = memo(DropdownMenuPrimitive.Group) as typeof DropdownMenuPrimitive.Group;
 DropdownMenuGroup.displayName = DropdownMenuPrimitive.Group.displayName;
@@ -58,16 +74,35 @@ DropdownMenuGroup.displayName = DropdownMenuPrimitive.Group.displayName;
  * DropdownMenuPortal Component
  * 
  * Portals its children into the document.body
+ * 
+ * @example
+ * ```tsx
+ * <DropdownMenuPortal>
+ *   <DropdownMenuContent>
+ *     <DropdownMenuItem>Item 1</DropdownMenuItem>
+ *   </DropdownMenuContent>
+ * </DropdownMenuPortal>
+ * ```
  */
-const DropdownMenuPortal = memo(({ ...props }: DropdownMenuPortalProps) => (
-  <DropdownMenuPrimitive.Portal {...props} />
-));
+const DropdownMenuPortal = memo(function DropdownMenuPortal({ ...props }: DropdownMenuPortalProps) {
+  return <DropdownMenuPrimitive.Portal {...props} />;
+});
 DropdownMenuPortal.displayName = 'DropdownMenuPortal';
 
 /**
  * DropdownMenuSub Component
  * 
  * Creates a submenu within a dropdown menu
+ * 
+ * @example
+ * ```tsx
+ * <DropdownMenuSub>
+ *   <DropdownMenuSubTrigger>More Options</DropdownMenuSubTrigger>
+ *   <DropdownMenuSubContent>
+ *     <DropdownMenuItem>Sub Item 1</DropdownMenuItem>
+ *   </DropdownMenuSubContent>
+ * </DropdownMenuSub>
+ * ```
  */
 const DropdownMenuSub = memo(DropdownMenuPrimitive.Sub) as typeof DropdownMenuPrimitive.Sub;
 DropdownMenuSub.displayName = DropdownMenuPrimitive.Sub.displayName;
@@ -76,6 +111,14 @@ DropdownMenuSub.displayName = DropdownMenuPrimitive.Sub.displayName;
  * DropdownMenuRadioGroup Component
  * 
  * Groups radio items together, allowing only one to be checked at a time
+ * 
+ * @example
+ * ```tsx
+ * <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
+ *   <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
+ *   <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
+ * </DropdownMenuRadioGroup>
+ * ```
  */
 const DropdownMenuRadioGroup = memo(DropdownMenuPrimitive.RadioGroup) as typeof DropdownMenuPrimitive.RadioGroup;
 DropdownMenuRadioGroup.displayName = DropdownMenuPrimitive.RadioGroup.displayName;
@@ -84,15 +127,22 @@ DropdownMenuRadioGroup.displayName = DropdownMenuPrimitive.RadioGroup.displayNam
  * DropdownMenuSubTrigger Component
  * 
  * Button that opens a submenu when clicked or hovered
+ * 
+ * @example
+ * ```tsx
+ * <DropdownMenuSubTrigger>
+ *   <span>More Options</span>
+ * </DropdownMenuSubTrigger>
+ * ```
  */
 const DropdownMenuSubTrigger = memo(React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,
   DropdownMenuSubTriggerProps
->(({ className, inset, children, ...props }, ref) => {
+>(function DropdownMenuSubTrigger({ className, inset, children, ...props }, ref) {
   const subTriggerClassName = useMemo(() => {
     return cn(
-      'flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-[state=open]:bg-accent',
-      inset && 'pl-8',
+      styles['dropdown-sub-trigger'],
+      inset && styles['dropdown-sub-trigger-inset'],
       className
     );
   }, [className, inset]);
@@ -104,7 +154,7 @@ const DropdownMenuSubTrigger = memo(React.forwardRef<
       {...props}
     >
       {children}
-      <ChevronRight className="ml-auto h-4 w-4" />
+      <ChevronRight className={styles['dropdown-chevron']} />
     </DropdownMenuPrimitive.SubTrigger>
   );
 }));
@@ -115,16 +165,21 @@ DropdownMenuSubTrigger.displayName = DropdownMenuPrimitive.SubTrigger.displayNam
  * DropdownMenuSubContent Component
  * 
  * Container for submenu items
+ * 
+ * @example
+ * ```tsx
+ * <DropdownMenuSubContent>
+ *   <DropdownMenuItem>Sub Item 1</DropdownMenuItem>
+ *   <DropdownMenuItem>Sub Item 2</DropdownMenuItem>
+ * </DropdownMenuSubContent>
+ * ```
  */
 const DropdownMenuSubContent = memo(React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
   DropdownMenuSubContentProps
->(({ className, ...props }, ref) => {
+>(function DropdownMenuSubContent({ className, ...props }, ref) {
   const subContentClassName = useMemo(() => {
-    return cn(
-      'z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-      className
-    );
+    return cn(styles['dropdown-sub-content'], className);
   }, [className]);
 
   return (
@@ -142,16 +197,23 @@ DropdownMenuSubContent.displayName = DropdownMenuPrimitive.SubContent.displayNam
  * DropdownMenuContent Component
  * 
  * Container for the dropdown menu items
+ * 
+ * @example
+ * ```tsx
+ * <DropdownMenuContent>
+ *   <DropdownMenuItem>Profile</DropdownMenuItem>
+ *   <DropdownMenuItem>Settings</DropdownMenuItem>
+ *   <DropdownMenuSeparator />
+ *   <DropdownMenuItem>Logout</DropdownMenuItem>
+ * </DropdownMenuContent>
+ * ```
  */
 const DropdownMenuContent = memo(React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   DropdownMenuContentProps
->(({ className, sideOffset = 4, ...props }, ref) => {
+>(function DropdownMenuContent({ className, sideOffset = 4, ...props }, ref) {
   const contentClassName = useMemo(() => {
-    return cn(
-      'z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-      className
-    );
+    return cn(styles['dropdown-content'], className);
   }, [className]);
 
   return (
@@ -172,15 +234,23 @@ DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
  * DropdownMenuItem Component
  * 
  * A selectable item in the dropdown menu
+ * 
+ * @example
+ * ```tsx
+ * <DropdownMenuItem onSelect={() => console.log('Profile selected')}>
+ *   Profile
+ *   <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+ * </DropdownMenuItem>
+ * ```
  */
 const DropdownMenuItem = memo(React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
   DropdownMenuItemProps
->(({ className, inset, ...props }, ref) => {
+>(function DropdownMenuItem({ className, inset, ...props }, ref) {
   const itemClassName = useMemo(() => {
     return cn(
-      'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      inset && 'pl-8',
+      styles['dropdown-item'],
+      inset && styles['dropdown-item-inset'],
       className
     );
   }, [className, inset]);
@@ -200,16 +270,23 @@ DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;
  * DropdownMenuCheckboxItem Component
  * 
  * A checkbox item in the dropdown menu
+ * 
+ * @example
+ * ```tsx
+ * <DropdownMenuCheckboxItem
+ *   checked={showStatus}
+ *   onCheckedChange={setShowStatus}
+ * >
+ *   Show status
+ * </DropdownMenuCheckboxItem>
+ * ```
  */
 const DropdownMenuCheckboxItem = memo(React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
   DropdownMenuCheckboxItemProps
->(({ className, children, checked, ...props }, ref) => {
+>(function DropdownMenuCheckboxItem({ className, children, checked, ...props }, ref) {
   const checkboxItemClassName = useMemo(() => {
-    return cn(
-      'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      className
-    );
+    return cn(styles['dropdown-checkbox-item'], className);
   }, [className]);
 
   return (
@@ -219,7 +296,7 @@ const DropdownMenuCheckboxItem = memo(React.forwardRef<
       checked={checked}
       {...props}
     >
-      <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <span className={styles['dropdown-item-indicator-wrapper']}>
         <DropdownMenuPrimitive.ItemIndicator>
           <Check className="h-4 w-4" />
         </DropdownMenuPrimitive.ItemIndicator>
@@ -235,16 +312,21 @@ DropdownMenuCheckboxItem.displayName = DropdownMenuPrimitive.CheckboxItem.displa
  * DropdownMenuRadioItem Component
  * 
  * A radio item in the dropdown menu
+ * 
+ * @example
+ * ```tsx
+ * <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
+ *   <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
+ *   <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
+ * </DropdownMenuRadioGroup>
+ * ```
  */
 const DropdownMenuRadioItem = memo(React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
   DropdownMenuRadioItemProps
->(({ className, children, ...props }, ref) => {
+>(function DropdownMenuRadioItem({ className, children, ...props }, ref) {
   const radioItemClassName = useMemo(() => {
-    return cn(
-      'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      className
-    );
+    return cn(styles['dropdown-radio-item'], className);
   }, [className]);
 
   return (
@@ -253,9 +335,9 @@ const DropdownMenuRadioItem = memo(React.forwardRef<
       className={radioItemClassName}
       {...props}
     >
-      <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <span className={styles['dropdown-item-indicator-wrapper']}>
         <DropdownMenuPrimitive.ItemIndicator>
-          <Circle className="h-2 w-2 fill-current" />
+          <Circle className={styles['dropdown-item-circle']} />
         </DropdownMenuPrimitive.ItemIndicator>
       </span>
       {children}
@@ -269,15 +351,22 @@ DropdownMenuRadioItem.displayName = DropdownMenuPrimitive.RadioItem.displayName;
  * DropdownMenuLabel Component
  * 
  * A label for a group of menu items
+ * 
+ * @example
+ * ```tsx
+ * <DropdownMenuLabel>Account Settings</DropdownMenuLabel>
+ * <DropdownMenuItem>Profile</DropdownMenuItem>
+ * <DropdownMenuItem>Password</DropdownMenuItem>
+ * ```
  */
 const DropdownMenuLabel = memo(React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Label>,
   DropdownMenuLabelProps
->(({ className, inset, ...props }, ref) => {
+>(function DropdownMenuLabel({ className, inset, ...props }, ref) {
   const labelClassName = useMemo(() => {
     return cn(
-      'px-2 py-1.5 text-sm font-semibold',
-      inset && 'pl-8',
+      styles['dropdown-label'],
+      inset && styles['dropdown-label-inset'],
       className
     );
   }, [className, inset]);
@@ -297,13 +386,20 @@ DropdownMenuLabel.displayName = DropdownMenuPrimitive.Label.displayName;
  * DropdownMenuSeparator Component
  * 
  * A separator for groups of menu items
+ * 
+ * @example
+ * ```tsx
+ * <DropdownMenuItem>Profile</DropdownMenuItem>
+ * <DropdownMenuSeparator />
+ * <DropdownMenuItem>Logout</DropdownMenuItem>
+ * ```
  */
 const DropdownMenuSeparator = memo(React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
   DropdownMenuSeparatorProps
->(({ className, ...props }, ref) => {
+>(function DropdownMenuSeparator({ className, ...props }, ref) {
   const separatorClassName = useMemo(() => {
-    return cn('-mx-1 my-1 h-px bg-muted', className);
+    return cn(styles['dropdown-separator'], className);
   }, [className]);
 
   return (
@@ -321,10 +417,18 @@ DropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName;
  * DropdownMenuShortcut Component
  * 
  * Display keyboard shortcuts in the dropdown menu items
+ * 
+ * @example
+ * ```tsx
+ * <DropdownMenuItem>
+ *   New Tab
+ *   <DropdownMenuShortcut>⌘T</DropdownMenuShortcut>
+ * </DropdownMenuItem>
+ * ```
  */
-const DropdownMenuShortcut = memo(({ className, ...props }: DropdownMenuShortcutProps) => {
+const DropdownMenuShortcut = memo(function DropdownMenuShortcut({ className, ...props }: DropdownMenuShortcutProps) {
   const shortcutClassName = useMemo(() => {
-    return cn('ml-auto text-xs tracking-widest opacity-60', className);
+    return cn(styles['dropdown-shortcut'], className);
   }, [className]);
 
   return <span className={shortcutClassName} {...props} />;

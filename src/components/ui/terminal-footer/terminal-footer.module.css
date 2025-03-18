@@ -1,0 +1,64 @@
+/* terminal-footer.module.css */
+
+.terminal-footer {
+  display: flex;
+  padding: 0.5rem 1rem;
+  border-top: 1px solid var(--terminal-border);
+}
+
+.terminal-form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.terminal-prompt {
+  margin-right: 0.5rem;
+  color: var(--terminal-prompt); /* Using the standardized --terminal-prompt variable */
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+.terminal-input {
+  flex-grow: 1;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: var(--terminal-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+.terminal-input::placeholder {
+  color: var(--terminal-muted);
+  opacity: 0.7;
+}
+
+.terminal-input:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.input-wrapper {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+
+.loading-indicator {
+  margin-left: 0.5rem;
+  opacity: 0.7;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}

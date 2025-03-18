@@ -1,0 +1,112 @@
+/**
+ * InfiniteMenu Component Styles
+ */
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.canvas {
+  cursor: grab;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  outline: none;
+}
+
+.canvas:active {
+  cursor: grabbing;
+}
+
+.title {
+  user-select: none;
+  position: absolute;
+  font-weight: 900;
+  font-size: 4rem;
+  left: 1.6em;
+  top: 50%;
+  transform: translateX(20%) translateY(-50%);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.0);
+}
+
+.title-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transition-duration: 500ms;
+}
+
+.title-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition-duration: 100ms;
+}
+
+.description {
+  user-select: none;
+  position: absolute;
+  max-width: 10ch;
+  font-size: 1.5rem;
+  top: 50%;
+  right: 1%;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.0);
+}
+
+.description-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transition-duration: 500ms;
+  transform: translateX(-90%) translateY(-50%);
+}
+
+.description-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition-duration: 100ms;
+  transform: translateX(-60%) translateY(-50%);
+}
+
+.button {
+  position: absolute;
+  left: 50%;
+  z-index: 10;
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  background-color: hsl(180deg, 100%, 50%);
+  border: 5px solid black;
+  border-radius: 50%;
+  cursor: pointer;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.0);
+  transform: translateX(-50%);
+}
+
+.button-visible {
+  bottom: 3.8em;
+  opacity: 1;
+  pointer-events: auto;
+  transition-duration: 500ms;
+  transform: translateX(-50%) scale(1);
+}
+
+.button-hidden {
+  bottom: -80px;
+  opacity: 0;
+  pointer-events: none;
+  transition-duration: 100ms;
+  transform: translateX(-50%) scale(0);
+}
+
+.button-icon {
+  user-select: none;
+  position: relative;
+  top: 2px;
+  color: #060606;
+  font-size: 26px;
+}

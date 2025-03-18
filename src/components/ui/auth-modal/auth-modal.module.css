@@ -1,0 +1,218 @@
+/**
+ * Auth Modal Component Styles
+ */
+
+/* Container */
+.container {
+  position: absolute;
+  z-index: 50;
+  border-radius: 0.375rem;
+  border-width: 1px;
+  border-color: var(--terminal-border);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* Content */
+.content {
+  background-color: var(--terminal-background-translucent);
+  padding: 1rem;
+  position: relative;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.title {
+  color: var(--terminal-foreground);
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.closeButton {
+  color: var(--terminal-muted);
+  transition-property: color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.closeButton:hover {
+  color: var(--terminal-foreground);
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formGroup {
+  position: relative;
+  margin-bottom: 0.75rem;
+}
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--terminal-foreground);
+  margin-bottom: 0.25rem;
+}
+
+.inputIcon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  padding-left: 0.75rem;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  color: var(--terminal-muted);
+}
+
+.input {
+  background-color: var(--terminal-input);
+  color: var(--terminal-foreground);
+  width: 100%;
+  padding-left: 2.5rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 0.375rem;
+  border-width: 1px;
+  border-color: var(--terminal-border);
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--terminal-prompt-rgb), 0.5);
+}
+
+.input:disabled {
+  opacity: 0.5;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: var(--terminal-prompt);
+  color: var(--terminal-background);
+  border-radius: 0.375rem;
+  transition-property: background-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: rgba(var(--terminal-prompt-rgb), 0.9);
+}
+
+.submitButton:disabled {
+  opacity: 0.5;
+}
+
+/* Divider */
+.divider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.dividerLine {
+  border-top-width: 1px;
+  border-color: var(--terminal-border);
+  flex-grow: 1;
+}
+
+.dividerText {
+  color: var(--terminal-muted);
+  font-size: 0.875rem;
+  padding: 0 0.5rem;
+}
+
+/* OAuth Section */
+.oauthSection {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.oauthButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  color: white;
+  border-radius: 0.375rem;
+  transition-property: background-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.oauthButton:disabled {
+  opacity: 0.5;
+}
+
+.oauthButtonIcon {
+  margin-right: 0.5rem;
+}
+
+.githubButton {
+  background-color: #24292e;
+}
+
+.githubButton:hover:not(:disabled) {
+  background-color: rgba(36, 41, 46, 0.9);
+}
+
+.googleButton {
+  background-color: #4285F4;
+}
+
+.googleButton:hover:not(:disabled) {
+  background-color: rgba(66, 133, 244, 0.9);
+}
+
+.twitterButton {
+  background-color: #1DA1F2;
+}
+
+.twitterButton:hover:not(:disabled) {
+  background-color: rgba(29, 161, 242, 0.9);
+}
+
+/* Toggle Mode */
+.toggleMode {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.toggleModeButton {
+  color: var(--terminal-prompt);
+  font-size: 0.875rem;
+}
+
+.toggleModeButton:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .container {
+    width: 95vw;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

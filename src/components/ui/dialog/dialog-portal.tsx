@@ -8,10 +8,20 @@ import { DialogPortalProps } from './dialog.types';
 /**
  * Dialog Portal Component
  * Portals the dialog content into the body
+ *
+ * @example
+ * ```tsx
+ * <DialogPortal>
+ *   <DialogOverlay />
+ *   <DialogContent>...</DialogContent>
+ * </DialogPortal>
+ * ```
  */
-const DialogPortal = memo(DialogPrimitive.Portal);
+const DialogPortal = memo(({ ...props }: DialogPortalProps) => (
+  <DialogPrimitive.Portal {...props} />
+));
 
-DialogPortal.displayName = 'DialogPortal';
+DialogPortal.displayName = DialogPrimitive.Portal.displayName;
 
 export { DialogPortal };
 export default DialogPortal;

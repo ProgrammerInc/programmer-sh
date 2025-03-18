@@ -1,7 +1,15 @@
-// Export dialog components
+/**
+ * Dialog component exports
+ */
+
+// Export the component
+import Dialog from './dialog';
+
+// Export all named exports
 export * from './dialog';
+
+// Export all types
 export * from './dialog.types';
 
-// For backwards compatibility
-import { Dialog } from './dialog';
+// Default export
 export default Dialog;

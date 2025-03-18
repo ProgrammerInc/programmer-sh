@@ -1,0 +1,40 @@
+/* Masonry component styles */
+
+.masonry-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.masonry-item {
+  position: absolute;
+  padding: 15px;
+  will-change: transform, width, height, opacity;
+}
+
+.masonry-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  text-transform: uppercase;
+  font-size: 10px;
+  line-height: 10px;
+  border-radius: 4px;
+  box-shadow: 0 10px 50px -10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  background-color: #ffffff;
+  background-size: cover;
+  background-position: center;
+}
+
+.masonry-image:hover {
+  transform: scale(1.1);
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  .masonry-item {
+    padding: 10px;
+  }
+}

@@ -1,39 +1,40 @@
 'use client';
 
 import { a, useTransition } from '@react-spring/web';
+import * as React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-export interface MasonryItem {
-  id: string | number;
-  height: number;
-  image: string;
-}
+import styles from './masonry.module.css';
+import { GridItem, MasonryProps } from './masonry.types';
+import { MASONRY_DEFAULTS, calculateGridPositions, getColumnCountForScreenSize } from './masonry.utils';
 
-export interface GridItem extends MasonryItem {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
+/**
+ * Masonry Component
+ *
+ * A responsive masonry layout component that organizes items in a grid with different heights.
+ * Automatically adjusts the number of columns based on screen size.
+ *
+ * @example
+ * ```tsx
+ * // Basic usage
+ * <Masonry data={items} />
+ * 
+ * // Where items is an array of MasonryItem objects
+ * const items = [
+ *   { id: 1, height: 400, image: '/images/example1.jpg' },
+ *   { id: 2, height: 300, image: '/images/example2.jpg' }
+ * ];
+ * ```
+ */
+export const MasonryComponent: React.FC<MasonryProps> = ({ data }) => {
+  const [columns, setColumns] = useState<number>(MASONRY_DEFAULTS.SMALL_SCREEN_COLUMNS);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState<number>(0);
 
-export interface MasonryProps {
-  data: MasonryItem[];
-}
-
-export function Masonry({ data }: MasonryProps) {
-  const [columns, setColumns] = useState<number>(2);
-
+  // Update columns based on screen size
   useEffect(() => {
     const updateColumns = () => {
-      if (window.matchMedia('(min-width: 1500px)').matches) {
-        setColumns(5);
-      } else if (window.matchMedia('(min-width: 1000px)').matches) {
-        setColumns(4);
-      } else if (window.matchMedia('(min-width: 600px)').matches) {
-        setColumns(3);
-      } else {
-        setColumns(1); // Mobile devices
-      }
+      setColumns(getColumnCountForScreenSize());
     };
 
     updateColumns();
@@ -41,13 +42,11 @@ export function Masonry({ data }: MasonryProps) {
     return () => window.removeEventListener('resize', updateColumns);
   }, []);
 
-  const ref = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState<number>(0);
-
+  // Update container width on resize
   useEffect(() => {
     const handleResize = () => {
-      if (ref.current) {
-        setWidth(ref.current.offsetWidth);
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
       }
     };
 
@@ -56,23 +55,13 @@ export function Masonry({ data }: MasonryProps) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const [heights, gridItems] = useMemo<[number[], GridItem[]]>(() => {
-    const heights = new Array(columns).fill(0);
-    const gridItems = data.map(child => {
-      const column = heights.indexOf(Math.min(...heights));
-      const x = (width / columns) * column;
-      const y = (heights[column] += child.height / 2) - child.height / 2;
-      return {
-        ...child,
-        x,
-        y,
-        width: width / columns,
-        height: child.height / 2
-      };
-    });
-    return [heights, gridItems];
-  }, [columns, data, width]);
+  // Calculate grid positions
+  const { gridItems, heights } = useMemo(() => {
+    if (containerWidth === 0) return { gridItems: [], heights: [0] };
+    return calculateGridPositions(data, columns, containerWidth);
+  }, [columns, data, containerWidth]);
 
+  // Set up transitions for grid items
   const transitions = useTransition<
     GridItem,
     { x: number; y: number; width: number; height: number; opacity: number }
@@ -87,26 +76,34 @@ export function Masonry({ data }: MasonryProps) {
   });
 
   return (
-    <div ref={ref} className="relative w-full h-full" style={{ height: Math.max(...heights) }}>
+    <div 
+      ref={containerRef} 
+      className={styles['masonry-container']} 
+      style={{ height: Math.max(...heights) }}
+    >
       {transitions((style, item) => (
         <a.div
           key={item.id}
           style={style}
-          className="absolute p-[15px] [will-change:transform,width,height,opacity]"
+          className={styles['masonry-item']}
         >
           <div
-            className="relative w-full h-full overflow-hidden uppercase text-[10px] leading-[10px] rounded-[4px] shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)] transition duration-300 ease hover:scale-110"
+            className={styles['masonry-image']}
             style={{
-              backgroundColor: '#ffffff',
-              backgroundImage: `url(${item.image})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
+              backgroundImage: `url(${item.image})`
             }}
           />
         </a.div>
       ))}
     </div>
   );
-}
+};
+
+MasonryComponent.displayName = 'Masonry';
+
+/**
+ * Memoized Masonry Component
+ */
+export const Masonry = React.memo(MasonryComponent);
 
 export default Masonry;

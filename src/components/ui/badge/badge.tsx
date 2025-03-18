@@ -5,7 +5,7 @@ import { memo, useMemo } from 'react';
 
 import { cn } from '@/utils/app.utils';
 import { BadgeProps } from './badge.types';
-import { badgeVariants } from './badge.variants';
+import styles from './badge.module.css';
 
 /**
  * Badge component
@@ -20,10 +20,11 @@ import { badgeVariants } from './badge.variants';
  * <Badge variant="outline">Outline</Badge>
  * ```
  */
-const Badge = memo(({ className, variant, ...props }: BadgeProps) => {
+const Badge = memo(({ className, variant = 'default', ...props }: BadgeProps) => {
   // Memoize the className calculation
   const badgeClassName = useMemo(() => {
-    return cn(badgeVariants({ variant }), className);
+    const variantClass = styles[`badge-${variant}`] || styles['badge-default'];
+    return cn(styles['badge-base'], variantClass, className);
   }, [variant, className]);
 
   return <div className={badgeClassName} {...props} />;

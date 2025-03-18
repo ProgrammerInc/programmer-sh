@@ -1,0 +1,105 @@
+/* FlowingMenu Styles */
+
+.flowing-menu-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.flowing-menu-nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-item {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 -1px 0 0 var(--border, #fff);
+}
+
+.menu-item-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--foreground, #fff);
+  font-size: 4vh;
+}
+
+.menu-item-link:hover {
+  color: var(--background, #060606);
+}
+
+.menu-item-link:focus {
+  color: var(--foreground, #fff);
+}
+
+.menu-item-link:focus-visible {
+  color: var(--background, #060606);
+}
+
+.marquee-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  background-color: var(--background, #fff);
+  transform: translateY(101%);
+}
+
+.marquee-inner {
+  height: 100%;
+  width: 200%;
+  display: flex;
+}
+
+.marquee-content {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 100%;
+  width: 200%;
+  will-change: transform;
+  animation: marquee 15s linear infinite;
+}
+
+.marquee-text {
+  color: var(--marquee-text, #060606);
+  text-transform: uppercase;
+  font-weight: normal;
+  font-size: 4vh;
+  line-height: 1.2;
+  padding: 1vh 1vw 0;
+}
+
+.marquee-image {
+  width: 200px;
+  height: 7vh;
+  margin: 2em 2vw;
+  padding: 1em 0;
+  border-radius: 50px;
+  background-size: cover;
+  background-position: center;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}

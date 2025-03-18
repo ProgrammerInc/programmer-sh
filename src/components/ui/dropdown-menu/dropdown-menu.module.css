@@ -1,0 +1,306 @@
+/* Dropdown Menu Styles */
+
+/* Dropdown SubTrigger */
+.dropdown-sub-trigger {
+  display: flex;
+  cursor: default;
+  user-select: none;
+  align-items: center;
+  border-radius: 0.125rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  outline: none;
+}
+
+.dropdown-sub-trigger:focus {
+  background-color: var(--accent);
+}
+
+.dropdown-sub-trigger[data-state='open'] {
+  background-color: var(--accent);
+}
+
+.dropdown-sub-trigger-inset {
+  padding-left: 2rem;
+}
+
+.dropdown-chevron {
+  margin-left: auto;
+  height: 1rem;
+  width: 1rem;
+}
+
+/* Dropdown SubContent */
+.dropdown-sub-content {
+  z-index: 50;
+  min-width: 8rem;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  border-width: 1px;
+  background-color: var(--popover);
+  padding: 0.25rem;
+  color: var(--popover-foreground);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Animation states */
+.dropdown-sub-content[data-state='open'] {
+  animation: fade-in 0.2s ease-out;
+}
+
+.dropdown-sub-content[data-state='closed'] {
+  animation: fade-out 0.2s ease-in;
+}
+
+/* Slide in animations based on side */
+.dropdown-sub-content[data-side='bottom'] {
+  animation-name: slide-in-from-top;
+}
+
+.dropdown-sub-content[data-side='left'] {
+  animation-name: slide-in-from-right;
+}
+
+.dropdown-sub-content[data-side='right'] {
+  animation-name: slide-in-from-left;
+}
+
+.dropdown-sub-content[data-side='top'] {
+  animation-name: slide-in-from-bottom;
+}
+
+/* Dropdown Content */
+.dropdown-content {
+  z-index: 50;
+  min-width: 8rem;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  border-width: 1px;
+  background-color: var(--popover);
+  padding: 0.25rem;
+  color: var(--popover-foreground);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Dropdown Item */
+.dropdown-item {
+  position: relative;
+  display: flex;
+  cursor: default;
+  user-select: none;
+  align-items: center;
+  border-radius: 0.125rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  outline: none;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.dropdown-item:focus {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.dropdown-item[data-disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.dropdown-item-inset {
+  padding-left: 2rem;
+}
+
+/* Dropdown Checkbox Item */
+.dropdown-checkbox-item {
+  position: relative;
+  display: flex;
+  cursor: default;
+  user-select: none;
+  align-items: center;
+  border-radius: 0.125rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  padding-left: 2rem;
+  padding-right: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  outline: none;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.dropdown-checkbox-item:focus {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.dropdown-checkbox-item[data-disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Dropdown Radio Item */
+.dropdown-radio-item {
+  position: relative;
+  display: flex;
+  cursor: default;
+  user-select: none;
+  align-items: center;
+  border-radius: 0.125rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  padding-left: 2rem;
+  padding-right: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  outline: none;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.dropdown-radio-item:focus {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.dropdown-radio-item[data-disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Indicator wrapper for checkbox and radio items */
+.dropdown-item-indicator-wrapper {
+  position: absolute;
+  left: 0.5rem;
+  display: flex;
+  height: 0.875rem;
+  width: 0.875rem;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Circle for radio item */
+.dropdown-item-circle {
+  height: 0.5rem;
+  width: 0.5rem;
+  fill: currentcolor;
+}
+
+/* Dropdown Label */
+.dropdown-label {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+}
+
+.dropdown-label-inset {
+  padding-left: 2rem;
+}
+
+/* Dropdown Separator */
+.dropdown-separator {
+  margin-left: -0.25rem;
+  margin-right: -0.25rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  height: 1px;
+  background-color: var(--muted);
+}
+
+/* Dropdown Shortcut */
+.dropdown-shortcut {
+  margin-left: auto;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0.05em;
+  opacity: 0.6;
+}
+
+/* Animation keyframes */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in-from-top {
+  from {
+    transform: translateY(-0.5rem);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-from-right {
+  from {
+    transform: translateX(0.5rem);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-from-left {
+  from {
+    transform: translateX(-0.5rem);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-from-bottom {
+  from {
+    transform: translateY(0.5rem);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoom-in {
+  from {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes zoom-out {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.95);
+  }
+}

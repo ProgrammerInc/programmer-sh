@@ -1,0 +1,29 @@
+/**
+ * BounceCards Component Styles
+ */
+
+/* Card container */
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Individual card */
+.card {
+  position: absolute;
+  width: 200px;
+  aspect-ratio: 1/1;
+  border: 8px solid white;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Card image */
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

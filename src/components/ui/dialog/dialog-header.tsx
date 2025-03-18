@@ -4,18 +4,24 @@ import * as React from 'react';
 import { memo, useMemo } from 'react';
 
 import { cn } from '@/utils/app.utils';
+import styles from './dialog.module.css';
 import { DialogHeaderProps } from './dialog.types';
 
 /**
  * Dialog Header Component
  * Container for the dialog title and description
+ *
+ * @example
+ * ```tsx
+ * <DialogHeader>
+ *   <DialogTitle>Dialog Title</DialogTitle>
+ *   <DialogDescription>Dialog Description</DialogDescription>
+ * </DialogHeader>
+ * ```
  */
-const DialogHeader = memo(({
-  className,
-  ...props
-}: DialogHeaderProps) => {
+const DialogHeader = memo(({ className, ...props }: DialogHeaderProps) => {
   const headerClassName = useMemo(() => {
-    return cn('flex flex-col space-y-1.5 text-center sm:text-left', className);
+    return cn(styles['dialog-header'], className);
   }, [className]);
 
   return <div className={headerClassName} {...props} />;

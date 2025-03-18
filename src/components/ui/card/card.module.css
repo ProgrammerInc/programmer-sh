@@ -1,0 +1,48 @@
+/**
+ * Card Component Styles
+ */
+
+/* Base card */
+.card {
+  border-radius: 0.5rem; /* rounded-lg */
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  color: var(--card-foreground);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+}
+
+/* Card header */
+.card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem; /* space-y-1.5 */
+  padding: 1.5rem; /* p-6 */
+}
+
+/* Card title */
+.card-title {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 600; /* font-semibold */
+  line-height: 1; /* leading-none */
+  letter-spacing: -0.025em; /* tracking-tight */
+}
+
+/* Card description */
+.card-description {
+  font-size: 0.875rem; /* text-sm */
+  color: var(--muted-foreground);
+}
+
+/* Card content */
+.card-content {
+  padding: 1.5rem; /* p-6 */
+  padding-top: 0; /* pt-0 */
+}
+
+/* Card footer */
+.card-footer {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem; /* p-6 */
+  padding-top: 0; /* pt-0 */
+}

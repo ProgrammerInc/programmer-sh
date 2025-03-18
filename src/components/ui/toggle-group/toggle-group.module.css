@@ -1,0 +1,57 @@
+/**
+ * ToggleGroup Component Styles
+ * CSS Module for styling the ToggleGroup component
+ */
+
+.toggle-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem; /* gap-1 */
+}
+
+.toggle-group-horizontal {
+  flex-direction: row;
+}
+
+.toggle-group-vertical {
+  flex-direction: column;
+}
+
+/* Toggle group item styles */
+
+.toggle-group-item {
+  position: relative;
+  
+  /* Additional styles are inherited from Toggle component */
+}
+
+/* When items are adjacent in a group, adjust border radius */
+
+.toggle-group-horizontal .toggle-group-item:not(:is(:first-child, :last-child)) {
+  border-radius: 0;
+}
+
+.toggle-group-horizontal .toggle-group-item:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.toggle-group-horizontal .toggle-group-item:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.toggle-group-vertical .toggle-group-item:not(:is(:first-child, :last-child)) {
+  border-radius: 0;
+}
+
+.toggle-group-vertical .toggle-group-item:first-child {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.toggle-group-vertical .toggle-group-item:last-child {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}

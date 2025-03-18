@@ -1,0 +1,32 @@
+/* Form Component Styles */
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+}
+
+.form-label-error {
+  color: var(--color-destructive);
+}
+
+.form-control {
+  width: 100%;
+}
+
+.form-description {
+  font-size: 0.875rem;
+  color: var(--color-muted-foreground, hsl(240deg, 3.8%, 46.1%));
+}
+
+.form-message {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-destructive, hsl(0deg, 84.2%, 60.2%));
+}

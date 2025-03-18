@@ -1,22 +1,34 @@
 'use client';
 
 import { animate, motion, useMotionValue, useMotionValueEvent, useTransform } from 'framer-motion';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, memo } from 'react';
 
+import { cn } from '@/utils/app.utils';
+import styles from './elastic-slider.module.css';
+import { ElasticSliderProps, SliderProps } from './elastic-slider.types';
+
+/**
+ * Maximum overflow distance for the elastic effect
+ */
 const MAX_OVERFLOW = 50;
 
-export interface ElasticSliderProps {
-  defaultValue?: number;
-  startingValue?: number;
-  maxValue?: number;
-  className?: string;
-  isStepped?: boolean;
-  stepSize?: number;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
-}
-
-export const ElasticSlider: React.FC<ElasticSliderProps> = ({
+/**
+ * ElasticSlider Component
+ * 
+ * A slider component with elastic effects when dragging beyond the bounds.
+ * It provides visual feedback through animations and haptic-like UI responses.
+ * 
+ * @example
+ * ```tsx
+ * <ElasticSlider
+ *   defaultValue={50}
+ *   maxValue={100}
+ *   isStepped={true}
+ *   stepSize={5}
+ * />
+ * ```
+ */
+export const ElasticSlider = memo(function ElasticSlider({
   defaultValue = 50,
   startingValue = 0,
   maxValue = 100,
@@ -25,9 +37,11 @@ export const ElasticSlider: React.FC<ElasticSliderProps> = ({
   stepSize = 1,
   leftIcon = <>-</>,
   rightIcon = <>+</>
-}) => {
+}: ElasticSliderProps) {
+  const sliderContainerClassName = cn(styles['slider-container'], className);
+  
   return (
-    <div className={`flex flex-col items-center justify-center gap-4 w-48 ${className}`}>
+    <div className={sliderContainerClassName}>
       <Slider
         defaultValue={defaultValue}
         startingValue={startingValue}
@@ -39,19 +53,17 @@ export const ElasticSlider: React.FC<ElasticSliderProps> = ({
       />
     </div>
   );
-};
+});
 
-interface SliderProps {
-  defaultValue: number;
-  startingValue: number;
-  maxValue: number;
-  isStepped: boolean;
-  stepSize: number;
-  leftIcon: React.ReactNode;
-  rightIcon: React.ReactNode;
-}
+ElasticSlider.displayName = 'ElasticSlider';
 
-const Slider: React.FC<SliderProps> = ({
+/**
+ * Internal Slider Component
+ * 
+ * Implements the core slider functionality with elastic effects.
+ * Handles user interactions, animations, and value calculations.
+ */
+const Slider = memo(function Slider({
   defaultValue,
   startingValue,
   maxValue,
@@ -59,7 +71,7 @@ const Slider: React.FC<SliderProps> = ({
   stepSize,
   leftIcon,
   rightIcon
-}) => {
+}: SliderProps) {
   const [value, setValue] = useState<number>(defaultValue);
   const sliderRef = useRef<HTMLDivElement>(null);
   const [region, setRegion] = useState<'left' | 'middle' | 'right'>('middle');
@@ -128,7 +140,7 @@ const Slider: React.FC<SliderProps> = ({
           scale,
           opacity: useTransform(scale, [1, 1.2], [0.7, 1])
         }}
-        className="flex w-full touch-none select-none items-center justify-center gap-4"
+        className={styles['slider-controls']}
       >
         <motion.div
           animate={{
@@ -138,13 +150,14 @@ const Slider: React.FC<SliderProps> = ({
           style={{
             x: useTransform(() => (region === 'left' ? -overflow.get() / scale.get() : 0))
           }}
+          className={styles['slider-icon']}
         >
           {leftIcon}
         </motion.div>
 
         <div
           ref={sliderRef}
-          className="relative flex w-full max-w-xs flex-grow cursor-grab touch-none select-none items-center py-4"
+          className={styles['slider-track-container']}
           onPointerMove={handlePointerMove}
           onPointerDown={handlePointerDown}
           onPointerUp={handlePointerUp}
@@ -170,11 +183,11 @@ const Slider: React.FC<SliderProps> = ({
               marginTop: useTransform(scale, [1, 1.2], [0, -3]),
               marginBottom: useTransform(scale, [1, 1.2], [0, -3])
             }}
-            className="flex flex-grow"
+            className={styles['slider-track']}
           >
-            <div className="relative h-full flex-grow overflow-hidden rounded-full bg-gray-400">
+            <div className={styles['slider-track-background']}>
               <div
-                className="absolute h-full bg-gray-500 rounded-full"
+                className={styles['slider-track-fill']}
                 style={{ width: `${getRangePercentage()}%` }}
               />
             </div>
@@ -189,17 +202,30 @@ const Slider: React.FC<SliderProps> = ({
           style={{
             x: useTransform(() => (region === 'right' ? overflow.get() / scale.get() : 0))
           }}
+          className={styles['slider-icon']}
         >
           {rightIcon}
         </motion.div>
       </motion.div>
-      <p className="absolute text-gray-400 transform -translate-y-4 text-xs font-medium tracking-wide">
+      <p className={styles['slider-value']}>
         {Math.round(value)}
       </p>
     </>
   );
-};
+});
 
+Slider.displayName = 'Slider';
+
+/**
+ * Decay function for elastic effect
+ * 
+ * Calculates a sigmoid-based decay to create a natural-feeling elastic effect
+ * when dragging beyond the slider bounds.
+ * 
+ * @param value - Current overflow value
+ * @param max - Maximum overflow threshold
+ * @returns Decayed value with sigmoid curve applied
+ */
 function decay(value: number, max: number): number {
   if (max === 0) {
     return 0;

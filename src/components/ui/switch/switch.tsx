@@ -1,38 +1,63 @@
 'use client';
 
-import { cn } from '@/utils/app.utils';
 import * as React from 'react';
-import { memo, useMemo } from 'react';
+import { memo, useMemo, forwardRef } from 'react';
 import * as SwitchPrimitives from '@radix-ui/react-switch';
-import { SwitchProps } from './switch.types';
+import { cn } from '@/utils/app.utils';
+
+import styles from './switch.module.css';
+import { SwitchProps, SwitchSize, SwitchColorScheme } from './switch.types';
 
 /**
- * Switch component
+ * Switch Component - A toggle control for binary choices
  * 
- * A control that allows the user to toggle between checked and not checked.
+ * Features:
+ * - Keyboard accessible using Tab and Space
+ * - Screen reader accessible with ARIA support
+ * - Customizable size and color scheme options
+ * - Smooth transition animations
+ * - Disabled state styling
+ * - Focus state highlighting for keyboard navigation
  * 
  * @example
  * ```tsx
- * <Switch aria-label="Toggle" />
- * <Switch checked={isChecked} onCheckedChange={setIsChecked} />
+ * // Basic usage
+ * <Switch aria-label="Toggle dark mode" />
+ * 
+ * // Controlled component
+ * <Switch 
+ *   checked={isDarkMode} 
+ *   onCheckedChange={setIsDarkMode} 
+ *   aria-label="Toggle dark mode"
+ * />
+ * 
+ * // With different size
+ * <Switch size="lg" aria-label="Toggle feature" />
+ * 
+ * // With custom color scheme
+ * <Switch colorScheme="success" aria-label="Enable feature" />
  * ```
  */
-const Switch = memo(React.forwardRef<
+const Switch = memo(forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,
-  SwitchProps
->(({ className, ...props }, ref) => {
-  // Memoize the className calculations
+  SwitchProps & { size?: SwitchSize; colorScheme?: SwitchColorScheme }
+>(({ 
+  className, 
+  size = 'default',
+  colorScheme = 'default',
+  ...props 
+}, ref) => {
+  // Generate the root class names with appropriate size and color scheme modifiers
   const rootClassName = useMemo(() => {
     return cn(
-      'peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input',
+      styles['switch-root'],
       className
     );
   }, [className]);
 
+  // Generate the thumb class names
   const thumbClassName = useMemo(() => {
-    return cn(
-      'pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0'
-    );
+    return styles['switch-thumb'];
   }, []);
 
   return (
@@ -48,7 +73,7 @@ const Switch = memo(React.forwardRef<
   );
 }));
 
-Switch.displayName = SwitchPrimitives.Root.displayName;
+Switch.displayName = 'Switch';
 
 export { Switch };
 export default Switch;

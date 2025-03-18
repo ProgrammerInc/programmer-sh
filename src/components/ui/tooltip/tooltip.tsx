@@ -1,65 +1,80 @@
 'use client';
 
-import { cn } from '@/utils/app.utils';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import * as React from 'react';
-import { memo, useMemo } from 'react';
+import { memo, forwardRef } from 'react';
 
+import { cn } from '@/utils/app.utils';
+import styles from './tooltip.module.css';
 import {
   TooltipContentProps,
   TooltipProps
 } from './tooltip.types';
 
 /**
- * Provider component for tooltips
- * Must wrap all tooltip components in your application
+ * TooltipProvider Component
+ * 
+ * Provider component that must wrap all tooltip components in your application.
+ * Controls global tooltip settings like delay duration and positioning.
+ * 
+ * Usage example: Wrap your application components with TooltipProvider
  */
 const TooltipProvider = memo(TooltipPrimitive.Provider);
 TooltipProvider.displayName = TooltipPrimitive.Provider.displayName;
 
 /**
- * Root component for tooltip functionality
+ * Tooltip Component
+ * 
+ * Root component for tooltip functionality. Wraps trigger and content components.
+ * 
+ * Features:
+ * - Hover and focus activation
+ * - Configurable delay duration
+ * - Controlled or uncontrolled state
+ * - Keyboard navigation support
+ * - Fully accessible
+ * 
+ * Usage example: Wrap TooltipTrigger and TooltipContent with Tooltip component
  */
 const Tooltip = memo(TooltipPrimitive.Root);
 Tooltip.displayName = TooltipPrimitive.Root.displayName;
 
 /**
- * Trigger element that will show the tooltip on hover
- * Should be wrapped in a Tooltip component
+ * TooltipTrigger Component
+ * 
+ * The element that triggers the tooltip when hovered or focused.
+ * Should be a child of the Tooltip component.
+ * 
+ * Usage example: Wrap a button or other interactive element with TooltipTrigger
  */
 const TooltipTrigger = memo(TooltipPrimitive.Trigger);
 TooltipTrigger.displayName = TooltipPrimitive.Trigger.displayName;
 
 /**
- * Content component that displays the actual tooltip
- * Configurable with various positioning options and animations
+ * TooltipContent Component
  * 
- * @example
- * ```tsx
- * <Tooltip>
- *   <TooltipTrigger>Hover me</TooltipTrigger>
- *   <TooltipContent>This is a tooltip</TooltipContent>
- * </Tooltip>
- * ```
+ * Content component that displays the actual tooltip.
+ * Positioned relative to the trigger element.
+ * 
+ * Features:
+ * - Automatic positioning
+ * - Configurable offset from trigger
+ * - CSS module styling with customizable appearance
+ * - Smooth animations
+ * - Collision detection
+ * 
+ * Usage example 1: Basic tooltip content with text
+ * Usage example 2: Positioned tooltip with custom offset and side
  */
-const TooltipContent = memo(React.forwardRef<
+const TooltipContent = memo(forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Content>,
   TooltipContentProps
 >(({ className, sideOffset = 4, ...props }, ref) => {
-  // Memoize the className computation
-  const tooltipClassName = useMemo(
-    () => cn(
-      'z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-      className
-    ),
-    [className]
-  );
-
   return (
     <TooltipPrimitive.Content
-      className={tooltipClassName}
       ref={ref}
       sideOffset={sideOffset}
+      className={cn(styles['tooltip-content'], className)}
       {...props}
     />
   );

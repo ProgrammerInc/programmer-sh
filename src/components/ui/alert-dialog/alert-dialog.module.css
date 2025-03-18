@@ -1,0 +1,152 @@
+/**
+ * Alert Dialog component styles
+ */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.overlay[data-state='open'] {
+  animation: fade-in 0.2s ease-out;
+}
+
+.overlay[data-state='closed'] {
+  animation: fade-out 0.2s ease-in;
+}
+
+.content {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 50;
+  display: grid;
+  width: 100%;
+  max-width: 32rem;
+  transform: translate(-50%, -50%);
+  gap: 1rem;
+  border-width: 1px;
+  background-color: var(--background);
+  padding: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition-duration: 0.2s;
+}
+
+.content[data-state='open'] {
+  animation: fade-in 0.2s ease-out, zoom-in 0.2s ease-out, slide-in 0.2s ease-out;
+}
+
+.content[data-state='closed'] {
+  animation: fade-out 0.2s ease-in, zoom-out 0.2s ease-in, slide-out 0.2s ease-in;
+}
+
+@media (min-width: 640px) {
+  .content {
+    border-radius: 0.5rem;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .header {
+    text-align: left;
+  }
+}
+
+.footer {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+@media (min-width: 640px) {
+  .footer {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+  
+  .footer > * + * {
+    margin-left: 0.5rem;
+  }
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--text-muted-foreground);
+}
+
+.cancel {
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .cancel {
+    margin-top: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes zoom-in {
+  from {
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes zoom-out {
+  from {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translate(-50%, -48%);
+  }
+  to {
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translate(-50%, -50%);
+  }
+  to {
+    transform: translate(-50%, -48%);
+  }
+}

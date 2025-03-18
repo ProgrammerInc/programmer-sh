@@ -5,6 +5,7 @@ import * as ProgressPrimitive from '@radix-ui/react-progress';
 import * as React from 'react';
 import { memo, useMemo } from 'react';
 
+import styles from './progress.module.css';
 import { ProgressProps } from './progress.types';
 
 /**
@@ -26,7 +27,7 @@ const Progress = memo(React.forwardRef<
   ProgressProps
 >(({ className, value, ...props }, ref) => {
   const rootClassName = useMemo(() => {
-    return cn('relative h-4 w-full overflow-hidden rounded-full bg-secondary', className);
+    return cn(styles.root, className);
   }, [className]);
 
   const indicatorStyle = useMemo(() => {
@@ -40,7 +41,7 @@ const Progress = memo(React.forwardRef<
       {...props}
     >
       <ProgressPrimitive.Indicator
-        className="h-full w-full flex-1 bg-primary transition-all"
+        className={styles.indicator}
         style={indicatorStyle}
       />
     </ProgressPrimitive.Root>

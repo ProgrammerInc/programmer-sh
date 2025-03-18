@@ -1,0 +1,74 @@
+/* Resizable component styles */
+
+/* Panel Group styles */
+.panel-group {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.panel-group[data-panel-group-direction='vertical'] {
+  flex-direction: column;
+}
+
+/* Resize Handle styles */
+.resize-handle {
+  position: relative;
+  display: flex;
+  width: 1px;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--border);
+}
+
+.resize-handle::after {
+  position: absolute;
+  inset-block: 0; /* inset-y-0 */
+  left: 50%;
+  width: 4px;
+  transform: translateX(-50%);
+  content: '';
+}
+
+/* Focus styles for resize handle */
+.resize-handle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--ring), 0 0 0 1px var(--ring);
+}
+
+/* Styles for vertical resize handle */
+.resize-handle[data-panel-group-direction='vertical'] {
+  height: 1px;
+  width: 100%;
+}
+
+.resize-handle[data-panel-group-direction='vertical']::after {
+  left: 0;
+  height: 4px;
+  width: 100%;
+  transform: translateY(-50%);
+}
+
+/* Rotate grip icon when vertical */
+.resize-handle[data-panel-group-direction='vertical'] > div {
+  transform: rotate(90deg);
+}
+
+/* Grip handle container */
+.grip-container {
+  z-index: 10;
+  display: flex;
+  height: 1rem; /* h-4 */
+  width: 0.75rem; /* w-3 */
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.125rem; /* rounded-sm */
+  border: 1px solid var(--border);
+  background-color: var(--border);
+}
+
+/* Grip icon */
+.grip-icon {
+  height: 0.625rem; /* h-2.5 */
+  width: 0.625rem; /* w-2.5 */
+}

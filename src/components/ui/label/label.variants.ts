@@ -1,8 +1,27 @@
 import { cva } from 'class-variance-authority';
+import styles from './label.module.css';
 
 /**
  * Variant styles for the Label component
+ * 
+ * @example
+ * ```tsx
+ * <span className={labelVariants()}>Label text</span>
+ * ```
  */
 export const labelVariants = cva(
-  'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+  styles.label,
+  {
+    variants: {
+      /**
+       * Whether the label is disabled
+       */
+      disabled: {
+        true: styles['label-disabled']
+      }
+    },
+    defaultVariants: {
+      disabled: false
+    }
+  }
 );

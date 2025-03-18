@@ -1,0 +1,132 @@
+/**
+ * Table component styles
+ */
+
+/* Container styles */
+.table-container {
+  position: relative;
+  width: 100%;
+  overflow: auto;
+}
+
+/* Base table styles */
+.table {
+  width: 100%;
+  caption-side: bottom;
+  font-size: 0.875rem; /* text-sm */
+}
+
+/* Header styles */
+.table-header {
+  /* Header specific styles will be inherited from the base styles */
+  display: table-header-group;
+}
+
+.table-header-row {
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+/* Body styles */
+.table-body {
+  /* Body specific styles will be inherited from the base styles */
+  display: table-row-group;
+}
+
+.table-body-row:last-child {
+  border-bottom: none;
+}
+
+/* Footer styles */
+.table-footer {
+  border-top: 1px solid hsl(var(--border));
+  background-color: hsla(var(--muted), 0.5);
+  font-weight: 500;
+}
+
+.table-footer > tr:last-child {
+  border-bottom: 0;
+}
+
+/* Row styles */
+.table-row {
+  border-bottom: 1px solid hsl(var(--border));
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.table-row:hover {
+  background-color: hsla(var(--muted), 0.5);
+}
+
+.table-row[data-state="selected"] {
+  background-color: hsl(var(--muted));
+}
+
+/* Header cell styles */
+.table-head {
+  height: 3rem; /* h-12 */
+  padding-left: 1rem; /* px-4 */
+  padding-right: 1rem; /* px-4 */
+  text-align: left;
+  vertical-align: middle;
+  font-weight: 500;
+  color: hsl(var(--muted-foreground));
+}
+
+.table-head:has([role="checkbox"]) {
+  padding-right: 0;
+}
+
+/* Cell styles */
+.table-cell {
+  padding: 1rem; /* p-4 */
+  vertical-align: middle;
+}
+
+.table-cell:has([role="checkbox"]) {
+  padding-right: 0;
+}
+
+.table-cell-truncate {
+  max-width: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Caption styles */
+.table-caption {
+  margin-top: 1rem; /* mt-4 */
+  font-size: 0.875rem; /* text-sm */
+  color: hsl(var(--muted-foreground));
+}
+
+/* Zebra striping */
+.table-zebra .table-body .table-row:nth-child(odd) {
+  background-color: hsla(var(--muted), 0.3);
+}
+
+/* Bordered variant */
+.table-bordered {
+  border: 1px solid hsl(var(--border));
+  border-collapse: collapse;
+}
+
+.table-bordered .table-head,
+.table-bordered .table-cell {
+  border: 1px solid hsl(var(--border));
+}
+
+/* Compact variant */
+.table-compact .table-head {
+  height: 2rem; /* h-8 */
+  padding-left: 0.5rem; /* px-2 */
+  padding-right: 0.5rem; /* px-2 */
+  font-size: 0.75rem; /* text-xs */
+}
+
+.table-compact .table-cell {
+  padding: 0.5rem; /* p-2 */
+  font-size: 0.75rem; /* text-xs */
+}

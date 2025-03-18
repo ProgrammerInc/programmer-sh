@@ -1,35 +1,38 @@
 'use client';
 
 import * as React from 'react';
-import { memo, useMemo } from 'react';
 
 import { cn } from '@/utils/app.utils';
+import styles from './input.module.css';
 import { InputProps } from './input.types';
 
 /**
  * Input component
  * 
- * A standard form input component with styling.
+ * A standard form input component with consistent styling across the application.
+ * The component uses CSS modules for styling and supports all standard HTML input attributes.
  * 
  * @example
  * ```tsx
+ * // Basic usage
  * <Input type="text" placeholder="Enter your name" />
- * <Input type="email" disabled />
- * <Input type="password" className="custom-class" />
+ * 
+ * // With validation
+ * <Input 
+ *   type="email" 
+ *   required 
+ *   placeholder="example@domain.com" 
+ *   aria-label="Email address"
+ * />
+ * 
+ * // Disabled state
+ * <Input type="text" disabled value="Read only content" />
  * ```
  */
-const Input = memo(React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
-    // Memoize the className calculation
-    const inputClassName = useMemo(() => {
-      return cn(
-        'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background',
-        'file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground',
-        'placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-        'disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-        className
-      );
-    }, [className]);
+const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, type = 'text', ...props }, ref) => {
+    // Combine default styles with any custom className
+    const inputClassName = cn(styles.input, className);
 
     return (
       <input
@@ -40,8 +43,18 @@ const Input = memo(React.forwardRef<HTMLInputElement, InputProps>(
       />
     );
   }
-));
+);
 
+// Set displayName for debugging
+InputComponent.displayName = 'Input';
+
+/**
+ * Memoized Input component
+ * 
+ * A styled input field for collecting user data in forms.
+ * Supports all standard HTML input types and attributes.
+ */
+const Input = React.memo(InputComponent);
 Input.displayName = 'Input';
 
 export { Input };

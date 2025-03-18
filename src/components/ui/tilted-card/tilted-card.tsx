@@ -1,32 +1,64 @@
 'use client';
 
+import { cn } from '@/utils/app.utils';
 import type { SpringOptions } from 'framer-motion';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 
-export interface TiltedCardProps {
-  imageSrc: React.ComponentProps<'img'>['src'];
-  altText?: string;
-  captionText?: string;
-  containerHeight?: React.CSSProperties['height'];
-  containerWidth?: React.CSSProperties['width'];
-  imageHeight?: React.CSSProperties['height'];
-  imageWidth?: React.CSSProperties['width'];
-  scaleOnHover?: number;
-  rotateAmplitude?: number;
-  showMobileWarning?: boolean;
-  showTooltip?: boolean;
-  overlayContent?: React.ReactNode;
-  displayOverlayContent?: boolean;
-}
+import styles from './tilted-card.module.css';
+import { TiltedCardProps } from './tilted-card.types';
 
+/**
+ * Spring animation configuration values
+ */
 const springValues: SpringOptions = {
   damping: 30,
   stiffness: 100,
   mass: 2
 };
 
-export default function TiltedCard({
+/**
+ * TiltedCard Component
+ * 
+ * A card component with interactive 3D tilt effect based on mouse position.
+ * The card responds to mouse movement by tilting in the direction of the cursor
+ * and provides visual feedback through rotation, scaling, and optional tooltip.
+ * 
+ * Features:
+ * - Interactive 3D rotation effect based on mouse position
+ * - Smooth animations with configurable parameters
+ * - Optional tooltip with customizable text
+ * - Responsive design with mobile device warning
+ * - Support for overlay content
+ * - Configurable dimensions and appearance
+ * - Accessible with proper alt text support
+ * 
+ * @example
+ * ```tsx
+ * // Basic usage
+ * <TiltedCard 
+ *   imageSrc="/path/to/image.jpg" 
+ *   altText="Description of the image"
+ * />
+ * 
+ * // With caption and custom dimensions
+ * <TiltedCard 
+ *   imageSrc="/path/to/image.jpg"
+ *   captionText="Interactive 3D Card"
+ *   containerHeight="400px"
+ *   imageWidth="350px"
+ *   imageHeight="350px"
+ * />
+ * 
+ * // With overlay content
+ * <TiltedCard 
+ *   imageSrc="/path/to/image.jpg"
+ *   displayOverlayContent={true}
+ *   overlayContent={<div className="p-4 text-white">Overlay Content</div>}
+ * />
+ * ```
+ */
+const TiltedCard = memo(function TiltedCard({
   imageSrc,
   altText = 'Tilted card image',
   captionText = '',
@@ -39,7 +71,9 @@ export default function TiltedCard({
   showMobileWarning = true,
   showTooltip = true,
   overlayContent = null,
-  displayOverlayContent = false
+  displayOverlayContent = false,
+  className,
+  ...props
 }: TiltedCardProps) {
   const ref = useRef<HTMLElement>(null);
   const x = useMotionValue(0);
@@ -56,6 +90,10 @@ export default function TiltedCard({
 
   const [lastY, setLastY] = useState(0);
 
+  /**
+   * Handle mouse movement over the card
+   * Calculates rotation based on mouse position relative to card center
+   */
   function handleMouse(e: React.MouseEvent<HTMLElement>) {
     if (!ref.current) return;
 
@@ -77,11 +115,19 @@ export default function TiltedCard({
     setLastY(offsetY);
   }
 
+  /**
+   * Handle mouse entering the card
+   * Activates the hover effect with scaling and tooltip
+   */
   function handleMouseEnter() {
     scale.set(scaleOnHover);
     opacity.set(1);
   }
 
+  /**
+   * Handle mouse leaving the card
+   * Resets all effects to their default state
+   */
   function handleMouseLeave() {
     opacity.set(0);
     scale.set(1);
@@ -93,7 +139,7 @@ export default function TiltedCard({
   return (
     <figure
       ref={ref}
-      className="relative w-full h-full [perspective:800px] flex flex-col items-center justify-center"
+      className={cn(styles.container, className)}
       style={{
         height: containerHeight,
         width: containerWidth
@@ -101,15 +147,16 @@ export default function TiltedCard({
       onMouseMove={handleMouse}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      {...props}
     >
       {showMobileWarning && (
-        <div className="absolute top-4 text-center text-sm block sm:hidden">
+        <div className={styles['mobile-warning']}>
           This effect is not optimized for mobile. Check on desktop.
         </div>
       )}
 
       <motion.div
-        className="relative [transform-style:preserve-3d]"
+        className={styles.card}
         style={{
           width: imageWidth,
           height: imageHeight,
@@ -121,7 +168,7 @@ export default function TiltedCard({
         <motion.img
           src={imageSrc}
           alt={altText}
-          className="absolute top-0 left-0 object-cover rounded-[15px] will-change-transform [transform:translateZ(0)]"
+          className={styles.image}
           style={{
             width: imageWidth,
             height: imageHeight
@@ -129,7 +176,7 @@ export default function TiltedCard({
         />
 
         {displayOverlayContent && overlayContent && (
-          <motion.div className="absolute top-0 left-0 z-[2] will-change-transform [transform:translateZ(30px)]">
+          <motion.div className={styles.overlay}>
             {overlayContent}
           </motion.div>
         )}
@@ -137,17 +184,21 @@ export default function TiltedCard({
 
       {showTooltip && (
         <motion.figcaption
-          className="pointer-events-none absolute left-0 top-0 rounded-[4px] bg-white px-[10px] py-[4px] text-[10px] text-[#2d2d2d] opacity-0 z-[3] hidden sm:block"
+          className={styles.caption}
           style={{
             x,
             y,
             opacity,
             rotate: rotateFigcaption
           }}
+          aria-hidden={opacity.get() === 0}
         >
           {captionText}
         </motion.figcaption>
       )}
     </figure>
   );
-}
+});
+
+export { TiltedCard };
+export default TiltedCard;

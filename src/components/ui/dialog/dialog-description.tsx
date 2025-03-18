@@ -5,18 +5,26 @@ import * as React from 'react';
 import { memo, useMemo } from 'react';
 
 import { cn } from '@/utils/app.utils';
+import styles from './dialog.module.css';
 import { DialogDescriptionProps } from './dialog.types';
 
 /**
  * Dialog Description Component
  * The description of the dialog
+ *
+ * @example
+ * ```tsx
+ * <DialogDescription>
+ *   This is a description of the dialog content and purpose.
+ * </DialogDescription>
+ * ```
  */
 const DialogDescription = memo(React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
   DialogDescriptionProps
 >(({ className, ...props }, ref) => {
   const descriptionClassName = useMemo(() => {
-    return cn('text-sm text-muted-foreground', className);
+    return cn(styles['dialog-description'], className);
   }, [className]);
 
   return (

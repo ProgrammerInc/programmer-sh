@@ -1,5 +1,6 @@
-import ContextMenu from './context-menu';
+/**
+ * Context Menu components and types exports
+ */
 
 export * from './context-menu';
-
-export default ContextMenu;
+export * from './context-menu.types';

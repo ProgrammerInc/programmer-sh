@@ -1,5 +1,7 @@
-import Counter from './counter';
+/**
+ * Counter component and types exports
+ */
 
 export * from './counter';
-
-export default Counter;
+export * from './counter.types';
+export { default } from './counter';

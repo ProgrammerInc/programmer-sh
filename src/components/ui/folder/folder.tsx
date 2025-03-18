@@ -1,14 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 
-export interface FolderProps {
-  color?: string;
-  size?: number;
-  items?: React.ReactNode[];
-  className?: string;
-}
+import { cn } from '@/utils/app.utils';
+import styles from './folder.module.css';
+import { FolderProps, Offset } from './folder.types';
 
+/**
+ * Darkens a hex color by a given percentage
+ *
+ * @param hex - Hex color code (with or without #)
+ * @param percent - Percentage to darken (0-1)
+ * @returns Darkened hex color
+ */
 const darkenColor = (hex: string, percent: number): string => {
   let color = hex.startsWith('#') ? hex.slice(1) : hex;
   if (color.length === 3) {
@@ -27,12 +31,31 @@ const darkenColor = (hex: string, percent: number): string => {
   return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
 };
 
-const Folder: React.FC<FolderProps> = ({
+/**
+ * Folder Component
+ *
+ * A folder component that can be opened to reveal its contents.
+ * Supports up to 3 items which animate when the folder is opened.
+ *
+ * @example
+ * ```tsx
+ * <Folder
+ *   color="#00d8ff"
+ *   size={1.2}
+ *   items={[
+ *     <div>Document 1</div>,
+ *     <div>Document 2</div>,
+ *     <div>Document 3</div>
+ *   ]}
+ * />
+ * ```
+ */
+const Folder = memo(function Folder({
   color = '#00d8ff',
   size = 1,
   items = [],
   className = ''
-}) => {
+}: FolderProps) {
   const maxItems = 3;
   const papers = items.slice(0, maxItems);
   while (papers.length < maxItems) {
@@ -40,7 +63,7 @@ const Folder: React.FC<FolderProps> = ({
   }
 
   const [open, setOpen] = useState(false);
-  const [paperOffsets, setPaperOffsets] = useState<{ x: number; y: number }[]>(
+  const [paperOffsets, setPaperOffsets] = useState<Offset[]>(
     Array.from({ length: maxItems }, () => ({ x: 0, y: 0 }))
   );
 
@@ -49,6 +72,9 @@ const Folder: React.FC<FolderProps> = ({
   const paper2 = darkenColor('#ffffff', 0.05);
   const paper3 = '#ffffff';
 
+  /**
+   * Handles clicking the folder to toggle its open state
+   */
   const handleClick = () => {
     setOpen(prev => !prev);
     if (open) {
@@ -56,6 +82,9 @@ const Folder: React.FC<FolderProps> = ({
     }
   };
 
+  /**
+   * Handles mouse movement over a paper to add parallax effect
+   */
   const handlePaperMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, index: number) => {
     if (!open) return;
     const rect = e.currentTarget.getBoundingClientRect();
@@ -70,6 +99,9 @@ const Folder: React.FC<FolderProps> = ({
     });
   };
 
+  /**
+   * Handles mouse leaving a paper to reset its position
+   */
   const handlePaperMouseLeave = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     index: number
@@ -81,6 +113,7 @@ const Folder: React.FC<FolderProps> = ({
     });
   };
 
+  // CSS custom properties for colors
   const folderStyle: React.CSSProperties = {
     '--folder-color': color,
     '--folder-back-color': folderBackColor,
@@ -92,6 +125,9 @@ const Folder: React.FC<FolderProps> = ({
   // Outer scale style
   const scaleStyle = { transform: `scale(${size})` };
 
+  /**
+   * Gets the transform style for open papers
+   */
   const getOpenTransform = (index: number) => {
     if (index === 0) return 'translate(-120%, -70%) rotate(-15deg)';
     if (index === 1) return 'translate(10%, -70%) rotate(15deg)';
@@ -102,30 +138,24 @@ const Folder: React.FC<FolderProps> = ({
   return (
     <div style={scaleStyle} className={className}>
       <div
-        className={`group relative transition-all duration-200 ease-in cursor-pointer ${
-          !open ? 'hover:-translate-y-2' : ''
-        }`}
-        style={{
-          ...folderStyle,
-          transform: open ? 'translateY(-8px)' : undefined
-        }}
+        className={cn(
+          styles.folder,
+          open && styles.open
+        )}
+        style={folderStyle}
         onClick={handleClick}
       >
         <div
-          className="relative w-[100px] h-[80px] rounded-tl-0 rounded-tr-[10px] rounded-br-[10px] rounded-bl-[10px]"
+          className={styles['folder-back']}
           style={{ backgroundColor: folderBackColor }}
         >
           <span
-            className="absolute z-0 bottom-[98%] left-0 w-[30px] h-[10px] rounded-tl-[5px] rounded-tr-[5px] rounded-bl-0 rounded-br-0"
+            className={styles['folder-tab']}
             style={{ backgroundColor: folderBackColor }}
           ></span>
           {/* Render papers */}
           {papers.map((item, i) => {
-            let sizeClasses = '';
-            if (i === 0) sizeClasses = open ? 'w-[70%] h-[80%]' : 'w-[70%] h-[80%]';
-            if (i === 1) sizeClasses = open ? 'w-[80%] h-[80%]' : 'w-[80%] h-[70%]';
-            if (i === 2) sizeClasses = open ? 'w-[90%] h-[80%]' : 'w-[90%] h-[60%]';
-
+            const paperClass = `paper-${i + 1}`;
             const transformStyle = open
               ? `${getOpenTransform(i)} translate(${paperOffsets[i].x}px, ${paperOffsets[i].y}px)`
               : undefined;
@@ -135,15 +165,14 @@ const Folder: React.FC<FolderProps> = ({
                 key={i}
                 onMouseMove={e => handlePaperMouseMove(e, i)}
                 onMouseLeave={e => handlePaperMouseLeave(e, i)}
-                className={`absolute z-20 bottom-[10%] left-1/2 transition-all duration-300 ease-in-out ${
-                  !open
-                    ? 'transform -translate-x-1/2 translate-y-[10%] group-hover:translate-y-0'
-                    : 'hover:scale-110'
-                } ${sizeClasses}`}
+                className={cn(
+                  styles.paper,
+                  styles[paperClass],
+                  open && styles.open
+                )}
                 style={{
                   ...(!open ? {} : { transform: transformStyle }),
-                  backgroundColor: i === 0 ? paper1 : i === 1 ? paper2 : paper3,
-                  borderRadius: '10px'
+                  backgroundColor: i === 0 ? paper1 : i === 1 ? paper2 : paper3
                 }}
               >
                 {item}
@@ -151,29 +180,27 @@ const Folder: React.FC<FolderProps> = ({
             );
           })}
           <div
-            className={`absolute z-30 w-full h-full origin-bottom transition-all duration-300 ease-in-out ${
-              !open ? 'group-hover:[transform:skew(15deg)_scaleY(0.6)]' : ''
-            }`}
-            style={{
-              backgroundColor: color,
-              borderRadius: '5px 10px 10px 10px',
-              ...(open && { transform: 'skew(15deg) scaleY(0.6)' })
-            }}
+            className={cn(
+              styles.cover,
+              styles['cover-left'],
+              open && styles.open
+            )}
+            style={{ backgroundColor: color }}
           ></div>
           <div
-            className={`absolute z-30 w-full h-full origin-bottom transition-all duration-300 ease-in-out ${
-              !open ? 'group-hover:[transform:skew(-15deg)_scaleY(0.6)]' : ''
-            }`}
-            style={{
-              backgroundColor: color,
-              borderRadius: '5px 10px 10px 10px',
-              ...(open && { transform: 'skew(-15deg) scaleY(0.6)' })
-            }}
+            className={cn(
+              styles.cover,
+              styles['cover-right'],
+              open && styles.open
+            )}
+            style={{ backgroundColor: color }}
           ></div>
         </div>
       </div>
     </div>
   );
-};
+});
+
+Folder.displayName = 'Folder';
 
 export default Folder;

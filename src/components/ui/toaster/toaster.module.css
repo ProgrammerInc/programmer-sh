@@ -1,0 +1,26 @@
+/** 
+ * Toaster UI Component Styles
+ * CSS Module for styling the Toaster component
+ */
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.toast-wrapper {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.toast-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .container {
+    transition: opacity 200ms ease-in-out;
+  }
+}

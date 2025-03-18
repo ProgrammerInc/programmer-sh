@@ -1,7 +1,19 @@
 'use client';
 
 import { mat4, quat, vec2, vec3 } from 'gl-matrix';
-import { FC, MutableRefObject, useEffect, useRef, useState } from 'react';
+import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+import { cn } from '@/utils/app.utils';
+import styles from './infinite-menu.module.css';
+import {
+  ActiveItemCallback,
+  Camera,
+  InitCallback,
+  InfiniteMenuProps,
+  MenuItem,
+  MovementChangeCallback
+} from './infinite-menu.types';
 
 // -------- Shader Sources --------
 const discVertShaderSource = `#version 300 es
@@ -667,33 +679,7 @@ class ArcballControl {
 }
 
 // -------- InfiniteGridMenu --------
-interface MenuItem {
-  image: string;
-  link: string;
-  title: string;
-  description: string;
-}
-
-type ActiveItemCallback = (index: number) => void;
-type MovementChangeCallback = (isMoving: boolean) => void;
-type InitCallback = (instance: InfiniteGridMenu) => void;
-
-interface Camera {
-  matrix: mat4;
-  near: number;
-  far: number;
-  fov: number;
-  aspect: number;
-  position: vec3;
-  up: vec3;
-  matrices: {
-    view: mat4;
-    projection: mat4;
-    inversProjection: mat4;
-  };
-}
-
-export class InfiniteGridMenu {
+class InfiniteGridMenu {
   private gl: WebGL2RenderingContext | null = null;
   private discProgram: WebGLProgram | null = null;
   private discVAO: WebGLVertexArrayObject | null = null;
@@ -812,7 +798,6 @@ export class InfiniteGridMenu {
 
     this.discProgram = createProgram(gl, [discVertShaderSource, discFragShaderSource], null, {
       aModelPosition: 0,
-      aModelNormal: 1, // not used in the code, but let's keep the location
       aModelUvs: 2,
       aInstanceMatrix: 3
     });
@@ -1133,14 +1118,28 @@ const defaultItems: MenuItem[] = [
 
 // -------- React Component --------
 
-interface InfiniteMenuProps {
-  items?: MenuItem[];
-}
-
-const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(
-    null
-  ) as MutableRefObject<HTMLCanvasElement | null>;
+/**
+ * InfiniteMenu Component
+ * 
+ * A WebGL-based 3D interactive menu with grid items.
+ * Uses gl-matrix for 3D matrix operations and implements a custom WebGL renderer.
+ * 
+ * @example
+ * ```tsx
+ * <InfiniteMenu 
+ *   items={[
+ *     {
+ *       image: '/images/item1.jpg',
+ *       link: '/page1',
+ *       title: 'First Item',
+ *       description: 'Description of the first item'
+ *     }
+ *   ]} 
+ * />
+ * ```
+ */
+const InfiniteMenu = React.memo(function InfiniteMenu({ items = [] }: InfiniteMenuProps): JSX.Element {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
   const [isMoving, setIsMoving] = useState<boolean>(false);
 
@@ -1189,56 +1188,31 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
   };
 
   return (
-    <div className="relative w-full h-full">
+    <div className={styles.container}>
       <canvas
         id="infinite-grid-menu-canvas"
         ref={canvasRef}
-        className="cursor-grab w-full h-full overflow-hidden relative outline-none active:cursor-grabbing"
+        className={styles.canvas}
       />
 
       {activeItem && (
         <>
           {/* Title */}
           <h2
-            className={`
-          select-none
-          absolute
-          font-black
-          [font-size:4rem]
-          left-[1.6em]
-          top-1/2
-          transform
-          translate-x-[20%]
-          -translate-y-1/2
-          transition-all
-          ease-&lsqb;cubic-bezier(0.25,0.1,0.25,1.0)&rsqb;
-          ${
-            isMoving
-              ? 'opacity-0 pointer-events-none duration-&lsqb;100ms&rsqb;'
-              : 'opacity-100 pointer-events-auto duration-&lsqb;500ms&rsqb;'
-          }
-        `}
+            className={cn(
+              styles.title,
+              isMoving ? styles['title-hidden'] : styles['title-visible']
+            )}
           >
             {activeItem.title}
           </h2>
 
           {/* Description */}
           <p
-            className={`
-          select-none
-          absolute
-          max-w-[10ch]
-          text-[1.5rem]
-          top-1/2
-          right-[1%]
-          transition-all
-          ease-&lsqb;cubic-bezier(0.25,0.1,0.25,1.0)&rsqb;
-          ${
-            isMoving
-              ? 'opacity-0 pointer-events-none duration-&lsqb;100ms&rsqb; translate-x-[-60%] -translate-y-1/2'
-              : 'opacity-100 pointer-events-auto duration-&lsqb;500ms&rsqb; translate-x-[-90%] -translate-y-1/2'
-          }
-        `}
+            className={cn(
+              styles.description,
+              isMoving ? styles['description-hidden'] : styles['description-visible']
+            )}
           >
             {activeItem.description}
           </p>
@@ -1246,34 +1220,19 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
           {/* Action Button */}
           <div
             onClick={handleButtonClick}
-            className={`
-          absolute
-          left-1/2
-          z-10
-          w-[60px]
-          h-[60px]
-          grid
-          place-items-center
-          bg-[#00ffff]
-          border-[5px]
-          border-black
-          rounded-full
-          cursor-pointer
-          transition-all
-          ease-&lsqb;cubic-bezier(0.25,0.1,0.25,1.0)&rsqb;
-          ${
-            isMoving
-              ? 'bottom-[-80px] opacity-0 pointer-events-none duration-&lsqb;100ms&rsqb; scale-0 -translate-x-1/2'
-              : 'bottom-[3.8em] opacity-100 pointer-events-auto duration-&lsqb;500ms&rsqb; scale-100 -translate-x-1/2'
-          }
-        `}
+            className={cn(
+              styles.button,
+              isMoving ? styles['button-hidden'] : styles['button-visible']
+            )}
           >
-            <p className="select-none relative text-[#060606] top-[2px] text-[26px]">&#x2197;</p>
+            <p className={styles['button-icon']}>&#x2197;</p>
           </div>
         </>
       )}
     </div>
   );
-};
+});
+
+InfiniteMenu.displayName = 'InfiniteMenu';
 
 export default InfiniteMenu;

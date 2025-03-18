@@ -1,3 +1,11 @@
+/* 
+ * InfiniteScroll Component Styles
+ * 
+ * Styles for an infinitely scrollable container with gradient overlays
+ * and support for tilted perspective.
+ */
+
+/* Wrapper - The outer container with gradient overlays */
 .infinite-scroll-wrapper {
   position: relative;
   display: flex;
@@ -8,15 +16,17 @@
   overscroll-behavior: none;
 }
 
+/* Gradient overlays for top and bottom fade effects */
 .infinite-scroll-wrapper::before,
 .infinite-scroll-wrapper::after {
   content: '';
   position: absolute;
-  background: linear-gradient(var(--dir, to bottom), black, transparent);
+  background: linear-gradient(var(--dir, to bottom), rgba(0, 0, 0, 0.8), transparent);
   height: 25%;
   width: 100%;
   z-index: 1;
   pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
 .infinite-scroll-wrapper::before {
@@ -28,6 +38,7 @@
   bottom: 0;
 }
 
+/* Container - The scrollable content container */
 .infinite-scroll-container {
   display: flex;
   flex-direction: column;
@@ -35,8 +46,14 @@
   padding-inline: 1rem;
   cursor: grab;
   transform-origin: center center;
+  transition: transform 0.3s ease;
 }
 
+.infinite-scroll-container:active {
+  cursor: grabbing;
+}
+
+/* Item - Individual items in the scroll container */
 .infinite-scroll-item {
   --accent-color: #ffffff;
   border-radius: 15px;
@@ -51,4 +68,19 @@
   user-select: none;
   box-sizing: border-box;
   position: relative;
+  transition: all 0.2s ease;
+}
+
+.infinite-scroll-item:hover {
+  transform: translateZ(5px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Modifier classes for different states */
+.infinite-scroll-tilted-left {
+  transform: rotateX(20deg) rotateZ(-20deg) skewX(20deg);
+}
+
+.infinite-scroll-tilted-right {
+  transform: rotateX(20deg) rotateZ(20deg) skewX(-20deg);
 }

@@ -1,0 +1,32 @@
+/**
+ * CommandLine component styles
+ */
+
+.command-line-container {
+  display: flex;
+  align-items: center;
+}
+
+.command-line-prompt {
+  font-family: monospace;
+  margin-right: 0.5rem;
+  color: var(--terminal-prompt, #10b981);
+}
+
+.command-line-input {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  font-family: monospace;
+  width: 100%;
+  color: var(--terminal-foreground, #e2e8f0);
+}
+
+.command-line-input:focus {
+  outline: none;
+}
+
+.command-line-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

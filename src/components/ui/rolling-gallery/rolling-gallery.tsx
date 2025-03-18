@@ -1,68 +1,100 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
+import { cn } from '@/utils/app.utils';
 import { PanInfo, motion, useAnimation, useMotionValue, useTransform } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 
-const IMGS: string[] = [
-  'https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  'https://images.unsplash.com/photo-1506665531195-3566af2b4dfa?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=3456&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  'https://images.unsplash.com/photo-1495103033382-fe343886b671?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  'https://images.unsplash.com/photo-1506781961370-37a89d6b3095?q=80&w=3264&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  'https://images.unsplash.com/photo-1599576838688-8a6c11263108?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  'https://images.unsplash.com/photo-1494094892896-7f14a4433b7a?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  'https://plus.unsplash.com/premium_photo-1664910706524-e783eed89e71?q=80&w=3869&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  'https://images.unsplash.com/photo-1503788311183-fa3bf9c4bc32?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  'https://images.unsplash.com/photo-1585970480901-90d6bb2a48b5?q=80&w=3774&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-];
+import styles from './rolling-gallery.module.css';
+import { RollingGalleryProps } from './rolling-gallery.types';
+import {
+  AUTOPLAY_DURATION,
+  DEFAULT_IMAGES,
+  DRAG_FACTOR,
+  calculateCarouselGeometry,
+  getFrameTransform
+} from './rolling-gallery.utils';
 
-export interface RollingGalleryProps {
-  autoplay?: boolean;
-  pauseOnHover?: boolean;
-  images?: string[];
-}
-
-export const RollingGallery: React.FC<RollingGalleryProps> = ({
+/**
+ * Rolling Gallery Component
+ * 
+ * A 3D rotating image carousel built with Framer Motion.
+ * Supports dragging, autoplay, and responsive design.
+ * 
+ * Features:
+ * - Interactive 3D rotating carousel
+ * - Drag to rotate manually
+ * - Optional autoplay with configurable behavior
+ * - Responsive design that adapts to screen size
+ * - Smooth animation and transitions
+ * 
+ * @example
+ * ```tsx
+ * // Basic usage
+ * <RollingGallery />
+ * 
+ * // With custom images and autoplay
+ * <RollingGallery 
+ *   images={[
+ *     '/image1.jpg',
+ *     '/image2.jpg',
+ *     '/image3.jpg'
+ *   ]}
+ *   autoplay
+ *   pauseOnHover
+ * />
+ * ```
+ */
+export const RollingGallery = memo(({ 
   autoplay = false,
   pauseOnHover = false,
-  images = []
-}) => {
+  images = [],
+  className
+}: RollingGalleryProps) => {
   // Use default images if none are provided
-  const galleryImages = images.length > 0 ? images : IMGS;
+  const galleryImages = images.length > 0 ? images : DEFAULT_IMAGES;
 
-  const [isScreenSizeSm, setIsScreenSizeSm] = useState<boolean>(window.innerWidth <= 640);
+  // Handle responsive layout
+  const [isScreenSizeSm, setIsScreenSizeSm] = useState<boolean>(false);
+  
   useEffect(() => {
+    // Initial check
+    setIsScreenSizeSm(window.innerWidth <= 640);
+    
+    // Listen for window resize events
     const handleResize = () => setIsScreenSizeSm(window.innerWidth <= 640);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // 3D geometry calculations
-  const cylinderWidth: number = isScreenSizeSm ? 1100 : 1800;
-  const faceCount: number = galleryImages.length;
-  const faceWidth: number = (cylinderWidth / faceCount) * 1.5;
-  const radius: number = cylinderWidth / (2 * Math.PI);
+  // Calculate 3D geometry based on screen size and number of images
+  const { cylinderWidth, faceWidth, radius } = calculateCarouselGeometry(
+    isScreenSizeSm,
+    galleryImages.length
+  );
 
   // Framer Motion values and controls
-  const dragFactor: number = 0.05;
   const rotation = useMotionValue(0);
   const controls = useAnimation();
 
   // Create a 3D transform based on the rotation motion value
   const transform = useTransform(rotation, (val: number) => `rotate3d(0,1,0,${val}deg)`);
 
+  /**
+   * Start infinite spinning animation
+   * @param startAngle The angle to start from
+   */
   const startInfiniteSpin = (startAngle: number) => {
     controls.start({
       rotateY: [startAngle, startAngle - 360],
       transition: {
-        duration: 20,
+        duration: AUTOPLAY_DURATION,
         ease: 'linear',
         repeat: Infinity
       }
     });
   };
 
+  // Handle autoplay state changes
   useEffect(() => {
     if (autoplay) {
       const currentAngle = rotation.get();
@@ -73,31 +105,46 @@ export const RollingGallery: React.FC<RollingGalleryProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoplay]);
 
-  const handleUpdate = (latest: any) => {
+  /**
+   * Update rotation value when animation runs
+   */
+  const handleUpdate = (latest: Record<string, unknown>) => {
     if (typeof latest.rotateY === 'number') {
       rotation.set(latest.rotateY);
     }
   };
 
-  const handleDrag = (_: any, info: PanInfo): void => {
+  /**
+   * Handle drag events for manual rotation
+   */
+  const handleDrag = (_: never, info: PanInfo): void => {
     controls.stop();
-    rotation.set(rotation.get() + info.offset.x * dragFactor);
+    rotation.set(rotation.get() + info.offset.x * DRAG_FACTOR);
   };
 
-  const handleDragEnd = (_: any, info: PanInfo): void => {
-    const finalAngle = rotation.get() + info.velocity.x * dragFactor;
+  /**
+   * Handle the end of a drag gesture
+   */
+  const handleDragEnd = (_: never, info: PanInfo): void => {
+    const finalAngle = rotation.get() + info.velocity.x * DRAG_FACTOR;
     rotation.set(finalAngle);
     if (autoplay) {
       startInfiniteSpin(finalAngle);
     }
   };
 
+  /**
+   * Handle mouse enter events for pause-on-hover
+   */
   const handleMouseEnter = (): void => {
     if (autoplay && pauseOnHover) {
       controls.stop();
     }
   };
 
+  /**
+   * Handle mouse leave events to resume autoplay
+   */
   const handleMouseLeave = (): void => {
     if (autoplay && pauseOnHover) {
       const currentAngle = rotation.get();
@@ -106,20 +153,11 @@ export const RollingGallery: React.FC<RollingGalleryProps> = ({
   };
 
   return (
-    <div className="relative h-[500px] w-full overflow-hidden">
-      <div
-        className="absolute top-0 left-0 h-full w-[48px] z-10"
-        style={{
-          background: 'linear-gradient(to left, rgba(0,0,0,0) 0%, #060606 100%)'
-        }}
-      />
-      <div
-        className="absolute top-0 right-0 h-full w-[48px] z-10"
-        style={{
-          background: 'linear-gradient(to right, rgba(0,0,0,0) 0%, #060606 100%)'
-        }}
-      />
-      <div className="flex h-full items-center justify-center [perspective:1000px] [transform-style:preserve-3d]">
+    <div className={cn(styles.container, className)}>
+      <div className={styles['left-gradient']} />
+      <div className={styles['right-gradient']} />
+      
+      <div className={styles['perspective-container']}>
         <motion.div
           drag="x"
           dragElastic={0}
@@ -135,21 +173,21 @@ export const RollingGallery: React.FC<RollingGalleryProps> = ({
             width: cylinderWidth,
             transformStyle: 'preserve-3d'
           }}
-          className="flex min-h-[200px] cursor-grab items-center justify-center [transform-style:preserve-3d]"
+          className={styles.carousel}
         >
           {galleryImages.map((url, i) => (
             <div
               key={i}
-              className="group absolute flex h-fit items-center justify-center p-[8%] [backface-visibility:hidden] md:p-[6%]"
+              className={styles.frame}
               style={{
                 width: `${faceWidth}px`,
-                transform: `rotateY(${(360 / faceCount) * i}deg) translateZ(${radius}px)`
+                ...getFrameTransform(i, galleryImages.length, radius)
               }}
             >
               <img
                 src={url}
-                alt="gallery"
-                className="pointer-events-none h-[120px] w-[300px] rounded-[15px] border-[3px] border-white object-cover transition-transform duration-300 ease-out group-hover:scale-105 sm:h-[100px] sm:w-[220px]"
+                alt={`Gallery image ${i + 1}`}
+                className={styles.image}
               />
             </div>
           ))}
@@ -157,6 +195,8 @@ export const RollingGallery: React.FC<RollingGalleryProps> = ({
       </div>
     </div>
   );
-};
+});
+
+RollingGallery.displayName = 'RollingGallery';
 
 export default RollingGallery;

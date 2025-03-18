@@ -5,6 +5,7 @@ import { memo, useMemo } from 'react';
 import { Drawer as DrawerPrimitive } from 'vaul';
 
 import { cn } from '@/utils/app.utils';
+import styles from './drawer.module.css';
 import {
   DrawerCloseProps,
   DrawerContentProps,
@@ -44,9 +45,9 @@ import {
  * </Drawer>
  * ```
  */
-const Drawer = memo(({ shouldScaleBackground = true, ...props }: DrawerProps) => (
-  <DrawerPrimitive.Root shouldScaleBackground={shouldScaleBackground} {...props} />
-));
+const Drawer = memo(function Drawer({ shouldScaleBackground = true, ...props }: DrawerProps) {
+  return <DrawerPrimitive.Root shouldScaleBackground={shouldScaleBackground} {...props} />;
+});
 
 Drawer.displayName = 'Drawer';
 
@@ -54,6 +55,13 @@ Drawer.displayName = 'Drawer';
  * DrawerTrigger component
  * 
  * Element that triggers the drawer to open when clicked.
+ * 
+ * @example
+ * ```tsx
+ * <DrawerTrigger asChild>
+ *   <Button>Open drawer</Button>
+ * </DrawerTrigger>
+ * ```
  */
 const DrawerTrigger = memo(DrawerPrimitive.Trigger) as typeof DrawerPrimitive.Trigger;
 DrawerTrigger.displayName = DrawerPrimitive.Trigger.displayName;
@@ -62,16 +70,31 @@ DrawerTrigger.displayName = DrawerPrimitive.Trigger.displayName;
  * DrawerPortal component
  * 
  * Portals the drawer content into the body.
+ * 
+ * @example
+ * ```tsx
+ * <DrawerPortal>
+ *   <DrawerOverlay />
+ *   <DrawerContent>...</DrawerContent>
+ * </DrawerPortal>
+ * ```
  */
-const DrawerPortal = memo(({ ...props }: DrawerPortalProps) => (
-  <DrawerPrimitive.Portal {...props} />
-));
+const DrawerPortal = memo(function DrawerPortal({ ...props }: DrawerPortalProps) {
+  return <DrawerPrimitive.Portal {...props} />;
+});
 DrawerPortal.displayName = 'DrawerPortal';
 
 /**
  * DrawerClose component
  * 
  * Element that closes the drawer when clicked.
+ * 
+ * @example
+ * ```tsx
+ * <DrawerClose asChild>
+ *   <Button variant="outline">Cancel</Button>
+ * </DrawerClose>
+ * ```
  */
 const DrawerClose = memo(DrawerPrimitive.Close) as typeof DrawerPrimitive.Close;
 DrawerClose.displayName = DrawerPrimitive.Close.displayName;
@@ -80,13 +103,18 @@ DrawerClose.displayName = DrawerPrimitive.Close.displayName;
  * DrawerOverlay component
  * 
  * Covers the viewport when the drawer is open.
+ * 
+ * @example
+ * ```tsx
+ * <DrawerOverlay />
+ * ```
  */
 const DrawerOverlay = memo(React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Overlay>,
   DrawerOverlayProps
->(({ className, ...props }, ref) => {
+>(function DrawerOverlay({ className, ...props }, ref) {
   const overlayClassName = useMemo(() => {
-    return cn('fixed inset-0 z-50 bg-black/80', className);
+    return cn(styles['drawer-overlay'], className);
   }, [className]);
 
   return (
@@ -104,16 +132,22 @@ DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
  * DrawerContent component
  * 
  * Contains the content for the drawer.
+ * 
+ * @example
+ * ```tsx
+ * <DrawerContent>
+ *   <DrawerHeader>...</DrawerHeader>
+ *   <div className="p-4">Main content</div>
+ *   <DrawerFooter>...</DrawerFooter>
+ * </DrawerContent>
+ * ```
  */
 const DrawerContent = memo(React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
   DrawerContentProps
->(({ className, children, ...props }, ref) => {
+>(function DrawerContent({ className, children, ...props }, ref) {
   const contentClassName = useMemo(() => {
-    return cn(
-      'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background',
-      className
-    );
+    return cn(styles['drawer-content'], className);
   }, [className]);
 
   return (
@@ -124,7 +158,7 @@ const DrawerContent = memo(React.forwardRef<
         className={contentClassName}
         {...props}
       >
-        <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+        <div className={styles['drawer-handle']} />
         {children}
       </DrawerPrimitive.Content>
     </DrawerPortal>
@@ -137,10 +171,18 @@ DrawerContent.displayName = 'DrawerContent';
  * DrawerHeader component
  * 
  * Container for the drawer title and description.
+ * 
+ * @example
+ * ```tsx
+ * <DrawerHeader>
+ *   <DrawerTitle>Settings</DrawerTitle>
+ *   <DrawerDescription>Configure your application settings.</DrawerDescription>
+ * </DrawerHeader>
+ * ```
  */
-const DrawerHeader = memo(({ className, ...props }: DrawerHeaderProps) => {
+const DrawerHeader = memo(function DrawerHeader({ className, ...props }: DrawerHeaderProps) {
   const headerClassName = useMemo(() => {
-    return cn('grid gap-1.5 p-4 text-center sm:text-left', className);
+    return cn(styles['drawer-header'], className);
   }, [className]);
 
   return <div className={headerClassName} {...props} />;
@@ -152,10 +194,20 @@ DrawerHeader.displayName = 'DrawerHeader';
  * DrawerFooter component
  * 
  * Container for the drawer actions.
+ * 
+ * @example
+ * ```tsx
+ * <DrawerFooter>
+ *   <Button>Save changes</Button>
+ *   <DrawerClose asChild>
+ *     <Button variant="outline">Cancel</Button>
+ *   </DrawerClose>
+ * </DrawerFooter>
+ * ```
  */
-const DrawerFooter = memo(({ className, ...props }: DrawerFooterProps) => {
+const DrawerFooter = memo(function DrawerFooter({ className, ...props }: DrawerFooterProps) {
   const footerClassName = useMemo(() => {
-    return cn('mt-auto flex flex-col gap-2 p-4', className);
+    return cn(styles['drawer-footer'], className);
   }, [className]);
 
   return <div className={footerClassName} {...props} />;
@@ -167,13 +219,18 @@ DrawerFooter.displayName = 'DrawerFooter';
  * DrawerTitle component
  * 
  * The title of the drawer.
+ * 
+ * @example
+ * ```tsx
+ * <DrawerTitle>Edit Profile</DrawerTitle>
+ * ```
  */
 const DrawerTitle = memo(React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Title>,
   DrawerTitleProps
->(({ className, ...props }, ref) => {
+>(function DrawerTitle({ className, ...props }, ref) {
   const titleClassName = useMemo(() => {
-    return cn('text-lg font-semibold leading-none tracking-tight', className);
+    return cn(styles['drawer-title'], className);
   }, [className]);
 
   return (
@@ -191,13 +248,20 @@ DrawerTitle.displayName = DrawerPrimitive.Title.displayName;
  * DrawerDescription component
  * 
  * The description of the drawer.
+ * 
+ * @example
+ * ```tsx
+ * <DrawerDescription>
+ *   Make changes to your profile here. Click save when you're done.
+ * </DrawerDescription>
+ * ```
  */
 const DrawerDescription = memo(React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Description>,
   DrawerDescriptionProps
->(({ className, ...props }, ref) => {
+>(function DrawerDescription({ className, ...props }, ref) {
   const descriptionClassName = useMemo(() => {
-    return cn('text-sm text-muted-foreground', className);
+    return cn(styles['drawer-description'], className);
   }, [className]);
 
   return (

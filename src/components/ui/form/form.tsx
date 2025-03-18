@@ -4,10 +4,12 @@ import * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 import * as React from 'react';
 import { Controller, FieldPath, FieldValues, FormProvider } from 'react-hook-form';
+
 import { Label } from '@/components/ui/label/label';
 import { cn } from '@/utils/app.utils';
 import { FormFieldContext, FormItemContext } from './form.context';
 import { useFormField } from './form.hooks';
+import styles from './form.module.css';
 import {
   FormControlProps,
   FormDescriptionProps,
@@ -18,12 +20,21 @@ import {
 } from './form.types';
 
 /**
- * Form component wrapper for react-hook-form FormProvider
+ * Form Component
+ * 
+ * A wrapper around react-hook-form's FormProvider.
+ * Creates the form context for handling form state management.
  */
 const Form = FormProvider;
 
 /**
- * Form Field component for handling form field context
+ * FormField Component
+ * 
+ * Provides a context wrapper for a form field.
+ * Uses react-hook-form's Controller to manage the field's state.
+ * 
+ * @template TFieldValues The type of the form values
+ * @template TName The type of the field name
  */
 const FormField = React.memo(
   <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>(
@@ -37,8 +48,13 @@ const FormField = React.memo(
   }
 );
 
+FormField.displayName = 'FormField';
+
 /**
- * Form Item component for grouping form elements
+ * FormItem Component
+ * 
+ * A container for form elements with consistent spacing.
+ * Provides context for child components.
  */
 const FormItem = React.memo(
   React.forwardRef<HTMLDivElement, FormItemProps>(({ className, ...props }, ref) => {
@@ -46,7 +62,7 @@ const FormItem = React.memo(
 
     return (
       <FormItemContext.Provider value={{ id }}>
-        <div className={cn('space-y-2', className)} ref={ref} {...props} />
+        <div className={cn(styles['form-item'], className)} ref={ref} {...props} />
       </FormItemContext.Provider>
     );
   })
@@ -55,7 +71,10 @@ const FormItem = React.memo(
 FormItem.displayName = 'FormItem';
 
 /**
- * Form Label component for form field labels
+ * FormLabel Component
+ * 
+ * A label for form inputs with error styling.
+ * Automatically connects to its input field using context.
  */
 const FormLabel = React.memo(
   React.forwardRef<React.ElementRef<typeof LabelPrimitive.Root>, FormLabelProps>(
@@ -64,7 +83,11 @@ const FormLabel = React.memo(
 
       return (
         <Label
-          className={cn(error && 'text-destructive', className)}
+          className={cn(
+            styles['form-label'],
+            error && styles['form-label-error'],
+            className
+          )}
           htmlFor={formItemId}
           ref={ref}
           {...props}
@@ -77,10 +100,13 @@ const FormLabel = React.memo(
 FormLabel.displayName = 'FormLabel';
 
 /**
- * Form Control component for form inputs
+ * FormControl Component
+ * 
+ * A wrapper for form inputs that adds required accessibility attributes.
+ * Connects inputs to their labels, descriptions, and error messages.
  */
 const FormControl = React.memo(
-  React.forwardRef<React.ElementRef<typeof Slot>, FormControlProps>(({ ...props }, ref) => {
+  React.forwardRef<React.ElementRef<typeof Slot>, FormControlProps>(({ className, ...props }, ref) => {
     const { error, formDescriptionId, formItemId, formMessageId } = useFormField();
 
     return (
@@ -89,6 +115,7 @@ const FormControl = React.memo(
           !error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`
         }
         aria-invalid={!!error}
+        className={cn(styles['form-control'], className)}
         id={formItemId}
         ref={ref}
         {...props}
@@ -100,7 +127,10 @@ const FormControl = React.memo(
 FormControl.displayName = 'FormControl';
 
 /**
- * Form Description component for describing form fields
+ * FormDescription Component
+ * 
+ * A text component for providing additional information about a form field.
+ * Uses a consistent style and connects to its field using context.
  */
 const FormDescription = React.memo(
   React.forwardRef<HTMLParagraphElement, FormDescriptionProps>(
@@ -109,7 +139,7 @@ const FormDescription = React.memo(
 
       return (
         <p
-          className={cn('text-sm text-muted-foreground', className)}
+          className={cn(styles['form-description'], className)}
           id={formDescriptionId}
           ref={ref}
           {...props}
@@ -122,7 +152,10 @@ const FormDescription = React.memo(
 FormDescription.displayName = 'FormDescription';
 
 /**
- * Form Message component for displaying form errors
+ * FormMessage Component
+ * 
+ * A component for displaying validation errors.
+ * Automatically shows error messages from react-hook-form.
  */
 const FormMessage = React.memo(
   React.forwardRef<HTMLParagraphElement, FormMessageProps>(
@@ -136,7 +169,7 @@ const FormMessage = React.memo(
 
       return (
         <p
-          className={cn('text-sm font-medium text-destructive', className)}
+          className={cn(styles['form-message'], className)}
           id={formMessageId}
           ref={ref}
           {...props}

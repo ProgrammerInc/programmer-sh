@@ -1,0 +1,58 @@
+/**
+ * Sonner toast notification styles
+ */
+
+/* Toaster container */
+.toaster {
+  --viewport-padding: 25px;
+  position: fixed;
+  top: var(--viewport-padding);
+  right: var(--viewport-padding);
+  left: var(--viewport-padding);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+/* Base toast styling */
+.toast {
+  background-color: var(--background);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  position: relative;
+  display: flex;
+  gap: 10px;
+  padding: 16px;
+  width: 100%;
+  pointer-events: auto;
+}
+
+/* Description text in toast */
+.description {
+  color: var(--muted-foreground);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Action button styling */
+.action-button {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Cancel button styling */
+.cancel-button {
+  background-color: var(--muted);
+  color: var(--muted-foreground);
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+}

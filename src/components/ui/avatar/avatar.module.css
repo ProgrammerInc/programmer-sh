@@ -1,0 +1,32 @@
+/**
+ * Avatar Component Styles
+ */
+
+/* Base avatar container */
+.avatar-root {
+  position: relative;
+  display: flex;
+  height: 2.5rem; /* h-10 */
+  width: 2.5rem; /* w-10 */
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 9999px; /* rounded-full */
+}
+
+/* Avatar image */
+.avatar-image {
+  aspect-ratio: 1 / 1;
+  height: 100%;
+  width: 100%;
+}
+
+/* Fallback for when image fails to load */
+.avatar-fallback {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px; /* rounded-full */
+  background-color: var(--muted);
+}

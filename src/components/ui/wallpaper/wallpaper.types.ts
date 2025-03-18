@@ -1,3 +1,6 @@
+'use client';
+
+import type { CSSProperties } from 'react';
 import {
   AuroraBackgroundProps,
   AuroraCanvasProps,
@@ -9,7 +12,7 @@ import {
   BlobBackgroundProps,
   CosmicSceneProps,
   DitherProps,
-  GlobeProps,
+  OrbProps,
   GradientAnimationProps,
   GradientMeshProps,
   GridDistortionProps,
@@ -33,8 +36,8 @@ import {
   SparklesProps,
   SphereAnimationProps,
   SpotlightProps,
+  StarsBackgroundProps,
   SquaresProps,
-  StarBackgroundProps,
   StarfallProps,
   StarryBackgroundProps,
   SwarmEffectProps,
@@ -42,76 +45,171 @@ import {
   VortexProps,
   WavesProps,
   WavyBackgroundProps,
-  WorldMapProps
+  WorldMapProps,
+  AuroraProps,
+  BackgroundLinesProps,
 } from '@/components/animations';
-import { AuroraProps } from '@/components/animations/aurora/aurora.types';
-import { BackgroundLinesProps } from '@/components/animations/background-lines/background-lines.types';
-import { CSSProperties } from 'react';
 
-export type AspectRatioType = '16:9' | '4:3' | '1:1';
-export type AnimationType = 'aceternity' | 'artifact-ui' | 'css' | 'react' | 'reactbits' | 'three';
-export type ColorType = 'hex' | 'rgb' | 'rgba' | 'hsl' | 'hsla';
-export type GradientType = 'linear' | 'radial';
-export type ImageType = 'base64' | 'file' | 'url';
-export type ImageMimeType = 'image/avif' | 'image/gif' | 'image/jpeg' | 'image/png' | 'image/webp';
-export type ImageSourceType = 'cloud' | 'generated' | 'local' | 'remote' | 'upload';
-export type GeneratedImageSource =
-  | 'dall-e'
-  | 'firefly'
-  | 'flux'
-  | 'ideogram'
-  | 'janus'
-  | 'midjourney'
-  | 'playground'
-  | 'stable-diffusion';
-export type RemoteImageSource = 'pexels' | 'pixabay' | 'unsplash';
-export type PatternType = 'css' | 'image' | 'video';
-export type OrientationType = 'horizontal' | 'vertical';
-export type StorageType = 'cloud' | 'database' | 'local' | 'remote';
-export type CloudStorageType =
-  | 'adobe'
-  | 'azure'
-  | 'backblaze'
-  | 'box'
-  | 'dropbox'
-  | 'gcp'
-  | 'google'
-  | 'oneDrive'
-  | 's3'
-  | 'storj'
-  | 'yandex';
-export type RemoteStorageType =
-  | 'ftp'
-  | 'git'
-  | 'ipfs'
-  | 'iscsi'
-  | 'nfs'
-  | 'rsync'
-  | 'scp'
-  | 'smb'
-  | 'sftp'
-  | 'url'
-  | 'webdav';
-export type WallpaperThemeType = 'light' | 'dark' | 'system';
-export type VideoType = 'base64' | 'file' | 'url';
-export type VideoMimeType = 'video/mp4' | 'video/webm';
-export type VideoSourceType = 'cloud' | 'generated' | 'local' | 'remote' | 'upload';
-export type GeneratedVideoSource = 'kling' | 'runway' | 'sora';
-export type RemoteVideoSource = 'dailymotion' | 'vimeo' | 'youtube';
-export type WallpaperType =
-  | 'default'
-  | 'animation'
-  | 'color'
-  | 'gradient'
-  | 'image'
-  | 'pattern'
+/**
+ * Aspect ratio type for images and videos
+ */
+export type AspectRatioType = '1:1' | '4:3' | '16:9' | '21:9' | 'auto';
+
+/**
+ * Animation type enum
+ */
+export type AnimationType = 'particles' | 'lines' | 'waves' | 'gradient' | 'custom';
+
+/**
+ * Color type enum
+ */
+export type ColorType = 'rgb' | 'rgba' | 'hsl' | 'hsla' | 'hex';
+
+/**
+ * Gradient type enum
+ */
+export type GradientType = 'linear' | 'radial' | 'conic';
+
+/**
+ * Image type enum
+ */
+export type ImageType = 'static' | 'dynamic' | 'gif';
+
+/**
+ * Image MIME type enum
+ */
+export type ImageMimeType = 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp';
+
+/**
+ * Image source type enum
+ */
+export type ImageSourceType = 'generated' | 'remote';
+
+/**
+ * Generated image source interface
+ */
+export interface GeneratedImageSource {
+  id: string;
+  seed?: number;
+  prompt?: string;
+  negativePrompt?: string;
+  model?: string;
+  steps?: number;
+}
+
+/**
+ * Remote image source interface
+ */
+export type RemoteImageSource = string;
+
+/**
+ * Pattern type enum
+ */
+export type PatternType = 'dots' | 'lines' | 'grid' | 'custom';
+
+/**
+ * Orientation type enum
+ */
+export type OrientationType = 'landscape' | 'portrait';
+
+/**
+ * Storage type enum
+ */
+export type StorageType = 'cloud' | 'remote';
+
+/**
+ * Cloud storage type interface
+ */
+export interface CloudStorageType {
+  provider: 'aws' | 'gcp' | 'azure' | 'cloudinary';
+  region?: string;
+  bucket?: string;
+  folder?: string;
+  filename?: string;
+  accessKey?: string;
+  secretKey?: string;
+  baseUrl?: string;
+  customDomain?: string;
+}
+
+/**
+ * Remote storage type interface
+ */
+export interface RemoteStorageType {
+  provider: 'github' | 'gitlab' | 'bitbucket' | 'custom';
+  owner?: string;
+  repo?: string;
+  branch?: string;
+  folder?: string;
+  filename?: string;
+  token?: string;
+  baseUrl?: string;
+  customDomain?: string;
+}
+
+/**
+ * Wallpaper theme type enum
+ */
+export type WallpaperThemeType = 'light' | 'dark' | 'auto';
+
+/**
+ * Video type enum
+ */
+export type VideoType = 'mp4' | 'webm' | 'ogg';
+
+/**
+ * Video MIME type enum
+ */
+export type VideoMimeType = 'video/mp4' | 'video/webm' | 'video/ogg';
+
+/**
+ * Video source type enum
+ */
+export type VideoSourceType = 'generated' | 'remote';
+
+/**
+ * Generated video source interface
+ * 
+ * Represents a video generated by AI or other automatic tools
+ */
+export interface GeneratedVideoSource extends GeneratedImageSource {
+  /** Optional duration of the video in seconds */
+  duration?: number;
+  /** Optional video format specification */
+  format?: string;
+}
+
+/**
+ * Remote video source interface
+ */
+export type RemoteVideoSource = string;
+
+/**
+ * Wallpaper type enum
+ */
+export type WallpaperType = 
+  | 'animation' 
+  | 'color' 
+  | 'gradient' 
+  | 'image' 
+  | 'pattern' 
   | 'video';
 
+/**
+ * Wallpaper animation interface
+ * 
+ * Represents the animation configuration for a wallpaper
+ */
 export interface WallpaperAnimation {
+  /** Unique identifier for the animation */
   id: string;
+  /** Optional name for the animation */
   name?: string;
+  /** Optional description of the animation */
   description?: string;
+  /** Optional URL for external animations */
   url?: string;
+  /** Animation specific properties */
   animationProps?:
     | AuroraProps
     | AuroraBackgroundProps
@@ -125,7 +223,7 @@ export interface WallpaperAnimation {
     | BlobBackgroundProps
     | CosmicSceneProps
     | DitherProps
-    | GlobeProps
+    | OrbProps
     | GradientAnimationProps
     | GradientMeshProps
     | GridDistortionProps
@@ -145,7 +243,7 @@ export interface WallpaperAnimation {
     | ParticlesProps
     | ParticleVeilProps
     | RainDropsProps
-    | [ShootingStarsProps, StarBackgroundProps]
+    | [ShootingStarsProps, StarsBackgroundProps]
     | SparklesProps
     | SphereAnimationProps
     | SpotlightProps
@@ -158,132 +256,272 @@ export interface WallpaperAnimation {
     | WavesProps
     | WavyBackgroundProps
     | WorldMapProps;
+  /** Type of animation */
   type: AnimationType;
 }
 
+/**
+ * Wallpaper background interface
+ * 
+ * Represents the background configuration for a wallpaper
+ */
 export interface WallpaperBackground {
+  /** Unique identifier for the background */
   id: string;
+  /** Optional name for the background */
   name?: string;
+  /** Optional description of the background */
   description?: string;
+  /** Optional animation configuration */
   animation?: WallpaperAnimation;
+  /** Optional array of colors */
   colors?: WallpaperColor[];
+  /** Optional gradient configuration */
   gradient?: WallpaperGradient;
+  /** Optional image configuration */
   image?: WallpaperImage;
+  /** Optional pattern configuration */
   pattern?: WallpaperPattern;
+  /** Optional inline styles */
   style?: CSSProperties;
+  /** Type of background */
   type: WallpaperType;
+  /** Optional video configuration */
   video?: WallpaperVideo;
 }
 
+/**
+ * Wallpaper color interface
+ * 
+ * Represents a color configuration for a wallpaper
+ */
 export interface WallpaperColor {
+  /** Unique identifier for the color */
   id: string;
+  /** Optional name for the color */
   name?: string;
+  /** Optional description of the color */
   description?: string;
+  /** Color value in the specified format */
   color: string;
+  /** Type of color format */
   type: ColorType;
 }
 
+/**
+ * Wallpaper gradient interface
+ * 
+ * Represents a gradient configuration for a wallpaper
+ */
 export interface WallpaperGradient {
+  /** Unique identifier for the gradient */
   id: string;
+  /** Optional name for the gradient */
   name?: string;
+  /** Optional description of the gradient */
   description?: string;
+  /** Optional alpha transparency (0-1) */
   alpha?: number;
+  /** Optional gradient CSS string */
   gradient?: string;
+  /** Optional inline styles */
   style?: CSSProperties;
+  /** Type of gradient */
   type: GradientType;
 }
 
+/**
+ * Wallpaper image interface
+ * 
+ * Represents an image configuration for a wallpaper
+ */
 export interface WallpaperImage {
+  /** Unique identifier for the image */
   id: string;
+  /** Optional name for the image */
   name?: string;
+  /** Optional description of the image */
   description?: string;
+  /** Optional aspect ratio */
   aspectRatio?: AspectRatioType;
+  /** Optional backup images if main image fails to load */
   backups?: WallpaperImage[];
+  /** Optional base64 encoded image data */
   base64?: string;
+  /** Optional CSS class name */
   className?: string;
+  /** Optional filename */
   filename?: string;
+  /** Optional folder path */
   folder?: string;
+  /** Optional image height */
   height?: number;
+  /** Image MIME type */
   mimeType: ImageMimeType;
+  /** Optional image orientation */
   orientation?: OrientationType;
+  /** Optional file path */
   path?: string;
+  /** Optional remote storage configuration */
   remoteType?: RemoteStorageType;
+  /** Optional file size in bytes */
   size?: number;
+  /** Optional source information */
   source?: GeneratedImageSource | RemoteImageSource;
+  /** Optional source type */
   sourceType?: ImageSourceType;
+  /** Optional storage type */
   storageType?: StorageType;
+  /** Optional inline styles */
   style?: CSSProperties;
+  /** Type of image */
   type: ImageType;
+  /** Optional image URL */
   url?: string;
+  /** Optional user ID associated with the image */
   userId?: string;
+  /** Optional username associated with the image */
   username?: string;
+  /** Optional image width */
   width?: number;
 }
 
+/**
+ * Wallpaper pattern interface
+ * 
+ * Represents a pattern configuration for a wallpaper
+ */
 export interface WallpaperPattern {
+  /** Unique identifier for the pattern */
   id: string;
+  /** Optional name for the pattern */
   name?: string;
+  /** Optional description of the pattern */
   description?: string;
+  /** Optional CSS class name */
   className?: string;
+  /** Optional array of colors */
   colors?: WallpaperColor[];
+  /** Optional gradient configuration */
   gradient?: WallpaperGradient;
+  /** Optional image configuration */
   image?: WallpaperImage;
+  /** Optional inline styles */
   style?: CSSProperties;
+  /** Type of pattern */
   type: PatternType;
+  /** Optional video configuration */
   video?: WallpaperVideo;
 }
 
+/**
+ * Wallpaper video interface
+ * 
+ * Represents a video configuration for a wallpaper
+ */
 export interface WallpaperVideo {
+  /** Unique identifier for the video */
   id: string;
+  /** Optional name for the video */
   name?: string;
+  /** Optional description of the video */
   description?: string;
+  /** Optional aspect ratio */
   aspectRatio?: AspectRatioType;
+  /** Optional backup videos if main video fails to load */
   backups?: WallpaperVideo[];
+  /** Optional base64 encoded video data */
   base64?: string;
+  /** Optional CSS class name */
   className?: string;
+  /** Optional cloud storage configuration */
   cloudType?: CloudStorageType;
+  /** Optional filename */
   filename?: string;
+  /** Optional folder path */
   folder?: string;
+  /** Optional video height */
   height?: number;
+  /** Video MIME type */
   mimeType: VideoMimeType;
+  /** Optional video orientation */
   orientation?: OrientationType;
+  /** Optional file path */
   path?: string;
+  /** Optional remote storage configuration */
   remoteType?: RemoteStorageType;
+  /** Optional file size in bytes */
   size?: number;
+  /** Optional source information */
   source?: GeneratedVideoSource | RemoteVideoSource;
+  /** Optional source type */
   sourceType?: VideoSourceType;
+  /** Optional storage type */
   storageType?: StorageType;
+  /** Optional inline styles */
   style?: CSSProperties;
+  /** Type of video */
   type: VideoType;
+  /** Optional video URL */
   url?: string;
+  /** Optional user ID associated with the video */
   userId?: string;
+  /** Optional username associated with the video */
   username?: string;
+  /** Optional video width */
   width?: number;
 }
 
-// Wallpaper definition
+/**
+ * Wallpaper interface
+ * 
+ * Represents a complete wallpaper configuration
+ */
 export interface Wallpaper {
+  /** Unique identifier for the wallpaper */
   id: string;
+  /** Optional name for the wallpaper */
   name?: string;
+  /** Optional description of the wallpaper */
   description?: string;
+  /** Whether the wallpaper is enabled */
   enabled: boolean;
+  /** Background configuration */
   background: WallpaperBackground;
+  /** Optional theme configuration */
   theme?: WallpaperThemeType;
+  /** Type of wallpaper */
   type: WallpaperType;
 }
 
-export interface WallpaperProps extends React.HTMLAttributes<HTMLDivElement> {
+/**
+ * Wallpaper component props
+ */
+export interface WallpaperProps {
+  /** Optional unique ID for the wallpaper container */
   id?: string;
+  /** Optional CSS class name */
   className?: string;
+  /** Optional inline styles */
   style?: CSSProperties;
+  /** Optional reference to the animation element */
   animationRef?: React.RefObject<HTMLDivElement>;
+  /** Optional reference to the container element */
   containerRef?: React.RefObject<HTMLDivElement>;
+  /** Optional reference to the content element */
   contentRef?: React.RefObject<HTMLDivElement>;
+  /** Optional flag to enable interactive features */
   interactive?: boolean;
+  /** Optional flag to randomize wallpaper selection */
   randomize?: boolean;
+  /** Optional theme override */
   theme?: WallpaperThemeType;
+  /** Optional specific wallpaper ID to use */
   wallpaper?: string;
+  /** Optional record of available wallpapers */
   wallpapers?: Record<string, Wallpaper>;
+  /** Children elements to render on top of the wallpaper */
+  children?: React.ReactNode;
 }
 
 export default Wallpaper;

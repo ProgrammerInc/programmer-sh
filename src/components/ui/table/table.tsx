@@ -1,9 +1,10 @@
 'use client';
 
-import { cn } from '@/utils/app.utils';
 import * as React from 'react';
-import { memo, useMemo } from 'react';
+import { memo, useMemo, forwardRef } from 'react';
+import { cn } from '@/utils/app.utils';
 
+import styles from './table.module.css';
 import {
   TableBodyProps,
   TableCaptionProps,
@@ -12,16 +13,25 @@ import {
   TableHeadProps,
   TableHeaderProps,
   TableProps,
-  TableRowProps
+  TableRowProps,
+  TableVariant
 } from './table.types';
 
 /**
- * Table component
+ * Table Component - A responsive data table with various styling options
  * 
- * A responsive table with various sub-components for different parts of the table structure.
+ * Features:
+ * - Multiple style variants: default, bordered, zebra, and compact
+ * - Responsive layout with horizontally scrollable container
+ * - Semantic markup with proper accessibility attributes
+ * - Comprehensive sub-components for table structure
+ * - Row selection and hover states
+ * - Support for sortable columns
+ * - Support for truncated cell content
  * 
  * @example
  * ```tsx
+ * // Basic usage
  * <Table>
  *   <TableCaption>List of users</TableCaption>
  *   <TableHeader>
@@ -37,17 +47,28 @@ import {
  *     </TableRow>
  *   </TableBody>
  * </Table>
+ * 
+ * // With variants
+ * <Table variant="bordered">
+ *   {/* Table content */}
+ * </Table>
  * ```
  */
-const Table = memo(React.forwardRef<HTMLTableElement, TableProps>(
-  ({ className, ...props }, ref) => {
-    // Memoize the className calculation
+const Table = memo(forwardRef<HTMLTableElement, TableProps>(
+  ({ className, variant = 'default', ...props }, ref) => {
+    // Generate class names based on variant
     const tableClassName = useMemo(() => {
-      return cn('w-full caption-bottom text-sm', className);
-    }, [className]);
+      return cn(
+        styles.table,
+        variant === 'bordered' && styles['table-bordered'],
+        variant === 'zebra' && styles['table-zebra'],
+        variant === 'compact' && styles['table-compact'],
+        className
+      );
+    }, [className, variant]);
     
     return (
-      <div className="relative w-full overflow-auto">
+      <div className={styles['table-container']}>
         <table ref={ref} className={tableClassName} {...props} />
       </div>
     );
@@ -57,9 +78,9 @@ const Table = memo(React.forwardRef<HTMLTableElement, TableProps>(
 Table.displayName = 'Table';
 
 /**
- * TableHeader component
+ * TableHeader Component - Container for table header rows
  * 
- * Container for table header rows.
+ * Used to group header rows in a table and apply appropriate styling.
  * 
  * @example
  * ```tsx
@@ -71,13 +92,12 @@ Table.displayName = 'Table';
  * </TableHeader>
  * ```
  */
-const TableHeader = memo(React.forwardRef<
+const TableHeader = memo(forwardRef<
   HTMLTableSectionElement,
   TableHeaderProps
 >(({ className, ...props }, ref) => {
-  // Memoize the className calculation
   const headerClassName = useMemo(() => {
-    return cn('[&_tr]:border-b', className);
+    return cn(styles['table-header'], className);
   }, [className]);
   
   return <thead ref={ref} className={headerClassName} {...props} />;
@@ -86,9 +106,9 @@ const TableHeader = memo(React.forwardRef<
 TableHeader.displayName = 'TableHeader';
 
 /**
- * TableBody component
+ * TableBody Component - Container for table body rows
  * 
- * Container for table body rows.
+ * Used to group body rows in a table and apply appropriate styling.
  * 
  * @example
  * ```tsx
@@ -100,13 +120,12 @@ TableHeader.displayName = 'TableHeader';
  * </TableBody>
  * ```
  */
-const TableBody = memo(React.forwardRef<
+const TableBody = memo(forwardRef<
   HTMLTableSectionElement,
   TableBodyProps
 >(({ className, ...props }, ref) => {
-  // Memoize the className calculation
   const bodyClassName = useMemo(() => {
-    return cn('[&_tr:last-child]:border-0', className);
+    return cn(styles['table-body'], className);
   }, [className]);
   
   return <tbody ref={ref} className={bodyClassName} {...props} />;
@@ -115,9 +134,9 @@ const TableBody = memo(React.forwardRef<
 TableBody.displayName = 'TableBody';
 
 /**
- * TableFooter component
+ * TableFooter Component - Container for table footer rows
  * 
- * Container for table footer rows.
+ * Used to group footer rows in a table with distinct styling.
  * 
  * @example
  * ```tsx
@@ -128,13 +147,12 @@ TableBody.displayName = 'TableBody';
  * </TableFooter>
  * ```
  */
-const TableFooter = memo(React.forwardRef<
+const TableFooter = memo(forwardRef<
   HTMLTableSectionElement,
   TableFooterProps
 >(({ className, ...props }, ref) => {
-  // Memoize the className calculation
   const footerClassName = useMemo(() => {
-    return cn('border-t bg-muted/50 font-medium [&>tr]:last:border-b-0', className);
+    return cn(styles['table-footer'], className);
   }, [className]);
   
   return <tfoot ref={ref} className={footerClassName} {...props} />;
@@ -143,9 +161,9 @@ const TableFooter = memo(React.forwardRef<
 TableFooter.displayName = 'TableFooter';
 
 /**
- * TableRow component
+ * TableRow Component - Table row element with hover and selected states
  * 
- * Table row element with hover and selected states.
+ * Renders a table row with support for hover effects and selection state.
  * 
  * @example
  * ```tsx
@@ -153,71 +171,97 @@ TableFooter.displayName = 'TableFooter';
  *   <TableCell>John Doe</TableCell>
  *   <TableCell>john@example.com</TableCell>
  * </TableRow>
+ * 
+ * // Selected row
+ * <TableRow selected>
+ *   <TableCell>John Doe</TableCell>
+ *   <TableCell>john@example.com</TableCell>
+ * </TableRow>
  * ```
  */
-const TableRow = memo(React.forwardRef<HTMLTableRowElement, TableRowProps>(
-  ({ className, ...props }, ref) => {
-    // Memoize the className calculation
+const TableRow = memo(forwardRef<HTMLTableRowElement, TableRowProps>(
+  ({ className, selected, ...props }, ref) => {
     const rowClassName = useMemo(() => {
-      return cn(
-        'border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted',
-        className
-      );
+      return cn(styles['table-row'], className);
     }, [className]);
     
-    return <tr ref={ref} className={rowClassName} {...props} />;
+    return (
+      <tr 
+        ref={ref} 
+        className={rowClassName} 
+        data-state={selected ? 'selected' : undefined}
+        {...props} 
+      />
+    );
   }
 ));
 
 TableRow.displayName = 'TableRow';
 
 /**
- * TableHead component
+ * TableHead Component - Table header cell for column headers
  * 
- * Table header cell with styling for column headers.
+ * Renders a table header cell with optional sortable functionality.
  * 
  * @example
  * ```tsx
  * <TableHead>Name</TableHead>
+ * 
+ * // Right-aligned header
  * <TableHead className="text-right">Actions</TableHead>
+ * 
+ * // Sortable header
+ * <TableHead sortable sortDirection="asc">Name</TableHead>
  * ```
  */
-const TableHead = memo(React.forwardRef<
+const TableHead = memo(forwardRef<
   HTMLTableCellElement,
   TableHeadProps
->(({ className, ...props }, ref) => {
-  // Memoize the className calculation
+>(({ className, sortable, sortDirection, ...props }, ref) => {
   const headClassName = useMemo(() => {
-    return cn(
-      'h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0',
-      className
-    );
+    return cn(styles['table-head'], className);
   }, [className]);
   
-  return <th ref={ref} className={headClassName} {...props} />;
+  return (
+    <th 
+      ref={ref} 
+      className={headClassName} 
+      aria-sort={sortDirection ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}
+      data-sortable={sortable ? 'true' : undefined}
+      {...props} 
+    />
+  );
 }));
 
 TableHead.displayName = 'TableHead';
 
 /**
- * TableCell component
+ * TableCell Component - Table data cell with consistent styling
  * 
- * Table data cell with consistent padding and alignment.
+ * Renders a table cell with options for content truncation.
  * 
  * @example
  * ```tsx
  * <TableCell>John Doe</TableCell>
- * <TableCell className="text-right">Edit</TableCell>
+ * 
+ * // Right-aligned cell
+ * <TableCell className="text-right">View</TableCell>
+ * 
+ * // Truncated content
+ * <TableCell truncate>Very long content that will be truncated</TableCell>
  * ```
  */
-const TableCell = memo(React.forwardRef<
+const TableCell = memo(forwardRef<
   HTMLTableCellElement,
   TableCellProps
->(({ className, ...props }, ref) => {
-  // Memoize the className calculation
+>(({ className, truncate, ...props }, ref) => {
   const cellClassName = useMemo(() => {
-    return cn('p-4 align-middle [&:has([role=checkbox])]:pr-0', className);
-  }, [className]);
+    return cn(
+      styles['table-cell'], 
+      truncate && styles['table-cell-truncate'],
+      className
+    );
+  }, [className, truncate]);
   
   return <td ref={ref} className={cellClassName} {...props} />;
 }));
@@ -225,22 +269,21 @@ const TableCell = memo(React.forwardRef<
 TableCell.displayName = 'TableCell';
 
 /**
- * TableCaption component
+ * TableCaption Component - Caption for the table
  * 
- * Caption for the table, typically shown at the bottom.
+ * Renders a caption element for the table, typically shown at the bottom.
  * 
  * @example
  * ```tsx
  * <TableCaption>List of users and their email addresses</TableCaption>
  * ```
  */
-const TableCaption = memo(React.forwardRef<
+const TableCaption = memo(forwardRef<
   HTMLTableCaptionElement,
   TableCaptionProps
 >(({ className, ...props }, ref) => {
-  // Memoize the className calculation
   const captionClassName = useMemo(() => {
-    return cn('mt-4 text-sm text-muted-foreground', className);
+    return cn(styles['table-caption'], className);
   }, [className]);
   
   return <caption ref={ref} className={captionClassName} {...props} />;

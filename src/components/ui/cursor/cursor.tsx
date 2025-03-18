@@ -1,5 +1,12 @@
 'use client';
 
+/**
+ * Cursor Provider Component
+ * 
+ * A customizable cursor provider that renders different cursor animations
+ * based on the selected preset.
+ */
+
 import {
   ArrowCursor,
   ArrowCursorProps,
@@ -37,15 +44,26 @@ import {
   TrailingCursorProps
 } from '@/components/cursors';
 import { cursorPresets } from '@/presets/cursor.presets';
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { createPortal } from 'react-dom';
+import { forwardRef, memo, useEffect, useImperativeHandle, useRef } from 'react';
+
+import styles from './cursor.module.css';
 import { Cursor, CursorProps } from './cursor.types';
 
-export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
+/**
+ * Cursor Provider component
+ * 
+ * Renders a custom cursor based on the selected preset
+ * 
+ * @example
+ * ```tsx
+ * <CursorProvider cursor="rainbow" theme="dark" />
+ * ```
+ */
+export const CursorProvider = memo(forwardRef<HTMLDivElement, CursorProps>(
   (
     {
       id = 'cursorContainer',
-      className = 'cursor-container',
+      className = '',
       style,
       color = '#64ffda',
       containerRef = null,
@@ -101,168 +119,161 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProps>(
     return (
       <div
         id={id}
-        className={className}
+        className={`${styles['cursor-container']} ${className}`}
         ref={cursorContainerRef}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          pointerEvents: 'none',
-          zIndex: 10000 /* Ensure this is higher than any other element */,
-          isolation: 'isolate' /* Creates a new stacking context */,
-          transform: 'translateZ(0)' /* Force hardware acceleration and create stacking context */,
-          willChange: 'transform' /* Hint to browser to optimize this element */,
-          ...style
-        }}
+        style={style}
       >
-        {currentCursor.type === 'animation' && currentCursor.animation === 'arrow' && (
-          <ArrowCursor
-            key={`arrow-cursor-${cursor}`}
-            fgColor={currentColor}
-            {...(currentCursor.animationProps as ArrowCursorProps)}
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'blob' && (
-          <BlobCursor 
-            key={`blob-cursor-${cursor}`}
-            {...(currentCursor.animationProps as BlobCursorProps)} 
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'bubble' && (
-          <BubbleCursor
-            key={`bubble-cursor-${cursor}`}
-            fillStyle={currentColor}
-            strokeStyle={currentColor}
-            wrapperElement={nestedContainerRef.current}
-            {...(currentCursor.animationProps as BubbleCursorProps)}
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'canvas' && (
-          <CanvasCursor 
-            key={`canvas-cursor-${cursor}`}
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'character' && (
-          <CharacterCursor
-            key={`character-cursor-${cursor}`}
-            characters={['p', 'r', 'o', 'g', 'r', 'a', 'm', 'm', 'e', 'r']}
-            colors={[currentColor]}
-            wrapperElement={nestedContainerRef.current}
-            {...(currentCursor.animationProps as CharacterCursorProps)}
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'crosshair' && (
-          <Crosshair
-            key={`crosshair-cursor-${cursor}`}
-            containerRef={nestedContainerRef}
-            color={currentColor}
-            {...(currentCursor.animationProps as CrosshairProps)}
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'fairydust' && (
-          <FairyDustCursor
-            key={`fairydust-cursor-${cursor}`}
-            colors={['#FF0000', '#00FF00', '#0000FF']}
-            characterSet={['✨', '⭐', '🌟']}
-            particleSize={24}
-            particleCount={2}
-            gravity={0.015}
-            fadeSpeed={0.97}
-            initialVelocity={{ min: 0.7, max: 2.0 }}
-            {...(currentCursor.animationProps as FairyDustCursorProps)}
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'glitch' && (
-          <GlitchCursor 
-            key={`glitch-cursor-${cursor}`}
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'gradient' && (
-          <GradientCursor 
-            key={`gradient-cursor-${cursor}`}
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'magic-trail' && (
-          <MagicTrailCursor
-            key={`magic-trail-cursor-${cursor}`}
-            containerRef={cursorContainerRef}
-            particleCount={50}
-            trailLength={35}
-            smoothing={0.8}
-            {...(currentCursor.animationProps as MagicTrailCursorProps)}
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'neon' && (
-          <NeonCursor 
-            key={`neon-cursor-${cursor}`}
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'rainbow' && (
-          <RainbowCursor 
-            key={`rainbow-cursor-${cursor}`}
-            {...(currentCursor.animationProps as RainbowCursorProps)} 
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'ribbons' && (
-          <Ribbons
-            key={`ribbons-cursor-${cursor}`}
-            baseThickness={30}
-            colors={[currentColor]}
-            speedMultiplier={0.5}
-            maxAge={500}
-            enableFade={false}
-            enableShaderEffect={true}
-            {...(currentCursor.animationProps as RibbonsProps)}
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'ripple' && (
-          <RippleCursor
-            key={`ripple-cursor-${cursor}`}
-            color={currentColor}
-            {...(currentCursor.animationProps as RippleCursorProps)}
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'snowflake' && (
-          <SnowflakeCursor 
-            key={`snowflake-cursor-${cursor}`}
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'splash' && (
-          <SplashCursor 
-            key={`splash-cursor-${cursor}`}
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'spotlight' && (
-          <SpotlightCursor 
-            key={`spotlight-cursor-${cursor}`}
-            {...(currentCursor.animationProps as SpotlightCursorProps)} 
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'springy' && (
-          <SpringyCursor 
-            key={`springy-cursor-${cursor}`}
-            {...(currentCursor.animationProps as SpringyCursorProps)} 
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'textflag' && (
-          <TextFlagCursor
-            key={`textflag-cursor-${cursor}`}
-            text="Programmer.sh"
-            color={currentColor}
-            {...(currentCursor.animationProps as TextFlagCursorProps)}
-          />
-        )}
-        {currentCursor.type === 'animation' && currentCursor.animation === 'trailing' && (
-          <TrailingCursor 
-            key={`trailing-cursor-${cursor}`}
-            {...(currentCursor.animationProps as TrailingCursorProps)} 
-          />
-        )}
+        <div className={styles['nested-container']} ref={nestedContainerRef}>
+          {currentCursor.type === 'animation' && currentCursor.animation === 'arrow' && (
+            <ArrowCursor
+              key={`arrow-cursor-${cursor}`}
+              fgColor={currentColor}
+              {...(currentCursor.animationProps as ArrowCursorProps)}
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'blob' && (
+            <BlobCursor 
+              key={`blob-cursor-${cursor}`}
+              {...(currentCursor.animationProps as BlobCursorProps)} 
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'bubble' && (
+            <BubbleCursor
+              key={`bubble-cursor-${cursor}`}
+              fillStyle={currentColor}
+              strokeStyle={currentColor}
+              wrapperElement={nestedContainerRef.current}
+              {...(currentCursor.animationProps as BubbleCursorProps)}
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'canvas' && (
+            <CanvasCursor 
+              key={`canvas-cursor-${cursor}`}
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'character' && (
+            <CharacterCursor
+              key={`character-cursor-${cursor}`}
+              characters={['p', 'r', 'o', 'g', 'r', 'a', 'm', 'm', 'e', 'r']}
+              colors={[currentColor]}
+              wrapperElement={nestedContainerRef.current}
+              {...(currentCursor.animationProps as CharacterCursorProps)}
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'crosshair' && (
+            <Crosshair
+              key={`crosshair-cursor-${cursor}`}
+              containerRef={nestedContainerRef}
+              color={currentColor}
+              {...(currentCursor.animationProps as CrosshairProps)}
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'fairydust' && (
+            <FairyDustCursor
+              key={`fairydust-cursor-${cursor}`}
+              colors={['#FF0000', '#00FF00', '#0000FF']}
+              characterSet={['✨', '⭐', '🌟']}
+              particleSize={24}
+              particleCount={2}
+              gravity={0.015}
+              fadeSpeed={0.97}
+              initialVelocity={{ min: 0.7, max: 2.0 }}
+              {...(currentCursor.animationProps as FairyDustCursorProps)}
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'glitch' && (
+            <GlitchCursor 
+              key={`glitch-cursor-${cursor}`}
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'gradient' && (
+            <GradientCursor 
+              key={`gradient-cursor-${cursor}`}
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'magic-trail' && (
+            <MagicTrailCursor
+              key={`magic-trail-cursor-${cursor}`}
+              containerRef={cursorContainerRef}
+              particleCount={50}
+              trailLength={35}
+              smoothing={0.8}
+              {...(currentCursor.animationProps as MagicTrailCursorProps)}
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'neon' && (
+            <NeonCursor 
+              key={`neon-cursor-${cursor}`}
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'rainbow' && (
+            <RainbowCursor 
+              key={`rainbow-cursor-${cursor}`}
+              {...(currentCursor.animationProps as RainbowCursorProps)} 
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'ribbons' && (
+            <Ribbons
+              key={`ribbons-cursor-${cursor}`}
+              baseThickness={30}
+              colors={[currentColor]}
+              speedMultiplier={0.5}
+              maxAge={500}
+              enableFade={false}
+              enableShaderEffect={true}
+              {...(currentCursor.animationProps as RibbonsProps)}
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'ripple' && (
+            <RippleCursor
+              key={`ripple-cursor-${cursor}`}
+              color={currentColor}
+              {...(currentCursor.animationProps as RippleCursorProps)}
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'snowflake' && (
+            <SnowflakeCursor 
+              key={`snowflake-cursor-${cursor}`}
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'splash' && (
+            <SplashCursor 
+              key={`splash-cursor-${cursor}`}
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'spotlight' && (
+            <SpotlightCursor 
+              key={`spotlight-cursor-${cursor}`}
+              {...(currentCursor.animationProps as SpotlightCursorProps)} 
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'springy' && (
+            <SpringyCursor 
+              key={`springy-cursor-${cursor}`}
+              {...(currentCursor.animationProps as SpringyCursorProps)} 
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'textflag' && (
+            <TextFlagCursor
+              key={`textflag-cursor-${cursor}`}
+              // Fixed the TypeScript error by removing the text prop
+              // and letting it come from animationProps
+              color={currentColor}
+              {...(currentCursor.animationProps as TextFlagCursorProps)}
+            />
+          )}
+          {currentCursor.type === 'animation' && currentCursor.animation === 'trailing' && (
+            <TrailingCursor 
+              key={`trailing-cursor-${cursor}`}
+              {...(currentCursor.animationProps as TrailingCursorProps)} 
+            />
+          )}
+        </div>
       </div>
     );
   }
-);
+));
+
+CursorProvider.displayName = 'CursorProvider';
 
 export default CursorProvider;

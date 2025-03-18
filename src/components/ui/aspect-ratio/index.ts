@@ -1,7 +1,13 @@
-// Export aspect-ratio components
-export * from './aspect-ratio';
+/**
+ * Aspect Ratio Component
+ *
+ * A component that maintains a consistent width-to-height ratio for content.
+ */
+
+// Export component and types
+export { default as AspectRatio } from './aspect-ratio';
 export * from './aspect-ratio.types';
+export * from './aspect-ratio.utils';
 
 // For backwards compatibility
-import { AspectRatio } from './aspect-ratio';
-export default AspectRatio;
+export { default } from './aspect-ratio';

@@ -1,44 +1,99 @@
 'use client';
 
+import { cn } from '@/utils/app.utils';
 import { GripVertical } from 'lucide-react';
+import * as React from 'react';
+import { memo } from 'react';
 import * as ResizablePrimitive from 'react-resizable-panels';
 
-import { cn } from '@/utils/app.utils';
+import styles from './resizable.module.css';
+import {
+  ResizableHandleProps,
+  ResizablePanelGroupProps,
+  ResizablePanelProps
+} from './resizable.types';
 
-const ResizablePanelGroup = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof ResizablePrimitive.PanelGroup>) => (
+/**
+ * ResizablePanelGroup Component
+ * 
+ * A container that holds and manages multiple resizable panels.
+ * Panels can be resized horizontally or vertically based on the direction prop.
+ * 
+ * @example
+ * ```tsx
+ * <ResizablePanelGroup direction="horizontal">
+ *   <ResizablePanel defaultSize={25}>
+ *     <div>Sidebar</div>
+ *   </ResizablePanel>
+ *   <ResizableHandle />
+ *   <ResizablePanel defaultSize={75}>
+ *     <div>Content</div>
+ *   </ResizablePanel>
+ * </ResizablePanelGroup>
+ * ```
+ */
+const ResizablePanelGroup = memo(({ 
+  className, 
+  ...props 
+}: ResizablePanelGroupProps) => (
   <ResizablePrimitive.PanelGroup
-    className={cn('flex h-full w-full data-[panel-group-direction=vertical]:flex-col', className)}
+    className={cn(styles['panel-group'], className)}
     {...props}
   />
-);
+));
 
-const ResizablePanel = ResizablePrimitive.Panel;
+ResizablePanelGroup.displayName = 'ResizablePanelGroup';
 
-const ResizableHandle = ({
-  withHandle,
-  className,
-  ...props
-}: React.ComponentProps<typeof ResizablePrimitive.PanelResizeHandle> & {
-  withHandle?: boolean;
-}) => (
+/**
+ * ResizablePanel Component
+ * 
+ * An individual panel within a ResizablePanelGroup that can be resized.
+ * Can have a minimum and maximum size, and a default size.
+ * 
+ * @example
+ * ```tsx
+ * <ResizablePanel 
+ *   defaultSize={50} 
+ *   minSize={20} 
+ *   maxSize={80}
+ * >
+ *   <div>Panel content</div>
+ * </ResizablePanel>
+ * ```
+ */
+const ResizablePanel = memo(ResizablePrimitive.Panel) as React.NamedExoticComponent<ResizablePanelProps>;
+
+ResizablePanel.displayName = 'ResizablePanel';
+
+/**
+ * ResizableHandle Component
+ * 
+ * A handle component that users can drag to resize panels.
+ * Can optionally display a grip handle for better visual indication.
+ * 
+ * @example
+ * ```tsx
+ * <ResizableHandle withHandle />
+ * ```
+ */
+const ResizableHandle = memo(({ 
+  withHandle, 
+  className, 
+  ...props 
+}: ResizableHandleProps) => (
   <ResizablePrimitive.PanelResizeHandle
-    className={cn(
-      'relative flex w-px items-center justify-center bg-border after:absolute after:inset-y-0 after:left-1/2 after:w-1 after:-translate-x-1/2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1 data-[panel-group-direction=vertical]:h-px data-[panel-group-direction=vertical]:w-full data-[panel-group-direction=vertical]:after:left-0 data-[panel-group-direction=vertical]:after:h-1 data-[panel-group-direction=vertical]:after:w-full data-[panel-group-direction=vertical]:after:-translate-y-1/2 data-[panel-group-direction=vertical]:after:translate-x-0 [&[data-panel-group-direction=vertical]>div]:rotate-90',
-      className
-    )}
+    className={cn(styles['resize-handle'], className)}
     {...props}
   >
     {withHandle && (
-      <div className="z-10 flex h-4 w-3 items-center justify-center rounded-sm border bg-border">
-        <GripVertical className="h-2.5 w-2.5" />
+      <div className={styles['grip-container']}>
+        <GripVertical className={styles['grip-icon']} />
       </div>
     )}
   </ResizablePrimitive.PanelResizeHandle>
-);
+));
+
+ResizableHandle.displayName = 'ResizableHandle';
 
 export { ResizableHandle, ResizablePanel, ResizablePanelGroup };
-
 export default ResizableHandle;

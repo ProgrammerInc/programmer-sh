@@ -1,15 +1,35 @@
 'use client';
 
+import { cn } from '@/utils/app.utils';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { useState } from 'react';
+import React, { memo, useState } from 'react';
 
-export interface CardRotateProps {
-  children: React.ReactNode;
-  onSendToBack: () => void;
-  sensitivity: number;
-}
+import styles from './stack.module.css';
+import {
+  AnimationConfig,
+  CardData,
+  CardDimensions,
+  CardRotateProps,
+  StackProps
+} from './stack.types';
 
-function CardRotate({ children, onSendToBack, sensitivity }: CardRotateProps) {
+/**
+ * CardRotate component - Handles the 3D rotation effect for cards in the stack
+ * 
+ * Features:
+ * - 3D rotation based on drag position
+ * - Drag with elastic constraints
+ * - Send to back functionality when dragged beyond sensitivity threshold
+ * - Smooth animation return to center when not sent to back
+ * 
+ * @example
+ * ```tsx
+ * <CardRotate onSendToBack={() => console.log('Card sent to back')} sensitivity={200}>
+ *   <div>Card content</div>
+ * </CardRotate>
+ * ```
+ */
+const CardRotate = memo(function CardRotate({ children, onSendToBack, sensitivity }: CardRotateProps) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotateX = useTransform(y, [-100, 100], [60, -60]);
@@ -26,7 +46,7 @@ function CardRotate({ children, onSendToBack, sensitivity }: CardRotateProps) {
 
   return (
     <motion.div
-      className="absolute cursor-grab"
+      className={styles['card-rotate']}
       style={{ x, y, rotateX, rotateY }}
       drag
       dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }}
@@ -37,52 +57,95 @@ function CardRotate({ children, onSendToBack, sensitivity }: CardRotateProps) {
       {children}
     </motion.div>
   );
-}
+});
 
-export interface StackProps {
-  randomRotation?: boolean;
-  sensitivity?: number;
-  cardDimensions?: { width: number; height: number };
-  sendToBackOnClick?: boolean;
-  cardsData?: { id: number; img: string }[];
-  animationConfig?: { stiffness: number; damping: number };
-}
+CardRotate.displayName = 'CardRotate';
 
-export default function Stack({
+/**
+ * Default cards data used when no custom cards are provided
+ */
+const DEFAULT_CARDS_DATA: CardData[] = [
+  {
+    id: 1,
+    img: 'https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?q=80&w=500&auto=format'
+  },
+  {
+    id: 2,
+    img: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=500&auto=format'
+  },
+  {
+    id: 3,
+    img: 'https://images.unsplash.com/photo-1452626212852-811d58933cae?q=80&w=500&auto=format'
+  },
+  {
+    id: 4,
+    img: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?q=80&w=500&auto=format'
+  }
+];
+
+/**
+ * Default animation configuration
+ */
+const DEFAULT_ANIMATION_CONFIG: AnimationConfig = { stiffness: 260, damping: 20 };
+
+/**
+ * Default card dimensions in pixels
+ */
+const DEFAULT_CARD_DIMENSIONS: CardDimensions = { width: 208, height: 208 };
+
+/**
+ * Stack component - Creates an interactive stack of cards that can be dragged and rearranged
+ * 
+ * Features:
+ * - Draggable cards with 3D rotation effects
+ * - Configurable card dimensions and animation properties
+ * - Optional random rotation for a more natural appearance
+ * - Ability to send cards to the back via drag or click
+ * - Customizable sensitivity for drag interactions
+ * 
+ * @example
+ * ```tsx
+ * // Basic usage
+ * <Stack />
+ * 
+ * // With custom configuration
+ * <Stack
+ *   randomRotation={true}
+ *   sensitivity={150}
+ *   cardDimensions={{ width: 300, height: 200 }}
+ *   sendToBackOnClick={true}
+ * />
+ * 
+ * // With custom cards data
+ * <Stack
+ *   cardsData={[
+ *     { id: 1, img: '/image1.jpg' },
+ *     { id: 2, img: '/image2.jpg' },
+ *   ]}
+ * />
+ * ```
+ */
+const Stack = memo(function Stack({
   randomRotation = false,
   sensitivity = 200,
-  cardDimensions = { width: 208, height: 208 },
+  cardDimensions = DEFAULT_CARD_DIMENSIONS,
   cardsData = [],
-  animationConfig = { stiffness: 260, damping: 20 },
+  animationConfig = DEFAULT_ANIMATION_CONFIG,
   sendToBackOnClick = false
 }: StackProps) {
-  const [cards, setCards] = useState(
-    cardsData.length
-      ? cardsData
-      : [
-          {
-            id: 1,
-            img: 'https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?q=80&w=500&auto=format'
-          },
-          {
-            id: 2,
-            img: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=500&auto=format'
-          },
-          {
-            id: 3,
-            img: 'https://images.unsplash.com/photo-1452626212852-811d58933cae?q=80&w=500&auto=format'
-          },
-          {
-            id: 4,
-            img: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?q=80&w=500&auto=format'
-          }
-        ]
+  const [cards, setCards] = useState<CardData[]>(
+    cardsData.length ? cardsData : DEFAULT_CARDS_DATA
   );
 
+  /**
+   * Sends the card with the specified ID to the back of the stack
+   */
   const sendToBack = (id: number) => {
     setCards(prev => {
       const newCards = [...prev];
       const index = newCards.findIndex(card => card.id === id);
+      if (index === -1) return prev;
+      
       const [card] = newCards.splice(index, 1);
       newCards.unshift(card);
       return newCards;
@@ -91,11 +154,10 @@ export default function Stack({
 
   return (
     <div
-      className="relative"
+      className={styles['stack-container']}
       style={{
         width: cardDimensions.width,
-        height: cardDimensions.height,
-        perspective: 600
+        height: cardDimensions.height
       }}
     >
       {cards.map((card, index) => {
@@ -110,7 +172,7 @@ export default function Stack({
             sensitivity={sensitivity}
           >
             <motion.div
-              className="rounded-2xl overflow-hidden border-4 border-white"
+              className={cn(styles.card, styles['card-appear'])}
               onClick={() => sendToBackOnClick && sendToBack(card.id)}
               animate={{
                 rotateZ: (cards.length - index - 1) * 4 + randomRotate,
@@ -131,7 +193,7 @@ export default function Stack({
               <img
                 src={card.img}
                 alt={`card-${card.id}`}
-                className="w-full h-full object-cover pointer-events-none"
+                className={styles['card-image']}
               />
             </motion.div>
           </CardRotate>
@@ -139,4 +201,9 @@ export default function Stack({
       })}
     </div>
   );
-}
+});
+
+Stack.displayName = 'Stack';
+
+export { CardRotate };
+export default Stack;

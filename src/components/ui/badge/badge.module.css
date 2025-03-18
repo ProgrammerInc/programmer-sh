@@ -1,0 +1,61 @@
+/**
+ * Badge Component Styles
+ */
+
+/* Base badge styles */
+.badge-base {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px; /* rounded-full */
+  border-width: 1px;
+  padding: 0.125rem 0.625rem; /* py-0.5 px-2.5 */
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 600; /* font-semibold */
+  transition-property: color, background-color, border-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.badge-base:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ring), 0 0 0 4px var(--ring-offset);
+}
+
+/* Variant: default */
+.badge-default {
+  border-color: transparent;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.badge-default:hover {
+  background-color: color-mix(in srgb, var(--primary) 80%, transparent);
+}
+
+/* Variant: secondary */
+.badge-secondary {
+  border-color: transparent;
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+.badge-secondary:hover {
+  background-color: color-mix(in srgb, var(--secondary) 80%, transparent);
+}
+
+/* Variant: destructive */
+.badge-destructive {
+  border-color: transparent;
+  background-color: var(--destructive);
+  color: var(--destructive-foreground);
+}
+
+.badge-destructive:hover {
+  background-color: color-mix(in srgb, var(--destructive) 80%, transparent);
+}
+
+/* Variant: outline */
+.badge-outline {
+  color: var(--foreground);
+  border-color: currentcolor;
+}

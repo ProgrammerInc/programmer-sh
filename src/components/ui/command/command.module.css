@@ -1,0 +1,141 @@
+/**
+ * Styles for Command component
+ */
+
+.command {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+}
+
+.command-input-wrapper {
+  display: flex;
+  align-items: center;
+  border-bottom-width: 1px;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.command-input-icon {
+  margin-right: 0.5rem;
+  height: 1rem;
+  width: 1rem;
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+
+.command-input {
+  display: flex;
+  height: 2.75rem;
+  width: 100%;
+  border-radius: 0.375rem;
+  background-color: transparent;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.command-input::placeholder {
+  color: var(--muted-foreground);
+}
+
+.command-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.command-list {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.command-empty {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.command-group {
+  overflow: hidden;
+  padding: 0.25rem;
+  color: var(--foreground);
+}
+
+.command-group-heading {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+.command-separator {
+  margin-left: -0.25rem;
+  margin-right: -0.25rem;
+  height: 1px;
+  background-color: var(--border);
+}
+
+.command-item {
+  position: relative;
+  display: flex;
+  cursor: default;
+  user-select: none;
+  align-items: center;
+  border-radius: 0.125rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.command-item[data-disabled="true"] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.command-item[data-selected="true"] {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.command-shortcut {
+  margin-left: auto;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--muted-foreground);
+}
+
+/* Dialog specific styles */
+.command-dialog {
+  overflow: hidden;
+  padding: 0;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Custom Dialog styles for nested selectors */
+.command-dialog-selectors {
+  --nested-group-heading-px: 0.5rem;
+  --nested-group-heading-py: 0.375rem;
+  --nested-group-heading-text-size: 0.75rem;
+  --nested-group-heading-font-weight: 500;
+  --nested-group-heading-color: var(--muted-foreground);
+  --nested-group-px: 0.5rem;
+  --nested-input-wrapper-svg-size: 1.25rem;
+  --nested-input-height: 3rem;
+  --nested-item-px: 0.5rem;
+  --nested-item-py: 0.75rem;
+  --nested-item-svg-size: 1.25rem;
+}

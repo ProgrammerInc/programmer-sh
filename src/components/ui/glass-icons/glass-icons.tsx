@@ -1,83 +1,112 @@
 'use client';
 
-import React from 'react';
+import * as React from 'react';
 
-export interface GlassIconsItem {
-  icon: React.ReactElement;
-  color: string;
-  label: string;
-  customClass?: string;
-}
+import { cn } from '@/utils/app.utils';
+import styles from './glass-icons.module.css';
+import { GlassIconProps, GlassIconsItem, GlassIconsProps } from './glass-icons.types';
 
-export interface GlassIconsProps {
-  items: GlassIconsItem[];
-  className?: string;
-}
-
+/**
+ * Mapping of predefined color names to gradient values
+ * Using proper hue-degree-notation for CSS compliance
+ */
 const gradientMapping: Record<string, string> = {
-  blue: 'linear-gradient(hsl(223, 90%, 50%), hsl(208, 90%, 50%))',
-  purple: 'linear-gradient(hsl(283, 90%, 50%), hsl(268, 90%, 50%))',
-  red: 'linear-gradient(hsl(3, 90%, 50%), hsl(348, 90%, 50%))',
-  indigo: 'linear-gradient(hsl(253, 90%, 50%), hsl(238, 90%, 50%))',
-  orange: 'linear-gradient(hsl(43, 90%, 50%), hsl(28, 90%, 50%))',
-  green: 'linear-gradient(hsl(123, 90%, 40%), hsl(108, 90%, 40%))'
+  blue: 'linear-gradient(hsl(223deg, 90%, 50%), hsl(208deg, 90%, 50%))',
+  purple: 'linear-gradient(hsl(283deg, 90%, 50%), hsl(268deg, 90%, 50%))',
+  red: 'linear-gradient(hsl(3deg, 90%, 50%), hsl(348deg, 90%, 50%))',
+  indigo: 'linear-gradient(hsl(253deg, 90%, 50%), hsl(238deg, 90%, 50%))',
+  orange: 'linear-gradient(hsl(43deg, 90%, 50%), hsl(28deg, 90%, 50%))',
+  green: 'linear-gradient(hsl(123deg, 90%, 40%), hsl(108deg, 90%, 40%))',
 };
 
-const GlassIcons: React.FC<GlassIconsProps> = ({ items, className }) => {
-  const getBackgroundStyle = (color: string): React.CSSProperties => {
+/**
+ * GlassIcon Component
+ * 
+ * Individual glass icon button with 3D hover effect.
+ */
+const GlassIcon = React.memo(function GlassIcon({ 
+  item, 
+  getBackgroundStyle 
+}: GlassIconProps): JSX.Element {
+  return (
+    <button
+      type="button"
+      aria-label={item.label}
+      className={cn(
+        styles['icon-button'],
+        item.customClass
+      )}
+    >
+      {/* Back layer */}
+      <span
+        className={styles['back-layer']}
+        style={getBackgroundStyle(item.color)}
+      ></span>
+
+      {/* Front layer */}
+      <span className={styles['front-layer']}>
+        <span
+          className={styles['icon-wrapper']}
+          aria-hidden="true"
+        >
+          {item.icon}
+        </span>
+      </span>
+
+      {/* Label */}
+      <span className={styles['icon-label']}>
+        {item.label}
+      </span>
+    </button>
+  );
+});
+
+GlassIcon.displayName = 'GlassIcon';
+
+/**
+ * GlassIcons Component
+ * 
+ * A grid of glass-like icon buttons with 3D hover effects.
+ * Each button has a colored background, a glass front layer, and a label.
+ * 
+ * @example
+ * ```tsx
+ * const items = [
+ *   { icon: <HomeIcon />, color: 'blue', label: 'Home' },
+ *   { icon: <SettingsIcon />, color: 'purple', label: 'Settings' },
+ * ];
+ * 
+ * <GlassIcons items={items} className="max-w-4xl" />
+ * ```
+ */
+const GlassIcons = React.memo(function GlassIcons({ 
+  items, 
+  className 
+}: GlassIconsProps): JSX.Element {
+  /**
+   * Returns the background style based on the color name or value
+   */
+  const getBackgroundStyle = React.useCallback((color: string): React.CSSProperties => {
     if (gradientMapping[color]) {
       return { background: gradientMapping[color] };
     }
     return { background: color };
-  };
+  }, []);
 
   return (
-    <div
-      className={`grid gap-[5em] grid-cols-2 md:grid-cols-3 mx-auto py-[3em] overflow-visible ${
-        className || ''
-      }`}
-    >
+    <div className={cn(styles['icons-container'], className)}>
       {items.map((item, index) => (
-        <button
-          key={index}
-          type="button"
-          aria-label={item.label}
-          className={`relative bg-transparent outline-none w-[4.5em] h-[4.5em] [perspective:24em] [transform-style:preserve-3d] [-webkit-tap-highlight-color:transparent] group ${
-            item.customClass || ''
-          }`}
-        >
-          {/* Back layer */}
-          <span
-            className="absolute top-0 left-0 w-full h-full rounded-[1.25em] block transition-[opacity,transform] duration-300 ease-&lsqb;cubic-bezier(0.83,0,0.17,1)&rsqb; origin-[100%_100%] rotate-[15deg] group-hover:[transform:rotate(25deg)_translate3d(-0.5em,-0.5em,0.5em)]"
-            style={{
-              ...getBackgroundStyle(item.color),
-              boxShadow: '0.5em -0.5em 0.75em hsla(223, 10%, 10%, 0.15)'
-            }}
-          ></span>
-
-          {/* Front layer */}
-          <span
-            className="absolute top-0 left-0 w-full h-full rounded-[1.25em] bg-[hsla(0,0%,100%,0.15)] transition-[opacity,transform] duration-300 ease-&lsqb;cubic-bezier(0.83,0,0.17,1)&rsqb; origin-[80%_50%] flex backdrop-blur-[0.75em] [-webkit-backdrop-filter:blur(0.75em)] transform group-hover:[transform:translateZ(2em)]"
-            style={{
-              boxShadow: '0 0 0 0.1em hsla(0, 0%, 100%, 0.3) inset'
-            }}
-          >
-            <span
-              className="m-auto w-[1.5em] h-[1.5em] flex items-center justify-center"
-              aria-hidden="true"
-            >
-              {item.icon}
-            </span>
-          </span>
-
-          {/* Label */}
-          <span className="absolute top-full left-0 right-0 text-center whitespace-nowrap leading-[2] text-base opacity-0 transition-[opacity,transform] duration-300 ease-&lsqb;cubic-bezier(0.83,0,0.17,1)&rsqb; translate-y-0 group-hover:opacity-100 group-hover:[transform:translateY(20%)]">
-            {item.label}
-          </span>
-        </button>
+        <GlassIcon 
+          key={index} 
+          item={item} 
+          getBackgroundStyle={getBackgroundStyle} 
+        />
       ))}
     </div>
   );
-};
+});
 
+GlassIcons.displayName = 'GlassIcons';
+
+export { GlassIcons };
 export default GlassIcons;

@@ -2,36 +2,31 @@
 
 import { gsap } from 'gsap';
 import { Observer } from 'gsap/Observer';
-import React, { useEffect, useRef, useMemo, useCallback, memo } from 'react';
-import './infinite-scroll.module.css';
+import React, { useEffect, useRef, useMemo, useCallback } from 'react';
 
-export interface InfiniteScrollItem {
-  content: React.ReactNode;
-}
-
-export interface InfiniteScrollProps {
-  // ----- Layout / Style Props -----
-  width?: string; // Width of the outer wrapper
-  maxHeight?: string; // Max-height of the outer wrapper
-  negativeMargin?: string; // Negative margin to reduce spacing between items
-  // ----- Items Prop -----
-  items?: InfiniteScrollItem[]; // Array of items with { content: ... }
-  itemMinHeight?: number; // Fixed height for each item
-  // ----- Tilt Props -----
-  isTilted?: boolean; // Whether the container is in "skewed" perspective
-  tiltDirection?: 'left' | 'right'; // tiltDirection: "left" or "right"
-  // ----- Autoplay Props -----
-  autoplay?: boolean; // Whether it should automatically scroll
-  autoplaySpeed?: number; // Speed (pixels/frame approx.)
-  autoplayDirection?: 'down' | 'up'; // "down" or "up"
-  pauseOnHover?: boolean; // Pause autoplay on hover
-}
+import { cn } from '@/utils/app.utils';
+import styles from './infinite-scroll.module.css';
+import { InfiniteScrollItem, InfiniteScrollProps } from './infinite-scroll.types';
 
 /**
  * InfiniteScroll component creates a scrollable container with infinite scrolling behavior
  * 
- * @param props - Component properties including styling and behavior options
- * @returns A memoized React component with infinite scrolling capability
+ * The component uses GSAP for smooth animations and supports custom styling, autoplay,
+ * and 3D tilting effects. Perfect for showcasing content in a continuous loop.
+ * 
+ * @example
+ * ```tsx
+ * <InfiniteScroll
+ *   items={[
+ *     { content: <div>Item 1</div> },
+ *     { content: <div>Item 2</div> },
+ *     { content: <div>Item 3</div> }
+ *   ]}
+ *   width="30rem"
+ *   autoplay={true}
+ *   isTilted={true}
+ * />
+ * ```
  */
 const InfiniteScrollComponent: React.FC<InfiniteScrollProps> = ({
   width = '30rem',
@@ -61,30 +56,10 @@ const InfiniteScrollComponent: React.FC<InfiniteScrollProps> = ({
   // Memoize styles to prevent recalculations
   const inlineStyles = useMemo(
     () => ({
-      wrapper: { maxHeight },
       container: { width, transform: getTiltTransform() },
       item: { height: `${itemMinHeight}px`, marginTop: negativeMargin }
     }),
-    [width, maxHeight, itemMinHeight, negativeMargin, getTiltTransform]
-  );
-
-  // Generate CSS style string
-  const styleString = useMemo(
-    () => `
-      .infinite-scroll-wrapper {
-        max-height: ${maxHeight};
-      }
-
-      .infinite-scroll-container {
-        width: ${width};
-      }
-
-      .infinite-scroll-item {
-        height: ${itemMinHeight}px;
-        margin-top: ${negativeMargin};
-      }
-    `,
-    [maxHeight, width, itemMinHeight, negativeMargin]
+    [width, itemMinHeight, negativeMargin, getTiltTransform]
   );
 
   useEffect(() => {
@@ -96,11 +71,7 @@ const InfiniteScrollComponent: React.FC<InfiniteScrollProps> = ({
     const container = containerRef.current;
     if (!container || items.length === 0) return;
 
-    // Get all child elements of container as HTMLDivElement[]
-    const divItems = gsap.utils.toArray<HTMLDivElement>(container.children);
-    if (!divItems.length) return;
-
-    const firstItem = divItems[0];
+    const firstItem = container.children[0] as HTMLElement;
     const itemStyle = getComputedStyle(firstItem);
     const itemHeight = firstItem.offsetHeight;
     const itemMarginTop = parseFloat(itemStyle.marginTop) || 0;
@@ -108,6 +79,10 @@ const InfiniteScrollComponent: React.FC<InfiniteScrollProps> = ({
     const totalHeight = itemHeight * items.length + itemMarginTop * (items.length - 1);
 
     const wrapFn = gsap.utils.wrap(-totalHeight, totalHeight);
+
+    // Get all child elements of container as HTMLDivElement[]
+    const divItems = gsap.utils.toArray<HTMLDivElement>(container.children);
+    if (!divItems.length) return;
 
     // Set initial positions
     divItems.forEach((child, i) => {
@@ -205,26 +180,45 @@ const InfiniteScrollComponent: React.FC<InfiniteScrollProps> = ({
   ]);
 
   return (
-    <>
-      <style>{styleString}</style>
-
-      <div className="infinite-scroll-wrapper" ref={wrapperRef}>
-        <div
-          className="infinite-scroll-container"
-          ref={containerRef}
-          style={inlineStyles.container}
-        >
-          {items.map((item, i) => (
-            <div className="infinite-scroll-item" key={i}>
-              {item.content}
-            </div>
-          ))}
-        </div>
+    <div 
+      className={styles['infinite-scroll-wrapper']} 
+      ref={wrapperRef} 
+      style={{ maxHeight }}
+    >
+      <div
+        className={styles['infinite-scroll-container']}
+        ref={containerRef}
+        style={inlineStyles.container}
+      >
+        {items.map((item, i) => (
+          <div 
+            className={cn(
+              styles['infinite-scroll-item'],
+              isTilted && (tiltDirection === 'left' 
+                ? styles['infinite-scroll-tilted-left'] 
+                : styles['infinite-scroll-tilted-right'])
+            )} 
+            key={i}
+            style={inlineStyles.item}
+          >
+            {item.content}
+          </div>
+        ))}
       </div>
-    </>
+    </div>
   );
 };
 
-// Export memoized component
-const InfiniteScroll = memo(InfiniteScrollComponent);
+// Set displayName for debugging
+InfiniteScrollComponent.displayName = 'InfiniteScrollComponent';
+
+/**
+ * Memoized InfiniteScroll component
+ * 
+ * A vertical infinite scrolling container that can display any React content
+ * with support for autoplay, tilting effects, and interactive scrolling.
+ */
+const InfiniteScroll = React.memo(InfiniteScrollComponent);
+InfiniteScroll.displayName = 'InfiniteScroll';
+
 export default InfiniteScroll;

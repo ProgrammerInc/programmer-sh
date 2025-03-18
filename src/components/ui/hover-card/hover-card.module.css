@@ -1,0 +1,100 @@
+/**
+ * HoverCard Component Styles
+ */
+
+.content {
+  z-index: 50;
+  width: 16rem;
+  border-radius: 0.375rem;
+  border: 1px solid hsl(var(--border));
+  background-color: hsl(var(--popover));
+  color: hsl(var(--popover-foreground));
+  padding: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  outline: none;
+}
+
+/* Animation states */
+.content[data-state="open"] {
+  animation: fade-in 150ms ease;
+}
+
+.content[data-state="closed"] {
+  animation: fade-out 150ms ease;
+}
+
+/* Position animations */
+.content[data-side="bottom"] {
+  animation-name: slide-from-top;
+}
+
+.content[data-side="left"] {
+  animation-name: slide-from-right;
+}
+
+.content[data-side="right"] {
+  animation-name: slide-from-left;
+}
+
+.content[data-side="top"] {
+  animation-name: slide-from-bottom;
+}
+
+/* Keyframe animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+@keyframes slide-from-top {
+  from {
+    transform: translateY(-0.5rem);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-from-right {
+  from {
+    transform: translateX(0.5rem);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-from-left {
+  from {
+    transform: translateX(-0.5rem);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-from-bottom {
+  from {
+    transform: translateY(0.5rem);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

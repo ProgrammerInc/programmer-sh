@@ -19,9 +19,49 @@ export interface CheckboxProps extends React.ComponentPropsWithoutRef<typeof Che
    * Required attribute to indicate if input requires a value
    */
   required?: boolean;
+
+  /**
+   * Optional additional CSS class name
+   */
+  className?: string;
+
+  /**
+   * Optional id for accessibility and label association
+   */
+  id?: string;
+
+  /**
+   * Optional name attribute for form submission
+   */
+  name?: string;
+
+  /**
+   * Optional value attribute for form submission
+   */
+  value?: string;
+
+  /**
+   * Optional disabled state
+   */
+  disabled?: boolean;
+
+  /**
+   * Optional callback for checkbox state changes
+   */
+  onCheckedChange?: (checked: boolean | 'indeterminate') => void;
 }
 
 /**
  * Checkbox indicator props
  */
 export type CheckboxIndicatorProps = React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Indicator>;
+
+/**
+ * Checkbox icon props
+ */
+export interface CheckboxIconProps extends React.SVGProps<SVGSVGElement> {
+  /**
+   * Optional additional CSS class name
+   */
+  className?: string;
+}

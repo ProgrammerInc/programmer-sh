@@ -3,19 +3,32 @@
 import { cn } from '@/utils/app.utils';
 import * as React from 'react';
 import * as TabsPrimitive from '@radix-ui/react-tabs';
-import { memo, useMemo } from 'react';
+import { forwardRef, memo, useMemo } from 'react';
 
 import {
   TabsContentProps,
   TabsListProps,
+  TabsOrientation,
   TabsProps,
-  TabsTriggerProps
+  TabsSize,
+  TabsTriggerProps,
+  TabsVariant
 } from './tabs.types';
+
+import styles from './tabs.module.css';
 
 /**
  * Tabs component based on Radix UI's Tabs primitive
  * 
  * Organizes content into multiple sections where only one section is visible at a time.
+ * 
+ * Features:
+ * - Multiple visual variants: default, underline, card, and bordered
+ * - Different size options: default, small (sm), and large (lg)
+ * - Support for both horizontal and vertical orientations
+ * - Keyboard navigation support
+ * - Screen reader accessible
+ * - Controlled and uncontrolled modes
  * 
  * @example
  * ```tsx
@@ -32,12 +45,69 @@ import {
  *   </TabsContent>
  * </Tabs>
  * ```
+ * 
+ * @example
+ * ```tsx
+ * // With variant and size options
+ * <Tabs variant="underline" size="lg">
+ *   <TabsList>
+ *     <TabsTrigger value="tab1">First Tab</TabsTrigger>
+ *     <TabsTrigger value="tab2">Second Tab</TabsTrigger>
+ *   </TabsList>
+ *   <TabsContent value="tab1">First tab content</TabsContent>
+ *   <TabsContent value="tab2">Second tab content</TabsContent>
+ * </Tabs>
+ * ```
+ * 
+ * @example
+ * ```tsx
+ * // Vertical orientation
+ * <Tabs orientation="vertical">
+ *   <TabsList>
+ *     <TabsTrigger value="tab1">First Tab</TabsTrigger>
+ *     <TabsTrigger value="tab2">Second Tab</TabsTrigger>
+ *   </TabsList>
+ *   <TabsContent value="tab1">First tab content</TabsContent>
+ *   <TabsContent value="tab2">Second tab content</TabsContent>
+ * </Tabs>
+ * ```
  */
-const Tabs = memo(TabsPrimitive.Root) as React.FC<TabsProps>;
+const Tabs = memo(forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Root>,
+  TabsProps
+>(({ className, variant = 'default', size = 'default', orientation = 'horizontal', ...props }, ref) => {
+  const tabsClassName = useMemo(() => {
+    return cn(
+      styles.tabs,
+      variant === 'underline' && styles['tabs-underline'],
+      variant === 'card' && styles['tabs-card'],
+      variant === 'bordered' && styles['tabs-bordered'],
+      size === 'sm' && styles['tabs-sm'],
+      size === 'lg' && styles['tabs-lg'],
+      orientation === 'vertical' && styles['tabs-vertical'],
+      className
+    );
+  }, [className, variant, size, orientation]);
+
+  return (
+    <TabsPrimitive.Root
+      ref={ref}
+      className={tabsClassName}
+      orientation={orientation === 'vertical' ? 'vertical' : 'horizontal'}
+      {...props}
+    />
+  );
+}));
+
 Tabs.displayName = TabsPrimitive.Root.displayName;
 
 /**
  * TabsList component that contains the triggers for each tab
+ * 
+ * Features:
+ * - Adapts to the parent Tabs variant and size automatically
+ * - Supports horizontal and vertical orientations
+ * - Fully accessible and keyboard navigable
  * 
  * @example
  * ```tsx
@@ -47,15 +117,12 @@ Tabs.displayName = TabsPrimitive.Root.displayName;
  * </TabsList>
  * ```
  */
-const TabsList = memo(React.forwardRef<
+const TabsList = memo(forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
   TabsListProps
 >(({ className, ...props }, ref) => {
   const listClassName = useMemo(() => {
-    return cn(
-      'inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground',
-      className
-    );
+    return cn(styles['tabs-list'], className);
   }, [className]);
 
   return (
@@ -72,20 +139,28 @@ TabsList.displayName = TabsPrimitive.List.displayName;
 /**
  * TabsTrigger component that users click to activate a tab
  * 
+ * Features:
+ * - Visual indication of active state
+ * - Supports disabled state
+ * - Fully accessible with keyboard navigation
+ * - Focus indicators for keyboard users
+ * 
  * @example
  * ```tsx
  * <TabsTrigger value="account">Account</TabsTrigger>
  * ```
+ * 
+ * @example
+ * ```tsx
+ * <TabsTrigger value="settings" disabled>Settings</TabsTrigger>
+ * ```
  */
-const TabsTrigger = memo(React.forwardRef<
+const TabsTrigger = memo(forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
   TabsTriggerProps
 >(({ className, ...props }, ref) => {
   const triggerClassName = useMemo(() => {
-    return cn(
-      'inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm',
-      className
-    );
+    return cn(styles['tabs-trigger'], className);
   }, [className]);
 
   return (
@@ -102,22 +177,31 @@ TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 /**
  * TabsContent component that contains the content for each tab
  * 
+ * Features:
+ * - Only displayed when the corresponding tab is active
+ * - Can be force mounted even when not active (useful for forms)
+ * - Smooth focus management when tabs change
+ * 
  * @example
  * ```tsx
  * <TabsContent value="account">
  *   <p>Account settings content here</p>
  * </TabsContent>
  * ```
+ * 
+ * @example
+ * ```tsx
+ * <TabsContent value="form" forceMount>
+ *   <form>Form that needs to stay mounted for state preservation</form>
+ * </TabsContent>
+ * ```
  */
-const TabsContent = memo(React.forwardRef<
+const TabsContent = memo(forwardRef<
   React.ElementRef<typeof TabsPrimitive.Content>,
   TabsContentProps
 >(({ className, ...props }, ref) => {
   const contentClassName = useMemo(() => {
-    return cn(
-      'mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-      className
-    );
+    return cn(styles['tabs-content'], className);
   }, [className]);
 
   return (

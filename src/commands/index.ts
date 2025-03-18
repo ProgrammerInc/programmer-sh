@@ -109,6 +109,17 @@ const DIRECT_COMMANDS: Record<string, Command> = {
  */
 export const processCommand = (commandString: string): CommandResult => {
   try {
+    const logger = createFeatureLogger('CommandSystem');
+    logger.debug('Processing command', { commandString });
+
+    // Test command - remove after debugging
+    if (commandString === 'test') {
+      return {
+        content: 'This is a test command output',
+        isError: false
+      };
+    }
+
     commandLogger.debug('Processing command input', { raw: commandString });
 
     // Special direct handling for 'history' command regardless of case or spaces

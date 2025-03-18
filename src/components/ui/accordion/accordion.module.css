@@ -1,0 +1,75 @@
+/**
+ * Accordion component styles
+ */
+
+.item {
+  border-bottom-width: 1px;
+}
+
+.trigger {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-weight: 500;
+  transition-property: all;
+}
+
+.trigger:hover {
+  text-decoration: underline;
+}
+
+.trigger[data-state='open'] > svg {
+  transform: rotate(180deg);
+}
+
+.header {
+  display: flex;
+}
+
+.content {
+  overflow: hidden;
+  font-size: 0.875rem;
+  transition-property: all;
+}
+
+.content[data-state='closed'] {
+  animation: accordion-up 0.2s ease-out;
+}
+
+.content[data-state='open'] {
+  animation: accordion-down 0.2s ease-out;
+}
+
+.content-inner {
+  padding-bottom: 1rem;
+  padding-top: 0;
+}
+
+.chevron {
+  height: 1rem;
+  width: 1rem;
+  flex-shrink: 0;
+  transition-property: transform;
+  transition-duration: 200ms;
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}

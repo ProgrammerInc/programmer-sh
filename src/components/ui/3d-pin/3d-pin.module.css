@@ -1,0 +1,166 @@
+/**
+ * 3D Pin component styles
+ */
+
+.container {
+  position: relative;
+  z-index: 50;
+  cursor: pointer;
+}
+
+.perspective-container {
+  perspective: 1000px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: 0.0938rem;
+  margin-top: 1rem;
+  transform: rotateX(70deg) translateZ(0) translate(-50%, -50%);
+}
+
+.pin-content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  padding: 1rem;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  border-radius: 1rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  background-color: black;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition-duration: 700ms;
+  overflow: hidden;
+}
+
+.container:hover .pin-content {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.pin-inner {
+  position: relative;
+  z-index: 50;
+}
+
+.perspective-wrapper {
+  pointer-events: none;
+  width: 24rem;
+  height: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  z-index: 60;
+  transition-duration: 500ms;
+}
+
+.container:hover .perspective-wrapper {
+  opacity: 1;
+}
+
+.perspective-content {
+  width: 100%;
+  height: 100%;
+  margin-top: -1.75rem;
+  position: relative;
+}
+
+.title-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.title-link {
+  position: relative;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  z-index: 10;
+  border-radius: 9999px;
+  background-color: rgb(10, 10, 16);
+  padding: 0.125rem 1rem;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.title-text {
+  position: relative;
+  z-index: 20;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 0.125rem 0;
+}
+
+.title-underline {
+  position: absolute;
+  bottom: 0;
+  left: 1.125rem;
+  height: 1px;
+  width: calc(100% - 2.25rem);
+  background: linear-gradient(to right, rgba(52, 211, 153, 0), rgba(52, 211, 153, 0.9), rgba(52, 211, 153, 0));
+  transition-property: opacity;
+  transition-duration: 500ms;
+}
+
+.container:hover .title-underline {
+  opacity: 0.4;
+}
+
+.ripple {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 11.25rem;
+  width: 11.25rem;
+  border-radius: 50%;
+  background-color: rgba(14, 165, 233, 0.08);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.line-vertical {
+  position: absolute;
+  right: 50%;
+  bottom: 50%;
+  background: linear-gradient(to bottom, transparent, #06b6d4);
+  transform: translateY(14px);
+  width: 1px;
+  height: 5rem;
+  transition-property: height;
+}
+
+.container:hover .line-vertical {
+  height: 10rem;
+}
+
+.line-blur {
+  filter: blur(2px);
+}
+
+.dot {
+  position: absolute;
+  right: 50%;
+  bottom: 50%;
+  transform: translateY(14px);
+  border-radius: 9999px;
+  z-index: 40;
+}
+
+.dot-large {
+  transform: translate(1.5px, 14px);
+  width: 4px;
+  height: 4px;
+  background-color: #0891b2;
+  filter: blur(3px);
+}
+
+.dot-small {
+  transform: translate(0.5px, 14px);
+  width: 2px;
+  height: 2px;
+  background-color: #67e8f9;
+}

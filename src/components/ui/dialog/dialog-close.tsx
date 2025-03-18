@@ -8,10 +8,15 @@ import { DialogCloseProps } from './dialog.types';
 /**
  * Dialog Close Component
  * Button that closes the dialog when clicked
+ *
+ * @example
+ * ```tsx
+ * <DialogClose>Close</DialogClose>
+ * ```
  */
 const DialogClose = memo(DialogPrimitive.Close);
 
-DialogClose.displayName = 'DialogClose';
+DialogClose.displayName = DialogPrimitive.Close.displayName;
 
 export { DialogClose };
 export default DialogClose;

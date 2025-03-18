@@ -4,26 +4,50 @@ import { useAuthModal } from '@/hooks/use-auth-modal.hook';
 import { useTerminalAuth } from '@/hooks/use-terminal-auth.hook';
 import { supabase } from '@/integrations/supabase/supabase.client';
 import { isIncognitoMode } from '@/lib/is-incognito-mode';
-import { SocialLink } from '@/types/social-links.types';
 import { ChevronDown, LogIn, LogOut, Minus, Plus, Settings, User, X } from 'lucide-react';
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import styles from './terminal-header.module.css';
+import { TerminalHeaderProps, TerminalHeaderRef } from './terminal-header.types';
 
-export interface TerminalHeaderProps {
-  ref?: React.RefObject<HTMLDivElement> | null;
-  lastCommand?: string;
-  socialLinks?: SocialLink[];
-}
-
-export const TerminalHeader = forwardRef<HTMLDivElement, TerminalHeaderProps>(
-  ({ lastCommand = '' }, ref) => {
+/**
+ * Terminal Header component that displays window controls, terminal title, and user menu.
+ * 
+ * Features:
+ * - Window control buttons (close, minimize, maximize)
+ * - Title display with animated cursor and last command indicator
+ * - User authentication dropdown menu
+ * - Login/signup or profile/logout options
+ * - Social media links (optional)
+ * 
+ * @example
+ * ```tsx
+ * <TerminalHeader 
+ *   lastCommand="ls -la" 
+ *   socialLinks={[
+ *     { name: 'GitHub', url: 'https://github.com/username' },
+ *     { name: 'Twitter', url: 'https://twitter.com/username' }
+ *   ]} 
+ * />
+ * ```
+ */
+export const TerminalHeader = forwardRef<TerminalHeaderRef, TerminalHeaderProps>(
+  ({ 
+    lastCommand = '', 
+    socialLinks = [],
+    className = ''
+  }, ref) => {
     const { userEmail } = useTerminalAuth();
     const { openModal, headerRef } = useAuthModal();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [isAnonymous, setIsAnonymous] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const dropdownButtonRef = useRef<HTMLButtonElement>(null);
 
-    // Use the headerRef from context instead of local ref
-    useImperativeHandle(ref, () => headerRef.current!);
+    // Expose methods to parent component
+    useImperativeHandle(ref, () => ({
+      focusUserMenu: () => dropdownButtonRef.current?.focus(),
+      closeUserMenu: () => setDropdownOpen(false)
+    }));
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -40,6 +64,13 @@ export const TerminalHeader = forwardRef<HTMLDivElement, TerminalHeaderProps>(
       };
     }, []);
 
+    // Update aria-expanded attribute directly when dropdownOpen changes
+    useEffect(() => {
+      if (dropdownButtonRef.current) {
+        dropdownButtonRef.current.setAttribute('aria-expanded', dropdownOpen ? 'true' : 'false');
+      }
+    }, [dropdownOpen]);
+
     // Check for incognito mode
     useEffect(() => {
       setIsAnonymous(isIncognitoMode());
@@ -54,6 +85,7 @@ export const TerminalHeader = forwardRef<HTMLDivElement, TerminalHeaderProps>(
       return isAnonymous ? 'Anonymous' : 'Guest';
     };
 
+    // Handle user actions
     const handleLogout = async () => {
       try {
         await supabase.auth.signOut();
@@ -87,108 +119,142 @@ export const TerminalHeader = forwardRef<HTMLDivElement, TerminalHeaderProps>(
       document.dispatchEvent(event);
     };
 
+    // Handle keyboard navigation in dropdown
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setDropdownOpen(false);
+      }
+    };
+
     return (
       <div
         ref={headerRef}
-        className="flex items-center justify-between bg-terminal-background p-2 border-b border-terminal-border"
+        className={`${styles.header} ${className}`}
+        role="banner"
+        aria-label="Terminal header"
       >
-        <div className="flex space-x-2">
-          <div className="w-3 h-3 rounded-full bg-terminal-close window-control group flex items-center justify-center">
+        {/* Window controls */}
+        <div className={styles['window-controls']} role="group" aria-label="Window controls">
+          <div 
+            className={`${styles['window-control']} ${styles.close}`}
+            role="button"
+            aria-label="Close window"
+            tabIndex={0}
+          >
             <X
-              className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100"
+              className={styles['control-icon']}
               strokeWidth={3}
             />
           </div>
-          <div className="w-3 h-3 rounded-full bg-terminal-minimize window-control group flex items-center justify-center">
+          <div 
+            className={`${styles['window-control']} ${styles.minimize}`}
+            role="button"
+            aria-label="Minimize window"
+            tabIndex={0}
+          >
             <Minus
-              className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100"
+              className={styles['control-icon']}
               strokeWidth={3}
             />
           </div>
-          <div className="w-3 h-3 rounded-full bg-terminal-maximize window-control group flex items-center justify-center">
+          <div 
+            className={`${styles['window-control']} ${styles.maximize}`}
+            role="button"
+            aria-label="Maximize window"
+            tabIndex={0}
+          >
             <Plus
-              className="w-2 h-2 text-terminal-background opacity-0 group-hover:opacity-100"
+              className={styles['control-icon']}
               strokeWidth={3}
             />
           </div>
         </div>
 
-        <div className="flex-1 text-center text-terminal-title text-sm font-mono truncate px-4">
+        {/* Title area */}
+        <div className={styles['title-container']} aria-label="Terminal title">
           <span>
-            <span className="font-mono">&lt;programmer&gt;</span>.
-            <span className="animate-cursor-blink font-mono">_</span>
+            <span className={styles['title-text']}>&lt;programmer&gt;</span>.
+            <span className={styles.cursor}>_</span>
           </span>
           {lastCommand && (
             <span>
-              <span className="text-terminal-muted font-mono">&nbsp;-&nbsp;</span>
-              <span className="text-terminal-prompt font-mono">~/{lastCommand}</span>
+              <span className={styles.divider}>&nbsp;-&nbsp;</span>
+              <span className={styles['command-path']}>~/{lastCommand}</span>
             </span>
           )}
         </div>
 
-        <div className="relative" ref={dropdownRef}>
+        {/* User dropdown */}
+        <div className={styles['user-dropdown']} ref={dropdownRef} onKeyDown={handleKeyDown}>
           <button
+            ref={dropdownButtonRef}
             id="userDropdown"
             type="button"
             onClick={e => {
               e.preventDefault();
-              e.currentTarget.ariaExpanded = String(!dropdownOpen);
               setDropdownOpen(!dropdownOpen);
             }}
-            className="flex items-center space-x-1 text-terminal-title hover:text-terminal-prompt transition-colors py-1 px-2 rounded"
+            className={styles['dropdown-button']}
             aria-haspopup="true"
-            aria-expanded="false"
+            aria-label="User menu dropdown"
           >
             <User className="w-4 h-4" />
-            <span className="text-xs">{getUserDisplayName()}</span>
+            <span className={styles.username}>{getUserDisplayName()}</span>
             <ChevronDown className="w-3 h-3" />
           </button>
 
           {dropdownOpen && (
             <div
-              className="absolute right-0 mt-1 w-48 rounded-md shadow-lg border border-terminal-border z-50 terminal-glass"
+              className={styles['dropdown-content']}
               onClick={e => e.stopPropagation()}
+              role="menu"
+              aria-labelledby="userDropdown"
             >
-              <div className="py-1 rounded-md bg-terminal-background-translucent">
+              <div className={styles['dropdown-menu']}>
                 {userEmail ? (
                   <>
                     <button
-                      className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
+                      className={styles['dropdown-item']}
                       onClick={handleProfileClick}
+                      role="menuitem"
                     >
-                      <User className="w-4 h-4 mr-2" />
+                      <User className={styles['dropdown-icon']} />
                       Profile
                     </button>
                     <button
-                      className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
+                      className={styles['dropdown-item']}
                       onClick={handleSettingsClick}
+                      role="menuitem"
                     >
-                      <Settings className="w-4 h-4 mr-2" />
+                      <Settings className={styles['dropdown-icon']} />
                       Settings
                     </button>
-                    <div className="border-t border-terminal-border my-1"></div>
+                    <div className={styles['dropdown-divider']} role="separator"></div>
                     <button
-                      className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
+                      className={styles['dropdown-item']}
                       onClick={handleLogout}
+                      role="menuitem"
                     >
-                      <LogOut className="w-4 h-4 mr-2" />
+                      <LogOut className={styles['dropdown-icon']} />
                       Logout
                     </button>
                   </>
                 ) : (
                   <>
                     <button
-                      className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
+                      className={styles['dropdown-item']}
                       onClick={handleLoginClick}
+                      role="menuitem"
                     >
-                      <LogIn className="w-4 h-4 mr-2" />
+                      <LogIn className={styles['dropdown-icon']} />
                       Login
                     </button>
                     <button
-                      className="flex w-full items-center px-4 py-2 text-sm text-terminal-foreground hover:bg-terminal-muted/30"
+                      className={styles['dropdown-item']}
                       onClick={handleSignupClick}
+                      role="menuitem"
                     >
-                      <User className="w-4 h-4 mr-2" />
+                      <User className={styles['dropdown-icon']} />
                       Sign Up
                     </button>
                   </>

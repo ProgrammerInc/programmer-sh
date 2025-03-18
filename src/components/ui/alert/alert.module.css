@@ -1,0 +1,55 @@
+/**
+ * Alert component styles
+ */
+
+.alert {
+  position: relative;
+  width: 100%;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  padding: 1rem;
+}
+
+.alert > svg ~ * {
+  padding-left: 1.75rem;
+}
+
+.alert > svg + div {
+  transform: translateY(-3px);
+}
+
+.alert > svg {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  color: var(--text-foreground);
+}
+
+.default {
+  background-color: var(--background);
+  color: var(--text-foreground);
+}
+
+.destructive {
+  border-color: rgba(var(--destructive), 0.5);
+  color: var(--destructive);
+}
+
+.destructive > svg {
+  color: var(--destructive);
+}
+
+.title {
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.description {
+  font-size: 0.875rem;
+}
+
+.description p {
+  line-height: 1.5;
+}

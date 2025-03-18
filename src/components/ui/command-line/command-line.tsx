@@ -1,33 +1,46 @@
 'use client';
 
+/**
+ * CommandLine component
+ * 
+ * A terminal-like command input interface with history navigation support
+ */
+
 import { cn } from '@/utils/app.utils';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { forwardRef, memo, useEffect, useRef, useState } from 'react';
 
-export interface CommandLineProps {
-  prompt?: string;
-  onSubmit: (command: string) => void;
-  disabled?: boolean;
-  autoFocus?: boolean;
-  className?: string;
-  showPrompt?: boolean;
-  inputRef?: React.RefObject<HTMLInputElement>;
-  history?: string[];
-  initialValue?: string;
-  onInputChange?: (value: string) => void;
-}
+import styles from './command-line.module.css';
+import { CommandLineProps } from './command-line.types';
 
-export const CommandLine: React.FC<CommandLineProps> = ({
-  prompt = '~$',
-  onSubmit,
-  disabled = false,
-  autoFocus = true,
-  className,
-  showPrompt = true,
-  inputRef,
-  history = [],
-  initialValue = '',
-  onInputChange
-}) => {
+/**
+ * CommandLine component
+ * 
+ * A terminal-like command line input with history navigation via arrow keys.
+ * 
+ * @example
+ * ```tsx
+ * <CommandLine
+ *   prompt="$"
+ *   onSubmit={(command) => console.log(`Executing: ${command}`)}
+ *   history={commandHistory}
+ * />
+ * ```
+ */
+export const CommandLine = memo(forwardRef<HTMLFormElement, CommandLineProps>((
+  {
+    prompt = '~$',
+    onSubmit,
+    disabled = false,
+    autoFocus = true,
+    className,
+    showPrompt = true,
+    inputRef,
+    history = [],
+    initialValue = '',
+    onInputChange
+  }, 
+  ref
+) => {
   const [command, setCommand] = useState(initialValue);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const internalInputRef = useRef<HTMLInputElement>(null);
@@ -110,8 +123,8 @@ export const CommandLine: React.FC<CommandLineProps> = ({
   }, [autoFocus, disabled, actualInputRef]);
 
   return (
-    <form onSubmit={handleSubmit} className={cn('flex items-center', className)}>
-      {showPrompt && <span className="text-terminal-prompt font-mono mr-2">{prompt}</span>}
+    <form ref={ref} onSubmit={handleSubmit} className={cn(styles['command-line-container'], className)}>
+      {showPrompt && <span className={styles['command-line-prompt']}>{prompt}</span>}
       <input
         ref={actualInputRef}
         type="text"
@@ -120,8 +133,7 @@ export const CommandLine: React.FC<CommandLineProps> = ({
         onKeyDown={handleKeyDown}
         disabled={disabled}
         className={cn(
-          'bg-transparent outline-none border-none text-terminal-foreground font-mono w-full',
-          'focus:ring-0 focus:outline-none',
+          styles['command-line-input'],
           disabled ? 'opacity-50 cursor-not-allowed' : ''
         )}
         aria-label="Terminal command input"
@@ -129,6 +141,8 @@ export const CommandLine: React.FC<CommandLineProps> = ({
       />
     </form>
   );
-};
+}));
+
+CommandLine.displayName = 'CommandLine';
 
 export default CommandLine;

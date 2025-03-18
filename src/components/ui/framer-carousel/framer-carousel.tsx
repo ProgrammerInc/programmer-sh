@@ -1,26 +1,22 @@
 'use client';
 
 import { PanInfo, motion, useMotionValue, useTransform } from 'framer-motion';
+import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { FiCircle, FiCode, FiFileText, FiLayers, FiLayout } from 'react-icons/fi';
 
-export interface FramerCarouselItem {
-  title: string;
-  description: string;
-  id: number;
-  icon: JSX.Element;
-}
+import { cn } from '@/utils/app.utils';
+import styles from './framer-carousel.module.css';
+import {
+  FramerCarouselDotsProps,
+  FramerCarouselItem,
+  FramerCarouselItemProps,
+  FramerCarouselProps
+} from './framer-carousel.types';
 
-export interface FramerCarouselProps {
-  items?: FramerCarouselItem[];
-  baseWidth?: number;
-  autoplay?: boolean;
-  autoplayDelay?: number;
-  pauseOnHover?: boolean;
-  loop?: boolean;
-  round?: boolean;
-}
-
+/**
+ * Default carousel items used when no items are provided
+ */
 const DEFAULT_ITEMS: FramerCarouselItem[] = [
   {
     title: 'Text Animations',
@@ -54,12 +50,120 @@ const DEFAULT_ITEMS: FramerCarouselItem[] = [
   }
 ];
 
+/**
+ * Constants for the carousel behavior
+ */
 const DRAG_BUFFER = 0;
 const VELOCITY_THRESHOLD = 500;
 const GAP = 16;
 const SPRING_OPTIONS = { type: 'spring', stiffness: 300, damping: 30 };
 
-export default function FramerCarousel({
+/**
+ * CarouselItem Component
+ * 
+ * Renders an individual carousel item with 3D transformation effects.
+ */
+const FramerCarouselItem = React.memo(function FramerCarouselItem({
+  item,
+  width,
+  round,
+  transition,
+  rotateY
+}: FramerCarouselItemProps): JSX.Element {
+  return (
+    <motion.div
+      className={cn(
+        styles['carousel-item'],
+        round ? styles['carousel-item-round'] : styles['carousel-item-default']
+      )}
+      style={{
+        width,
+        height: round ? width : '100%',
+        rotateY,
+        ...(round && { borderRadius: '50%' })
+      }}
+      transition={transition}
+    >
+      <div className={cn(
+        round ? styles['icon-container-round'] : styles['icon-container-default']
+      )}>
+        <span className={styles['icon-wrapper']}>
+          {item.icon}
+        </span>
+      </div>
+      <div className={styles['content-container']}>
+        <div className={styles['item-title']}>{item.title}</div>
+        <p className={styles['item-description']}>{item.description}</p>
+      </div>
+    </motion.div>
+  );
+});
+
+FramerCarouselItem.displayName = 'FramerCarouselItem';
+
+/**
+ * CarouselDots Component
+ * 
+ * Navigation dots for the carousel, showing the current position.
+ */
+const FramerCarouselDots = React.memo(function FramerCarouselDots({
+  items,
+  currentIndex,
+  setCurrentIndex,
+  round
+}: FramerCarouselDotsProps): JSX.Element {
+  return (
+    <div
+      className={cn(
+        styles['dots-container'],
+        round ? styles['dots-container-round'] : ''
+      )}
+    >
+      <div className={styles['dots-wrapper']}>
+        {items.map((_, index) => (
+          <motion.div
+            key={index}
+            className={cn(
+              styles['dot'],
+              currentIndex % items.length === index
+                ? round
+                  ? styles['dot-active-round']
+                  : styles['dot-active-default']
+                : round
+                  ? styles['dot-inactive-round']
+                  : styles['dot-inactive-default']
+            )}
+            animate={{
+              scale: currentIndex % items.length === index ? 1.2 : 1
+            }}
+            onClick={() => setCurrentIndex(index)}
+            transition={{ duration: 0.15 }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+});
+
+FramerCarouselDots.displayName = 'FramerCarouselDots';
+
+/**
+ * FramerCarousel Component
+ * 
+ * A carousel component with 3D effects using Framer Motion.
+ * Supports autoplay, looping, and touch/drag interactions.
+ * 
+ * @example
+ * ```tsx
+ * <FramerCarousel 
+ *   items={items} 
+ *   baseWidth={300} 
+ *   autoplay={true} 
+ *   loop={true} 
+ * />
+ * ```
+ */
+const FramerCarousel = React.memo(function FramerCarousel({
   items = DEFAULT_ITEMS,
   baseWidth = 300,
   autoplay = false,
@@ -79,6 +183,8 @@ export default function FramerCarousel({
   const [isResetting, setIsResetting] = useState<boolean>(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Handle mouse hover events for pauseOnHover functionality
   useEffect(() => {
     if (pauseOnHover && containerRef.current) {
       const container = containerRef.current;
@@ -93,12 +199,13 @@ export default function FramerCarousel({
     }
   }, [pauseOnHover]);
 
+  // Handle autoplay functionality
   useEffect(() => {
     if (autoplay && (!pauseOnHover || !isHovered)) {
       const timer = setInterval(() => {
         setCurrentIndex(prev => {
           if (prev === items.length - 1 && loop) {
-            return prev + 1; // Animate to clone.
+            return prev + 1; // Animate to clone
           }
           if (prev === carouselItems.length - 1) {
             return loop ? 0 : prev;
@@ -112,6 +219,7 @@ export default function FramerCarousel({
 
   const effectiveTransition = isResetting ? { duration: 0 } : SPRING_OPTIONS;
 
+  // Handle animation completion for loop functionality
   const handleAnimationComplete = () => {
     if (loop && currentIndex === carouselItems.length - 1) {
       setIsResetting(true);
@@ -121,6 +229,7 @@ export default function FramerCarousel({
     }
   };
 
+  // Handle drag end event for gesture-based navigation
   const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo): void => {
     const offset = info.offset.x;
     const velocity = info.velocity.x;
@@ -151,16 +260,17 @@ export default function FramerCarousel({
   return (
     <div
       ref={containerRef}
-      className={`relative overflow-hidden p-4 ${
-        round ? 'rounded-full border border-white' : 'rounded-[24px] border border-[#222]'
-      }`}
+      className={cn(
+        styles['carousel-container'],
+        round ? styles['carousel-container-round'] : styles['carousel-container-default']
+      )}
       style={{
         width: `${baseWidth}px`,
         ...(round && { height: `${baseWidth}px` })
       }}
     >
       <motion.div
-        className="flex"
+        className={styles['carousel-track']}
         drag="x"
         {...dragProps}
         style={{
@@ -185,61 +295,29 @@ export default function FramerCarousel({
           // eslint-disable-next-line react-hooks/rules-of-hooks
           const rotateY = useTransform(x, range, outputRange, { clamp: false });
           return (
-            <motion.div
+            <FramerCarouselItem
               key={index}
-              className={`relative shrink-0 flex flex-col ${
-                round
-                  ? 'items-center justify-center text-center bg-[#060606] border-0'
-                  : 'items-start justify-between bg-[#222] border border-[#222] rounded-[12px]'
-              } overflow-hidden cursor-grab active:cursor-grabbing`}
-              style={{
-                width: itemWidth,
-                height: round ? itemWidth : '100%',
-                rotateY: rotateY,
-                ...(round && { borderRadius: '50%' })
-              }}
+              item={item}
+              width={itemWidth}
+              round={round}
               transition={effectiveTransition}
-            >
-              <div className={`${round ? 'p-0 m-0' : 'mb-4 p-5'}`}>
-                <span className="flex h-[28px] w-[28px] items-center justify-center rounded-full bg-[#060606]">
-                  {item.icon}
-                </span>
-              </div>
-              <div className="p-5">
-                <div className="mb-1 font-black text-lg text-white">{item.title}</div>
-                <p className="text-sm text-white">{item.description}</p>
-              </div>
-            </motion.div>
+              rotateY={rotateY}
+            />
           );
         })}
       </motion.div>
-      <div
-        className={`flex w-full justify-center ${
-          round ? 'absolute z-20 bottom-12 left-1/2 -translate-x-1/2' : ''
-        }`}
-      >
-        <div className="mt-4 flex w-[150px] justify-between px-8">
-          {items.map((_, index) => (
-            <motion.div
-              key={index}
-              className={`h-2 w-2 rounded-full cursor-pointer transition-colors duration-150 ${
-                currentIndex % items.length === index
-                  ? round
-                    ? 'bg-white'
-                    : 'bg-[#333333]'
-                  : round
-                    ? 'bg-[#555]'
-                    : 'bg-[rgba(51,51,51,0.4)]'
-              }`}
-              animate={{
-                scale: currentIndex % items.length === index ? 1.2 : 1
-              }}
-              onClick={() => setCurrentIndex(index)}
-              transition={{ duration: 0.15 }}
-            />
-          ))}
-        </div>
-      </div>
+      
+      <FramerCarouselDots 
+        items={items}
+        currentIndex={currentIndex}
+        setCurrentIndex={setCurrentIndex}
+        round={round}
+      />
     </div>
   );
-}
+});
+
+FramerCarousel.displayName = 'FramerCarousel';
+
+export { FramerCarousel, FramerCarouselItem, FramerCarouselDots };
+export default FramerCarousel;

@@ -1,0 +1,61 @@
+/* terminal-content.module.css */
+
+.terminal-content {
+  width: 100%;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  color: var(--terminal-text);
+  padding: 0; 
+  line-height: 1.5;
+}
+
+.history-item {
+  margin-bottom: 0.75rem; 
+}
+
+.command-prompt {
+  display: flex;
+  margin-bottom: 0.25rem;
+}
+
+.prompt {
+  color: var(--terminal-prompt);
+  margin-right: 0.5rem;
+  white-space: nowrap;
+}
+
+.command {
+  color: var(--terminal-text);
+  word-break: break-all;
+}
+
+.output {
+  color: var(--terminal-text);
+  margin-left: 1rem;
+  margin-bottom: 0.25rem; 
+  white-space: pre-wrap;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.output a.command-link {
+  color: var(--terminal-highlight);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.output a.command-link:hover, 
+.output a.command-link:focus {
+  color: var(--terminal-prompt);
+  text-decoration: underline;
+  outline: none;
+}
+
+.output a.command-link:active {
+  color: var(--terminal-text);
+}
+
+/* Error styling */
+.output.error {
+  color: var(--terminal-error);
+}

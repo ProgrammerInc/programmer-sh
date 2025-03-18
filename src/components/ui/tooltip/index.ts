@@ -1,3 +1,5 @@
+'use client';
+
 // Export tooltip components
 export * from './tooltip';
 export * from './tooltip.types';

@@ -1,0 +1,78 @@
+/* Pagination component styles */
+
+/* Root pagination container */
+.pagination {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+/* Content container for pagination items */
+.pagination-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Individual pagination item container */
+.pagination-item {
+  /* Base container for pagination items */
+  display: flex;
+  align-items: center;
+}
+
+/* Link element for pagination */
+.pagination-link {
+  /* Note: styling through button variants */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-link[aria-current="page"] {
+  border: 1px solid var(--border);
+  background-color: transparent;
+}
+
+/* Previous page link */
+.pagination-previous {
+  gap: 0.25rem;
+  padding-left: 0.625rem;
+}
+
+/* Next page link */
+.pagination-next {
+  gap: 0.25rem;
+  padding-right: 0.625rem;
+}
+
+/* Ellipsis element */
+.pagination-ellipsis {
+  display: flex;
+  height: 2.25rem; /* h-9 */
+  width: 2.25rem; /* w-9 */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Icon styles */
+.pagination-icon {
+  height: 1rem;
+  width: 1rem;
+}
+
+/* Screen reader only text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

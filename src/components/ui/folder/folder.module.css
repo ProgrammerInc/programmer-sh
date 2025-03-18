@@ -1,0 +1,113 @@
+/* Folder Component Styles */
+
+.container {
+  position: relative;
+}
+
+.folder {
+  position: relative;
+  transition: all 200ms ease-in;
+  cursor: pointer;
+}
+
+.folder:not(.open):hover {
+  transform: translateY(-8px);
+}
+
+.folder.open {
+  transform: translateY(-8px);
+}
+
+.folder-back {
+  position: relative;
+  width: 100px;
+  height: 80px;
+  border-radius: 0 10px 10px;
+}
+
+.folder-tab {
+  position: absolute;
+  z-index: 0;
+  bottom: 98%;
+  left: 0;
+  width: 30px;
+  height: 10px;
+  border-radius: 5px 5px 0 0;
+}
+
+/* Paper styles */
+.paper {
+  position: absolute;
+  z-index: 20;
+  bottom: 10%;
+  left: 50%;
+  transition: all 300ms ease-in-out;
+  border-radius: 10px;
+}
+
+.paper:not(.open) {
+  transform: translateX(-50%) translateY(10%);
+}
+
+.paper:not(.open):hover {
+  transform: translateX(-50%) translateY(0);
+}
+
+.paper.open {
+  cursor: pointer;
+}
+
+.paper.open:hover {
+  transform: scale(1.1);
+}
+
+/* Paper sizes */
+.paper-1 {
+  width: 70%;
+  height: 80%;
+}
+
+.paper-2 {
+  width: 80%;
+  height: 80%;
+}
+
+.paper-2:not(.open) {
+  height: 70%;
+}
+
+.paper-3 {
+  width: 90%;
+  height: 80%;
+}
+
+.paper-3:not(.open) {
+  height: 60%;
+}
+
+/* Folder covers */
+.cover {
+  position: absolute;
+  z-index: 30;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px 10px 10px;
+  transform-origin: bottom;
+  transition: all 300ms ease-in-out;
+}
+
+.cover-left:not(.open):hover {
+  transform: skew(15deg) scaleY(0.6);
+}
+
+.cover-right:not(.open):hover {
+  transform: skew(-15deg) scaleY(0.6);
+}
+
+.cover-left.open {
+  transform: skew(15deg) scaleY(0.6);
+}
+
+.cover-right.open {
+  transform: skew(-15deg) scaleY(0.6);
+}

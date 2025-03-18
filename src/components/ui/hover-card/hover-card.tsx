@@ -1,10 +1,10 @@
 'use client';
 
-import { cn } from '@/utils/app.utils';
 import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
 import * as React from 'react';
-import { memo, useMemo } from 'react';
 
+import { cn } from '@/utils/app.utils';
+import styles from './hover-card.module.css';
 import {
   HoverCardContentProps,
   HoverCardProps,
@@ -26,7 +26,10 @@ import {
  * </HoverCard>
  * ```
  */
-const HoverCard = memo(HoverCardPrimitive.Root);
+const HoverCard = React.memo(function HoverCard(props: HoverCardProps): JSX.Element {
+  return <HoverCardPrimitive.Root {...props} />;
+});
+
 HoverCard.displayName = HoverCardPrimitive.Root.displayName;
 
 /**
@@ -39,7 +42,10 @@ HoverCard.displayName = HoverCardPrimitive.Root.displayName;
  * <HoverCardTrigger>Hover over me</HoverCardTrigger>
  * ```
  */
-const HoverCardTrigger = memo(HoverCardPrimitive.Trigger);
+const HoverCardTrigger = React.memo(function HoverCardTrigger(props: HoverCardTriggerProps): JSX.Element {
+  return <HoverCardPrimitive.Trigger {...props} />;
+});
+
 HoverCardTrigger.displayName = HoverCardPrimitive.Trigger.displayName;
 
 /**
@@ -57,24 +63,16 @@ HoverCardTrigger.displayName = HoverCardPrimitive.Trigger.displayName;
  * </HoverCardContent>
  * ```
  */
-const HoverCardContent = memo(React.forwardRef<
+const HoverCardContent = React.memo(React.forwardRef<
   React.ElementRef<typeof HoverCardPrimitive.Content>,
   HoverCardContentProps
 >(({ className, align = 'center', sideOffset = 4, ...props }, ref) => {
-  // Memoize the className calculation
-  const contentClassName = useMemo(() => {
-    return cn(
-      'z-50 w-64 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-      className
-    );
-  }, [className]);
-
   return (
     <HoverCardPrimitive.Content
       ref={ref}
       align={align}
       sideOffset={sideOffset}
-      className={contentClassName}
+      className={cn(styles.content, className)}
       {...props}
     />
   );

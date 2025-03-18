@@ -1,0 +1,173 @@
+/* terminal.module.css */
+
+.terminal {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--terminal-background);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.terminal-glass {
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: background-color 0.3s ease;
+}
+
+.terminal-dark {
+  --terminal-background: rgba(16, 16, 20, 0.95);
+  --terminal-text: rgba(220, 220, 220, 1);
+  --terminal-prompt: #64ffda; 
+  --terminal-selection: rgba(80, 80, 255, 0.3);
+  --terminal-highlight: rgba(60, 60, 180, 0.4);
+  --terminal-error: rgba(255, 100, 100, 0.9);
+  --terminal-success: rgba(100, 255, 100, 0.9);
+  --terminal-warning: rgba(255, 255, 100, 0.9);
+  --terminal-scrollbar: rgba(80, 80, 90, 0.6);
+  --terminal-scrollbar-hover: rgba(100, 100, 120, 0.8);
+}
+
+.terminal-light {
+  --terminal-background: rgba(240, 240, 245, 0.95);
+  --terminal-text: rgba(40, 40, 40, 1);
+  --terminal-prompt: #00a8a8; 
+  --terminal-selection: rgba(100, 100, 255, 0.2);
+  --terminal-highlight: rgba(100, 100, 220, 0.25);
+  --terminal-error: rgba(220, 50, 50, 0.9);
+  --terminal-success: rgba(50, 180, 50, 0.9);
+  --terminal-warning: rgba(180, 180, 0, 0.9);
+  --terminal-scrollbar: rgba(180, 180, 190, 0.6);
+  --terminal-scrollbar-hover: rgba(160, 160, 180, 0.8);
+}
+
+.terminal-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+  font-family: var(--font-mono);
+  color: var(--terminal-text);
+  word-break: break-all;
+  scroll-behavior: smooth;
+}
+
+.terminal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terminal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.terminal-content::-webkit-scrollbar-thumb {
+  background-color: var(--terminal-scrollbar);
+  border-radius: 4px;
+}
+
+.terminal-content::-webkit-scrollbar-thumb:hover {
+  background-color: var(--terminal-scrollbar-hover);
+}
+
+.terminal-prompt {
+  color: var(--terminal-prompt);
+  font-weight: 500;
+}
+
+.terminal-input {
+  background-color: transparent;
+  border: none;
+  color: var(--terminal-text);
+  font-family: var(--font-mono);
+  flex: 1;
+  outline: none;
+  caret-color: var(--terminal-prompt);
+}
+
+.terminal-input::selection {
+  background-color: var(--terminal-selection);
+}
+
+.terminal-command {
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--terminal-prompt);
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.terminal-command:hover {
+  opacity: 0.8;
+}
+
+.terminal-error {
+  color: var(--terminal-error);
+}
+
+.terminal-success {
+  color: var(--terminal-success);
+}
+
+.terminal-warning {
+  color: var(--terminal-warning);
+}
+
+.terminal-highlight {
+  background-color: var(--terminal-highlight);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.2rem;
+}
+
+.terminal-footer {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.terminal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.terminal-header-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--terminal-text);
+}
+
+.terminal-social-links {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.terminal-social-link {
+  color: var(--terminal-text);
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.terminal-social-link:hover {
+  opacity: 1;
+}
+
+.terminal-form {
+  display: flex;
+  width: 100%;
+}
+
+@keyframes blink-caret {
+  0%, 100% { border-color: transparent; }
+  50% { border-color: var(--terminal-prompt); }
+}
+
+.terminal-animated-cursor {
+  border-right: 2px solid var(--terminal-prompt);
+  padding-right: 2px;
+  animation: blink-caret 1s step-end infinite;
+  white-space: pre-wrap;
+  word-break: break-all;
+}

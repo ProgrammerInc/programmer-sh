@@ -1,0 +1,223 @@
+/* Menubar component styles */
+
+/* Main menubar container */
+.menubar {
+  display: flex;
+  height: 2.5rem;
+  align-items: center;
+  padding: 0.25rem;
+  border-radius: 0.375rem;
+  border-width: 1px;
+  background-color: var(--background);
+  gap: 0.25rem;
+}
+
+/* Menubar trigger */
+.menubar-trigger {
+  display: flex;
+  cursor: default;
+  user-select: none;
+  align-items: center;
+  border-radius: 0.125rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  outline: none;
+}
+
+.menubar-trigger:focus {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.menubar-trigger[data-state="open"] {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+/* Menubar sub-trigger */
+.menubar-sub-trigger {
+  display: flex;
+  cursor: default;
+  user-select: none;
+  align-items: center;
+  border-radius: 0.125rem;
+  padding: 0.375rem 0.5rem;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.menubar-sub-trigger-inset {
+  padding-left: 2rem;
+}
+
+.menubar-sub-trigger:focus {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.menubar-sub-trigger[data-state="open"] {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.menubar-sub-trigger-icon {
+  margin-left: auto;
+  height: 1rem;
+  width: 1rem;
+}
+
+/* Menubar sub-content */
+.menubar-sub-content {
+  z-index: 50;
+  min-width: 8rem;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  border-width: 1px;
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+  padding: 0.25rem;
+}
+
+/* Animation states */
+.menubar-sub-content[data-state="open"] {
+  animation: menubar-fade-in 150ms ease;
+}
+
+.menubar-sub-content[data-state="closed"] {
+  animation: menubar-fade-out 150ms ease;
+}
+
+/* Menubar content */
+.menubar-content {
+  z-index: 50;
+  min-width: 12rem;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  border-width: 1px;
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+  padding: 0.25rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Animation states */
+.menubar-content[data-state="open"] {
+  animation: menubar-fade-in 150ms ease;
+}
+
+.menubar-content[data-state="closed"] {
+  animation: menubar-fade-out 150ms ease;
+}
+
+/* Menubar item */
+.menubar-item {
+  position: relative;
+  display: flex;
+  cursor: default;
+  user-select: none;
+  align-items: center;
+  border-radius: 0.125rem;
+  padding: 0.375rem 0.5rem;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.menubar-item-inset {
+  padding-left: 2rem;
+}
+
+.menubar-item:focus {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.menubar-item[data-disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Menubar checkbox and radio items */
+.menubar-checkbox-item,
+.menubar-radio-item {
+  position: relative;
+  display: flex;
+  cursor: default;
+  user-select: none;
+  align-items: center;
+  border-radius: 0.125rem;
+  padding: 0.375rem 0.5rem 0.375rem 2rem;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.menubar-checkbox-item:focus,
+.menubar-radio-item:focus {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.menubar-checkbox-item[data-disabled],
+.menubar-radio-item[data-disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.menubar-item-indicator {
+  position: absolute;
+  left: 0.5rem;
+  display: flex;
+  height: 0.875rem;
+  width: 0.875rem;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Menubar label */
+.menubar-label {
+  padding: 0.375rem 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.menubar-label-inset {
+  padding-left: 2rem;
+}
+
+/* Menubar separator */
+.menubar-separator {
+  margin: 0.25rem -0.25rem;
+  height: 1px;
+  background-color: var(--muted);
+}
+
+/* Menubar shortcut */
+.menubar-shortcut {
+  margin-left: auto;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--muted-foreground);
+}
+
+/* Animation keyframes */
+@keyframes menubar-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes menubar-fade-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}

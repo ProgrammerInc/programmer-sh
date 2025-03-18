@@ -1,0 +1,46 @@
+/**
+ * Decay Card component styles
+ */
+
+/* Main container */
+.decay-card {
+  position: relative;
+  display: block;
+  will-change: transform;
+}
+
+/* SVG container */
+.svg-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+  will-change: transform;
+}
+
+/* Text content container */
+.content {
+  position: absolute;
+  bottom: 1.2em;
+  left: 1em;
+  letter-spacing: -0.5px;
+  font-weight: 900;
+  font-size: 2.5rem;
+  line-height: 1.5em;
+}
+
+/* First line text styling */
+.content > :first-child {
+  font-size: 6rem;
+  display: block;
+}
+
+/* Transition styles for hover effects */
+.decay-card-transition {
+  transition: transform 0.3s ease-out;
+}
+
+/* Optional hover effect */
+.hover-effect:hover {
+  transform: scale(1.02);
+}

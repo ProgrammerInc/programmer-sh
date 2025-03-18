@@ -4,6 +4,7 @@ import { Toaster } from '@/components/ui/toaster/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip/tooltip';
 import { useAuthModal } from '@/hooks/use-auth-modal.hook';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ThemeProvider } from 'next-themes';
 import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -53,41 +54,41 @@ const AuthModalWrapper = () => {
     };
   }, [openModal]);
 
-  return (
-    <AuthModal isOpen={isModalOpen} mode={modalMode} anchorRef={headerRef} onClose={closeModal} />
-  );
+  return <AuthModal isOpen={isModalOpen} mode={modalMode} onClose={closeModal} anchorRef={headerRef} />;
 };
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <AuthModalProvider>
-        <Toaster />
-        <Sonner />
-        <AuthModalWrapper />
-        <BrowserRouter
-          future={{
-            v7_relativeSplatPath: true,
-            v7_startTransition: true
-          }}
-        >
-          <Suspense fallback={<LoadingSpinner />}>
-            <Routes>
-              {/* Command routes - these will pass the command as a URL parameter */}
-              <Route path="/:command" element={<Index />} />
-              <Route path="/demo" element={<LoggerDemo />} />
-              <Route path="/demo/memory" element={<MemoryLeakDemo />} />
-              <Route path="/demo/sentry" element={<SentryDemo />} />
-              <Route path="/demo/wdyr" element={<WhyDidYouRenderDemo />} />
-              <Route path="/auth/callback" element={<AuthCallback />} />
-              <Route path="/" element={<Index />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-      </AuthModalProvider>
-    </TooltipProvider>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={true}>
+      <TooltipProvider>
+        <AuthModalProvider>
+          <Toaster />
+          <Sonner />
+          <AuthModalWrapper />
+          <BrowserRouter
+            future={{
+              v7_relativeSplatPath: true,
+              v7_startTransition: true
+            }}
+          >
+            <Suspense fallback={<LoadingSpinner />}>
+              <Routes>
+                {/* Command routes - these will pass the command as a URL parameter */}
+                <Route path="/:command" element={<Index />} />
+                <Route path="/demo" element={<LoggerDemo />} />
+                <Route path="/demo/memory" element={<MemoryLeakDemo />} />
+                <Route path="/demo/sentry" element={<SentryDemo />} />
+                <Route path="/demo/wdyr" element={<WhyDidYouRenderDemo />} />
+                <Route path="/auth/callback" element={<AuthCallback />} />
+                <Route path="/" element={<Index />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </AuthModalProvider>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 

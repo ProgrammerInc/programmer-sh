@@ -1,13 +1,16 @@
-import { VariantProps } from 'class-variance-authority';
-import * as React from 'react';
+/**
+ * Type definitions for Alert components
+ */
 
-import { alertVariants } from './alert.variants';
+import * as React from 'react';
 
 /**
  * Props for the Alert component
  */
-export interface AlertProps extends React.HTMLAttributes<HTMLDivElement>, 
-  VariantProps<typeof alertVariants> {}
+export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Style variant for the alert - 'default' or 'destructive' */
+  variant?: 'default' | 'destructive';
+}
 
 /**
  * Props for the AlertTitle component

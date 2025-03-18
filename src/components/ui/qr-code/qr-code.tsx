@@ -1,46 +1,62 @@
 'use client';
 
 import { cn } from '@/utils/app.utils';
-import React from 'react';
+import React, { memo } from 'react';
 import { QRCode } from 'react-qrcode-logo';
 
-export interface ImageSettings {
-  src: string;
-  size?: number;
-  height: number;
-  width: number;
-  crossOrigin?: string;
-  excavate: boolean;
-  logoPadding?: number;
-  logoPaddingStyle?: 'circle' | 'square';
-  logoWidth?: number;
-  logoHeight?: number;
-  opacity?: number;
-  quietZone?: number;
-  removeQrCodeBehindLogo?: boolean;
-  x?: number;
-  y?: number;
-}
+import styles from './qr-code.module.css';
+import { QRCodeProps, ImageSettings } from './qr-code.types';
 
-export interface QRCodeProps {
-  id: string;
-  value: string;
-  title?: string;
-  className?: string;
-  bgColor?: string;
-  fgColor?: string;
-  eyeColor?: string;
-  eyeRadius?: number;
-  level?: 'L' | 'M' | 'Q' | 'H';
-  qrStyle?: 'squares' | 'dots' | 'fluid';
-  quietZone?: number;
-  size?: number;
-  style?: React.CSSProperties;
-  enableCORS?: boolean;
-  imageSettings?: ImageSettings;
-}
-
-export const QRCodeComponent: React.FC<QRCodeProps> = ({
+/**
+ * QR Code Component
+ * 
+ * A customizable QR code component that can include logos, custom colors,
+ * and different visual styles.
+ * 
+ * Features:
+ * - Customizable colors for background, foreground, and positioning markers
+ * - Multiple visual styles (dots, squares, fluid)
+ * - Optional logo or image in the center
+ * - Configurable error correction level
+ * - Optional title text below the QR code
+ * 
+ * @example Basic usage
+ * ```tsx
+ * <QRCodeComponent 
+ *   id="contact-info"
+ *   value="https://example.com" 
+ * />
+ * ```
+ * 
+ * @example Custom styling
+ * ```tsx
+ * <QRCodeComponent 
+ *   id="custom-qr"
+ *   value="Hello World" 
+ *   bgColor="#ffffff"
+ *   fgColor="#000000"
+ *   eyeColor="#ff0000"
+ *   qrStyle="dots"
+ *   size={200}
+ *   title="Scan to view message"
+ * />
+ * ```
+ * 
+ * @example With logo
+ * ```tsx
+ * <QRCodeComponent 
+ *   id="logo-qr"
+ *   value="https://example.com" 
+ *   imageSettings={{
+ *     src: "/logo.png",
+ *     height: 24,
+ *     width: 24,
+ *     excavate: true
+ *   }}
+ * />
+ * ```
+ */
+export const QRCodeComponent = memo<QRCodeProps>(function QRCodeComponent({
   value,
   bgColor = '#31373F',
   fgColor = '#f1f1f1',
@@ -58,10 +74,10 @@ export const QRCodeComponent: React.FC<QRCodeProps> = ({
   imageSettings,
   className,
   title = 'Scan QR Code to Save My Contact Information'
-}) => {
+}) {
   return (
-    <div className={cn('flex flex-col items-center my-4', className)}>
-      <div className="p-2 rounded">
+    <div className={cn(styles.container, className)}>
+      <div className={styles['qr-wrapper']}>
         <QRCode
           id={value}
           value={value}
@@ -84,12 +100,14 @@ export const QRCodeComponent: React.FC<QRCodeProps> = ({
         />
       </div>
       {title && (
-        <p className="text-xs text-terminal-foreground mt-2">
-          <span className="text-terminal-link hover:underline">{title}</span>
+        <p className={styles.title}>
+          <span className={styles['title-link']}>{title}</span>
         </p>
       )}
     </div>
   );
-};
+});
+
+QRCodeComponent.displayName = 'QRCodeComponent';
 
 export default QRCodeComponent;

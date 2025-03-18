@@ -1,0 +1,219 @@
+/**
+ * Stepper component styles
+ */
+
+/* Main container */
+.container {
+  display: flex;
+  min-height: 100%;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* Horizontal layout container */
+.container-horizontal {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+/* Step circle container */
+.circle-container {
+  width: 100%;
+  max-width: 28rem;
+  margin: 0 auto;
+  border-radius: 2rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border: 1px solid #222;
+}
+
+/* Horizontal layout for circle container */
+.circle-container-horizontal {
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+  border-radius: 2rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border: 1px solid #222;
+}
+
+/* Step container */
+.step-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* Horizontal layout for step container */
+.step-container-horizontal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 1.5rem 2rem 0;
+  position: relative;
+  gap: 1rem;
+}
+
+/* Content area */
+.content {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0 2rem;
+}
+
+/* Footer */
+.footer {
+  padding: 0 2rem 2rem;
+}
+
+/* Footer buttons container */
+.footer-buttons {
+  margin-top: 2.5rem;
+  display: flex;
+}
+
+.footer-buttons-between {
+  justify-content: space-between;
+}
+
+.footer-buttons-end {
+  justify-content: flex-end;
+}
+
+/* Back button */
+.back-button {
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  transition: all 0.35s;
+  color: #a3a3a3;
+}
+
+.back-button:hover {
+  color: #404040;
+}
+
+.back-button-disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  color: #a3a3a3;
+}
+
+/* Next/Continue button */
+.next-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: #22c55e;
+  padding: 0.375rem 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: white;
+  transition: all 0.35s;
+}
+
+.next-button:hover {
+  background-color: #16a34a;
+}
+
+.next-button:active {
+  background-color: #15803d;
+}
+
+/* Step indicator */
+.step-indicator {
+  position: relative;
+  cursor: pointer;
+  outline: none;
+}
+
+.step-circle {
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  font-weight: 600;
+}
+
+.step-circle-inactive {
+  background-color: #222;
+  color: #a3a3a3;
+}
+
+.step-circle-active {
+  background-color: #00d8ff;
+  color: #00d8ff;
+}
+
+.step-circle-complete {
+  background-color: #00d8ff;
+  color: #3b82f6;
+}
+
+.step-circle-dot {
+  height: 0.75rem;
+  width: 0.75rem;
+  border-radius: 9999px;
+  background-color: #060606;
+}
+
+.step-circle-number {
+  font-size: 0.875rem;
+}
+
+/* Step connector */
+.connector {
+  position: relative;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  height: 0.125rem;
+  flex: 1;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  background-color: #525252;
+}
+
+.connector-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: #00d8ff;
+}
+
+/* Step content */
+.step-content-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.slide-transition {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+
+/* Horizontal layout slide transition */
+.slide-transition-horizontal {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding: 0 1rem;
+}
+
+/* Step component styles */
+.step {
+  width: 100%;
+  color: #e2e8f0;
+}

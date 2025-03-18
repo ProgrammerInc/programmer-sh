@@ -8,66 +8,30 @@ import {
   Program,
   Renderer,
   Texture,
-  Transform,
-  type OGLRenderingContext
+  Transform
 } from 'ogl';
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 
-type GL = OGLRenderingContext;
-type OGLProgram = Program;
-type OGLMesh = Mesh;
-type OGLTransform = Transform;
-type OGLPlane = Plane;
+import { cn } from '@/utils/app.utils';
+import styles from './flying-posters.module.css';
+import {
+  AutoBindOptions,
+  CanvasParams,
+  FlyingPostersProps,
+  GL,
+  MediaParams,
+  OGLMesh,
+  OGLPlane,
+  OGLProgram,
+  OGLTransform,
+  ScreenSize,
+  ScrollState,
+  ViewportSize
+} from './flying-posters.types';
 
-interface ScreenSize {
-  width: number;
-  height: number;
-}
-
-interface ViewportSize {
-  width: number;
-  height: number;
-}
-
-interface ScrollState {
-  position?: number;
-  ease: number;
-  current: number;
-  target: number;
-  last: number;
-}
-
-interface AutoBindOptions {
-  include?: Array<string | RegExp>;
-  exclude?: Array<string | RegExp>;
-}
-
-interface MediaParams {
-  gl: GL;
-  geometry: OGLPlane;
-  scene: OGLTransform;
-  screen: ScreenSize;
-  viewport: ViewportSize;
-  image: string;
-  length: number;
-  index: number;
-  planeWidth: number;
-  planeHeight: number;
-  distortion: number;
-}
-
-interface CanvasParams {
-  container: HTMLElement;
-  canvas: HTMLCanvasElement;
-  items: string[];
-  planeWidth: number;
-  planeHeight: number;
-  distortion: number;
-  scrollEase: number;
-  cameraFov: number;
-  cameraZ: number;
-}
-
+/**
+ * Vertex shader for the flying posters effect
+ */
 const vertexShader = `
 precision highp float;
 
@@ -133,6 +97,9 @@ void main() {
 }
 `;
 
+/**
+ * Fragment shader for the flying posters effect
+ */
 const fragmentShader = `
 precision highp float;
 
@@ -162,6 +129,15 @@ void main() {
 }
 `;
 
+/**
+ * AutoBind utility
+ * 
+ * Automatically binds methods to the instance of a class
+ * 
+ * @param self - The instance to bind methods to
+ * @param options - Optional configuration for method binding
+ * @returns The instance with bound methods
+ */
 function AutoBind(self: any, { include, exclude }: AutoBindOptions = {}) {
   const getAllProperties = (object: any): Set<[any, string | symbol]> => {
     const properties = new Set<[any, string | symbol]>();
@@ -192,11 +168,29 @@ function AutoBind(self: any, { include, exclude }: AutoBindOptions = {}) {
   return self;
 }
 
-// Utility functions with TypeScript types
+/**
+ * Linear interpolation utility
+ * 
+ * @param p1 - Start value
+ * @param p2 - End value
+ * @param t - Interpolation factor (0-1)
+ * @returns Interpolated value
+ */
 function lerp(p1: number, p2: number, t: number): number {
   return p1 + (p2 - p1) * t;
 }
 
+/**
+ * Map a value from one range to another
+ * 
+ * @param num - Value to map
+ * @param min1 - Source range minimum
+ * @param max1 - Source range maximum
+ * @param min2 - Target range minimum
+ * @param max2 - Target range maximum
+ * @param round - Whether to round the result
+ * @returns Mapped value
+ */
 function map(
   num: number,
   min1: number,
@@ -210,6 +204,12 @@ function map(
   return round ? Math.round(num2) : num2;
 }
 
+/**
+ * Media class
+ * 
+ * Manages an individual poster in the flying posters effect,
+ * handling its rendering and animation.
+ */
 class Media {
   gl: GL;
   geometry: OGLPlane;
@@ -261,6 +261,9 @@ class Media {
     this.onResize();
   }
 
+  /**
+   * Creates the shader program for this media item
+   */
   createShader() {
     const texture = new Texture(this.gl, { generateMipmaps: false });
     this.program = new Program(this.gl, {
@@ -292,6 +295,9 @@ class Media {
     };
   }
 
+  /**
+   * Creates the mesh for this media item
+   */
   createMesh() {
     this.plane = new Mesh(this.gl, {
       geometry: this.geometry,
@@ -300,6 +306,9 @@ class Media {
     this.plane.setParent(this.scene);
   }
 
+  /**
+   * Sets the scale of the plane based on viewport and screen dimensions
+   */
   setScale() {
     this.plane.scale.x = (this.viewport.width * this.planeWidth) / this.screen.width;
     this.plane.scale.y = (this.viewport.height * this.planeHeight) / this.screen.height;
@@ -307,6 +316,9 @@ class Media {
     this.program.uniforms.uPlaneSize.value = [this.plane.scale.x, this.plane.scale.y];
   }
 
+  /**
+   * Handles resize events
+   */
   onResize({ screen, viewport }: { screen?: ScreenSize; viewport?: ViewportSize } = {}) {
     if (screen) this.screen = screen;
     if (viewport) {
@@ -321,6 +333,9 @@ class Media {
     this.y = -this.heightTotal / 2 + (this.index + 0.5) * this.height;
   }
 
+  /**
+   * Updates the media item's position and animation
+   */
   update(scroll: ScrollState) {
     this.plane.position.y = this.y - scroll.current - this.extra;
     const position = map(this.plane.position.y, -this.viewport.height, this.viewport.height, 5, 15);
@@ -342,6 +357,12 @@ class Media {
   }
 }
 
+/**
+ * Canvas class
+ * 
+ * Manages the WebGL canvas and all media items within the flying posters effect.
+ * Handles rendering, animation, and user interactions.
+ */
 class Canvas {
   container: HTMLElement;
   canvas: HTMLCanvasElement;
@@ -403,105 +424,152 @@ class Canvas {
     this.createPreloader();
   }
 
+  /**
+   * Creates the WebGL renderer
+   */
   createRenderer() {
     this.renderer = new Renderer({
-      canvas: this.canvas,
       alpha: true,
       antialias: true,
+      canvas: this.canvas,
       dpr: Math.min(window.devicePixelRatio, 2)
     });
     this.gl = this.renderer.gl;
   }
 
+  /**
+   * Creates the camera for the scene
+   */
   createCamera() {
-    this.camera = new Camera(this.gl);
-    this.camera.fov = this.cameraFov;
+    const fov = this.cameraFov * (Math.PI / 180);
+    this.camera = new Camera(this.gl, {
+      fov
+    });
     this.camera.position.z = this.cameraZ;
   }
 
+  /**
+   * Creates the scene
+   */
   createScene() {
     this.scene = new Transform();
   }
 
+  /**
+   * Creates the plane geometry for media items
+   */
   createGeometry() {
     this.planeGeometry = new Plane(this.gl, {
-      heightSegments: 1,
-      widthSegments: 100
+      heightSegments: 10,
+      widthSegments: 10
     });
   }
 
+  /**
+   * Creates media items for each image
+   */
   createMedias() {
-    this.medias = this.items.map(
-      (image, index) =>
-        new Media({
-          gl: this.gl,
-          geometry: this.planeGeometry,
-          scene: this.scene,
-          screen: this.screen,
-          viewport: this.viewport,
-          image,
-          length: this.items.length,
-          index,
-          planeWidth: this.planeWidth,
-          planeHeight: this.planeHeight,
-          distortion: this.distortion
-        })
-    );
-  }
-
-  createPreloader() {
-    this.loaded = 0;
-    this.items.forEach(src => {
-      const image = new Image();
-      image.crossOrigin = 'anonymous';
-      image.src = src;
-      image.onload = () => {
-        if (++this.loaded === this.items.length) {
-          document.documentElement.classList.remove('loading');
-          document.documentElement.classList.add('loaded');
-        }
-      };
+    this.medias = this.items.map((image, index) => {
+      return new Media({
+        gl: this.gl,
+        geometry: this.planeGeometry,
+        scene: this.scene,
+        screen: this.screen,
+        viewport: this.viewport,
+        image,
+        length: this.items.length,
+        index,
+        planeWidth: this.planeWidth,
+        planeHeight: this.planeHeight,
+        distortion: this.distortion
+      });
     });
   }
 
+  /**
+   * Creates a preloader for the component
+   */
+  createPreloader() {
+    if (this.items.length > 0) {
+      const images = this.items.map(src => {
+        const img = new Image();
+        img.src = src;
+        img.crossOrigin = 'anonymous';
+        img.onload = this.onload;
+        return img;
+      });
+    }
+  }
+
+  /**
+   * Handles image load events
+   */
+  onload() {
+    this.loaded++;
+    if (this.loaded === this.items.length) {
+      // All images loaded
+    }
+  }
+
+  /**
+   * Handles resize events
+   */
   onResize() {
-    const rect = this.container.getBoundingClientRect();
-    this.screen = { width: rect.width, height: rect.height };
+    this.screen = {
+      width: window.innerWidth,
+      height: window.innerHeight
+    };
+
     this.renderer.setSize(this.screen.width, this.screen.height);
 
-    this.camera.perspective({
-      aspect: this.gl.canvas.width / this.gl.canvas.height
-    });
-
-    const fov = (this.camera.fov * Math.PI) / 180;
+    const fov = this.camera.fov * (180 / Math.PI);
     const height = 2 * Math.tan(fov / 2) * this.camera.position.z;
     const width = height * this.camera.aspect;
-    this.viewport = { width, height };
+
+    this.viewport = {
+      width,
+      height
+    };
 
     this.medias?.forEach(media => media.onResize({ screen: this.screen, viewport: this.viewport }));
   }
 
+  /**
+   * Handles touch/mouse down events
+   */
   onTouchDown(e: MouseEvent | TouchEvent) {
     this.isDown = true;
-    this.scroll.position = this.scroll.current;
-    this.start = e instanceof TouchEvent ? e.touches[0].clientY : e.clientY;
+    this.start = e instanceof MouseEvent ? e.clientY : e.touches[0].clientY;
   }
 
+  /**
+   * Handles touch/mouse move events
+   */
   onTouchMove(e: MouseEvent | TouchEvent) {
-    if (!this.isDown || !this.scroll.position) return;
-    const y = e instanceof TouchEvent ? e.touches[0].clientY : e.clientY;
-    const distance = (this.start - y) * 0.1;
-    this.scroll.target = this.scroll.position + distance;
+    if (!this.isDown) return;
+    const y = e instanceof MouseEvent ? e.clientY : e.touches[0].clientY;
+    const distance = this.start - y;
+    this.scroll.target += distance * 0.01;
+    this.start = y;
   }
 
+  /**
+   * Handles touch/mouse up events
+   */
   onTouchUp() {
     this.isDown = false;
   }
 
+  /**
+   * Handles wheel events
+   */
   onWheel(e: WheelEvent) {
     this.scroll.target += e.deltaY * 0.005;
   }
 
+  /**
+   * Main update loop
+   */
   update() {
     this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
     this.medias?.forEach(media => media.update(this.scroll));
@@ -510,6 +578,9 @@ class Canvas {
     requestAnimationFrame(this.update);
   }
 
+  /**
+   * Sets up event listeners
+   */
   addEventListeners() {
     window.addEventListener('resize', this.onResize);
     window.addEventListener('wheel', this.onWheel);
@@ -521,6 +592,9 @@ class Canvas {
     window.addEventListener('touchend', this.onTouchUp as EventListener);
   }
 
+  /**
+   * Cleans up event listeners and resources
+   */
   destroy() {
     window.removeEventListener('resize', this.onResize);
     window.removeEventListener('wheel', this.onWheel);
@@ -533,17 +607,27 @@ class Canvas {
   }
 }
 
-export interface FlyingPostersProps extends React.HTMLAttributes<HTMLDivElement> {
-  items?: string[];
-  planeWidth?: number;
-  planeHeight?: number;
-  distortion?: number;
-  scrollEase?: number;
-  cameraFov?: number;
-  cameraZ?: number;
-}
-
-export default function FlyingPosters({
+/**
+ * FlyingPosters Component
+ * 
+ * A WebGL-based component that displays images as 3D flying posters with
+ * scroll-based navigation and animations.
+ * 
+ * @example
+ * ```tsx
+ * <FlyingPosters
+ *   items={[
+ *     '/images/poster1.jpg',
+ *     '/images/poster2.jpg',
+ *     '/images/poster3.jpg',
+ *   ]}
+ *   planeWidth={320}
+ *   planeHeight={320}
+ *   distortion={3}
+ * />
+ * ```
+ */
+const FlyingPosters = memo(function FlyingPosters({
   items = [],
   planeWidth = 320,
   planeHeight = 320,
@@ -607,10 +691,14 @@ export default function FlyingPosters({
   return (
     <div
       ref={containerRef}
-      className={`w-full h-full overflow-hidden relative z-2 ${className}`}
+      className={cn(styles.container, className)}
       {...props}
     >
-      <canvas ref={canvasRef} className="block w-full h-full" />
+      <canvas ref={canvasRef} className={styles.canvas} />
     </div>
   );
-}
+});
+
+FlyingPosters.displayName = 'FlyingPosters';
+
+export default FlyingPosters;

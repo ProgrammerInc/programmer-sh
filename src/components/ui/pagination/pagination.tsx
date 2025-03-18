@@ -2,99 +2,192 @@
 
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 import * as React from 'react';
+import { memo, forwardRef, useMemo } from 'react';
 
-import { type ButtonProps } from '@/components/ui/button/button';
-import { buttonVariants } from '@/components/ui/button/button.variants';
+import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/utils/app.utils';
+import styles from './pagination.module.css';
+import {
+  PaginationContentProps,
+  PaginationEllipsisProps,
+  PaginationItemProps,
+  PaginationLinkProps,
+  PaginationNextProps,
+  PaginationPreviousProps,
+  PaginationProps
+} from './pagination.types';
 
-const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
-  <nav
-    role="navigation"
-    aria-label="pagination"
-    className={cn('mx-auto flex w-full justify-center', className)}
-    {...props}
-  />
-);
+/**
+ * Pagination
+ * 
+ * A navigation component for switching between pages of content.
+ */
+const Pagination = memo(({ className, ...props }: PaginationProps) => {
+  const navClassName = useMemo(() => {
+    return cn(styles.pagination, className);
+  }, [className]);
+
+  return (
+    <nav
+      role="navigation"
+      aria-label="pagination"
+      className={navClassName}
+      {...props}
+    />
+  );
+});
 
 Pagination.displayName = 'Pagination';
 
-const PaginationContent = React.forwardRef<
+/**
+ * Pagination Content
+ * 
+ * Container for pagination items.
+ */
+const PaginationContent = memo(forwardRef<
   HTMLUListElement,
-  React.HTMLAttributes<HTMLUListElement>
->(({ className, ...props }, ref) => (
-  <ul ref={ref} className={cn('flex flex-row items-center gap-1', className)} {...props} />
-));
+  PaginationContentProps
+>(({ className, ...props }, ref) => {
+  const contentClassName = useMemo(() => {
+    return cn(styles['pagination-content'], className);
+  }, [className]);
+
+  return <ul ref={ref} className={contentClassName} {...props} />;
+}));
 
 PaginationContent.displayName = 'PaginationContent';
 
-const PaginationItem = React.forwardRef<HTMLLIElement, React.HTMLAttributes<HTMLLIElement>>(
-  ({ className, ...props }, ref) => <li ref={ref} className={cn('', className)} {...props} />
-);
+/**
+ * Pagination Item
+ * 
+ * Wraps individual pagination elements like links, ellipsis, etc.
+ */
+const PaginationItem = memo(forwardRef<
+  HTMLLIElement,
+  PaginationItemProps
+>(({ className, ...props }, ref) => {
+  const itemClassName = useMemo(() => {
+    return cn(styles['pagination-item'], className);
+  }, [className]);
+
+  return <li ref={ref} className={itemClassName} {...props} />;
+}));
 
 PaginationItem.displayName = 'PaginationItem';
 
-export type PaginationLinkProps = {
-  isActive?: boolean;
-} & Pick<ButtonProps, 'size'> &
-  React.ComponentProps<'a'>;
-
-const PaginationLink = ({ className, isActive, size = 'icon', ...props }: PaginationLinkProps) => (
-  <a
-    aria-current={isActive ? 'page' : undefined}
-    className={cn(
+/**
+ * Pagination Link
+ * 
+ * A link component for navigating to a specific page.
+ */
+const PaginationLink = memo(({ 
+  className, 
+  isActive, 
+  size = 'icon', 
+  ...props 
+}: PaginationLinkProps & React.ComponentPropsWithoutRef<'a'>) => {
+  const linkClassName = useMemo(() => {
+    return cn(
       buttonVariants({
         variant: isActive ? 'outline' : 'ghost',
         size
       }),
+      styles['pagination-link'],
       className
-    )}
-    {...props}
-  />
-);
+    );
+  }, [className, isActive, size]);
+
+  return (
+    <a
+      aria-current={isActive ? 'page' : undefined}
+      className={linkClassName}
+      {...props}
+    />
+  );
+});
 
 PaginationLink.displayName = 'PaginationLink';
 
-const PaginationPrevious = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof PaginationLink>) => (
-  <PaginationLink
-    aria-label="Go to previous page"
-    size="default"
-    className={cn('gap-1 pl-2.5', className)}
-    {...props}
-  >
-    <ChevronLeft className="h-4 w-4" />
-    <span>Previous</span>
-  </PaginationLink>
-);
+/**
+ * Pagination Previous
+ * 
+ * A link component for navigating to the previous page.
+ */
+const PaginationPrevious = memo(({ 
+  className, 
+  ...props 
+}: Omit<PaginationPreviousProps, 'ref'>) => {
+  const previousClassName = useMemo(() => {
+    return cn(styles['pagination-previous'], className);
+  }, [className]);
+
+  return (
+    <PaginationLink
+      aria-label="Go to previous page"
+      size="default"
+      className={previousClassName}
+      {...props}
+    >
+      <ChevronLeft className={styles['pagination-icon']} />
+      <span>Previous</span>
+    </PaginationLink>
+  );
+});
 
 PaginationPrevious.displayName = 'PaginationPrevious';
 
-const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
-  <PaginationLink
-    aria-label="Go to next page"
-    size="default"
-    className={cn('gap-1 pr-2.5', className)}
-    {...props}
-  >
-    <span>Next</span>
-    <ChevronRight className="h-4 w-4" />
-  </PaginationLink>
-);
+/**
+ * Pagination Next
+ * 
+ * A link component for navigating to the next page.
+ */
+const PaginationNext = memo(({ 
+  className, 
+  ...props 
+}: Omit<PaginationNextProps, 'ref'>) => {
+  const nextClassName = useMemo(() => {
+    return cn(styles['pagination-next'], className);
+  }, [className]);
+
+  return (
+    <PaginationLink
+      aria-label="Go to next page"
+      size="default"
+      className={nextClassName}
+      {...props}
+    >
+      <span>Next</span>
+      <ChevronRight className={styles['pagination-icon']} />
+    </PaginationLink>
+  );
+});
 
 PaginationNext.displayName = 'PaginationNext';
 
-const PaginationEllipsis = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => (
-  <span
-    aria-hidden
-    className={cn('flex h-9 w-9 items-center justify-center', className)}
-    {...props}
-  >
-    <MoreHorizontal className="h-4 w-4" />
-    <span className="sr-only">More pages</span>
-  </span>
-);
+/**
+ * Pagination Ellipsis
+ * 
+ * A component that represents a range of skipped pages.
+ */
+const PaginationEllipsis = memo(({ 
+  className, 
+  ...props 
+}: PaginationEllipsisProps) => {
+  const ellipsisClassName = useMemo(() => {
+    return cn(styles['pagination-ellipsis'], className);
+  }, [className]);
+
+  return (
+    <span
+      aria-hidden
+      className={ellipsisClassName}
+      {...props}
+    >
+      <MoreHorizontal className={styles['pagination-icon']} />
+      <span className={styles['sr-only']}>More pages</span>
+    </span>
+  );
+});
 
 PaginationEllipsis.displayName = 'PaginationEllipsis';
 

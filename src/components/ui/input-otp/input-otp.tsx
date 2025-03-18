@@ -1,77 +1,165 @@
-'use client';
-
 import { OTPInput, OTPInputContext } from 'input-otp';
-import { Dot } from 'lucide-react';
 import * as React from 'react';
+import { Dot } from 'lucide-react';
 
 import { cn } from '@/utils/app.utils';
+import styles from './input-otp.module.css';
+import {
+  InputOTPProps,
+  InputOTPGroupProps,
+  InputOTPSlotProps,
+  InputOTPSeparatorProps
+} from './input-otp.types';
 
-const InputOTP = React.forwardRef<
-  React.ElementRef<typeof OTPInput>,
-  React.ComponentPropsWithoutRef<typeof OTPInput>
->(({ className, containerClassName, ...props }, ref) => (
-  <OTPInput
-    ref={ref}
-    containerClassName={cn(
-      'flex items-center gap-2 has-[:disabled]:opacity-50',
-      containerClassName
-    )}
-    className={cn('disabled:cursor-not-allowed', className)}
-    {...props}
-  />
-));
-
-InputOTP.displayName = 'InputOTP';
-
-const InputOTPGroup = React.forwardRef<
-  React.ElementRef<'div'>,
-  React.ComponentPropsWithoutRef<'div'>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn('flex items-center', className)} {...props} />
-));
-
-InputOTPGroup.displayName = 'InputOTPGroup';
-
-const InputOTPSlot = React.forwardRef<
-  React.ElementRef<'div'>,
-  React.ComponentPropsWithoutRef<'div'> & { index: number }
->(({ index, className, ...props }, ref) => {
-  const inputOTPContext = React.useContext(OTPInputContext);
-  const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index];
-
-  return (
+/**
+ * InputOTPGroup Component
+ *
+ * A container for grouping OTP input slots.
+ *
+ * @example
+ * ```tsx
+ * <InputOTPGroup>
+ *   <InputOTPSlot index={0} />
+ *   <InputOTPSlot index={1} />
+ * </InputOTPGroup>
+ * ```
+ */
+const InputOTPGroupComponent = React.memo(
+  React.forwardRef<HTMLDivElement, InputOTPGroupProps>(({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn(
-        'relative flex h-10 w-10 items-center justify-center border-y border-r border-input text-sm transition-all first:rounded-l-md first:border-l last:rounded-r-md',
-        isActive && 'z-10 ring-2 ring-ring ring-offset-background',
-        className
-      )}
+      className={cn(styles['input-otp-group'], className)}
       {...props}
-    >
-      {char}
-      {hasFakeCaret && (
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="h-4 w-px animate-caret-blink bg-foreground duration-1000" />
+    />
+  ))
+);
+
+InputOTPGroupComponent.displayName = 'InputOTPGroup';
+
+/**
+ * InputOTPSlot Component
+ *
+ * An individual slot for entering a character in the OTP input.
+ * Displays the character and a blinking caret when active.
+ *
+ * @example
+ * ```tsx
+ * <InputOTPSlot index={0} />
+ * ```
+ */
+const InputOTPSlotComponent = React.memo(
+  React.forwardRef<HTMLDivElement, InputOTPSlotProps>(
+    ({ index, className, ...props }, ref) => {
+      const inputOTPContext = React.useContext(OTPInputContext);
+      const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index];
+
+      return (
+        <div
+          ref={ref}
+          className={cn(
+            styles['input-otp-slot'],
+            isActive && styles['input-otp-slot-active'],
+            className
+          )}
+          {...props}
+        >
+          {char}
+          {hasFakeCaret && (
+            <div className={styles['input-otp-caret']}>
+              <div className={styles['input-otp-caret-blink']} />
+            </div>
+          )}
         </div>
-      )}
-    </div>
-  );
+      );
+    }
+  )
+);
+
+InputOTPSlotComponent.displayName = 'InputOTPSlot';
+
+/**
+ * InputOTPSeparator Component
+ *
+ * A separator displayed between OTP input slots.
+ *
+ * @example
+ * ```tsx
+ * <InputOTPSeparator>
+ *   <Dot />
+ * </InputOTPSeparator>
+ * ```
+ */
+const InputOTPSeparatorComponent = React.memo(
+  React.forwardRef<HTMLDivElement, InputOTPSeparatorProps>(
+    ({ className, ...props }, ref) => (
+      <div
+        ref={ref}
+        className={cn(styles['input-otp-separator'], className)}
+        role="separator"
+        {...props}
+      >
+        <Dot />
+      </div>
+    )
+  )
+);
+
+InputOTPSeparatorComponent.displayName = 'InputOTPSeparator';
+
+/**
+ * InputOTP Component
+ *
+ * A custom OTP (One-Time Password) input field component based on input-otp.
+ * This component provides a way to enter verification codes with a user-friendly interface.
+ *
+ * @example
+ * ```tsx
+ * <InputOTP maxLength={6} onComplete={(value) => console.log(value)} />
+ * ```
+ */
+const InputOTPComponent = React.memo(
+  React.forwardRef<React.ElementRef<typeof OTPInput>, InputOTPProps>(
+    ({ className, containerClassName, children, ...props }, ref) => {
+      // Create references to the components to avoid TypeScript errors
+      const Group = InputOTPGroupComponent;
+      const Slot = InputOTPSlotComponent;
+      const Separator = InputOTPSeparatorComponent;
+
+      return (
+        <OTPInput
+          ref={ref}
+          containerClassName={cn(
+            styles['input-otp-container'],
+            containerClassName
+          )}
+          className={cn(styles['input-otp'], className)}
+          maxLength={props.maxLength || 4}
+          {...props}
+        >
+          {children || (
+            <Group>
+              {Array.from({ length: props.maxLength || 4 }).map((_, i) => (
+                <React.Fragment key={i}>
+                  {i > 0 && <Separator />}
+                  <Slot index={i} />
+                </React.Fragment>
+              ))}
+            </Group>
+          )}
+        </OTPInput>
+      );
+    }
+  )
+);
+
+InputOTPComponent.displayName = 'InputOTP';
+
+// Export the components as a group
+const InputOTP = Object.assign(InputOTPComponent, {
+  Group: InputOTPGroupComponent,
+  Slot: InputOTPSlotComponent,
+  Separator: InputOTPSeparatorComponent,
 });
 
-InputOTPSlot.displayName = 'InputOTPSlot';
-
-const InputOTPSeparator = React.forwardRef<
-  React.ElementRef<'div'>,
-  React.ComponentPropsWithoutRef<'div'>
->(({ ...props }, ref) => (
-  <div ref={ref} role="separator" {...props}>
-    <Dot />
-  </div>
-));
-
-InputOTPSeparator.displayName = 'InputOTPSeparator';
-
-export { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot };
-
-export default InputOTP;
+export { InputOTP };
+export type { InputOTPProps, InputOTPGroupProps, InputOTPSlotProps, InputOTPSeparatorProps };

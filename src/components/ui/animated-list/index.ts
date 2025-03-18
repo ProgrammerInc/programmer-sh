@@ -1,5 +1,12 @@
-import AnimatedList from './animated-list';
+/**
+ * Animated List Component
+ *
+ * A list component with smooth animations and keyboard navigation.
+ */
 
-export * from './animated-list';
+export { default as AnimatedList } from './animated-list.container';
+export { default as AnimatedItem } from './animated-list.item';
+export * from './animated-list.types';
 
-export default AnimatedList;
+// For backward compatibility
+export { default } from './animated-list.container';

@@ -1,0 +1,22 @@
+/* Progress component styles */
+
+/* Root container for progress bar */
+.root {
+  position: relative;
+  height: 1rem; /* h-4 */
+  width: 100%; /* w-full */
+  overflow: hidden;
+  border-radius: 9999px; /* rounded-full */
+  background-color: var(--secondary); /* bg-secondary */
+}
+
+/* Indicator element that shows progress */
+.indicator {
+  height: 100%;
+  width: 100%;
+  flex: 1;
+  background-color: var(--primary); /* bg-primary */
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}

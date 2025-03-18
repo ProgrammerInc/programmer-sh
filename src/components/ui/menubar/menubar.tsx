@@ -6,6 +6,7 @@ import { Check, ChevronRight, Circle } from 'lucide-react';
 import * as React from 'react';
 import { memo, useMemo } from 'react';
 
+import styles from './menubar.module.css';
 import {
   MenubarCheckboxItemProps,
   MenubarContentProps,
@@ -22,30 +23,40 @@ import {
 
 /**
  * Menu group for organizing menu items
+ * 
+ * @see {@link https://www.radix-ui.com/primitives/docs/components/menubar#menu Radix UI Menubar Menu}
  */
 const MenubarMenu = memo(MenubarPrimitive.Menu);
 MenubarMenu.displayName = MenubarPrimitive.Menu.displayName;
 
 /**
  * Group component for organizing related menu items
+ * 
+ * @see {@link https://www.radix-ui.com/primitives/docs/components/menubar#group Radix UI Menubar Group}
  */
 const MenubarGroup = memo(MenubarPrimitive.Group);
 MenubarGroup.displayName = MenubarPrimitive.Group.displayName;
 
 /**
  * Portal component for rendering menu content outside the DOM hierarchy
+ * 
+ * @see {@link https://www.radix-ui.com/primitives/docs/components/menubar#portal Radix UI Menubar Portal}
  */
 const MenubarPortal = memo(MenubarPrimitive.Portal);
 MenubarPortal.displayName = MenubarPrimitive.Portal.displayName;
 
 /**
  * Sub menu component for nested menu items
+ * 
+ * @see {@link https://www.radix-ui.com/primitives/docs/components/menubar#sub Radix UI Menubar Sub}
  */
 const MenubarSub = memo(MenubarPrimitive.Sub);
 MenubarSub.displayName = MenubarPrimitive.Sub.displayName;
 
 /**
  * Radio group for mutually exclusive menu items
+ * 
+ * @see {@link https://www.radix-ui.com/primitives/docs/components/menubar#radiogroup Radix UI Menubar RadioGroup}
  */
 const MenubarRadioGroup = memo(MenubarPrimitive.RadioGroup);
 MenubarRadioGroup.displayName = MenubarPrimitive.RadioGroup.displayName;
@@ -53,30 +64,14 @@ MenubarRadioGroup.displayName = MenubarPrimitive.RadioGroup.displayName;
 /**
  * Main menubar component that contains menu items
  * 
- * @example
- * ```tsx
- * <Menubar>
- *   <MenubarMenu>
- *     <MenubarTrigger>File</MenubarTrigger>
- *     <MenubarContent>
- *       <MenubarItem>New Tab</MenubarItem>
- *       <MenubarItem>New Window</MenubarItem>
- *       <MenubarSeparator />
- *       <MenubarItem>Close Window</MenubarItem>
- *     </MenubarContent>
- *   </MenubarMenu>
- * </Menubar>
- * ```
+ * @see {@link https://www.radix-ui.com/primitives/docs/components/menubar#root Radix UI Menubar Root}
  */
 const Menubar = memo(React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Root>,
   MenubarProps
 >(({ className, ...props }, ref) => {
   const menubarClassName = useMemo(() => {
-    return cn(
-      'flex h-10 items-center space-x-1 rounded-md border bg-background p-1',
-      className
-    );
+    return cn(styles['menubar'], className);
   }, [className]);
 
   return (
@@ -92,16 +87,15 @@ Menubar.displayName = MenubarPrimitive.Root.displayName;
 
 /**
  * Menubar trigger component that opens a menu when clicked
+ * 
+ * @see {@link https://www.radix-ui.com/primitives/docs/components/menubar#trigger Radix UI Menubar Trigger}
  */
 const MenubarTrigger = memo(React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Trigger>,
   MenubarTriggerProps
 >(({ className, ...props }, ref) => {
   const triggerClassName = useMemo(() => {
-    return cn(
-      'flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground',
-      className
-    );
+    return cn(styles['menubar-trigger'], className);
   }, [className]);
 
   return (
@@ -117,6 +111,8 @@ MenubarTrigger.displayName = MenubarPrimitive.Trigger.displayName;
 
 /**
  * Sub-menu trigger component that opens a sub-menu when clicked or hovered
+ * 
+ * @see {@link https://www.radix-ui.com/primitives/docs/components/menubar#subtrigger Radix UI Menubar SubTrigger}
  */
 const MenubarSubTrigger = memo(React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.SubTrigger>,
@@ -124,8 +120,8 @@ const MenubarSubTrigger = memo(React.forwardRef<
 >(({ className, inset, children, ...props }, ref) => {
   const subTriggerClassName = useMemo(() => {
     return cn(
-      'flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground',
-      inset && 'pl-8',
+      styles['menubar-sub-trigger'],
+      inset && styles['menubar-sub-trigger-inset'],
       className
     );
   }, [className, inset]);
@@ -137,7 +133,7 @@ const MenubarSubTrigger = memo(React.forwardRef<
       {...props}
     >
       {children}
-      <ChevronRight className="ml-auto h-4 w-4" />
+      <ChevronRight className={styles['menubar-sub-trigger-icon']} />
     </MenubarPrimitive.SubTrigger>
   );
 }));
@@ -146,16 +142,15 @@ MenubarSubTrigger.displayName = MenubarPrimitive.SubTrigger.displayName;
 
 /**
  * Sub-menu content container component
+ * 
+ * @see {@link https://www.radix-ui.com/primitives/docs/components/menubar#subcontent Radix UI Menubar SubContent}
  */
 const MenubarSubContent = memo(React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.SubContent>,
   MenubarSubContentProps
 >(({ className, ...props }, ref) => {
   const subContentClassName = useMemo(() => {
-    return cn(
-      'z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-      className
-    );
+    return cn(styles['menubar-sub-content'], className);
   }, [className]);
 
   return (
@@ -171,16 +166,15 @@ MenubarSubContent.displayName = MenubarPrimitive.SubContent.displayName;
 
 /**
  * Menubar content container component
+ * 
+ * @see {@link https://www.radix-ui.com/primitives/docs/components/menubar#content Radix UI Menubar Content}
  */
 const MenubarContent = memo(React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Content>,
   MenubarContentProps
 >(({ className, align = 'start', alignOffset = -4, sideOffset = 8, ...props }, ref) => {
   const contentClassName = useMemo(() => {
-    return cn(
-      'z-50 min-w-[12rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-      className
-    );
+    return cn(styles['menubar-content'], className);
   }, [className]);
 
   return (
@@ -201,6 +195,8 @@ MenubarContent.displayName = MenubarPrimitive.Content.displayName;
 
 /**
  * Menubar item component
+ * 
+ * @see {@link https://www.radix-ui.com/primitives/docs/components/menubar#item Radix UI Menubar Item}
  */
 const MenubarItem = memo(React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Item>,
@@ -208,8 +204,8 @@ const MenubarItem = memo(React.forwardRef<
 >(({ className, inset, ...props }, ref) => {
   const itemClassName = useMemo(() => {
     return cn(
-      'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      inset && 'pl-8',
+      styles['menubar-item'],
+      inset && styles['menubar-item-inset'],
       className
     );
   }, [className, inset]);
@@ -227,16 +223,15 @@ MenubarItem.displayName = MenubarPrimitive.Item.displayName;
 
 /**
  * Menubar checkbox item component with a checkmark indicator
+ * 
+ * @see {@link https://www.radix-ui.com/primitives/docs/components/menubar#checkboxitem Radix UI Menubar CheckboxItem}
  */
 const MenubarCheckboxItem = memo(React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.CheckboxItem>,
   MenubarCheckboxItemProps
 >(({ className, children, checked, ...props }, ref) => {
   const checkboxItemClassName = useMemo(() => {
-    return cn(
-      'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      className
-    );
+    return cn(styles['menubar-checkbox-item'], className);
   }, [className]);
 
   return (
@@ -246,7 +241,7 @@ const MenubarCheckboxItem = memo(React.forwardRef<
       ref={ref}
       {...props}
     >
-      <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <span className={styles['menubar-item-indicator']}>
         <MenubarPrimitive.ItemIndicator>
           <Check className="h-4 w-4" />
         </MenubarPrimitive.ItemIndicator>
@@ -260,16 +255,15 @@ MenubarCheckboxItem.displayName = MenubarPrimitive.CheckboxItem.displayName;
 
 /**
  * Menubar radio item component with a circle indicator
+ * 
+ * @see {@link https://www.radix-ui.com/primitives/docs/components/menubar#radioitem Radix UI Menubar RadioItem}
  */
 const MenubarRadioItem = memo(React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.RadioItem>,
   MenubarRadioItemProps
 >(({ className, children, ...props }, ref) => {
   const radioItemClassName = useMemo(() => {
-    return cn(
-      'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      className
-    );
+    return cn(styles['menubar-radio-item'], className);
   }, [className]);
 
   return (
@@ -278,7 +272,7 @@ const MenubarRadioItem = memo(React.forwardRef<
       ref={ref}
       {...props}
     >
-      <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <span className={styles['menubar-item-indicator']}>
         <MenubarPrimitive.ItemIndicator>
           <Circle className="h-2 w-2 fill-current" />
         </MenubarPrimitive.ItemIndicator>
@@ -292,6 +286,8 @@ MenubarRadioItem.displayName = MenubarPrimitive.RadioItem.displayName;
 
 /**
  * Menubar label component for section headers
+ * 
+ * @see {@link https://www.radix-ui.com/primitives/docs/components/menubar#label Radix UI Menubar Label}
  */
 const MenubarLabel = memo(React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Label>,
@@ -299,8 +295,8 @@ const MenubarLabel = memo(React.forwardRef<
 >(({ className, inset, ...props }, ref) => {
   const labelClassName = useMemo(() => {
     return cn(
-      'px-2 py-1.5 text-sm font-semibold',
-      inset && 'pl-8',
+      styles['menubar-label'],
+      inset && styles['menubar-label-inset'],
       className
     );
   }, [className, inset]);
@@ -318,13 +314,15 @@ MenubarLabel.displayName = MenubarPrimitive.Label.displayName;
 
 /**
  * Menubar separator component for visual grouping
+ * 
+ * @see {@link https://www.radix-ui.com/primitives/docs/components/menubar#separator Radix UI Menubar Separator}
  */
 const MenubarSeparator = memo(React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Separator>,
   MenubarSeparatorProps
 >(({ className, ...props }, ref) => {
   const separatorClassName = useMemo(() => {
-    return cn('-mx-1 my-1 h-px bg-muted', className);
+    return cn(styles['menubar-separator'], className);
   }, [className]);
 
   return (
@@ -340,10 +338,12 @@ MenubarSeparator.displayName = MenubarPrimitive.Separator.displayName;
 
 /**
  * Menubar shortcut component for displaying keyboard shortcuts
+ * 
+ * This is a custom component, not part of Radix UI Menubar primitives.
  */
 const MenubarShortcut = memo(({ className, ...props }: MenubarShortcutProps) => {
   const shortcutClassName = useMemo(() => {
-    return cn('ml-auto text-xs tracking-widest text-muted-foreground', className);
+    return cn(styles['menubar-shortcut'], className);
   }, [className]);
 
   return (

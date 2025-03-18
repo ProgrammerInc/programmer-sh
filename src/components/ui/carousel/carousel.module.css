@@ -1,0 +1,90 @@
+/**
+ * Carousel Component Styles
+ */
+
+/* Carousel container */
+.carousel {
+  position: relative;
+  width: 100%;
+}
+
+/* Carousel content container */
+.carousel-content-container {
+  overflow: hidden;
+}
+
+/* Carousel content */
+.carousel-content {
+  display: flex;
+}
+
+/* Horizontal orientation */
+.carousel-content-horizontal {
+  margin-left: -1rem; /* -ml-4 */
+}
+
+/* Vertical orientation */
+.carousel-content-vertical {
+  margin-top: -1rem; /* -mt-4 */
+  flex-direction: column;
+}
+
+/* Carousel item */
+.carousel-item {
+  min-width: 0;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: 100%;
+}
+
+/* Horizontal item spacing */
+.carousel-item-horizontal {
+  padding-left: 1rem; /* pl-4 */
+}
+
+/* Vertical item spacing */
+.carousel-item-vertical {
+  padding-top: 1rem; /* pt-4 */
+}
+
+/* Navigation buttons base */
+.carousel-nav-button {
+  position: absolute;
+  height: 2rem; /* h-8 */
+  width: 2rem; /* w-8 */
+  border-radius: 9999px; /* rounded-full */
+}
+
+/* Previous button - horizontal */
+.carousel-prev-horizontal {
+  left: -3rem; /* -left-12 */
+  top: 50%; /* top-1/2 */
+  transform: translateY(-50%); /* -translate-y-1/2 */
+}
+
+/* Previous button - vertical */
+.carousel-prev-vertical {
+  top: -3rem; /* -top-12 */
+  left: 50%; /* left-1/2 */
+  transform: translateX(-50%) rotate(90deg); /* -translate-x-1/2 rotate-90 */
+}
+
+/* Next button - horizontal */
+.carousel-next-horizontal {
+  right: -3rem; /* -right-12 */
+  top: 50%; /* top-1/2 */
+  transform: translateY(-50%); /* -translate-y-1/2 */
+}
+
+/* Next button - vertical */
+.carousel-next-vertical {
+  bottom: -3rem; /* -bottom-12 */
+  left: 50%; /* left-1/2 */
+  transform: translateX(-50%) rotate(90deg); /* -translate-x-1/2 rotate-90 */
+}
+
+/* Navigation icons */
+.carousel-icon {
+  height: 1rem; /* h-4 */
+  width: 1rem; /* w-4 */
+}

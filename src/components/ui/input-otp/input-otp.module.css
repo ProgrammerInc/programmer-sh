@@ -1,0 +1,136 @@
+/*
+ * Input OTP Component Styles
+ *
+ * This file contains all the styles for the InputOTP component and its subcomponents.
+ * The styles follow a consistent pattern with other UI components
+ * and use CSS modules for better encapsulation.
+ */
+
+/* Base InputOTP container styles */
+.input-otp-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+.input-otp-container:has(:disabled) {
+  opacity: 0.5;
+}
+
+/* Base InputOTP styles */
+.input-otp {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.input-otp:disabled {
+  cursor: not-allowed;
+}
+
+/* InputOTPGroup styles */
+.input-otp-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* InputOTPSlot styles */
+.input-otp-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 3.5rem;
+  border: 1px solid hsl(240deg 5.9% 90%);
+  border-radius: 0.375rem;
+  background-color: white;
+  font-size: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+/* Apply rounded corners only to first and last slots */
+.input-otp-slot:first-child {
+  border-top-left-radius: 0.375rem; /* rounded-l-md */
+  border-bottom-left-radius: 0.375rem; /* rounded-l-md */
+  border-left-width: 1px;
+}
+
+.input-otp-slot:last-child {
+  border-top-right-radius: 0.375rem; /* rounded-r-md */
+  border-bottom-right-radius: 0.375rem; /* rounded-r-md */
+}
+
+/* Active slot styles */
+.input-otp-slot-active {
+  border-color: hsl(240deg 5% 64.9%);
+  box-shadow: 0 0 0 1px hsl(240deg 5% 64.9%);
+}
+
+/* Caret animation */
+.input-otp-caret {
+  position: relative;
+  width: 1px;
+  height: 1.75rem;
+  background-color: hsl(240deg 5.9% 10%);
+}
+
+.input-otp-caret-blink {
+  width: 100%;
+  height: 100%;
+  animation: caret-blink 1s step-end infinite;
+}
+
+/* InputOTPSeparator styles */
+.input-otp-separator {
+  display: flex;
+  align-items: center;
+  padding: 0 0.25rem;
+  color: hsl(240deg 3.8% 46.1%);
+}
+
+.input-otp-char {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 3.5rem;
+}
+
+/* Focus and hover states */
+.input-otp-slot:hover {
+  border-color: hsl(240deg 5% 64.9%);
+}
+
+.input-otp-slot:focus-visible {
+  outline: none;
+  border-color: hsl(240deg 5% 64.9%);
+  box-shadow: 0 0 0 1px hsl(240deg 5% 64.9%);
+}
+
+/* Placeholder styles */
+.input-otp-slot-placeholder {
+  color: hsl(240deg 3.8% 46.1%);
+  opacity: 0.6;
+}
+
+/* For disabled state */
+.input-otp-slot[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Keyframes for caret blinking effect */
+@keyframes caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,57 @@
+/**
+ * Counter component styles
+ */
+
+/* Number component styles */
+.number {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Digit component styles */
+.digit {
+  position: relative;
+  width: 1ch;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Container styles */
+.container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Counter styles */
+.counter {
+  display: flex;
+  overflow: hidden;
+  line-height: 1;
+}
+
+/* Gradient container styles */
+.gradient-container {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* Top gradient styles */
+.top-gradient {
+  width: 100%;
+}
+
+/* Bottom gradient styles */
+.bottom-gradient {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}

@@ -1,37 +1,66 @@
 'use client';
 
 import { gsap } from 'gsap';
-import React from 'react';
+import React, { useRef, useMemo, memo } from 'react';
 
-export interface MenuItemProps {
-  link: string;
-  text: string;
-  image: string;
-}
+import styles from './flowing-menu.module.css';
+import { FlowingMenuProps, MenuItemProps } from './flowing-menu.types';
 
-export interface FlowingMenuProps {
-  items?: MenuItemProps[];
-}
-
-export const FlowingMenu: React.FC<FlowingMenuProps> = ({ items = [] }) => {
+/**
+ * FlowingMenu Component
+ * 
+ * A navigation menu with flowing animations on hover.
+ * Each item reveals a marquee animation when hovered.
+ * 
+ * @example
+ * ```tsx
+ * <FlowingMenu 
+ *   items={[
+ *     { link: "/home", text: "Home", image: "/images/home.jpg" },
+ *     { link: "/about", text: "About", image: "/images/about.jpg" },
+ *   ]}
+ * />
+ * ```
+ */
+export const FlowingMenu = memo(function FlowingMenu({ items = [] }: FlowingMenuProps) {
   return (
-    <div className="w-full h-full overflow-hidden">
-      <nav className="flex flex-col h-full m-0 p-0">
+    <div className={styles['flowing-menu-container']}>
+      <nav className={styles['flowing-menu-nav']}>
         {items.map((item, idx) => (
           <MenuItem key={idx} {...item} />
         ))}
       </nav>
     </div>
   );
-};
+});
 
-export const MenuItem: React.FC<MenuItemProps> = ({ link, text, image }) => {
-  const itemRef = React.useRef<HTMLDivElement>(null);
-  const marqueeRef = React.useRef<HTMLDivElement>(null);
-  const marqueeInnerRef = React.useRef<HTMLDivElement>(null);
+FlowingMenu.displayName = 'FlowingMenu';
+
+/**
+ * MenuItem Component
+ * 
+ * An individual item in the FlowingMenu that displays a text label
+ * and reveals an animated marquee with text and image on hover.
+ * 
+ * @example
+ * ```tsx
+ * <MenuItem 
+ *   link="/about" 
+ *   text="About Us" 
+ *   image="/images/about.jpg" 
+ * />
+ * ```
+ */
+export const MenuItem = memo(function MenuItem({ link, text, image }: MenuItemProps) {
+  const itemRef = useRef<HTMLDivElement>(null);
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const marqueeInnerRef = useRef<HTMLDivElement>(null);
 
   const animationDefaults = { duration: 0.6, ease: 'expo' };
 
+  /**
+   * Determines which edge of the element the mouse is closest to
+   */
   const findClosestEdge = (
     mouseX: number,
     mouseY: number,
@@ -43,6 +72,9 @@ export const MenuItem: React.FC<MenuItemProps> = ({ link, text, image }) => {
     return topEdgeDist < bottomEdgeDist ? 'top' : 'bottom';
   };
 
+  /**
+   * Handles mouse enter animation for the menu item
+   */
   const handleMouseEnter = (ev: React.MouseEvent<HTMLAnchorElement>) => {
     if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
     const rect = itemRef.current.getBoundingClientRect();
@@ -59,6 +91,9 @@ export const MenuItem: React.FC<MenuItemProps> = ({ link, text, image }) => {
       .to([marqueeRef.current, marqueeInnerRef.current], { y: '0%' });
   };
 
+  /**
+   * Handles mouse leave animation for the menu item
+   */
   const handleMouseLeave = (ev: React.MouseEvent<HTMLAnchorElement>) => {
     if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
     const rect = itemRef.current.getBoundingClientRect();
@@ -69,21 +104,24 @@ export const MenuItem: React.FC<MenuItemProps> = ({ link, text, image }) => {
       rect.height
     );
 
-    const tl = gsap.timeline({ defaults: animationDefaults }) as TimelineMax;
+    const tl = gsap.timeline({ defaults: animationDefaults });
     tl.to(marqueeRef.current, { y: edge === 'top' ? '-101%' : '101%' }).to(
       marqueeInnerRef.current,
       { y: edge === 'top' ? '101%' : '-101%' }
     );
   };
 
-  const repeatedMarqueeContent = React.useMemo(() => {
+  /**
+   * Generates repeated marquee content for the continuous animation
+   */
+  const repeatedMarqueeContent = useMemo(() => {
     return Array.from({ length: 4 }).map((_, idx) => (
       <React.Fragment key={idx}>
-        <span className="text-[#060606] uppercase font-normal text-[4vh] leading-[1.2] p-[1vh_1vw_0]">
+        <span className={styles['marquee-text']}>
           {text}
         </span>
         <div
-          className="w-[200px] h-[7vh] my-[2em] mx-[2vw] p-[1em_0] rounded-[50px] bg-cover bg-center"
+          className={styles['marquee-image']}
           style={{ backgroundImage: `url(${image})` }}
         />
       </React.Fragment>
@@ -92,11 +130,11 @@ export const MenuItem: React.FC<MenuItemProps> = ({ link, text, image }) => {
 
   return (
     <div
-      className="flex-1 relative overflow-hidden text-center shadow-[0_-1px_0_0_#fff]"
+      className={styles['menu-item']}
       ref={itemRef}
     >
       <a
-        className="flex items-center justify-center h-full relative cursor-pointer uppercase no-underline font-semibold text-white text-[4vh] hover:text-[#060606] focus:text-white focus-visible:text-[#060606]"
+        className={styles['menu-item-link']}
         href={link}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -104,40 +142,19 @@ export const MenuItem: React.FC<MenuItemProps> = ({ link, text, image }) => {
         {text}
       </a>
       <div
-        className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none bg-white translate-y-[101%]"
+        className={styles['marquee-container']}
         ref={marqueeRef}
       >
-        <div className="h-full w-[200%] flex" ref={marqueeInnerRef}>
-          <div className="flex items-center relative h-full w-[200%] will-change-transform animate-marquee">
+        <div className={styles['marquee-inner']} ref={marqueeInnerRef}>
+          <div className={styles['marquee-content']}>
             {repeatedMarqueeContent}
           </div>
         </div>
       </div>
     </div>
   );
-};
+});
+
+MenuItem.displayName = 'MenuItem';
 
 export default FlowingMenu;
-
-// Note: this is also needed
-// /** @type {import('tailwindcss').Config} */
-// export default {
-//   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-//   theme: {
-//     extend: {
-//       translate: {
-//         '101': '101%',
-//       },
-//       keyframes: {
-//         marquee: {
-//           'from': { transform: 'translateX(0%)' },
-//           'to': { transform: 'translateX(-50%)' }
-//         }
-//       },
-//       animation: {
-//         marquee: 'marquee 15s linear infinite'
-//       }
-//     }
-//   },
-//   plugins: [],
-// };

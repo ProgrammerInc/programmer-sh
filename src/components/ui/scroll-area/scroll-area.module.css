@@ -1,0 +1,56 @@
+/* Scroll Area component styles */
+
+/* Main container */
+.root {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Viewport container */
+.viewport {
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
+}
+
+/* Scrollbar base styles */
+.scrollbar {
+  display: flex;
+  touch-action: none;
+  user-select: none;
+  transition: colors 0.2s ease;
+}
+
+/* Vertical scrollbar specific styles */
+.scrollbar-vertical {
+  height: 100%;
+  width: 0.625rem; /* w-2.5 */
+  border-left: 1px solid transparent;
+  padding: 1px;
+}
+
+/* Horizontal scrollbar specific styles */
+.scrollbar-horizontal {
+  height: 0.625rem; /* h-2.5 */
+  flex-direction: column;
+  border-top: 1px solid transparent;
+  padding: 1px;
+}
+
+/* Scrollbar thumb styles */
+.thumb {
+  position: relative;
+  flex: 1;
+  border-radius: 9999px; /* rounded-full */
+  background-color: var(--border);
+}
+
+/* Scrollbar hover effects */
+.scrollbar:hover .thumb {
+  background-color: var(--border-hover, #999);
+}
+
+/* Scrollbar active/dragging effects */
+.scrollbar:active .thumb {
+  background-color: var(--border-active, #777);
+}

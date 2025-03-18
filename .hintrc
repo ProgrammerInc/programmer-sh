@@ -1,18 +1,9 @@
 {
-  "extends": ["development"],
+  "extends": [
+    "development"
+  ],
   "hints": {
     "no-inline-styles": "off",
-    "compat-api/css": [
-      "default",
-      {
-        "ignore": [
-          "-webkit-text-size-adjust",
-          "user-select",
-          "overscroll-behavior",
-          "overscroll-behavior: none",
-          "overscroll-behavior: contain"
-        ]
-      }
-    ]
+    "compat-api/css": "off"
   }
 }

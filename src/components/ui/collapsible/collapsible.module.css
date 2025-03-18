@@ -1,0 +1,48 @@
+/**
+ * Styles for Collapsible component
+ */
+
+.collapsible {
+  width: 100%;
+}
+
+.collapsible-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.collapsible-content {
+  overflow: hidden;
+}
+
+.collapsible-content-animation {
+  animation: collapsible-down 0.2s ease-out;
+}
+
+.collapsible-content-animation[data-state="closed"] {
+  animation: collapsible-up 0.2s ease-out;
+}
+
+@keyframes collapsible-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-collapsible-content-height);
+  }
+}
+
+@keyframes collapsible-up {
+  from {
+    height: var(--radix-collapsible-content-height);
+  }
+  to {
+    height: 0;
+  }
+}

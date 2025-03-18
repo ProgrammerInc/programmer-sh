@@ -1,181 +1,340 @@
 'use client';
 
+/**
+ * Context Menu component
+ * 
+ * A context menu component built on Radix UI's primitives
+ */
+
+import { cn } from '@/utils/app.utils';
 import * as ContextMenuPrimitive from '@radix-ui/react-context-menu';
 import { Check, ChevronRight, Circle } from 'lucide-react';
 import * as React from 'react';
+import { memo } from 'react';
 
-import { cn } from '@/utils/app.utils';
+import styles from './context-menu.module.css';
+import {
+  ContextMenuCheckboxItemRef,
+  ContextMenuCheckboxItemProps,
+  ContextMenuContentProps,
+  ContextMenuContentRef,
+  ContextMenuItemProps,
+  ContextMenuItemRef,
+  ContextMenuLabelProps,
+  ContextMenuLabelRef,
+  ContextMenuRadioItemProps,
+  ContextMenuRadioItemRef,
+  ContextMenuSeparatorProps,
+  ContextMenuSeparatorRef,
+  ContextMenuShortcutProps,
+  ContextMenuSubContentProps,
+  ContextMenuSubContentRef,
+  ContextMenuSubTriggerProps,
+  ContextMenuSubTriggerRef
+} from './context-menu.types';
 
+/**
+ * Root Context Menu component
+ * 
+ * @example
+ * ```tsx
+ * <ContextMenu>
+ *   <ContextMenuTrigger>Right click on me</ContextMenuTrigger>
+ *   <ContextMenuContent>
+ *     <ContextMenuItem>Profile</ContextMenuItem>
+ *     <ContextMenuItem>Settings</ContextMenuItem>
+ *     <ContextMenuSeparator />
+ *     <ContextMenuItem>Logout</ContextMenuItem>
+ *   </ContextMenuContent>
+ * </ContextMenu>
+ * ```
+ */
 const ContextMenu = ContextMenuPrimitive.Root;
 
+/**
+ * Context Menu Trigger component
+ * 
+ * The area that opens the context menu on right click.
+ */
 const ContextMenuTrigger = ContextMenuPrimitive.Trigger;
 
+/**
+ * Context Menu Group component
+ * 
+ * Used to group related items.
+ */
 const ContextMenuGroup = ContextMenuPrimitive.Group;
 
+/**
+ * Context Menu Portal component
+ * 
+ * Portals the content into the body.
+ */
 const ContextMenuPortal = ContextMenuPrimitive.Portal;
 
+/**
+ * Context Menu Sub component
+ * 
+ * Used to create a submenu.
+ */
 const ContextMenuSub = ContextMenuPrimitive.Sub;
 
+/**
+ * Context Menu Radio Group component
+ * 
+ * Used to group radio items.
+ */
 const ContextMenuRadioGroup = ContextMenuPrimitive.RadioGroup;
 
-const ContextMenuSubTrigger = React.forwardRef<
-  React.ElementRef<typeof ContextMenuPrimitive.SubTrigger>,
-  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.SubTrigger> & {
-    inset?: boolean;
-  }
+/**
+ * Context Menu Sub Trigger component
+ * 
+ * The trigger for a submenu.
+ * 
+ * @example
+ * ```tsx
+ * <ContextMenuSub>
+ *   <ContextMenuSubTrigger>More Options</ContextMenuSubTrigger>
+ *   <ContextMenuSubContent>
+ *     <ContextMenuItem>Option 1</ContextMenuItem>
+ *     <ContextMenuItem>Option 2</ContextMenuItem>
+ *   </ContextMenuSubContent>
+ * </ContextMenuSub>
+ * ```
+ */
+const ContextMenuSubTrigger = memo(React.forwardRef<
+  ContextMenuSubTriggerRef,
+  ContextMenuSubTriggerProps
 >(({ className, inset, children, ...props }, ref) => (
   <ContextMenuPrimitive.SubTrigger
     ref={ref}
     className={cn(
-      'flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground',
-      inset && 'pl-8',
+      styles['sub-trigger'],
+      inset && styles['sub-trigger-inset'],
       className
     )}
     {...props}
   >
     {children}
-    <ChevronRight className="ml-auto h-4 w-4" />
+    <ChevronRight className={styles['sub-trigger-icon']} />
   </ContextMenuPrimitive.SubTrigger>
-));
+)));
 
 ContextMenuSubTrigger.displayName = ContextMenuPrimitive.SubTrigger.displayName;
 
-const ContextMenuSubContent = React.forwardRef<
-  React.ElementRef<typeof ContextMenuPrimitive.SubContent>,
-  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.SubContent>
+/**
+ * Context Menu Sub Content component
+ * 
+ * The content for a submenu.
+ */
+const ContextMenuSubContent = memo(React.forwardRef<
+  ContextMenuSubContentRef,
+  ContextMenuSubContentProps
 >(({ className, ...props }, ref) => (
   <ContextMenuPrimitive.SubContent
     ref={ref}
-    className={cn(
-      'z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-      className
-    )}
+    className={cn(styles['sub-content'], className)}
     {...props}
   />
-));
+)));
 
 ContextMenuSubContent.displayName = ContextMenuPrimitive.SubContent.displayName;
 
-const ContextMenuContent = React.forwardRef<
-  React.ElementRef<typeof ContextMenuPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Content>
+/**
+ * Context Menu Content component
+ * 
+ * The content that appears when the context menu is triggered.
+ * 
+ * @example
+ * ```tsx
+ * <ContextMenuContent>
+ *   <ContextMenuItem>Profile</ContextMenuItem>
+ *   <ContextMenuItem>Settings</ContextMenuItem>
+ * </ContextMenuContent>
+ * ```
+ */
+const ContextMenuContent = memo(React.forwardRef<
+  ContextMenuContentRef,
+  ContextMenuContentProps
 >(({ className, ...props }, ref) => (
   <ContextMenuPrimitive.Portal>
     <ContextMenuPrimitive.Content
       ref={ref}
-      className={cn(
-        'z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in-80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-        className
-      )}
+      className={cn(styles.content, className)}
       {...props}
     />
   </ContextMenuPrimitive.Portal>
-));
+)));
 
 ContextMenuContent.displayName = ContextMenuPrimitive.Content.displayName;
 
-const ContextMenuItem = React.forwardRef<
-  React.ElementRef<typeof ContextMenuPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Item> & {
-    inset?: boolean;
-  }
+/**
+ * Context Menu Item component
+ * 
+ * An actionable item in the context menu.
+ * 
+ * @example
+ * ```tsx
+ * <ContextMenuItem onSelect={() => console.log('Selected')}>
+ *   Profile
+ * </ContextMenuItem>
+ * ```
+ */
+const ContextMenuItem = memo(React.forwardRef<
+  ContextMenuItemRef,
+  ContextMenuItemProps
 >(({ className, inset, ...props }, ref) => (
   <ContextMenuPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      inset && 'pl-8',
+      styles.item,
+      inset && styles['item-inset'],
       className
     )}
     {...props}
   />
-));
+)));
 
 ContextMenuItem.displayName = ContextMenuPrimitive.Item.displayName;
 
-const ContextMenuCheckboxItem = React.forwardRef<
-  React.ElementRef<typeof ContextMenuPrimitive.CheckboxItem>,
-  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.CheckboxItem>
+/**
+ * Context Menu Checkbox Item component
+ * 
+ * A checkbox item in the context menu.
+ * 
+ * @example
+ * ```tsx
+ * <ContextMenuCheckboxItem checked={checked} onCheckedChange={setChecked}>
+ *   Show Hidden Files
+ * </ContextMenuCheckboxItem>
+ * ```
+ */
+const ContextMenuCheckboxItem = memo(React.forwardRef<
+  ContextMenuCheckboxItemRef,
+  ContextMenuCheckboxItemProps
 >(({ className, children, checked, ...props }, ref) => (
   <ContextMenuPrimitive.CheckboxItem
     ref={ref}
-    className={cn(
-      'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      className
-    )}
+    className={cn(styles['checkbox-item'], className)}
     checked={checked}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className={styles['item-indicator-wrapper']}>
       <ContextMenuPrimitive.ItemIndicator>
-        <Check className="h-4 w-4" />
+        <Check className={styles['icon-check']} />
       </ContextMenuPrimitive.ItemIndicator>
     </span>
     {children}
   </ContextMenuPrimitive.CheckboxItem>
-));
+)));
 
 ContextMenuCheckboxItem.displayName = ContextMenuPrimitive.CheckboxItem.displayName;
 
-const ContextMenuRadioItem = React.forwardRef<
-  React.ElementRef<typeof ContextMenuPrimitive.RadioItem>,
-  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.RadioItem>
+/**
+ * Context Menu Radio Item component
+ * 
+ * A radio item in the context menu.
+ * 
+ * @example
+ * ```tsx
+ * <ContextMenuRadioGroup value={position} onValueChange={setPosition}>
+ *   <ContextMenuRadioItem value="left">Left</ContextMenuRadioItem>
+ *   <ContextMenuRadioItem value="right">Right</ContextMenuRadioItem>
+ * </ContextMenuRadioGroup>
+ * ```
+ */
+const ContextMenuRadioItem = memo(React.forwardRef<
+  ContextMenuRadioItemRef,
+  ContextMenuRadioItemProps
 >(({ className, children, ...props }, ref) => (
   <ContextMenuPrimitive.RadioItem
     ref={ref}
-    className={cn(
-      'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      className
-    )}
+    className={cn(styles['radio-item'], className)}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className={styles['item-indicator-wrapper']}>
       <ContextMenuPrimitive.ItemIndicator>
-        <Circle className="h-2 w-2 fill-current" />
+        <Circle className={styles['icon-circle']} />
       </ContextMenuPrimitive.ItemIndicator>
     </span>
     {children}
   </ContextMenuPrimitive.RadioItem>
-));
+)));
 
 ContextMenuRadioItem.displayName = ContextMenuPrimitive.RadioItem.displayName;
 
-const ContextMenuLabel = React.forwardRef<
-  React.ElementRef<typeof ContextMenuPrimitive.Label>,
-  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Label> & {
-    inset?: boolean;
-  }
+/**
+ * Context Menu Label component
+ * 
+ * A label for a section in the context menu.
+ * 
+ * @example
+ * ```tsx
+ * <ContextMenuLabel>Account</ContextMenuLabel>
+ * ```
+ */
+const ContextMenuLabel = memo(React.forwardRef<
+  ContextMenuLabelRef,
+  ContextMenuLabelProps
 >(({ className, inset, ...props }, ref) => (
   <ContextMenuPrimitive.Label
     ref={ref}
-    className={cn('px-2 py-1.5 text-sm font-semibold text-foreground', inset && 'pl-8', className)}
+    className={cn(
+      styles.label,
+      inset && styles['label-inset'],
+      className
+    )}
     {...props}
   />
-));
+)));
 
 ContextMenuLabel.displayName = ContextMenuPrimitive.Label.displayName;
 
-const ContextMenuSeparator = React.forwardRef<
-  React.ElementRef<typeof ContextMenuPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Separator>
+/**
+ * Context Menu Separator component
+ * 
+ * A visual separator in the context menu.
+ * 
+ * @example
+ * ```tsx
+ * <ContextMenuItem>Profile</ContextMenuItem>
+ * <ContextMenuSeparator />
+ * <ContextMenuItem>Logout</ContextMenuItem>
+ * ```
+ */
+const ContextMenuSeparator = memo(React.forwardRef<
+  ContextMenuSeparatorRef,
+  ContextMenuSeparatorProps
 >(({ className, ...props }, ref) => (
   <ContextMenuPrimitive.Separator
     ref={ref}
-    className={cn('-mx-1 my-1 h-px bg-border', className)}
+    className={cn(styles.separator, className)}
     {...props}
   />
-));
+)));
 
 ContextMenuSeparator.displayName = ContextMenuPrimitive.Separator.displayName;
 
-const ContextMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
+/**
+ * Context Menu Shortcut component
+ * 
+ * Displays a keyboard shortcut in a context menu item.
+ * 
+ * @example
+ * ```tsx
+ * <ContextMenuItem>
+ *   New Tab <ContextMenuShortcut>⌘T</ContextMenuShortcut>
+ * </ContextMenuItem>
+ * ```
+ */
+const ContextMenuShortcut = memo(({ className, ...props }: ContextMenuShortcutProps) => {
   return (
     <span
-      className={cn('ml-auto text-xs tracking-widest text-muted-foreground', className)}
+      className={cn(styles.shortcut, className)}
       {...props}
     />
   );
-};
+});
 
 ContextMenuShortcut.displayName = 'ContextMenuShortcut';
 

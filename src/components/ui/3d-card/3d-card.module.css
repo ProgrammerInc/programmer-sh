@@ -1,0 +1,36 @@
+/**
+ * 3D Card component styles
+ */
+
+.container {
+  perspective: 1000px;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 200ms ease-linear;
+  transform-style: preserve-3d;
+}
+
+.body {
+  height: 24rem; /* h-96 */
+  width: 24rem; /* w-96 */
+  transform-style: preserve-3d;
+}
+
+.body > * {
+  transform-style: preserve-3d;
+}
+
+.item {
+  width: fit-content;
+  transition: transform 200ms ease-linear;
+}

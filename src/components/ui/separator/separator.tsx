@@ -5,22 +5,22 @@ import * as React from 'react';
 import { memo, useMemo } from 'react';
 
 import { cn } from '@/utils/app.utils';
+import styles from './separator.module.css';
 import { SeparatorProps } from './separator.types';
 
 /**
- * Separator component based on Radix UI's Separator primitive
- *
- * Creates a visual divider that separates content either horizontally or vertically.
+ * Separator Component
  * 
- * @example
- * // Horizontal separator
- * <Separator />
+ * A visual divider that separates content either horizontally or vertically.
+ * Based on Radix UI's Separator primitive.
  * 
- * // Vertical separator
- * <Separator orientation="vertical" />
+ * Features:
+ * - Supports both horizontal and vertical orientations
+ * - Can be set as decorative or semantic for accessibility
+ * - Customizable with classes for styling and spacing
+ * - Fully keyboard accessible and screen reader friendly
  * 
- * // With custom spacing
- * <Separator className="my-4" />
+ * @see {@link https://www.radix-ui.com/docs/primitives/components/separator | Radix UI Separator}
  */
 const Separator = memo(React.forwardRef<
   React.ElementRef<typeof SeparatorPrimitive.Root>,
@@ -29,8 +29,8 @@ const Separator = memo(React.forwardRef<
   // Memoize the className computation to avoid unnecessary recalculations
   const separatorClassName = useMemo(() => {
     return cn(
-      'shrink-0 bg-border',
-      orientation === 'horizontal' ? 'h-[1px] w-full' : 'h-full w-[1px]',
+      styles.separator,
+      orientation === 'horizontal' ? styles.horizontal : styles.vertical,
       className
     );
   }, [orientation, className]);

@@ -1,0 +1,61 @@
+/* Skeleton component styles */
+
+/* Base skeleton styling */
+.skeleton {
+  background-color: var(--skeleton-bg, var(--muted)); /* bg-muted with CSS variable override */
+  border-radius: var(--skeleton-radius, 0.375rem); /* rounded-md with CSS variable override */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Pulsing animation */
+.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Visibility control */
+.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Specific variants */
+.circle {
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+}
+
+.avatar {
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  width: 3rem; /* 48px by default */
+  height: 3rem;
+}
+
+.text {
+  height: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.button {
+  height: 2.5rem;
+  border-radius: 0.25rem;
+}
+
+.card {
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+/* Animation keyframes */
+@keyframes pulse {
+  0%, 100% {
+    opacity: var(--skeleton-opacity-high, 1);
+  }
+  50% {
+    opacity: var(--skeleton-opacity-low, 0.5);
+  }
+}

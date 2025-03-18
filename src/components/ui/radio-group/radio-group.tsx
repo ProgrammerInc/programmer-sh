@@ -6,22 +6,43 @@ import { Circle } from 'lucide-react';
 import * as React from 'react';
 import { memo, useMemo } from 'react';
 
+import styles from './radio-group.module.css';
 import {
   RadioGroupItemProps,
   RadioGroupProps
 } from './radio-group.types';
 
 /**
- * RadioGroup component for selecting a single value from a list of options
+ * RadioGroup component
+ * 
+ * A set of checkable buttons—known as radio buttons—where only one can be checked at a time.
+ * Built on top of Radix UI RadioGroup primitive for accessibility and customization.
+ * 
+ * Features:
+ * - Keyboard navigation (arrow keys, space to select)
+ * - Screen reader announcements
+ * - Focus management and custom focus styles
+ * - Automatic ARIA attributes for accessibility
  * 
  * @example
  * ```tsx
- * <RadioGroup defaultValue="option-one">
- *   <div className="flex items-center space-x-2">
- *     <RadioGroupItem value="option-one" id="option-one" />
- *     <Label htmlFor="option-one">Option One</Label>
- *   </div>
- * </RadioGroup>
+ * import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+ * import { Label } from '@/components/ui/label';
+ * 
+ * export function RadioGroupExample() {
+ *   return (
+ *     <RadioGroup defaultValue="option-one">
+ *       <div className="flex items-center space-x-2">
+ *         <RadioGroupItem value="option-one" id="option-one" />
+ *         <Label htmlFor="option-one">Option One</Label>
+ *       </div>
+ *       <div className="flex items-center space-x-2">
+ *         <RadioGroupItem value="option-two" id="option-two" />
+ *         <Label htmlFor="option-two">Option Two</Label>
+ *       </div>
+ *     </RadioGroup>
+ *   );
+ * }
  * ```
  */
 const RadioGroup = memo(React.forwardRef<
@@ -29,7 +50,7 @@ const RadioGroup = memo(React.forwardRef<
   RadioGroupProps
 >(({ className, ...props }, ref) => {
   const radioGroupClassName = useMemo(() => {
-    return cn('grid gap-2', className);
+    return cn(styles.root, className);
   }, [className]);
 
   return (
@@ -44,17 +65,27 @@ const RadioGroup = memo(React.forwardRef<
 RadioGroup.displayName = RadioGroupPrimitive.Root.displayName;
 
 /**
- * RadioGroupItem component for individual radio options within a RadioGroup
+ * RadioGroupItem component
+ * 
+ * An individual radio button item within a RadioGroup that can be checked.
+ * When checked, a visual indicator is shown and the radio item receives focus.
+ * 
+ * Features:
+ * - Customizable appearance
+ * - Focus and disabled states styling
+ * - Animated indicator when selected
+ * 
+ * @example
+ * ```tsx
+ * <RadioGroupItem value="option" id="option" />
+ * ```
  */
 const RadioGroupItem = memo(React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Item>,
   RadioGroupItemProps
 >(({ className, ...props }, ref) => {
   const radioItemClassName = useMemo(() => {
-    return cn(
-      'aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
-      className
-    );
+    return cn(styles.item, className);
   }, [className]);
 
   return (
@@ -63,8 +94,8 @@ const RadioGroupItem = memo(React.forwardRef<
       ref={ref}
       {...props}
     >
-      <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
-        <Circle className="h-2.5 w-2.5 fill-current text-current" />
+      <RadioGroupPrimitive.Indicator className={styles.indicator}>
+        <Circle className={styles.circle} />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   );

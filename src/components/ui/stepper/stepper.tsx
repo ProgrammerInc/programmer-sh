@@ -3,35 +3,62 @@
 import { AnimatePresence, Variants, motion } from 'framer-motion';
 import React, {
   Children,
-  HTMLAttributes,
-  ReactNode,
   useLayoutEffect,
   useRef,
-  useState
+  useState,
+  memo
 } from 'react';
 
-export interface StepperProps extends HTMLAttributes<HTMLDivElement> {
-  children: ReactNode;
-  initialStep?: number;
-  onStepChange?: (step: number) => void;
-  onFinalStepCompleted?: () => void;
-  stepCircleContainerClassName?: string;
-  stepContainerClassName?: string;
-  contentClassName?: string;
-  footerClassName?: string;
-  backButtonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
-  nextButtonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
-  backButtonText?: string;
-  nextButtonText?: string;
-  disableStepIndicators?: boolean;
-  renderStepIndicator?: (props: {
-    step: number;
-    currentStep: number;
-    onStepClick: (clicked: number) => void;
-  }) => ReactNode;
-}
+import styles from './stepper.module.css';
+import {
+  StepperProps,
+  StepProps,
+  StepContentWrapperProps,
+  SlideTransitionProps,
+  StepIndicatorProps,
+  StepConnectorProps,
+  CheckIconProps,
+  StepperOrientation
+} from './stepper.types';
 
-export default function Stepper({
+/**
+ * Stepper Component - A multi-step wizard with interactive step indicators
+ * 
+ * Features:
+ * - Multi-step wizard with configurable step count
+ * - Interactive step indicators that can be clicked to navigate
+ * - Optional step indicators that can be disabled
+ * - Smooth animations between steps
+ * - Customizable back and next buttons
+ * - Support for custom step indicator rendering
+ * - Callbacks for step changes and completion
+ * - Support for vertical and horizontal layouts
+ * 
+ * @example
+ * ```tsx
+ * // Basic usage
+ * <Stepper>
+ *   <Step>Step 1 content</Step>
+ *   <Step>Step 2 content</Step>
+ *   <Step>Step 3 content</Step>
+ * </Stepper>
+ * 
+ * // With custom configuration
+ * <Stepper
+ *   initialStep={2}
+ *   onStepChange={(step) => console.log(`Step ${step} active`)}
+ *   onFinalStepCompleted={() => console.log('All steps completed')}
+ *   backButtonText="Previous"
+ *   nextButtonText="Next"
+ *   orientation="horizontal"
+ * >
+ *   <Step>Step 1 content</Step>
+ *   <Step>Step 2 content</Step>
+ *   <Step>Step 3 content</Step>
+ * </Stepper>
+ * ```
+ */
+const Stepper = memo(function Stepper({
   children,
   initialStep = 1,
   onStepChange = () => {},
@@ -46,6 +73,7 @@ export default function Stepper({
   nextButtonText = 'Continue',
   disableStepIndicators = false,
   renderStepIndicator,
+  orientation = 'vertical',
   ...rest
 }: StepperProps) {
   const [currentStep, setCurrentStep] = useState<number>(initialStep);
@@ -54,6 +82,11 @@ export default function Stepper({
   const totalSteps = stepsArray.length;
   const isCompleted = currentStep > totalSteps;
   const isLastStep = currentStep === totalSteps;
+
+  // Get the appropriate container class based on orientation
+  const containerClass = orientation === 'horizontal' ? styles['container-horizontal'] : styles.container;
+  const circleContainerClass = orientation === 'horizontal' ? styles['circle-container-horizontal'] : styles['circle-container'];
+  const stepContainerClass = orientation === 'horizontal' ? styles['step-container-horizontal'] : styles['step-container'];
 
   const updateStep = (newStep: number) => {
     setCurrentStep(newStep);
@@ -85,14 +118,13 @@ export default function Stepper({
 
   return (
     <div
-      className="flex min-h-full flex-1 flex-col items-center justify-center p-4 sm:aspect-[4/3] md:aspect-[2/1]"
+      className={containerClass}
       {...rest}
     >
       <div
-        className={`mx-auto w-full max-w-md rounded-4xl shadow-xl ${stepCircleContainerClassName}`}
-        style={{ border: '1px solid #222' }}
+        className={`${circleContainerClass} ${stepCircleContainerClassName}`}
       >
-        <div className={`${stepContainerClassName} flex w-full items-center p-8`}>
+        <div className={`${stepContainerClass} ${stepContainerClassName}`}>
           {stepsArray.map((_, index) => {
             const stepNumber = index + 1;
             const isNotLastStep = index < totalSteps - 1;
@@ -116,9 +148,10 @@ export default function Stepper({
                       setDirection(clicked > currentStep ? 1 : -1);
                       updateStep(clicked);
                     }}
+                    orientation={orientation}
                   />
                 )}
-                {isNotLastStep && <StepConnector isComplete={currentStep > stepNumber} />}
+                {isNotLastStep && <StepConnector isComplete={currentStep > stepNumber} orientation={orientation} />}
               </React.Fragment>
             );
           })}
@@ -128,22 +161,19 @@ export default function Stepper({
           isCompleted={isCompleted}
           currentStep={currentStep}
           direction={direction}
-          className={`space-y-2 px-8 ${contentClassName}`}
+          className={`${styles.content} ${contentClassName}`}
+          orientation={orientation}
         >
           {stepsArray[currentStep - 1]}
         </StepContentWrapper>
 
         {!isCompleted && (
-          <div className={`px-8 pb-8 ${footerClassName}`}>
-            <div className={`mt-10 flex ${currentStep !== 1 ? 'justify-between' : 'justify-end'}`}>
+          <div className={`${styles.footer} ${footerClassName}`}>
+            <div className={`${styles['footer-buttons']} ${currentStep !== 1 ? styles['footer-buttons-between'] : styles['footer-buttons-end']}`}>
               {currentStep !== 1 && (
                 <button
                   onClick={handleBack}
-                  className={`duration-350 rounded px-2 py-1 transition ${
-                    currentStep === 1
-                      ? 'pointer-events-none opacity-50 text-neutral-400'
-                      : 'text-neutral-400 hover:text-neutral-700'
-                  }`}
+                  className={`${styles['back-button']} ${currentStep === 1 ? styles['back-button-disabled'] : ''}`}
                   {...backButtonProps}
                 >
                   {backButtonText}
@@ -151,7 +181,7 @@ export default function Stepper({
               )}
               <button
                 onClick={isLastStep ? handleComplete : handleNext}
-                className="duration-350 flex items-center justify-center rounded-full bg-green-500 py-1.5 px-3.5 font-medium tracking-tight text-white transition hover:bg-green-600 active:bg-green-700"
+                className={styles['next-button']}
                 {...nextButtonProps}
               >
                 {isLastStep ? 'Complete' : nextButtonText}
@@ -162,22 +192,22 @@ export default function Stepper({
       </div>
     </div>
   );
-}
+});
 
-interface StepContentWrapperProps {
-  isCompleted: boolean;
-  currentStep: number;
-  direction: number;
-  children: ReactNode;
-  className?: string;
-}
+Stepper.displayName = 'Stepper';
 
-function StepContentWrapper({
+/**
+ * StepContentWrapper - Handles animation and height calculations for step content
+ * 
+ * @private Internal component for the Stepper
+ */
+const StepContentWrapper = memo(function StepContentWrapper({
   isCompleted,
   currentStep,
   direction,
   children,
-  className = ''
+  className = '',
+  orientation = 'vertical'
 }: StepContentWrapperProps) {
   const [parentHeight, setParentHeight] = useState<number>(0);
 
@@ -186,7 +216,7 @@ function StepContentWrapper({
       style={{ position: 'relative', overflow: 'hidden' }}
       animate={{ height: isCompleted ? 0 : parentHeight }}
       transition={{ type: 'spring', duration: 0.4 }}
-      className={className}
+      className={`${styles['step-content-container']} ${className}`}
     >
       <AnimatePresence initial={false} mode="sync" custom={direction}>
         {!isCompleted && (
@@ -194,6 +224,7 @@ function StepContentWrapper({
             key={currentStep}
             direction={direction}
             onHeightReady={h => setParentHeight(h)}
+            orientation={orientation}
           >
             {children}
           </SlideTransition>
@@ -201,15 +232,21 @@ function StepContentWrapper({
       </AnimatePresence>
     </motion.div>
   );
-}
+});
 
-interface SlideTransitionProps {
-  children: ReactNode;
-  direction: number;
-  onHeightReady: (height: number) => void;
-}
+StepContentWrapper.displayName = 'StepContentWrapper';
 
-function SlideTransition({ children, direction, onHeightReady }: SlideTransitionProps) {
+/**
+ * SlideTransition - Handles the sliding animation between steps
+ * 
+ * @private Internal component for the Stepper
+ */
+const SlideTransition = memo(function SlideTransition({
+  children,
+  direction,
+  onHeightReady,
+  orientation = 'vertical'
+}: SlideTransitionProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useLayoutEffect(() => {
@@ -227,12 +264,14 @@ function SlideTransition({ children, direction, onHeightReady }: SlideTransition
       animate="center"
       exit="exit"
       transition={{ duration: 0.4 }}
-      style={{ position: 'absolute', left: 0, right: 0, top: 0 }}
+      className={orientation === 'horizontal' ? styles['slide-transition-horizontal'] : styles['slide-transition']}
     >
       {children}
     </motion.div>
   );
-}
+});
+
+SlideTransition.displayName = 'SlideTransition';
 
 const stepVariants: Variants = {
   enter: (dir: number) => ({
@@ -249,26 +288,34 @@ const stepVariants: Variants = {
   })
 };
 
-interface StepProps {
-  children: ReactNode;
-}
+/**
+ * Step Component - Container for step content
+ * 
+ * @example
+ * ```tsx
+ * <Step>
+ *   <h2>Step Title</h2>
+ *   <p>Step content goes here...</p>
+ * </Step>
+ * ```
+ */
+export const Step = memo(function Step({ children }: StepProps) {
+  return <div className={styles.step}>{children}</div>;
+});
 
-export function Step({ children }: StepProps) {
-  return <div className="px-8">{children}</div>;
-}
+Step.displayName = 'Step';
 
-interface StepIndicatorProps {
-  step: number;
-  currentStep: number;
-  onClickStep: (clicked: number) => void;
-  disableStepIndicators?: boolean;
-}
-
-function StepIndicator({
+/**
+ * StepIndicator - Visual indicator for a step
+ * 
+ * @private Internal component for the Stepper
+ */
+const StepIndicator = memo(function StepIndicator({
   step,
   currentStep,
   onClickStep,
-  disableStepIndicators = false
+  disableStepIndicators = false,
+  orientation = 'vertical'
 }: StepIndicatorProps) {
   const status = currentStep === step ? 'active' : currentStep < step ? 'inactive' : 'complete';
 
@@ -281,7 +328,7 @@ function StepIndicator({
   return (
     <motion.div
       onClick={handleClick}
-      className="relative cursor-pointer outline-none focus:outline-none"
+      className={styles['step-indicator']}
       animate={status}
       initial={false}
     >
@@ -292,34 +339,40 @@ function StepIndicator({
           complete: { scale: 1, backgroundColor: '#00d8ff', color: '#3b82f6' }
         }}
         transition={{ duration: 0.3 }}
-        className="flex h-8 w-8 items-center justify-center rounded-full font-semibold"
+        className={styles['step-circle']}
       >
         {status === 'complete' ? (
           <CheckIcon className="h-4 w-4 text-black" />
         ) : status === 'active' ? (
-          <div className="h-3 w-3 rounded-full bg-[#060606]" />
+          <div className={styles['step-circle-dot']} />
         ) : (
-          <span className="text-sm">{step}</span>
+          <span className={styles['step-circle-number']}>{step}</span>
         )}
       </motion.div>
     </motion.div>
   );
-}
+});
 
-interface StepConnectorProps {
-  isComplete: boolean;
-}
+StepIndicator.displayName = 'StepIndicator';
 
-function StepConnector({ isComplete }: StepConnectorProps) {
+/**
+ * StepConnector - Connection line between step indicators
+ * 
+ * @private Internal component for the Stepper
+ */
+const StepConnector = memo(function StepConnector({
+  isComplete,
+  orientation = 'vertical'
+}: StepConnectorProps) {
   const lineVariants: Variants = {
     incomplete: { width: 0, backgroundColor: 'transparent' },
     complete: { width: '100%', backgroundColor: '#00d8ff' }
   };
 
   return (
-    <div className="relative mx-2 h-0.5 flex-1 overflow-hidden rounded bg-neutral-600">
+    <div className={styles.connector}>
       <motion.div
-        className="absolute left-0 top-0 h-full"
+        className={styles['connector-line']}
         variants={lineVariants}
         initial={false}
         animate={isComplete ? 'complete' : 'incomplete'}
@@ -327,12 +380,16 @@ function StepConnector({ isComplete }: StepConnectorProps) {
       />
     </div>
   );
-}
+});
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface CheckIconProps extends React.SVGProps<SVGSVGElement> {}
+StepConnector.displayName = 'StepConnector';
 
-function CheckIcon(props: CheckIconProps) {
+/**
+ * CheckIcon - Checkmark icon for completed steps
+ * 
+ * @private Internal component for the Stepper
+ */
+const CheckIcon = memo(function CheckIcon(props: CheckIconProps) {
   return (
     <svg {...props} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
       <motion.path
@@ -350,4 +407,9 @@ function CheckIcon(props: CheckIconProps) {
       />
     </svg>
   );
-}
+});
+
+CheckIcon.displayName = 'CheckIcon';
+
+export { Stepper };
+export default Stepper;

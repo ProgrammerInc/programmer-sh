@@ -1,0 +1,35 @@
+/**
+ * ASCII Art Component Styles
+ */
+
+.container {
+  margin-bottom: 1.5rem;
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--color-terminal-prompt, #00ff00);
+}
+
+.line {
+  white-space: pre;
+}
+
+/* Responsive sizes */
+@media (min-width: 768px) {
+  .container {
+    font-size: 0.875rem;
+  }
+}
+
+/* Animation for ASCII art */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animated {
+  animation: fade-in 0.8s ease-in;
+}

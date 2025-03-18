@@ -1,5 +1,13 @@
-import ASCIIArt from './ascii-art';
+/**
+ * ASCII Art Component
+ *
+ * Displays ASCII art with animation and welcome command trigger.
+ */
 
-export * from './ascii-art';
+export { default as ASCIIArt } from './ascii-art.component';
+export * from './ascii-art.constants';
+export * from './ascii-art.types';
+export * from './ascii-art.utils';
 
-export default ASCIIArt;
+// For backward compatibility
+export { default } from './ascii-art.component';

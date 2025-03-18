@@ -1,13 +1,12 @@
 'use client';
 
-import { buttonVariants } from '@/components/ui/button/button.variants';
-import { cn } from '@/utils/app.utils';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import * as React from 'react';
 import { memo, useMemo } from 'react';
 import { ClassNames, DayPicker } from 'react-day-picker';
 
+import { cn } from '@/utils/app.utils';
 import { CalendarProps } from './calendar.types';
+import styles from './calendar.module.css';
 
 /**
  * Calendar component based on react-day-picker
@@ -32,59 +31,63 @@ const Calendar = memo(({
   showOutsideDays = true, 
   ...props 
 }: CalendarProps) => {
-  // Create the combined class names with tailwind styles
+  // Create the combined class names with CSS module styles
   const combinedClassNames = useMemo(() => ({
-    months: 'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0',
-    month: 'space-y-4',
-    caption: 'flex justify-center pt-1 relative items-center',
-    caption_label: 'text-sm font-medium',
-    nav: 'space-x-1 flex items-center',
-    nav_button: cn(
-      buttonVariants({ variant: 'outline' }),
-      'h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100'
-    ),
-    nav_button_previous: 'absolute left-1',
-    nav_button_next: 'absolute right-1',
-    table: 'w-full border-collapse space-y-1',
-    head_row: 'flex',
-    head_cell: 'text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]',
-    row: 'flex w-full mt-2',
-    cell: 'h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20',
-    day: cn(
-      buttonVariants({ variant: 'ghost' }),
-      'h-9 w-9 p-0 font-normal aria-selected:opacity-100'
-    ),
-    day_range_end: 'day-range-end',
-    day_selected:
-      'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground',
-    day_today: 'bg-accent text-accent-foreground',
-    day_outside:
-      'day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30',
-    day_disabled: 'text-muted-foreground opacity-50',
-    day_range_middle: 'aria-selected:bg-accent aria-selected:text-accent-foreground',
-    day_hidden: 'invisible',
+    months: styles.months,
+    month: styles.month,
+    caption: styles.caption,
+    caption_label: styles['caption-label'],
+    nav: styles.nav,
+    nav_button: cn(styles['nav-button']),
+    nav_button_previous: cn(styles['nav-button'], styles['nav-button-previous']),
+    nav_button_next: cn(styles['nav-button'], styles['nav-button-next']),
+    table: styles.table,
+    head_row: styles['head-row'],
+    head_cell: styles['head-cell'],
+    row: styles.row,
+    cell: styles.cell,
+    day: styles.day,
+    day_range_end: styles['day-range-end'],
+    day_selected: styles['day-selected'],
+    day_today: styles['day-today'],
+    day_outside: styles['day-outside'],
+    day_disabled: styles['day-disabled'],
+    day_range_middle: styles['day-range-middle'],
+    day_hidden: styles['day-hidden'],
     ...(userClassNames || {})
   }), [userClassNames]);
 
   // Generate calendar container class name
   const calendarClassName = useMemo(() => {
-    return cn('p-3', className);
+    return cn(styles.calendar, className);
   }, [className]);
 
-  // Prepare the DayPicker props
-  const customProps = {
-    showOutsideDays,
-    className: calendarClassName,
-    classNames: combinedClassNames as unknown as ClassNames,
-    components: {
-      IconLeft: () => <ChevronLeft className="h-4 w-4" />,
-      IconRight: () => <ChevronRight className="h-4 w-4" />
-    }
-  };
+  // Icon components that return React elements, not just nodes
+  const IconLeft = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+      <path d="m15 18-6-6 6-6" />
+    </svg>
+  );
 
-  // Use type assertion based on mode to fix the TypeScript error
-  // This approach maintains type safety while working with the discriminated union
-  return <DayPicker {...props} {...customProps} />;
+  const IconRight = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  );
+
+  // Use a simpler approach - just spread all props to DayPicker
+  return (
+    <DayPicker
+      showOutsideDays={showOutsideDays}
+      className={calendarClassName}
+      classNames={combinedClassNames as ClassNames}
+      components={{
+        IconLeft,
+        IconRight
+      }}
+      {...props}
+    />
+  );
 });
 
 Calendar.displayName = 'Calendar';

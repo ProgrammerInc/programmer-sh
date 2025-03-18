@@ -1,0 +1,18 @@
+/* Separator component styles */
+
+/* Base styles */
+.separator {
+  flex-shrink: 0;
+  background-color: var(--border); /* bg-border */
+}
+
+/* Orientation styles */
+.horizontal {
+  height: 1px; /* h-[1px] */
+  width: 100%; /* w-full */
+}
+
+.vertical {
+  height: 100%; /* h-full */
+  width: 1px; /* w-[1px] */
+}

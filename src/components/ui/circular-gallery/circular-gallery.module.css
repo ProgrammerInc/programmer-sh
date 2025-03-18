@@ -1,0 +1,24 @@
+/* Circular Gallery Styles */
+
+.container {
+  @apply w-full h-full overflow-hidden;
+  @apply cursor-grab active:cursor-grabbing;
+}
+
+.canvas {
+  @apply block w-full h-full;
+}
+
+.gallery-item {
+  @apply relative;
+}
+
+.gallery-text {
+  @apply absolute bottom-0 left-0 w-full p-2;
+  @apply text-white text-center;
+  @apply opacity-0 transition-opacity duration-300;
+}
+
+.gallery-item:hover .gallery-text {
+  @apply opacity-100;
+}

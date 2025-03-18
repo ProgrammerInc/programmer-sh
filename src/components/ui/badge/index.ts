@@ -1,7 +1,6 @@
-// Export badge components
+// Export badge components and types
 export * from './badge';
 export * from './badge.types';
-export * from './badge.variants';
 
 // For backwards compatibility
 import { Badge } from './badge';
