@@ -3,8 +3,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 
-import { Wallpaper } from '.';
 import { WallpaperProvider } from './wallpaper';
+import { Wallpaper } from './wallpaper.types';
 
 const meta: Meta<typeof WallpaperProvider> = {
   title: 'UI/Wallpaper',
