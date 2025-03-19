@@ -17,7 +17,7 @@
 }
 
 .terminal-dark {
-  --terminal-background: rgba(16, 16, 20, 0.95);
+  --terminal-background: rgba(10, 10, 11, 0.95);
   --terminal-text: rgba(220, 220, 220, 1);
   --terminal-prompt: #64ffda; 
   --terminal-selection: rgba(80, 80, 255, 0.3);
@@ -30,7 +30,7 @@
 }
 
 .terminal-light {
-  --terminal-background: rgba(240, 240, 245, 0.95);
+  --terminal-background: rgba(245, 245, 250, 0.95);
   --terminal-text: rgba(40, 40, 40, 1);
   --terminal-prompt: #00a8a8; 
   --terminal-selection: rgba(100, 100, 255, 0.2);
