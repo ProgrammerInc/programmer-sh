@@ -25,11 +25,11 @@ export const welcomeCommand: Command = {
   execute: (): CommandResult => {
     try {
       welcomeLogger.info('Displaying welcome message');
-      
+
       return {
         content: `<div class="ascii-art font-mono text-xs md:text-sm mt-2"><pre><span class="text-terminal-prompt">${ASCIIArt.join('\n')}</span></pre></div>
-      <div class="font-mono text-xs md:text-sm m-0 p-0 leading-tight">Welcome to the <span class="text-terminal-prompt">&lt;programmer&gt;</span><span class="text-terminal-prompt">.</span><span class="text-terminal-prompt animate-cursor-blink">_</span> portfolio.
-This is an interactive terminal portfolio app designed and developed by <span class="text-terminal-prompt">James A. Black Jr.</span>
+      <div class="font-mono text-xs md:text-sm m-0 p-0 leading-tight">Welcome to the <span class="text-terminal-prompt">&lt;programmer&gt;</span><span class="text-terminal-prompt">.</span><span class="text-terminal-prompt animate-cursor-blink">_</span> portfolio.\n
+This is an interactive terminal portfolio app designed and developed by <span class="text-terminal-prompt">James A. Black Jr.</span>\n
 Type <span class="command-link" data-command="help">help</span> to see available commands, or try one of these:
 <div class="m-0 p-0 leading-tight">
 <span>- <span class="command-link" data-command="about">about</span>: To learn about me</span>
@@ -48,7 +48,7 @@ Feel free to explore and get in touch!</div>`,
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       welcomeLogger.error('Error displaying welcome message', { error: errorMessage });
-      
+
       return {
         content: `Error displaying welcome message: ${errorMessage}`,
         isError: true,

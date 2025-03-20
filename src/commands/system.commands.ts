@@ -10,16 +10,25 @@ const systemLogger = createFeatureLogger('SystemCommands');
  */
 export const clearCommand: Command = {
   name: 'clear',
-  description: 'Clear the terminal',
+  description: 'Clear the terminal and reset command history',
   execute: (): CommandResult => {
     try {
       systemLogger.info('Executing clear command');
+      
+      // Reset command history in localStorage
+      try {
+        localStorage.removeItem('commandHistory');
+        systemLogger.info('Command history reset successfully');
+      } catch (storageError) {
+        systemLogger.warn('Could not reset command history in localStorage', { error: storageError });
+      }
+      
       // Return a special command result that signals to clear the terminal
       // and then follows with the welcome command output
       return {
         content: 'CLEAR_TERMINAL',
         isError: false,
-        clearHistory: true, // Signal to also clear command history display ONLY, not localStorage
+        clearHistory: true, // Signal to also clear command history display 
         runAfterClear: welcomeCommand.execute()
       };
     } catch (error) {
