@@ -173,7 +173,7 @@ export const getSpecificCommandHelp = (commandName: string): string => {
     }
 
     // Start building a detailed help display for the command
-    let helpContent = `<div class="command-help">\n`;
+    let helpContent = `<div class="command-help">`;
 
     // Command title and basic information
     helpContent += `<div>Command: <span class="text-terminal-prompt">${commandName}</span></div>`;
@@ -236,7 +236,7 @@ export const getSpecificCommandHelp = (commandName: string): string => {
     }
 
     // Close the command-help div
-    helpContent += `</div>\n`;
+    helpContent += `</div>`;
 
     helpLogger.debug('Generated specific command help', { commandName });
     return helpContent;
