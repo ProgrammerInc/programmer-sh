@@ -173,7 +173,7 @@ export const TerminalHeader = forwardRef<TerminalHeaderRef, TerminalHeaderProps>
         {/* Title area */}
         <div className={styles['title-container']} aria-label="Terminal title">
           <span>
-            <span className={styles['title-text']}>&lt;programmer&gt;</span>.
+            <span className={styles['title-text']}>&lt;programmer.sh&gt;</span>.
             <span className={styles.cursor}>_</span>
           </span>
           {lastCommand && (

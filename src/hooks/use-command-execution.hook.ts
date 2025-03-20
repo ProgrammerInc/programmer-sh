@@ -1,4 +1,5 @@
 import { Command, CommandResult } from '@/commands/command.types';
+import { HistoryItem } from '@/components/ui/terminal-history/terminal-history.types';
 import { createFeatureLogger } from '@/services/logger/logger.utils';
 import { renderCommandOutput } from '@/utils/terminal.utils';
 import { useCallback, useState } from 'react';
@@ -12,8 +13,8 @@ const commandExecutionLogger = createFeatureLogger('CommandExecution');
 interface CommandExecutionHook {
   commandHistory: string[];
   setCommandHistory: React.Dispatch<React.SetStateAction<string[]>>;
-  commandOutput: string;
-  setCommandOutput: React.Dispatch<React.SetStateAction<string>>;
+  commandOutput: HistoryItem[];
+  setCommandOutput: React.Dispatch<React.SetStateAction<HistoryItem[]>>;
   isAwaitingAsync: boolean;
   lastCommand: string;
   executeCommand: (commandStr: string) => void;
@@ -36,7 +37,7 @@ enum CommandType {
  */
 export const useCommandExecution = (commands: Record<string, Command>): CommandExecutionHook => {
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
-  const [commandOutput, setCommandOutput] = useState<string>('');
+  const [commandOutput, setCommandOutput] = useState<HistoryItem[]>([]);
   const [isAwaitingAsync, setIsAwaitingAsync] = useState<boolean>(false);
   const [lastCommand, setLastCommand] = useState<string>('');
 
@@ -90,8 +91,8 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
           setIsAwaitingAsync(false);
           setCommandOutput(prevOutput =>
             prevOutput
-              ? `${prevOutput}\n${renderCommandOutput(actualCommand, output.content, output.rawHTML)}`
-              : renderCommandOutput(actualCommand, output.content, output.rawHTML)
+              ? [...prevOutput, renderCommandOutput(actualCommand, output.content, output.rawHTML)]
+              : [renderCommandOutput(actualCommand, output.content, output.rawHTML)]
           );
 
           // Only dispatch event if it's not a special command (to prevent loops)
@@ -111,8 +112,8 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
           setIsAwaitingAsync(false);
           setCommandOutput(prevOutput =>
             prevOutput
-              ? `${prevOutput}\n${renderCommandOutput(actualCommand, `Error executing command: ${errorMessage}`)}`
-              : renderCommandOutput(actualCommand, `Error executing command: ${errorMessage}`)
+              ? [...prevOutput, renderCommandOutput(actualCommand, `Error executing command: ${errorMessage}`)]
+              : [renderCommandOutput(actualCommand, `Error executing command: ${errorMessage}`)]
           );
         });
     },
@@ -126,7 +127,7 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
    */
   const handleClearCommand = useCallback((cmdResult: CommandResult, originalCommand: string) => {
     // Clear the terminal output
-    setCommandOutput('');
+    setCommandOutput([]);
 
     // Check if we should also clear command history
     if (cmdResult.clearHistory) {
@@ -140,11 +141,11 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
       setTimeout(() => {
         // Always show welcome without any prefixes
         setCommandOutput(
-          renderCommandOutput(
+          [renderCommandOutput(
             'welcome',
             cmdResult.runAfterClear?.content || '',
             cmdResult.runAfterClear?.rawHTML
-          )
+          )]
         );
 
         // Only dispatch welcome event if not a special command
@@ -174,8 +175,8 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
     ) => {
       setCommandOutput(prevOutput =>
         prevOutput
-          ? `${prevOutput}\n${renderCommandOutput(actualCommand, cmdResult.content, cmdResult.rawHTML)}`
-          : renderCommandOutput(actualCommand, cmdResult.content, cmdResult.rawHTML)
+          ? [...prevOutput, renderCommandOutput(actualCommand, cmdResult.content, cmdResult.rawHTML !== undefined ? cmdResult.rawHTML : false)]
+          : [renderCommandOutput(actualCommand, cmdResult.content, cmdResult.rawHTML !== undefined ? cmdResult.rawHTML : false)]
       );
 
       // Only dispatch event if it's not a special command (to prevent loops)
@@ -238,10 +239,14 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
             );
 
             // Display error message
-            setCommandOutput(
-              prev =>
-                `${prev}\n\n<span class="text-red-500">Command '${commandName}' not found. Try 'help' to see available commands.</span>\n`
-            );
+          setCommandOutput(prevOutput => [
+            ...prevOutput,
+            renderCommandOutput(
+              'error',
+              `Command '${commandName}' not found. Try 'help' to see available commands.`,
+              false
+            )
+          ]);
 
             // Execute help command after a short delay
             setTimeout(() => {
@@ -253,7 +258,11 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
           // For regular commands, just show the error
           setCommandOutput(
             prev =>
-              `${prev}\n\n<span class="text-red-500">Command '${commandName}' not found. Try 'help' to see available commands.</span>\n`
+              [...prev, renderCommandOutput(
+                'error',
+                `Command '${commandName}' not found. Try 'help' to see available commands.`,
+                false
+              )]
           );
           return;
         }
@@ -300,9 +309,7 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
         });
 
         setCommandOutput(prevOutput =>
-          prevOutput
-            ? `${prevOutput}\n${renderCommandOutput(commandName, `Error executing command: ${errorMessage}`)}`
-            : renderCommandOutput(commandName, `Error executing command: ${errorMessage}`)
+          [...prevOutput, renderCommandOutput(commandName, `Error executing command: ${errorMessage}`, false)]
         );
       }
     },

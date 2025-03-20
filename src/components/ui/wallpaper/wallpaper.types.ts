@@ -58,7 +58,7 @@ export type AspectRatioType = '1:1' | '4:3' | '16:9' | '21:9' | 'auto';
 /**
  * Animation type enum
  */
-export type AnimationType = 'particles' | 'lines' | 'waves' | 'gradient' | 'custom';
+export type AnimationType = 'particles' | 'lines' | 'waves' | 'gradient' | 'custom' | 'reactbits' | 'aceternity' | 'artifact-ui';
 
 /**
  * Color type enum
@@ -73,12 +73,12 @@ export type GradientType = 'linear' | 'radial' | 'conic';
 /**
  * Image type enum
  */
-export type ImageType = 'static' | 'dynamic' | 'gif';
+export type ImageType = 'static' | 'dynamic' | 'gif' | 'reactbits' | 'aceternity' | 'url';
 
 /**
  * Image MIME type enum
  */
-export type ImageMimeType = 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp';
+export type ImageMimeType = 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp' | 'image/avif';
 
 /**
  * Image source type enum
@@ -190,6 +190,7 @@ export type RemoteVideoSource = string;
 export type WallpaperType = 
   | 'animation' 
   | 'color' 
+  | 'default'
   | 'gradient' 
   | 'image' 
   | 'pattern' 

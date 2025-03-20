@@ -24,7 +24,7 @@ import { TerminalFooterProps, TerminalFooterRef } from './terminal-footer.types'
  *   commandInput={commandInput}
  *   setCommandInput={setCommandInput}
  *   handleCommandSubmit={handleCommandSubmit}
- *   onHistoryNavigation={handleHistoryNavigation}
+ *   inputRef={inputRef}
  * />
  * 
  * // With custom prompt
@@ -32,7 +32,7 @@ import { TerminalFooterProps, TerminalFooterRef } from './terminal-footer.types'
  *   commandInput={commandInput}
  *   setCommandInput={setCommandInput}
  *   handleCommandSubmit={handleCommandSubmit}
- *   onHistoryNavigation={handleHistoryNavigation}
+ *   inputRef={inputRef}
  *   prompt="root@server:~#"
  * />
  * ```
@@ -42,44 +42,46 @@ export const TerminalFooter = forwardRef<TerminalFooterRef, TerminalFooterProps>
     commandInput, 
     setCommandInput, 
     handleCommandSubmit, 
-    onHistoryNavigation,
+    inputRef: externalInputRef,
     prompt = "guest@programmer.sh:~$",
     isProcessing = false,
-    className = ''
+    className = '',
+    onHistoryNavigation, // Add onHistoryNavigation prop
+    onKeyDown, // Add onKeyDown prop
   }, 
   ref
 ) => {
   const formRef = useRef<HTMLFormElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const internalInputRef = useRef<HTMLInputElement>(null);
 
-  // Connect the forwarded ref to our inner refs
+  const actualInputRef = externalInputRef || internalInputRef;
+
   useImperativeHandle(ref, () => ({
     form: formRef.current,
-    input: inputRef.current,
+    input: actualInputRef.current,
     focus: () => {
-      inputRef.current?.focus();
+      if (actualInputRef.current) {
+        actualInputRef.current.focus();
+      }
     }
   }));
 
-  // Handle keyboard events for command history navigation
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'ArrowUp') {
-      e.preventDefault(); // Prevent cursor from moving to start of input
-      onHistoryNavigation('up');
-    } else if (e.key === 'ArrowDown') {
-      e.preventDefault(); // Prevent cursor from moving to end of input
-      onHistoryNavigation('down');
-    }
-  };
-
-  // Handle form submission
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     handleCommandSubmit(e);
-    // Focus the input field after submission
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 0);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // Prevent default behavior for arrow keys to avoid cursor movement
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      // Call the history navigation function from parent component
+      if (e.key === 'ArrowUp') {
+        onHistoryNavigation?.('up');
+      } else if (e.key === 'ArrowDown') {
+        onHistoryNavigation?.('down');
+      }
+    }
   };
 
   return (
@@ -88,41 +90,27 @@ export const TerminalFooter = forwardRef<TerminalFooterRef, TerminalFooterProps>
         ref={formRef}
         onSubmit={onSubmit}
         className={styles['terminal-form']}
-        aria-label="Terminal command form"
+        aria-label="Terminal command input"
       >
-        <span 
-          className={styles['terminal-prompt']} 
-          aria-hidden="true"
-        >
-          {prompt}
-        </span>
-        
-        <div className={styles['input-wrapper']}>
-          <input
-            ref={inputRef}
-            id="terminal-input"
-            type="text"
-            value={commandInput}
-            onChange={e => setCommandInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className={styles['terminal-input']}
-            autoComplete="off"
-            autoCapitalize="off"
-            spellCheck={false}
-            aria-label="Terminal command input"
-            placeholder="Type a command..."
-            disabled={isProcessing}
-          />
-          
-          {isProcessing && (
-            <span 
-              className={styles['loading-indicator']} 
-              aria-hidden="true"
-            >
-              ●
-            </span>
-          )}
-        </div>
+        <div className={styles['terminal-prompt']}>{prompt}</div>
+        <input
+          id="terminal-input"
+          ref={actualInputRef}
+          className={styles['terminal-input']}
+          type="text"
+          value={commandInput}
+          onChange={(e) => setCommandInput(e.target.value)}
+          disabled={isProcessing}
+          autoCapitalize="none"
+          autoComplete="off"
+          autoCorrect="off"
+          spellCheck="false"
+          aria-label="Terminal command input"
+          onKeyDown={(e) => {
+            handleKeyDown(e);
+            onKeyDown?.(e);
+          }}
+        />
       </form>
     </div>
   );

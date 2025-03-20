@@ -118,16 +118,15 @@ export const useCommandProcessor = (
           commandProcessorLogger.info('Clearing terminal history');
           // Clear history from state
           setHistory([]);
-          // Clear history from localStorage
-          localStorage.removeItem('terminal_history');
+          // Don't clear command history from localStorage - this would break command history navigation
           setIsProcessingAsync(false);
 
           // Process any commands to run after clearing
           if (result.runAfterClear) {
             const welcomeHistoryItem: HistoryItem = {
               command: 'welcome',
-              timestamp: new Date(),
-              output: 'Welcome to Programmer.sh!\nType "help" to see available commands.'
+              timestamp: new Date()
+              // No longer storing result - will re-execute command when needed
             };
 
             setHistory([welcomeHistoryItem]);
@@ -146,10 +145,8 @@ export const useCommandProcessor = (
         // Create history item for the command
         const historyItem: HistoryItem = {
           command: commandString,
-          timestamp: new Date(),
-          output: result.content,
-          error: result.isError,
-          html: true
+          timestamp: new Date()
+          // No longer storing result - will re-execute command when needed
         };
 
         setHistory(prev => [...prev, historyItem]);
@@ -160,17 +157,8 @@ export const useCommandProcessor = (
             commandProcessorLogger.debug('Processing async command', { command: commandString });
             const asyncResult = await result.asyncResolver();
 
-            // Update the history item with the resolved result
             setHistory(prev =>
-              prev.map(item =>
-                item === historyItem
-                  ? {
-                      ...item,
-                      output: asyncResult.content,
-                      error: asyncResult.isError
-                    }
-                  : item
-              )
+              prev.map(item => (item === historyItem ? { ...item, result: asyncResult } : item))
             );
           } catch (error) {
             const errorMessage = error instanceof Error ? error.message : String(error);
@@ -179,14 +167,15 @@ export const useCommandProcessor = (
               error: errorMessage
             });
 
-            // Update the history item with the error
             setHistory(prev =>
               prev.map(item =>
                 item === historyItem
                   ? {
                       ...item,
-                      output: `Error: ${errorMessage}`,
-                      error: true
+                      result: {
+                        content: `Error: ${errorMessage}`,
+                        isError: true
+                      }
                     }
                   : item
               )
@@ -203,16 +192,6 @@ export const useCommandProcessor = (
           command: commandString,
           error: errorMessage
         });
-        
-        // Add error to history
-        const errorHistoryItem: HistoryItem = {
-          command: commandString,
-          timestamp: new Date(),
-          output: `Error: ${errorMessage}`,
-          error: true
-        };
-        
-        setHistory(prev => [...prev, errorHistoryItem]);
         setIsProcessingAsync(false);
       }
     },

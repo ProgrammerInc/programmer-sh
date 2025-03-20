@@ -9,7 +9,7 @@ import { HistoryItem } from '@/components/ui/terminal-history';
  */
 export const saveCommandHistory = (commands: string[]): void => {
   try {
-    localStorage.setItem('command_history', JSON.stringify(commands));
+    localStorage.setItem('terminal_history', JSON.stringify(commands));
   } catch (error) {
     console.error('Error saving command history:', error);
   }
@@ -21,7 +21,7 @@ export const saveCommandHistory = (commands: string[]): void => {
  */
 export const loadCommandHistory = (): string[] => {
   try {
-    const historyJson = localStorage.getItem('command_history');
+    const historyJson = localStorage.getItem('terminal_history');
     if (historyJson) {
       return JSON.parse(historyJson);
     }

@@ -238,6 +238,28 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       }
     }
   },
+  'crazy-ballpit': {
+    id: 'crazy-ballpit',
+    name: 'Crazy Ballpit',
+    description: 'A ball pit of many colorful balls',
+    enabled: true,
+    type: 'animation',
+    background: {
+      id: 'crazy-ballpit',
+      type: 'animation',
+      animation: {
+        id: 'crazy-ballpit',
+        type: 'reactbits',
+        url: DEFAULT_ANIMATION_IMAGE_URL
+      },
+      image: {
+        id: 'arcade',
+        mimeType: 'image/avif',
+        type: 'url',
+        url: 'https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&q=80'
+      }
+    }
+  },
   beach: {
     id: 'beach',
     name: 'Beach',

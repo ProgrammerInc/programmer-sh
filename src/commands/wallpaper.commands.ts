@@ -240,7 +240,7 @@ export const wallpaperCommand: Command = {
         });
 
         return {
-          content: `\nCurrent wallpaper: <span class="text-terminal-prompt">${wallpaperPresets[currentWallpaper].id}</span>\n\nAvailable Wallpapers:\n${wallpaperOutput}\nUsage: <span class="command-link" data-command="wallpaper" data-placeholder="[name]">wallpaper [name]</span>\n\n`,
+          content: `\nCurrent wallpaper: <span class="text-terminal-prompt">${wallpaperPresets[currentWallpaper].id}</span>\n\nAvailable Wallpapers:\n${wallpaperOutput}\nUsage: <span class="command-link" data-command="wallpaper [name]" data-placeholder="[name]">wallpaper [name]</span>\n\n`,
           isError: false,
           rawHTML: true
         };

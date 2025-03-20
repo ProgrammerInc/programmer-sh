@@ -34,17 +34,40 @@ import styles from './terminal-content.module.css';
  * ```
  */
 export const TerminalContent = forwardRef<HTMLDivElement, TerminalContentProps>(
-  ({ commandOutput, setScrollToBottom, className = '' }, ref) => {
+  ({ commandOutput, setScrollToBottom }, ref) => {
     // Local ref for event handlers
     const contentRef = useRef<HTMLDivElement>(null);
 
     // Connect the forwarded ref to our inner ref
     useImperativeHandle(ref, () => contentRef.current!);
 
-    // Call setScrollToBottom when output changes
-    useEffect(() => {
+    // Function to scroll to bottom
+    const scrollToBottom = () => {
+      if (contentRef.current) {
+        // Smooth scrolling for better UX
+        contentRef.current.scrollTo({
+          top: contentRef.current.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
+    };
+
+    // Call parent's scroll function but also handle scrolling internally
+    const handleScrollToBottom = () => {
+      // Call the parent's scroll function first
       setScrollToBottom();
-    }, [commandOutput, setScrollToBottom]);
+      // Then also scroll this component directly
+      scrollToBottom();
+    };
+
+    // Use effect for auto-scrolling when content changes
+    useEffect(() => {
+      // Scroll after content changes with multiple attempts
+      const scrollDelays = [0, 50, 100, 200];
+      scrollDelays.forEach(delay => {
+        setTimeout(scrollToBottom, delay);
+      });
+    }, [commandOutput]);
 
     useEffect(() => {
       // Handle command link clicks
@@ -64,6 +87,7 @@ export const TerminalContent = forwardRef<HTMLDivElement, TerminalContentProps>(
         
         // Prevent default action (e.g., href navigation)
         e.preventDefault();
+        e.stopPropagation(); // Stop event bubbling to prevent any parent handlers
         
         // Get command from data attribute
         const command = target.getAttribute('data-command');
@@ -75,6 +99,8 @@ export const TerminalContent = forwardRef<HTMLDivElement, TerminalContentProps>(
         // Get additional options
         const addToHistory = target.getAttribute('data-add-to-history') !== 'false';
         const placeholder = target.getAttribute('data-placeholder') || '';
+        
+        console.log('Command link clicked:', { command, placeholder });
         
         // Dispatch command link click event
         const commandLinkEvent = new CustomEvent<CommandLinkEventDetail>('commandLinkClick', {
@@ -218,7 +244,7 @@ export const TerminalContent = forwardRef<HTMLDivElement, TerminalContentProps>(
     return (
       <div 
         ref={contentRef} 
-        className={`${styles['terminal-content']} ${className}`}
+        className={styles['terminal-content']}
         role="log"
         aria-live="polite"
       >

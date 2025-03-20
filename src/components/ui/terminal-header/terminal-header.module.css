@@ -50,7 +50,7 @@
 .title-container {
   flex: 1;
   text-align: center;
-  color: var(--terminal-title);
+  color: var(--terminal-foreground);
   font-size: 0.875rem;
   font-family: var(--font-mono);
   white-space: nowrap;
@@ -99,7 +99,7 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  color: var(--terminal-title);
+  color: var(--terminal-foreground);
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
   transition: color 0.15s ease;

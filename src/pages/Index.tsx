@@ -107,45 +107,11 @@ const Index = () => {
   // This helps us ensure URL commands are definitely executed
   const urlCommandExecuted = useRef(false);
 
-  // Simple effect that directly checks the URL for commands when mounting
+  // Main effect to process URL parameters and set initial commands
   useEffect(() => {
-    // Check if we have a command in the URL path (most reliable method)
-    const pathParts = window.location.pathname.split('/');
-    // Get the part after the first slash
-    const pathCommand = pathParts[1];
-
-    indexLogger.debug('URL check ->', window.location.pathname);
-    indexLogger.debug('URL command:', pathCommand);
-
-    // If we found a command in the path, set it to execute
-    if (pathCommand && pathCommand.length > 0) {
-      const normalizedCommand = pathCommand.toLowerCase();
-      indexLogger.info('Setting URL command to execute:', normalizedCommand);
-
-      // Set the initial commands to execute this command
-      setInitialCommands([normalizedCommand]);
-
-      // Update the title
-      setCurrentCommand(normalizedCommand);
-    }
-  }, []); // Empty dependency array - run once on mount
-
-  useEffect(() => {
-    console.log('[Index] Initializing...');
-
-    // Process URL parameters
-    const params = new URLSearchParams(window.location.search);
-    const themeParam = params.get('theme');
-    if (themeParam) {
-      processThemeFromUrl(themeParam);
-    }
-
-    return () => {};
-  }, []);
-
-  useEffect(() => {
-    // Only process commands once to prevent duplicate execution
+    // Skip this effect if commands already processed
     if (commandsProcessed.current) {
+      indexLogger.info('Commands already processed, skipping URL parameter processing');
       return;
     }
 
@@ -172,8 +138,7 @@ const Index = () => {
       commandParam, // Final command parameter to use
       theme,
       currentUrl,
-      location: location.pathname,
-      validCommands: validUrlCommands.length // Just show length to avoid console clutter
+      location: location.pathname
     });
 
     // Process theme parameter if present
@@ -184,18 +149,10 @@ const Index = () => {
     // Prepare initial commands
     let commands: string[] = [];
 
-    // Log what we're doing
-    indexLogger.info(
-      'Processing URL parameters with high priority - will NOT show welcome if URL command exists'
-    );
-
     // Use the command from parameters (route or extracted)
     const commandToExecute = commandParam;
 
     indexLogger.info('Final command to execute:', commandToExecute);
-    indexLogger.info('Valid URL commands array type:', typeof validUrlCommands);
-    indexLogger.info('Valid URL commands length:', validUrlCommands.length);
-    indexLogger.info('First few valid commands:', validUrlCommands.slice(0, 10));
 
     // If we have a command from the URL, add it to our initial commands
     if (commandToExecute) {
@@ -218,14 +175,8 @@ const Index = () => {
         // Type assertion is safe here because we've verified the command exists in validUrlCommands
         setCurrentCommand(normalizedCommand as CommandName);
 
-        // Either replace welcome or add after welcome
-        if (normalizedCommand === 'welcome') {
-          commands = ['welcome'];
-        } else {
-          // Just execute the command directly
-          commands = [normalizedCommand];
-          indexLogger.info('Setting commands to:', commands);
-        }
+        // Execute the command directly
+        commands = [normalizedCommand];
       } else {
         // Hard-code some known commands as a fallback
         const knownCommands = [
@@ -257,9 +208,11 @@ const Index = () => {
       commands = ['welcome'];
     }
 
-    indexLogger.info('Initial commands to execute:', commands);
-
-    setInitialCommands(commands);
+    // Set the commands if we have any
+    if (commands.length > 0) {
+      indexLogger.info('Initial commands to execute:', commands);
+      setInitialCommands(commands);
+    }
 
     // Simulate loading for smoother entrance
     const timer = setTimeout(() => {
@@ -267,7 +220,7 @@ const Index = () => {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [urlCommand, location]);
+  }, [location.pathname, location.search, urlCommand]);
 
   // Listen for cursor changes
   useEffect(() => {

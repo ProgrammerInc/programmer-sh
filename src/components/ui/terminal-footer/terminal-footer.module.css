@@ -2,14 +2,16 @@
 
 .terminal-footer {
   display: flex;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   border-top: 1px solid var(--terminal-border);
+  flex-shrink: 0; /* Prevent the footer from shrinking */
 }
 
 .terminal-form {
   width: 100%;
   display: flex;
   align-items: center;
+  padding-left: 0.5rem;
 }
 
 .terminal-prompt {

@@ -19,6 +19,7 @@ export const clearCommand: Command = {
       return {
         content: 'CLEAR_TERMINAL',
         isError: false,
+        clearHistory: true, // Signal to also clear command history display ONLY, not localStorage
         runAfterClear: welcomeCommand.execute()
       };
     } catch (error) {

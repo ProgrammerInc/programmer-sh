@@ -15,6 +15,7 @@ import {
   BlobBackground,
   BlobBackgroundProps,
   CosmicSceneProps,
+  CrazyBallpit,
   Dither,
   DitherProps,
   GradientAnimation,
@@ -76,7 +77,7 @@ import {
 } from '@/components/animations';
 
 // Import types for lazy loaded components
-import type {} from '@/components/animations';
+import type { CrazyBallpitProps } from '@/components/animations';
 
 import {
   AnimationLoader,
@@ -99,7 +100,7 @@ import {
 import defaultBlobs from '@/presets/blob.presets';
 import { globeArcs, globeConfig } from '@/presets/globe.presets';
 import wallpaperPresets from '@/presets/wallpaper.presets';
-import { hexToRgb } from '@/utils/app.utils';
+import { hexToRgb } from '@/components/animations/particles/particles.utils';
 import { Suspense, forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
 import { WallpaperProps } from './wallpaper.types';
@@ -283,6 +284,24 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                   {...(animation.animationProps as BallpitProps)}
                 />
               </Suspense>
+            )}
+            {animation.id === 'crazy-ballpit' && (
+              <CrazyBallpit
+                className="w-full h-full block"
+                colors={[0x3a29ff, 0x6c01b4, 0xff0070, 0xffbd2d, 0x25c93f]}
+                ambientColor={0x1a1f2c}
+                ambientIntensity={0.2}
+                lightIntensity={0.5}
+                materialParams={{
+                  metalness: 0.5,
+                  roughness: 0.5,
+                  clearcoat: 1,
+                  clearcoatRoughness: 0.15
+                }}
+                followCursor={false}
+                count={100}
+                {...(animation.animationProps as CrazyBallpitProps)}
+              />
             )}
             {animation.id === 'beam-portal' && (
               <BeamPortal colorScheme="aurora" pattern="radial" intensity="active" shimmer={true} />
@@ -648,7 +667,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
                 amplitude={3}
                 color={
                   colorType === 'hex'
-                    ? (hexToRgb(foregroundColor, true) as [number, number, number])
+                    ? hexToRgb(foregroundColor)
                     : (foregroundColor as unknown as [number, number, number])
                 }
                 distance={0}
