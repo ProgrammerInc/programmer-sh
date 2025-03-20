@@ -7,7 +7,7 @@
 'use client';
 
 import { Lock, Mail } from 'lucide-react';
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 
 import styles from './auth-modal.module.css';
 import { Divider, FormInput, OAuthButton } from './auth-modal.components';
@@ -51,6 +51,19 @@ export const AuthModalForm = memo<ModalFormProps>(({
     };
   }, [currentMode, loading, onSubmit, onOAuthLogin, onToggleMode]);
   
+  // Ensure email input is focused when modal opens
+  React.useEffect(() => {
+    // Small timeout to ensure the modal is fully rendered and animated in
+    const timer = setTimeout(() => {
+      const emailInput = document.getElementById('email') as HTMLInputElement;
+      if (emailInput) {
+        emailInput.focus();
+      }
+    }, 50);
+    
+    return () => clearTimeout(timer);
+  }, []);
+  
   return (
     <>
       <form onSubmit={onSubmit} className={styles.form}>
@@ -62,6 +75,7 @@ export const AuthModalForm = memo<ModalFormProps>(({
           label="Email"
           placeholder="your@email.com"
           disabled={loading}
+          autoFocus={true}
           icon={<Mail size={16} className="text-terminal-muted" />}
         />
         

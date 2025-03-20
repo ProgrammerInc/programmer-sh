@@ -54,6 +54,7 @@ export interface FormInputProps {
   label: string;
   placeholder: string;
   disabled?: boolean;
+  autoFocus?: boolean;
   icon: ReactNode;
 }
 

@@ -178,12 +178,29 @@ export const useModalPosition = (
   const [modalPosition, setModalPosition] = useState({ top: 0, left: 0, width: 0 });
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // Position the modal below the header
-  useEffect(() => {
+  // Function to update modal position
+  const updateModalPosition = useCallback(() => {
     if (anchorRef.current && isOpen) {
       setModalPosition(getModalPosition(anchorRef.current));
     }
   }, [anchorRef, isOpen]);
+
+  // Position the modal when opened and anchor changes
+  useEffect(() => {
+    updateModalPosition();
+  }, [updateModalPosition]);
+
+  // Update position on window resize
+  useEffect(() => {
+    if (!isOpen) return;
+    
+    const handleResize = () => {
+      updateModalPosition();
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isOpen, updateModalPosition]);
 
   // Close on escape key
   useEffect(() => {

@@ -26,6 +26,7 @@ export const FormInput: React.FC<FormInputProps> = ({
   label,
   placeholder,
   disabled = false,
+  autoFocus = false,
   icon
 }) => {
   return (
@@ -48,6 +49,7 @@ export const FormInput: React.FC<FormInputProps> = ({
           className={styles.input}
           placeholder={placeholder}
           disabled={disabled}
+          autoFocus={autoFocus}
         />
       </div>
     </div>

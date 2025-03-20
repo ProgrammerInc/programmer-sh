@@ -15,7 +15,7 @@
 
 /* Content */
 .content {
-  background-color: var(--terminal-background-translucent);
+  background-color: var(--terminal-background);
   padding: 1rem;
   position: relative;
 }
