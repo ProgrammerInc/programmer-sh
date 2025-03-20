@@ -37,6 +37,7 @@ export interface TerminalProps {
   footerRef?: React.RefObject<TerminalFooterRef> | null;
   initialCommands?: string[];
   socialLinks?: SocialLink[];
+  className?: string;
 }
 
 const Terminal: React.FC<TerminalProps> = ({
@@ -45,7 +46,8 @@ const Terminal: React.FC<TerminalProps> = ({
   headerRef = null,
   footerRef = null,
   initialCommands = [],
-  socialLinks = []
+  socialLinks = [],
+  className = ''
 }) => {
   const [commandInput, setCommandInput] = useState<string>('');
 
@@ -662,7 +664,7 @@ const Terminal: React.FC<TerminalProps> = ({
   return (
     <div
       ref={terminalContainerRef}
-      className="flex flex-col h-full bg-terminal-background rounded-lg overflow-hidden terminal-glass"
+      className={`flex flex-col h-full bg-terminal-background rounded-lg overflow-hidden terminal-glass ${className}`}
     >
       <TerminalHeader ref={terminalHeaderRef} lastCommand={lastCommand} socialLinks={socialLinks} />
 
