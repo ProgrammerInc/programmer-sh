@@ -542,6 +542,48 @@ const Terminal: React.FC<TerminalProps> = ({
     };
   }, [executeCommand]);
 
+  // Effect to handle terminal container clicks for auto-focusing the input
+  useEffect(() => {
+    const terminalContainer = terminalContainerRef.current;
+    
+    const handleContainerClick = (e: MouseEvent) => {
+      // Skip if clicking on an input, button, or command link
+      const target = e.target as HTMLElement;
+      const isInteractive = (
+        target.tagName === 'INPUT' || 
+        target.tagName === 'BUTTON' || 
+        target.tagName === 'A' || 
+        target.tagName === 'TEXTAREA' ||
+        target.tagName === 'SELECT' ||
+        target.classList.contains('command-link') ||
+        target.closest('input') ||
+        target.closest('button') ||
+        target.closest('a') ||
+        target.closest('textarea') ||
+        target.closest('select')
+      );
+      
+      if (!isInteractive) {
+        // Don't focus if user is selecting text
+        const selection = window.getSelection();
+        if (selection && selection.toString().length === 0) {
+          e.preventDefault();
+          focusInputField();
+        }
+      }
+    };
+    
+    if (terminalContainer) {
+      terminalContainer.addEventListener('click', handleContainerClick);
+    }
+    
+    return () => {
+      if (terminalContainer) {
+        terminalContainer.removeEventListener('click', handleContainerClick);
+      }
+    };
+  }, []);
+
   const navigateHistory = useCallback(
     (direction: 'up' | 'down') => {
       let currentIndex = historyIndexRef.current;
