@@ -115,7 +115,9 @@
   margin-top: 0.25rem;
   width: 12rem;
   border-radius: 0.375rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
   border: 1px solid var(--terminal-border);
   z-index: 50;
   backdrop-filter: blur(8px);
@@ -133,11 +135,14 @@
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
   color: var(--terminal-foreground);
-  transition: background-color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .dropdown-item:hover {
   background-color: rgba(var(--terminal-muted-rgb), 0.3);
+  color: var(--terminal-prompt);
 }
 
 .dropdown-icon {

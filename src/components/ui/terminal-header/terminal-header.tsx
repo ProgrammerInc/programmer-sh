@@ -245,6 +245,7 @@ export const TerminalHeader = forwardRef<TerminalHeaderRef, TerminalHeaderProps>
                       className={styles['dropdown-item']}
                       onClick={handleLoginClick}
                       role="menuitem"
+                      data-action="login"
                     >
                       <LogIn className={styles['dropdown-icon']} />
                       Login
@@ -253,6 +254,7 @@ export const TerminalHeader = forwardRef<TerminalHeaderRef, TerminalHeaderProps>
                       className={styles['dropdown-item']}
                       onClick={handleSignupClick}
                       role="menuitem"
+                      data-action="signup"
                     >
                       <User className={styles['dropdown-icon']} />
                       Sign Up
