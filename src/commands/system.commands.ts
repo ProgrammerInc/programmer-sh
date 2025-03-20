@@ -1,6 +1,7 @@
 import { createFeatureLogger } from '@/services/logger/logger.utils';
 import { Command, CommandResult } from './command.types';
 import { welcomeCommand } from './welcome.commands';
+import { getCommands } from './index';
 
 // Create a dedicated logger for system commands
 const systemLogger = createFeatureLogger('SystemCommands');

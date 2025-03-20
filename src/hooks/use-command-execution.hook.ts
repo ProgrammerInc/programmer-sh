@@ -16,6 +16,8 @@ interface CommandExecutionHook {
   commandOutput: HistoryItem[];
   setCommandOutput: React.Dispatch<React.SetStateAction<HistoryItem[]>>;
   isAwaitingAsync: boolean;
+  asyncCommandName: string | undefined;
+  setAsyncCommandName: React.Dispatch<React.SetStateAction<string | undefined>>;
   lastCommand: string;
   executeCommand: (commandStr: string) => void;
 }
@@ -38,7 +40,8 @@ enum CommandType {
 export const useCommandExecution = (commands: Record<string, Command>): CommandExecutionHook => {
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [commandOutput, setCommandOutput] = useState<HistoryItem[]>([]);
-  const [isAwaitingAsync, setIsAwaitingAsync] = useState<boolean>(false);
+  const [isAwaitingAsync, setIsAwaitingAsync] = useState(false);
+  const [asyncCommandName, setAsyncCommandName] = useState<string | undefined>(undefined);
   const [lastCommand, setLastCommand] = useState<string>('');
 
   /**
@@ -86,9 +89,11 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
       originalCommand: string
     ) => {
       setIsAwaitingAsync(true);
+      setAsyncCommandName(commandName);
       result.asyncResolver!()
         .then(output => {
           setIsAwaitingAsync(false);
+          setAsyncCommandName(undefined);
           setCommandOutput(prevOutput =>
             prevOutput
               ? [...prevOutput, renderCommandOutput(actualCommand, output.content, output.rawHTML)]
@@ -110,6 +115,7 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
             error: errorMessage
           });
           setIsAwaitingAsync(false);
+          setAsyncCommandName(undefined);
           setCommandOutput(prevOutput =>
             prevOutput
               ? [...prevOutput, renderCommandOutput(actualCommand, `Error executing command: ${errorMessage}`)]
@@ -329,6 +335,8 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
     commandOutput,
     setCommandOutput,
     isAwaitingAsync,
+    asyncCommandName,
+    setAsyncCommandName,
     lastCommand,
     executeCommand
   };

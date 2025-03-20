@@ -4,6 +4,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { TerminalContentProps, ProcessableElement, CommandLinkEventDetail } from './terminal-content.types';
 import { formatCommandOutput } from './terminal-content.utils';
 import styles from './terminal-content.module.css';
+import { TerminalLoading } from '../terminal-loading';
 
 /**
  * TerminalContent Component
@@ -16,6 +17,7 @@ import styles from './terminal-content.module.css';
  * - Interactive command links with keyboard accessibility
  * - Support for custom styling through CSS modules
  * - Mutation observer to handle dynamically added content
+ * - Loading animation for async commands
  * 
  * @example
  * ```tsx
@@ -25,16 +27,17 @@ import styles from './terminal-content.module.css';
  *   setScrollToBottom={handleScrollToBottom} 
  * />
  * 
- * // With custom class name
+ * // With async loading state
  * <TerminalContent 
  *   commandOutput={commandHistory} 
  *   setScrollToBottom={handleScrollToBottom} 
- *   className="custom-terminal-content"
+ *   isAwaitingAsync={true}
+ *   asyncCommandName="database"
  * />
  * ```
  */
 export const TerminalContent = forwardRef<HTMLDivElement, TerminalContentProps>(
-  ({ commandOutput, setScrollToBottom }, ref) => {
+  ({ commandOutput, setScrollToBottom, isAwaitingAsync, asyncCommandName }, ref) => {
     // Local ref for event handlers
     const contentRef = useRef<HTMLDivElement>(null);
 
@@ -241,6 +244,11 @@ export const TerminalContent = forwardRef<HTMLDivElement, TerminalContentProps>(
       console.log('Terminal Content - Command Output:', commandOutput);
     }, [commandOutput]);
 
+    // Debug the loading state
+    useEffect(() => {
+      console.log('Terminal Content - Loading State:', { isAwaitingAsync, asyncCommandName });
+    }, [isAwaitingAsync, asyncCommandName]);
+
     return (
       <div 
         ref={contentRef} 
@@ -262,6 +270,15 @@ export const TerminalContent = forwardRef<HTMLDivElement, TerminalContentProps>(
             )}
           </div>
         ))}
+        
+        {isAwaitingAsync && (
+          <div className={styles['history-item']}>
+            <TerminalLoading 
+              message={asyncCommandName ? `Processing ${asyncCommandName} command` : 'Processing command'}
+              variant="dots"
+            />
+          </div>
+        )}
       </div>
     );
   }

@@ -8,6 +8,8 @@ import {
 } from './auth.commands';
 import { Command, CommandResult } from './command.types';
 import { cursorCommand } from './cursor.commands';
+import { queryCommand } from './database.commands';
+import { debugCommand } from './debug.commands';
 import { educationCommand } from './education.commands';
 import { experienceCommand } from './experience.commands';
 import { helpCommand, historyCommand } from './help.commands';
@@ -78,10 +80,17 @@ export const getCommands = (): Record<string, Command> => {
       // Use direct implementation instead of imported historyCommand
       history: directHistoryCommand,
       cursor: cursorCommand,
-      wallpaper: wallpaperCommand
+      wallpaper: wallpaperCommand,
+      // Database commands
+      query: queryCommand,
+      // Debug commands
+      debug: debugCommand
     };
 
+    // Log all command names for debugging
     commandLogger.debug('Registered commands', { count: Object.keys(commandRegistry).length });
+    commandLogger.debug('ALL COMMANDS:', Object.keys(commandRegistry).sort());
+
     return commandRegistry;
   } catch (error) {
     commandLogger.error('Error in getCommands', { error: (error as Error).message });
@@ -112,6 +121,12 @@ export const processCommand = (commandString: string): CommandResult => {
     const logger = createFeatureLogger('CommandSystem');
     logger.debug('Processing command', { commandString });
 
+    // Direct test for the query command
+    if (commandString === 'query') {
+      console.log('DIRECT QUERY COMMAND CALLED');
+      return queryCommand.execute('');
+    }
+    
     // Test command - remove after debugging
     if (commandString === 'test') {
       return {
@@ -167,10 +182,15 @@ export const processCommand = (commandString: string): CommandResult => {
 
     // Look up command in registry
     const commands = getCommands();
-    commandLogger.debug('Looking up command', { available: Object.keys(commands).length });
+    commandLogger.debug('Looking up command', { 
+      searchCommand: commandName, 
+      available: Object.keys(commands).length,
+      commandsList: Object.keys(commands).sort()
+    });
 
     if (commandName in commands) {
       commandLogger.info('Executing command', { command: commandName, hasArgs: !!args });
+      commandLogger.info(`Command exists: ${commandName}`);
       try {
         return commands[commandName].execute(args);
       } catch (error) {

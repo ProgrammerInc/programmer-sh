@@ -9,11 +9,15 @@ import { HistoryItem } from '../terminal-history/index';
  * @property {HistoryItem[]} commandOutput - Array of command history items to display
  * @property {() => void} setScrollToBottom - Function to scroll the terminal content to the bottom
  * @property {string} [className] - Optional additional CSS class name
+ * @property {boolean} [isAwaitingAsync] - Flag indicating if an async command is currently processing
+ * @property {string} [asyncCommandName] - Optional name of the async command being processed
  */
 export interface TerminalContentProps {
   commandOutput: HistoryItem[];
   setScrollToBottom: () => void;
   className?: string;
+  isAwaitingAsync?: boolean;
+  asyncCommandName?: string;
 }
 
 /**

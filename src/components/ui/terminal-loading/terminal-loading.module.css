@@ -1,0 +1,99 @@
+/* terminal-loading.module.css */
+
+.loader-container {
+  display: flex;
+  align-items: flex-end;
+  padding: 0.5rem;
+  padding-left: 0.5rem;
+  color: var(--terminal-prompt);
+  font-family: var(--font-mono);
+}
+
+.loader {
+  display: inline-flex;
+  position: relative;
+  margin-left: 0.25rem;
+  width: 1.5rem;
+  height: 0.8rem;
+  margin-bottom: 0.15rem;
+}
+
+.loader div {
+  position: absolute;
+  bottom: 0;
+  width: 0.15rem;
+  height: 0.15rem;
+  border-radius: 50%;
+  background: var(--terminal-prompt);
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.loader div:nth-child(1) {
+  left: 0;
+  animation: loader1 0.6s infinite;
+}
+
+.loader div:nth-child(2) {
+  left: 0;
+  animation: loader2 0.6s infinite;
+}
+
+.loader div:nth-child(3) {
+  left: 0.4rem;
+  animation: loader2 0.6s infinite;
+}
+
+.loader div:nth-child(4) {
+  left: 0.8rem;
+  animation: loader3 0.6s infinite;
+}
+
+@keyframes loader1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes loader3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes loader2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0.4rem, 0);
+  }
+}
+
+.message {
+  font-size: 0.9rem;
+  color: var(--terminal-muted);
+  display: inline-block;
+  line-height: 1;
+}
+
+.spinner {
+  display: inline-block;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

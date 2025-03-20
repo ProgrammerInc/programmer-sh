@@ -19,6 +19,8 @@ import { privacyCommand, termsCommand } from '@/commands/system.commands';
 import { themeCommand } from '@/commands/theme.commands';
 import { wallpaperCommand } from '@/commands/wallpaper.commands';
 import { welcomeCommand } from '@/commands/welcome.commands';
+import { queryCommand } from '@/commands/database.commands';
+import { debugCommand } from '@/commands/debug.commands'; // Import the debug command
 import { TerminalContent } from '@/components/ui/terminal-content';
 import { TerminalFooter } from '@/components/ui/terminal-footer';
 import { TerminalFooterRef } from '@/components/ui/terminal-footer/terminal-footer.types';
@@ -140,6 +142,8 @@ const Terminal: React.FC<TerminalProps> = ({
       projects: projectsCommand,
       resume: resumeCommand,
       education: educationCommand,
+      query: queryCommand,
+      debug: debugCommand, // Add the debug command to the commands object
       // Add history command with a direct implementation
       history: {
         name: 'history',
@@ -185,7 +189,7 @@ const Terminal: React.FC<TerminalProps> = ({
     []
   );
 
-  const { commandOutput, lastCommand, executeCommand, setCommandOutput } =
+  const { commandOutput, lastCommand, executeCommand, setCommandOutput, isAwaitingAsync, asyncCommandName } =
     useCommandExecution(commands);
 
   const handleScrollToBottom = () => {
@@ -497,13 +501,6 @@ const Terminal: React.FC<TerminalProps> = ({
                 newHistory.push(command);
                 console.log('HISTORY UPDATE: Added link command to history:', command);
                 console.log('HISTORY UPDATE: New history state:', newHistory);
-
-                // Update localStorage
-                try {
-                  localStorage.setItem('terminal_history', JSON.stringify(newHistory));
-                } catch (error) {
-                  console.error('Error saving link command to history:', error);
-                }
               }
 
               // Update our ref immediately for consistent access
@@ -713,7 +710,9 @@ const Terminal: React.FC<TerminalProps> = ({
       <TerminalContent
         ref={terminalContentRef}
         commandOutput={commandOutput}
+        asyncCommandName={asyncCommandName}
         setScrollToBottom={handleScrollToBottom}
+        isAwaitingAsync={isAwaitingAsync}
       />
 
       <TerminalFooter
