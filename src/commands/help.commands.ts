@@ -286,7 +286,7 @@ export const helpCommand: Command = {
         helpContent += `<div class="ml-2">${commandsHtml}</div></div>`;
       });
 
-      helpContent += `<div class="mb-4"><span class="text-terminal-prompt">Tip:</span> Type <span class="command-link" data-command="help" data-placeholder="[command]">help [command]</span> for more information about a specific command.</div></div>`;
+      helpContent += `<div><span class="text-terminal-prompt">Tip:</span> Type <span class="command-link" data-command="help" data-placeholder="[command]">help [command]</span> for more information about a specific command.</div></div>`;
 
       helpLogger.debug('Generated general help content');
       return {
