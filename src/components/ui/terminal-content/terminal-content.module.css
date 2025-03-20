@@ -41,7 +41,7 @@
 
 .output {
   color: var(--terminal-text);
-  margin-left: 1rem;
+  margin-left: 0.5rem;
   margin-bottom: 0;
   white-space: pre-wrap;
   word-break: normal;
