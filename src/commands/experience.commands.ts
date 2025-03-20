@@ -31,7 +31,7 @@ export const experienceCommand: Command = {
       isError: false,
       asyncResolver: async (): Promise<CommandResult> => {
         try {
-          const experience = await fetchExperience() as ExperienceRecord[];
+          const experience = (await fetchExperience()) as ExperienceRecord[];
 
           if (!experience || !experience.length) {
             experienceLogger.error('Failed to fetch experience data', { reason: 'Empty response' });
@@ -41,12 +41,14 @@ export const experienceCommand: Command = {
             };
           }
 
-          experienceLogger.info('Successfully fetched experience data', { count: experience.length });
-          
+          experienceLogger.info('Successfully fetched experience data', {
+            count: experience.length
+          });
+
           const formattedExperience = formatExperienceData(experience);
-          
+
           return {
-            content: `\nMy Experience:\n\n${formattedExperience}\n\n`,
+            content: `My Experience:\n\n${formattedExperience}`,
             isError: false,
             rawHTML: true
           };
@@ -81,7 +83,7 @@ function formatExperienceData(experience: ExperienceRecord[]): string {
             return 0; // Default to 0 if parsing fails
           }
         };
-        
+
         return getStartYear(b.duration) - getStartYear(a.duration);
       })
       .map(exp => formatSingleExperience(exp))
@@ -121,12 +123,12 @@ Technologies: ${formatTechnologies(exp.technologies)}`;
  * @param achievements - Array of achievement strings
  * @returns Formatted HTML string for achievements
  */
-function formatAchievements(achievements: string[]): string {
+export function formatAchievements(achievements: string[]): string {
   try {
     if (!achievements || !achievements.length) {
-      return 'None specified';
+      return '\nNone specified';
     }
-    
+
     return achievements.map(achievement => `&nbsp;&nbsp;- ${achievement}`).join('\n');
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
@@ -140,12 +142,12 @@ function formatAchievements(achievements: string[]): string {
  * @param technologies - Array of technology names
  * @returns Formatted HTML string for technologies
  */
-function formatTechnologies(technologies: string[]): string {
+export function formatTechnologies(technologies: string[]): string {
   try {
     if (!technologies || !technologies.length) {
       return 'None specified';
     }
-    
+
     return technologies
       .sort()
       .map(

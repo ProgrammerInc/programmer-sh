@@ -203,7 +203,7 @@ const formatWallpaperList = (wallpapersByType: WallpapersByType): string => {
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     wallpaperLogger.error('Error formatting wallpaper list', { error: errorMessage });
-    return '\nError formatting wallpaper list. Please try again.';
+    return 'Error formatting wallpaper list. Please try again.';
   }
 };
 
@@ -240,7 +240,7 @@ export const wallpaperCommand: Command = {
         });
 
         return {
-          content: `\nCurrent wallpaper: <span class="text-terminal-prompt">${wallpaperPresets[currentWallpaper].id}</span>\n\nAvailable Wallpapers:\n${wallpaperOutput}\nUsage: <span class="command-link" data-command="wallpaper [name]" data-placeholder="[name]">wallpaper [name]</span>\n\n`,
+          content: `Current wallpaper: <span class="text-terminal-prompt">${wallpaperPresets[currentWallpaper].id}</span>\n\nAvailable Wallpapers:\n${wallpaperOutput}\nUsage: <span class="command-link" data-command="wallpaper [name]" data-placeholder="[name]">wallpaper [name]</span>`,
           isError: false,
           rawHTML: true
         };
@@ -251,7 +251,7 @@ export const wallpaperCommand: Command = {
       if (!isValidWallpaper(requestedWallpaper)) {
         wallpaperLogger.warn('Wallpaper not found', { requested: requestedWallpaper });
         return {
-          content: `\nWallpaper <span class="text-terminal-prompt">${requestedWallpaper}</span> not found. Use <span class="command-link" data-command="wallpaper">wallpaper</span> to see available options.\n\n`,
+          content: `Wallpaper <span class="text-terminal-prompt">${requestedWallpaper}</span> not found. Use <span class="command-link" data-command="wallpaper">wallpaper</span> to see available options.`,
           isError: true,
           rawHTML: true
         };
@@ -266,7 +266,7 @@ export const wallpaperCommand: Command = {
       });
 
       return {
-        content: `\nWallpaper changed to <span class="text-terminal-prompt">${requestedWallpaper}</span>.\n\n`,
+        content: `Wallpaper changed to <span class="text-terminal-prompt">${requestedWallpaper}</span>.`,
         isError: false,
         rawHTML: true,
         metadata: {

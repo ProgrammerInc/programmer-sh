@@ -28,13 +28,13 @@ export const getCurrentCursor = (): string => {
   try {
     const savedCursor = localStorage.getItem(CURSOR_STORAGE_KEY);
     const cursorId = savedCursor || 'default';
-    
+
     // Verify the cursor exists in presets
     if (!Object.keys(cursorPresets).includes(cursorId)) {
       cursorLogger.warn('Saved cursor not found in presets, using default', { cursorId });
       return 'default';
     }
-    
+
     return cursorId;
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
@@ -53,7 +53,7 @@ export const setCursor = (id: string): void => {
     if (!cursorPresets[id]) {
       throw new Error(`Cursor with ID '${id}' not found in presets`);
     }
-    
+
     localStorage.setItem(CURSOR_STORAGE_KEY, id);
 
     // Dispatch custom event for components to respond to cursor change
@@ -62,7 +62,7 @@ export const setCursor = (id: string): void => {
         detail: { cursorId: id, cursor: cursorPresets[id] }
       })
     );
-    
+
     cursorLogger.info('Cursor set successfully', { cursorId: id });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
@@ -115,7 +115,7 @@ const formatCursorList = (): string => {
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     cursorLogger.error('Error formatting cursor list', { error: errorMessage });
-    return '\nError formatting cursor list. Please try again.';
+    return 'Error formatting cursor list. Please try again.';
   }
 };
 
@@ -132,14 +132,14 @@ export const cursorCommand: Command = {
 
       if (!args) {
         const availableCursors = formatCursorList();
-        
-        cursorLogger.debug('Listed available cursors', { 
+
+        cursorLogger.debug('Listed available cursors', {
           current: currentCursor,
           totalAvailable: Object.keys(cursorPresets).length
         });
 
         return {
-          content: `\nCurrent cursor: <span class="text-terminal-prompt">${cursorPresets[currentCursor].id}</span>\n\nAvailable Cursors:${availableCursors}\n\nUsage: <span class="command-link" data-command="cursor" data-placeholder="[name]">cursor [name]</span>\n\n`,
+          content: `Current cursor: <span class="text-terminal-prompt">${cursorPresets[currentCursor].id}</span>\n\nAvailable Cursors:${availableCursors}\n\nUsage: <span class="command-link" data-command="cursor" data-placeholder="[name]">cursor [name]</span>`,
           isError: false,
           rawHTML: true
         };
@@ -150,7 +150,7 @@ export const cursorCommand: Command = {
       if (!Object.keys(cursorPresets).includes(requestedCursor)) {
         cursorLogger.warn('Cursor not found', { requested: requestedCursor });
         return {
-          content: `\nCursor <span class="text-terminal-prompt">${requestedCursor}</span> not found. Use <span class="command-link" data-command="cursor">cursor</span> to see available options.\n\n`,
+          content: `Cursor <span class="text-terminal-prompt">${requestedCursor}</span> not found. Use <span class="command-link" data-command="cursor">cursor</span> to see available options.`,
           isError: true,
           rawHTML: true
         };
@@ -159,21 +159,21 @@ export const cursorCommand: Command = {
       if (requestedCursor === currentCursor) {
         cursorLogger.debug('Cursor already set', { cursor: currentCursor });
         return {
-          content: `\nCursor is already set to <span class="text-terminal-prompt">${cursorPresets[currentCursor].id}</span>.\n\n`,
+          content: `Cursor is already set to <span class="text-terminal-prompt">${cursorPresets[currentCursor].id}</span>.`,
           isError: false,
           rawHTML: true
         };
       }
 
       setCursor(requestedCursor);
-      
-      cursorLogger.info('Cursor changed', { 
-        from: currentCursor, 
-        to: requestedCursor 
+
+      cursorLogger.info('Cursor changed', {
+        from: currentCursor,
+        to: requestedCursor
       });
 
       return {
-        content: `\nCursor changed to <span class="text-terminal-prompt">${cursorPresets[requestedCursor].id}</span>.\n\n`,
+        content: `Cursor changed to <span class="text-terminal-prompt">${cursorPresets[requestedCursor].id}</span>.`,
         isError: false,
         rawHTML: true,
         metadata: {

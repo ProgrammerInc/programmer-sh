@@ -29,11 +29,11 @@ export type ThemeOption = `${Theme}`;
 export const getCurrentTheme = (): ThemeOption => {
   try {
     const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-    
+
     if (savedTheme === Theme.Dark || savedTheme === Theme.Light) {
       return savedTheme as ThemeOption;
-    } 
-    
+    }
+
     return Theme.Dark; // Default theme
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
@@ -73,7 +73,7 @@ export const setTheme = (theme: ThemeOption): void => {
       detail: { isDark, theme }
     });
     document.dispatchEvent(themeChangeEvent);
-    
+
     themeLogger.info('Theme applied successfully', { theme });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
@@ -130,7 +130,7 @@ export const initializeTheme = (): void => {
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     themeLogger.error('Error initializing theme', { error: errorMessage });
-    
+
     // Attempt to set default theme as fallback
     try {
       setTheme(Theme.Dark);
@@ -160,12 +160,12 @@ export const themeCommand: Command = {
   execute: (args?: string): CommandResult => {
     try {
       themeLogger.info('Executing theme command', args ? { themeArg: args } : {});
-      
+
       const currentTheme = getCurrentTheme();
 
       if (!args) {
         return {
-          content: `\nCurrent theme: <span class="text-terminal-prompt">${currentTheme}</span>\n\nUsage: <span class="command-link" data-command="theme" data-placeholder="[dark|light]">theme</span> [<span class="command-link" data-command="theme dark">dark</span>|<span class="command-link" data-command="theme light">light</span>]\n\n`,
+          content: `Current theme: <span class="text-terminal-prompt">${currentTheme}</span>\n\nUsage: <span class="command-link" data-command="theme" data-placeholder="[dark|light]">theme</span> [<span class="command-link" data-command="theme dark">dark</span>|<span class="command-link" data-command="theme light">light</span>]`,
           isError: false
         };
       }
@@ -175,7 +175,7 @@ export const themeCommand: Command = {
       if (!isValidTheme(newTheme)) {
         themeLogger.warn('Invalid theme requested', { requested: newTheme });
         return {
-          content: `\nInvalid theme: <span class="text-terminal-prompt">${newTheme}</span>. Available Themes: <span class="command-link" data-command="theme dark">dark</span>, <span class="command-link" data-command="theme light">light</span>\n\n`,
+          content: `Invalid theme: <span class="text-terminal-prompt">${newTheme}</span>. Available Themes: <span class="command-link" data-command="theme dark">dark</span>, <span class="command-link" data-command="theme light">light</span>`,
           isError: true
         };
       }
@@ -183,7 +183,7 @@ export const themeCommand: Command = {
       if (newTheme === currentTheme) {
         themeLogger.info('Theme unchanged', { theme: currentTheme });
         return {
-          content: `\nTheme is already set to <span class="text-terminal-prompt">${currentTheme}</span> mode.\n\n`,
+          content: `Theme is already set to <span class="text-terminal-prompt">${currentTheme}</span> mode.`,
           isError: false
         };
       }
@@ -192,7 +192,7 @@ export const themeCommand: Command = {
       themeLogger.info('Theme changed', { from: currentTheme, to: newTheme });
 
       return {
-        content: `\nTheme switched to <span class="text-terminal-prompt">${newTheme}</span> mode.\n\n`,
+        content: `Theme switched to <span class="text-terminal-prompt">${newTheme}</span> mode.`,
         isError: false
       };
     } catch (error) {

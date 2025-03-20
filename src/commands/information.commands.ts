@@ -63,23 +63,33 @@ const formatContactInfo = (profile: Profile): string => {
     ];
 
     if (profile.contact.phone) {
-      contactLines.push(`&nbsp;&nbsp;- Phone: <a href="tel:${profile.contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${profile.contact.phone}</a>`);
+      contactLines.push(
+        `&nbsp;&nbsp;- Phone: <a href="tel:${profile.contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${profile.contact.phone}</a>`
+      );
     }
 
     if (github) {
-      contactLines.push(`&nbsp;&nbsp;- GitHub: <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github?.replace(/^https?:\/\//, '')}</a>`);
+      contactLines.push(
+        `&nbsp;&nbsp;- GitHub: <a href="${github}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.github?.replace(/^https?:\/\//, '')}</a>`
+      );
     }
 
     if (linkedin) {
-      contactLines.push(`&nbsp;&nbsp;- LinkedIn: <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin?.replace(/^https?:\/\//, '')}</a>`);
+      contactLines.push(
+        `&nbsp;&nbsp;- LinkedIn: <a href="${linkedin}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.linkedin?.replace(/^https?:\/\//, '')}</a>`
+      );
     }
 
     if (twitter) {
-      contactLines.push(`&nbsp;&nbsp;- Twitter/X: <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter?.replace(/^https?:\/\//, '')}</a>`);
+      contactLines.push(
+        `&nbsp;&nbsp;- Twitter/X: <a href="${twitter}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.twitter?.replace(/^https?:\/\//, '')}</a>`
+      );
     }
 
     if (website) {
-      contactLines.push(`&nbsp;&nbsp;- Website: <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website?.replace(/^https?:\/\//, '')}</a>`);
+      contactLines.push(
+        `&nbsp;&nbsp;- Website: <a href="${website}" target="_blank" class="text-terminal-link hover:underline">${profile.contact.website?.replace(/^https?:\/\//, '')}</a>`
+      );
     }
 
     return contactLines.join('\n  ');
@@ -104,10 +114,12 @@ export const aboutCommand: Command = {
       isError: false,
       asyncResolver: async (): Promise<CommandResult> => {
         try {
-          const profile = await fetchProfile() as Profile;
+          const profile = (await fetchProfile()) as Profile;
 
           if (!profile || !profile.contact) {
-            informationLogger.error('Failed to fetch profile information', { reason: 'Empty response or invalid data structure' });
+            informationLogger.error('Failed to fetch profile information', {
+              reason: 'Empty response or invalid data structure'
+            });
             return {
               content: 'Error: Could not fetch profile information.',
               isError: true
@@ -115,17 +127,17 @@ export const aboutCommand: Command = {
           }
 
           informationLogger.info('Successfully fetched about information');
-          
+
           const contactInfo = formatContactInfo(profile);
-          
+
           return {
-            content: `\nAbout Me:\n
+            content: `About Me:\n
 Name: <span class="text-terminal-prompt">${profile.full_name}</span>
 Title: <span class="text-terminal-prompt">${profile.title}</span> @ <span class="text-terminal-prompt">${profile.company}</span>
 Location: <span class="text-terminal-prompt">${profile.location}</span>\n
 ${profile.summary}\n
 Contact Information:\n
-${contactInfo}\n\n`,
+${contactInfo}`,
             isError: false,
             rawHTML: true
           };
@@ -156,10 +168,12 @@ export const contactCommand: Command = {
       isError: false,
       asyncResolver: async (): Promise<CommandResult> => {
         try {
-          const profile = await fetchProfile() as Profile;
+          const profile = (await fetchProfile()) as Profile;
 
           if (!profile || !profile.contact) {
-            informationLogger.error('Failed to fetch contact information', { reason: 'Empty response or invalid data structure' });
+            informationLogger.error('Failed to fetch contact information', {
+              reason: 'Empty response or invalid data structure'
+            });
             return {
               content: 'Error: Could not fetch contact information.',
               isError: true
@@ -167,15 +181,15 @@ export const contactCommand: Command = {
           }
 
           informationLogger.info('Successfully fetched contact information');
-          
+
           const contactInfo = formatContactInfo(profile);
-          
+
           return {
-            content: `\nMy Contact Information:\n
+            content: `My Contact Information:\n
 Name: <span class="text-terminal-prompt">${profile.full_name}</span>
 Title: <span class="text-terminal-prompt">${profile.title}</span> @ <span class="text-terminal-prompt">${profile.company}</span>
 Location: <span class="text-terminal-prompt">${profile.location}</span>\n
-${contactInfo}\n\n`,
+${contactInfo}`,
             isError: false,
             rawHTML: true
           };

@@ -29,7 +29,7 @@ export const educationCommand: Command = {
       isError: false,
       asyncResolver: async (): Promise<CommandResult> => {
         try {
-          const education = await fetchEducation() as EducationRecord[];
+          const education = (await fetchEducation()) as EducationRecord[];
 
           if (!education || !education.length) {
             educationLogger.error('Failed to fetch education data', { reason: 'Empty response' });
@@ -40,11 +40,11 @@ export const educationCommand: Command = {
           }
 
           educationLogger.info('Successfully fetched education data', { count: education.length });
-          
+
           const formattedEducation = formatEducationData(education);
-          
+
           return {
-            content: `\nMy Education:\n\n${formattedEducation}\n\n`,
+            content: `My Education:\n\n${formattedEducation}`,
             isError: false,
             rawHTML: true
           };
@@ -79,7 +79,7 @@ function formatEducationData(education: EducationRecord[]): string {
             return 0; // Default to 0 if parsing fails
           }
         };
-        
+
         return getStartYear(b.duration) - getStartYear(a.duration);
       })
       .map(

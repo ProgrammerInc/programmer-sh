@@ -35,7 +35,7 @@ export const projectsCommand: Command = {
         isError: false,
         asyncResolver: async (): Promise<CommandResult> => {
           try {
-            const projects = await fetchProjects() as Project[];
+            const projects = (await fetchProjects()) as Project[];
 
             if (!projects || !projects.length) {
               projectsLogger.error('Failed to fetch projects', { reason: 'Empty response' });
@@ -46,11 +46,11 @@ export const projectsCommand: Command = {
             }
 
             projectsLogger.info('Successfully fetched projects', { count: projects.length });
-            
+
             const formattedProjects = formatProjectsList(projects);
-            
+
             return {
-              content: `\nMy Projects:\n${formattedProjects}`,
+              content: `My Projects:\n${formattedProjects}`,
               isError: false,
               rawHTML: true
             };
@@ -74,7 +74,7 @@ export const projectsCommand: Command = {
       isError: false,
       asyncResolver: async (): Promise<CommandResult> => {
         try {
-          const project = await fetchProjectById(args) as Project | null;
+          const project = (await fetchProjectById(args)) as Project | null;
 
           if (!project) {
             projectsLogger.warn('Project not found', { projectId: args });
@@ -84,10 +84,13 @@ export const projectsCommand: Command = {
             };
           }
 
-          projectsLogger.info('Successfully fetched project', { projectId: args, title: project.title });
-          
+          projectsLogger.info('Successfully fetched project', {
+            projectId: args,
+            title: project.title
+          });
+
           const formattedProject = formatSingleProject(project);
-          
+
           return {
             content: formattedProject,
             isError: false,
@@ -95,7 +98,10 @@ export const projectsCommand: Command = {
           };
         } catch (error) {
           const errorMessage = error instanceof Error ? error.message : String(error);
-          projectsLogger.error('Error fetching specific project', { projectId: args, error: errorMessage });
+          projectsLogger.error('Error fetching specific project', {
+            projectId: args,
+            error: errorMessage
+          });
           return {
             content: `Error: Failed to fetch project details. ${errorMessage}`,
             isError: true
@@ -125,7 +131,7 @@ Technologies: ${formatTechnologies(project.technologies)}
 `
       )
       .join('\n<hr class="terminal-divider" />');
-      
+
     return formattedProjects;
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
@@ -169,7 +175,7 @@ function formatHighlights(highlights: string[]): string {
     if (!highlights || !highlights.length) {
       return 'None specified';
     }
-    
+
     return highlights.map(highlight => `&nbsp;&nbsp;- ${highlight}`).join('\n');
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
@@ -188,7 +194,7 @@ function formatTechnologies(technologies: string[]): string {
     if (!technologies || !technologies.length) {
       return 'None specified';
     }
-    
+
     return technologies
       .sort()
       .map(

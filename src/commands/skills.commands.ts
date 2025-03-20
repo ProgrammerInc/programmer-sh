@@ -35,22 +35,26 @@ export const skillsCommand: Command = {
       isError: false,
       asyncResolver: async (): Promise<CommandResult> => {
         try {
-          const profile = await fetchProfile() as Profile;
+          const profile = (await fetchProfile()) as Profile;
 
           if (!profile || !profile.skills || !profile.skills.length) {
-            skillsLogger.error('Failed to fetch skills information', { reason: 'Empty response or no skills found' });
+            skillsLogger.error('Failed to fetch skills information', {
+              reason: 'Empty response or no skills found'
+            });
             return {
               content: 'Error: Could not fetch skills information.',
               isError: true
             };
           }
 
-          skillsLogger.info('Successfully fetched skills', { skillCategories: profile.skills.length });
-          
+          skillsLogger.info('Successfully fetched skills', {
+            skillCategories: profile.skills.length
+          });
+
           const formattedSkills = formatSkillsByCategory(profile.skills);
-          
+
           return {
-            content: `\nMy Skills:\n\n${formattedSkills}\n\n`,
+            content: `My Skills:\n\n${formattedSkills}`,
             isError: false,
             rawHTML: true
           };
@@ -77,7 +81,7 @@ function formatSkillsByCategory(skillCategories: SkillCategory[]): string {
     if (!skillCategories || !skillCategories.length) {
       return 'No skills information available.';
     }
-    
+
     return skillCategories
       .sort((a, b) => a.category.localeCompare(b.category)) // Sort categories alphabetically
       .map(
@@ -102,7 +106,7 @@ function formatSkillItems(items: string[]): string {
     if (!items || !items.length) {
       return '&nbsp;&nbsp;- None specified';
     }
-    
+
     return items
       .sort() // Sort skills alphabetically within category
       .map(

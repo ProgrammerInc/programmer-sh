@@ -1,6 +1,7 @@
 import { fetchPortfolioData } from '../services/database/portfolio.services';
 import { createFeatureLogger } from '../services/logger/logger.utils';
 import { Command, CommandResult } from './command.types';
+import { formatAchievements, formatTechnologies } from './experience.commands';
 
 // Create a dedicated logger for resume commands
 const resumeLogger = createFeatureLogger('ResumeCommands');
@@ -83,12 +84,15 @@ const ensureProtocol = (url: string | null | undefined): string | null => {
  * @param portfolioData - Portfolio data to use for vCard
  * @returns Formatted vCard string
  */
-const createVCard = (portfolioData: PortfolioData, socialUrls: {
-  github: string | null;
-  linkedin: string | null;
-  twitter: string | null;
-  website: string | null;
-}): string => {
+const createVCard = (
+  portfolioData: PortfolioData,
+  socialUrls: {
+    github: string | null;
+    linkedin: string | null;
+    twitter: string | null;
+    website: string | null;
+  }
+): string => {
   try {
     return `BEGIN:VCARD
 VERSION:3.0
@@ -130,15 +134,9 @@ Duration: ${exp.duration}
 Description: ${exp.description}
 
 Achievements:
-${exp.achievements.map(achievement => `&nbsp;&nbsp;- ${achievement}`).join('\n')}
+${formatAchievements(exp.achievements)}
 
-Technologies: ${exp.technologies
-          .sort()
-          .map(
-            tech =>
-              `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${tech}" target="_blank">${tech}</a>`
-          )
-          .join(', ')}`
+Technologies: ${formatTechnologies(exp.technologies)}`
       )
       .join('\n\n<hr class="terminal-divider" />\n');
   } catch (error) {
@@ -182,11 +180,17 @@ ${edu.details ? `Details: <span class="details">${edu.details}</span>` : ''}</di
  */
 const formatSkills = (skills: SkillCategory[]): string => {
   try {
-    return skills.map(skillCategory => 
-      `<div class="skill-category"><span class="category">${skillCategory.category}:</span> ${skillCategory.items.map(skill => 
-        `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${skill}" target="_blank">${skill}</a>`
-      ).join(', ')}</span></div>`
-    ).join('');
+    return skills
+      .map(
+        skillCategory =>
+          `<div class="skill-category"><span class="category">${skillCategory.category}:</span> ${skillCategory.items
+            .map(
+              skill =>
+                `<a class="text-terminal-link hover:underline" href="https://en.wikipedia.org/wiki/${skill}" target="_blank">${skill}</a>`
+            )
+            .join(', ')}</span></div>`
+      )
+      .join('');
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     resumeLogger.error('Error formatting skill categories', { error: errorMessage });
@@ -200,35 +204,48 @@ const formatSkills = (skills: SkillCategory[]): string => {
  * @param socialUrls - Processed social URLs with protocols
  * @returns Formatted HTML string of contact information
  */
-const formatContact = (contact: Contact, socialUrls: {
-  github: string | null;
-  linkedin: string | null;
-  twitter: string | null;
-  website: string | null;
-}): string => {
+const formatContact = (
+  contact: Contact,
+  socialUrls: {
+    github: string | null;
+    linkedin: string | null;
+    twitter: string | null;
+    website: string | null;
+  }
+): string => {
   try {
     const contactLines = [
       `<span>E-mail: <a href="mailto:${contact.email}" target="_blank" class="text-terminal-link hover:underline">${contact.email}</a></span>`
     ];
 
     if (contact.phone) {
-      contactLines.push(`<span>Phone: <a href="tel:${contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${contact.phone}</a></span>`);
+      contactLines.push(
+        `<span>Phone: <a href="tel:${contact.phone.replace(/\D/g, '')}" class="text-terminal-link hover:underline">${contact.phone}</a></span>`
+      );
     }
 
     if (socialUrls.github) {
-      contactLines.push(`<span>GitHub: <a href="${socialUrls.github}" target="_blank" class="text-terminal-link hover:underline">${socialUrls.github.replace(/^https?:\/\//, '')}</a></span>`);
+      contactLines.push(
+        `<span>GitHub: <a href="${socialUrls.github}" target="_blank" class="text-terminal-link hover:underline">${socialUrls.github.replace(/^https?:\/\//, '')}</a></span>`
+      );
     }
 
     if (socialUrls.linkedin) {
-      contactLines.push(`<span>LinkedIn: <a href="${socialUrls.linkedin}" target="_blank" class="text-terminal-link hover:underline">${socialUrls.linkedin.replace(/^https?:\/\//, '')}</a></span>`);
+      contactLines.push(
+        `<span>LinkedIn: <a href="${socialUrls.linkedin}" target="_blank" class="text-terminal-link hover:underline">${socialUrls.linkedin.replace(/^https?:\/\//, '')}</a></span>`
+      );
     }
 
     if (socialUrls.twitter) {
-      contactLines.push(`<span>Twitter/X: <a href="${socialUrls.twitter}" target="_blank" class="text-terminal-link hover:underline">${socialUrls.twitter.replace(/^https?:\/\//, '')}</a></span>`);
+      contactLines.push(
+        `<span>Twitter/X: <a href="${socialUrls.twitter}" target="_blank" class="text-terminal-link hover:underline">${socialUrls.twitter.replace(/^https?:\/\//, '')}</a></span>`
+      );
     }
 
     if (socialUrls.website) {
-      contactLines.push(`<span>Website: <a href="${socialUrls.website}" target="_blank" class="text-terminal-link hover:underline">${socialUrls.website.replace(/^https?:\/\//, '')}</a></span>`);
+      contactLines.push(
+        `<span>Website: <a href="${socialUrls.website}" target="_blank" class="text-terminal-link hover:underline">${socialUrls.website.replace(/^https?:\/\//, '')}</a></span>`
+      );
     }
 
     return contactLines.join('\n');
@@ -253,7 +270,7 @@ export const resumeCommand: Command = {
       isError: false,
       asyncResolver: async (): Promise<CommandResult> => {
         try {
-          const portfolioData = await fetchPortfolioData() as PortfolioData;
+          const portfolioData = (await fetchPortfolioData()) as PortfolioData;
 
           if (!portfolioData) {
             resumeLogger.error('Failed to fetch portfolio data', { reason: 'Empty response' });
@@ -282,7 +299,7 @@ export const resumeCommand: Command = {
 
           resumeLogger.info('Successfully generated resume');
           return {
-            content: `\nMy Resume:
+            content: `My Resume:
 <div class="resume-header">
 Name: <span class="text-terminal-prompt">${portfolioData.full_name}</span>
 Title: <span class="text-terminal-prompt">${portfolioData.title}</span> @ <span class="text-terminal-prompt">${portfolioData.company}</span>
@@ -308,7 +325,7 @@ MY SKILLS
 <hr class="terminal-divider" /><div class="resume-section">
 CONTACT INFORMATION
 <div class="contact-section">
-${contactSection}</div></div>\n`,
+${contactSection}</div></div>`,
             isError: false,
             rawHTML: true
           };
