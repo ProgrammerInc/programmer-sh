@@ -80,6 +80,24 @@
   background-color: var(--terminal-scrollbar-hover);
 }
 
+.terminal-scrollbar::-webkit-scrollbar {
+  width: 0.375rem; /* w-1.5 in Tailwind */
+}
+
+.terminal-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.terminal-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--terminal-scrollbar);
+  border-radius: 9999px; /* rounded-full in Tailwind */
+  transition: background-color 0.2s;
+}
+
+.terminal-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--terminal-scrollbar-hover);
+}
+
 .terminal-prompt {
   color: var(--terminal-prompt);
   font-weight: 500;
@@ -186,4 +204,17 @@
   animation: blink-caret 1s step-end infinite;
   white-space: pre-wrap;
   word-break: break-all;
+}
+
+.terminal-content-height {
+  max-height: calc(100% - 46px);
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: var(--terminal-foreground);
+}
+
+.terminal-divider {
+  border-top: 1px solid var(--terminal-muted-30);
+  margin-top: 0;
+  margin-bottom: 0;
 }

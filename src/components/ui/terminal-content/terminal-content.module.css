@@ -47,24 +47,7 @@
   overflow-wrap: break-word;
 }
 
-.output a.command-link {
-  color: var(--terminal-highlight);
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.output a.command-link:hover,
-.output a.command-link:focus {
-  color: var(--terminal-prompt);
-  text-decoration: underline;
-  outline: none;
-}
-
-.output a.command-link:active {
-  color: var(--terminal-text);
-}
-
-/* Error styling */
+/* ERROR STYLING - make sure this stays at the BOTTOM */
 .output.error {
   color: var(--terminal-error);
 }

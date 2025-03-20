@@ -149,7 +149,7 @@ export const privacyCommand: Command = {
 <h3>7. Changes to This Policy</h3>
 <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.</p>
 <h3>8. Contact Us</h3>
-<p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:privacy@programmer.sh" target="_blank" class="text-terminal-link hover:underline">privacy@programmer.sh</a></p></div>`,
+<p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:privacy@programmer.sh" target="_blank" class="command-link">privacy@programmer.sh</a></p></div>`,
         isError: false,
         rawHTML: true
       };
@@ -197,7 +197,7 @@ export const termsCommand: Command = {
 <h3>8. Governing Law</h3>
 <p>These terms and conditions are governed by and construed in accordance with the laws of the United States, and you irrevocably submit to the exclusive jurisdiction of the courts in that location.</p>
 <h3>9. Contact Us</h3>
-<p>If you have any questions about these Terms and Conditions, please contact us at <a href="mailto:terms@programmer.sh" target="_blank" class="text-terminal-link hover:underline">terms@programmer.sh</a></p></div>`,
+<p>If you have any questions about these Terms and Conditions, please contact us at <a href="mailto:terms@programmer.sh" target="_blank" class="command-link">terms@programmer.sh</a></p></div>`,
         isError: false,
         rawHTML: true
       };
