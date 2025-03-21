@@ -3,6 +3,7 @@
  */
 
 import { HTMLAttributes } from 'react';
+import { AudioAnalyzerOptions, AudioData } from './threads.audio';
 
 /**
  * Component-specific properties for the Threads component
@@ -18,6 +19,10 @@ export interface ThreadsOwnProps {
   enableMouseInteraction?: boolean;
   /** Whether to include a stars background (default: true) */
   withStars?: boolean;
+  /** Audio analyzer options for sound reactivity */
+  audioOptions?: AudioAnalyzerOptions;
+  /** Audio data for controlled usage */
+  audioData?: AudioData;
 }
 
 /**

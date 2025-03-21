@@ -64,6 +64,7 @@ import {
   StarsBackground,
   SwarmEffect,
   SwarmEffectProps,
+  ThreadsAudioProvider,
   Threads,
   ThreadsProps,
   VortexProps,
@@ -101,6 +102,8 @@ import defaultBlobs from '@/presets/blob.presets';
 import { globeArcs, globeConfig } from '@/presets/globe.presets';
 import wallpaperPresets from '@/presets/wallpaper.presets';
 import { hexToRgb } from '@/components/animations/particles/particles.utils';
+import WallpaperAudioControl from './wallpaper-audio-control';
+import styles from './wallpaper.module.css';
 import { Suspense, forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
 import { WallpaperProps } from './wallpaper.types';
@@ -663,17 +666,27 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
               />
             )}
             {animation.id === 'threads' && (
-              <Threads
-                amplitude={3}
-                color={
-                  colorType === 'hex'
-                    ? hexToRgb(foregroundColor)
-                    : (foregroundColor as unknown as [number, number, number])
-                }
-                distance={0}
-                enableMouseInteraction={interactive}
-                {...(animation.animationProps as ThreadsProps)}
-              />
+              <>
+                <ThreadsAudioProvider initialEnabled={true}>
+                  {({ audioEnabled }) => (
+                    <>
+                      <Threads
+                        amplitude={3}
+                        color={
+                          colorType === 'hex'
+                            ? hexToRgb(foregroundColor)
+                            : (foregroundColor as unknown as [number, number, number])
+                        }
+                        distance={0}
+                        enableMouseInteraction={!audioEnabled && interactive}
+                        {...(animation.animationProps as ThreadsProps)}
+                      />
+                      {/* Audio controls for threads animation */}
+                      <WallpaperAudioControl position="bottom-right" />
+                    </>
+                  )}
+                </ThreadsAudioProvider>
+              </>
             )}
             {animation.id === 'vortex' && (
               <Suspense fallback={<AnimationLoader />}>

@@ -67,6 +67,69 @@
   text-align: center;
 }
 
+/* Audio reactivity controls */
+.wallpaper-audio-control {
+  position: absolute;
+  z-index: 10;
+  padding: 8px;
+  transition: all 0.3s ease;
+  opacity: 0.6;
+  transform: scale(0.9);
+}
+
+.wallpaper-audio-control:hover {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.wallpaper-audio-control-active {
+  opacity: 1;
+  transform: scale(1.1);
+  animation: pulse 2s infinite;
+}
+
+.wallpaper-audio-button-active {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 255, 0);
+  }
+}
+
+.wallpaper-audio-control-top-left {
+  top: 16px;
+  left: 16px;
+}
+
+.wallpaper-audio-control-top-right {
+  top: 16px;
+  right: 16px;
+}
+
+.wallpaper-audio-control-bottom-left {
+  bottom: 16px;
+  left: 16px;
+}
+
+.wallpaper-audio-control-bottom-right {
+  bottom: 16px;
+  right: 16px;
+}
+
+.wallpaper-audio-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
 /* Animation specific styles */
 .aurora-container,
 .aurora-background-container,

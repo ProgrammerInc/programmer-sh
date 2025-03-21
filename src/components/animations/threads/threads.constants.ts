@@ -15,7 +15,23 @@ export const DEFAULT_SETTINGS = {
   /** Default mouse interaction setting */
   ENABLE_MOUSE_INTERACTION: false,
   /** Default stars background setting */
-  WITH_STARS: true
+  WITH_STARS: true,
+  /** Default audio reactivity setting */
+  ENABLE_AUDIO_REACTIVITY: false
+};
+
+/**
+ * Audio reactivity settings
+ */
+export const AUDIO_SETTINGS = {
+  /** Bass influence on amplitude (0-1) */
+  BASS_AMPLITUDE_INFLUENCE: 1.2,
+  /** Mid frequency influence on line width (0-1) */
+  MID_WIDTH_INFLUENCE: 0.8,
+  /** Treble influence on line distance (0-1) */
+  TREBLE_DISTANCE_INFLUENCE: 0.7,
+  /** Volume influence on color brightness (0-1) */
+  VOLUME_BRIGHTNESS_INFLUENCE: 1.0
 };
 
 /**
@@ -23,15 +39,15 @@ export const DEFAULT_SETTINGS = {
  */
 export const SHADER_SETTINGS = {
   /** Number of thread lines to render */
-  LINE_COUNT: 40,
+  LINE_COUNT: 60,
   /** Width of each thread line */
-  LINE_WIDTH: 7.0,
+  LINE_WIDTH: 8.0,
   /** Blur amount for thread lines */
-  LINE_BLUR: 10.0,
+  LINE_BLUR: 12.0,
   /** PI constant for shader calculations */
   PI: 3.1415926538,
   /** Mouse movement smoothing factor */
-  MOUSE_SMOOTHING: 0.05
+  MOUSE_SMOOTHING: 0.08
 };
 
 /**
@@ -70,12 +86,16 @@ export const SHADERS = {
   uniform float uAmplitude;
   uniform float uDistance;
   uniform vec2 uMouse;
+  uniform float uBass;
+  uniform float uMid;
+  uniform float uTreble;
+  uniform float uVolume;
 
   #define PI 3.1415926538
 
-  const int u_line_count = 40;
-  const float u_line_width = 7.0;
-  const float u_line_blur = 10.0;
+  const int u_line_count = 60;
+  const float u_line_width = 8.0;
+  const float u_line_blur = 12.0;
 
   float pixel(float count, vec2 resolution) {
       return 1.0 / max(resolution.x, resolution.y) * count;
@@ -105,15 +125,18 @@ export const SHADERS = {
       float split_offset = (perc * 0.4);
       float split_point = 0.1 + split_offset;
       
+      // Adjust amplitude with bass audio reactivity
       float amplitude_normal = smoothstep(split_point, 0.7, st.x);
       float amplitude_strength = 0.5;
-      // Reduced modulation intensity (20% influence from mouse Y)
-      float amplitude = amplitude_normal * amplitude_strength * uAmplitude * (1.0 + (uMouse.y - 0.5) * 0.2);
+      // Combine uAmplitude with uBass for audio reactivity
+      float combined_amplitude = uAmplitude * (1.0 + uBass * 0.6);
+      float amplitude = amplitude_normal * amplitude_strength * combined_amplitude * (1.0 + (uMouse.y - 0.5) * 0.2);
 
-      // Reduced time modulation (only 1.0 factor)
-      float time_scaled = iTime / 10.0 + (uMouse.x - 0.5) * 1.0;
+      // Adjust time modulation with mid frequencies
+      float time_scaled = iTime / 10.0 + (uMouse.x - 0.5) * 1.0 + uMid * 0.3;
       
-      float blur = smoothstep(split_point, split_point + 0.05, st.x) * perc;
+      // Adjust blur with treble
+      float blur = smoothstep(split_point, split_point + 0.05, st.x) * perc * (1.0 + uTreble * 0.2);
 
       float xnoise = mix(
           Perlin2D(vec2(time_scaled, st.x + perc) * 2.5),
@@ -121,17 +144,23 @@ export const SHADERS = {
           st.x * 0.3
       );
 
-      float y = 0.5 + (perc - 0.5) * uDistance + xnoise / 2.0 * amplitude;
+      // Add audio reactivity to positioning
+      float audio_movement = uBass * 0.2 + uMid * 0.05 + uTreble * 0.02;
+      float y = 0.5 + (perc - 0.5) * (uDistance + uTreble * 0.2) + xnoise / 2.0 * amplitude + sin(iTime + perc * 6.28) * audio_movement;
+
+      // Adjust line width with mid frequencies
+      float line_width_mod = width * (1.0 + uMid * 0.4);
+      float line_blur_mod = u_line_blur * (1.0 + uTreble * 0.3);
 
       float line_start = smoothstep(
-          y + (width / 2.0) + (u_line_blur * pixel(1.0, iResolution.xy) * blur),
+          y + (line_width_mod / 2.0) + (line_blur_mod * pixel(1.0, iResolution.xy) * blur),
           y,
           st.y
       );
           
       float line_end = smoothstep(
           y,
-          y - (width / 2.0) - (u_line_blur * pixel(1.0, iResolution.xy) * blur),
+          y - (line_width_mod / 2.0) - (line_blur_mod * pixel(1.0, iResolution.xy) * blur),
           st.y
       );
       
@@ -158,7 +187,9 @@ export const SHADERS = {
       }
       
       float color = 1.0 - line_strength;
-      fragColor = vec4(uColor * color, color);
+      // Adjust color intensity based on volume
+      vec3 final_color = uColor * color * (1.0 + uVolume * 0.5);
+      fragColor = vec4(final_color, color);
   }
 
   void main() {
@@ -174,5 +205,7 @@ export const CSS_CLASSES = {
   /** Container class */
   CONTAINER: 'threads-container',
   /** Canvas class */
-  CANVAS: 'threads-canvas'
+  CANVAS: 'threads-canvas',
+  /** Audio controls class */
+  AUDIO_CONTROLS: 'threads-audio-controls'
 };
