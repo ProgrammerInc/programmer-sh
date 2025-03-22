@@ -179,4 +179,11 @@ export interface QRCodeProps {
    * Configuration for the logo/image to display in the center of the QR code
    */
   imageSettings?: ImageSettings;
+
+  /**
+   * Identifier of a preset to use from the database
+   * If provided, will load the preset from the database and use its settings
+   * This will override any imageSettings provided directly
+   */
+  imagePreset?: string;
 }

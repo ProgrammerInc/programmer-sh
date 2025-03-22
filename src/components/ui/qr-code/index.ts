@@ -49,10 +49,10 @@
  * ```
  */
 
+'use client';
+
 // Export all components and types
 export * from './qr-code';
 export * from './qr-code.types';
-
-// For backwards compatibility
-import QRCodeComponent from './qr-code';
-export default QRCodeComponent;
+export * from './qr-code.hooks';
+export { default } from './qr-code';

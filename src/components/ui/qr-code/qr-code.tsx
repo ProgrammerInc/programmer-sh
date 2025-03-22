@@ -1,11 +1,13 @@
 'use client';
 
 import { cn } from '@/utils/app.utils';
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { QRCode } from 'react-qrcode-logo';
 
 import styles from './qr-code.module.css';
 import { QRCodeProps, ImageSettings } from './qr-code.types';
+import { useQRCodePreset, useQRCodePresets } from './qr-code.hooks';
+import { logger } from '@/services/logger/logger.service';
 
 /**
  * QR Code Component
@@ -47,12 +49,7 @@ import { QRCodeProps, ImageSettings } from './qr-code.types';
  * <QRCodeComponent 
  *   id="logo-qr"
  *   value="https://example.com" 
- *   imageSettings={{
- *     src: "/logo.png",
- *     height: 24,
- *     width: 24,
- *     excavate: true
- *   }}
+ *   imagePreset="programmerIcon"
  * />
  * ```
  */
@@ -72,9 +69,47 @@ export const QRCodeComponent = memo<QRCodeProps>(function QRCodeComponent({
   },
   enableCORS = false,
   imageSettings,
+  imagePreset,
   className,
   title = 'Scan QR Code to Save My Contact Information'
 }) {
+  // Load presets from database if an image preset is specified
+  const { preset, isLoading: isPresetLoading } = useQRCodePreset(imagePreset || '');
+  
+  // Determine which image settings to use
+  const finalImageSettings = useMemo(() => {
+    // If loading or no preset specified, use provided image settings
+    if (isPresetLoading || !imagePreset) {
+      return imageSettings;
+    }
+    
+    // If preset loaded, use it
+    if (preset) {
+      logger.debug(`Using QR code preset: ${imagePreset}`);
+      return preset;
+    }
+    
+    // Fallback
+    logger.debug('No QR code preset found, using provided image settings');
+    return imageSettings;
+  }, [imageSettings, imagePreset, preset, isPresetLoading]);
+  
+  // Show loading state
+  if (imagePreset && isPresetLoading) {
+    return (
+      <div className={cn(styles.container, styles.loading, className)}>
+        <div className={styles['qr-wrapper']}>
+          <div className={styles.loadingIndicator} />
+        </div>
+        {title && (
+          <p className={styles.title}>
+            <span className={styles['title-link']}>{title}</span>
+          </p>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className={cn(styles.container, className)}>
       <div className={styles['qr-wrapper']}>
@@ -87,14 +122,14 @@ export const QRCodeComponent = memo<QRCodeProps>(function QRCodeComponent({
           enableCORS={enableCORS}
           eyeColor={eyeColor}
           eyeRadius={eyeRadius}
-          logoImage={imageSettings?.src}
-          logoWidth={imageSettings?.width}
-          logoHeight={imageSettings?.height}
-          logoPadding={imageSettings?.logoPadding}
-          logoPaddingStyle={imageSettings?.logoPaddingStyle}
+          logoImage={finalImageSettings?.src}
+          logoWidth={finalImageSettings?.width}
+          logoHeight={finalImageSettings?.height}
+          logoPadding={finalImageSettings?.logoPadding}
+          logoPaddingStyle={finalImageSettings?.logoPaddingStyle}
           qrStyle={qrStyle}
           quietZone={quietZone}
-          removeQrCodeBehindLogo={imageSettings?.removeQrCodeBehindLogo}
+          removeQrCodeBehindLogo={finalImageSettings?.removeQrCodeBehindLogo}
           size={size}
           style={style}
         />

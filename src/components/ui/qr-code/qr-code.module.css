@@ -9,10 +9,39 @@
   margin-bottom: 1rem;
 }
 
+/* Loading state for the container */
+.loading {
+  position: relative;
+}
+
+/* Loading indicator */
+.loadingIndicator {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  animation: qrcode-loading-spinner 0.8s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Loading animation */
+@keyframes qrcode-loading-spinner {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
 /* Wrapper for the QR code image */
 .qr-wrapper {
   padding: 0.5rem;
   border-radius: 0.25rem;
+  position: relative;
+  min-height: 100px;
+  min-width: 100px;
 }
 
 /* Title text below QR code */
