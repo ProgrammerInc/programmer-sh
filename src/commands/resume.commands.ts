@@ -1,5 +1,5 @@
 import { createFeatureLogger } from '../services/logger/logger.utils';
-import { fetchPortfolioData } from '../services/portfolio/portfolio.services';
+import { fetchPortfolioData } from '../services/portfolio/portfolio.service';
 import { Command, CommandResult } from './command.types';
 import { formatAchievements, formatTechnologies } from './experience.commands';
 

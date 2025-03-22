@@ -5,7 +5,7 @@
  */
 
 export * from '../cursor/cursor.service';
-export * from '../portfolio/portfolio.services';
+export * from '../portfolio/portfolio.service';
 export * from '../qrcode/qrcode.service';
 export * from '../social-links/social-links.service';
 export * from '../wallpaper/wallpaper.service';

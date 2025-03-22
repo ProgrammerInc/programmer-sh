@@ -1,5 +1,5 @@
 import { createFeatureLogger } from '../services/logger/logger.utils';
-import { fetchProjectById, fetchProjects } from '../services/portfolio/portfolio.services';
+import { fetchProjectById, fetchProjects } from '../services/portfolio/portfolio.service';
 import { Command, CommandResult } from './command.types';
 
 // Create a dedicated logger for projects commands
