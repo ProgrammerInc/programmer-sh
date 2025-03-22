@@ -1,5 +1,5 @@
-import { fetchSocialLinks } from '@/services/database/social-links.service';
 import { createFeatureLogger } from '@/services/logger/logger.utils';
+import { fetchSocialLinks } from '@/services/social-links/social-links.service';
 import { Command, CommandResult } from './command.types';
 
 // Create a dedicated logger for social commands
@@ -63,7 +63,10 @@ const formatSocialLink = (link: SocialLink): string => {
     return `  - ${name}: <a class="text-terminal-link hover:underline" href="${link.url}" target="_blank" rel="noopener noreferrer">${link.url.replace('https://', '')}</a>`;
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    socialLogger.error('Error formatting social link', { linkType: link.type, error: errorMessage });
+    socialLogger.error('Error formatting social link', {
+      linkType: link.type,
+      error: errorMessage
+    });
     return `  - Error formatting link: ${link.type}`;
   }
 };
@@ -77,7 +80,7 @@ export const socialCommand: Command = {
   execute: (): CommandResult => {
     // Start logging for command execution
     socialLogger.info('Executing social command');
-    
+
     // Return a CommandResult with isAsync flag and an asyncResolver function
     return {
       content: 'Loading social links...',
@@ -87,7 +90,7 @@ export const socialCommand: Command = {
         try {
           socialLogger.debug('Fetching social links');
           // Fetch social links directly from the service
-          const links = await fetchSocialLinks() as SocialLink[];
+          const links = (await fetchSocialLinks()) as SocialLink[];
 
           if (!links || links.length === 0) {
             socialLogger.info('No social links available');
@@ -98,7 +101,7 @@ export const socialCommand: Command = {
           }
 
           socialLogger.info('Social links fetched successfully', { count: links.length });
-          
+
           // Format and sort social links output
           const formattedLinks = links
             .sort((a, b) => getSocialName(a.type).localeCompare(getSocialName(b.type)))

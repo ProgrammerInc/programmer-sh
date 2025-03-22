@@ -5,17 +5,9 @@
  * with optimized query performance.
  */
 
-import { createClient } from '@supabase/supabase-js';
 import { CursorType, Cursor } from '@/components/ui/cursor/cursor.types';
+import { supabase, isNotFoundError, logDbError } from '@/utils/supabase.utils';
 import { logger } from '@/services/logger';
-
-// Environment variables
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://ypsbxadldkiokgvlfxag.supabase.co';
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlwc2J4YWRsZGtpb2tndmxmeGFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk3NTcyMDEsImV4cCI6MjA1NTMzMzIwMX0.s_LiIvqGbHBeN1HSXEKMBzGV6se9ezvjyH_KtLi5lYk';
-
-// Create a single Supabase client for interacting with the database
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Define database cursor interface
 interface DbCursor {
@@ -31,7 +23,6 @@ interface DbCursor {
   is_active: boolean;
   created_at: string;
   updated_at: string;
-  poster: string | null;
 }
 
 /**
@@ -81,14 +72,14 @@ export const getAllCursors = async (): Promise<Cursor[]> => {
       return cursorsCache;
     }
 
-    // Fetch cursors from database with a single optimized query
     const { data: cursors, error } = await supabase
       .from('cursors')
       .select('*')
       .order('name');
 
     if (error) {
-      throw new Error(`Error fetching cursors: ${error.message}`);
+      logDbError('getAllCursors', error);
+      return [];
     }
 
     // Map database cursors to application cursors
@@ -118,21 +109,21 @@ export const getCursorById = async (id: string): Promise<Cursor | null> => {
       }
     }
 
-    // Fetch cursor from database
-    const { data: cursor, error } = await supabase
+    const { data, error } = await supabase
       .from('cursors')
       .select('*')
       .eq('identifier', id)
       .single();
 
     if (error) {
-      if (error.code === 'PGRST116') { // Record not found
+      if (isNotFoundError(error, 'Cursor')) {
         return null;
       }
-      throw new Error(`Error fetching cursor: ${error.message}`);
+      logDbError('getCursorById', error);
+      return null;
     }
 
-    return mapDbCursorToCursor(cursor as DbCursor);
+    return mapDbCursorToCursor(data as DbCursor);
   } catch (error) {
     logger.error('Error in getCursorById:', error);
     return null;
@@ -152,21 +143,21 @@ export const getCursorByName = async (name: string): Promise<Cursor | null> => {
       }
     }
 
-    // Fetch cursor from database
-    const { data: cursor, error } = await supabase
+    const { data, error } = await supabase
       .from('cursors')
       .select('*')
       .eq('name', name)
       .single();
 
     if (error) {
-      if (error.code === 'PGRST116') { // Record not found
+      if (isNotFoundError(error, 'Cursor')) {
         return null;
       }
-      throw new Error(`Error fetching cursor: ${error.message}`);
+      logDbError('getCursorByName', error);
+      return null;
     }
 
-    return mapDbCursorToCursor(cursor as DbCursor);
+    return mapDbCursorToCursor(data as DbCursor);
   } catch (error) {
     logger.error('Error in getCursorByName:', error);
     return null;

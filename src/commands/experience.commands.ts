@@ -1,5 +1,5 @@
-import { fetchExperience } from '../services/database/portfolio.services';
 import { createFeatureLogger } from '../services/logger/logger.utils';
+import { fetchExperience } from '../services/portfolio/portfolio.services';
 import { Command, CommandResult } from './command.types';
 
 // Create a dedicated logger for experience commands

@@ -5,17 +5,9 @@
  * with optimized query performance.
  */
 
-import { createClient } from '@supabase/supabase-js';
 import { QRCodeType, QRCode } from '@/components/ui/qrcode/qrcode.types';
+import { supabase, isNotFoundError, logDbError } from '@/utils/supabase.utils';
 import { logger } from '@/services/logger';
-
-// Environment variables
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://ypsbxadldkiokgvlfxag.supabase.co';
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlwc2J4YWRsZGtpb2tndmxmeGFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk3NTcyMDEsImV4cCI6MjA1NTMzMzIwMX0.s_LiIvqGbHBeN1HSXEKMBzGV6se9ezvjyH_KtLi5lYk';
-
-// Create a single Supabase client for interacting with the database
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Define database QR code interface
 interface DbQRCode {
@@ -82,14 +74,14 @@ export const getAllQRCodes = async (): Promise<QRCode[]> => {
       return qrCodesCache;
     }
 
-    // Fetch QR codes from database with a single optimized query
     const { data: qrCodes, error } = await supabase
       .from('qr_codes')
       .select('*')
       .order('name');
 
     if (error) {
-      throw new Error(`Error fetching QR codes: ${error.message}`);
+      logDbError('getAllQRCodes', error);
+      return [];
     }
 
     // Map database QR codes to application QR codes
@@ -119,21 +111,21 @@ export const getQRCodeById = async (id: string): Promise<QRCode | null> => {
       }
     }
 
-    // Fetch QR code from database
-    const { data: qrCode, error } = await supabase
+    const { data, error } = await supabase
       .from('qr_codes')
       .select('*')
       .eq('identifier', id)
       .single();
 
     if (error) {
-      if (error.code === 'PGRST116') { // Record not found
+      if (isNotFoundError(error, 'QR code')) {
         return null;
       }
-      throw new Error(`Error fetching QR code: ${error.message}`);
+      logDbError('getQRCodeById', error);
+      return null;
     }
 
-    return mapDbQRCodeToQRCode(qrCode as DbQRCode);
+    return mapDbQRCodeToQRCode(data as DbQRCode);
   } catch (error) {
     logger.error('Error in getQRCodeById:', error);
     return null;
@@ -153,21 +145,21 @@ export const getQRCodeByName = async (name: string): Promise<QRCode | null> => {
       }
     }
 
-    // Fetch QR code from database
-    const { data: qrCode, error } = await supabase
+    const { data, error } = await supabase
       .from('qr_codes')
       .select('*')
       .eq('name', name)
       .single();
 
     if (error) {
-      if (error.code === 'PGRST116') { // Record not found
+      if (isNotFoundError(error, 'QR code')) {
         return null;
       }
-      throw new Error(`Error fetching QR code: ${error.message}`);
+      logDbError('getQRCodeByName', error);
+      return null;
     }
 
-    return mapDbQRCodeToQRCode(qrCode as DbQRCode);
+    return mapDbQRCodeToQRCode(data as DbQRCode);
   } catch (error) {
     logger.error('Error in getQRCodeByName:', error);
     return null;
@@ -192,7 +184,6 @@ export const createQRCode = async (qrCode: Omit<QRCode, 'id'>): Promise<QRCode |
       options: qrCode.options || null
     };
 
-    // Insert new QR code into database
     const { data, error } = await supabase
       .from('qr_codes')
       .insert([dbQRCode])
@@ -200,7 +191,8 @@ export const createQRCode = async (qrCode: Omit<QRCode, 'id'>): Promise<QRCode |
       .single();
 
     if (error) {
-      throw new Error(`Error creating QR code: ${error.message}`);
+      logDbError('createQRCode', error);
+      return null;
     }
 
     // Invalidate cache
@@ -230,7 +222,6 @@ export const updateQRCode = async (id: string, qrCode: Partial<QRCode>): Promise
     if (qrCode.logoUrl !== undefined) dbQRCode.logo_url = qrCode.logoUrl || null;
     if (qrCode.options !== undefined) dbQRCode.options = qrCode.options || null;
 
-    // Update QR code in database
     const { data, error } = await supabase
       .from('qr_codes')
       .update(dbQRCode)
@@ -239,7 +230,8 @@ export const updateQRCode = async (id: string, qrCode: Partial<QRCode>): Promise
       .single();
 
     if (error) {
-      throw new Error(`Error updating QR code: ${error.message}`);
+      logDbError('updateQRCode', error);
+      return null;
     }
 
     // Invalidate cache
@@ -263,7 +255,8 @@ export const deleteQRCode = async (id: string): Promise<boolean> => {
       .eq('identifier', id);
 
     if (error) {
-      throw new Error(`Error deleting QR code: ${error.message}`);
+      logDbError('deleteQRCode', error);
+      return false;
     }
 
     // Invalidate cache

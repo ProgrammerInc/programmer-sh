@@ -1,5 +1,5 @@
-import { fetchSocialLinks } from '@/services/database/social-links.service';
 import { createFeatureLogger } from '@/services/logger/logger.utils';
+import { fetchSocialLinks } from '@/services/social-links/social-links.service';
 import type { SocialLink } from '@/types/social-links.types';
 import { useEffect, useState } from 'react';
 

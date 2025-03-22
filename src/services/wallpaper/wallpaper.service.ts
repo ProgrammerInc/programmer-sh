@@ -23,18 +23,98 @@ import {
   WallpaperType,
   WallpaperVideo
 } from '@/components/ui/wallpaper/wallpaper.types';
-import { logger } from '@/services/logger/logger.service';
-import { createClient } from '@supabase/supabase-js';
+import { supabase, isNotFoundError, logDbError } from '@/utils/supabase.utils';
+import { logger } from '@/services/logger';
 
-// Create a singleton instance of the Supabase client
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+// Define database wallpaper record interface
+interface DbWallpaper {
+  id: string;
+  identifier: string;
+  name: string;
+  description: string;
+  enabled: boolean;
+  type: string;
+  background_id: string;
+  created_at?: string;
+  updated_at?: string;
+  wallpaper_background?: DbBackground;
+}
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Define database background record interface
+interface DbBackground {
+  id: string;
+  identifier: string;
+  type: string;
+  animation_id: string | null;
+  color_id: string | null;
+  gradient_id: string | null;
+  image_id: string | null;
+  video_id: string | null;
+  created_at?: string;
+  updated_at?: string;
+  wallpaper_animation?: DbAnimation;
+  wallpaper_color?: DbColor;
+  wallpaper_gradient?: DbGradient;
+  wallpaper_image?: DbImage;
+  wallpaper_video?: DbVideo;
+}
 
-/**
- * Cache management for wallpaper data
- */
+// Define database animation record interface
+interface DbAnimation {
+  id: string;
+  identifier: string;
+  type: string;
+  url: string | null;
+  animation_props: Record<string, unknown> | null;
+  created_at?: string;
+  updated_at?: string;
+}
+
+// Define database color record interface
+interface DbColor {
+  id: string;
+  identifier: string;
+  color: string;
+  type: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+// Define database gradient record interface
+interface DbGradient {
+  id: string;
+  identifier: string;
+  type: string;
+  gradient: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+// Define database image record interface
+interface DbImage {
+  id: string;
+  identifier: string;
+  url: string;
+  type: string;
+  mime_type: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+// Define database video record interface
+interface DbVideo {
+  id: string;
+  identifier: string;
+  url: string;
+  type: string;
+  mime_type: string;
+  poster: string | null;
+  source_type: string | null;
+  created_at?: string;
+  updated_at?: string;
+}
+
+// Cache management for wallpaper data
 interface CacheItem<T> {
   data: T;
   timestamp: number;
@@ -63,108 +143,6 @@ const isCacheValid = <T>(cacheItem: CacheItem<T> | null): boolean => {
   if (!cacheItem) return false;
   return Date.now() - cacheItem.timestamp < CACHE_EXPIRATION;
 };
-
-/**
- * Interface for database wallpaper records
- */
-interface DbWallpaper {
-  id: string;
-  identifier: string;
-  name: string;
-  description: string;
-  enabled: boolean;
-  type: string;
-  background_id: string;
-  created_at?: string;
-  updated_at?: string;
-  wallpaper_background?: DbBackground;
-}
-
-/**
- * Interface for database background records
- */
-interface DbBackground {
-  id: string;
-  identifier: string;
-  type: string;
-  animation_id: string | null;
-  color_id: string | null;
-  gradient_id: string | null;
-  image_id: string | null;
-  video_id: string | null;
-  created_at?: string;
-  updated_at?: string;
-  wallpaper_animation?: DbAnimation;
-  wallpaper_color?: DbColor;
-  wallpaper_gradient?: DbGradient;
-  wallpaper_image?: DbImage;
-  wallpaper_video?: DbVideo;
-}
-
-/**
- * Interface for database animation records
- */
-interface DbAnimation {
-  id: string;
-  identifier: string;
-  type: string;
-  url: string | null;
-  animation_props: Record<string, unknown> | null;
-  created_at?: string;
-  updated_at?: string;
-}
-
-/**
- * Interface for database color records
- */
-interface DbColor {
-  id: string;
-  identifier: string;
-  color: string;
-  type: string;
-  created_at?: string;
-  updated_at?: string;
-}
-
-/**
- * Interface for database gradient records
- */
-interface DbGradient {
-  id: string;
-  identifier: string;
-  type: string;
-  gradient: string;
-  created_at?: string;
-  updated_at?: string;
-}
-
-/**
- * Interface for database image records
- */
-interface DbImage {
-  id: string;
-  identifier: string;
-  url: string;
-  type: string;
-  mime_type: string;
-  created_at?: string;
-  updated_at?: string;
-}
-
-/**
- * Interface for database video records
- */
-interface DbVideo {
-  id: string;
-  identifier: string;
-  url: string;
-  type: string;
-  mime_type: string;
-  poster: string | null;
-  source_type: string | null;
-  created_at?: string;
-  updated_at?: string;
-}
 
 /**
  * Maps a database animation to the application Animation type
@@ -359,7 +337,7 @@ export const fetchAllWallpapers = async (): Promise<Record<string, Wallpaper>> =
       .select(WALLPAPER_QUERY);
 
     if (error) {
-      logger.error('Error fetching wallpapers:', error);
+      logDbError('fetchAllWallpapers', error);
       throw new Error(`Error fetching wallpapers: ${error.message}`);
     }
 
@@ -410,7 +388,7 @@ export const fetchEnabledWallpapers = async (): Promise<Record<string, Wallpaper
       .eq('enabled', true);
 
     if (error) {
-      logger.error('Error fetching enabled wallpapers:', error);
+      logDbError('fetchEnabledWallpapers', error);
       throw new Error(`Error fetching enabled wallpapers: ${error.message}`);
     }
 
@@ -473,7 +451,7 @@ export const fetchWallpaperByIdentifier = async (identifier: string): Promise<Wa
       .single();
 
     if (error) {
-      logger.error(`Error fetching wallpaper ${identifier}:`, error);
+      logDbError(`fetchWallpaperByIdentifier`, error);
       return null;
     }
 

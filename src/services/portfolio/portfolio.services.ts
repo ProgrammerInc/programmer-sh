@@ -1,4 +1,10 @@
-import { supabase } from '../../integrations/supabase/supabase.client';
+/**
+ * Portfolio Services
+ *
+ * Handles retrieval of portfolio data from the database
+ * with optimized query performance.
+ */
+
 import {
   Contact,
   Education,
@@ -6,8 +12,9 @@ import {
   Profile,
   Project,
   Skill
-} from '../../types/portfolio-data.types';
-import { createServiceLogger, logError } from '../logger/logger.utils';
+} from '@/types/portfolio-data.types';
+import { supabase, isNotFoundError, logDbError } from '@/utils/supabase.utils';
+import { createServiceLogger, logError } from '@/services/logger/logger.utils';
 
 // Create a dedicated logger for database services
 const dbLogger = createServiceLogger('PortfolioService');
@@ -21,7 +28,11 @@ export const fetchProfile = async (): Promise<Profile | null> => {
       .select('*')
       .single();
 
-    if (profileError) throw profileError;
+    if (profileError) {
+      logDbError('fetchProfile', profileError);
+      return null;
+    }
+    
     if (!profileData) {
       dbLogger.error('No profile data found in the database');
       return null;
@@ -36,7 +47,10 @@ export const fetchProfile = async (): Promise<Profile | null> => {
         )
       `);
 
-    if (skillsError) throw skillsError;
+    if (skillsError) {
+      logDbError('fetchProfile (skills)', skillsError);
+      return null;
+    }
 
     // Transform the data format
     const skills: Skill[] = skillsData.map(skillCategory => ({
@@ -114,7 +128,11 @@ export const fetchExperience = async (): Promise<Experience[]> => {
         experience_achievements (description)
       `);
 
-    if (experienceError) throw experienceError;
+    if (experienceError) {
+      logDbError('fetchExperience', experienceError);
+      return [];
+    }
+    
     if (!experienceData || experienceData.length === 0) {
       dbLogger.error('No experience data found in the database');
       return [];
@@ -151,7 +169,11 @@ export const fetchProjects = async (): Promise<Project[]> => {
         project_highlights (description)
       `);
 
-    if (projectsError) throw projectsError;
+    if (projectsError) {
+      logDbError('fetchProjects', projectsError);
+      return [];
+    }
+    
     if (!projectsData || projectsData.length === 0) {
       dbLogger.error('No projects data found in the database');
       return [];
@@ -162,7 +184,7 @@ export const fetchProjects = async (): Promise<Project[]> => {
       title: project.title,
       description: project.description,
       url: project.url,
-      github: project.github_url,
+      github_url: project.github_url,
       image: project.image,
       technologies: project.project_technologies.map((tech: { name: string }) => tech.name),
       highlights: project.project_highlights.map(
@@ -182,7 +204,11 @@ export const fetchEducation = async (): Promise<Education[]> => {
       .from('education')
       .select('*');
 
-    if (educationError) throw educationError;
+    if (educationError) {
+      logDbError('fetchEducation', educationError);
+      return [];
+    }
+    
     if (!educationData || educationData.length === 0) {
       dbLogger.error('No education data found in the database');
       return [];
@@ -247,7 +273,14 @@ export const fetchProjectById = async (projectId: string): Promise<Project | nul
       .eq('project_key', projectId)
       .single();
 
-    if (projectError) throw projectError;
+    if (projectError) {
+      if (isNotFoundError(projectError, 'Project')) {
+        return null;
+      }
+      logDbError(`fetchProjectById (${projectId})`, projectError);
+      return null;
+    }
+    
     if (!projectData) return null;
 
     return {
