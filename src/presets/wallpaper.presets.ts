@@ -203,7 +203,7 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
   balatro: {
     id: 'balatro',
     name: 'Balatro',
-    description: 'Balatro - a rainbow of colors',
+    description: 'Balatro background animation',
     enabled: true,
     type: 'animation',
     background: {

@@ -29,6 +29,7 @@ import {
   GridPatternProps,
   HyperspaceHero,
   HyperspaceHeroProps,
+  Hyperspeed,
   HyperspeedProps,
   Iridescence,
   IridescenceProps,
@@ -102,11 +103,13 @@ import defaultBlobs from '@/presets/blob.presets';
 import { globeArcs, globeConfig } from '@/presets/globe.presets';
 import wallpaperPresets from '@/presets/wallpaper.presets';
 import { hexToRgb } from '@/components/animations/particles/particles.utils';
+import { useWallpapers } from './wallpaper.hooks';
 import WallpaperAudioControl from './wallpaper-audio-control';
 import styles from './wallpaper.module.css';
-import { Suspense, forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { Suspense, forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
 import { WallpaperProps } from './wallpaper.types';
+import { fetchWallpaperByIdentifier } from '@/services/database/wallpaper.service';
 
 export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
   (
@@ -121,14 +124,26 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
       interactive = true,
       theme = 'dark',
       wallpaper = 'default',
-      wallpapers = wallpaperPresets
+      wallpapers: initialWallpapers
     },
     ref
   ) => {
+    // Load wallpapers from database with fallback to props or presets
+    const { wallpapers: dbWallpapers, isLoading } = useWallpapers();
+    const [wallpapers, setWallpapers] = useState(initialWallpapers || wallpaperPresets);
+    
+    // Update wallpapers when database load completes
+    useEffect(() => {
+      if (!isLoading && dbWallpapers && Object.keys(dbWallpapers).length > 0) {
+        setWallpapers(dbWallpapers);
+      }
+    }, [dbWallpapers, isLoading]);
+
     // Wallpaper debugging - only log once
     const isInitialMount = useRef(true);
     useEffect(() => {
       if (isInitialMount.current) {
+        console.log('Current wallpaper identifier:', wallpaper);
         console.log('Current wallpaper:', wallpapers[wallpaper]);
         isInitialMount.current = false;
       }
@@ -147,7 +162,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
 
     // Debug logging for wallpaper selection
     useEffect(() => {
-      console.log('[Wallpaper Debug] Current wallpaper ID:', wallpaper);
+      console.log('[Wallpaper Debug] Current wallpaper identifier:', wallpaper);
       console.log('[Wallpaper Debug] Current animation:', animation?.id || 'none');
       console.log('[Wallpaper Debug] Background config:', background);
     }, [wallpaper, background, animation]);

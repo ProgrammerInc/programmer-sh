@@ -11,31 +11,27 @@ import { TerminalHeaderProps, TerminalHeaderRef } from './terminal-header.types'
 
 /**
  * Terminal Header component that displays window controls, terminal title, and user menu.
- * 
+ *
  * Features:
  * - Window control buttons (close, minimize, maximize)
  * - Title display with animated cursor and last command indicator
  * - User authentication dropdown menu
  * - Login/signup or profile/logout options
  * - Social media links (optional)
- * 
+ *
  * @example
  * ```tsx
- * <TerminalHeader 
- *   lastCommand="ls -la" 
+ * <TerminalHeader
+ *   lastCommand="ls -la"
  *   socialLinks={[
  *     { name: 'GitHub', url: 'https://github.com/username' },
  *     { name: 'Twitter', url: 'https://twitter.com/username' }
- *   ]} 
+ *   ]}
  * />
  * ```
  */
 export const TerminalHeader = forwardRef<TerminalHeaderRef, TerminalHeaderProps>(
-  ({ 
-    lastCommand = '', 
-    socialLinks = [],
-    className = ''
-  }, ref) => {
+  ({ lastCommand = '', socialLinks = [], className = '' }, ref) => {
     const { userEmail } = useTerminalAuth();
     const { openModal, headerRef } = useAuthModal();
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -135,45 +131,36 @@ export const TerminalHeader = forwardRef<TerminalHeaderRef, TerminalHeaderProps>
       >
         {/* Window controls */}
         <div className={styles['window-controls']} role="group" aria-label="Window controls">
-          <div 
+          <div
             className={`${styles['window-control']} ${styles.close}`}
             role="button"
             aria-label="Close window"
             tabIndex={0}
           >
-            <X
-              className={styles['control-icon']}
-              strokeWidth={3}
-            />
+            <X className={styles['control-icon']} strokeWidth={3} />
           </div>
-          <div 
+          <div
             className={`${styles['window-control']} ${styles.minimize}`}
             role="button"
             aria-label="Minimize window"
             tabIndex={0}
           >
-            <Minus
-              className={styles['control-icon']}
-              strokeWidth={3}
-            />
+            <Minus className={styles['control-icon']} strokeWidth={3} />
           </div>
-          <div 
+          <div
             className={`${styles['window-control']} ${styles.maximize}`}
             role="button"
             aria-label="Maximize window"
             tabIndex={0}
           >
-            <Plus
-              className={styles['control-icon']}
-              strokeWidth={3}
-            />
+            <Plus className={styles['control-icon']} strokeWidth={3} />
           </div>
         </div>
 
         {/* Title area */}
         <div className={styles['title-container']} aria-label="Terminal title">
           <span>
-            <span className={styles['title-text']}>&lt;programmer.sh&gt;</span>.
+            <span className={styles['title-text']}>&lt;programmer&gt;</span>.
             <span className={styles.cursor}>_</span>
           </span>
           {lastCommand && (
