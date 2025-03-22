@@ -3,6 +3,86 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type Database = {
   public: {
     Tables: {
+      cursor_animations: {
+        Row: {
+          id: string;
+          identifier: string;
+          name: string | null;
+          description: string | null;
+          animation_type: string;
+          props: Json | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          identifier: string;
+          name?: string | null;
+          description?: string | null;
+          animation_type: string;
+          props?: Json | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          identifier?: string;
+          name?: string | null;
+          description?: string | null;
+          animation_type?: string;
+          props?: Json | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      cursors: {
+        Row: {
+          id: string;
+          identifier: string;
+          name: string;
+          description: string | null;
+          type: string;
+          animation_id: string | null;
+          enabled: boolean | null;
+          style: Json | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          identifier: string;
+          name: string;
+          description?: string | null;
+          type: string;
+          animation_id?: string | null;
+          enabled?: boolean | null;
+          style?: Json | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          identifier?: string;
+          name?: string;
+          description?: string | null;
+          type?: string;
+          animation_id?: string | null;
+          enabled?: boolean | null;
+          style?: Json | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'cursors_animation_id_fkey';
+            columns: ['animation_id'];
+            isOneToOne: false;
+            referencedRelation: 'cursor_animations';
+            referencedColumns: ['id'];
+          }
+        ];
+      };
       education: {
         Row: {
           created_at: string;

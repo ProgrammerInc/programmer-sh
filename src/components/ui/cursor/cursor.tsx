@@ -4,7 +4,7 @@
  * Cursor Provider Component
  * 
  * A customizable cursor provider that renders different cursor animations
- * based on the selected preset.
+ * based on selected presets from the database.
  */
 
 import {
@@ -43,16 +43,26 @@ import {
   TrailingCursor,
   TrailingCursorProps
 } from '@/components/cursors';
-import { cursorPresets } from '@/presets/cursor.presets';
-import { forwardRef, memo, useEffect, useImperativeHandle, useRef } from 'react';
+// Import the cursor service for database loading
+import { fetchCursorPresets } from '@/services/cursor/cursor.service';
+import { logger } from '@/services/logger/logger.service';
+import { forwardRef, memo, useEffect, useImperativeHandle, useRef, useState, useMemo } from 'react';
 
 import styles from './cursor.module.css';
 import { Cursor, CursorProps } from './cursor.types';
 
+// Default cursor as a fallback while loading
+const defaultCursor: Cursor = {
+  id: 'default',
+  name: 'Default',
+  description: 'Default cursor',
+  type: 'default'
+};
+
 /**
  * Cursor Provider component
  * 
- * Renders a custom cursor based on the selected preset
+ * Renders a custom cursor based on the selected preset from the database
  * 
  * @example
  * ```tsx
@@ -72,7 +82,14 @@ export const CursorProvider = memo(forwardRef<HTMLDivElement, CursorProps>(
     },
     ref
   ) => {
-    const currentCursor: Cursor = cursorPresets[cursor] || cursorPresets.default;
+    // State for cursor presets loaded from database
+    const [cursorPresets, setCursorPresets] = useState<Record<string, Cursor>>({ default: defaultCursor });
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    
+    const currentCursor = useMemo(() => {
+      return cursorPresets[cursor] || cursorPresets.default || defaultCursor;
+    }, [cursorPresets, cursor]);
+    
     const currentTheme: 'light' | 'dark' = theme;
     const currentColor = color || (currentTheme === 'dark' ? '#64ffda' : '#f1f1f1');
 
@@ -83,6 +100,25 @@ export const CursorProvider = memo(forwardRef<HTMLDivElement, CursorProps>(
     const magicTrailCursorRef = useRef<HTMLDivElement>(null);
     const nestedContainerRef = useRef<HTMLDivElement>(null);
     const previousCursorContainer = useRef<HTMLDivElement | null>(null);
+
+    // Load cursor presets from database
+    useEffect(() => {
+      const loadCursorPresets = async () => {
+        try {
+          setIsLoading(true);
+          const presets = await fetchCursorPresets();
+          setCursorPresets(presets);
+        } catch (error) {
+          logger.error('[Cursor] Error loading cursor presets from database:', error);
+          // Keep the default cursor only as fallback
+          setCursorPresets({ default: defaultCursor });
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      loadCursorPresets();
+    }, []);
 
     // Track when component is mounted to prevent cleanup errors
     useEffect(() => {
@@ -97,10 +133,10 @@ export const CursorProvider = memo(forwardRef<HTMLDivElement, CursorProps>(
 
     useEffect(() => {
       if (isInitialMount.current) {
-        console.log('[Cursor] Initial render with cursor:', currentCursor);
+        logger.debug('[Cursor] Initial render with cursor:', currentCursor);
         isInitialMount.current = false;
       } else {
-        console.log('[Cursor] Cursor changed to:', currentCursor.animation || 'default');
+        logger.debug('[Cursor] Cursor changed to:', currentCursor.animation || 'default');
       }
     }, [currentCursor]);
 
@@ -111,10 +147,15 @@ export const CursorProvider = memo(forwardRef<HTMLDivElement, CursorProps>(
       return () => {
         // Clean up any global event listeners here if needed
         if (hasMounted.current) {
-          console.log('[CursorProvider] Cleaning up cursor effect');
+          logger.debug('[CursorProvider] Cleaning up cursor effect');
         }
       };
     }, [cursor]);
+
+    // If still loading, show nothing or a placeholder
+    if (isLoading) {
+      return null; // Or a loading placeholder if needed
+    }
 
     return (
       <div

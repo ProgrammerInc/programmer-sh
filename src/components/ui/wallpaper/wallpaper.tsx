@@ -99,17 +99,34 @@ import {
   LazyParticles,
   LazyVortex
 } from '@/lib/lazy-components';
-import defaultBlobs from '@/presets/blob.presets';
-import { globeArcs, globeConfig } from '@/presets/globe.presets';
-import wallpaperPresets from '@/presets/wallpaper.presets';
 import { hexToRgb } from '@/components/animations/particles/particles.utils';
 import { useWallpapers } from './wallpaper.hooks';
 import WallpaperAudioControl from './wallpaper-audio-control';
 import styles from './wallpaper.module.css';
-import { Suspense, forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { Suspense, forwardRef, useEffect, useImperativeHandle, useRef, useState, useMemo } from 'react';
 
 import { WallpaperProps } from './wallpaper.types';
-import { fetchWallpaperByIdentifier } from '@/services/database/wallpaper.service';
+import { logger } from '@/services/logger/logger.service';
+
+// Default wallpaper as a fallback during loading
+const defaultWallpaper = {
+  id: 'default',
+  name: 'Default',
+  description: 'Default empty wallpaper',
+  type: 'color',
+  enabled: true,
+  background: {
+    id: 'default-background',
+    type: 'color',
+    colors: [
+      {
+        id: 'default-color',
+        color: '#121212',
+        type: 'hex'
+      }
+    ]
+  }
+};
 
 export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
   (
@@ -128,9 +145,9 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
     },
     ref
   ) => {
-    // Load wallpapers from database with fallback to props or presets
+    // Load wallpapers from database only
     const { wallpapers: dbWallpapers, isLoading } = useWallpapers();
-    const [wallpapers, setWallpapers] = useState(initialWallpapers || wallpaperPresets);
+    const [wallpapers, setWallpapers] = useState(initialWallpapers || { default: defaultWallpaper });
     
     // Update wallpapers when database load completes
     useEffect(() => {
@@ -143,14 +160,17 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
     const isInitialMount = useRef(true);
     useEffect(() => {
       if (isInitialMount.current) {
-        console.log('Current wallpaper identifier:', wallpaper);
-        console.log('Current wallpaper:', wallpapers[wallpaper]);
+        logger.debug('Current wallpaper identifier:', wallpaper);
+        logger.debug('Current wallpaper:', wallpapers[wallpaper]);
         isInitialMount.current = false;
       }
     }, [wallpaper, wallpapers]);
 
-    // Wallpaper properties
-    const currentWallpaper = wallpapers[wallpaper];
+    // Get current wallpaper or fallback to default
+    const currentWallpaper = useMemo(() => {
+      return wallpapers[wallpaper] || wallpapers.default || defaultWallpaper;
+    }, [wallpapers, wallpaper]);
+    
     const wallpaperAnimationRef = useRef<HTMLDivElement>(animationRef?.current || null);
     const wallpaperContainerRef = useRef<HTMLDivElement>(containerRef?.current || null);
     const wallpaperContentRef = useRef<HTMLDivElement>(contentRef?.current || null);
@@ -162,9 +182,9 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
 
     // Debug logging for wallpaper selection
     useEffect(() => {
-      console.log('[Wallpaper Debug] Current wallpaper identifier:', wallpaper);
-      console.log('[Wallpaper Debug] Current animation:', animation?.id || 'none');
-      console.log('[Wallpaper Debug] Background config:', background);
+      logger.debug('[Wallpaper Debug] Current wallpaper identifier:', wallpaper);
+      logger.debug('[Wallpaper Debug] Current animation:', animation?.id || 'none');
+      logger.debug('[Wallpaper Debug] Background config:', background);
     }, [wallpaper, background, animation]);
 
     // Default values
@@ -187,6 +207,27 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
     backgroundStyles.backgroundRepeat = 'no-repeat';
 
     useImperativeHandle(ref, () => wallpaperContainerRef.current!);
+
+    // Don't render anything substantial while loading
+    if (isLoading) {
+      return (
+        <div
+          id={id}
+          className={`${className} ${styles['wallpaper-loading']}`}
+          ref={wallpaperContainerRef}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            zIndex: -1,
+            backgroundColor: '#121212',
+            ...style
+          }}
+        />
+      );
+    }
 
     return (
       <div
@@ -326,7 +367,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
             )}
             {animation.id === 'blob-background' && (
               <BlobBackground
-                blobs={defaultBlobs}
+                blobs={[]}
                 {...(animation.animationProps as BlobBackgroundProps)}
               />
             )}
@@ -355,26 +396,12 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
             {animation.id === 'globe' && (
               <Suspense fallback={<AnimationLoader />}>
                 <LazyGlobe
-                  data={globeArcs.map(arc => ({
-                    ...arc,
-                    // Ensure all values are valid numbers
-                    startLat: Number.isFinite(arc.startLat) ? arc.startLat : 0,
-                    startLng: Number.isFinite(arc.startLng) ? arc.startLng : 0,
-                    endLat: Number.isFinite(arc.endLat) ? arc.endLat : 0,
-                    endLng: Number.isFinite(arc.endLng) ? arc.endLng : 0,
-                    arcAlt: Number.isFinite(arc.arcAlt) ? arc.arcAlt : 0.1,
-                    // Ensure color is never undefined
-                    color: arc.color || '#06b6d4'
-                  }))}
+                  data={[]}
                   globeConfig={{
-                    ...globeConfig,
-                    // Ensure lighting properties are never undefined
-                    ambientLight: globeConfig.ambientLight || '#ffffff',
-                    directionalLeftLight: globeConfig.directionalLeftLight || '#ffffff',
-                    directionalTopLight: globeConfig.directionalTopLight || '#ffffff',
-                    pointLight: globeConfig.pointLight || '#ffffff',
-                    // Apply animation props if available
-                    ...(animation.animationProps as WorldProps)?.globeConfig
+                    ambientLight: '#ffffff',
+                    directionalLeftLight: '#ffffff',
+                    directionalTopLight: '#ffffff',
+                    pointLight: '#ffffff',
                   }}
                 />
               </Suspense>
@@ -735,12 +762,7 @@ export const WallpaperProvider = forwardRef<HTMLDivElement, WallpaperProps>(
             )}
             {animation.id === 'world-map' && (
               <WorldMap
-                dots={[
-                  {
-                    start: { lat: 40.73061, lng: -73.935242 },
-                    end: { lat: 48.8534, lng: 2.3488 }
-                  }
-                ]}
+                dots={[]}
                 lineColor={foregroundColor}
                 {...(animation.animationProps as WorldMapProps)}
               />
