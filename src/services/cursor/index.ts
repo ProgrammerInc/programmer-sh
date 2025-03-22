@@ -1,8 +1,7 @@
 /**
  * Cursor Service Index
- * 
- * Exports all cursor service functionality
+ *
+ * Exports cursor service functionality for managing cursor data
  */
 
 export * from './cursor.service';
-export { default } from './cursor.service';

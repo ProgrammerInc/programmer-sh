@@ -1,161 +1,182 @@
 /**
  * Cursor Service
- * 
- * Provides functionality to fetch cursor data from the database
+ *
+ * Handles retrieval and management of cursor data from the database
+ * with optimized query performance.
  */
 
-import { supabase } from '@/integrations/supabase/supabase.client';
-import { Cursor } from '@/components/ui/cursor/cursor.types';
-import { logger } from '@/services/logger/logger.service';
+import { createClient } from '@supabase/supabase-js';
+import { CursorType, Cursor } from '@/components/ui/cursor/cursor.types';
+import { logger } from '@/services/logger';
 
-/**
- * Type definition for cursor animation data from the database
- */
-interface CursorAnimationData {
-  id: string;
-  identifier: string;
-  name: string | null;
-  description: string | null;
-  animation_type: string;
-  props: Record<string, unknown> | null;
-}
+// Environment variables
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://ypsbxadldkiokgvlfxag.supabase.co';
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlwc2J4YWRsZGtpb2tndmxmeGFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk3NTcyMDEsImV4cCI6MjA1NTMzMzIwMX0.s_LiIvqGbHBeN1HSXEKMBzGV6se9ezvjyH_KtLi5lYk';
 
-/**
- * Type definition for cursor data from the database
- */
-interface CursorData {
-  id: string;
+// Create a single Supabase client for interacting with the database
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Define database cursor interface
+interface DbCursor {
+  id: number;
   identifier: string;
   name: string;
   description: string | null;
   type: string;
-  animation_id: string | null;
-  enabled: boolean | null;
-  style: Record<string, unknown> | null;
-  animation?: CursorAnimationData;
+  theme: string | null;
+  animation: string | null;
+  animation_type: string | null;
+  url: string | null;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+  poster: string | null;
 }
 
 /**
- * Cache for cursor presets
+ * Maps a database cursor to the application Cursor type
  */
-let cachedCursorPresets: Record<string, Cursor> | null = null;
-
-/**
- * Default cursor for fallback if no presets are available
- */
-const defaultCursor: Cursor = {
-  id: 'default',
-  name: 'Default',
-  description: 'Default cursor',
-  type: 'default'
-};
-
-/**
- * Convert database cursor data to the Cursor interface format
- */
-const mapDatabaseCursorToCursor = (cursorData: CursorData): Cursor => {
+const mapDbCursorToCursor = (dbCursor: DbCursor): Cursor => {
   const cursor: Cursor = {
-    id: cursorData.identifier,
-    name: cursorData.name,
-    description: cursorData.description || '',
-    type: cursorData.type as 'default' | 'cursor' | 'image' | 'animation',
+    id: dbCursor.identifier,
+    name: dbCursor.name,
+    description: dbCursor.description || '',
+    type: dbCursor.type as CursorType
   };
 
-  // Add theme if in style object
-  if (cursorData.style?.theme) {
-    cursor.theme = cursorData.style.theme as 'light' | 'dark';
+  // Add optional properties if they exist in the database record
+  if (dbCursor.theme) {
+    cursor.theme = dbCursor.theme as 'light' | 'dark';
   }
 
-  // Add URL for image type cursors
-  if (cursorData.type === 'image' && cursorData.style?.url) {
-    cursor.url = cursorData.style.url as string;
+  if (dbCursor.animation) {
+    cursor.animation = dbCursor.animation;
   }
 
-  // Add animation properties for animation type cursors
-  if (cursorData.type === 'animation' && cursorData.animation) {
-    cursor.animation = cursorData.animation.identifier;
-    cursor.animationType = cursorData.animation.animation_type;
-    
-    // Add animation props if available
-    if (cursorData.animation.props) {
-      cursor.animationProps = cursorData.animation.props;
-    }
+  if (dbCursor.animation_type) {
+    cursor.animationType = dbCursor.animation_type;
+  }
+
+  if (dbCursor.url) {
+    cursor.url = dbCursor.url;
   }
 
   return cursor;
 };
 
+// In-memory cache for cursors
+let cursorsCache: Cursor[] | null = null;
+let lastFetchTime = 0;
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
 /**
- * Fetch cursor presets from the database
+ * Retrieves all cursors from the database with optimized query performance
  */
-export const fetchCursorPresets = async (): Promise<Record<string, Cursor>> => {
+export const getAllCursors = async (): Promise<Cursor[]> => {
   try {
-    // Return cached presets if available
-    if (cachedCursorPresets) {
-      return cachedCursorPresets;
+    // Check if we have a valid cache
+    const now = Date.now();
+    if (cursorsCache && (now - lastFetchTime < CACHE_TTL)) {
+      return cursorsCache;
     }
 
-    // Fetch all cursor data with animation relationships
-    const { data: cursorsData, error } = await supabase
+    // Fetch cursors from database with a single optimized query
+    const { data: cursors, error } = await supabase
       .from('cursors')
-      .select(`
-        id,
-        identifier,
-        name,
-        description,
-        type,
-        animation_id,
-        enabled,
-        style,
-        animation:cursor_animations(*)
-      `)
-      .eq('enabled', true);
+      .select('*')
+      .order('name');
 
     if (error) {
-      logger.error('Error fetching cursor presets:', error);
-      return { default: defaultCursor };
+      throw new Error(`Error fetching cursors: ${error.message}`);
     }
 
-    // Convert to Record<string, Cursor> format
-    const presets: Record<string, Cursor> = {};
+    // Map database cursors to application cursors
+    const mappedCursors = (cursors as DbCursor[]).map(mapDbCursorToCursor);
     
-    cursorsData.forEach((cursorData) => {
-      const cursor = mapDatabaseCursorToCursor(cursorData as CursorData);
-      presets[cursor.id] = cursor;
-    });
+    // Update cache
+    cursorsCache = mappedCursors;
+    lastFetchTime = now;
 
-    // If no cursors were found, add a default cursor
-    if (Object.keys(presets).length === 0) {
-      presets.default = defaultCursor;
-    }
-
-    // Cache the presets
-    cachedCursorPresets = presets;
-    
-    return presets;
+    return mappedCursors;
   } catch (error) {
-    logger.error('Error fetching cursor presets:', error);
-    return { default: defaultCursor };
+    logger.error('Error in getAllCursors:', error);
+    return [];
   }
 };
 
 /**
- * Clear the cursor presets cache
+ * Retrieves a cursor by its identifier with optimized query performance
  */
-export const clearCursorPresetsCache = (): void => {
-  cachedCursorPresets = null;
+export const getCursorById = async (id: string): Promise<Cursor | null> => {
+  try {
+    // Try to find the cursor in the cache first
+    if (cursorsCache) {
+      const cachedCursor = cursorsCache.find(cursor => cursor.id === id);
+      if (cachedCursor) {
+        return cachedCursor;
+      }
+    }
+
+    // Fetch cursor from database
+    const { data: cursor, error } = await supabase
+      .from('cursors')
+      .select('*')
+      .eq('identifier', id)
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') { // Record not found
+        return null;
+      }
+      throw new Error(`Error fetching cursor: ${error.message}`);
+    }
+
+    return mapDbCursorToCursor(cursor as DbCursor);
+  } catch (error) {
+    logger.error('Error in getCursorById:', error);
+    return null;
+  }
 };
 
 /**
- * Get a specific cursor preset by ID
+ * Retrieves a cursor by its name with optimized query performance
  */
-export const getCursorPreset = async (id: string): Promise<Cursor> => {
-  const presets = await fetchCursorPresets();
-  return presets[id] || presets.default || defaultCursor;
+export const getCursorByName = async (name: string): Promise<Cursor | null> => {
+  try {
+    // Try to find the cursor in the cache first
+    if (cursorsCache) {
+      const cachedCursor = cursorsCache.find(cursor => cursor.name === name);
+      if (cachedCursor) {
+        return cachedCursor;
+      }
+    }
+
+    // Fetch cursor from database
+    const { data: cursor, error } = await supabase
+      .from('cursors')
+      .select('*')
+      .eq('name', name)
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') { // Record not found
+        return null;
+      }
+      throw new Error(`Error fetching cursor: ${error.message}`);
+    }
+
+    return mapDbCursorToCursor(cursor as DbCursor);
+  } catch (error) {
+    logger.error('Error in getCursorByName:', error);
+    return null;
+  }
 };
 
-export default {
-  fetchCursorPresets,
-  clearCursorPresetsCache,
-  getCursorPreset
+/**
+ * Invalidates the cursors cache, forcing the next fetch to get fresh data
+ */
+export const invalidateCursorsCache = (): void => {
+  cursorsCache = null;
+  lastFetchTime = 0;
 };
