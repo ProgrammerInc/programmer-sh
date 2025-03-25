@@ -7,5 +7,6 @@
  * @module MetaBalls
  */
 
-export { MetaBalls, default } from './meta-balls';
+// Don't export the component directly to ensure proper lazy loading
+// Use the LazyMetalBalls component from @/lib/lazy-components instead
 export type { MetaBallsProps } from './meta-balls.types';
