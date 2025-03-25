@@ -232,11 +232,67 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
 
         // Check if command exists
         const command = commands[commandName];
+
+        // Add detailed debugging to check what's happening
+        commandExecutionLogger.debug('Command lookup details', {
+          commandName,
+          commandExists: !!command,
+          registeredCommands: Object.keys(commands),
+          supportRegistered: !!commands['support'],
+          contactRegistered: !!commands['contact'],
+          supportAlias: commands['contact']?.aliases?.includes('support')
+        });
+
+        // Check if this is an alias command
         if (!command) {
-          commandExecutionLogger.warn('Command not found', {
-            commandName,
-            availableCommands: Object.keys(commands).join(', ')
-          });
+          // Try to find a command where this is an alias
+          const commandWithAlias = Object.values(commands).find(cmd =>
+            cmd.aliases && cmd.aliases.includes(commandName)
+          );
+
+          if (commandWithAlias) {
+            commandExecutionLogger.info('Found command via alias lookup', {
+              commandName,
+              aliasOf: commandWithAlias.name
+            });
+
+            // Update lastCommand to show this is an alias
+            setLastCommand(`${commandName} (${commandWithAlias.name})`);
+
+            // Use the found command
+            const result = commandWithAlias.execute(cmdArgs);
+
+            // Process the result
+            if (result.isAsync && result.asyncResolver) {
+              handleAsyncCommand(actualCommand, commandWithAlias.name, result, commandStr);
+            } else {
+              setCommandOutput(prevOutput => [
+                ...prevOutput,
+                renderCommandOutput(actualCommand, result.content, result.rawHTML)
+              ]);
+            }
+            return;
+          }
+
+          // Special case for the support command (direct hardcoded fallback)
+          if (commandName === 'support' && commands['contact']) {
+            commandExecutionLogger.info('Using hardcoded support->contact fallback');
+            const result = commands['contact'].execute(cmdArgs);
+            
+            // Update lastCommand to show this is an alias of 'contact'
+            setLastCommand(`support (contact)`);
+
+            // Process the result
+            if (result.isAsync && result.asyncResolver) {
+              handleAsyncCommand(actualCommand, 'contact', result, commandStr);
+            } else {
+              setCommandOutput(prevOutput => [
+                ...prevOutput,
+                renderCommandOutput(actualCommand, result.content, result.rawHTML)
+              ]);
+            }
+            return;
+          }
 
           // Special handling for URL commands that don't exist
           if (isUrlCommand) {
@@ -245,14 +301,14 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
             );
 
             // Display error message
-          setCommandOutput(prevOutput => [
-            ...prevOutput,
-            renderCommandOutput(
-              'error',
-              `Command '${commandName}' not found. Try 'help' to see available commands.`,
-              false
-            )
-          ]);
+            setCommandOutput(prevOutput => [
+              ...prevOutput,
+              renderCommandOutput(
+                'error',
+                `Command '${commandName}' not found. Try 'help' to see available commands.`,
+                false
+              )
+            ]);
 
             // Execute help command after a short delay
             setTimeout(() => {

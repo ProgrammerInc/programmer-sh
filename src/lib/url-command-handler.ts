@@ -27,7 +27,13 @@ console.log('All available commands:', Object.keys(allCommands));
  * List of valid commands that can be executed via URL
  * This is dynamically generated from all available commands
  */
-export const validUrlCommands = Object.keys(allCommands) as ReadonlyArray<CommandName>;
+const baseCommands = Object.keys(allCommands) as ReadonlyArray<CommandName>;
+
+// Add any known command aliases to the valid commands list
+const aliasCommands = ['support'];
+
+// Combine base commands with alias commands for a complete list
+export const validUrlCommands = [...baseCommands, ...aliasCommands] as ReadonlyArray<CommandName>;
 
 // Log the valid commands to verify they are correctly populated
 console.log('Valid URL commands:', validUrlCommands);
@@ -83,15 +89,30 @@ export const extractUrlParameters = (url: string): UrlParameters => {
 };
 
 /**
- * Validates if the extracted command is valid and can be executed
- * 
- * @param command - The command to validate
- * @returns Whether the command is valid and can be executed
+ * Validates if a command is a valid URL command
+ *
+ * @param command The command to validate
+ * @returns boolean indicating if command is valid
  */
 export const isValidUrlCommand = (command: string): boolean => {
-  if (!command) return false;
-  
-  return validUrlCommands.includes(command as CommandName);
+  const commandParts = command.split('/');
+  const commandName = commandParts.length > 1 ? commandParts[1].toLowerCase() : '';
+
+  console.log(`URL command validation: ${commandName}`, { 
+    command, 
+    commandName,
+    commandParts,
+    validationResult: validUrlCommands.includes(commandName as CommandName) 
+  });
+
+  // Special case for support alias
+  if (commandName === 'support') {
+    console.log('URL handler recognizing support command directly');
+    return true;
+  }
+
+  // Standard validation logic
+  return validUrlCommands.includes(commandName as CommandName);
 };
 
 /**

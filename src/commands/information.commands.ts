@@ -160,6 +160,7 @@ ${contactInfo}`,
 export const contactCommand: Command = {
   name: 'contact',
   description: 'Display my contact information',
+  aliases: ['support'] as string[],
   execute: (): CommandResult => {
     informationLogger.info('Executing contact command');
     return {
@@ -201,6 +202,70 @@ ${contactInfo}`,
             isError: true
           };
         }
+      }
+    };
+  }
+};
+
+/**
+ * Command to handle support requests (direct alias for contact)
+ */
+export const supportCommand: Command = {
+  name: 'support',
+  description: 'Get support and contact information',
+  execute: (): CommandResult => {
+    informationLogger.info('Support command redirecting to contact command');
+    return {
+      content: 'Fetching contact information...',
+      isAsync: true,
+      isError: false,
+      asyncResolver: async (): Promise<CommandResult> => {
+        // Use the same resolver as the contact command
+        const profile = (await fetchProfile()) as Profile;
+        if (!profile || !profile.contact) {
+          informationLogger.error('Failed to fetch contact information', {
+            reason: 'Empty response or invalid data structure'
+          });
+          return {
+            content: 'Error: Could not fetch contact information.',
+            isError: true
+          };
+        }
+        const contactData = {
+          email: profile.contact.email,
+          linkedin: ensureProtocol(profile.contact.linkedin),
+          github: ensureProtocol(profile.contact.github),
+          website: ensureProtocol(profile.contact.website),
+        };
+        return {
+          content: `
+          <div class="about-section">
+            <div class="section-title">Contact Information</div>
+            <div class="about-content">
+              <div class="contact-item">
+                <span class="contact-label">Email:</span>
+                <a href="mailto:${contactData.email}" class="contact-value">${contactData.email}</a>
+              </div>
+              <div class="contact-item">
+                <span class="contact-label">LinkedIn:</span>
+                <a href="${contactData.linkedin}" target="_blank" class="contact-value">LinkedIn Profile</a>
+              </div>
+              <div class="contact-item">
+                <span class="contact-label">GitHub:</span>
+                <a href="${contactData.github}" target="_blank" class="contact-value">GitHub Profile</a>
+              </div>
+              ${contactData.website ? `
+              <div class="contact-item">
+                <span class="contact-label">Website:</span>
+                <a href="${contactData.website}" target="_blank" class="contact-value">${contactData.website}</a>
+              </div>` : ''}
+              <div class="contact-note">Feel free to reach out with any questions or opportunities!</div>
+            </div>
+          </div>
+          `,
+          isError: false,
+          rawHTML: true
+        };
       }
     };
   }

@@ -1,5 +1,6 @@
 import { CommandName } from '@/commands/command.types';
 import { getCurrentCursor } from '@/commands/cursor.commands';
+import { getCommands } from '@/commands';
 import { processThemeFromUrl } from '@/commands/theme.commands';
 import { getCurrentWallpaper } from '@/commands/wallpaper.commands';
 import CursorProvider from '@/components/ui/cursor';
@@ -147,7 +148,7 @@ const Index = () => {
     }
 
     // Prepare initial commands
-    let commands: string[] = [];
+    const initialCommandsToSet: string[] = [];
 
     // Use the command from parameters (route or extracted)
     const commandToExecute = commandParam;
@@ -158,11 +159,22 @@ const Index = () => {
     if (commandToExecute) {
       // Force lowercase for consistent matching
       const normalizedCommand = commandToExecute.toLowerCase();
+      
+      // Get all commands for checking aliases
+      const allAvailableCommands = getCommands();
 
       // Check if exact command exists
       let isValidCommand = validUrlCommands.includes(normalizedCommand as CommandName);
 
-      // If not found, try case-insensitive search
+      // If not found as direct command, check if it's an alias
+      if (!isValidCommand) {
+        const commandWithAlias = Object.values(allAvailableCommands).find(cmd => 
+          cmd.aliases && cmd.aliases.includes(normalizedCommand)
+        );
+        isValidCommand = !!commandWithAlias;
+      }
+
+      // If still not found, try case-insensitive search
       if (!isValidCommand) {
         isValidCommand = validUrlCommands.some(cmd => cmd.toLowerCase() === normalizedCommand);
       }
@@ -176,7 +188,7 @@ const Index = () => {
         setCurrentCommand(normalizedCommand as CommandName);
 
         // Execute the command directly
-        commands = [normalizedCommand];
+        initialCommandsToSet.push(normalizedCommand);
       } else {
         // Hard-code some known commands as a fallback
         const knownCommands = [
@@ -186,18 +198,19 @@ const Index = () => {
           'projects',
           'contact',
           'experience',
-          'education'
+          'education',
+          'support' // Explicitly add support to known commands
         ];
 
         if (knownCommands.includes(normalizedCommand)) {
           indexLogger.info('Using fallback for known command:', normalizedCommand);
-          commands = [normalizedCommand];
+          initialCommandsToSet.push(normalizedCommand);
         } else {
           indexLogger.warn('Invalid URL command:', normalizedCommand);
           // If invalid command, we'll still show the welcome screen
-          commands = ['welcome'];
+          initialCommandsToSet.push('welcome');
           // Optionally show an error message about invalid command
-          commands.push(
+          initialCommandsToSet.push(
             `echo Command '${normalizedCommand}' not found. Try 'help' to see available commands.`
           );
         }
@@ -205,13 +218,13 @@ const Index = () => {
     } else {
       // If no URL command was provided, show welcome
       indexLogger.info('No URL command found, showing welcome');
-      commands = ['welcome'];
+      initialCommandsToSet.push('welcome');
     }
 
     // Set the commands if we have any
-    if (commands.length > 0) {
-      indexLogger.info('Initial commands to execute:', commands);
-      setInitialCommands(commands);
+    if (initialCommandsToSet.length > 0) {
+      indexLogger.info('Initial commands to execute:', initialCommandsToSet);
+      setInitialCommands(initialCommandsToSet);
     }
 
     // Simulate loading for smoother entrance

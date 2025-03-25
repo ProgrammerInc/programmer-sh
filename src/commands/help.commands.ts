@@ -1,6 +1,7 @@
 import { createFeatureLogger } from '../services/logger/logger.utils';
 import { Command, CommandResult } from './command.types';
 import { welcomeCommand } from './welcome.commands';
+import { getCommands } from './index';
 
 // Create a dedicated logger for help commands
 const helpLogger = createFeatureLogger('HelpCommands');
@@ -184,6 +185,25 @@ export const getSpecificCommandHelp = (commandName: string): string => {
       helpContent += `<div>Category: <span class="text-terminal-prompt">${category.name}</span></div>`;
     }
 
+    // Get the actual command implementation
+    const commands = getCommands();
+    const commandObj = commands[commandName as keyof typeof commands] as Command | undefined;
+
+    // Add aliases information if available
+    if (commandObj && commandObj.aliases && commandObj.aliases.length > 0) {
+      const aliasesText = commandObj.aliases.map(a => `<span class="text-terminal-prompt">${a}</span>`).join(', ');
+      helpContent += `<div>Aliases: ${aliasesText}</div>`;
+    }
+
+    // Check if this command is an alias itself
+    const isAlias = Object.values(commands).find(cmd => 
+      (cmd as Command).aliases && (cmd as Command).aliases!.includes(commandName) && (cmd as Command).name !== commandName
+    ) as Command | undefined;
+
+    if (isAlias) {
+      helpContent += `<div>Alias of: <span class="text-terminal-prompt">${isAlias.name}</span></div>`;
+    }
+
     // Usage section
     if (allCommands[commandName].placeholder) {
       helpContent += `<div>Usage: <span class="text-terminal-prompt">${commandName} ${allCommands[commandName].placeholder}</span></div>
@@ -230,6 +250,12 @@ export const getSpecificCommandHelp = (commandName: string): string => {
         break;
       case 'terms':
         helpContent += `<div class="ml-4"><div><span class="command-link" data-command="terms">terms</span> - Display terms and conditions</div></div>`;
+        break;
+      case 'contact':
+        helpContent += `<div class="ml-4"><div><span class="command-link" data-command="contact">contact</span> - Display my contact information</div></div>`;
+        break;
+      case 'support':
+        helpContent += `<div class="ml-4"><div><span class="command-link" data-command="support">support</span> - Display my contact information (alias for 'contact')</div></div>`;
         break;
       default:
         helpContent += `<div class="ml-4"><div><span class="command-link" data-command="${commandName}">${commandName}</span> - Execute the ${commandName} command</div></div>`;
