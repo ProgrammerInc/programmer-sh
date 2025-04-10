@@ -1,4 +1,4 @@
-# Referral Buddy WindsurfRules
+# Referral Buddy CursorRules
 # These rules ensure consistent code generation and type safety
 
 # Technology Stack
@@ -214,7 +214,6 @@ documentation:
 developmentTools:
   ide:
     - 'VSCode'
-    - 'Windsurf'
     - 'Cursor'
   linting:
     code: 'ESLint'
@@ -274,7 +273,7 @@ webStandards:
   openGraph: true
   robots: true
 
-# Component Structure Standards (NEW)
+# Component Structure Standards
 componentStructure:
   requiredFiles:
     - '{component-name}.tsx' # Main component file
@@ -288,9 +287,9 @@ componentStructure:
     - '{component-name}.variants.ts' # When variants are needed
   subcomponents:
     location: 'same-directory' # Or "subdirectory" for larger components
-    naming: '{parent-name}-{subcomponent}.tsx'
+    naming: '{parent-name}.{subcomponent}.tsx'
 
-# Component Implementation Standards (NEW)
+# Component Implementation Standards
 componentImplementation:
   performance:
     memoization:
@@ -316,7 +315,7 @@ componentImplementation:
     screenReaderSupport: true
     keyboardNavigation: true
 
-# CSS Module Standards (NEW)
+# CSS Module Standards
 cssModules:
   naming:
     convention: 'kebab-case'
@@ -333,7 +332,7 @@ cssModules:
     preferred: 'cn'
     implementation: 'clsx/tailwind-merge'
 
-# Animation Component Standards (NEW)
+# Animation Component Standards
 animationComponents:
   fileStructure:
     constants:
@@ -364,7 +363,7 @@ animationComponents:
     reducedMotion: true
     alternativeContent: true
 
-# Refactoring Process Guidelines (NEW)
+# Refactoring Process Guidelines
 refactoringProcess:
   steps:
     - name: 'extractTypes'
@@ -389,3 +388,35 @@ refactoringProcess:
     - 'displayName is set for all components'
     - 'All CSS classes follow kebab-case convention'
     - 'All files follow kebab-case naming'
+
+# Context Provider Rules
+contextProviders:
+  memoization:
+    required: true
+    pattern: 'useMemo'
+    dependencies: 'explicit'
+  valueObject:
+    avoidInline: true
+    preferMemoized: true
+  bestPractices:
+    - 'Wrap context value in useMemo'
+    - 'Include all dependencies in dependency array'
+    - 'Avoid inline object creation'
+
+# Conditional Statement Rules
+conditionals:
+  nesting:
+    maxDepth: 2
+    avoidSingleStatementElse: true
+  patterns:
+    prefer:
+      - 'else if'
+      - 'early returns'
+      - 'ternary for simple conditions'
+    avoid:
+      - 'nested if in else blocks'
+      - 'complex nested conditions'
+  bestPractices:
+    - 'Combine conditions when possible'
+    - 'Use early returns to reduce nesting'
+    - 'Extract complex conditions to variables'
