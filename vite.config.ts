@@ -1,7 +1,6 @@
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 import react from '@vitejs/plugin-react-swc';
 import fs from 'fs';
-import { componentTagger } from 'lovable-tagger';
 import path from 'path';
 import { defineConfig } from 'vite';
 import { Wallpaper } from './src/components/ui/wallpaper';
@@ -162,7 +161,6 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === 'development' && componentTagger(),
     // Put the Sentry vite plugin after all other plugins
     sentryVitePlugin({
       authToken: process.env.VITE_SENTRY_AUTH_TOKEN,
