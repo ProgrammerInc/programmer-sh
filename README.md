@@ -1,69 +1,189 @@
-# Welcome to your Lovable project
+# &lt;programmer&gt;.\_
 
-## Project info
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Version](https://img.shields.io/badge/version-0.1.0-green.svg)
+![React](https://img.shields.io/badge/React-18.3.1-61DAFB.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.7.3-3178C6.svg)
+![Vite](https://img.shields.io/badge/Vite-6.3.5-646CFF.svg)
 
-**URL**: https://lovable.dev/projects/0b3636e9-5995-4b6d-b402-3d4e47332e3e
+A modern terminal-inspired portfolio and resume website showcasing interactive animations, 3D experiences, and an immersive UI built with cutting-edge web technologies.
 
-## How can I edit this code?
+## 🚀 Features
 
-There are several ways of editing your application.
+- **Terminal Interface**: Interactive command-line experience with custom commands
+- **Modern UI Components**: Built with Radix UI primitives and custom animations
+- **3D Animations**: Advanced Three.js integrations with optimized performance
+- **Interactive Wallpapers**: Dynamic wallpapers with various animation techniques
+- **Responsive Design**: Seamless experience across all devices
+- **Type Safety**: Comprehensive TypeScript integration
+- **Dark/Light Modes**: Theme switching with adaptive interface elements
+- **Optimized Performance**: Code splitting and lazy loading with Vite
+- **Storybook Integration**: Component documentation and testing
 
-**Use Lovable**
+## 🛠️ Technology Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/0b3636e9-5995-4b6d-b402-3d4e47332e3e) and start prompting.
+### Frontend
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Framework**: Vite
+- **Library**: React
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS + CSS Modules
+- **Components**: Radix UI
 
-**Use your preferred IDE**
+### Backend & Data
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **Runtime**: Node.js
+- **Database**: Supabase PostgreSQL
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Animation Libraries
 
-Follow these steps:
+- Three.js + React Three Fiber
+- Framer Motion
+- GSAP
+- tsParticles
+- Anime.js
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Testing & Quality
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- Vitest + Playwright
+- Storybook
+- ESLint + Stylelint
 
-# Step 3: Install the necessary dependencies.
-npm i
+## 📦 Installation
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+# Install dependencies with PNPM (recommended)
+pnpm install
+
+# Alternative: using npm
+npm install
+
+# Alternative: using yarn
+yarn install
 ```
 
-**Edit a file directly in GitHub**
+## 🏗️ Development
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+# Start the development server
+pnpm dev
 
-**Use GitHub Codespaces**
+# Build for production
+pnpm build
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Preview production build
+pnpm preview
 
-## What technologies are used for this project?
+# Run linting
+pnpm lint:all
 
-This project is built with .
+# Format code
+pnpm format
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Run Storybook
+pnpm storybook
+```
 
-## How can I deploy this project?
+## 📂 Project Structure
 
-Simply open [Lovable](https://lovable.dev/projects/0b3636e9-5995-4b6d-b402-3d4e47332e3e) and click on Share -> Publish.
+```
+├── public/            # Static assets and favicon
+├── schemas/           # JSON schemas for validation
+├── scripts/           # Build and utility scripts
+├── src/               # Source code
+│   ├── commands/      # Terminal command implementations
+│   ├── components/    # React components
+│   │   ├── ui/        # Core UI components
+│   │   └── animations/# Animation components
+│   ├── data/          # Static data and content
+│   ├── errors/        # Error handling and boundary components
+│   ├── hooks/         # Custom React hooks
+│   ├── integrations/  # Third-party integrations
+│   ├── lib/           # Utility libraries
+│   ├── pages/         # Page components
+│   ├── presets/       # Configuration presets
+│   ├── services/      # API services
+│   ├── stories/       # Storybook stories
+│   ├── types/         # TypeScript type definitions
+│   └── utils/         # Utility functions
+├── supabase/          # Supabase configuration
+├── .env.example       # Example environment variables
+├── index.html         # Application entry point
+├── package.json       # Project dependencies
+├── tailwind.config.js # Tailwind CSS configuration
+├── tsconfig.json      # TypeScript configuration
+└── vite.config.ts     # Vite configuration
+```
 
-## I want to use a custom domain - is that possible?
+## 📚 Code Standards
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+This project follows strict TypeScript practices and coding standards:
+
+- Strong typing with full type safety
+- No use of `any` type
+- Comprehensive JSDoc documentation
+- Modular file organization with clear naming conventions
+- Component files using kebab-case naming
+- React Page components using PascalCase
+- Custom utilities with strict error handling
+
+## 📱 Responsive Design
+
+The application is designed to work across all device sizes:
+
+- Desktop (1280px+)
+- Tablet (768px - 1279px)
+- Mobile (320px - 767px)
+
+Responsive adjustments are handled through both Tailwind breakpoints and CSS modules with media queries.
+
+## 🔌 Integration Points
+
+- **Supabase**: Database and authentication
+- **Sentry**: Error monitoring and performance tracking
+- **Three.js**: 3D visualizations and animations
+
+## 🚢 Deployment
+
+The project is configured for seamless deployment on Netlify:
+
+```bash
+# Build for production deployment
+pnpm build
+```
+
+The Vite build process optimizes asset loading with intelligent code splitting for better performance.
+
+## 🧪 Testing
+
+```bash
+# Run unit tests
+pnpm test
+
+# Run E2E tests
+pnpm test:e2e
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add some amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+- [Radix UI](https://www.radix-ui.com/) for accessible component primitives
+- [Three.js](https://threejs.org/) for 3D graphics capabilities
+- [Tailwind CSS](https://tailwindcss.com/) for utility-first styling
+- [Vite](https://vitejs.dev/) for the lightning-fast development experience
+- [Supabase](https://supabase.io/) for backend services
+
+---
+
+Built with ❤️ by [Programmer Inc.](https://programmer.sh)
