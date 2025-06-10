@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"
+  style="background-color: #1a1f2c !important; background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)) !important;">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>~/welcome - &lt;programmer&gt;._</title>
+  <meta name="description" content="Programmer Inc. Portfolio and Resume Website" />
+  <meta name="author" content="Programmer Incorporated LLC" />
+  <meta property="og:image" content="/og-image.png" />
+
+  <!-- Favicon links - these will be dynamically updated by the script below -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" id="apple-touch-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" id="favicon-32">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" id="favicon-16">
+  <link rel="manifest" href="/site.webmanifest" id="webmanifest">
+
+  <!-- Script to handle dark/light mode favicon switching -->
+  <script>
+    // Function to update favicons based on dark mode preference
+    function updateFavicons(isDarkMode) {
+      // Apple Touch Icon
+      document.getElementById('apple-touch-icon').href = isDarkMode
+        ? '/apple-touch-icon-dark.png'
+        : '/apple-touch-icon.png';
+
+      // Favicon 32x32
+      document.getElementById('favicon-32').href = isDarkMode
+        ? '/favicon-32x32-dark.png'
+        : '/favicon-32x32.png';
+
+      // Favicon 16x16
+      document.getElementById('favicon-16').href = isDarkMode
+        ? '/favicon-16x16-dark.png'
+        : '/favicon-16x16.png';
+
+      // Web Manifest
+      document.getElementById('webmanifest').href = isDarkMode
+        ? '/site-dark.webmanifest'
+        : '/site.webmanifest';
+    }
+
+    // Check if the user has a dark mode preference in their OS
+    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
+
+    // Set initial favicon based on current preference
+    updateFavicons(prefersDarkMode.matches);
+
+    // Listen for changes in the color scheme preference
+    prefersDarkMode.addEventListener('change', (event) => {
+      updateFavicons(event.matches);
+    });
+
+    // Also listen for custom dark mode toggle events from your app
+    document.addEventListener('themeChange', (event) => {
+      // Your app should dispatch a custom event when theme is toggled manually
+      if (event.detail && typeof event.detail.isDark === 'boolean') {
+        updateFavicons(event.detail.isDark);
+      }
+    });
+  </script>
+</head>
+
+<body style="background-color: #1e1e2e; margin: 0; padding: 0;">
+  <div id="root"></div>
+</body>
+
+</html>

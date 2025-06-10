@@ -52,12 +52,12 @@ export interface WallpaperChangeEventDetail {
 export const getCurrentWallpaper = (): string => {
   try {
     const savedWallpaper = localStorage.getItem(WALLPAPER_STORAGE_KEY);
-    const wallpaperId = savedWallpaper || 'particles';
+    const wallpaperId = savedWallpaper || 'default';
 
     // Verify the wallpaper exists in presets
     if (!Object.keys(wallpaperPresets).includes(wallpaperId)) {
       wallpaperLogger.warn('Saved wallpaper not found in presets, using default', { wallpaperId });
-      return 'particles';
+      return 'default';
     }
 
     return wallpaperId;

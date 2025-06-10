@@ -12,9 +12,9 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
     name: 'Default',
     description: 'Default wallpaper',
     enabled: true,
-    type: 'default',
+    type: 'animation',
     background: {
-      id: 'default',
+      id: 'letter-glitch',
       type: 'animation',
       animation: {
         id: 'letter-glitch',
