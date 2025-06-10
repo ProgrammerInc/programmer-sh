@@ -124,7 +124,6 @@ This project follows strict TypeScript practices and coding standards:
 - Comprehensive JSDoc documentation
 - Modular file organization with clear naming conventions
 - Component files using kebab-case naming
-- React Page components using PascalCase
 - Custom utilities with strict error handling
 
 ## 📱 Responsive Design

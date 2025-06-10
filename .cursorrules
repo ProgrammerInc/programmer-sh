@@ -43,9 +43,6 @@ namingConventions:
   files:
     # Use kebab-case for files (e.g. /src/services/my-service/my-service.service.ts)
     general: 'kebab-case'
-    # Use PascalCase for page files (e.g. /src/pages/MyPage.tsx)
-    pages: 'PascalCase'
-    pattern: '/src/pages/*.tsx'
   code:
     # Use camelCase for variable and function names (e.g. myVariable and myFunction)
     variables: 'camelCase'
