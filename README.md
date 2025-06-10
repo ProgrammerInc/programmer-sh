@@ -45,8 +45,8 @@ A modern terminal-inspired portfolio and resume website showcasing interactive a
 
 ### Testing & Quality
 
-- Vitest + Playwright
-- Storybook
+- Vitest + Playwright (WIP)
+- Storybook (WIP)
 - ESLint + Stylelint
 
 ## 📦 Installation
@@ -87,32 +87,32 @@ pnpm storybook
 ## 📂 Project Structure
 
 ```
-├── public/            # Static assets and favicon
-├── schemas/           # JSON schemas for validation
-├── scripts/           # Build and utility scripts
-├── src/               # Source code
-│   ├── commands/      # Terminal command implementations
-│   ├── components/    # React components
-│   │   ├── ui/        # Core UI components
-│   │   └── animations/# Animation components
-│   ├── data/          # Static data and content
-│   ├── errors/        # Error handling and boundary components
-│   ├── hooks/         # Custom React hooks
-│   ├── integrations/  # Third-party integrations
-│   ├── lib/           # Utility libraries
-│   ├── pages/         # Page components
-│   ├── presets/       # Configuration presets
-│   ├── services/      # API services
-│   ├── stories/       # Storybook stories
-│   ├── types/         # TypeScript type definitions
-│   └── utils/         # Utility functions
-├── supabase/          # Supabase configuration
-├── .env.example       # Example environment variables
-├── index.html         # Application entry point
-├── package.json       # Project dependencies
-├── tailwind.config.js # Tailwind CSS configuration
-├── tsconfig.json      # TypeScript configuration
-└── vite.config.ts     # Vite configuration
+├── public/               # Static assets and favicon
+├── schemas/              # JSON schemas for validation
+├── scripts/              # Build and utility scripts
+├── src/                  # Source code
+│   ├── commands/         # Terminal command implementations
+│   ├── components/       # React components
+│   │   ├── ui/           # Core UI components
+│   │   └── animations/   # Animation components
+│   ├── data/             # Static data and content
+│   ├── errors/           # Error handling and boundary components
+│   ├── hooks/            # Custom React hooks
+│   ├── integrations/     # Third-party integrations
+│   ├── lib/              # Utility libraries
+│   ├── pages/            # Page components
+│   ├── presets/          # Configuration presets
+│   ├── services/         # API services
+│   ├── stories/          # Storybook stories
+│   ├── types/            # TypeScript type definitions
+│   └── utils/            # Utility functions
+├── supabase/             # Supabase configuration
+├── .env.example          # Example environment variables
+├── index.html            # Application entry point
+├── package.json          # Project dependencies
+├── tailwind.config.js    # Tailwind CSS configuration
+├── tsconfig.json         # TypeScript configuration
+└── vite.config.ts        # Vite configuration
 ```
 
 ## 📚 Code Standards
