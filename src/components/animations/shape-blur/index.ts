@@ -9,6 +9,6 @@
  * @module ShapeBlur
  */
 
-export { ShapeBlur, default } from './shape-blur';
+export { default, ShapeBlur } from './shape-blur';
 export * as ShapeBlurStyles from './shape-blur.module.css';
 export type { ShapeBlurProps } from './shape-blur.types';

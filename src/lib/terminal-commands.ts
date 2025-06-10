@@ -1,6 +1,6 @@
 /**
  * Terminal Commands Module
- * 
+ *
  * This is the main entry point for command processing in the terminal.
  * It re-exports all command-related functionality from the commands directory.
  */
@@ -16,7 +16,7 @@ export * from '../commands/command.types';
 
 /**
  * Process a command string and return the result
- * 
+ *
  * @param command - The command string to process
  * @returns The result of processing the command
  */

@@ -1,9 +1,9 @@
 /**
  * ToggleGroup UI Component
- * 
+ *
  * A set of two-state buttons that can be toggled on or off, built on Radix UI's ToggleGroup primitive.
  * Used for groups of related toggles, such as text alignment options or formatting controls.
- * 
+ *
  * Features:
  * - Single or multiple selection modes
  * - Consistent styling across toggle items
@@ -12,12 +12,12 @@
  * - Focus management
  * - ARIA support
  * - CSS module styling for improved maintainability
- * 
+ *
  * @example
  * ```tsx
  * import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
  * import { Bold, Italic, Underline } from 'lucide-react';
- * 
+ *
  * // Single selection (radio-like behavior)
  * function TextAlignment() {
  *   return (
@@ -34,7 +34,7 @@
  *     </ToggleGroup>
  *   );
  * }
- * 
+ *
  * // Multiple selection (checkbox-like behavior)
  * function TextFormatting() {
  *   return (

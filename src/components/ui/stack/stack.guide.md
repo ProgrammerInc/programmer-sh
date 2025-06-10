@@ -50,21 +50,21 @@ See the `stack.examples.md` file for comprehensive usage examples.
 
 ### Stack Component Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `randomRotation` | `boolean` | `false` | Applies random rotation to cards |
-| `sensitivity` | `number` | `200` | Drag distance needed to trigger send-to-back |
-| `cardDimensions` | `{ width: number, height: number }` | `{ width: 208, height: 208 }` | Size of cards |
-| `sendToBackOnClick` | `boolean` | `false` | Whether clicking a card sends it to back |
-| `cardsData` | `CardData[]` | `[...defaultCards]` | Array of card data objects |
-| `animationConfig` | `{ stiffness: number, damping: number }` | `{ stiffness: 260, damping: 20 }` | Framer Motion spring configuration |
+| Prop                | Type                                     | Default                           | Description                                  |
+| ------------------- | ---------------------------------------- | --------------------------------- | -------------------------------------------- |
+| `randomRotation`    | `boolean`                                | `false`                           | Applies random rotation to cards             |
+| `sensitivity`       | `number`                                 | `200`                             | Drag distance needed to trigger send-to-back |
+| `cardDimensions`    | `{ width: number, height: number }`      | `{ width: 208, height: 208 }`     | Size of cards                                |
+| `sendToBackOnClick` | `boolean`                                | `false`                           | Whether clicking a card sends it to back     |
+| `cardsData`         | `CardData[]`                             | `[...defaultCards]`               | Array of card data objects                   |
+| `animationConfig`   | `{ stiffness: number, damping: number }` | `{ stiffness: 260, damping: 20 }` | Framer Motion spring configuration           |
 
 ### CardData Interface
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `id` | `number` | Unique identifier for the card |
-| `img` | `string` | URL of the image to display |
+| Property | Type     | Description                    |
+| -------- | -------- | ------------------------------ |
+| `id`     | `number` | Unique identifier for the card |
+| `img`    | `string` | URL of the image to display    |
 
 ## Advanced Usage
 

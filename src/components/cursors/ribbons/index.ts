@@ -4,5 +4,5 @@
  * @module
  */
 
-export { Ribbons, default } from './ribbons';
+export { default, Ribbons } from './ribbons';
 export type { RibbonsProps } from './ribbons.types';

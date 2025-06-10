@@ -119,7 +119,7 @@ Implement custom step indicators to match your design system:
 ```tsx
 <Stepper
   renderStepIndicator={({ step, currentStep, onStepClick }) => (
-    <div 
+    <div
       onClick={() => onStepClick(step)}
       className={`custom-step-indicator ${currentStep >= step ? 'active' : ''}`}
     >

@@ -100,15 +100,18 @@ The CSS module (`tabs.module.css`) organizes styles with these key classes:
 - `.tabs-content`: Styles for the tab content area
 
 Variant-specific classes:
+
 - `.tabs-underline`: Styles for the underline variant
 - `.tabs-card`: Styles for the card variant
 - `.tabs-bordered`: Styles for the bordered variant
 
 Size-specific classes:
+
 - `.tabs-sm`: Styles for small tabs
 - `.tabs-lg`: Styles for large tabs
 
 Orientation-specific classes:
+
 - `.tabs-vertical`: Styles for vertical orientation
 
 ### Variants Implementation
@@ -116,9 +119,7 @@ Orientation-specific classes:
 Variants are implemented using CSS classes and controlled via props:
 
 ```tsx
-<Tabs variant="underline">
-  {/* ... */}
-</Tabs>
+<Tabs variant="underline">{/* ... */}</Tabs>
 ```
 
 The variant prop is passed to the root component and used to generate appropriate class names for all nested components.
@@ -128,9 +129,7 @@ The variant prop is passed to the root component and used to generate appropriat
 Sizes are implemented similarly to variants:
 
 ```tsx
-<Tabs size="lg">
-  {/* ... */}
-</Tabs>
+<Tabs size="lg">{/* ... */}</Tabs>
 ```
 
 ### Orientation Implementation
@@ -138,9 +137,7 @@ Sizes are implemented similarly to variants:
 Orientation is controlled via the `orientation` prop:
 
 ```tsx
-<Tabs orientation="vertical">
-  {/* ... */}
-</Tabs>
+<Tabs orientation="vertical">{/* ... */}</Tabs>
 ```
 
 This sets both the CSS classes for visual layout and the ARIA attributes for accessibility.
@@ -156,7 +153,7 @@ const [activeTab, setActiveTab] = useState('tab1');
 
 <Tabs value={activeTab} onValueChange={setActiveTab}>
   {/* ... */}
-</Tabs>
+</Tabs>;
 ```
 
 ### Lazy Loading Content
@@ -166,7 +163,7 @@ For tabs with heavy content that should only load when selected:
 ```tsx
 const [visitedTabs, setVisitedTabs] = useState(['tab1']);
 
-const handleTabChange = (value) => {
+const handleTabChange = value => {
   if (!visitedTabs.includes(value)) {
     setVisitedTabs([...visitedTabs, value]);
   }
@@ -175,10 +172,8 @@ const handleTabChange = (value) => {
 <Tabs defaultValue="tab1" onValueChange={handleTabChange}>
   <TabsList>{/* ... */}</TabsList>
   <TabsContent value="tab1">{/* Default tab content */}</TabsContent>
-  {visitedTabs.includes('tab2') && (
-    <TabsContent value="tab2">{/* Heavy content */}</TabsContent>
-  )}
-</Tabs>
+  {visitedTabs.includes('tab2') && <TabsContent value="tab2">{/* Heavy content */}</TabsContent>}
+</Tabs>;
 ```
 
 ### Tabs with Icons
@@ -202,19 +197,23 @@ For dynamically generated tabs:
 const tabs = [
   { id: 'tab1', label: 'Tab 1', content: 'Content 1' },
   { id: 'tab2', label: 'Tab 2', content: 'Content 2' },
-  { id: 'tab3', label: 'Tab 3', content: 'Content 3' },
+  { id: 'tab3', label: 'Tab 3', content: 'Content 3' }
 ];
 
 <Tabs defaultValue={tabs[0].id}>
   <TabsList>
     {tabs.map(tab => (
-      <TabsTrigger key={tab.id} value={tab.id}>{tab.label}</TabsTrigger>
+      <TabsTrigger key={tab.id} value={tab.id}>
+        {tab.label}
+      </TabsTrigger>
     ))}
   </TabsList>
   {tabs.map(tab => (
-    <TabsContent key={tab.id} value={tab.id}>{tab.content}</TabsContent>
+    <TabsContent key={tab.id} value={tab.id}>
+      {tab.content}
+    </TabsContent>
   ))}
-</Tabs>
+</Tabs>;
 ```
 
 ## Troubleshooting
@@ -222,15 +221,18 @@ const tabs = [
 ### Common Issues
 
 1. **All tabs showing at once or no tabs showing**
+
    - Ensure each `TabsTrigger` has a matching `TabsContent` with exactly the same value
    - Verify the `defaultValue` matches one of your tab values
    - Check that the `value` prop (if using controlled mode) is correctly set
 
 2. **Tab content not updating when tab changes**
+
    - If using controlled mode, ensure your `onValueChange` handler is correctly updating the state
    - Verify that each tab has a unique value
 
 3. **Styling issues with specific variants**
+
    - Ensure the CSS module is properly imported
    - Check that CSS variables for colors are properly defined in your theme
 
@@ -243,6 +245,7 @@ const tabs = [
 For advanced customization beyond the provided variants and sizes:
 
 1. **Custom styling**:
+
    ```tsx
    <Tabs className="my-custom-tabs">
      <TabsList className="my-custom-tabs-list">
@@ -256,26 +259,24 @@ For advanced customization beyond the provided variants and sizes:
    ```
 
 2. **Dynamic props based on state**:
+
    ```tsx
-   <TabsTrigger 
-     value="tab1" 
-     className={isSpecial ? 'special-tab' : ''}
-     disabled={!hasPermission}
-   >
+   <TabsTrigger value="tab1" className={isSpecial ? 'special-tab' : ''} disabled={!hasPermission}>
      Tab 1
    </TabsTrigger>
    ```
 
 3. **Integration with routing**:
+
    ```tsx
    const router = useRouter();
    const currentTab = router.query.tab || 'default';
-   
-   const handleTabChange = (value) => {
+
+   const handleTabChange = value => {
      router.push(`?tab=${value}`, undefined, { shallow: true });
    };
-   
+
    <Tabs value={currentTab} onValueChange={handleTabChange}>
      {/* ... */}
-   </Tabs>
+   </Tabs>;
    ```

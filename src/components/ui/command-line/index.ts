@@ -1,6 +1,6 @@
 /**
  * CommandLine component module
- * 
+ *
  * A terminal-like command input interface with history navigation support
  */
 

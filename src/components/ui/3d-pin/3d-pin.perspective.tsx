@@ -28,12 +28,7 @@ export const PinPerspective: React.FC<PinPerspectiveProps> = ({ title, href }) =
     <div className={styles['perspective-wrapper']}>
       <div className={styles['perspective-content']}>
         <div className={styles['title-container']}>
-          <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles['title-link']}
-          >
+          <a href={href} target="_blank" rel="noopener noreferrer" className={styles['title-link']}>
             <span className={styles['title-text']}>{title}</span>
             <span className={styles['title-underline']}></span>
           </a>

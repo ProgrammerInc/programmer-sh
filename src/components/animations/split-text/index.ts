@@ -7,6 +7,6 @@
  * @module SplitText
  */
 
-export { SplitText, default } from './split-text';
+export { default, SplitText } from './split-text';
 export * as SplitTextStyles from './split-text.module.css';
 export type { SplitTextProps } from './split-text.types';

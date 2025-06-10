@@ -1,7 +1,7 @@
 import { createFeatureLogger } from '../services/logger/logger.utils';
 import { Command, CommandResult } from './command.types';
-import { welcomeCommand } from './welcome.commands';
 import { getCommands } from './index';
+import { welcomeCommand } from './welcome.commands';
 
 // Create a dedicated logger for help commands
 const helpLogger = createFeatureLogger('HelpCommands');
@@ -191,13 +191,18 @@ export const getSpecificCommandHelp = (commandName: string): string => {
 
     // Add aliases information if available
     if (commandObj && commandObj.aliases && commandObj.aliases.length > 0) {
-      const aliasesText = commandObj.aliases.map(a => `<span class="text-terminal-prompt">${a}</span>`).join(', ');
+      const aliasesText = commandObj.aliases
+        .map(a => `<span class="text-terminal-prompt">${a}</span>`)
+        .join(', ');
       helpContent += `<div>Aliases: ${aliasesText}</div>`;
     }
 
     // Check if this command is an alias itself
-    const isAlias = Object.values(commands).find(cmd => 
-      (cmd as Command).aliases && (cmd as Command).aliases!.includes(commandName) && (cmd as Command).name !== commandName
+    const isAlias = Object.values(commands).find(
+      cmd =>
+        (cmd as Command).aliases &&
+        (cmd as Command).aliases!.includes(commandName) &&
+        (cmd as Command).name !== commandName
     ) as Command | undefined;
 
     if (isAlias) {

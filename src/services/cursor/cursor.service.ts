@@ -5,9 +5,9 @@
  * with optimized query performance.
  */
 
-import { CursorType, Cursor } from '@/components/ui/cursor/cursor.types';
-import { supabase, isNotFoundError, logDbError } from '@/utils/supabase.utils';
+import { Cursor, CursorType } from '@/components/ui/cursor/cursor.types';
 import { logger } from '@/services/logger';
+import { isNotFoundError, logDbError, supabase } from '@/utils/supabase.utils';
 
 // Define database cursor interface
 interface DbCursor {
@@ -68,14 +68,11 @@ export const getAllCursors = async (): Promise<Cursor[]> => {
   try {
     // Check if we have a valid cache
     const now = Date.now();
-    if (cursorsCache && (now - lastFetchTime < CACHE_TTL)) {
+    if (cursorsCache && now - lastFetchTime < CACHE_TTL) {
       return cursorsCache;
     }
 
-    const { data: cursors, error } = await supabase
-      .from('cursors')
-      .select('*')
-      .order('name');
+    const { data: cursors, error } = await supabase.from('cursors').select('*').order('name');
 
     if (error) {
       logDbError('getAllCursors', error);
@@ -84,7 +81,7 @@ export const getAllCursors = async (): Promise<Cursor[]> => {
 
     // Map database cursors to application cursors
     const mappedCursors = (cursors as DbCursor[]).map(mapDbCursorToCursor);
-    
+
     // Update cache
     cursorsCache = mappedCursors;
     lastFetchTime = now;
@@ -143,11 +140,7 @@ export const getCursorByName = async (name: string): Promise<Cursor | null> => {
       }
     }
 
-    const { data, error } = await supabase
-      .from('cursors')
-      .select('*')
-      .eq('name', name)
-      .single();
+    const { data, error } = await supabase.from('cursors').select('*').eq('name', name).single();
 
     if (error) {
       if (isNotFoundError(error, 'Cursor')) {

@@ -5,5 +5,5 @@
  * @module Hyperspeed
  */
 
-export { Hyperspeed, default } from './hyperspeed';
+export { default, Hyperspeed } from './hyperspeed';
 export type { HyperspeedProps } from './hyperspeed.types';

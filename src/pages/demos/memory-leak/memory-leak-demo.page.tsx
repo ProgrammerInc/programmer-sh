@@ -8,7 +8,7 @@
 import { logger } from '@/services/logger';
 import { MemorySnapshot, memoryTracker } from '@/services/memory-tracker';
 import { useCallback, useEffect, useState } from 'react';
-import './MemoryLeakDemo.module.css';
+import './memory-leak-demo.module.css';
 
 // Create component-specific logger
 const demoLogger = logger.createChildLogger('MemoryLeakDemo');

@@ -7,7 +7,7 @@ import { Point } from './waves.types';
 
 /**
  * Calculate the actual position of a point based on its wave and cursor offsets
- * 
+ *
  * @param point - The point to calculate position for
  * @returns The calculated position
  */
@@ -47,7 +47,7 @@ export class Noise {
 
   /**
    * Initialize noise generator with seed
-   * 
+   *
    * @param seed - Random seed value
    */
   constructor(seed: number = Math.random()) {
@@ -86,7 +86,7 @@ export class Noise {
 
   /**
    * Get 2D Perlin noise value for a position
-   * 
+   *
    * @param x - X coordinate
    * @param y - Y coordinate
    * @returns Noise value between -1 and 1

@@ -1,3 +1,4 @@
+/* eslint-disable no-secrets/no-secrets */
 'use client';
 
 import { CommandResult } from '@/commands/command.types';
@@ -6,7 +7,7 @@ import { ReactNode, RefObject } from 'react';
 
 /**
  * Terminal component props interface.
- * 
+ *
  * @interface TerminalProps
  * @property {RefObject<HTMLDivElement>} [containerRef] - Reference to the terminal container div
  * @property {RefObject<HTMLDivElement>} [contentRef] - Reference to the terminal content div
@@ -32,7 +33,7 @@ export interface TerminalProps {
 
 /**
  * Terminal component's local state interface.
- * 
+ *
  * @interface TerminalState
  * @property {string} commandInput - Current command input value
  * @property {CommandResult[]} commandOutput - Array of command execution results
@@ -54,14 +55,14 @@ export interface TerminalState {
 
 /**
  * History navigation direction type.
- * 
+ *
  * @typedef {'up' | 'down'} HistoryDirection
  */
 export type HistoryDirection = 'up' | 'down';
 
 /**
  * Terminal utility functions interface.
- * 
+ *
  * @interface TerminalUtils
  * @property {(command: string, output: string, rawHTML?: boolean) => string} renderCommandOutput - Renders command output with formatting
  * @property {(ref: RefObject<HTMLDivElement>) => void} scrollToBottom - Scrolls the terminal content to the bottom

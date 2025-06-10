@@ -6,6 +6,7 @@ declare module '*.module.css' {
 
 // Type declarations for path aliases
 declare module '@/utils/app.utils' {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export const cn: (...inputs: any[]) => string;
   export const ensureHttps: (url: string) => string;
   export const genRandomNumbers: (min: number, max: number, count: number) => number[];

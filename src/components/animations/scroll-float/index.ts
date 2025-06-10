@@ -7,6 +7,6 @@
  * @module ScrollFloat
  */
 
-export { ScrollFloat, default } from './scroll-float';
+export { default, ScrollFloat } from './scroll-float';
 export * as ScrollFloatStyles from './scroll-float.module.css';
 export type { ScrollFloatProps } from './scroll-float.types';

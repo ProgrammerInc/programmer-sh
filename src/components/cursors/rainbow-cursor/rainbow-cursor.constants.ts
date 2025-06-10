@@ -34,7 +34,7 @@ export const CANVAS_STYLES = {
   /**
    * Use hardware acceleration and create a stacking context.
    */
-  transform: 'translateZ(0)',
+  transform: 'translateZ(0)'
 };
 
 /**
@@ -84,7 +84,7 @@ export const DEFAULT_VALUES = {
   /**
    * Maximum scale factor for pulsing animation.
    */
-  pulseMax: 1.2,
+  pulseMax: 1.2
 };
 
 /**
@@ -99,7 +99,7 @@ export const CANVAS_CONTEXT_SETTINGS = {
   /**
    * Cap style for line ends.
    */
-  lineCap: 'round' as CanvasLineCap,
+  lineCap: 'round' as CanvasLineCap
 };
 
 /**

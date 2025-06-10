@@ -39,9 +39,7 @@ export interface SentryUser {
  * @param context Optional context information to include with the error
  * @returns The Sentry event ID of the captured error or empty string if capture fails
  */
-export const sendTestError = (
-  context: SentryContext = {}
-): string => {
+export const sendTestError = (context: SentryContext = {}): string => {
   try {
     // Create a specific error type for testing
     const testError = new Error('This is a test error sent to Sentry');
@@ -88,7 +86,7 @@ export const trackEvent = (
     console.error('Invalid event name provided to trackEvent');
     return;
   }
-  
+
   try {
     Sentry.captureMessage(`Event: ${name}`, {
       level,

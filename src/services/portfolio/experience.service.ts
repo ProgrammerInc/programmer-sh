@@ -5,8 +5,8 @@
  * with optimized query performance.
  */
 
-import { supabase, logDbError } from '@/utils/supabase.utils';
 import { createServiceLogger, logError } from '@/services/logger/logger.utils';
+import { logDbError, supabase } from '@/utils/supabase.utils';
 import { DbExperience, Experience } from './portfolio.types';
 
 // Create a dedicated logger for experience service
@@ -36,10 +36,10 @@ export const fetchExperience = async (): Promise<Experience[]> => {
   try {
     // Check if we have a valid cache
     const now = Date.now();
-    if (experienceCache && (now - lastFetchTime < CACHE_TTL)) {
+    if (experienceCache && now - lastFetchTime < CACHE_TTL) {
       return experienceCache;
     }
-    
+
     const { data: experienceData, error: experienceError } = await supabase.from('experiences')
       .select(`
         id,
@@ -55,18 +55,18 @@ export const fetchExperience = async (): Promise<Experience[]> => {
       logDbError('fetchExperience', experienceError);
       return [];
     }
-    
+
     if (!experienceData || experienceData.length === 0) {
       dbLogger.error('No experience data found in the database');
       return [];
     }
 
     const experiences = experienceData.map(mapDbExperienceToExperience);
-    
+
     // Update cache
     experienceCache = experiences;
     lastFetchTime = now;
-    
+
     return experiences;
   } catch (error) {
     logError('Error fetching experience:', error, 'ExperienceService');

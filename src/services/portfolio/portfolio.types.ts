@@ -109,11 +109,4 @@ export interface DbEducation {
 /**
  * Re-export types from portfolio-data.types.ts for convenience
  */
-export type {
-  Contact,
-  Education,
-  Experience,
-  Profile,
-  Project,
-  Skill
-};
+export type { Contact, Education, Experience, Profile, Project, Skill };

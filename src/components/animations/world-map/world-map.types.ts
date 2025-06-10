@@ -1,7 +1,6 @@
 /**
  * Types for the WorldMap animation component
  */
-import type { ReactNode } from 'react';
 
 /**
  * Point coordinates definition for map locations

@@ -138,22 +138,19 @@ import { useState } from 'react';
 
 export function ButtonStates() {
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const handleClick = () => {
     setIsLoading(true);
     setTimeout(() => setIsLoading(false), 2000);
   };
-  
+
   return (
     <div className="flex flex-col gap-4">
       <Button disabled>Disabled Button</Button>
-      <Button 
-        onClick={handleClick}
-        disabled={isLoading}
-      >
+      <Button onClick={handleClick} disabled={isLoading}>
         {isLoading ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> 
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             Please wait
           </>
         ) : (
@@ -209,21 +206,21 @@ import { useState } from 'react';
 
 export function FormSubmissionButton() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     // Simulate form submission
     setTimeout(() => setIsSubmitting(false), 2000);
   };
-  
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid gap-2">
         <label htmlFor="email">Email</label>
         <input
           id="email"
-          type="email" 
+          type="email"
           className="rounded-md border p-2"
           placeholder="Enter your email"
         />

@@ -33,7 +33,9 @@
 /* Focus styles for resize handle */
 .resize-handle:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 1px var(--ring), 0 0 0 1px var(--ring);
+  box-shadow:
+    0 0 0 1px var(--ring),
+    0 0 0 1px var(--ring);
 }
 
 /* Styles for vertical resize handle */

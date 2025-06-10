@@ -8,6 +8,6 @@
  * @module TextPressure
  */
 
-export { TextPressure, default } from './text-pressure';
+export { default, TextPressure } from './text-pressure';
 export * as TextPressureStyles from './text-pressure.module.css';
 export type { TextPressureProps } from './text-pressure.types';

@@ -7,6 +7,6 @@
  * @module RotatingText
  */
 
-export { RotatingText, default } from './rotating-text';
+export { default, RotatingText } from './rotating-text';
 export * as RotatingTextStyles from './rotating-text.module.css';
 export type { RotatingTextProps } from './rotating-text.types';

@@ -1,16 +1,14 @@
-import React from 'react';
-
 /**
  * MenuItem Props
- * 
+ *
  * Props for an individual menu item in the FlowingMenu component.
- * 
+ *
  * @example
  * ```tsx
- * <MenuItem 
- *   link="/about" 
- *   text="About Us" 
- *   image="/images/about.jpg" 
+ * <MenuItem
+ *   link="/about"
+ *   text="About Us"
+ *   image="/images/about.jpg"
  * />
  * ```
  */
@@ -33,17 +31,17 @@ export interface MenuItemProps {
 
 /**
  * FlowingMenu Props
- * 
+ *
  * Props for the FlowingMenu component that displays animated menu items.
- * 
+ *
  * @example
  * ```tsx
- * <FlowingMenu 
+ * <FlowingMenu
  *   items={[
  *     { link: "/home", text: "Home", image: "/images/home.jpg" },
  *     { link: "/about", text: "About", image: "/images/about.jpg" },
  *     { link: "/contact", text: "Contact", image: "/images/contact.jpg" },
- *   ]} 
+ *   ]}
  * />
  * ```
  */

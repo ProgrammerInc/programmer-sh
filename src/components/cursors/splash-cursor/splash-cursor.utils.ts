@@ -5,7 +5,6 @@ import {
   ColorRGB,
   FramebufferType,
   Material,
-  SimulationConfig,
   WebGLContext,
   WebGLExtensions
 } from './splash-cursor.types';
@@ -18,8 +17,10 @@ import {
  * @returns RGB color object
  */
 export function HSVtoRGB(h: number, s: number, v: number): ColorRGB {
-  let r = 0, g = 0, b = 0;
-  
+  let r = 0,
+    g = 0,
+    b = 0;
+
   const i = Math.floor(h * 6);
   const f = h * 6 - i;
   const p = v * (1 - s);
@@ -77,12 +78,13 @@ export function generateColor(): ColorRGB {
  * @param params - WebGL context parameters
  * @returns WebGL rendering context or null if initialization fails
  */
-export function getWebGLContext(canvas: HTMLCanvasElement, params: Record<string, boolean>): WebGLRenderingContext | null {
-  return (
-    canvas.getContext('webgl2', params) ||
+export function getWebGLContext(
+  canvas: HTMLCanvasElement,
+  params: Record<string, boolean>
+): WebGLRenderingContext | null {
+  return (canvas.getContext('webgl2', params) ||
     canvas.getContext('webgl', params) ||
-    canvas.getContext('experimental-webgl', params)
-  ) as WebGLRenderingContext | null;
+    canvas.getContext('experimental-webgl', params)) as WebGLRenderingContext | null;
 }
 
 /**
@@ -92,10 +94,14 @@ export function getWebGLContext(canvas: HTMLCanvasElement, params: Record<string
  * @param source - Shader source code
  * @returns The compiled shader
  */
-export function compileShader(gl: WebGLRenderingContext, type: number, source: string): WebGLShader | null {
+export function compileShader(
+  gl: WebGLRenderingContext,
+  type: number,
+  source: string
+): WebGLShader | null {
   const shader = gl.createShader(type);
   if (!shader) return null;
-  
+
   gl.shaderSource(shader, source);
   gl.compileShader(shader);
 
@@ -122,7 +128,7 @@ export function createProgram(
 ): WebGLProgram | null {
   const vertexShader = compileShader(gl, gl.VERTEX_SHADER, vertexSource);
   const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, fragmentSource);
-  
+
   if (!vertexShader || !fragmentShader) return null;
 
   const program = gl.createProgram();
@@ -155,17 +161,17 @@ export function createMaterial(
 ): Material | null {
   const program = createProgram(gl, vertexShader, fragmentShaderSource);
   if (!program) return null;
-  
+
   const uniforms: Record<string, WebGLUniformLocation | null> = {};
   const uniformCount = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
-  
+
   for (let i = 0; i < uniformCount; i++) {
     const uniformInfo = gl.getActiveUniform(program, i);
     if (!uniformInfo) continue;
-    
+
     uniforms[uniformInfo.name] = gl.getUniformLocation(program, uniformInfo.name);
   }
-  
+
   return {
     program,
     uniforms
@@ -178,13 +184,16 @@ export function createMaterial(
  * @param texId - Texture ID to attach
  * @returns Framebuffer object
  */
-export function createFramebuffer(gl: WebGLRenderingContext, texId: WebGLTexture): WebGLFramebuffer | null {
+export function createFramebuffer(
+  gl: WebGLRenderingContext,
+  texId: WebGLTexture
+): WebGLFramebuffer | null {
   const fbo = gl.createFramebuffer();
   gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
   gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texId, 0);
   gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
   gl.clear(gl.COLOR_BUFFER_BIT);
-  
+
   return fbo;
 }
 
@@ -195,13 +204,13 @@ export function createFramebuffer(gl: WebGLRenderingContext, texId: WebGLTexture
  * @returns Coordinates as [x, y] in canvas space
  */
 export function updatePointerPosition(
-  e: MouseEvent | TouchEvent, 
+  e: MouseEvent | TouchEvent,
   canvas: HTMLCanvasElement
 ): [number, number] {
   const rect = canvas.getBoundingClientRect();
   let clientX = 0;
   let clientY = 0;
-  
+
   if ('touches' in e) {
     if (e.touches.length > 0) {
       clientX = e.touches[0].clientX;
@@ -211,11 +220,8 @@ export function updatePointerPosition(
     clientX = e.clientX;
     clientY = e.clientY;
   }
-  
-  return [
-    (clientX - rect.left) / rect.width,
-    (clientY - rect.top) / rect.height
-  ];
+
+  return [(clientX - rect.left) / rect.width, (clientY - rect.top) / rect.height];
 }
 
 /**
@@ -240,10 +246,10 @@ export function createDoubleFBO(
 ) {
   const { gl, ext } = context;
   const filtering = type === FramebufferType.HALF_FLOAT ? gl.NEAREST : minFilter;
-  
+
   let fbo1 = createFBO(context, width, height, format, type, filtering, magFilter);
   let fbo2 = createFBO(context, width, height, format, type, filtering, magFilter);
-  
+
   return {
     width,
     height,
@@ -297,10 +303,10 @@ export function createFBO(
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, magFilter);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  
+
   let internalFormat = format;
   let dataType: 5121 | number = gl.UNSIGNED_BYTE;
-  
+
   if (type === FramebufferType.HALF_FLOAT) {
     if (ext.textureHalfFloat) {
       internalFormat = gl.RGBA;
@@ -311,7 +317,7 @@ export function createFBO(
       dataType = gl.UNSIGNED_BYTE;
     }
   }
-  
+
   if (type === FramebufferType.FLOAT) {
     if (ext.textureFloat) {
       dataType = gl.FLOAT as 5121;
@@ -319,15 +325,15 @@ export function createFBO(
       dataType = gl.UNSIGNED_BYTE;
     }
   }
-  
+
   gl.texImage2D(gl.TEXTURE_2D, 0, internalFormat, width, height, 0, format, dataType, null);
-  
+
   const fbo = gl.createFramebuffer();
   gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
   gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
   gl.viewport(0, 0, width, height);
   gl.clear(gl.COLOR_BUFFER_BIT);
-  
+
   return {
     texture,
     fbo,
@@ -348,15 +354,15 @@ export function createFBO(
  */
 export function getFramebufferType(context: WebGLContext): FramebufferType {
   const { gl, ext } = context;
-  
+
   if (ext.textureHalfFloat && ext.supportLinearFiltering) {
     return FramebufferType.HALF_FLOAT;
   }
-  
+
   if (ext.textureFloat) {
     return FramebufferType.FLOAT;
   }
-  
+
   return FramebufferType.UNSIGNED_BYTE;
 }
 
@@ -373,11 +379,11 @@ export function supportsLinearFiltering(gl: WebGLRenderingContext): boolean {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
-  
+
   const halfFloatFramebuffer = gl.createFramebuffer();
   gl.bindFramebuffer(gl.FRAMEBUFFER, halfFloatFramebuffer);
   gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, halfFloatTexture, 0);
-  
+
   const status = gl.checkFramebufferStatus(gl.FRAMEBUFFER);
   return status === gl.FRAMEBUFFER_COMPLETE;
 }
@@ -391,12 +397,12 @@ export function initializeExtensions(gl: WebGLRenderingContext): WebGLExtensions
   const textureFloat = gl.getExtension('OES_texture_float');
   const textureHalfFloat = gl.getExtension('OES_texture_half_float');
   const textureHalfFloatLinear = gl.getExtension('OES_texture_half_float_linear');
-  
+
   let supportLinearFiltering = false;
   if (textureHalfFloat) {
     supportLinearFiltering = supportsLinearFiltering(gl);
   }
-  
+
   return {
     textureFloat,
     textureHalfFloat,
@@ -421,13 +427,13 @@ export function isTouchDevice(): boolean {
 export function resizeCanvas(canvas: HTMLCanvasElement): boolean {
   const width = canvas.clientWidth;
   const height = canvas.clientHeight;
-  
+
   if (canvas.width !== width || canvas.height !== height) {
     canvas.width = width;
     canvas.height = height;
     return true;
   }
-  
+
   return false;
 }
 
@@ -437,7 +443,7 @@ export function resizeCanvas(canvas: HTMLCanvasElement): boolean {
 export function createQuad(gl: WebGLRenderingContext): void {
   const positions = new Float32Array([-1, -1, -1, 1, 1, 1, 1, -1]);
   const buffer = gl.createBuffer();
-  
+
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
   gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
@@ -451,7 +457,7 @@ export function createQuad(gl: WebGLRenderingContext): void {
  */
 export function initializeWebGLContext(gl: WebGLRenderingContext): WebGLContext {
   const ext = initializeExtensions(gl);
-  
+
   return {
     gl,
     ext,

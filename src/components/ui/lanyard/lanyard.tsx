@@ -5,10 +5,9 @@ import { Canvas, extend } from '@react-three/fiber';
 import { Physics } from '@react-three/rapier';
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 import * as React from 'react';
-import * as THREE from 'three';
 
-import styles from './lanyard.module.css';
 import { Band } from './lanyard-band.component';
+import styles from './lanyard.module.css';
 import { LanyardProps } from './lanyard.types';
 import { LANYARD_DEFAULTS, createLanyardEnvironment, setupRenderer } from './lanyard.utils';
 
@@ -27,11 +26,11 @@ extend({ MeshLineGeometry, MeshLineMaterial });
  * <Lanyard />
  *
  * // With custom settings
- * <Lanyard 
- *   position={[0, 0, 35]} 
- *   gravity={[0, -30, 0]} 
- *   fov={25} 
- *   transparent={false} 
+ * <Lanyard
+ *   position={[0, 0, 35]}
+ *   gravity={[0, -30, 0]}
+ *   fov={25}
+ *   transparent={false}
  * />
  * ```
  */
@@ -53,12 +52,12 @@ export const LanyardComponent: React.FC<LanyardProps> = ({
       >
         {/* Scene lighting */}
         <ambientLight intensity={Math.PI} />
-        
+
         {/* Physics simulation */}
         <Physics gravity={gravity} timeStep={1 / 60}>
           <Band />
         </Physics>
-        
+
         {/* Environment lighting */}
         <Environment blur={0.75}>
           {environmentLights.map((light, index) => (

@@ -2,7 +2,7 @@
  * Custom hooks for the Globe component
  */
 
-import { genRandomNumbers, hexToRgbObject } from '@/utils/app.utils';
+import { genRandomNumbers } from '@/utils/app.utils';
 import { useFrame } from '@react-three/fiber';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Color, MeshPhongMaterial, Object3D } from 'three';
@@ -31,6 +31,7 @@ let numbersOfRings: number[] = [0];
  * since we need access to it inside our hooks
  */
 import countries from '@/data/globe.json';
+import { hexToRgbObject } from '@/lib';
 
 /**
  * Validates if a number is valid (not NaN, not Infinity)

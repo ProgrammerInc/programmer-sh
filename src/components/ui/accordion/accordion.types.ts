@@ -14,12 +14,16 @@ export type AccordionItemProps = React.ComponentPropsWithoutRef<typeof Accordion
 /**
  * AccordionTrigger component props
  */
-export type AccordionTriggerProps = React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>;
+export type AccordionTriggerProps = React.ComponentPropsWithoutRef<
+  typeof AccordionPrimitive.Trigger
+>;
 
 /**
  * AccordionContent component props
  */
-export type AccordionContentProps = React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>;
+export type AccordionContentProps = React.ComponentPropsWithoutRef<
+  typeof AccordionPrimitive.Content
+>;
 
 /**
  * AccordionHeader component props

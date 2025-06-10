@@ -7,5 +7,5 @@
  * @module GlitchText
  */
 
-export { GlitchText, default } from './glitch-text';
+export { default, GlitchText } from './glitch-text';
 export type { GlitchTextProps } from './glitch-text.types';

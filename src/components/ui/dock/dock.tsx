@@ -11,18 +11,13 @@ import {
 import React, { Children, cloneElement, memo, useEffect, useMemo, useRef, useState } from 'react';
 
 import styles from './dock.module.css';
-import {
-  DockIconProps,
-  DockItemProps,
-  DockLabelProps,
-  DockProps
-} from './dock.types';
+import { DockIconProps, DockItemProps, DockLabelProps, DockProps } from './dock.types';
 
 /**
  * Dock Item Component
- * 
+ *
  * An individual item in the dock that responds to mouse position for magnification effects.
- * 
+ *
  * @example
  * ```tsx
  * <DockItem
@@ -90,9 +85,9 @@ export const DockItem = memo(function DockItem({
 
 /**
  * Dock Label Component
- * 
+ *
  * Label that appears above a dock item when hovered.
- * 
+ *
  * @example
  * ```tsx
  * <DockLabel>Settings</DockLabel>
@@ -134,26 +129,23 @@ export const DockLabel = memo(function DockLabel({
 
 /**
  * Dock Icon Component
- * 
+ *
  * Container for the icon in a dock item.
- * 
+ *
  * @example
  * ```tsx
  * <DockIcon><CommandIcon size={24} /></DockIcon>
  * ```
  */
-export const DockIcon = memo(function DockIcon({
-  children,
-  className = ''
-}: DockIconProps) {
+export const DockIcon = memo(function DockIcon({ children, className = '' }: DockIconProps) {
   return <div className={`${styles['dock-icon']} ${className}`}>{children}</div>;
 });
 
 /**
  * Dock Component
- * 
+ *
  * A macOS-style dock that provides a magnification effect when hovering over items.
- * 
+ *
  * @example
  * ```tsx
  * const dockItems = [
@@ -168,7 +160,7 @@ export const DockIcon = memo(function DockIcon({
  *     onClick: () => setSettingsOpen(true),
  *   }
  * ];
- * 
+ *
  * <Dock
  *   items={dockItems}
  *   magnification={70}
@@ -198,10 +190,7 @@ const Dock = memo(function Dock({
   const height = useSpring(heightRow, spring);
 
   return (
-    <motion.div
-      style={{ height, scrollbarWidth: 'none' }}
-      className={styles['dock-container']}
-    >
+    <motion.div style={{ height, scrollbarWidth: 'none' }} className={styles['dock-container']}>
       <motion.div
         onMouseMove={({ pageX }) => {
           isHovered.set(1);

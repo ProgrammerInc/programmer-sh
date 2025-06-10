@@ -13,7 +13,7 @@ import { GoogleIcon } from './auth-modal.components';
 
 /**
  * Validate email format
- * 
+ *
  * @param email - Email address to validate
  * @returns True if email is valid, false otherwise
  */
@@ -24,12 +24,15 @@ export const validateEmail = (email: string): boolean => {
 
 /**
  * Calculate modal position relative to an anchor element
- * 
+ *
  * @param anchorRef - Reference to the anchor element
  * @param modalWidth - Width of the modal in pixels
  * @returns Calculated position coordinates
  */
-export const getModalPosition = (anchorRef: HTMLDivElement | null, modalWidth = 400): { top: number; left: number; width: number } => {
+export const getModalPosition = (
+  anchorRef: HTMLDivElement | null,
+  modalWidth = 400
+): { top: number; left: number; width: number } => {
   if (!anchorRef) {
     return { top: 0, left: 0, width: modalWidth };
   }
@@ -53,12 +56,12 @@ type OAuthProviderConfig = {
     label: string;
     className: string;
     color: string;
-  }
+  };
 };
 
 /**
  * Get OAuth provider configuration
- * 
+ *
  * @returns Configuration object for OAuth providers
  */
 export const getOAuthProviderConfig = (): OAuthProviderConfig => {
@@ -86,7 +89,7 @@ export const getOAuthProviderConfig = (): OAuthProviderConfig => {
 
 /**
  * Get redirect URL for OAuth providers
- * 
+ *
  * @returns The redirect URL for OAuth callbacks
  */
 export const getOAuthRedirectUrl = (): string => {
@@ -95,7 +98,7 @@ export const getOAuthRedirectUrl = (): string => {
 
 /**
  * Get the opposite auth mode
- * 
+ *
  * @param currentMode - Current auth mode ('login' or 'signup')
  * @returns The opposite auth mode
  */

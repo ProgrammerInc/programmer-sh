@@ -1,16 +1,17 @@
 #!/usr/bin/env ts-node
+/* eslint-disable no-secrets/no-secrets */
+
 /**
  * Cursor Presets Database Loader
- * 
+ *
  * This script loads the cursor presets from the static presets file
  * into the Supabase database with proper relationships between tables.
  */
 
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
-import { v4 as uuidv4 } from 'uuid';
-import { cursorPresets } from '../src/presets/cursor.presets';
 import type { Cursor } from '../src/components/ui/cursor/cursor.types';
+import { cursorPresets } from '../src/presets/cursor.presets';
 
 // Initialize environment variables
 dotenv.config();
@@ -43,7 +44,11 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 /**
  * Insert a cursor animation if it doesn't exist
  */
-const insertCursorAnimation = async (identifier: string, animationType: string, animationProps?: unknown): Promise<string | null> => {
+const insertCursorAnimation = async (
+  identifier: string,
+  animationType: string,
+  animationProps?: unknown
+): Promise<string | null> => {
   try {
     // Check if animation already exists
     const { data: existingAnimation } = await supabase
@@ -103,7 +108,8 @@ const insertCursor = async (cursor: Cursor): Promise<string | null> => {
     const cursorData: Record<string, unknown> = {
       identifier: cursor.id,
       name: cursor.name || cursor.id.charAt(0).toUpperCase() + cursor.id.slice(1),
-      description: cursor.description || `${cursor.id.charAt(0).toUpperCase() + cursor.id.slice(1)} cursor`,
+      description:
+        cursor.description || `${cursor.id.charAt(0).toUpperCase() + cursor.id.slice(1)} cursor`,
       type: cursor.type,
       enabled: true,
       style: {}
@@ -111,28 +117,28 @@ const insertCursor = async (cursor: Cursor): Promise<string | null> => {
 
     // Add theme if it exists
     if (cursor.theme) {
-      cursorData.style = { ...cursorData.style as Record<string, unknown>, theme: cursor.theme };
+      cursorData.style = { ...(cursorData.style as Record<string, unknown>), theme: cursor.theme };
     }
 
     // Add URL for image type cursors
     if (cursor.type === 'image' && cursor.url) {
-      cursorData.style = { ...cursorData.style as Record<string, unknown>, url: cursor.url };
+      cursorData.style = { ...(cursorData.style as Record<string, unknown>), url: cursor.url };
     }
 
     // If it's an animation cursor, insert the animation first and link it
     if (cursor.type === 'animation' && cursor.animation && cursor.animationType) {
-      const animationId = await insertCursorAnimation(cursor.animation, cursor.animationType, cursor.animationProps);
+      const animationId = await insertCursorAnimation(
+        cursor.animation,
+        cursor.animationType,
+        cursor.animationProps
+      );
       if (animationId) {
         cursorData.animation_id = animationId;
       }
     }
 
     // Insert cursor
-    const { data, error } = await supabase
-      .from('cursors')
-      .insert(cursorData)
-      .select('id')
-      .single();
+    const { data, error } = await supabase.from('cursors').insert(cursorData).select('id').single();
 
     if (error) {
       console.error(`Error inserting cursor ${cursor.id}:`, error);
@@ -152,13 +158,13 @@ const insertCursor = async (cursor: Cursor): Promise<string | null> => {
  */
 const loadCursorPresets = async () => {
   console.log('\x1b[36mStarting cursor presets database load...\x1b[0m');
-  
+
   try {
     // Process all cursors in sequence
     for (const [id, cursor] of Object.entries(cursorPresets)) {
       await insertCursor(cursor);
     }
-    
+
     console.log('\x1b[32mCursor presets loaded successfully!\x1b[0m');
   } catch (error) {
     console.error('\x1b[31mError loading cursor presets:\x1b[0m', error);

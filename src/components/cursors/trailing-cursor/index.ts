@@ -4,6 +4,6 @@
  * @module TrailingCursor
  */
 
-export { TrailingCursor, default } from './trailing-cursor';
-export type { TrailingCursorProps } from './trailing-cursor.types';
+export { default, TrailingCursor } from './trailing-cursor';
 export * as TrailingCursorStyles from './trailing-cursor.module.css';
+export type { TrailingCursorProps } from './trailing-cursor.types';

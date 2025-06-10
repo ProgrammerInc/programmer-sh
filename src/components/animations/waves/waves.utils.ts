@@ -144,12 +144,15 @@ export class WavesNoise {
  * @param withCursor Whether to include cursor influence
  * @returns The calculated position
  */
-export const calculatePointPosition = (point: {
-  x: number;
-  y: number;
-  wave: { x: number; y: number };
-  cursor: { x: number; y: number };
-}, withCursor = true): { x: number; y: number } => {
+export const calculatePointPosition = (
+  point: {
+    x: number;
+    y: number;
+    wave: { x: number; y: number };
+    cursor: { x: number; y: number };
+  },
+  withCursor = true
+): { x: number; y: number } => {
   const x = point.x + point.wave.x + (withCursor ? point.cursor.x : 0);
   const y = point.y + point.wave.y + (withCursor ? point.cursor.y : 0);
   return { x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10 };
@@ -168,26 +171,30 @@ export const createWaveGrid = (
   height: number,
   xGap: number,
   yGap: number
-): Array<Array<{
-  x: number;
-  y: number;
-  wave: { x: number; y: number };
-  cursor: { x: number; y: number; vx: number; vy: number };
-}>> => {
-  const lines: Array<Array<{
+): Array<
+  Array<{
     x: number;
     y: number;
     wave: { x: number; y: number };
     cursor: { x: number; y: number; vx: number; vy: number };
-  }>> = [];
-  
+  }>
+> => {
+  const lines: Array<
+    Array<{
+      x: number;
+      y: number;
+      wave: { x: number; y: number };
+      cursor: { x: number; y: number; vx: number; vy: number };
+    }>
+  > = [];
+
   const oWidth = width + 200;
   const oHeight = height + 30;
   const totalLines = Math.ceil(oWidth / xGap);
   const totalPoints = Math.ceil(oHeight / yGap);
   const xStart = (width - xGap * totalLines) / 2;
   const yStart = (height - yGap * totalPoints) / 2;
-  
+
   for (let i = 0; i <= totalLines; i++) {
     const pts: {
       x: number;
@@ -205,7 +212,7 @@ export const createWaveGrid = (
     }
     lines.push(pts);
   }
-  
+
   return lines;
 };
 
@@ -220,16 +227,19 @@ export const updateMouseTracking = (
   x: number,
   y: number,
   boundingRect: { left: number; top: number },
-  mouse: { 
-    x: number; y: number; 
-    lx: number; ly: number; 
-    sx: number; sy: number; 
-    set: boolean 
+  mouse: {
+    x: number;
+    y: number;
+    lx: number;
+    ly: number;
+    sx: number;
+    sy: number;
+    set: boolean;
   }
 ): void => {
   mouse.x = x - boundingRect.left;
   mouse.y = y - boundingRect.top + window.scrollY;
-  
+
   if (!mouse.set) {
     mouse.sx = mouse.x;
     mouse.sy = mouse.y;

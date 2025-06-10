@@ -1,3 +1,4 @@
+/* eslint-disable no-secrets/no-secrets */
 import { Wallpaper } from '@/components/ui/wallpaper';
 
 // Default placeholder image URL for animations requiring an image source
@@ -16,14 +17,9 @@ export const wallpaperPresets: Record<string, Wallpaper> = {
       id: 'default',
       type: 'animation',
       animation: {
-        id: 'particles',
+        id: 'letter-glitch',
         type: 'reactbits',
         url: DEFAULT_ANIMATION_IMAGE_URL
-      },
-      gradient: {
-        id: 'default',
-        gradient: 'to bottom, rgba(0, 0, 0, 0.25), rgba(5, 5, 5, 0.7)',
-        type: 'linear'
       }
     }
   },

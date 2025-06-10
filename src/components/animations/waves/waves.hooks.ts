@@ -4,7 +4,12 @@
 import { CSSProperties, MutableRefObject, useCallback, useEffect, useRef } from 'react';
 import { ANIMATION_CONSTANTS, NOISE_CONSTANTS } from './waves.constants';
 import { BoundingRect, Mouse, Point, WavesConfig } from './waves.types';
-import { WavesNoise, calculatePointPosition, createWaveGrid, updateMouseTracking } from './waves.utils';
+import {
+  WavesNoise,
+  calculatePointPosition,
+  createWaveGrid,
+  updateMouseTracking
+} from './waves.utils';
 
 /**
  * Hook to manage the animation sizing and grid creation
@@ -48,7 +53,7 @@ export const useWavesSetup = (
     const container = containerRef.current;
     const canvas = canvasRef.current;
     if (!container || !canvas) return;
-    
+
     const rect = container.getBoundingClientRect();
     boundingRef.current = {
       width: rect.width,
@@ -56,10 +61,10 @@ export const useWavesSetup = (
       left: rect.left,
       top: rect.top
     };
-    
+
     canvas.width = rect.width;
     canvas.height = rect.height;
-    
+
     ctxRef.current = canvas.getContext('2d');
   }, [canvasRef, containerRef]);
 
@@ -75,53 +80,57 @@ export const useWavesSetup = (
   /**
    * Move the wave points based on noise and mouse influence
    */
-  const movePoints = useCallback((time: number) => {
-    const lines = linesRef.current;
-    const mouse = mouseRef.current;
-    const noise = noiseRef.current;
-    const { 
-      waveSpeedX, waveSpeedY, waveAmpX, waveAmpY, 
-      friction, tension, maxCursorMove 
-    } = configRef.current;
-    
-    lines.forEach(pts => {
-      pts.forEach(p => {
-        // Calculate wave movement using Perlin noise
-        const move = noise.perlin2(
-          (p.x + time * waveSpeedX) * NOISE_CONSTANTS.X_SCALE, 
-          (p.y + time * waveSpeedY) * NOISE_CONSTANTS.Y_SCALE
-        ) * NOISE_CONSTANTS.PERLIN_MULTIPLIER;
-        
-        p.wave.x = Math.cos(move) * waveAmpX;
-        p.wave.y = Math.sin(move) * waveAmpY;
+  const movePoints = useCallback(
+    (time: number) => {
+      const lines = linesRef.current;
+      const mouse = mouseRef.current;
+      const noise = noiseRef.current;
+      const { waveSpeedX, waveSpeedY, waveAmpX, waveAmpY, friction, tension, maxCursorMove } =
+        configRef.current;
 
-        // Apply cursor influence
-        const dx = p.x - mouse.sx,
-          dy = p.y - mouse.sy;
-        const dist = Math.hypot(dx, dy);
-        const l = Math.max(ANIMATION_CONSTANTS.MIN_INFLUENCE_DISTANCE, mouse.vs);
-        
-        if (dist < l) {
-          const s = 1 - dist / l;
-          const f = Math.cos(dist * ANIMATION_CONSTANTS.WAVE_DISTORTION) * s;
-          p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * ANIMATION_CONSTANTS.CURSOR_INFLUENCE_FACTOR;
-          p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * ANIMATION_CONSTANTS.CURSOR_INFLUENCE_FACTOR;
-        }
+      lines.forEach(pts => {
+        pts.forEach(p => {
+          // Calculate wave movement using Perlin noise
+          const move =
+            noise.perlin2(
+              (p.x + time * waveSpeedX) * NOISE_CONSTANTS.X_SCALE,
+              (p.y + time * waveSpeedY) * NOISE_CONSTANTS.Y_SCALE
+            ) * NOISE_CONSTANTS.PERLIN_MULTIPLIER;
 
-        // Apply spring physics
-        p.cursor.vx += (0 - p.cursor.x) * tension;
-        p.cursor.vy += (0 - p.cursor.y) * tension;
-        p.cursor.vx *= friction;
-        p.cursor.vy *= friction;
-        p.cursor.x += p.cursor.vx * 2;
-        p.cursor.y += p.cursor.vy * 2;
-        
-        // Clamp cursor influence
-        p.cursor.x = Math.min(maxCursorMove, Math.max(-maxCursorMove, p.cursor.x));
-        p.cursor.y = Math.min(maxCursorMove, Math.max(-maxCursorMove, p.cursor.y));
+          p.wave.x = Math.cos(move) * waveAmpX;
+          p.wave.y = Math.sin(move) * waveAmpY;
+
+          // Apply cursor influence
+          const dx = p.x - mouse.sx,
+            dy = p.y - mouse.sy;
+          const dist = Math.hypot(dx, dy);
+          const l = Math.max(ANIMATION_CONSTANTS.MIN_INFLUENCE_DISTANCE, mouse.vs);
+
+          if (dist < l) {
+            const s = 1 - dist / l;
+            const f = Math.cos(dist * ANIMATION_CONSTANTS.WAVE_DISTORTION) * s;
+            p.cursor.vx +=
+              Math.cos(mouse.a) * f * l * mouse.vs * ANIMATION_CONSTANTS.CURSOR_INFLUENCE_FACTOR;
+            p.cursor.vy +=
+              Math.sin(mouse.a) * f * l * mouse.vs * ANIMATION_CONSTANTS.CURSOR_INFLUENCE_FACTOR;
+          }
+
+          // Apply spring physics
+          p.cursor.vx += (0 - p.cursor.x) * tension;
+          p.cursor.vy += (0 - p.cursor.y) * tension;
+          p.cursor.vx *= friction;
+          p.cursor.vy *= friction;
+          p.cursor.x += p.cursor.vx * 2;
+          p.cursor.y += p.cursor.vy * 2;
+
+          // Clamp cursor influence
+          p.cursor.x = Math.min(maxCursorMove, Math.max(-maxCursorMove, p.cursor.x));
+          p.cursor.y = Math.min(maxCursorMove, Math.max(-maxCursorMove, p.cursor.y));
+        });
       });
-    });
-  }, [configRef]);
+    },
+    [configRef]
+  );
 
   /**
    * Draw the wave lines on the canvas
@@ -130,15 +139,15 @@ export const useWavesSetup = (
     const { width, height } = boundingRef.current;
     const ctx = ctxRef.current;
     if (!ctx) return;
-    
+
     ctx.clearRect(0, 0, width, height);
     ctx.beginPath();
     ctx.strokeStyle = configRef.current.lineColor;
-    
+
     linesRef.current.forEach(points => {
       let p1 = calculatePointPosition(points[0], false);
       ctx.moveTo(p1.x, p1.y);
-      
+
       points.forEach((p, idx) => {
         const isLast = idx === points.length - 1;
         p1 = calculatePointPosition(p, !isLast);
@@ -147,46 +156,49 @@ export const useWavesSetup = (
         if (isLast) ctx.moveTo(p2.x, p2.y);
       });
     });
-    
+
     ctx.stroke();
   }, [configRef]);
 
   /**
    * Animation tick function
    */
-  const tick = useCallback((t: number) => {
-    const container = containerRef.current;
-    if (!container) return;
-    
-    const mouse = mouseRef.current;
-    
-    // Update mouse smoothing
-    mouse.sx += (mouse.x - mouse.sx) * ANIMATION_CONSTANTS.MOUSE_SMOOTHING;
-    mouse.sy += (mouse.y - mouse.sy) * ANIMATION_CONSTANTS.MOUSE_SMOOTHING;
-    
-    // Calculate velocity and angle
-    const dx = mouse.x - mouse.lx,
-      dy = mouse.y - mouse.ly;
-    const d = Math.hypot(dx, dy);
-    
-    mouse.v = d;
-    mouse.vs += (d - mouse.vs) * ANIMATION_CONSTANTS.VELOCITY_SMOOTHING;
-    mouse.vs = Math.min(ANIMATION_CONSTANTS.MAX_VELOCITY, mouse.vs);
-    mouse.lx = mouse.x;
-    mouse.ly = mouse.y;
-    mouse.a = Math.atan2(dy, dx);
-    
-    // Update CSS variables for cursor visualization
-    container.style.setProperty('--x', `${mouse.sx}px`);
-    container.style.setProperty('--y', `${mouse.sy}px`);
+  const tick = useCallback(
+    (t: number) => {
+      const container = containerRef.current;
+      if (!container) return;
 
-    // Update and draw animation
-    movePoints(t);
-    drawLines();
-    
-    // Continue animation loop
-    frameIdRef.current = requestAnimationFrame(tick);
-  }, [containerRef, drawLines, movePoints]);
+      const mouse = mouseRef.current;
+
+      // Update mouse smoothing
+      mouse.sx += (mouse.x - mouse.sx) * ANIMATION_CONSTANTS.MOUSE_SMOOTHING;
+      mouse.sy += (mouse.y - mouse.sy) * ANIMATION_CONSTANTS.MOUSE_SMOOTHING;
+
+      // Calculate velocity and angle
+      const dx = mouse.x - mouse.lx,
+        dy = mouse.y - mouse.ly;
+      const d = Math.hypot(dx, dy);
+
+      mouse.v = d;
+      mouse.vs += (d - mouse.vs) * ANIMATION_CONSTANTS.VELOCITY_SMOOTHING;
+      mouse.vs = Math.min(ANIMATION_CONSTANTS.MAX_VELOCITY, mouse.vs);
+      mouse.lx = mouse.x;
+      mouse.ly = mouse.y;
+      mouse.a = Math.atan2(dy, dx);
+
+      // Update CSS variables for cursor visualization
+      container.style.setProperty('--x', `${mouse.sx}px`);
+      container.style.setProperty('--y', `${mouse.sy}px`);
+
+      // Update and draw animation
+      movePoints(t);
+      drawLines();
+
+      // Continue animation loop
+      frameIdRef.current = requestAnimationFrame(tick);
+    },
+    [containerRef, drawLines, movePoints]
+  );
 
   /**
    * Handle mouse movement
@@ -240,15 +252,8 @@ export const useWavesAnimation = (
   canvasRef: MutableRefObject<HTMLCanvasElement | null>,
   configRef: MutableRefObject<WavesConfig>
 ) => {
-  const {
-    frameIdRef,
-    setSize,
-    setLines,
-    tick,
-    handleMouseMove,
-    handleTouchMove,
-    handleResize
-  } = useWavesSetup(containerRef, canvasRef, configRef);
+  const { frameIdRef, setSize, setLines, tick, handleMouseMove, handleTouchMove, handleResize } =
+    useWavesSetup(containerRef, canvasRef, configRef);
 
   // Initialize and cleanup the animation
   useEffect(() => {
@@ -260,7 +265,7 @@ export const useWavesAnimation = (
     setSize();
     setLines();
     frameIdRef.current = requestAnimationFrame(tick);
-    
+
     // Event listeners
     window.addEventListener('resize', handleResize);
     window.addEventListener('mousemove', handleMouseMove);
@@ -275,7 +280,17 @@ export const useWavesAnimation = (
         cancelAnimationFrame(frameIdRef.current);
       }
     };
-  }, [canvasRef, containerRef, frameIdRef, handleMouseMove, handleResize, handleTouchMove, setLines, setSize, tick]);
+  }, [
+    canvasRef,
+    containerRef,
+    frameIdRef,
+    handleMouseMove,
+    handleResize,
+    handleTouchMove,
+    setLines,
+    setSize,
+    tick
+  ]);
 };
 
 /**
@@ -365,7 +380,7 @@ export const useWavesStyles = (
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-    
+
     container.style.setProperty('--waves-background-color', backgroundColor);
     container.style.setProperty('--waves-line-color', lineColor);
 
@@ -376,7 +391,7 @@ export const useWavesStyles = (
         container.style.setProperty(`--waves-custom-${cssKey}`, value as string);
       });
     }
-    
+
     return () => {
       // Clean up custom properties on unmount
       if (container && style) {

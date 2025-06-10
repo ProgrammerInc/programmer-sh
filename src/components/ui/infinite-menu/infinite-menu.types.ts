@@ -1,19 +1,18 @@
 /**
  * InfiniteMenu Component Type Definitions
- * 
+ *
  * Types for the InfiniteMenu component that provides a WebGL-based 3D interactive menu with grid items.
- * 
+ *
  * @module
  */
 
 import { mat4, vec2, vec3 } from 'gl-matrix';
-import { FC, MutableRefObject, ReactNode } from 'react';
 
 /**
  * MenuItem Interface
- * 
+ *
  * Represents a single item in the infinite menu grid.
- * 
+ *
  * @example
  * ```tsx
  * const menuItems: MenuItem[] = [
@@ -40,34 +39,34 @@ export interface MenuItem {
 
 /**
  * ActiveItemCallback Type
- * 
+ *
  * Callback function type for when the active item changes.
- * 
+ *
  * @param index The index of the newly active item
  */
 export type ActiveItemCallback = (index: number) => void;
 
 /**
  * MovementChangeCallback Type
- * 
+ *
  * Callback function type for when the movement state changes.
- * 
+ *
  * @param isMoving Whether the menu is currently in motion
  */
 export type MovementChangeCallback = (isMoving: boolean) => void;
 
 /**
  * InitCallback Type
- * 
+ *
  * Callback function type for initialization of the menu.
- * 
+ *
  * @param menu The InfiniteGridMenu instance
  */
 export type InitCallback = (menu: InfiniteGridMenu) => void;
 
 /**
  * InfiniteGridMenu Interface
- * 
+ *
  * Interface for the InfiniteGridMenu class used by the InfiniteMenu component.
  */
 export interface InfiniteGridMenu {
@@ -79,7 +78,7 @@ export interface InfiniteGridMenu {
 
 /**
  * Camera Interface
- * 
+ *
  * Defines the properties for the 3D camera used in the menu.
  */
 export interface Camera {
@@ -107,7 +106,7 @@ export interface Camera {
 
 /**
  * Face Interface
- * 
+ *
  * Represents a triangular face in 3D geometry.
  */
 export interface Face {
@@ -121,7 +120,7 @@ export interface Face {
 
 /**
  * Vertex Interface
- * 
+ *
  * Represents a vertex in 3D geometry.
  */
 export interface Vertex {
@@ -135,9 +134,9 @@ export interface Vertex {
 
 /**
  * InfiniteMenuProps Interface
- * 
+ *
  * Props for the InfiniteMenu component.
- * 
+ *
  * @example
  * ```tsx
  * <InfiniteMenu items={myItems} />

@@ -78,7 +78,7 @@ You can control the pulsing animation and visibility of the skeleton:
 // Dynamic control with state
 function Example() {
   const [isLoading, setIsLoading] = useState(true);
-  
+
   return (
     <Skeleton visible={isLoading} className="h-12 w-full" />
   );
@@ -102,10 +102,7 @@ When using the Skeleton component:
 3. For longer loading times, provide alternative text information
 
 ```tsx
-<Skeleton 
-  loadingLabel="Loading user profile"
-  className="h-12 w-12 rounded-full"
-/>
+<Skeleton loadingLabel="Loading user profile" className="h-12 w-12 rounded-full" />
 ```
 
 ## Best Practices
@@ -151,3 +148,4 @@ When using the Skeleton component:
   <Skeleton className="h-4 w-2/3" />
   <Skeleton className="h-4 w-1/2" />
 </div>
+```

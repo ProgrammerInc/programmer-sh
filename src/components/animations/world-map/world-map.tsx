@@ -23,7 +23,7 @@ export function WorldMap({
 }: WorldMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const svgMap = useDottedMapSVG(theme);
-  
+
   return (
     <div className={cn(CSS_CLASSES.CONTAINER, className)}>
       <img

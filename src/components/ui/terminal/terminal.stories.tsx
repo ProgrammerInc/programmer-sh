@@ -1,7 +1,6 @@
 'use client';
 
 import { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
 
 import Terminal from './terminal';
 
@@ -108,12 +107,12 @@ export const InteractiveCommands: Story = {
     if (typeof window !== 'undefined') {
       // @ts-expect-error - for storybook demonstration only
       window.__storybook_commands = {
-        'hello': () => 'Hello World! This is an interactive command.',
-        'random': () => `Random number: ${Math.floor(Math.random() * 100)}`,
-        'date': () => `Current date: ${new Date().toLocaleString()}`
+        hello: () => 'Hello World! This is an interactive command.',
+        random: () => `Random number: ${Math.floor(Math.random() * 100)}`,
+        date: () => `Current date: ${new Date().toLocaleString()}`
       };
     }
-    
+
     return (
       <div className="min-h-screen bg-background p-8">
         <Terminal

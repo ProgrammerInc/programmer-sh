@@ -6,5 +6,5 @@
  * @module Globe
  */
 
-export { World, default } from './globe';
+export { default, World } from './globe';
 export type { GlobeObjectProps, WorldProps } from './globe.types';

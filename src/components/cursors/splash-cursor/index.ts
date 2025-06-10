@@ -4,6 +4,6 @@
  * @module SplashCursor
  */
 
-export { SplashCursor, default } from './splash-cursor';
+export { default, SplashCursor } from './splash-cursor';
 export * as SplashCursorStyles from './splash-cursor.module.css';
 export type { SplashCursorProps } from './splash-cursor.types';

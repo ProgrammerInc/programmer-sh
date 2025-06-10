@@ -7,10 +7,7 @@ The `TiltedCard` component creates an interactive 3D card effect that responds t
 A simple implementation with just the required image source:
 
 ```tsx
-<TiltedCard 
-  imageSrc="/images/sample-image.jpg" 
-  altText="Sample image description"
-/>
+<TiltedCard imageSrc="/images/sample-image.jpg" altText="Sample image description" />
 ```
 
 ## With Caption Text
@@ -18,7 +15,7 @@ A simple implementation with just the required image source:
 Add a tooltip caption that appears when hovering:
 
 ```tsx
-<TiltedCard 
+<TiltedCard
   imageSrc="/images/profile-photo.jpg"
   altText="User profile photo"
   captionText="Jane Smith, Product Designer"
@@ -30,7 +27,7 @@ Add a tooltip caption that appears when hovering:
 Specify custom dimensions for the container and image:
 
 ```tsx
-<TiltedCard 
+<TiltedCard
   imageSrc="/images/landscape-photo.jpg"
   altText="Mountain landscape"
   containerWidth="500px"
@@ -45,7 +42,7 @@ Specify custom dimensions for the container and image:
 Adjust the scale and rotation amplitude of the effect:
 
 ```tsx
-<TiltedCard 
+<TiltedCard
   imageSrc="/images/product-image.jpg"
   altText="Product showcase"
   scaleOnHover={1.15} // More pronounced scale effect
@@ -58,7 +55,7 @@ Adjust the scale and rotation amplitude of the effect:
 Add custom overlay content on top of the image:
 
 ```tsx
-<TiltedCard 
+<TiltedCard
   imageSrc="/images/background.jpg"
   altText="Product background"
   displayOverlayContent={true}
@@ -76,11 +73,7 @@ Add custom overlay content on top of the image:
 Remove the mobile warning message:
 
 ```tsx
-<TiltedCard 
-  imageSrc="/images/sample.jpg"
-  altText="Sample image"
-  showMobileWarning={false}
-/>
+<TiltedCard imageSrc="/images/sample.jpg" altText="Sample image" showMobileWarning={false} />
 ```
 
 ## Disable Tooltip
@@ -88,11 +81,7 @@ Remove the mobile warning message:
 Hide the tooltip caption completely:
 
 ```tsx
-<TiltedCard 
-  imageSrc="/images/gallery-image.jpg"
-  altText="Gallery image"
-  showTooltip={false}
-/>
+<TiltedCard imageSrc="/images/gallery-image.jpg" altText="Gallery image" showTooltip={false} />
 ```
 
 ## Gallery Implementation
@@ -106,7 +95,7 @@ export function Gallery() {
   const images = [
     { src: '/images/gallery/image1.jpg', alt: 'Gallery image 1', caption: 'Mountain View' },
     { src: '/images/gallery/image2.jpg', alt: 'Gallery image 2', caption: 'Ocean Sunset' },
-    { src: '/images/gallery/image3.jpg', alt: 'Gallery image 3', caption: 'Forest Trail' },
+    { src: '/images/gallery/image3.jpg', alt: 'Gallery image 3', caption: 'Forest Trail' }
   ];
 
   return (
@@ -173,7 +162,7 @@ const customSpringValues = {
 Always provide meaningful `altText` for screen readers:
 
 ```tsx
-<TiltedCard 
+<TiltedCard
   imageSrc="/images/chart.jpg"
   altText="Bar chart showing sales growth from January to December 2023"
 />

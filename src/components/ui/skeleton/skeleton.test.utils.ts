@@ -8,7 +8,7 @@ import { SkeletonVariant } from './skeleton.types';
 
 /**
  * Get dimensions for a specific skeleton variant
- * 
+ *
  * @param variant The skeleton variant
  * @returns Object containing width and height CSS values
  */
@@ -31,17 +31,19 @@ export function getSkeletonDimensions(variant: SkeletonVariant): { width: string
 
 /**
  * Determine if a skeleton variant should be rendered with specific ARIA attributes
- * 
+ *
  * @param variant The skeleton variant
  * @returns Object containing recommended ARIA attributes
  */
-export function getSkeletonAccessibilityAttributes(variant: SkeletonVariant): Record<string, string> {
+export function getSkeletonAccessibilityAttributes(
+  variant: SkeletonVariant
+): Record<string, string> {
   const baseAttributes = {
     role: 'status',
     'aria-busy': 'true',
-    'aria-live': 'polite',
+    'aria-live': 'polite'
   };
-  
+
   switch (variant) {
     case 'avatar':
       return { ...baseAttributes, 'aria-label': 'Loading user avatar' };
@@ -58,7 +60,7 @@ export function getSkeletonAccessibilityAttributes(variant: SkeletonVariant): Re
 
 /**
  * Get appropriate test IDs for skeleton variants
- * 
+ *
  * @param variant The skeleton variant
  * @returns A test ID string for the component
  */

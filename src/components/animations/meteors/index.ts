@@ -7,6 +7,6 @@
  * @module Meteors
  */
 
-export { Meteors, default } from './meteors';
+export { default, Meteors } from './meteors';
 export * as MeteorsStyles from './meteors.module.css';
 export type { MeteorsProps } from './meteors.types';

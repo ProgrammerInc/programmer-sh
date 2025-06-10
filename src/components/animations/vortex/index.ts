@@ -7,6 +7,6 @@
  * @module Vortex
  */
 
-export { Vortex, default } from './vortex';
+export { default, Vortex } from './vortex';
 export * as VortexStyles from './vortex.module.css';
 export type { VortexProps } from './vortex.types';

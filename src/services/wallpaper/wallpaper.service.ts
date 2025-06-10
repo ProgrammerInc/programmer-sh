@@ -10,7 +10,6 @@ import {
   GradientType,
   ImageMimeType,
   ImageType,
-  RemoteVideoSource,
   VideoMimeType,
   VideoSourceType,
   VideoType,
@@ -23,8 +22,8 @@ import {
   WallpaperType,
   WallpaperVideo
 } from '@/components/ui/wallpaper/wallpaper.types';
-import { supabase, isNotFoundError, logDbError } from '@/utils/supabase.utils';
 import { logger } from '@/services/logger';
+import { logDbError, supabase } from '@/utils/supabase.utils';
 
 // Define database wallpaper record interface
 interface DbWallpaper {
@@ -202,7 +201,7 @@ const mapDbVideoToVideo = (dbVideo: DbVideo): WallpaperVideo => {
 
   if (dbVideo.source_type) {
     video.sourceType = dbVideo.source_type as VideoSourceType;
-    
+
     // If this is a remote video source, add it as a string
     if (video.sourceType === 'remote') {
       // Parse URL to identify video information
@@ -214,8 +213,7 @@ const mapDbVideoToVideo = (dbVideo: DbVideo): WallpaperVideo => {
             video.source = remoteSourceUrl;
           } else {
             // Try to extract video ID for YouTube thumbnail
-            const videoId = url.searchParams.get('v') || 
-                          url.pathname.split('/').pop() || '';
+            const videoId = url.searchParams.get('v') || url.pathname.split('/').pop() || '';
             if (videoId) {
               // Use YouTube thumbnail as the source
               video.source = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
@@ -232,7 +230,7 @@ const mapDbVideoToVideo = (dbVideo: DbVideo): WallpaperVideo => {
         }
       } catch (error) {
         logger.error('Error parsing remote video URL:', error);
-        
+
         // Use the poster as a fallback if there was an error parsing the URL
         if (remoteSourceUrl) {
           video.source = remoteSourceUrl;
@@ -332,9 +330,7 @@ export const fetchAllWallpapers = async (): Promise<Record<string, Wallpaper>> =
 
     // No valid cache, fetch from database with all related data in a single query
     logger.debug('Fetching all wallpapers from database');
-    const { data, error } = await supabase
-      .from('wallpapers')
-      .select(WALLPAPER_QUERY);
+    const { data, error } = await supabase.from('wallpapers').select(WALLPAPER_QUERY);
 
     if (error) {
       logDbError('fetchAllWallpapers', error);

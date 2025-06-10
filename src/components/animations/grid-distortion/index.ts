@@ -7,5 +7,5 @@
  * @module GridDistortion
  */
 
-export { GridDistortion, default } from './grid-distortion';
+export { default, GridDistortion } from './grid-distortion';
 export type { GridDistortionProps } from './grid-distortion.types';

@@ -2,11 +2,11 @@
 
 /**
  * Select Component
- * 
+ *
  * A customizable select component based on Radix UI that allows users to
  * select an option from a dropdown list. This component is fully accessible
  * and provides a rich set of features.
- * 
+ *
  * Features:
  * - Accessible dropdown selection component
  * - Supports controlled and uncontrolled usage
@@ -16,7 +16,7 @@
  * - Customizable trigger and dropdown styling
  * - Support for placeholder text
  * - Form control integration
- * 
+ *
  * @example
  * ```
  * // Basic usage
@@ -30,7 +30,7 @@
  *     <SelectItem value="orange">Orange</SelectItem>
  *   </SelectContent>
  * </Select>
- * 
+ *
  * // With grouped options
  * <Select>
  *   <SelectTrigger className="w-[200px]">

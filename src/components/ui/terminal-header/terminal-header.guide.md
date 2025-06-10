@@ -28,7 +28,7 @@ const handleCommandSubmit = (command: string) => {
 };
 
 // In render:
-<TerminalHeader lastCommand={lastCommand} />
+<TerminalHeader lastCommand={lastCommand} />;
 ```
 
 ### User Authentication Integration
@@ -92,7 +92,7 @@ terminalHeaderRef.current?.focusUserMenu();
 terminalHeaderRef.current?.closeUserMenu();
 
 // Usage
-<TerminalHeader ref={terminalHeaderRef} />
+<TerminalHeader ref={terminalHeaderRef} />;
 ```
 
 ## Common Issues and Solutions
@@ -115,14 +115,14 @@ const handleClose = () => {
 };
 
 // Then update the JSX for the close button:
-<div 
+<div
   className={`${styles['window-control']} ${styles.close}`}
   role="button"
   aria-label="Close window"
   tabIndex={0}
   onClick={handleClose}
-  onKeyDown={(e) => e.key === 'Enter' && handleClose()}
+  onKeyDown={e => e.key === 'Enter' && handleClose()}
 >
   <X className={styles['control-icon']} strokeWidth={3} />
-</div>
+</div>;
 ```

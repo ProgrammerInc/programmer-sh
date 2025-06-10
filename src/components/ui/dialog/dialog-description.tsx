@@ -19,22 +19,17 @@ import { DialogDescriptionProps } from './dialog.types';
  * </DialogDescription>
  * ```
  */
-const DialogDescription = memo(React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Description>,
-  DialogDescriptionProps
->(({ className, ...props }, ref) => {
-  const descriptionClassName = useMemo(() => {
-    return cn(styles['dialog-description'], className);
-  }, [className]);
+const DialogDescription = memo(
+  React.forwardRef<React.ElementRef<typeof DialogPrimitive.Description>, DialogDescriptionProps>(
+    ({ className, ...props }, ref) => {
+      const descriptionClassName = useMemo(() => {
+        return cn(styles['dialog-description'], className);
+      }, [className]);
 
-  return (
-    <DialogPrimitive.Description
-      ref={ref}
-      className={descriptionClassName}
-      {...props}
-    />
-  );
-}));
+      return <DialogPrimitive.Description ref={ref} className={descriptionClassName} {...props} />;
+    }
+  )
+);
 
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 

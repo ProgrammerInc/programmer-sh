@@ -4,7 +4,7 @@ import { HistoryItem } from '../terminal-history/index';
 
 /**
  * TerminalContent component props interface.
- * 
+ *
  * @interface TerminalContentProps
  * @property {HistoryItem[]} commandOutput - Array of command history items to display
  * @property {() => void} setScrollToBottom - Function to scroll the terminal content to the bottom
@@ -23,7 +23,7 @@ export interface TerminalContentProps {
 /**
  * Interface for HTML elements with processing state.
  * Used to prevent double execution of command links.
- * 
+ *
  * @interface ProcessableElement
  * @extends HTMLElement
  * @property {boolean} [__processing] - Flag indicating whether the element is currently being processed
@@ -34,7 +34,7 @@ export interface ProcessableElement extends HTMLElement {
 
 /**
  * Command link click event detail interface.
- * 
+ *
  * @interface CommandLinkEventDetail
  * @property {string} command - The command to execute
  * @property {boolean} addToHistory - Whether to add the command to history

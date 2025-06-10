@@ -1,20 +1,20 @@
 /**
  * Popover Component
- * 
+ *
  * A popover is a non-modal dialog that floats around its disclosure element.
  * It's commonly used for displaying additional information or actions when users
  * click or hover over a trigger element.
- * 
+ *
  * This component is built on top of Radix UI's Popover primitive and provides
  * a styled, accessible implementation with animations and proper positioning.
- * 
+ *
  * Features:
  * - Accessible: Follows WAI-ARIA Popover/Dialog pattern
  * - Animation: Smooth entry/exit animations
  * - Positioning: Smart positioning to ensure it stays in view
  * - Keyboard Support: Fully keyboard navigable
  * - Focus Management: Proper focus management for accessibility
- * 
+ *
  * @example
  * Basic usage:
  * ```tsx
@@ -26,7 +26,7 @@
  *   </PopoverContent>
  * </Popover>
  * ```
- * 
+ *
  * With custom trigger:
  * ```tsx
  * <Popover>

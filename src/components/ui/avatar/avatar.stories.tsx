@@ -9,12 +9,12 @@ const meta: Meta<typeof Avatar> = {
   component: Avatar,
   tags: ['autodocs'],
   decorators: [
-    (Story) => (
+    Story => (
       <div className="flex items-center justify-center p-8">
         <Story />
       </div>
-    ),
-  ],
+    )
+  ]
 };
 
 export default meta;
@@ -29,7 +29,7 @@ export const Default: Story = {
       <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
       <AvatarFallback>CN</AvatarFallback>
     </Avatar>
-  ),
+  )
 };
 
 /**
@@ -40,7 +40,7 @@ export const Initials: Story = {
     <Avatar>
       <AvatarFallback>JD</AvatarFallback>
     </Avatar>
-  ),
+  )
 };
 
 /**
@@ -52,7 +52,7 @@ export const BrokenImage: Story = {
       <AvatarImage src="/broken-image.jpg" alt="@broken" />
       <AvatarFallback>BK</AvatarFallback>
     </Avatar>
-  ),
+  )
 };
 
 /**
@@ -64,7 +64,7 @@ export const Small: Story = {
       <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
       <AvatarFallback>SM</AvatarFallback>
     </Avatar>
-  ),
+  )
 };
 
 /**
@@ -76,7 +76,7 @@ export const Large: Story = {
       <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
       <AvatarFallback>LG</AvatarFallback>
     </Avatar>
-  ),
+  )
 };
 
 /**
@@ -88,7 +88,7 @@ export const CustomStyle: Story = {
       <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
       <AvatarFallback className="bg-primary text-primary-foreground">CS</AvatarFallback>
     </Avatar>
-  ),
+  )
 };
 
 /**
@@ -103,7 +103,7 @@ export const WithStatusIndicator: Story = {
       </Avatar>
       <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-500 border-2 border-white" />
     </div>
-  ),
+  )
 };
 
 /**
@@ -124,7 +124,7 @@ export const AvatarGroup: Story = {
         <AvatarFallback>+3</AvatarFallback>
       </Avatar>
     </div>
-  ),
+  )
 };
 
 /**
@@ -154,5 +154,5 @@ export const SizesShowcase: Story = {
         <AvatarFallback className="text-xl">XL</AvatarFallback>
       </Avatar>
     </div>
-  ),
+  )
 };

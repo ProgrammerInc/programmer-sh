@@ -21,7 +21,9 @@
   padding-bottom: 0.5rem; /* py-2 */
   font-size: 1rem; /* text-base */
   outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 /* File input specific styles */
@@ -42,7 +44,9 @@
 /* Focus styles */
 .input:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--ring, #3b82f6), 0 0 0 4px var(--ring-offset, #ffffff);
+  box-shadow:
+    0 0 0 2px var(--ring, #3b82f6),
+    0 0 0 4px var(--ring-offset, #ffffff);
 }
 
 /* Disabled state styling */

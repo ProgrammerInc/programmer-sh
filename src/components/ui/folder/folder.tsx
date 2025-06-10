@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, memo } from 'react';
+import React, { memo, useState } from 'react';
 
 import { cn } from '@/utils/app.utils';
 import styles from './folder.module.css';
@@ -138,17 +138,11 @@ const Folder = memo(function Folder({
   return (
     <div style={scaleStyle} className={className}>
       <div
-        className={cn(
-          styles.folder,
-          open && styles.open
-        )}
+        className={cn(styles.folder, open && styles.open)}
         style={folderStyle}
         onClick={handleClick}
       >
-        <div
-          className={styles['folder-back']}
-          style={{ backgroundColor: folderBackColor }}
-        >
+        <div className={styles['folder-back']} style={{ backgroundColor: folderBackColor }}>
           <span
             className={styles['folder-tab']}
             style={{ backgroundColor: folderBackColor }}
@@ -165,11 +159,7 @@ const Folder = memo(function Folder({
                 key={i}
                 onMouseMove={e => handlePaperMouseMove(e, i)}
                 onMouseLeave={e => handlePaperMouseLeave(e, i)}
-                className={cn(
-                  styles.paper,
-                  styles[paperClass],
-                  open && styles.open
-                )}
+                className={cn(styles.paper, styles[paperClass], open && styles.open)}
                 style={{
                   ...(!open ? {} : { transform: transformStyle }),
                   backgroundColor: i === 0 ? paper1 : i === 1 ? paper2 : paper3
@@ -180,19 +170,11 @@ const Folder = memo(function Folder({
             );
           })}
           <div
-            className={cn(
-              styles.cover,
-              styles['cover-left'],
-              open && styles.open
-            )}
+            className={cn(styles.cover, styles['cover-left'], open && styles.open)}
             style={{ backgroundColor: color }}
           ></div>
           <div
-            className={cn(
-              styles.cover,
-              styles['cover-right'],
-              open && styles.open
-            )}
+            className={cn(styles.cover, styles['cover-right'], open && styles.open)}
             style={{ backgroundColor: color }}
           ></div>
         </div>

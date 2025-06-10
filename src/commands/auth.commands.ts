@@ -1,6 +1,6 @@
 import { supabase } from '../integrations/supabase/supabase.client';
-import { Command, CommandResult } from './command.types';
 import { authLogger } from '../services/logger/logger.utils';
+import { Command, CommandResult } from './command.types';
 
 /**
  * Valid fields that can be updated in a user profile
@@ -50,7 +50,7 @@ export const loginCommand: Command = {
         detail: { mode: 'login' }
       });
       document.dispatchEvent(event);
-      
+
       authLogger.debug('Login modal opened');
       return {
         content: 'Opening login modal...',
@@ -81,7 +81,7 @@ export const signupCommand: Command = {
         detail: { mode: 'signup' }
       });
       document.dispatchEvent(event);
-      
+
       authLogger.debug('Signup modal opened');
       return {
         content: 'Opening signup modal...',
@@ -147,18 +147,21 @@ export const logoutCommand: Command = {
  * @param profileData - User profile data from database
  * @returns Formatted user profile information string
  */
-const formatUserProfile = (userData: {
-  email?: string;
-  id: string;
-  last_sign_in_at?: string;
-}, profileData: ProfileData | null): string => {
+const formatUserProfile = (
+  userData: {
+    email?: string;
+    id: string;
+    last_sign_in_at?: string;
+  },
+  profileData: ProfileData | null
+): string => {
   try {
     const username = profileData?.username || 'Not set';
     const fullName = profileData?.full_name || 'Not set';
     const lastSignIn = userData.last_sign_in_at
       ? new Date(userData.last_sign_in_at).toLocaleString()
       : 'Never';
-    
+
     return `
 Logged in as:
 Email: ${userData.email || 'Not available'}
@@ -215,21 +218,28 @@ export const whoamiCommand: Command = {
                 .single();
 
               if (profileError) {
-                authLogger.warn('Could not retrieve profile data', { error: profileError.message, userId: data.user.id });
+                authLogger.warn('Could not retrieve profile data', {
+                  error: profileError.message,
+                  userId: data.user.id
+                });
               }
 
               const profile = profileData as ProfileData | null;
               authLogger.info('User session retrieved', { userId: data.user.id });
-              
+
               return {
                 content: formatUserProfile(data.user, profile),
                 isError: false
               };
             } catch (profileError) {
               // We can still return user data even if profile fetch fails
-              const errorMessage = profileError instanceof Error ? profileError.message : String(profileError);
-              authLogger.error('Error retrieving profile data', { error: errorMessage, userId: data.user.id });
-              
+              const errorMessage =
+                profileError instanceof Error ? profileError.message : String(profileError);
+              authLogger.error('Error retrieving profile data', {
+                error: errorMessage,
+                userId: data.user.id
+              });
+
               return {
                 content: `${formatUserProfile(data.user, null)}
 Note: Could not retrieve complete profile data.`,
@@ -256,7 +266,6 @@ Note: Could not retrieve complete profile data.`,
   }
 };
 
-
 /**
  * Profile command implementation
  * Allows users to update their profile information
@@ -271,7 +280,7 @@ Usage:
   profile set username <value>  - Set your username
   profile set fullname <value>  - Set your full name
         `;
-    
+
     try {
       if (!args || args.trim() === '') {
         authLogger.debug('Profile command executed without arguments');
@@ -293,13 +302,13 @@ Usage:
       // Use enum for type safety
       const fieldInput = argArray[1].toLowerCase();
       let field: ProfileUpdateField | undefined;
-      
+
       if (fieldInput === 'username') {
         field = ProfileUpdateField.Username;
       } else if (fieldInput === 'fullname') {
         field = ProfileUpdateField.FullName;
       }
-      
+
       if (!field) {
         authLogger.debug('Profile command attempted with invalid field', { fieldInput });
         return {
@@ -309,7 +318,7 @@ Usage:
       }
 
       const value = argArray.slice(2).join(' ');
-      
+
       authLogger.debug('Starting profile update process', { field });
       return {
         content: `Updating your ${field}...`,
@@ -320,7 +329,9 @@ Usage:
             const { data: userData, error: userError } = await supabase.auth.getUser();
 
             if (userError || !userData.user) {
-              authLogger.error('Profile update failed: Not logged in', { error: userError?.message || 'No user data' });
+              authLogger.error('Profile update failed: Not logged in', {
+                error: userError?.message || 'No user data'
+              });
               return {
                 content: 'Error: You must be logged in to update your profile.',
                 isError: true

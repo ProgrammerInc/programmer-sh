@@ -2,7 +2,7 @@
 
 /**
  * Command component
- * 
+ *
  * A command menu powered by cmdk that can be used for command palettes, search overlays, etc.
  */
 
@@ -28,9 +28,9 @@ import {
 
 /**
  * Command component
- * 
+ *
  * A command menu powered by cmdk that can be used for command palettes, search overlays, etc.
- * 
+ *
  * @example
  * ```tsx
  * <Command>
@@ -46,25 +46,26 @@ import {
  * </Command>
  * ```
  */
-const Command = memo(React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive>,
-  CommandProps
->(({ className, ...props }, ref) => {
-  // Memoize the className calculation
-  const commandClassName = useMemo(() => {
-    return cn(styles.command, className);
-  }, [className]);
+const Command = memo(
+  React.forwardRef<React.ElementRef<typeof CommandPrimitive>, CommandProps>(
+    ({ className, ...props }, ref) => {
+      // Memoize the className calculation
+      const commandClassName = useMemo(() => {
+        return cn(styles.command, className);
+      }, [className]);
 
-  return <CommandPrimitive ref={ref} className={commandClassName} {...props} />;
-}));
+      return <CommandPrimitive ref={ref} className={commandClassName} {...props} />;
+    }
+  )
+);
 
 Command.displayName = CommandPrimitive.displayName;
 
 /**
  * CommandDialog component
- * 
+ *
  * A dialog that contains a command menu.
- * 
+ *
  * @example
  * ```tsx
  * <CommandDialog open={open} onOpenChange={setOpen}>
@@ -81,9 +82,7 @@ const CommandDialog = memo(({ children, ...props }: CommandDialogProps) => {
   return (
     <Dialog {...props}>
       <DialogContent className={styles['command-dialog']}>
-        <Command className={styles['command-dialog-selectors']}>
-          {children}
-        </Command>
+        <Command className={styles['command-dialog-selectors']}>{children}</Command>
       </DialogContent>
     </Dialog>
   );
@@ -93,38 +92,39 @@ CommandDialog.displayName = 'CommandDialog';
 
 /**
  * CommandInput component
- * 
+ *
  * The input field for the command menu.
- * 
+ *
  * @example
  * ```tsx
  * <CommandInput placeholder="Type a command or search..." />
  * ```
  */
-const CommandInput = memo(React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Input>,
-  CommandInputProps
->(({ className, ...props }, ref) => {
-  // Memoize the className calculation
-  const inputClassName = useMemo(() => {
-    return cn(styles['command-input'], className);
-  }, [className]);
+const CommandInput = memo(
+  React.forwardRef<React.ElementRef<typeof CommandPrimitive.Input>, CommandInputProps>(
+    ({ className, ...props }, ref) => {
+      // Memoize the className calculation
+      const inputClassName = useMemo(() => {
+        return cn(styles['command-input'], className);
+      }, [className]);
 
-  return (
-    <div className={styles['command-input-wrapper']} cmdk-input-wrapper="">
-      <Search className={styles['command-input-icon']} />
-      <CommandPrimitive.Input ref={ref} className={inputClassName} {...props} />
-    </div>
-  );
-}));
+      return (
+        <div className={styles['command-input-wrapper']} cmdk-input-wrapper="">
+          <Search className={styles['command-input-icon']} />
+          <CommandPrimitive.Input ref={ref} className={inputClassName} {...props} />
+        </div>
+      );
+    }
+  )
+);
 
 CommandInput.displayName = CommandPrimitive.Input.displayName;
 
 /**
  * CommandList component
- * 
+ *
  * The list of items displayed in the command menu.
- * 
+ *
  * @example
  * ```tsx
  * <CommandList>
@@ -135,44 +135,46 @@ CommandInput.displayName = CommandPrimitive.Input.displayName;
  * </CommandList>
  * ```
  */
-const CommandList = memo(React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.List>,
-  CommandListProps
->(({ className, ...props }, ref) => {
-  // Memoize the className calculation
-  const listClassName = useMemo(() => {
-    return cn(styles['command-list'], className);
-  }, [className]);
+const CommandList = memo(
+  React.forwardRef<React.ElementRef<typeof CommandPrimitive.List>, CommandListProps>(
+    ({ className, ...props }, ref) => {
+      // Memoize the className calculation
+      const listClassName = useMemo(() => {
+        return cn(styles['command-list'], className);
+      }, [className]);
 
-  return <CommandPrimitive.List ref={ref} className={listClassName} {...props} />;
-}));
+      return <CommandPrimitive.List ref={ref} className={listClassName} {...props} />;
+    }
+  )
+);
 
 CommandList.displayName = CommandPrimitive.List.displayName;
 
 /**
  * CommandEmpty component
- * 
+ *
  * Displayed when the command menu has no results.
- * 
+ *
  * @example
  * ```tsx
  * <CommandEmpty>No results found.</CommandEmpty>
  * ```
  */
-const CommandEmpty = memo(React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Empty>,
-  CommandEmptyProps
->((props, ref) => {
-  return <CommandPrimitive.Empty ref={ref} className={styles['command-empty']} {...props} />;
-}));
+const CommandEmpty = memo(
+  React.forwardRef<React.ElementRef<typeof CommandPrimitive.Empty>, CommandEmptyProps>(
+    (props, ref) => {
+      return <CommandPrimitive.Empty ref={ref} className={styles['command-empty']} {...props} />;
+    }
+  )
+);
 
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName;
 
 /**
  * CommandGroup component
- * 
+ *
  * Used to group related items in the command menu.
- * 
+ *
  * @example
  * ```tsx
  * <CommandGroup heading="Suggestions">
@@ -181,25 +183,26 @@ CommandEmpty.displayName = CommandPrimitive.Empty.displayName;
  * </CommandGroup>
  * ```
  */
-const CommandGroup = memo(React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Group>,
-  CommandGroupProps
->(({ className, ...props }, ref) => {
-  // Memoize the className calculation
-  const groupClassName = useMemo(() => {
-    return cn(styles['command-group'], className);
-  }, [className]);
+const CommandGroup = memo(
+  React.forwardRef<React.ElementRef<typeof CommandPrimitive.Group>, CommandGroupProps>(
+    ({ className, ...props }, ref) => {
+      // Memoize the className calculation
+      const groupClassName = useMemo(() => {
+        return cn(styles['command-group'], className);
+      }, [className]);
 
-  return <CommandPrimitive.Group ref={ref} className={groupClassName} {...props} />;
-}));
+      return <CommandPrimitive.Group ref={ref} className={groupClassName} {...props} />;
+    }
+  )
+);
 
 CommandGroup.displayName = CommandPrimitive.Group.displayName;
 
 /**
  * CommandSeparator component
- * 
+ *
  * A visual separator for the command menu.
- * 
+ *
  * @example
  * ```tsx
  * <CommandGroup>
@@ -209,25 +212,26 @@ CommandGroup.displayName = CommandPrimitive.Group.displayName;
  * </CommandGroup>
  * ```
  */
-const CommandSeparator = memo(React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Separator>,
-  CommandSeparatorProps
->(({ className, ...props }, ref) => {
-  // Memoize the className calculation
-  const separatorClassName = useMemo(() => {
-    return cn(styles['command-separator'], className);
-  }, [className]);
+const CommandSeparator = memo(
+  React.forwardRef<React.ElementRef<typeof CommandPrimitive.Separator>, CommandSeparatorProps>(
+    ({ className, ...props }, ref) => {
+      // Memoize the className calculation
+      const separatorClassName = useMemo(() => {
+        return cn(styles['command-separator'], className);
+      }, [className]);
 
-  return <CommandPrimitive.Separator ref={ref} className={separatorClassName} {...props} />;
-}));
+      return <CommandPrimitive.Separator ref={ref} className={separatorClassName} {...props} />;
+    }
+  )
+);
 
 CommandSeparator.displayName = CommandPrimitive.Separator.displayName;
 
 /**
  * CommandItem component
- * 
+ *
  * An item in the command menu, can be selected and triggered.
- * 
+ *
  * @example
  * ```tsx
  * <CommandItem onSelect={() => console.log('selected')}>
@@ -236,25 +240,26 @@ CommandSeparator.displayName = CommandPrimitive.Separator.displayName;
  * </CommandItem>
  * ```
  */
-const CommandItem = memo(React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Item>,
-  CommandItemProps
->(({ className, ...props }, ref) => {
-  // Memoize the className calculation
-  const itemClassName = useMemo(() => {
-    return cn(styles['command-item'], className);
-  }, [className]);
+const CommandItem = memo(
+  React.forwardRef<React.ElementRef<typeof CommandPrimitive.Item>, CommandItemProps>(
+    ({ className, ...props }, ref) => {
+      // Memoize the className calculation
+      const itemClassName = useMemo(() => {
+        return cn(styles['command-item'], className);
+      }, [className]);
 
-  return <CommandPrimitive.Item ref={ref} className={itemClassName} {...props} />;
-}));
+      return <CommandPrimitive.Item ref={ref} className={itemClassName} {...props} />;
+    }
+  )
+);
 
 CommandItem.displayName = CommandPrimitive.Item.displayName;
 
 /**
  * CommandShortcut component
- * 
+ *
  * Used to display keyboard shortcuts in command items.
- * 
+ *
  * @example
  * ```tsx
  * <CommandItem>

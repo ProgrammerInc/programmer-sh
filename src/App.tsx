@@ -9,23 +9,28 @@ import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 // Lazily load page components with explicit chunk names for better dynamic imports
-const Index = lazy(() => import(/* webpackChunkName: "index-page" */ './pages/Index.tsx'));
+const Index = lazy(() => import(/* webpackChunkName: "index-page" */ './pages/index.page.tsx'));
 const LoggerDemo = lazy(
-  () => import(/* webpackChunkName: "logger-demo" */ './components/demos/LoggerDemo.tsx')
+  () => import(/* webpackChunkName: "logger-demo" */ './pages/demos/logger/logger-demo.page.tsx')
 );
 const MemoryLeakDemo = lazy(
-  () => import(/* webpackChunkName: "memory-leak-demo" */ './components/demos/MemoryLeakDemo.tsx')
+  () =>
+    import(
+      /* webpackChunkName: "memory-leak-demo" */ './pages/demos/memory-leak/memory-leak-demo.page.tsx'
+    )
 );
 const SentryDemo = lazy(
-  () => import(/* webpackChunkName: "sentry-demo" */ './components/demos/SentryDemo.tsx')
+  () => import(/* webpackChunkName: "sentry-demo" */ './pages/demos/sentry/sentry-demo.page.tsx')
 );
 const WhyDidYouRenderDemo = lazy(
-  () => import(/* webpackChunkName: "wdyr-demo" */ './components/demos/WDYRDemo.tsx')
+  () => import(/* webpackChunkName: "wdyr-demo" */ './pages/demos/WDYR/wdyr-demo.page.tsx')
 );
 const AuthCallback = lazy(
-  () => import(/* webpackChunkName: "auth-callback" */ './pages/AuthCallback.tsx')
+  () => import(/* webpackChunkName: "auth-callback" */ './pages/auth-callback.page.tsx')
 );
-const NotFound = lazy(() => import(/* webpackChunkName: "not-found" */ './pages/NotFound.tsx'));
+const NotFound = lazy(
+  () => import(/* webpackChunkName: "not-found" */ './pages/not-found.page.tsx')
+);
 
 // Loading component for Suspense fallback
 const LoadingSpinner = () => (
@@ -54,7 +59,9 @@ const AuthModalWrapper = () => {
     };
   }, [openModal]);
 
-  return <AuthModal isOpen={isModalOpen} mode={modalMode} onClose={closeModal} anchorRef={headerRef} />;
+  return (
+    <AuthModal isOpen={isModalOpen} mode={modalMode} onClose={closeModal} anchorRef={headerRef} />
+  );
 };
 
 const App = () => (

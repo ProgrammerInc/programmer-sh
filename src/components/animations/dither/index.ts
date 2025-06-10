@@ -4,5 +4,5 @@
  * @module Dither
  */
 
-export { Dither, default } from './dither';
+export { default, Dither } from './dither';
 export type { DitherProps } from './dither.types';

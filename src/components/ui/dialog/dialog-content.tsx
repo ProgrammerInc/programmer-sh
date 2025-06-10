@@ -6,10 +6,10 @@ import * as React from 'react';
 import { memo, useMemo } from 'react';
 
 import { cn } from '@/utils/app.utils';
-import styles from './dialog.module.css';
 import { DialogClose } from './dialog-close';
 import { DialogOverlay } from './dialog-overlay';
 import { DialogPortal } from './dialog-portal';
+import styles from './dialog.module.css';
 import { DialogContentProps } from './dialog.types';
 
 /**
@@ -24,31 +24,28 @@ import { DialogContentProps } from './dialog.types';
  * </DialogContent>
  * ```
  */
-const DialogContent = memo(React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Content>,
-  DialogContentProps
->(({ className, children, ...props }, ref) => {
-  const contentClassName = useMemo(() => {
-    return cn(styles['dialog-content'], className);
-  }, [className]);
+const DialogContent = memo(
+  React.forwardRef<React.ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
+    ({ className, children, ...props }, ref) => {
+      const contentClassName = useMemo(() => {
+        return cn(styles['dialog-content'], className);
+      }, [className]);
 
-  return (
-    <DialogPortal>
-      <DialogOverlay />
-      <DialogPrimitive.Content
-        ref={ref}
-        className={contentClassName}
-        {...props}
-      >
-        {children}
-        <DialogClose className={styles['dialog-close']}>
-          <X className="h-4 w-4" />
-          <span className="sr-only">Close</span>
-        </DialogClose>
-      </DialogPrimitive.Content>
-    </DialogPortal>
-  );
-}));
+      return (
+        <DialogPortal>
+          <DialogOverlay />
+          <DialogPrimitive.Content ref={ref} className={contentClassName} {...props}>
+            {children}
+            <DialogClose className={styles['dialog-close']}>
+              <X className="h-4 w-4" />
+              <span className="sr-only">Close</span>
+            </DialogClose>
+          </DialogPrimitive.Content>
+        </DialogPortal>
+      );
+    }
+  )
+);
 
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 

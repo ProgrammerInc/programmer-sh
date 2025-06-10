@@ -4,15 +4,14 @@
 
 import { Color, Mesh, Program, Renderer, Triangle } from 'ogl';
 import { RefObject, useEffect, useRef } from 'react';
-import { 
-  SHADERS, 
-  SHADER_SETTINGS, 
-  AUDIO_SETTINGS, 
-  DEFAULT_SETTINGS, 
-  GL_SETTINGS 
+import { AudioAnalyzerOptions, AudioData, useAudioAnalyzer } from './threads.audio';
+import {
+  AUDIO_SETTINGS,
+  DEFAULT_SETTINGS,
+  GL_SETTINGS,
+  SHADERS,
+  SHADER_SETTINGS
 } from './threads.constants';
-import { AudioAnalyzerOptions, AudioData } from './threads.audio';
-import { useAudioAnalyzer } from './threads.audio';
 import {
   createFloat32Array,
   getNormalizedMousePosition,
@@ -72,7 +71,7 @@ export const useThreadsAnimation = (
     audioSource: 'mic', // Default to microphone
     sensitivity: 2.5 // Increase sensitivity for better responsiveness
   });
-  
+
   // Use external audio data if provided, otherwise use the internal analyzer
   const currentAudioData = externalAudioData || audioData;
 
@@ -178,11 +177,11 @@ export const useThreadsAnimation = (
 
       // Update audio uniforms if audio data exists
       if (audioOptions?.enabled || externalAudioData) {
-        const { 
-          BASS_AMPLITUDE_INFLUENCE, 
-          MID_WIDTH_INFLUENCE, 
-          TREBLE_DISTANCE_INFLUENCE, 
-          VOLUME_BRIGHTNESS_INFLUENCE 
+        const {
+          BASS_AMPLITUDE_INFLUENCE,
+          MID_WIDTH_INFLUENCE,
+          TREBLE_DISTANCE_INFLUENCE,
+          VOLUME_BRIGHTNESS_INFLUENCE
         } = AUDIO_SETTINGS;
 
         const baseAmplitude = amplitude;
@@ -190,7 +189,7 @@ export const useThreadsAnimation = (
         const baseDistance = distance;
         const baseColor = [...color];
 
-        const bassInfluence = Math.pow(currentAudioData.bass, 1.5); 
+        const bassInfluence = Math.pow(currentAudioData.bass, 1.5);
         const midInfluence = Math.pow(currentAudioData.mid, 1.3);
         const trebleInfluence = currentAudioData.treble;
         const volumeInfluence = Math.pow(currentAudioData.volume, 1.2);
@@ -205,9 +204,9 @@ export const useThreadsAnimation = (
         const audioAmplitude = baseAmplitude + bassInfluence * BASS_AMPLITUDE_INFLUENCE * 2;
         const audioLineWidth = baseWidth + midInfluence * MID_WIDTH_INFLUENCE * 5;
         const audioDistance = baseDistance + trebleInfluence * TREBLE_DISTANCE_INFLUENCE * 0.2;
-        
+
         const pulse = 1.0 + volumeInfluence * 0.3 * Math.sin(t * 2.0);
-        
+
         const brightness = 1.0 + volumeInfluence * VOLUME_BRIGHTNESS_INFLUENCE;
         const audioColor: [number, number, number] = [
           Math.min(baseColor[0] * brightness, 1.5),
@@ -273,7 +272,18 @@ export const useThreadsAnimation = (
 
       renderer.gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-  }, [containerRef, color, amplitude, distance, enableMouseInteraction, audioOptions, externalAudioData, currentAudioData, startAudioAnalysis, stopAudioAnalysis]);
+  }, [
+    containerRef,
+    color,
+    amplitude,
+    distance,
+    enableMouseInteraction,
+    audioOptions,
+    externalAudioData,
+    currentAudioData,
+    startAudioAnalysis,
+    stopAudioAnalysis
+  ]);
 
   return animationFrameId;
 };

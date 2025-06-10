@@ -1,7 +1,7 @@
 'use client';
 
 import type { Meta, StoryObj } from '@storybook/react';
-import { InfoIcon, EditIcon, TrashIcon } from 'lucide-react';
+import { EditIcon, InfoIcon, TrashIcon } from 'lucide-react';
 import { useState } from 'react';
 
 import { Button } from '../button/button';
@@ -12,17 +12,17 @@ const meta: Meta<typeof Tooltip> = {
   component: Tooltip,
   tags: ['autodocs'],
   decorators: [
-    (Story) => (
+    Story => (
       <TooltipProvider>
         <div className="flex items-center justify-center p-8">
           <Story />
         </div>
       </TooltipProvider>
-    ),
+    )
   ],
   parameters: {
-    layout: 'centered',
-  },
+    layout: 'centered'
+  }
 };
 
 export default meta;
@@ -41,7 +41,7 @@ export const Basic: Story = {
         <p>This is a tooltip</p>
       </TooltipContent>
     </Tooltip>
-  ),
+  )
 };
 
 /**
@@ -89,7 +89,7 @@ export const Positions: Story = {
         </Tooltip>
       </div>
     </div>
-  ),
+  )
 };
 
 /**
@@ -123,7 +123,7 @@ export const Alignment: Story = {
         </TooltipContent>
       </Tooltip>
     </div>
-  ),
+  )
 };
 
 /**
@@ -143,7 +143,7 @@ export const IconButtons: Story = {
           <p>View information</p>
         </TooltipContent>
       </Tooltip>
-      
+
       <Tooltip>
         <TooltipTrigger asChild>
           <Button size="icon" variant="ghost">
@@ -155,7 +155,7 @@ export const IconButtons: Story = {
           <p>Edit item</p>
         </TooltipContent>
       </Tooltip>
-      
+
       <Tooltip>
         <TooltipTrigger asChild>
           <Button size="icon" variant="ghost">
@@ -168,7 +168,7 @@ export const IconButtons: Story = {
         </TooltipContent>
       </Tooltip>
     </div>
-  ),
+  )
 };
 
 /**
@@ -195,7 +195,7 @@ export const RichContent: Story = {
         </div>
       </TooltipContent>
     </Tooltip>
-  ),
+  )
 };
 
 /**
@@ -205,14 +205,16 @@ export const Controlled: Story = {
   render: () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [open, setOpen] = useState(false);
-    
+
     return (
       <div className="space-y-4">
         <div className="flex gap-4">
           <Button onClick={() => setOpen(true)}>Show Tooltip</Button>
-          <Button onClick={() => setOpen(false)} variant="outline">Hide Tooltip</Button>
+          <Button onClick={() => setOpen(false)} variant="outline">
+            Hide Tooltip
+          </Button>
         </div>
-        
+
         <Tooltip open={open} onOpenChange={setOpen}>
           <TooltipTrigger asChild>
             <Button variant="outline">Controlled Tooltip</Button>
@@ -223,7 +225,7 @@ export const Controlled: Story = {
         </Tooltip>
       </div>
     );
-  },
+  }
 };
 
 /**
@@ -241,5 +243,5 @@ export const WithDisabledElement: Story = {
         <p>You cannot perform this action right now</p>
       </TooltipContent>
     </Tooltip>
-  ),
+  )
 };

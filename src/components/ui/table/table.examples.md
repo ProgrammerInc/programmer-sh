@@ -7,7 +7,16 @@ The Table component provides a flexible, accessible way to display tabular data.
 A simple table with header, body, and data:
 
 ```tsx
-import { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption } from '@/components/ui/table';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption
+} from '@/components/ui/table';
 
 export function BasicTable() {
   return (
@@ -57,13 +66,20 @@ export function BasicTable() {
 The Table component supports different variants like 'default', 'bordered', 'zebra', and 'compact':
 
 ```tsx
-import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '@/components/ui/table';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell
+} from '@/components/ui/table';
 
 export function TableVariants() {
   const data = [
     { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Developer' },
     { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'Designer' },
-    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'Manager' },
+    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'Manager' }
   ];
 
   return (
@@ -79,7 +95,7 @@ export function TableVariants() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.map((item) => (
+            {data.map(item => (
               <TableRow key={item.id}>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>{item.email}</TableCell>
@@ -101,7 +117,7 @@ export function TableVariants() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.map((item) => (
+            {data.map(item => (
               <TableRow key={item.id}>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>{item.email}</TableCell>
@@ -123,7 +139,7 @@ export function TableVariants() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.map((item) => (
+            {data.map(item => (
               <TableRow key={item.id}>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>{item.email}</TableCell>
@@ -145,7 +161,7 @@ export function TableVariants() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.map((item) => (
+            {data.map(item => (
               <TableRow key={item.id}>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>{item.email}</TableCell>
@@ -166,7 +182,14 @@ Implementing sortable columns in a table:
 
 ```tsx
 import { useState } from 'react';
-import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '@/components/ui/table';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell
+} from '@/components/ui/table';
 import { ChevronUp, ChevronDown } from 'lucide-react';
 
 type SortDirection = 'asc' | 'desc' | null;
@@ -174,19 +197,19 @@ type SortDirection = 'asc' | 'desc' | null;
 export function SortableTable() {
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>(null);
-  
+
   const initialData = [
     { id: 1, name: 'John Doe', email: 'john@example.com', age: 32 },
     { id: 2, name: 'Jane Smith', email: 'jane@example.com', age: 27 },
     { id: 3, name: 'Bob Johnson', email: 'bob@example.com', age: 45 },
-    { id: 4, name: 'Alice Williams', email: 'alice@example.com', age: 29 },
+    { id: 4, name: 'Alice Williams', email: 'alice@example.com', age: 29 }
   ];
 
   const [data, setData] = useState(initialData);
 
   const handleSort = (column: string) => {
     let newDirection: SortDirection = 'asc';
-    
+
     if (sortColumn === column) {
       if (sortDirection === 'asc') {
         newDirection = 'desc';
@@ -196,15 +219,15 @@ export function SortableTable() {
         newDirection = 'asc';
       }
     }
-    
+
     setSortColumn(newDirection ? column : null);
     setSortDirection(newDirection);
-    
+
     if (!newDirection) {
       setData(initialData); // Reset to initial data
       return;
     }
-    
+
     const sortedData = [...data].sort((a, b) => {
       if (newDirection === 'asc') {
         return a[column as keyof typeof a] > b[column as keyof typeof b] ? 1 : -1;
@@ -212,13 +235,13 @@ export function SortableTable() {
         return a[column as keyof typeof a] < b[column as keyof typeof b] ? 1 : -1;
       }
     });
-    
+
     setData(sortedData);
   };
 
   const renderSortIcon = (column: string) => {
     if (sortColumn !== column) return null;
-    
+
     return sortDirection === 'asc' ? (
       <ChevronUp className="ml-2 h-4 w-4" />
     ) : (
@@ -230,8 +253,8 @@ export function SortableTable() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead 
-            sortable 
+          <TableHead
+            sortable
             sortDirection={sortColumn === 'name' ? sortDirection : undefined}
             onClick={() => handleSort('name')}
             className="cursor-pointer"
@@ -241,8 +264,8 @@ export function SortableTable() {
               {renderSortIcon('name')}
             </div>
           </TableHead>
-          <TableHead 
-            sortable 
+          <TableHead
+            sortable
             sortDirection={sortColumn === 'email' ? sortDirection : undefined}
             onClick={() => handleSort('email')}
             className="cursor-pointer"
@@ -252,8 +275,8 @@ export function SortableTable() {
               {renderSortIcon('email')}
             </div>
           </TableHead>
-          <TableHead 
-            sortable 
+          <TableHead
+            sortable
             sortDirection={sortColumn === 'age' ? sortDirection : undefined}
             onClick={() => handleSort('age')}
             className="cursor-pointer"
@@ -266,7 +289,7 @@ export function SortableTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data.map((item) => (
+        {data.map(item => (
           <TableRow key={item.id}>
             <TableCell>{item.name}</TableCell>
             <TableCell>{item.email}</TableCell>
@@ -285,21 +308,28 @@ Implementing selectable rows in a table:
 
 ```tsx
 import { useState } from 'react';
-import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '@/components/ui/table';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell
+} from '@/components/ui/table';
 import { Checkbox } from '@/components/ui/checkbox';
 
 export function SelectableTable() {
   const initialData = [
     { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Developer' },
     { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'Designer' },
-    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'Manager' },
+    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'Manager' }
   ];
 
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
 
   const handleSelectRow = (id: number) => {
     if (selectedRows.includes(id)) {
-      setSelectedRows(selectedRows.filter((rowId) => rowId !== id));
+      setSelectedRows(selectedRows.filter(rowId => rowId !== id));
     } else {
       setSelectedRows([...selectedRows, id]);
     }
@@ -309,7 +339,7 @@ export function SelectableTable() {
     if (selectedRows.length === initialData.length) {
       setSelectedRows([]);
     } else {
-      setSelectedRows(initialData.map((item) => item.id));
+      setSelectedRows(initialData.map(item => item.id));
     }
   };
 
@@ -318,8 +348,8 @@ export function SelectableTable() {
       <TableHeader>
         <TableRow>
           <TableHead className="w-12">
-            <Checkbox 
-              checked={selectedRows.length === initialData.length} 
+            <Checkbox
+              checked={selectedRows.length === initialData.length}
               onCheckedChange={handleSelectAll}
             />
           </TableHead>
@@ -329,14 +359,11 @@ export function SelectableTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {initialData.map((item) => (
-          <TableRow 
-            key={item.id} 
-            selected={selectedRows.includes(item.id)}
-          >
+        {initialData.map(item => (
+          <TableRow key={item.id} selected={selectedRows.includes(item.id)}>
             <TableCell>
-              <Checkbox 
-                checked={selectedRows.includes(item.id)} 
+              <Checkbox
+                checked={selectedRows.includes(item.id)}
                 onCheckedChange={() => handleSelectRow(item.id)}
               />
             </TableCell>
@@ -356,20 +383,29 @@ export function SelectableTable() {
 Implementing a table with truncated cell content:
 
 ```tsx
-import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '@/components/ui/table';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell
+} from '@/components/ui/table';
 
 export function TruncatedCellsTable() {
   const data = [
     {
       id: 1,
       title: 'A very long document title that would overflow the available space in the table cell',
-      description: 'This is a very long description that contains a lot of text and would normally overflow the table cell boundaries, causing layout issues.',
+      description:
+        'This is a very long description that contains a lot of text and would normally overflow the table cell boundaries, causing layout issues.',
       status: 'Published'
     },
     {
       id: 2,
       title: 'Another document with an extremely long title that demonstrates truncation',
-      description: 'Another very lengthy description that showcases how text can be elegantly truncated when it exceeds the available width.',
+      description:
+        'Another very lengthy description that showcases how text can be elegantly truncated when it exceeds the available width.',
       status: 'Draft'
     },
     {
@@ -377,7 +413,7 @@ export function TruncatedCellsTable() {
       title: 'Short title',
       description: 'A description that is not too long and should display fine.',
       status: 'Archived'
-    },
+    }
   ];
 
   return (
@@ -390,7 +426,7 @@ export function TruncatedCellsTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data.map((item) => (
+        {data.map(item => (
           <TableRow key={item.id}>
             <TableCell truncate title={item.title}>
               {item.title}
@@ -413,7 +449,15 @@ A table that adapts to different screen sizes:
 
 ```tsx
 import { useEffect, useState } from 'react';
-import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell, TableCaption } from '@/components/ui/table';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption
+} from '@/components/ui/table';
 
 type UserData = {
   id: number;
@@ -426,7 +470,7 @@ type UserData = {
 
 export function ResponsiveTable() {
   const [isMobile, setIsMobile] = useState(false);
-  
+
   useEffect(() => {
     const checkIfMobile = () => setIsMobile(window.innerWidth < 768);
     checkIfMobile();
@@ -435,15 +479,36 @@ export function ResponsiveTable() {
   }, []);
 
   const userData: UserData[] = [
-    { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Developer', status: 'Active', lastActive: '2 hours ago' },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'Designer', status: 'Away', lastActive: '1 day ago' },
-    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'Manager', status: 'Offline', lastActive: '3 days ago' },
+    {
+      id: 1,
+      name: 'John Doe',
+      email: 'john@example.com',
+      role: 'Developer',
+      status: 'Active',
+      lastActive: '2 hours ago'
+    },
+    {
+      id: 2,
+      name: 'Jane Smith',
+      email: 'jane@example.com',
+      role: 'Designer',
+      status: 'Away',
+      lastActive: '1 day ago'
+    },
+    {
+      id: 3,
+      name: 'Bob Johnson',
+      email: 'bob@example.com',
+      role: 'Manager',
+      status: 'Offline',
+      lastActive: '3 days ago'
+    }
   ];
 
   if (isMobile) {
     return (
       <div className="space-y-4">
-        {userData.map((user) => (
+        {userData.map(user => (
           <div key={user.id} className="border rounded-md p-4">
             <h3 className="font-bold">{user.name}</h3>
             <div className="text-sm">{user.email}</div>
@@ -474,7 +539,7 @@ export function ResponsiveTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {userData.map((user) => (
+        {userData.map(user => (
           <TableRow key={user.id}>
             <TableCell>{user.name}</TableCell>
             <TableCell>{user.email}</TableCell>
@@ -495,7 +560,15 @@ Implementing a table with pagination:
 
 ```tsx
 import { useState } from 'react';
-import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell, TableFooter } from '@/components/ui/table';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableFooter
+} from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -504,7 +577,7 @@ export function PaginatedTable() {
     id: i + 1,
     name: `Person ${i + 1}`,
     email: `person${i + 1}@example.com`,
-    role: i % 3 === 0 ? 'Developer' : i % 3 === 1 ? 'Designer' : 'Manager',
+    role: i % 3 === 0 ? 'Developer' : i % 3 === 1 ? 'Designer' : 'Manager'
   }));
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -527,7 +600,7 @@ export function PaginatedTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {currentData.map((item) => (
+          {currentData.map(item => (
             <TableRow key={item.id}>
               <TableCell>{item.id}</TableCell>
               <TableCell>{item.name}</TableCell>
@@ -541,12 +614,13 @@ export function PaginatedTable() {
             <TableCell colSpan={4} className="text-center">
               <div className="flex items-center justify-between">
                 <div className="text-sm text-gray-500">
-                  Showing {startIndex + 1} to {Math.min(endIndex, allData.length)} of {allData.length} entries
+                  Showing {startIndex + 1} to {Math.min(endIndex, allData.length)} of{' '}
+                  {allData.length} entries
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
+                  <Button
+                    variant="outline"
+                    size="sm"
                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                     disabled={currentPage === 1}
                   >
@@ -563,11 +637,11 @@ export function PaginatedTable() {
                     } else {
                       pageNum = currentPage - 2 + i;
                     }
-                    
+
                     return (
                       <Button
                         key={pageNum}
-                        variant={currentPage === pageNum ? "default" : "outline"}
+                        variant={currentPage === pageNum ? 'default' : 'outline'}
                         size="sm"
                         onClick={() => setCurrentPage(pageNum)}
                       >
@@ -575,9 +649,9 @@ export function PaginatedTable() {
                       </Button>
                     );
                   })}
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
+                  <Button
+                    variant="outline"
+                    size="sm"
                     onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                     disabled={currentPage === totalPages}
                   >

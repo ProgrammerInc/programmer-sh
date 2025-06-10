@@ -17,6 +17,6 @@
 }
 
 .shooting-star-gradient {
-  --star-head-color: var(--shooting-star-head, #9E00FF);
-  --star-trail-color: var(--shooting-star-trail, #2EB9DF);
+  --star-head-color: var(--shooting-star-head, #9e00ff);
+  --star-trail-color: var(--shooting-star-trail, #2eb9df);
 }

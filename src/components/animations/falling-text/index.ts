@@ -4,5 +4,5 @@
  * @module FallingText
  */
 
-export { FallingText, default } from './falling-text';
+export { default, FallingText } from './falling-text';
 export type { FallingTextProps } from './falling-text.types';

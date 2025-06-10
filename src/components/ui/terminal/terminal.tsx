@@ -8,6 +8,8 @@ import {
   whoamiCommand
 } from '@/commands/auth.commands';
 import { cursorCommand } from '@/commands/cursor.commands';
+import { queryCommand } from '@/commands/database.commands';
+import { debugCommand } from '@/commands/debug.commands'; // Import the debug command
 import { educationCommand } from '@/commands/education.commands';
 import { experienceCommand } from '@/commands/experience.commands';
 import { clearCommand, echoCommand, helpCommand } from '@/commands/help.commands';
@@ -19,8 +21,6 @@ import { privacyCommand, termsCommand } from '@/commands/system.commands';
 import { themeCommand } from '@/commands/theme.commands';
 import { wallpaperCommand } from '@/commands/wallpaper.commands';
 import { welcomeCommand } from '@/commands/welcome.commands';
-import { queryCommand } from '@/commands/database.commands';
-import { debugCommand } from '@/commands/debug.commands'; // Import the debug command
 import { TerminalContent } from '@/components/ui/terminal-content';
 import { TerminalFooter } from '@/components/ui/terminal-footer';
 import { TerminalFooterRef } from '@/components/ui/terminal-footer/terminal-footer.types';
@@ -189,8 +189,14 @@ const Terminal: React.FC<TerminalProps> = ({
     []
   );
 
-  const { commandOutput, lastCommand, executeCommand, setCommandOutput, isAwaitingAsync, asyncCommandName } =
-    useCommandExecution(commands);
+  const {
+    commandOutput,
+    lastCommand,
+    executeCommand,
+    setCommandOutput,
+    isAwaitingAsync,
+    asyncCommandName
+  } = useCommandExecution(commands);
 
   const handleScrollToBottom = () => {
     scrollToBottom(terminalContentRef);
@@ -542,14 +548,14 @@ const Terminal: React.FC<TerminalProps> = ({
   // Effect to handle terminal container clicks for auto-focusing the input
   useEffect(() => {
     const terminalContainer = terminalContainerRef.current;
-    
+
     const handleContainerClick = (e: MouseEvent) => {
       // Skip if clicking on an input, button, or command link
       const target = e.target as HTMLElement;
-      const isInteractive = (
-        target.tagName === 'INPUT' || 
-        target.tagName === 'BUTTON' || 
-        target.tagName === 'A' || 
+      const isInteractive =
+        target.tagName === 'INPUT' ||
+        target.tagName === 'BUTTON' ||
+        target.tagName === 'A' ||
         target.tagName === 'TEXTAREA' ||
         target.tagName === 'SELECT' ||
         target.classList.contains('command-link') ||
@@ -557,9 +563,8 @@ const Terminal: React.FC<TerminalProps> = ({
         target.closest('button') ||
         target.closest('a') ||
         target.closest('textarea') ||
-        target.closest('select')
-      );
-      
+        target.closest('select');
+
       if (!isInteractive) {
         // Don't focus if user is selecting text
         const selection = window.getSelection();
@@ -569,11 +574,11 @@ const Terminal: React.FC<TerminalProps> = ({
         }
       }
     };
-    
+
     if (terminalContainer) {
       terminalContainer.addEventListener('click', handleContainerClick);
     }
-    
+
     return () => {
       if (terminalContainer) {
         terminalContainer.removeEventListener('click', handleContainerClick);

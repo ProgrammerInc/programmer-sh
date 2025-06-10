@@ -1,7 +1,7 @@
 'use client';
 
-import { FC, memo, useMemo, useRef } from 'react';
 import { cn } from '@/utils/app.utils';
+import { FC, memo, useMemo, useRef } from 'react';
 
 import { CSS_CLASSES, DEFAULT_SHOOTING_STARS } from './shooting-stars.constants';
 import { useShootingStars } from './shooting-stars.hooks';
@@ -26,7 +26,7 @@ export const ShootingStars: FC<ShootingStarsProps> = memo(function ShootingStars
   className
 }) {
   const svgRef = useRef<SVGSVGElement>(null);
-  
+
   // Use our custom hook to manage the stars and animation
   const { star, starTransform } = useShootingStars({
     minSpeed,
@@ -57,11 +57,11 @@ export const ShootingStars: FC<ShootingStarsProps> = memo(function ShootingStars
         />
       )}
       <defs>
-        <linearGradient 
-          id="gradient" 
-          x1="0%" 
-          y1="0%" 
-          x2="100%" 
+        <linearGradient
+          id="gradient"
+          x1="0%"
+          y1="0%"
+          x2="100%"
           y2="100%"
           className={styles[CSS_CLASSES.GRADIENT]}
         >

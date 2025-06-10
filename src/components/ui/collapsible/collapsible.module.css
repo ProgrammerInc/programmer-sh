@@ -25,7 +25,7 @@
   animation: collapsible-down 0.2s ease-out;
 }
 
-.collapsible-content-animation[data-state="closed"] {
+.collapsible-content-animation[data-state='closed'] {
   animation: collapsible-up 0.2s ease-out;
 }
 

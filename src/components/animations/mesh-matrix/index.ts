@@ -7,5 +7,5 @@
  * @module MeshMatrix
  */
 
-export { MeshMatrix, default } from './mesh-matrix';
+export { default, MeshMatrix } from './mesh-matrix';
 export type { MeshMatrixProps } from './mesh-matrix.types';

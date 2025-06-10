@@ -36,6 +36,7 @@ export interface TextPressureOwnProps {
    */
   fontFamily?: string;
 
+  // eslint-disable-next-line no-secrets/no-secrets
   /**
    * URL to the font file
    * @default 'https://res.cloudinary.com/dr6lvwubh/raw/upload/v1529908256/CompressaPRO-GX.woff2'

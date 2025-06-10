@@ -19,7 +19,9 @@
 
 .trigger:focus {
   outline: none;
-  box-shadow: 0 0 0 2px var(--ring), 0 0 0 4px var(--ring-offset-background); /* focus:ring-2 focus:ring-ring focus:ring-offset-2 */
+  box-shadow:
+    0 0 0 2px var(--ring),
+    0 0 0 4px var(--ring-offset-background); /* focus:ring-2 focus:ring-ring focus:ring-offset-2 */
 }
 
 .trigger:disabled {
@@ -63,7 +65,9 @@
   border: 1px solid var(--border); /* border */
   background-color: var(--popover); /* bg-popover */
   color: var(--popover-foreground); /* text-popover-foreground */
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
 }
 
 /* Animation states */
@@ -184,41 +188,73 @@
 
 /* Animation keyframes */
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes zoom-in {
-  from { transform: scale(0.95); }
-  to { transform: scale(1); }
+  from {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 @keyframes zoom-out {
-  from { transform: scale(1); }
-  to { transform: scale(0.95); }
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.95);
+  }
 }
 
 @keyframes slide-in-from-top {
-  from { transform: translateY(-0.5rem); }
-  to { transform: translateY(0); }
+  from {
+    transform: translateY(-0.5rem);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 @keyframes slide-in-from-right {
-  from { transform: translateX(0.5rem); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(0.5rem);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 @keyframes slide-in-from-left {
-  from { transform: translateX(-0.5rem); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(-0.5rem);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 @keyframes slide-in-from-bottom {
-  from { transform: translateY(0.5rem); }
-  to { transform: translateY(0); }
+  from {
+    transform: translateY(0.5rem);
+  }
+  to {
+    transform: translateY(0);
+  }
 }

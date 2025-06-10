@@ -15,7 +15,9 @@ The Textarea component is a customizable multi-line text input field designed fo
 
 ```tsx
 <div>
-  <label htmlFor="message" id="message-label">Your Message</label>
+  <label htmlFor="message" id="message-label">
+    Your Message
+  </label>
   <Textarea
     id="message"
     aria-labelledby="message-label"
@@ -42,6 +44,7 @@ const [value, setValue] = useState('');
 ### Resize Behavior
 
 1. **Choose Appropriate Resize Option**
+
    - Use `resize="vertical"` (default) for most cases to let users adjust height
    - Use `resize="none"` when fixed size is important for layout
    - Use `resize="both"` when users might need to adjust width and height
@@ -53,6 +56,7 @@ const [value, setValue] = useState('');
 ### Validation and Feedback
 
 1. **Status Indicators**
+
    - Use `status="error"` to indicate validation errors
    - Use `status="success"` to indicate successful validation
    - Always provide descriptive error messages alongside error states
@@ -76,10 +80,12 @@ const [value, setValue] = useState('');
 ## Accessibility Considerations
 
 1. **Keyboard Navigation**
+
    - The textarea element naturally supports keyboard navigation
    - Ensure focus styling is visible for keyboard users
 
 2. **Screen Readers**
+
    - Use appropriate `aria-*` attributes like `aria-invalid` for error states
    - Ensure error messages are linked to the textarea via `aria-describedby`
 
@@ -90,6 +96,7 @@ const [value, setValue] = useState('');
 ## Performance Considerations
 
 1. **Auto-resize Performance**
+
    - Auto-growing textareas can impact performance with very large text
    - Consider using a fixed size with scrolling for editing very large text documents
 
@@ -100,6 +107,7 @@ const [value, setValue] = useState('');
 ## Styling Customization
 
 1. **CSS Module Classes**
+
    - The component uses CSS modules with the following key classes:
      - `.textarea`: The main textarea element
      - `.textarea-sm`, `.textarea-md`, `.textarea-lg`: Size variants
@@ -113,10 +121,12 @@ const [value, setValue] = useState('');
 ## Troubleshooting
 
 1. **Text Not Visible**
+
    - Check that text and background colors have sufficient contrast
    - Verify that value or defaultValue props are properly passed
 
 2. **Auto-resize Not Working**
+
    - Ensure `minRows` and/or `maxRows` props are provided
    - Check that the textarea is not constrained by a parent element's dimensions
 

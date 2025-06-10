@@ -23,21 +23,20 @@ Implement proper command history navigation in the parent component:
 ```tsx
 const handleHistoryNavigation = (direction: 'up' | 'down') => {
   if (commandHistory.length === 0) return;
-  
+
   let newIndex = historyIndex;
-  
+
   if (direction === 'up') {
     // Navigate backward through history (newer to older)
-    newIndex = historyIndex >= commandHistory.length - 1 
-      ? commandHistory.length - 1 
-      : historyIndex + 1;
+    newIndex =
+      historyIndex >= commandHistory.length - 1 ? commandHistory.length - 1 : historyIndex + 1;
   } else {
     // Navigate forward through history (older to newer)
     newIndex = historyIndex <= 0 ? -1 : historyIndex - 1;
   }
-  
+
   setHistoryIndex(newIndex);
-  
+
   if (newIndex === -1) {
     // At the "bottom" of history, show empty input
     setCommandInput('');
@@ -55,7 +54,7 @@ Handling form submission efficiently:
 ```tsx
 const handleCommandSubmit = (e: React.FormEvent<HTMLFormElement> | string) => {
   let commandString = '';
-  
+
   if (typeof e === 'string') {
     commandString = e;
   } else {
@@ -63,12 +62,12 @@ const handleCommandSubmit = (e: React.FormEvent<HTMLFormElement> | string) => {
     commandString = commandInput;
     setCommandInput('');
   }
-  
+
   if (!commandString.trim()) return;
-  
+
   // Process the command
   processCommand(commandString);
-  
+
   // Reset history index
   setHistoryIndex(-1);
 };
@@ -107,7 +106,7 @@ terminalFooterRef.current?.focus();
 <TerminalFooter
   ref={terminalFooterRef}
   // other props
-/>
+/>;
 ```
 
 ## Common Issues and Solutions
@@ -134,7 +133,7 @@ const handleTerminalClick = (e: React.MouseEvent) => {
   ) {
     return;
   }
-  
+
   // Focus the input
   terminalFooterRef.current?.focus();
 };
@@ -143,5 +142,5 @@ const handleTerminalClick = (e: React.MouseEvent) => {
 <div onClick={handleTerminalClick}>
   {/* Terminal content */}
   <TerminalFooter ref={terminalFooterRef} />
-</div>
+</div>;
 ```

@@ -7,5 +7,5 @@
  * @module GradientText
  */
 
-export { GradientText, default } from './gradient-text';
+export { default, GradientText } from './gradient-text';
 export type { GradientTextProps } from './gradient-text.types';

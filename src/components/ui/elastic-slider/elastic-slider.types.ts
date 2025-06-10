@@ -2,9 +2,9 @@ import type React from 'react';
 
 /**
  * ElasticSlider Component Props
- * 
+ *
  * Props for the root ElasticSlider component that provides an interactive slider with elasticity effects.
- * 
+ *
  * @example
  * ```tsx
  * <ElasticSlider
@@ -66,7 +66,7 @@ export interface ElasticSliderProps {
 
 /**
  * Internal Slider Component Props
- * 
+ *
  * Props for the internal Slider component used by ElasticSlider.
  * This component implements the core slider functionality.
  */

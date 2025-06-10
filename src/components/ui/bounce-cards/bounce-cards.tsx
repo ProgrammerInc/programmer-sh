@@ -1,21 +1,21 @@
 'use client';
 
+import { cn } from '@/utils/app.utils';
 import { memo } from 'react';
-import { BounceCardsProps } from './bounce-cards.types';
 import { useBounceCardsAnimation } from './bounce-cards.hooks';
 import styles from './bounce-cards.module.css';
-import { cn } from '@/utils/app.utils';
+import { BounceCardsProps } from './bounce-cards.types';
 
 /**
  * BounceCards Component
- * 
+ *
  * A dynamic card stack that animates with GSAP and responds to hover interactions.
- * 
+ *
  * @example
  * ```tsx
- * <BounceCards 
- *   images={['image1.jpg', 'image2.jpg']} 
- *   enableHover={true} 
+ * <BounceCards
+ *   images={['image1.jpg', 'image2.jpg']}
+ *   enableHover={true}
  * />
  * ```
  */

@@ -70,10 +70,10 @@ const TerminalDemo = () => {
   const handleCommandSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!commandInput.trim()) return;
-    
+
     // Process the command
     console.log(`Executing command: ${commandInput}`);
-    
+
     // Update history
     setCommandHistory(prev => [commandInput, ...prev]);
     setCommandInput('');
@@ -83,21 +83,20 @@ const TerminalDemo = () => {
   // History navigation handler
   const handleHistoryNavigation = (direction: 'up' | 'down') => {
     if (commandHistory.length === 0) return;
-    
+
     let newIndex = historyIndex;
-    
+
     if (direction === 'up') {
       // Navigate backward through history
-      newIndex = historyIndex >= commandHistory.length - 1 
-        ? commandHistory.length - 1 
-        : historyIndex + 1;
+      newIndex =
+        historyIndex >= commandHistory.length - 1 ? commandHistory.length - 1 : historyIndex + 1;
     } else {
       // Navigate forward through history
       newIndex = historyIndex <= 0 ? -1 : historyIndex - 1;
     }
-    
+
     setHistoryIndex(newIndex);
-    
+
     if (newIndex === -1) {
       // At the bottom of history, show empty input
       setCommandInput('');
@@ -109,10 +108,8 @@ const TerminalDemo = () => {
 
   return (
     <div className="terminal">
-      <div className="terminal-content">
-        {/* Terminal output content */}
-      </div>
-      
+      <div className="terminal-content">{/* Terminal output content */}</div>
+
       <TerminalFooter
         ref={footerRef}
         commandInput={commandInput}

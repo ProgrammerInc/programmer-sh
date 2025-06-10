@@ -28,9 +28,7 @@ Import the toast function from Sonner to display notifications:
 import { toast } from 'sonner';
 
 export default function MyComponent() {
-  return (
-    <button onClick={() => toast('Hello World')}>Show Toast</button>
-  );
+  return <button onClick={() => toast('Hello World')}>Show Toast</button>;
 }
 ```
 
@@ -272,7 +270,7 @@ import { toast } from 'sonner';
 
 function showDismissibleToast() {
   const toastId = toast('This toast can be programmatically dismissed');
-  
+
   setTimeout(() => {
     toast.dismiss(toastId);
   }, 3000);

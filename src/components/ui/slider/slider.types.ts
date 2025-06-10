@@ -23,7 +23,7 @@ export type SliderProps = React.ComponentPropsWithoutRef<typeof SliderPrimitive.
  * Props for the SliderTrack component
  *
  * The track that contains the SliderRange
- * 
+ *
  * @see {@link https://www.radix-ui.com/primitives/docs/components/slider#track Radix UI Slider Track}
  *
  * @example
@@ -39,7 +39,7 @@ export type SliderTrackProps = React.ComponentPropsWithoutRef<typeof SliderPrimi
  * Props for the SliderRange component
  *
  * Shows the range within the SliderTrack
- * 
+ *
  * @see {@link https://www.radix-ui.com/primitives/docs/components/slider#range Radix UI Slider Range}
  *
  * @example
@@ -53,7 +53,7 @@ export type SliderRangeProps = React.ComponentPropsWithoutRef<typeof SliderPrimi
  * Props for the SliderThumb component
  *
  * The draggable thumb to set the value
- * 
+ *
  * @see {@link https://www.radix-ui.com/primitives/docs/components/slider#thumb Radix UI Slider Thumb}
  *
  * @example

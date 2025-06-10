@@ -4,5 +4,5 @@
  * @module
  */
 
-export { PixelTrail, default } from './pixel-trail';
+export { default, PixelTrail } from './pixel-trail';
 export type { PixelTrailProps } from './pixel-trail.types';

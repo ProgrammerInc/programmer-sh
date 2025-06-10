@@ -1,16 +1,16 @@
 /**
  * Sheet Component
- * 
+ *
  * A modal dialog that slides in from the edge of the screen.
  * Based on Radix UI's Dialog primitive.
- * 
+ *
  * Features:
  * - Can appear from different edges of the screen (top, right, bottom, left)
  * - Includes an overlay to dim background content
  * - Fully keyboard accessible and screen reader friendly
  * - Animated entrances and exits with smooth transitions
  * - Supports customization through component composition
- * 
+ *
  * Usage examples:
  * ```tsx
  * // Basic usage
@@ -27,7 +27,7 @@
  *     </SheetFooter>
  *   </SheetContent>
  * </Sheet>
- * 
+ *
  * // From different sides
  * <Sheet>
  *   <SheetTrigger>Open Left Sheet</SheetTrigger>
@@ -35,7 +35,7 @@
  *     Content from the left
  *   </SheetContent>
  * </Sheet>
- * 
+ *
  * // With custom styling
  * <Sheet>
  *   <SheetTrigger>Settings</SheetTrigger>

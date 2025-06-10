@@ -3,9 +3,9 @@ import React from 'react';
 
 /**
  * Dock Item Data
- * 
+ *
  * Represents a single item in the dock.
- * 
+ *
  * @example
  * ```tsx
  * const items: DockItemData[] = [
@@ -35,11 +35,11 @@ export interface DockItemData {
 
 /**
  * Dock Props
- * 
+ *
  * Props for the main Dock component.
- * 
+ *
  * @see https://www.framer.com/motion/spring/ for spring options
- * 
+ *
  * @example
  * ```tsx
  * <Dock
@@ -71,9 +71,9 @@ export interface DockProps {
 
 /**
  * Dock Item Props
- * 
+ *
  * Props for individual dock items.
- * 
+ *
  * @internal
  */
 export interface DockItemProps {
@@ -97,9 +97,9 @@ export interface DockItemProps {
 
 /**
  * Dock Label Props
- * 
+ *
  * Props for the label that appears on hover.
- * 
+ *
  * @example
  * ```tsx
  * <DockLabel>Settings</DockLabel>
@@ -116,9 +116,9 @@ export interface DockLabelProps {
 
 /**
  * Dock Icon Props
- * 
+ *
  * Props for the icon within a dock item.
- * 
+ *
  * @example
  * ```tsx
  * <DockIcon><SettingsIcon size={24} /></DockIcon>

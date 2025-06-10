@@ -4,5 +4,5 @@
  * @module
  */
 
-export { SnowflakeCursor, default } from './snowflake-cursor';
+export { default, SnowflakeCursor } from './snowflake-cursor';
 export type { SnowflakeCursorProps } from './snowflake-cursor.types';

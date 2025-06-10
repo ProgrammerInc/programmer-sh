@@ -7,6 +7,6 @@
  * @module WorldMap
  */
 
-export { WorldMap, default } from './world-map';
+export { default, WorldMap } from './world-map';
 export * as WorldMapStyles from './world-map.module.css';
 export type { WorldMapProps } from './world-map.types';

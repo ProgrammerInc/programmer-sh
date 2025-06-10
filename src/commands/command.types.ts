@@ -1,6 +1,6 @@
 /**
  * Command Types
- * 
+ *
  * Type definitions for the command system
  */
 

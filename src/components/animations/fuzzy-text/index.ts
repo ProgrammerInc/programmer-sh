@@ -7,5 +7,5 @@
  * @module FuzzyText
  */
 
-export { FuzzyText, default } from './fuzzy-text';
+export { default, FuzzyText } from './fuzzy-text';
 export type { FuzzyTextProps } from './fuzzy-text.types';

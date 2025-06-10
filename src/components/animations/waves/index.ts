@@ -6,6 +6,6 @@
  * @module Waves
  */
 
-export { Waves, default } from './waves';
+export { default, Waves } from './waves';
 export * as WavesStyles from './waves.module.css';
 export type { WavesProps } from './waves.types';

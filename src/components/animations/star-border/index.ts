@@ -7,6 +7,6 @@
  * @module StarBorder
  */
 
-export { StarBorder, default } from './star-border';
+export { default, StarBorder } from './star-border';
 export * as StarBorderStyles from './star-border.module.css';
 export type { StarBorderProps } from './star-border.types';

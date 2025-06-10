@@ -4,17 +4,18 @@ import * as React from 'react';
 /**
  * Checkbox component props
  */
-export interface CheckboxProps extends React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> {
+export interface CheckboxProps
+  extends React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> {
   /**
    * Controlled checked state of the checkbox
    */
   checked?: boolean;
-  
+
   /**
    * Default checked state when uncontrolled
    */
   defaultChecked?: boolean;
-  
+
   /**
    * Required attribute to indicate if input requires a value
    */
@@ -54,7 +55,9 @@ export interface CheckboxProps extends React.ComponentPropsWithoutRef<typeof Che
 /**
  * Checkbox indicator props
  */
-export type CheckboxIndicatorProps = React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Indicator>;
+export type CheckboxIndicatorProps = React.ComponentPropsWithoutRef<
+  typeof CheckboxPrimitive.Indicator
+>;
 
 /**
  * Checkbox icon props

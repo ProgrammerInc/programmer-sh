@@ -1,4 +1,4 @@
-import { BlobConfig } from '@/components/animations/blob-background';
+import { BlobConfig } from '@/components/animations/blob-background/blob-background.types';
 
 export const defaultBlobs: BlobConfig[] = [
   {

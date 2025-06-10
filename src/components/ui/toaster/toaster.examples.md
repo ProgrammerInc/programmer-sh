@@ -26,13 +26,13 @@ import { useToast } from '@/hooks/use-toast.hook';
 
 export function SubmitButton() {
   const { toast } = useToast();
-  
+
   return (
     <button
       onClick={() => {
         toast({
-          title: "Form submitted",
-          description: "We've received your submission",
+          title: 'Form submitted',
+          description: "We've received your submission"
         });
       }}
     >
@@ -51,26 +51,22 @@ import { useToast } from '@/hooks/use-toast.hook';
 
 export function SaveButton() {
   const { toast } = useToast();
-  
+
   const handleSave = async () => {
     try {
       // Save data logic here
       await saveData();
-      
+
       toast({
-        title: "Saved successfully",
-        description: "Your changes have been saved",
+        title: 'Saved successfully',
+        description: 'Your changes have been saved'
       });
     } catch (error) {
       // Error handling
     }
   };
-  
-  return (
-    <button onClick={handleSave}>
-      Save Changes
-    </button>
-  );
+
+  return <button onClick={handleSave}>Save Changes</button>;
 }
 ```
 
@@ -83,24 +79,24 @@ import { useToast } from '@/hooks/use-toast.hook';
 
 export function SubmitForm() {
   const { toast } = useToast();
-  
-  const handleSubmit = async (event) => {
+
+  const handleSubmit = async event => {
     event.preventDefault();
-    
+
     try {
       // Form submission logic
       const response = await submitForm();
-      
+
       // Success handling
     } catch (error) {
       toast({
-        variant: "destructive",
-        title: "Error",
-        description: error.message || "Something went wrong",
+        variant: 'destructive',
+        title: 'Error',
+        description: error.message || 'Something went wrong'
       });
     }
   };
-  
+
   return (
     <form onSubmit={handleSubmit}>
       {/* Form fields */}
@@ -120,24 +116,20 @@ import { ToastAction } from '@/components/ui/toast/toast';
 
 export function NotificationExample() {
   const { toast } = useToast();
-  
+
   const showNotification = () => {
     toast({
-      title: "New message",
-      description: "You have 3 unread messages",
+      title: 'New message',
+      description: 'You have 3 unread messages',
       action: (
-        <ToastAction altText="View messages" onClick={() => window.location.href = '/messages'}>
+        <ToastAction altText="View messages" onClick={() => (window.location.href = '/messages')}>
           View
         </ToastAction>
-      ),
+      )
     });
   };
-  
-  return (
-    <button onClick={showNotification}>
-      Show Notification
-    </button>
-  );
+
+  return <button onClick={showNotification}>Show Notification</button>;
 }
 ```
 
@@ -150,20 +142,16 @@ import { useToast } from '@/hooks/use-toast.hook';
 
 export function QuickNotification() {
   const { toast } = useToast();
-  
+
   const showQuickNotification = () => {
     toast({
-      title: "Quick update",
-      description: "This will disappear in 2 seconds",
-      duration: 2000, // 2 seconds
+      title: 'Quick update',
+      description: 'This will disappear in 2 seconds',
+      duration: 2000 // 2 seconds
     });
   };
-  
-  return (
-    <button onClick={showQuickNotification}>
-      Quick Notification
-    </button>
-  );
+
+  return <button onClick={showQuickNotification}>Quick Notification</button>;
 }
 ```
 
@@ -177,19 +165,15 @@ import styles from './custom-styles.module.css';
 
 export function CustomStyledToast() {
   const { toast } = useToast();
-  
+
   const showCustomStyledToast = () => {
     toast({
-      title: "Custom styled toast",
-      description: "This toast has custom styling",
-      className: styles.customToast,
+      title: 'Custom styled toast',
+      description: 'This toast has custom styling',
+      className: styles.customToast
     });
   };
-  
-  return (
-    <button onClick={showCustomStyledToast}>
-      Custom Styled Toast
-    </button>
-  );
+
+  return <button onClick={showCustomStyledToast}>Custom Styled Toast</button>;
 }
 ```

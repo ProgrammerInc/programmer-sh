@@ -13,7 +13,7 @@ import { AccordionProps } from './accordion.types';
 
 /**
  * Accordion root component
- * 
+ *
  * @example
  * ```tsx
  * <Accordion type="single" collapsible>

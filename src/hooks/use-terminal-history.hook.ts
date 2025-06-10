@@ -75,7 +75,9 @@ export const useTerminalHistory = (isInitializing: boolean) => {
               })
             );
 
-            terminalHistoryLogger.debug('Loaded history from storage', { count: formattedHistory.length });
+            terminalHistoryLogger.debug('Loaded history from storage', {
+              count: formattedHistory.length
+            });
             setHistory(formattedHistory);
 
             // Set the last command from history only if we didn't already get it from storage
@@ -83,7 +85,9 @@ export const useTerminalHistory = (isInitializing: boolean) => {
               const lastItem = formattedHistory[formattedHistory.length - 1];
 
               if (lastItem && lastItem.command) {
-                terminalHistoryLogger.debug('Setting last command from history', { command: lastItem.command });
+                terminalHistoryLogger.debug('Setting last command from history', {
+                  command: lastItem.command
+                });
                 setLastExecutedCommand(lastItem.command);
               }
             }
@@ -126,11 +130,15 @@ export const useTerminalHistory = (isInitializing: boolean) => {
           timestamp: item.timestamp
         }));
         localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(storableHistory));
-        terminalHistoryLogger.debug('Saved history to localStorage', { count: storableHistory.length });
+        terminalHistoryLogger.debug('Saved history to localStorage', {
+          count: storableHistory.length
+        });
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
-        terminalHistoryLogger.error('Error saving history to localStorage', { error: errorMessage });
-        
+        terminalHistoryLogger.error('Error saving history to localStorage', {
+          error: errorMessage
+        });
+
         // If we still have an error, try to save a smaller portion of the history
         if (limitedHistory.length > 10) {
           try {
@@ -142,10 +150,15 @@ export const useTerminalHistory = (isInitializing: boolean) => {
             }));
             localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(storableReducedHistory));
             setHistory(reducedHistory);
-            terminalHistoryLogger.info('Saved reduced history to localStorage', { count: reducedHistory.length });
+            terminalHistoryLogger.info('Saved reduced history to localStorage', {
+              count: reducedHistory.length
+            });
           } catch (fallbackError) {
-            const fallbackErrorMessage = fallbackError instanceof Error ? fallbackError.message : String(fallbackError);
-            terminalHistoryLogger.error('Error saving reduced history', { error: fallbackErrorMessage });
+            const fallbackErrorMessage =
+              fallbackError instanceof Error ? fallbackError.message : String(fallbackError);
+            terminalHistoryLogger.error('Error saving reduced history', {
+              error: fallbackErrorMessage
+            });
             // Last resort: clear history
             clearHistory();
           }

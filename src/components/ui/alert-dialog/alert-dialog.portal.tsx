@@ -13,9 +13,9 @@ import { AlertDialogPortalProps } from './alert-dialog.types';
 
 /**
  * AlertDialogPortal component
- * 
+ *
  * A container that portals its children (the alert dialog content) into the body.
- * 
+ *
  * @example
  * ```tsx
  * <AlertDialogPortal>

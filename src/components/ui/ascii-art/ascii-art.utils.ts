@@ -6,7 +6,7 @@
 
 /**
  * Trigger the welcome command by dispatching a custom event
- * 
+ *
  * @param delay - Delay in milliseconds before triggering (default: 100ms)
  * @returns A cleanup function to cancel the timeout if component unmounts
  */

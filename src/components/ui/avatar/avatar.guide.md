@@ -7,6 +7,7 @@ This guide provides best practices, accessibility information, and implementatio
 ### When to Use
 
 u2705 **Do use avatars for:**
+
 - User profile pictures or representations
 - Team member displays
 - Comment or activity stream author identification
@@ -14,6 +15,7 @@ u2705 **Do use avatars for:**
 - Contact lists and user directories
 
 u274c **Don't use avatars for:**
+
 - Decorative purposes unrelated to people or entities
 - Large hero or background images
 - Logo or brand representation (use dedicated components instead)
@@ -65,15 +67,13 @@ export function AccessibleAvatar({ user }) {
   return (
     <Avatar aria-label={user.interactive ? undefined : user.name}>
       {user.image ? (
-        <AvatarImage 
+        <AvatarImage
           src={user.image}
-          alt={user.name} 
-          onError={(e) => e.currentTarget.style.display = 'none'}
+          alt={user.name}
+          onError={e => (e.currentTarget.style.display = 'none')}
         />
       ) : null}
-      <AvatarFallback>
-        {user.initials || user.name.charAt(0)}
-      </AvatarFallback>
+      <AvatarFallback>{user.initials || user.name.charAt(0)}</AvatarFallback>
     </Avatar>
   );
 }
@@ -168,12 +168,12 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 export function AvatarWithErrorHandling({ user }) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  
+
   return (
     <Avatar>
       {!hasError && (
-        <AvatarImage 
-          src={user.image} 
+        <AvatarImage
+          src={user.image}
           alt={user.name}
           onLoad={() => setIsLoading(false)}
           onError={() => {
@@ -182,7 +182,7 @@ export function AvatarWithErrorHandling({ user }) {
           }}
         />
       )}
-      <AvatarFallback 
+      <AvatarFallback
         delayMs={isLoading ? 700 : undefined} // Wait for image load before showing fallback
       >
         {user.initials}
@@ -207,17 +207,20 @@ export function AvatarShapes() {
         <AvatarImage src="https://example.com/user1.jpg" alt="Round Avatar" />
         <AvatarFallback>RA</AvatarFallback>
       </Avatar>
-      
+
       {/* Square avatar */}
       <Avatar className="rounded-lg">
         <AvatarImage src="https://example.com/user2.jpg" alt="Square Avatar" />
         <AvatarFallback>SA</AvatarFallback>
       </Avatar>
-      
+
       {/* Hexagon avatar using clip-path */}
-      <Avatar className="rounded-none" style={{ 
-        clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)'
-      }}>
+      <Avatar
+        className="rounded-none"
+        style={{
+          clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)'
+        }}
+      >
         <AvatarImage src="https://example.com/user3.jpg" alt="Hexagon Avatar" />
         <AvatarFallback>HA</AvatarFallback>
       </Avatar>

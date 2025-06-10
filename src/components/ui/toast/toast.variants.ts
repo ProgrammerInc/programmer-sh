@@ -1,18 +1,18 @@
 /**
  * This file is maintained for backward compatibility.
  * New components should use the CSS module styles directly.
- * 
+ *
  * @deprecated Use toast.module.css instead
  */
 import { cva } from 'class-variance-authority';
 
 /**
  * Toast component variants
- * 
+ *
  * Defines styling variants for the Toast component including:
  * - default: standard toast with background color
  * - destructive: error/warning toast with destructive styling
- * 
+ *
  * @deprecated Use toast.module.css instead
  */
 export const toastVariants = cva(

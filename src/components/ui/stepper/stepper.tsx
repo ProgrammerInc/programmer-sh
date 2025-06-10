@@ -1,29 +1,23 @@
+/* eslint-disable no-secrets/no-secrets */
 'use client';
 
-import { AnimatePresence, Variants, motion } from 'framer-motion';
-import React, {
-  Children,
-  useLayoutEffect,
-  useRef,
-  useState,
-  memo
-} from 'react';
+import { AnimatePresence, motion, Variants } from 'framer-motion';
+import React, { Children, memo, useLayoutEffect, useRef, useState } from 'react';
 
 import styles from './stepper.module.css';
 import {
-  StepperProps,
-  StepProps,
-  StepContentWrapperProps,
-  SlideTransitionProps,
-  StepIndicatorProps,
-  StepConnectorProps,
   CheckIconProps,
-  StepperOrientation
+  SlideTransitionProps,
+  StepConnectorProps,
+  StepContentWrapperProps,
+  StepIndicatorProps,
+  StepperProps,
+  StepProps
 } from './stepper.types';
 
 /**
  * Stepper Component - A multi-step wizard with interactive step indicators
- * 
+ *
  * Features:
  * - Multi-step wizard with configurable step count
  * - Interactive step indicators that can be clicked to navigate
@@ -33,7 +27,7 @@ import {
  * - Support for custom step indicator rendering
  * - Callbacks for step changes and completion
  * - Support for vertical and horizontal layouts
- * 
+ *
  * @example
  * ```tsx
  * // Basic usage
@@ -42,7 +36,7 @@ import {
  *   <Step>Step 2 content</Step>
  *   <Step>Step 3 content</Step>
  * </Stepper>
- * 
+ *
  * // With custom configuration
  * <Stepper
  *   initialStep={2}
@@ -84,9 +78,14 @@ const Stepper = memo(function Stepper({
   const isLastStep = currentStep === totalSteps;
 
   // Get the appropriate container class based on orientation
-  const containerClass = orientation === 'horizontal' ? styles['container-horizontal'] : styles.container;
-  const circleContainerClass = orientation === 'horizontal' ? styles['circle-container-horizontal'] : styles['circle-container'];
-  const stepContainerClass = orientation === 'horizontal' ? styles['step-container-horizontal'] : styles['step-container'];
+  const containerClass =
+    orientation === 'horizontal' ? styles['container-horizontal'] : styles.container;
+  const circleContainerClass =
+    orientation === 'horizontal'
+      ? styles['circle-container-horizontal']
+      : styles['circle-container'];
+  const stepContainerClass =
+    orientation === 'horizontal' ? styles['step-container-horizontal'] : styles['step-container'];
 
   const updateStep = (newStep: number) => {
     setCurrentStep(newStep);
@@ -117,13 +116,8 @@ const Stepper = memo(function Stepper({
   };
 
   return (
-    <div
-      className={containerClass}
-      {...rest}
-    >
-      <div
-        className={`${circleContainerClass} ${stepCircleContainerClassName}`}
-      >
+    <div className={containerClass} {...rest}>
+      <div className={`${circleContainerClass} ${stepCircleContainerClassName}`}>
         <div className={`${stepContainerClass} ${stepContainerClassName}`}>
           {stepsArray.map((_, index) => {
             const stepNumber = index + 1;
@@ -151,7 +145,9 @@ const Stepper = memo(function Stepper({
                     orientation={orientation}
                   />
                 )}
-                {isNotLastStep && <StepConnector isComplete={currentStep > stepNumber} orientation={orientation} />}
+                {isNotLastStep && (
+                  <StepConnector isComplete={currentStep > stepNumber} orientation={orientation} />
+                )}
               </React.Fragment>
             );
           })}
@@ -169,7 +165,9 @@ const Stepper = memo(function Stepper({
 
         {!isCompleted && (
           <div className={`${styles.footer} ${footerClassName}`}>
-            <div className={`${styles['footer-buttons']} ${currentStep !== 1 ? styles['footer-buttons-between'] : styles['footer-buttons-end']}`}>
+            <div
+              className={`${styles['footer-buttons']} ${currentStep !== 1 ? styles['footer-buttons-between'] : styles['footer-buttons-end']}`}
+            >
               {currentStep !== 1 && (
                 <button
                   onClick={handleBack}
@@ -198,7 +196,7 @@ Stepper.displayName = 'Stepper';
 
 /**
  * StepContentWrapper - Handles animation and height calculations for step content
- * 
+ *
  * @private Internal component for the Stepper
  */
 const StepContentWrapper = memo(function StepContentWrapper({
@@ -238,7 +236,7 @@ StepContentWrapper.displayName = 'StepContentWrapper';
 
 /**
  * SlideTransition - Handles the sliding animation between steps
- * 
+ *
  * @private Internal component for the Stepper
  */
 const SlideTransition = memo(function SlideTransition({
@@ -264,7 +262,11 @@ const SlideTransition = memo(function SlideTransition({
       animate="center"
       exit="exit"
       transition={{ duration: 0.4 }}
-      className={orientation === 'horizontal' ? styles['slide-transition-horizontal'] : styles['slide-transition']}
+      className={
+        orientation === 'horizontal'
+          ? styles['slide-transition-horizontal']
+          : styles['slide-transition']
+      }
     >
       {children}
     </motion.div>
@@ -290,7 +292,7 @@ const stepVariants: Variants = {
 
 /**
  * Step Component - Container for step content
- * 
+ *
  * @example
  * ```tsx
  * <Step>
@@ -307,7 +309,7 @@ Step.displayName = 'Step';
 
 /**
  * StepIndicator - Visual indicator for a step
- * 
+ *
  * @private Internal component for the Stepper
  */
 const StepIndicator = memo(function StepIndicator({
@@ -357,7 +359,7 @@ StepIndicator.displayName = 'StepIndicator';
 
 /**
  * StepConnector - Connection line between step indicators
- * 
+ *
  * @private Internal component for the Stepper
  */
 const StepConnector = memo(function StepConnector({
@@ -386,7 +388,7 @@ StepConnector.displayName = 'StepConnector';
 
 /**
  * CheckIcon - Checkmark icon for completed steps
- * 
+ *
  * @private Internal component for the Stepper
  */
 const CheckIcon = memo(function CheckIcon(props: CheckIconProps) {

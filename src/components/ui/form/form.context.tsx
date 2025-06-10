@@ -5,12 +5,12 @@ import { FieldPath, FieldValues } from 'react-hook-form';
 
 /**
  * Form Field Context Value Interface
- * 
+ *
  * Defines the shape of the FormFieldContext value.
- * 
+ *
  * @template TFieldValues - The type of the form values
  * @template TName - The type of the field name
- * 
+ *
  * @property name - The name of the field in the form
  */
 export type FormFieldContextValue<
@@ -22,10 +22,10 @@ export type FormFieldContextValue<
 
 /**
  * Form Field Context
- * 
+ *
  * React context for maintaining state between a FormField and its descendants.
  * Used by the FormField component to pass the field name to child components.
- * 
+ *
  * @example
  * ```tsx
  * // Internal component usage
@@ -40,9 +40,9 @@ export const FormFieldContext = React.createContext<FormFieldContextValue>(
 
 /**
  * Form Item Context Value Interface
- * 
+ *
  * Defines the shape of the FormItemContext value.
- * 
+ *
  * @property id - The unique ID for the form item
  */
 export type FormItemContextValue = {
@@ -51,10 +51,10 @@ export type FormItemContextValue = {
 
 /**
  * Form Item Context
- * 
+ *
  * React context for maintaining state between a FormItem and its descendants.
  * Used by the FormItem component to pass the generated ID to child components.
- * 
+ *
  * @example
  * ```tsx
  * // Internal component usage

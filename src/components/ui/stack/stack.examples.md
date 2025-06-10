@@ -46,7 +46,7 @@ You can provide your own card data to display custom images.
     { id: 1, img: '/images/photo1.jpg' },
     { id: 2, img: '/images/photo2.jpg' },
     { id: 3, img: '/images/photo3.jpg' },
-    { id: 4, img: '/images/photo4.jpg' },
+    { id: 4, img: '/images/photo4.jpg' }
   ]}
 />
 ```
@@ -78,7 +78,7 @@ export default function PhotoGallery() {
     { id: 1, img: '/gallery/landscape1.jpg' },
     { id: 2, img: '/gallery/landscape2.jpg' },
     { id: 3, img: '/gallery/landscape3.jpg' },
-    { id: 4, img: '/gallery/landscape4.jpg' },
+    { id: 4, img: '/gallery/landscape4.jpg' }
   ];
 
   return (
@@ -112,15 +112,12 @@ export default function CardGame() {
   const [cards, setCards] = useState([
     { id: 1, img: '/cards/card1.jpg' },
     { id: 2, img: '/cards/card2.jpg' },
-    { id: 3, img: '/cards/card3.jpg' },
+    { id: 3, img: '/cards/card3.jpg' }
   ]);
 
   const addCard = () => {
     const newId = Math.max(...cards.map(card => card.id)) + 1;
-    setCards([
-      ...cards, 
-      { id: newId, img: `/cards/card${(newId % 10) + 1}.jpg` }
-    ]);
+    setCards([...cards, { id: newId, img: `/cards/card${(newId % 10) + 1}.jpg` }]);
   };
 
   const shuffleCards = () => {
@@ -134,11 +131,7 @@ export default function CardGame() {
         <Button onClick={shuffleCards}>Shuffle</Button>
       </div>
       <div className="mt-8">
-        <Stack
-          cardsData={cards}
-          randomRotation={true}
-          sendToBackOnClick={true}
-        />
+        <Stack cardsData={cards} randomRotation={true} sendToBackOnClick={true} />
       </div>
     </div>
   );

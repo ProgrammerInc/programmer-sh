@@ -1,3 +1,4 @@
+/* eslint-disable no-secrets/no-secrets */
 'use client';
 
 import { SocialLink } from '@/types/social-links.types';
@@ -5,7 +6,7 @@ import { RefObject } from 'react';
 
 /**
  * Terminal header component props interface.
- * 
+ *
  * @interface TerminalHeaderProps
  * @property {RefObject<HTMLDivElement>} [headerRef] - Reference to the header div element
  * @property {string} [lastCommand] - Last command executed in the terminal
@@ -21,7 +22,7 @@ export interface TerminalHeaderProps {
 
 /**
  * User menu item interface.
- * 
+ *
  * @interface UserMenuItem
  * @property {string} id - Unique identifier for the menu item
  * @property {string} label - Display text for the menu item
@@ -39,7 +40,7 @@ export interface UserMenuItem {
 
 /**
  * Terminal header ref interface.
- * 
+ *
  * @interface TerminalHeaderRef
  * @property {() => void} focusUserMenu - Function to focus the user menu
  * @property {() => void} closeUserMenu - Function to close the user menu

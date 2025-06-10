@@ -7,6 +7,7 @@ This guide provides best practices, accessibility considerations, and implementa
 ### When to Use Tooltips
 
 ✅ **Do use tooltips for:**
+
 - Providing additional context for UI elements
 - Explaining the purpose of buttons with only icons
 - Displaying keyboard shortcuts
@@ -14,6 +15,7 @@ This guide provides best practices, accessibility considerations, and implementa
 - Providing help text for form inputs
 
 ❌ **Don't use tooltips for:**
+
 - Critical information needed to complete a task
 - Lengthy content that would be better in a modal or drawer
 - Essential error messages (use inline validation instead)
@@ -98,7 +100,9 @@ The Tooltip component is built to be fully accessible for keyboard users:
           <InfoIcon className="ml-1 h-3 w-3" aria-label="Username requirements" />
         </TooltipTrigger>
         <TooltipContent>
-          <p>Username must be 3-20 characters and only contain letters, numbers, and underscores.</p>
+          <p>
+            Username must be 3-20 characters and only contain letters, numbers, and underscores.
+          </p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
@@ -119,7 +123,9 @@ The Tooltip component is built to be fully accessible for keyboard users:
         </span>
       </TooltipTrigger>
       <TooltipContent>
-        <p>This is a very long text that will be truncated in the UI but shown fully in a tooltip.</p>
+        <p>
+          This is a very long text that will be truncated in the UI but shown fully in a tooltip.
+        </p>
       </TooltipContent>
     </Tooltip>
   </TooltipProvider>
@@ -141,7 +147,7 @@ The Tooltip component is built to be fully accessible for keyboard users:
         <p>Edit item</p>
       </TooltipContent>
     </Tooltip>
-    
+
     <Tooltip>
       <TooltipTrigger asChild>
         <button aria-label="Delete">

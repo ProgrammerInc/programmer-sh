@@ -7,5 +7,5 @@
  * @module MetallicPaint
  */
 
-export { MetallicPaint, default } from './metallic-paint';
+export { default, MetallicPaint } from './metallic-paint';
 export type { MetallicPaintProps } from './metallic-paint.types';

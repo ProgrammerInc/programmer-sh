@@ -1,7 +1,7 @@
 'use client';
 
 import type { Meta, StoryObj } from '@storybook/react';
-import { Check, X, AlertCircle } from 'lucide-react';
+import { AlertCircle, Check, X } from 'lucide-react';
 
 import { Badge } from './badge';
 
@@ -17,12 +17,12 @@ const meta: Meta<typeof Badge> = {
     }
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div className="flex items-center justify-center p-8">
         <Story />
       </div>
-    ),
-  ],
+    )
+  ]
 };
 
 export default meta;
@@ -124,15 +124,9 @@ export const StatusBadges: Story = {
 export const SizedBadges: Story = {
   render: () => (
     <div className="flex flex-wrap gap-4 items-center">
-      <Badge className="text-[0.625rem] px-2 py-0">
-        Extra Small
-      </Badge>
-      <Badge>
-        Default
-      </Badge>
-      <Badge className="text-sm px-3 py-1">
-        Large
-      </Badge>
+      <Badge className="text-[0.625rem] px-2 py-0">Extra Small</Badge>
+      <Badge>Default</Badge>
+      <Badge className="text-sm px-3 py-1">Large</Badge>
     </div>
   )
 };
@@ -143,14 +137,11 @@ export const SizedBadges: Story = {
 export const InteractiveBadges: Story = {
   render: () => (
     <div className="flex flex-wrap gap-2">
-      <Badge 
-        className="hover:bg-primary/80 cursor-pointer"
-        onClick={() => alert('Badge clicked!')}
-      >
+      <Badge className="hover:bg-primary/80 cursor-pointer" onClick={() => alert('Badge clicked!')}>
         Clickable
       </Badge>
-      <Badge 
-        variant="secondary" 
+      <Badge
+        variant="secondary"
         className="hover:bg-secondary/80 cursor-pointer"
         onClick={() => alert('Secondary badge clicked!')}
       >
@@ -166,26 +157,14 @@ export const InteractiveBadges: Story = {
 export const CustomColors: Story = {
   render: () => (
     <div className="flex flex-wrap gap-2">
-      <Badge 
-        className="bg-green-500 hover:bg-green-600 text-white border-transparent"
-      >
+      <Badge className="bg-green-500 hover:bg-green-600 text-white border-transparent">
         Success
       </Badge>
-      <Badge 
-        className="bg-yellow-500 hover:bg-yellow-600 text-white border-transparent"
-      >
+      <Badge className="bg-yellow-500 hover:bg-yellow-600 text-white border-transparent">
         Warning
       </Badge>
-      <Badge 
-        className="bg-blue-500 hover:bg-blue-600 text-white border-transparent"
-      >
-        Info
-      </Badge>
-      <Badge 
-        className="bg-purple-500 hover:bg-purple-600 text-white border-transparent"
-      >
-        New
-      </Badge>
+      <Badge className="bg-blue-500 hover:bg-blue-600 text-white border-transparent">Info</Badge>
+      <Badge className="bg-purple-500 hover:bg-purple-600 text-white border-transparent">New</Badge>
     </div>
   )
 };

@@ -16,14 +16,14 @@ import { useToast } from '@/hooks/use-toast';
 
 export function BasicToastExample() {
   const { toast } = useToast();
-  
+
   return (
     <ToastProvider>
       <button
         onClick={() => {
           toast({
             title: 'Success',
-            description: 'Your action was completed successfully',
+            description: 'Your action was completed successfully'
           });
         }}
       >
@@ -52,7 +52,7 @@ import { useToast } from '@/hooks/use-toast';
 
 export function ToastWithActionExample() {
   const { toast } = useToast();
-  
+
   return (
     <ToastProvider>
       <button
@@ -60,11 +60,7 @@ export function ToastWithActionExample() {
           toast({
             title: 'New message',
             description: 'You have 3 unread messages',
-            action: (
-              <ToastAction altText="View messages">
-                View
-              </ToastAction>
-            ),
+            action: <ToastAction altText="View messages">View</ToastAction>
           });
         }}
       >
@@ -92,7 +88,7 @@ import { useToast } from '@/hooks/use-toast';
 
 export function DestructiveToastExample() {
   const { toast } = useToast();
-  
+
   return (
     <ToastProvider>
       <button
@@ -100,7 +96,7 @@ export function DestructiveToastExample() {
           toast({
             variant: 'destructive',
             title: 'Error',
-            description: 'There was a problem with your request',
+            description: 'There was a problem with your request'
           });
         }}
       >
@@ -128,7 +124,7 @@ import { useToast } from '@/hooks/use-toast';
 
 export function CustomDurationToastExample() {
   const { toast } = useToast();
-  
+
   return (
     <ToastProvider>
       <button
@@ -136,7 +132,7 @@ export function CustomDurationToastExample() {
           toast({
             title: 'Quick notification',
             description: 'This toast will disappear after 2 seconds',
-            duration: 2000, // 2 seconds
+            duration: 2000 // 2 seconds
           });
         }}
       >
@@ -165,21 +161,17 @@ import { useState } from 'react';
 
 export function ManualToastExample() {
   const [open, setOpen] = useState(false);
-  
+
   return (
     <ToastProvider>
-      <button onClick={() => setOpen(true)}>
-        Show Manual Toast
-      </button>
-      
+      <button onClick={() => setOpen(true)}>Show Manual Toast</button>
+
       <Toast open={open} onOpenChange={setOpen}>
         <ToastClose />
         <ToastTitle>Custom Built Toast</ToastTitle>
-        <ToastDescription>
-          This toast is manually built and controlled
-        </ToastDescription>
+        <ToastDescription>This toast is manually built and controlled</ToastDescription>
       </Toast>
-      
+
       <ToastViewport />
     </ToastProvider>
   );
@@ -203,7 +195,7 @@ import styles from './custom-toast.module.css';
 
 export function CustomStyledToastExample() {
   const { toast } = useToast();
-  
+
   return (
     <ToastProvider>
       <button
@@ -211,7 +203,7 @@ export function CustomStyledToastExample() {
           toast({
             title: 'Custom styled toast',
             description: 'This toast has custom styling',
-            className: styles.customToast,
+            className: styles.customToast
           });
         }}
       >

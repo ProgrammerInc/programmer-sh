@@ -7,6 +7,6 @@
  * @module StarsBackground
  */
 
-export { StarsBackground, default } from './stars-background';
+export { default, StarsBackground } from './stars-background';
 export * as StarsBackgroundStyles from './stars-background.module.css';
 export type { StarsBackgroundProps } from './stars-background.types';

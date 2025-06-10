@@ -8,27 +8,27 @@ export const LANYARD_DEFAULTS = {
    * Default camera position [x, y, z]
    */
   POSITION: [0, 0, 30] as [number, number, number],
-  
+
   /**
    * Default gravity vector [x, y, z]
    */
   GRAVITY: [0, -40, 0] as [number, number, number],
-  
+
   /**
    * Default field of view in degrees
    */
   FOV: 20,
-  
+
   /**
    * Default background transparency setting
    */
   TRANSPARENT: true,
-  
+
   /**
    * Default maximum speed for the lanyard physics
    */
   MAX_SPEED: 50,
-  
+
   /**
    * Default minimum speed for the lanyard physics
    */
@@ -37,7 +37,7 @@ export const LANYARD_DEFAULTS = {
 
 /**
  * Creates the environment lighting for the lanyard scene
- * 
+ *
  * @returns An array of lightformer configurations for the environment
  */
 export const createLanyardEnvironment = () => [
@@ -73,7 +73,7 @@ export const createLanyardEnvironment = () => [
 
 /**
  * Set up the clear color for the WebGL renderer
- * 
+ *
  * @param gl - The WebGL renderer
  * @param transparent - Whether the background should be transparent
  */

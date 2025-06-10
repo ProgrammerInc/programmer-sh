@@ -6,10 +6,9 @@
  */
 
 import { createServiceLogger, logError } from '@/services/logger/logger.utils';
-import { supabase, isNotFoundError, logDbError } from '@/utils/supabase.utils';
-import { ensureHttps } from '@/utils/app.utils';
 import { fetchProfile } from '@/services/portfolio/profile.service';
-import { SocialLink, SocialLinkWithSource, SocialLinkSettings } from './social-links.types';
+import { ensureHttps } from '@/utils/app.utils';
+import { SocialLink, SocialLinkSettings, SocialLinkWithSource } from './social-links.types';
 
 // Create a dedicated logger for social links service
 const socialLinksLogger = createServiceLogger('SocialLinks');
@@ -146,11 +145,11 @@ export const fetchSocialLinks = async (settings?: SocialLinkSettings): Promise<S
   try {
     // Check if we have a valid cache
     const now = Date.now();
-    if (socialLinksCache && (now - lastFetchTime < CACHE_TTL)) {
+    if (socialLinksCache && now - lastFetchTime < CACHE_TTL) {
       // Use the cached social links but apply settings filters
       return filterSocialLinks(socialLinksCache, settings);
     }
-    
+
     // Get social links from profile
     const socialLinks = await getSocialLinksFromProfile();
 
@@ -159,7 +158,7 @@ export const fetchSocialLinks = async (settings?: SocialLinkSettings): Promise<S
     lastFetchTime = now;
 
     socialLinksLogger.debug('Fetched social links', { count: socialLinks.length });
-    
+
     // Apply filters based on settings
     return filterSocialLinks(socialLinks, settings);
   } catch (error) {
@@ -171,7 +170,10 @@ export const fetchSocialLinks = async (settings?: SocialLinkSettings): Promise<S
 /**
  * Filter social links based on provided settings
  */
-const filterSocialLinks = (links: SocialLinkWithSource[], settings?: SocialLinkSettings): SocialLink[] => {
+const filterSocialLinks = (
+  links: SocialLinkWithSource[],
+  settings?: SocialLinkSettings
+): SocialLink[] => {
   // If no settings, return all links without the source property
   if (!settings) {
     return links.map(({ type, url }) => ({ type, url }));

@@ -58,9 +58,9 @@
 // Export all components and types
 export { HoverCard, HoverCardContent, HoverCardTrigger } from './hover-card';
 export type {
+  HoverCardContentProps,
   HoverCardProps,
-  HoverCardTriggerProps,
-  HoverCardContentProps
+  HoverCardTriggerProps
 } from './hover-card.types';
 
 // For backwards compatibility

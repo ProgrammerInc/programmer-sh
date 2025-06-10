@@ -1,8 +1,9 @@
+/* eslint-disable no-secrets/no-secrets */
 'use client';
 
 /**
  * Terminal Footer Props Interface
- * 
+ *
  * @interface TerminalFooterProps
  * @property {string} commandInput - Current value of the command input
  * @property {(value: string) => void} setCommandInput - Function to update the command input value
@@ -53,7 +54,7 @@ export interface TerminalFooterProps {
 
 /**
  * Terminal Footer Reference Interface
- * 
+ *
  * @interface TerminalFooterRef
  * @property {HTMLFormElement} form - Reference to the form element
  * @property {HTMLInputElement} input - Reference to the input element

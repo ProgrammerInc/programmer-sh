@@ -19,15 +19,15 @@
  * export function LoginForm() {
  *   return (
  *     <form>
- *       <Input 
- *         type="email" 
- *         placeholder="Email address" 
- *         required 
+ *       <Input
+ *         type="email"
+ *         placeholder="Email address"
+ *         required
  *       />
- *       <Input 
- *         type="password" 
- *         placeholder="Password" 
- *         required 
+ *       <Input
+ *         type="password"
+ *         placeholder="Password"
+ *         required
  *       />
  *       <button type="submit">Log in</button>
  *     </form>

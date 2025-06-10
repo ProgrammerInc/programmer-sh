@@ -10,33 +10,35 @@
   background-color: hsl(var(--popover));
   color: hsl(var(--popover-foreground));
   padding: 1rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
   outline: none;
 }
 
 /* Animation states */
-.content[data-state="open"] {
+.content[data-state='open'] {
   animation: fade-in 150ms ease;
 }
 
-.content[data-state="closed"] {
+.content[data-state='closed'] {
   animation: fade-out 150ms ease;
 }
 
 /* Position animations */
-.content[data-side="bottom"] {
+.content[data-side='bottom'] {
   animation-name: slide-from-top;
 }
 
-.content[data-side="left"] {
+.content[data-side='left'] {
   animation-name: slide-from-right;
 }
 
-.content[data-side="right"] {
+.content[data-side='right'] {
   animation-name: slide-from-left;
 }
 
-.content[data-side="top"] {
+.content[data-side='top'] {
   animation-name: slide-from-bottom;
 }
 

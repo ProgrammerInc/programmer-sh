@@ -93,8 +93,8 @@ The Table component supports multiple variants:
 Implement sortable columns using:
 
 ```tsx
-<TableHead 
-  sortable 
+<TableHead
+  sortable
   sortDirection="asc" // or "desc" or undefined
   onClick={handleSort}
 >
@@ -107,9 +107,7 @@ Implement sortable columns using:
 Implement row selection using:
 
 ```tsx
-<TableRow selected={isSelected}>
-  {/* Row content */}
-</TableRow>
+<TableRow selected={isSelected}>{/* Row content */}</TableRow>
 ```
 
 #### Truncated Cells
@@ -137,6 +135,7 @@ The `table.module.css` file organizes styling with these key classes:
 - `.table-caption`: Caption styling
 
 Variant-specific classes:
+
 - `.table-bordered`: Adds borders to cells
 - `.table-zebra`: Adds alternating row background colors
 - `.table-compact`: Reduces padding for dense display
@@ -152,9 +151,7 @@ For large datasets, combine the Table component with pagination controls:
   {/* Table content */}
   <TableFooter>
     <TableRow>
-      <TableCell colSpan={columns.length}>
-        {/* Pagination controls */}
-      </TableCell>
+      <TableCell colSpan={columns.length}>{/* Pagination controls */}</TableCell>
     </TableRow>
   </TableFooter>
 </Table>
@@ -167,15 +164,9 @@ Combine with filter controls above the table:
 ```tsx
 <div>
   <div className="filter-controls mb-4">
-    <input 
-      type="text" 
-      placeholder="Search..." 
-      onChange={(e) => handleFilter(e.target.value)}
-    />
+    <input type="text" placeholder="Search..." onChange={e => handleFilter(e.target.value)} />
   </div>
-  <Table>
-    {/* Filtered table content */}
-  </Table>
+  <Table>{/* Filtered table content */}</Table>
 </div>
 ```
 
@@ -189,9 +180,7 @@ Add export controls for table data:
     <Button onClick={() => exportToCsv(data)}>Export to CSV</Button>
     <Button onClick={() => exportToPdf(data)}>Export to PDF</Button>
   </div>
-  <Table>
-    {/* Table content */}
-  </Table>
+  <Table>{/* Table content */}</Table>
 </div>
 ```
 
@@ -204,18 +193,16 @@ Let users control which columns are visible:
   <div className="column-visibility mb-4">
     {columns.map(column => (
       <label key={column.id} className="mr-4">
-        <input 
-          type="checkbox" 
-          checked={column.visible} 
-          onChange={() => toggleColumnVisibility(column.id)} 
+        <input
+          type="checkbox"
+          checked={column.visible}
+          onChange={() => toggleColumnVisibility(column.id)}
         />
         {column.title}
       </label>
     ))}
   </div>
-  <Table>
-    {/* Table with visible columns */}
-  </Table>
+  <Table>{/* Table with visible columns */}</Table>
 </div>
 ```
 
@@ -224,15 +211,19 @@ Let users control which columns are visible:
 ### Common Issues
 
 1. **Table overflows container**
+
    - The `table-container` class provides responsive support, but you may need to adjust the width settings.
 
 2. **Misaligned columns**
+
    - Use consistent width specifications for columns or use table-layout: fixed.
 
 3. **Poor performance with large datasets**
+
    - Implement pagination, virtualization, or lazy loading for large datasets.
 
 4. **Inconsistent styling across browsers**
+
    - The CSS module handles most cross-browser issues, but test in multiple browsers.
 
 5. **Accessibility issues**
@@ -243,16 +234,19 @@ Let users control which columns are visible:
 For advanced customization beyond the provided variants:
 
 1. **Custom column widths**:
+
    ```tsx
    <TableHead className="w-1/4">Column Name</TableHead>
    ```
 
 2. **Custom cell alignment**:
+
    ```tsx
    <TableCell className="text-right">123.45</TableCell>
    ```
 
 3. **Custom colors**:
+
    ```tsx
    <TableRow className="bg-red-50">{/* Row content */}</TableRow>
    ```

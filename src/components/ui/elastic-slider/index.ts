@@ -1,14 +1,22 @@
 /**
  * Elastic Slider Component Module
- * 
+ *
  * A slider component with elastic effects when dragging beyond the bounds.
  * It provides visual feedback through animations and haptic-like UI responses.
  */
 
-// Named exports for the elastic slider component and types
-export * from './elastic-slider';
-export * from './elastic-slider.types';
+// Import components first
+import { ElasticSlider } from './elastic-slider';
+
+// Named exports for the elastic slider component
+export { ElasticSlider };
+
+// Export types with explicit names to avoid conflicts
+export type { 
+  ElasticSliderProps,
+  // Rename SliderProps to avoid conflicts with the standard slider component
+  SliderProps as ElasticSliderInternalProps 
+} from './elastic-slider.types';
 
 // Default export for backward compatibility
-import { ElasticSlider } from './elastic-slider';
 export default ElasticSlider;

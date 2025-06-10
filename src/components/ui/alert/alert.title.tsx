@@ -15,7 +15,7 @@ import { AlertTitleProps } from './alert.types';
 
 /**
  * AlertTitle component for the heading of an alert
- * 
+ *
  * @example
  * ```tsx
  * <Alert>
@@ -23,15 +23,15 @@ import { AlertTitleProps } from './alert.types';
  * </Alert>
  * ```
  */
-export const AlertTitle = memo(React.forwardRef<HTMLHeadingElement, AlertTitleProps>(
-  ({ className, ...props }, ref) => {
+export const AlertTitle = memo(
+  React.forwardRef<HTMLHeadingElement, AlertTitleProps>(({ className, ...props }, ref) => {
     const titleClassName = useMemo(() => {
       return cn(styles.title, className);
     }, [className]);
 
     return <h5 ref={ref} className={titleClassName} {...props} />;
-  }
-));
+  })
+);
 
 AlertTitle.displayName = 'AlertTitle';
 

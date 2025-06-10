@@ -235,7 +235,7 @@ export const supportCommand: Command = {
           email: profile.contact.email,
           linkedin: ensureProtocol(profile.contact.linkedin),
           github: ensureProtocol(profile.contact.github),
-          website: ensureProtocol(profile.contact.website),
+          website: ensureProtocol(profile.contact.website)
         };
         return {
           content: `
@@ -254,11 +254,15 @@ export const supportCommand: Command = {
                 <span class="contact-label">GitHub:</span>
                 <a href="${contactData.github}" target="_blank" class="contact-value">GitHub Profile</a>
               </div>
-              ${contactData.website ? `
+              ${
+                contactData.website
+                  ? `
               <div class="contact-item">
                 <span class="contact-label">Website:</span>
                 <a href="${contactData.website}" target="_blank" class="contact-value">${contactData.website}</a>
-              </div>` : ''}
+              </div>`
+                  : ''
+              }
               <div class="contact-note">Feel free to reach out with any questions or opportunities!</div>
             </div>
           </div>

@@ -2,29 +2,33 @@
 
 import * as React from 'react';
 import * as RechartsPrimitive from 'recharts';
-import { TooltipProps, LegendProps } from 'recharts';
+import { LegendProps, TooltipProps } from 'recharts';
 
 import { cn } from '@/utils/app.utils';
-import { 
-  ChartConfig, 
-  ChartPayloadItem, 
-  ChartStyleProps, 
-  BasicTooltipContentProps,
-  BasicLegendContentProps
-} from './chart.types';
 import { useChartConfig } from './chart.context';
 import styles from './chart.module.css';
+import {
+  BasicLegendContentProps,
+  BasicTooltipContentProps,
+  ChartConfig,
+  ChartPayloadItem,
+  ChartStyleProps
+} from './chart.types';
 
 /**
  * Get payload configuration from chart config
  */
-const getPayloadConfigFromPayload = (config: ChartConfig, payload: ChartPayloadItem, key: string) => {
+const getPayloadConfigFromPayload = (
+  config: ChartConfig,
+  payload: ChartPayloadItem,
+  key: string
+) => {
   return config[key] || { label: key };
 };
 
 /**
  * Chart Style Component
- * 
+ *
  * Generates CSS styles for chart based on configuration
  */
 export const ChartStyle = ({ id, config }: ChartStyleProps) => {
@@ -68,20 +72,16 @@ export const ChartTooltip = (props: TooltipProps<string | number, string | numbe
   // Using a direct content function to handle tooltip rendering
   const content = (tooltipProps: RechartsTooltipProps | undefined) => {
     if (!tooltipProps) return null;
-    return <ChartTooltipContent 
-      active={tooltipProps.active}
-      payload={tooltipProps.payload as ChartPayloadItem[]}
-      label={tooltipProps.label}
-    />;
+    return (
+      <ChartTooltipContent
+        active={tooltipProps.active}
+        payload={tooltipProps.payload as ChartPayloadItem[]}
+        label={tooltipProps.label}
+      />
+    );
   };
-  
-  return (
-    <RechartsPrimitive.Tooltip
-      cursor={false}
-      content={content}
-      {...props}
-    />
-  );
+
+  return <RechartsPrimitive.Tooltip cursor={false} content={content} {...props} />;
 };
 
 /**
@@ -90,40 +90,70 @@ export const ChartTooltip = (props: TooltipProps<string | number, string | numbe
 export const ChartTooltipContent = React.forwardRef<
   HTMLDivElement,
   BasicTooltipContentProps & React.HTMLProps<HTMLDivElement>
->(({ active, payload = [], className, indicator = 'dot', hideLabel = false, hideIndicator = false, label, labelFormatter, color, nameKey, labelKey }, ref) => {
-  const { config } = useChartConfig();
-  if (!active || !payload.length) return null;
+>(
+  (
+    {
+      active,
+      payload = [],
+      className,
+      indicator = 'dot',
+      hideLabel = false,
+      hideIndicator = false,
+      label,
+      labelFormatter,
+      color,
+      nameKey,
+      labelKey
+    },
+    ref
+  ) => {
+    const { config } = useChartConfig();
+    if (!active || !payload.length) return null;
 
-  // Treat the payload as ChartPayloadItem[] since we control that implementation
-  const tooltipLabel = labelFormatter ? labelFormatter(label, payload as ChartPayloadItem[]) : label;
-  const nestLabel = !hideLabel && labelKey && typeof tooltipLabel === 'string';
+    // Treat the payload as ChartPayloadItem[] since we control that implementation
+    const tooltipLabel = labelFormatter
+      ? labelFormatter(label, payload as ChartPayloadItem[])
+      : label;
+    const nestLabel = !hideLabel && labelKey && typeof tooltipLabel === 'string';
 
-  return (
-    <div ref={ref} className={cn(styles.tooltip, className)}>
-      {!nestLabel ? tooltipLabel : null}
-      <div className={styles.tooltipContent}>
-        {payload.map((item: ChartPayloadItem, index: number) => {
-          const key = `${nameKey || item.dataKey || item.name || 'value'}`;
-          const itemConfig = getPayloadConfigFromPayload(config, item, key);
-          const indicatorColor = color || item.payload?.fill || item.color;
+    return (
+      <div ref={ref} className={cn(styles.tooltip, className)}>
+        {!nestLabel ? tooltipLabel : null}
+        <div className={styles.tooltipContent}>
+          {payload.map((item: ChartPayloadItem, index: number) => {
+            const key = `${nameKey || item.dataKey || item.name || 'value'}`;
+            const itemConfig = getPayloadConfigFromPayload(config, item, key);
+            const indicatorColor = color || item.payload?.fill || item.color;
 
-          return (
-            <div
-              key={`item-${index}`}
-              className={styles.tooltipItem}
-              data-name={key}
-            >
-              {!hideIndicator ? (
-                <>
-                  <div
-                    className={cn(
-                      styles.tooltipIndicator,
-                      indicator === 'line' && styles.tooltipIndicatorLine,
-                      indicator === 'dot' && styles.tooltipIndicatorDot,
-                      indicator === 'dashed' && styles.tooltipIndicatorDashed
-                    )}
-                    style={{ backgroundColor: indicatorColor }}
-                  />
+            return (
+              <div key={`item-${index}`} className={styles.tooltipItem} data-name={key}>
+                {!hideIndicator ? (
+                  <>
+                    <div
+                      className={cn(
+                        styles.tooltipIndicator,
+                        indicator === 'line' && styles.tooltipIndicatorLine,
+                        indicator === 'dot' && styles.tooltipIndicatorDot,
+                        indicator === 'dashed' && styles.tooltipIndicatorDashed
+                      )}
+                      style={{ backgroundColor: indicatorColor }}
+                    />
+                    <div
+                      className={cn(
+                        styles.tooltipItemContent,
+                        nestLabel
+                          ? styles.tooltipItemContentNestLabel
+                          : styles.tooltipItemContentNoNestLabel
+                      )}
+                    >
+                      {nestLabel ? tooltipLabel : null}
+                      <div className={styles.tooltipItemLabel}>{item.name}</div>
+                      <div className={styles.tooltipItemValue}>
+                        {typeof item.value === 'number' ? item.value.toLocaleString() : item.value}
+                      </div>
+                    </div>
+                  </>
+                ) : (
                   <div
                     className={cn(
                       styles.tooltipItemContent,
@@ -135,37 +165,18 @@ export const ChartTooltipContent = React.forwardRef<
                     {nestLabel ? tooltipLabel : null}
                     <div className={styles.tooltipItemLabel}>{item.name}</div>
                     <div className={styles.tooltipItemValue}>
-                      {typeof item.value === 'number' 
-                        ? item.value.toLocaleString() 
-                        : item.value}
+                      {typeof item.value === 'number' ? item.value.toLocaleString() : item.value}
                     </div>
                   </div>
-                </>
-              ) : (
-                <div
-                  className={cn(
-                    styles.tooltipItemContent,
-                    nestLabel
-                      ? styles.tooltipItemContentNestLabel
-                      : styles.tooltipItemContentNoNestLabel
-                  )}
-                >
-                  {nestLabel ? tooltipLabel : null}
-                  <div className={styles.tooltipItemLabel}>{item.name}</div>
-                  <div className={styles.tooltipItemValue}>
-                    {typeof item.value === 'number' 
-                      ? item.value.toLocaleString() 
-                      : item.value}
-                  </div>
-                </div>
-              )}
-            </div>
-          );
-        })}
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  }
+);
 
 ChartTooltipContent.displayName = 'ChartTooltipContent';
 
@@ -178,10 +189,7 @@ type RechartsLegendProps = LegendProps & {
  * Function to render legend content, used by the Legend component
  */
 const renderLegendContent = (props: RechartsLegendProps) => {
-  return <ChartLegendContent 
-    payload={props.payload as ChartPayloadItem[]}
-    hideIcon={false}
-  />;
+  return <ChartLegendContent payload={props.payload as ChartPayloadItem[]} hideIcon={false} />;
 };
 
 /**
@@ -192,10 +200,7 @@ export const ChartLegend = (props: LegendProps) => {
   // Need to tell TypeScript to ignore the ref type mismatch
   return (
     // @ts-expect-error - There is a ref type incompatibility with Legend component
-    <RechartsPrimitive.Legend
-      content={renderLegendContent}
-      {...props}
-    />
+    <RechartsPrimitive.Legend content={renderLegendContent} {...props} />
   );
 };
 
@@ -233,11 +238,7 @@ export const ChartLegendContent = React.forwardRef<
                 data-name={key}
               />
             ) : null}
-            <div
-              className={styles.legendLabel}
-              data-icon={!hideIcon}
-              data-name={key}
-            >
+            <div className={styles.legendLabel} data-icon={!hideIcon} data-name={key}>
               {itemConfig.label || item.value}
             </div>
           </div>

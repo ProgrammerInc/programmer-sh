@@ -6,26 +6,21 @@
 
 'use client';
 
+import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import React, { memo } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
 
-import styles from './auth-modal.module.css';
 import { AuthModalForm } from './auth-modal.form';
 import { useAuthForm, useModalPosition } from './auth-modal.hooks';
+import styles from './auth-modal.module.css';
 import { AuthModalProps } from './auth-modal.types';
 
 /**
  * Auth Modal Component
- * 
+ *
  * Displays a modal for user authentication with login and signup options.
  */
-export const AuthModal = memo<AuthModalProps>(({ 
-  isOpen, 
-  mode, 
-  anchorRef, 
-  onClose 
-}) => {
+export const AuthModal = memo<AuthModalProps>(({ isOpen, mode, anchorRef, onClose }) => {
   // Custom hooks for form state and modal positioning
   const {
     currentMode,
@@ -40,7 +35,7 @@ export const AuthModal = memo<AuthModalProps>(({
     handleSubmit,
     handleOAuthLogin
   } = useAuthForm(mode);
-  
+
   const { modalRef, modalPosition } = useModalPosition(isOpen, anchorRef, onClose);
 
   // Memoized form submit handler
@@ -74,11 +69,7 @@ export const AuthModal = memo<AuthModalProps>(({
               <h2 className={styles.title}>
                 {currentMode === 'login' ? 'Login' : 'Create Account'}
               </h2>
-              <button
-                onClick={onClose}
-                className={styles.closeButton}
-                aria-label="Close"
-              >
+              <button onClick={onClose} className={styles.closeButton} aria-label="Close">
                 <X size={18} />
               </button>
             </div>

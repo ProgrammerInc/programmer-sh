@@ -7,6 +7,6 @@
  * @module GradientAnimation
  */
 
-export { GradientAnimation, default } from './gradient-animation';
+export { default, GradientAnimation } from './gradient-animation';
 export * as GradientAnimationStyles from './gradient-animation.module.css';
 export type { GradientAnimationProps } from './gradient-animation.types';

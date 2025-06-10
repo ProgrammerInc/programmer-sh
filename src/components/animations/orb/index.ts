@@ -7,6 +7,6 @@
  * @module Orb
  */
 
-export { Orb, default } from './orb';
+export { default, Orb } from './orb';
 export * as OrbStyles from './orb.module.css';
 export type { OrbProps } from './orb.types';

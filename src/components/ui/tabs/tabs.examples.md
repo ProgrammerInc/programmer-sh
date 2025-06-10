@@ -61,7 +61,7 @@ export function TabsVariants() {
           <TabsContent value="tab2">Content for Tab 2</TabsContent>
         </Tabs>
       </div>
-      
+
       <div>
         <h3 className="mb-4">Underline Variant</h3>
         <Tabs defaultValue="tab1" variant="underline">
@@ -73,7 +73,7 @@ export function TabsVariants() {
           <TabsContent value="tab2">Content for Tab 2</TabsContent>
         </Tabs>
       </div>
-      
+
       <div>
         <h3 className="mb-4">Card Variant</h3>
         <Tabs defaultValue="tab1" variant="card">
@@ -85,7 +85,7 @@ export function TabsVariants() {
           <TabsContent value="tab2">Content for Tab 2</TabsContent>
         </Tabs>
       </div>
-      
+
       <div>
         <h3 className="mb-4">Bordered Variant</h3>
         <Tabs defaultValue="tab1" variant="bordered">
@@ -123,7 +123,7 @@ export function TabsSizes() {
           <TabsContent value="tab2">More content for small tabs</TabsContent>
         </Tabs>
       </div>
-      
+
       <div>
         <h3 className="mb-4">Default Size</h3>
         <Tabs defaultValue="tab1" size="default">
@@ -135,7 +135,7 @@ export function TabsSizes() {
           <TabsContent value="tab2">More content for default size tabs</TabsContent>
         </Tabs>
       </div>
-      
+
       <div>
         <h3 className="mb-4">Large Size</h3>
         <Tabs defaultValue="tab1" size="lg">
@@ -207,19 +207,19 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
 export function ControlledTabs() {
   const [activeTab, setActiveTab] = useState('tab1');
-  
+
   return (
     <div>
       <div className="mb-4">
         <p>Current active tab: {activeTab}</p>
-        <button 
-          onClick={() => setActiveTab('tab3')} 
+        <button
+          onClick={() => setActiveTab('tab3')}
           className="px-4 py-2 bg-blue-500 text-white rounded-md mt-2"
         >
           Programmatically switch to Tab 3
         </button>
       </div>
-      
+
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList>
           <TabsTrigger value="tab1">Tab 1</TabsTrigger>
@@ -247,7 +247,9 @@ export function TabsWithDisabledOptions() {
     <Tabs defaultValue="tab1">
       <TabsList>
         <TabsTrigger value="tab1">Available</TabsTrigger>
-        <TabsTrigger value="tab2" disabled>Disabled</TabsTrigger>
+        <TabsTrigger value="tab2" disabled>
+          Disabled
+        </TabsTrigger>
         <TabsTrigger value="tab3">Available</TabsTrigger>
       </TabsList>
       <TabsContent value="tab1">Content for Tab 1</TabsContent>
@@ -310,7 +312,14 @@ Combining tabs with a card component for a cohesive UI:
 
 ```tsx
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card';
 
 export function TabsInCard() {
   return (
@@ -322,19 +331,33 @@ export function TabsInCard() {
       <CardContent>
         <Tabs defaultValue="general" variant="underline">
           <TabsList className="w-full">
-            <TabsTrigger value="general" className="flex-1">General</TabsTrigger>
-            <TabsTrigger value="password" className="flex-1">Password</TabsTrigger>
-            <TabsTrigger value="notifications" className="flex-1">Notifications</TabsTrigger>
+            <TabsTrigger value="general" className="flex-1">
+              General
+            </TabsTrigger>
+            <TabsTrigger value="password" className="flex-1">
+              Password
+            </TabsTrigger>
+            <TabsTrigger value="notifications" className="flex-1">
+              Notifications
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="general">
             <div className="mt-4 space-y-4">
               <div>
                 <label className="block text-sm font-medium">Name</label>
-                <input type="text" className="mt-1 block w-full p-2 border rounded-md" defaultValue="John Doe" />
+                <input
+                  type="text"
+                  className="mt-1 block w-full p-2 border rounded-md"
+                  defaultValue="John Doe"
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium">Email</label>
-                <input type="email" className="mt-1 block w-full p-2 border rounded-md" defaultValue="john.doe@example.com" />
+                <input
+                  type="email"
+                  className="mt-1 block w-full p-2 border rounded-md"
+                  defaultValue="john.doe@example.com"
+                />
               </div>
             </div>
           </TabsContent>
@@ -391,13 +414,13 @@ import { useState } from 'react';
 
 export function LazyTabs() {
   const [visitedTabs, setVisitedTabs] = useState<string[]>(['tab1']);
-  
+
   const handleTabChange = (value: string) => {
     if (!visitedTabs.includes(value)) {
       setVisitedTabs([...visitedTabs, value]);
     }
   };
-  
+
   return (
     <Tabs defaultValue="tab1" onValueChange={handleTabChange}>
       <TabsList>
@@ -405,7 +428,7 @@ export function LazyTabs() {
         <TabsTrigger value="tab2">Tab 2 (Heavy)</TabsTrigger>
         <TabsTrigger value="tab3">Tab 3 (Heavy)</TabsTrigger>
       </TabsList>
-      
+
       {/* Always mounted (default tab) */}
       <TabsContent value="tab1">
         <div className="p-4 border rounded-md mt-2">
@@ -413,7 +436,7 @@ export function LazyTabs() {
           <p>This tab is always mounted.</p>
         </div>
       </TabsContent>
-      
+
       {/* Only mount if visited */}
       {visitedTabs.includes('tab2') && (
         <TabsContent value="tab2">
@@ -446,7 +469,7 @@ export function LazyTabs() {
           </div>
         </TabsContent>
       )}
-      
+
       {/* Only mount if visited */}
       {visitedTabs.includes('tab3') && (
         <TabsContent value="tab3">

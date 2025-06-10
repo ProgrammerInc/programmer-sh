@@ -35,7 +35,9 @@ export type CommandGroupProps = React.ComponentPropsWithoutRef<typeof CommandPri
 /**
  * Command separator component props
  */
-export type CommandSeparatorProps = React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>;
+export type CommandSeparatorProps = React.ComponentPropsWithoutRef<
+  typeof CommandPrimitive.Separator
+>;
 
 /**
  * Command item component props

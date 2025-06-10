@@ -68,7 +68,7 @@ export const CursorProvider = memo(
         style,
         color = '#64ffda',
         containerRef = null,
-        cursor = 'default',
+        cursor = 'splash',
         theme = 'dark'
       },
       ref

@@ -49,12 +49,14 @@ export function AvatarSizes() {
         <AvatarImage src="https://example.com/avatar.jpg" alt="Small avatar" />
         <AvatarFallback>S</AvatarFallback>
       </Avatar>
-      
-      <Avatar> {/* Default size */}
+
+      <Avatar>
+        {' '}
+        {/* Default size */}
         <AvatarImage src="https://example.com/avatar.jpg" alt="Default avatar" />
         <AvatarFallback>M</AvatarFallback>
       </Avatar>
-      
+
       <Avatar className="h-16 w-16">
         <AvatarImage src="https://example.com/avatar.jpg" alt="Large avatar" />
         <AvatarFallback>L</AvatarFallback>
@@ -75,9 +77,7 @@ export function CustomAvatar() {
   return (
     <Avatar className="border-4 border-primary">
       <AvatarImage src="https://example.com/avatar.jpg" alt="Styled avatar" />
-      <AvatarFallback className="bg-primary text-primary-foreground font-bold">
-        SA
-      </AvatarFallback>
+      <AvatarFallback className="bg-primary text-primary-foreground font-bold">SA</AvatarFallback>
     </Avatar>
   );
 }
@@ -97,8 +97,8 @@ export function AvatarWithStatus({ status = 'online' }) {
         <AvatarImage src="https://example.com/avatar.jpg" alt="User with status" />
         <AvatarFallback>US</AvatarFallback>
       </Avatar>
-      <span 
-        className={`absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-background ${status === 'online' ? 'bg-green-500' : 'bg-gray-400'}`} 
+      <span
+        className={`absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-background ${status === 'online' ? 'bg-green-500' : 'bg-gray-400'}`}
         aria-hidden="true"
       />
       <span className="sr-only">{status === 'online' ? 'Online' : 'Offline'}</span>
@@ -120,20 +120,14 @@ export function AvatarGroup() {
     { name: 'Jane Smith', image: 'https://example.com/jane.jpg', initials: 'JS' },
     { name: 'Robert Brown', image: 'https://example.com/robert.jpg', initials: 'RB' },
     // Additional users not shown but counted
-    { name: 'Additional Users', image: '', initials: '+2' },
+    { name: 'Additional Users', image: '', initials: '+2' }
   ];
-  
+
   return (
     <div className="flex -space-x-4">
       {team.map((person, index) => (
-        <Avatar 
-          key={index} 
-          className="border-2 border-background"
-          aria-label={person.name}
-        >
-          {person.image ? (
-            <AvatarImage src={person.image} alt={person.name} />
-          ) : null}
+        <Avatar key={index} className="border-2 border-background" aria-label={person.name}>
+          {person.image ? <AvatarImage src={person.image} alt={person.name} /> : null}
           <AvatarFallback>{person.initials}</AvatarFallback>
         </Avatar>
       ))}
@@ -153,16 +147,14 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export function LoadingAvatar() {
   const [isLoading, setIsLoading] = useState(true);
-  
+
   return (
     <>
-      {isLoading && (
-        <Skeleton className="h-10 w-10 rounded-full" />
-      )}
+      {isLoading && <Skeleton className="h-10 w-10 rounded-full" />}
       <div className={isLoading ? 'hidden' : 'block'}>
         <Avatar>
-          <AvatarImage 
-            src="https://example.com/avatar.jpg" 
+          <AvatarImage
+            src="https://example.com/avatar.jpg"
             alt="Loading avatar"
             onLoad={() => setIsLoading(false)}
           />
@@ -184,7 +176,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 
 export function AvatarWithDropdown() {
@@ -242,18 +234,18 @@ export function ColoredAvatars() {
     { name: 'Bob Wilson', color: 'bg-blue-500' },
     { name: 'Carol Martinez', color: 'bg-green-500' },
     { name: 'Dave Thompson', color: 'bg-yellow-500' },
-    { name: 'Eve Jackson', color: 'bg-purple-500' },
+    { name: 'Eve Jackson', color: 'bg-purple-500' }
   ];
-  
+
   // Function to get initials from name
-  const getInitials = (name) => {
+  const getInitials = name => {
     return name
       .split(' ')
-      .map((n) => n[0])
+      .map(n => n[0])
       .join('')
       .toUpperCase();
   };
-  
+
   return (
     <div className="flex gap-2">
       {users.map((user, index) => (

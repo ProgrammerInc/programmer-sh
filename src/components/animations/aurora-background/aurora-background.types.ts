@@ -1,3 +1,4 @@
+/* eslint-disable no-secrets/no-secrets */
 import { HTMLProps, ReactNode } from 'react';
 
 /**

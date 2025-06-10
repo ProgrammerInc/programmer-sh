@@ -2,7 +2,7 @@
 
 /**
  * Pixel class for animated pixel effects
- * 
+ *
  * Handles individual pixel rendering and animation in the PixelCard component.
  */
 export class Pixel {

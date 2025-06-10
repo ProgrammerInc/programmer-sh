@@ -3,7 +3,7 @@
 import * as ToastPrimitives from '@radix-ui/react-toast';
 import { X } from 'lucide-react';
 import * as React from 'react';
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 
 import styles from './toast.module.css';
 import {
@@ -14,11 +14,10 @@ import {
   ToastTitleProps,
   ToastViewportProps
 } from './toast.types';
-import { toastVariants } from './toast.variants';
 
 /**
  * Toast provider component that manages toast notifications
- * 
+ *
  * @example
  * ```tsx
  * <ToastProvider>
@@ -32,7 +31,7 @@ ToastProvider.displayName = 'ToastProvider';
 
 /**
  * Toast viewport component that displays all active toasts
- * 
+ *
  * @example
  * ```tsx
  * <ToastProvider>
@@ -41,31 +40,32 @@ ToastProvider.displayName = 'ToastProvider';
  * </ToastProvider>
  * ```
  */
-const ToastViewport = memo(React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Viewport>,
-  ToastViewportProps
->(({ className, ...props }, ref) => {
-  return (
-    <ToastPrimitives.Viewport
-      className={className ? `${styles.viewport} ${className}` : styles.viewport}
-      ref={ref}
-      {...props}
-    />
-  );
-}));
+const ToastViewport = memo(
+  React.forwardRef<React.ElementRef<typeof ToastPrimitives.Viewport>, ToastViewportProps>(
+    ({ className, ...props }, ref) => {
+      return (
+        <ToastPrimitives.Viewport
+          className={className ? `${styles.viewport} ${className}` : styles.viewport}
+          ref={ref}
+          {...props}
+        />
+      );
+    }
+  )
+);
 
 ToastViewport.displayName = ToastPrimitives.Viewport.displayName;
 
 /**
  * Toast component for displaying notifications
- * 
+ *
  * Features:
  * - Multiple variants (default, destructive)
  * - Customizable duration
  * - Support for actions and close button
  * - Swipe to dismiss
  * - Keyboard accessible
- * 
+ *
  * @example
  * ```tsx
  * <Toast>
@@ -76,31 +76,36 @@ ToastViewport.displayName = ToastPrimitives.Viewport.displayName;
  * </Toast>
  * ```
  */
-const Toast = memo(React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Root>,
-  ToastRootProps
->(({ className, variant, ...props }, ref) => {
-  const variantClass = variant === 'destructive' ? styles.destructive : styles.default;
-  
-  return (
-    <ToastPrimitives.Root
-      className={className ? `${styles.toast} ${variantClass} ${className}` : `${styles.toast} ${variantClass}`}
-      ref={ref}
-      {...props}
-    />
-  );
-}));
+const Toast = memo(
+  React.forwardRef<React.ElementRef<typeof ToastPrimitives.Root>, ToastRootProps>(
+    ({ className, variant, ...props }, ref) => {
+      const variantClass = variant === 'destructive' ? styles.destructive : styles.default;
+
+      return (
+        <ToastPrimitives.Root
+          className={
+            className
+              ? `${styles.toast} ${variantClass} ${className}`
+              : `${styles.toast} ${variantClass}`
+          }
+          ref={ref}
+          {...props}
+        />
+      );
+    }
+  )
+);
 
 Toast.displayName = ToastPrimitives.Root.displayName;
 
 /**
  * Toast action component for interactive elements within a toast
- * 
+ *
  * Features:
  * - Proper styling for all toast variants
  * - Focus and hover states
  * - Accessibility support with altText
- * 
+ *
  * @example
  * ```tsx
  * <Toast>
@@ -110,29 +115,30 @@ Toast.displayName = ToastPrimitives.Root.displayName;
  * </Toast>
  * ```
  */
-const ToastAction = memo(React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Action>,
-  ToastActionProps
->(({ className, ...props }, ref) => {
-  return (
-    <ToastPrimitives.Action
-      className={className ? `${styles.action} ${className}` : styles.action}
-      ref={ref}
-      {...props}
-    />
-  );
-}));
+const ToastAction = memo(
+  React.forwardRef<React.ElementRef<typeof ToastPrimitives.Action>, ToastActionProps>(
+    ({ className, ...props }, ref) => {
+      return (
+        <ToastPrimitives.Action
+          className={className ? `${styles.action} ${className}` : styles.action}
+          ref={ref}
+          {...props}
+        />
+      );
+    }
+  )
+);
 
 ToastAction.displayName = ToastPrimitives.Action.displayName;
 
 /**
  * Toast close button component
- * 
+ *
  * Features:
  * - Hidden by default, appears on hover
  * - Proper focus states
  * - Automatically closes parent toast
- * 
+ *
  * @example
  * ```tsx
  * <Toast>
@@ -142,31 +148,32 @@ ToastAction.displayName = ToastPrimitives.Action.displayName;
  * </Toast>
  * ```
  */
-const ToastClose = memo(React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Close>,
-  ToastCloseProps
->(({ className, ...props }, ref) => {
-  return (
-    <ToastPrimitives.Close
-      className={className ? `${styles.close} ${className}` : styles.close}
-      ref={ref}
-      toast-close=""
-      {...props}
-    >
-      <X className="h-4 w-4" />
-    </ToastPrimitives.Close>
-  );
-}));
+const ToastClose = memo(
+  React.forwardRef<React.ElementRef<typeof ToastPrimitives.Close>, ToastCloseProps>(
+    ({ className, ...props }, ref) => {
+      return (
+        <ToastPrimitives.Close
+          className={className ? `${styles.close} ${className}` : styles.close}
+          ref={ref}
+          toast-close=""
+          {...props}
+        >
+          <X className="h-4 w-4" />
+        </ToastPrimitives.Close>
+      );
+    }
+  )
+);
 
 ToastClose.displayName = ToastPrimitives.Close.displayName;
 
 /**
  * Toast title component for the heading of a toast
- * 
+ *
  * Features:
  * - Proper styling and font weight
  * - Accessibility support as a heading element
- * 
+ *
  * @example
  * ```tsx
  * <Toast>
@@ -175,28 +182,29 @@ ToastClose.displayName = ToastPrimitives.Close.displayName;
  * </Toast>
  * ```
  */
-const ToastTitle = memo(React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Title>,
-  ToastTitleProps
->(({ className, ...props }, ref) => {
-  return (
-    <ToastPrimitives.Title 
-      className={className ? `${styles.title} ${className}` : styles.title}
-      ref={ref} 
-      {...props} 
-    />
-  );
-}));
+const ToastTitle = memo(
+  React.forwardRef<React.ElementRef<typeof ToastPrimitives.Title>, ToastTitleProps>(
+    ({ className, ...props }, ref) => {
+      return (
+        <ToastPrimitives.Title
+          className={className ? `${styles.title} ${className}` : styles.title}
+          ref={ref}
+          {...props}
+        />
+      );
+    }
+  )
+);
 
 ToastTitle.displayName = ToastPrimitives.Title.displayName;
 
 /**
  * Toast description component for the body content of a toast
- * 
+ *
  * Features:
  * - Proper styling with reduced opacity
  * - Accessibility support as descriptive content
- * 
+ *
  * @example
  * ```tsx
  * <Toast>
@@ -205,18 +213,19 @@ ToastTitle.displayName = ToastPrimitives.Title.displayName;
  * </Toast>
  * ```
  */
-const ToastDescription = memo(React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Description>,
-  ToastDescriptionProps
->(({ className, ...props }, ref) => {
-  return (
-    <ToastPrimitives.Description
-      className={className ? `${styles.description} ${className}` : styles.description}
-      ref={ref}
-      {...props}
-    />
-  );
-}));
+const ToastDescription = memo(
+  React.forwardRef<React.ElementRef<typeof ToastPrimitives.Description>, ToastDescriptionProps>(
+    ({ className, ...props }, ref) => {
+      return (
+        <ToastPrimitives.Description
+          className={className ? `${styles.description} ${className}` : styles.description}
+          ref={ref}
+          {...props}
+        />
+      );
+    }
+  )
+);
 
 ToastDescription.displayName = ToastPrimitives.Description.displayName;
 

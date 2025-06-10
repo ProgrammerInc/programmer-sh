@@ -7,6 +7,6 @@
  * @module ParticleNetwork
  */
 
-export { ParticleNetwork, default } from './particle-network';
+export { default, ParticleNetwork } from './particle-network';
 export * as ParticleNetworkStyles from './particle-network.module.css';
 export type { ParticleNetworkProps } from './particle-network.types';

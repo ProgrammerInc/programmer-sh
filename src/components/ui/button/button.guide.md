@@ -7,6 +7,7 @@ This guide provides best practices, accessibility information, and implementatio
 ### When to Use
 
 ✅ **Do use buttons for:**
+
 - Interactive actions that trigger immediate operations
 - Form submissions
 - Toggling UI states
@@ -14,6 +15,7 @@ This guide provides best practices, accessibility information, and implementatio
 - Dialog confirmations and cancellations
 
 ❌ **Don't use buttons for:**
+
 - Navigation between pages (use links instead)
 - Text styling that doesn't represent an action
 - Container elements that should use more semantic HTML
@@ -64,10 +66,7 @@ import { Plus } from 'lucide-react';
 
 export function AccessibleIconButton() {
   return (
-    <Button 
-      size="icon" 
-      aria-label="Add new item"
-    >
+    <Button size="icon" aria-label="Add new item">
       <Plus className="h-4 w-4" />
     </Button>
   );
@@ -83,21 +82,17 @@ import { useState } from 'react';
 
 export function AccessibleLoadingButton() {
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const handleClick = () => {
     setIsLoading(true);
     setTimeout(() => setIsLoading(false), 2000);
   };
-  
+
   return (
-    <Button 
-      onClick={handleClick}
-      disabled={isLoading}
-      aria-busy={isLoading}
-    >
+    <Button onClick={handleClick} disabled={isLoading} aria-busy={isLoading}>
       {isLoading ? (
         <>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" /> 
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
           Loading...
         </>
       ) : (
@@ -145,21 +140,17 @@ import { useForm } from 'react-hook-form';
 export function FormExample() {
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
-  
-  const onSubmit = async (data) => {
+
+  const onSubmit = async data => {
     // Form submission logic
     await new Promise(r => setTimeout(r, 2000));
     console.log(data);
   };
-  
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <input {...register('email')} />
-      <Button 
-        type="submit" 
-        disabled={isSubmitting}
-        aria-busy={isSubmitting}
-      >
+      <Button type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>
         {isSubmitting ? 'Submitting...' : 'Submit'}
       </Button>
     </form>
@@ -217,10 +208,6 @@ import customStyles from './custom-button.module.css';
 import { cn } from '@/lib/utils';
 
 export function CustomButton() {
-  return (
-    <Button className={cn(customStyles['button-custom'])}>
-      Custom Button
-    </Button>
-  );
+  return <Button className={cn(customStyles['button-custom'])}>Custom Button</Button>;
 }
 ```

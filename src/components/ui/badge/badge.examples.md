@@ -125,20 +125,16 @@ export function NumberBadges() {
   return (
     <div className="flex flex-wrap gap-4">
       <div className="relative inline-block">
-        <button className="px-3 py-2 border rounded-md">
-          Notifications
-        </button>
+        <button className="px-3 py-2 border rounded-md">Notifications</button>
         <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0">
           5
         </Badge>
       </div>
-      
+
       <div className="relative inline-block">
-        <button className="px-3 py-2 border rounded-md">
-          Messages
-        </button>
-        <Badge 
-          variant="secondary" 
+        <button className="px-3 py-2 border rounded-md">Messages</button>
+        <Badge
+          variant="secondary"
           className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0"
         >
           3
@@ -159,17 +155,13 @@ import { useState } from 'react';
 
 export function InteractiveBadges() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  
+
   const tags = ['React', 'TypeScript', 'UI', 'Component', 'CSS'];
-  
+
   const toggleTag = (tag: string) => {
-    setSelectedTags(prev => 
-      prev.includes(tag) 
-        ? prev.filter(t => t !== tag)
-        : [...prev, tag]
-    );
+    setSelectedTags(prev => (prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]));
   };
-  
+
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap gap-2">
@@ -184,9 +176,7 @@ export function InteractiveBadges() {
           </Badge>
         ))}
       </div>
-      <div>
-        Selected: {selectedTags.length ? selectedTags.join(', ') : 'None'}
-      </div>
+      <div>Selected: {selectedTags.length ? selectedTags.join(', ') : 'None'}</div>
     </div>
   );
 }
@@ -208,12 +198,8 @@ export function CustomColoredBadges() {
       <Badge className="bg-yellow-500 hover:bg-yellow-600 text-white border-transparent">
         Warning
       </Badge>
-      <Badge className="bg-blue-500 hover:bg-blue-600 text-white border-transparent">
-        Info
-      </Badge>
-      <Badge className="bg-purple-500 hover:bg-purple-600 text-white border-transparent">
-        New
-      </Badge>
+      <Badge className="bg-blue-500 hover:bg-blue-600 text-white border-transparent">Info</Badge>
+      <Badge className="bg-purple-500 hover:bg-purple-600 text-white border-transparent">New</Badge>
       <Badge className="bg-pink-500 hover:bg-pink-600 text-white border-transparent">
         Featured
       </Badge>
@@ -232,20 +218,18 @@ import { X } from 'lucide-react';
 import { useState } from 'react';
 
 export function RemovableBadges() {
-  const [tags, setTags] = useState([
-    'React', 'TypeScript', 'UI', 'Component', 'CSS'
-  ]);
-  
+  const [tags, setTags] = useState(['React', 'TypeScript', 'UI', 'Component', 'CSS']);
+
   const removeTag = (tagToRemove: string) => {
     setTags(tags.filter(tag => tag !== tagToRemove));
   };
-  
+
   return (
     <div className="flex flex-wrap gap-2">
       {tags.map(tag => (
         <Badge key={tag} variant="secondary" className="gap-1 pr-1">
           {tag}
-          <button 
+          <button
             className="ml-1 rounded-full hover:bg-secondary-foreground/20 h-4 w-4 inline-flex items-center justify-center"
             onClick={() => removeTag(tag)}
           >
@@ -273,7 +257,9 @@ export function CardWithBadges() {
         <h3 className="text-lg font-semibold">Product Name</h3>
         <Badge>New</Badge>
       </div>
-      <p className="text-gray-500 mb-4">Product description goes here explaining the features and benefits.</p>
+      <p className="text-gray-500 mb-4">
+        Product description goes here explaining the features and benefits.
+      </p>
       <div className="flex flex-wrap gap-1">
         <Badge variant="outline">Feature 1</Badge>
         <Badge variant="outline">Feature 2</Badge>
@@ -301,26 +287,24 @@ export function NotificationBadges() {
     <div className="flex gap-8">
       <div className="relative">
         <Bell className="h-6 w-6" />
-        <Badge 
-          className="absolute -top-2 -right-2 h-4 w-4 p-0 flex items-center justify-center"
-        >
+        <Badge className="absolute -top-2 -right-2 h-4 w-4 p-0 flex items-center justify-center">
           3
         </Badge>
       </div>
-      
+
       <div className="relative">
         <Mail className="h-6 w-6" />
-        <Badge 
+        <Badge
           variant="secondary"
           className="absolute -top-2 -right-2 h-4 w-4 p-0 flex items-center justify-center"
         >
           5
         </Badge>
       </div>
-      
+
       <div className="relative">
         <ShoppingCart className="h-6 w-6" />
-        <Badge 
+        <Badge
           variant="outline"
           className="absolute -top-2 -right-2 h-4 w-4 p-0 flex items-center justify-center"
         >

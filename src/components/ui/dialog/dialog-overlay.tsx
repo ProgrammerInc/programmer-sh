@@ -20,22 +20,17 @@ import { DialogOverlayProps } from './dialog.types';
  * </DialogPortal>
  * ```
  */
-const DialogOverlay = memo(React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Overlay>,
-  DialogOverlayProps
->(({ className, ...props }, ref) => {
-  const overlayClassName = useMemo(() => {
-    return cn(styles['dialog-overlay'], className);
-  }, [className]);
+const DialogOverlay = memo(
+  React.forwardRef<React.ElementRef<typeof DialogPrimitive.Overlay>, DialogOverlayProps>(
+    ({ className, ...props }, ref) => {
+      const overlayClassName = useMemo(() => {
+        return cn(styles['dialog-overlay'], className);
+      }, [className]);
 
-  return (
-    <DialogPrimitive.Overlay
-      ref={ref}
-      className={overlayClassName}
-      {...props}
-    />
-  );
-}));
+      return <DialogPrimitive.Overlay ref={ref} className={overlayClassName} {...props} />;
+    }
+  )
+);
 
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 

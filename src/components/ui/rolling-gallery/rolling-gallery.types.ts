@@ -2,9 +2,9 @@
 
 /**
  * Rolling Gallery Props
- * 
+ *
  * Props for the RollingGallery component that displays images in a 3D rotating carousel.
- * 
+ *
  * @see {@link https://www.framer.com/motion/ | Framer Motion}
  */
 export interface RollingGalleryProps {

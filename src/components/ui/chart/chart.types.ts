@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as RechartsPrimitive from 'recharts';
-import { TooltipProps, LegendProps } from 'recharts';
+import { LegendProps, TooltipProps } from 'recharts';
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 export const THEMES = { light: '', dark: '.dark' } as const;
@@ -80,7 +80,7 @@ export interface BasicTooltipContentProps {
  * Chart tooltip content props
  */
 export type ChartTooltipContentProps = BasicTooltipContentProps &
-  Omit<TooltipProps<string | number, string | number>, 'content'> & 
+  Omit<TooltipProps<string | number, string | number>, 'content'> &
   Omit<React.HTMLProps<HTMLDivElement>, 'content'>;
 
 /**
@@ -109,5 +109,5 @@ export interface BasicLegendContentProps {
  * Chart legend content props
  */
 export type ChartLegendContentProps = BasicLegendContentProps &
-  Omit<LegendProps, 'content'> & 
+  Omit<LegendProps, 'content'> &
   Omit<React.HTMLProps<HTMLDivElement>, 'content'>;

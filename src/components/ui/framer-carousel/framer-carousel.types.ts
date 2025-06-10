@@ -7,7 +7,7 @@ import { MotionValue, SpringOptions } from 'framer-motion';
 /**
  * Represents an item in the FramerCarousel.
  * Each item consists of a title, description, unique ID, and icon.
- * 
+ *
  * @example
  * ```tsx
  * const carouselItem: FramerCarouselItem = {
@@ -21,20 +21,20 @@ import { MotionValue, SpringOptions } from 'framer-motion';
 export interface FramerCarouselItem {
   /** Title of the carousel item */
   title: string;
-  
+
   /** Descriptive text for the carousel item */
   description: string;
-  
+
   /** Unique identifier for the carousel item */
   id: number;
-  
+
   /** Icon element to display with the carousel item */
   icon: JSX.Element;
 }
 
 /**
  * Props for the FramerCarousel component.
- * 
+ *
  * @example
  * ```tsx
  * <FramerCarousel
@@ -51,63 +51,63 @@ export interface FramerCarouselItem {
 export interface FramerCarouselProps {
   /** Array of items to display in the carousel */
   items?: FramerCarouselItem[];
-  
+
   /** Base width of the carousel container in pixels */
   baseWidth?: number;
-  
+
   /** Whether to automatically advance slides */
   autoplay?: boolean;
-  
+
   /** Delay between autoplay transitions in milliseconds */
   autoplayDelay?: number;
-  
+
   /** Whether to pause autoplay when user hovers over the carousel */
   pauseOnHover?: boolean;
-  
+
   /** Whether to loop back to the first slide after the last slide */
   loop?: boolean;
-  
+
   /** Whether to display the carousel in a round shape */
   round?: boolean;
 }
 
 /**
  * Props for the FramerCarouselItem component.
- * 
+ *
  * @internal
  */
 export interface FramerCarouselItemProps {
   /** The carousel item data */
   item: FramerCarouselItem;
-  
+
   /** Width of the carousel item */
   width: number;
-  
+
   /** Whether the carousel is in round mode */
   round: boolean;
-  
+
   /** Animation transition configuration */
   transition: SpringOptions | { duration: number };
-  
+
   /** Rotation Y transform value */
   rotateY: MotionValue<number>;
 }
 
 /**
  * Props for the FramerCarouselDots component.
- * 
+ *
  * @internal
  */
 export interface FramerCarouselDotsProps {
   /** Total number of items in the carousel */
   items: FramerCarouselItem[];
-  
+
   /** Current active index */
   currentIndex: number;
-  
+
   /** Function to set the current index */
   setCurrentIndex: (index: number) => void;
-  
+
   /** Whether the carousel is in round mode */
   round: boolean;
 }

@@ -11,21 +11,21 @@ import {
   SelectLabel,
   SelectSeparator,
   SelectTrigger,
-  SelectValue,
+  SelectValue
 } from './select';
 
 const meta: Meta<typeof Select> = {
   title: 'UI/Select',
   component: Select,
   tags: ['autodocs'],
-  argTypes: {},
+  argTypes: {}
 };
 
 export default meta;
 type Story = StoryObj<typeof Select>;
 
 export const Basic: Story = {
-  render: (args) => (
+  render: args => (
     <Select {...args}>
       <SelectTrigger className="w-[200px]">
         <SelectValue placeholder="Select a fruit" />
@@ -36,11 +36,11 @@ export const Basic: Story = {
         <SelectItem value="orange">Orange</SelectItem>
       </SelectContent>
     </Select>
-  ),
+  )
 };
 
 export const WithGroups: Story = {
-  render: (args) => (
+  render: args => (
     <Select {...args}>
       <SelectTrigger className="w-[200px]">
         <SelectValue placeholder="Select a food" />
@@ -59,11 +59,11 @@ export const WithGroups: Story = {
         </SelectGroup>
       </SelectContent>
     </Select>
-  ),
+  )
 };
 
 export const Disabled: Story = {
-  render: (args) => (
+  render: args => (
     <Select disabled {...args}>
       <SelectTrigger className="w-[200px]">
         <SelectValue placeholder="Disabled select" />
@@ -73,22 +73,24 @@ export const Disabled: Story = {
         <SelectItem value="banana">Banana</SelectItem>
       </SelectContent>
     </Select>
-  ),
+  )
 };
 
 export const WithDisabledItems: Story = {
-  render: (args) => (
+  render: args => (
     <Select {...args}>
       <SelectTrigger className="w-[200px]">
         <SelectValue placeholder="Select a fruit" />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="apple">Apple</SelectItem>
-        <SelectItem value="banana" disabled>Banana (Out of Stock)</SelectItem>
+        <SelectItem value="banana" disabled>
+          Banana (Out of Stock)
+        </SelectItem>
         <SelectItem value="orange">Orange</SelectItem>
       </SelectContent>
     </Select>
-  ),
+  )
 };
 
 export const Controlled: Story = {
@@ -110,5 +112,5 @@ export const Controlled: Story = {
         <div className="text-sm">Selected value: {value || 'none'}</div>
       </div>
     );
-  },
+  }
 };

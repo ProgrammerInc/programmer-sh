@@ -102,7 +102,12 @@
   left: 1.125rem;
   height: 1px;
   width: calc(100% - 2.25rem);
-  background: linear-gradient(to right, rgba(52, 211, 153, 0), rgba(52, 211, 153, 0.9), rgba(52, 211, 153, 0));
+  background: linear-gradient(
+    to right,
+    rgba(52, 211, 153, 0),
+    rgba(52, 211, 153, 0.9),
+    rgba(52, 211, 153, 0)
+  );
   transition-property: opacity;
   transition-duration: 500ms;
 }

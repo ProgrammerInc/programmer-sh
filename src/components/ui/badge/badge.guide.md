@@ -7,6 +7,7 @@ This guide provides best practices, accessibility information, and implementatio
 ### When to Use
 
 ✅ **Do use badges for:**
+
 - Status indicators for objects or tasks
 - Category or tag labels
 - Counters for notifications or items
@@ -15,6 +16,7 @@ This guide provides best practices, accessibility information, and implementatio
 - Indicating online/offline status
 
 ❌ **Don't use badges for:**
+
 - Primary calls to action (use buttons instead)
 - Complex interactive elements
 - Long text content
@@ -58,16 +60,13 @@ import { Badge } from '@/components/ui/badge';
 
 export function AccessibleBadge() {
   const count = 5;
-  
+
   return (
     <div className="relative">
-      <button 
-        className="p-2 rounded border"
-        aria-label={`Notifications (${count} unread)`}
-      >
+      <button className="p-2 rounded border" aria-label={`Notifications (${count} unread)`}>
         <span>Notifications</span>
       </button>
-      <Badge 
+      <Badge
         className="absolute -top-2 -right-2"
         aria-hidden="true" // Screen readers will use the button's aria-label
       >
@@ -140,19 +139,24 @@ export function TableWithBadges() {
     { id: 1, name: 'Project Alpha', status: 'Active' },
     { id: 2, name: 'Project Beta', status: 'Completed' },
     { id: 3, name: 'Project Gamma', status: 'On Hold' },
-    { id: 4, name: 'Project Delta', status: 'Cancelled' },
+    { id: 4, name: 'Project Delta', status: 'Cancelled' }
   ];
-  
-  const getBadgeVariant = (status) => {
+
+  const getBadgeVariant = status => {
     switch (status) {
-      case 'Active': return 'default';
-      case 'Completed': return 'secondary';
-      case 'On Hold': return 'outline';
-      case 'Cancelled': return 'destructive';
-      default: return 'default';
+      case 'Active':
+        return 'default';
+      case 'Completed':
+        return 'secondary';
+      case 'On Hold':
+        return 'outline';
+      case 'Cancelled':
+        return 'destructive';
+      default:
+        return 'default';
     }
   };
-  
+
   return (
     <table className="w-full border-collapse">
       <thead>
@@ -163,14 +167,12 @@ export function TableWithBadges() {
         </tr>
       </thead>
       <tbody>
-        {data.map((row) => (
+        {data.map(row => (
           <tr key={row.id}>
             <td>{row.id}</td>
             <td>{row.name}</td>
             <td>
-              <Badge variant={getBadgeVariant(row.status)}>
-                {row.status}
-              </Badge>
+              <Badge variant={getBadgeVariant(row.status)}>{row.status}</Badge>
             </td>
           </tr>
         ))}
@@ -205,11 +207,7 @@ import { cn } from '@/lib/utils';
 import customStyles from './custom-styles.module.css';
 
 export function CustomBadge() {
-  return (
-    <Badge className={cn(customStyles['custom-badge'])}>
-      Premium
-    </Badge>
-  );
+  return <Badge className={cn(customStyles['custom-badge'])}>Premium</Badge>;
 }
 ```
 
@@ -225,7 +223,7 @@ import { cn } from '@/lib/utils';
 export function AnimatedBadge() {
   const [count, setCount] = useState(0);
   const [highlight, setHighlight] = useState(false);
-  
+
   useEffect(() => {
     // Highlight the badge briefly when count changes
     if (count > 0) {
@@ -234,19 +232,14 @@ export function AnimatedBadge() {
       return () => clearTimeout(timer);
     }
   }, [count]);
-  
+
   return (
     <div>
       <button onClick={() => setCount(prev => prev + 1)} className="mr-2">
         Increment
       </button>
-      
-      <Badge
-        className={cn(
-          'transition-all duration-300',
-          highlight ? 'scale-125 bg-primary' : ''
-        )}
-      >
+
+      <Badge className={cn('transition-all duration-300', highlight ? 'scale-125 bg-primary' : '')}>
         {count}
       </Badge>
     </div>

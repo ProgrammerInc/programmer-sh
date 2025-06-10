@@ -4,10 +4,10 @@ import { memo, useRef } from 'react';
 
 import { StarsBackground } from '..';
 import { DEFAULT_SETTINGS } from './threads.constants';
-import { useThreadsAudio, useIsThreadsAudioAvailable } from './use-threads-audio.hook';
 import { useThreadsAnimation } from './threads.hooks';
 import styles from './threads.module.css';
 import { ThreadsProps } from './threads.types';
+import { useIsThreadsAudioAvailable, useThreadsAudio } from './use-threads-audio.hook';
 
 /**
  * Threads component creates an interactive wave-like thread animation using WebGL
@@ -31,15 +31,15 @@ export const ThreadsComponent = ({
 }: ThreadsProps) => {
   // Reference to the container element
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   // Check if the audio context is available and get audio context data
   const hasAudioContext = useIsThreadsAudioAvailable();
   const audioContext = useThreadsAudio();
-  
+
   // Initialize audio-related variables with defaults
   let contextAudioOptions = undefined;
   let contextAudioData = undefined;
-  
+
   // Only use audio context values if it's available and enabled
   // Since useThreadsAudio might throw, we have to try/catch
   // but the useIsThreadsAudioAvailable hook will ensure this is safe
@@ -54,10 +54,10 @@ export const ThreadsComponent = ({
 
   // Setup and run the threads WebGL animation with audio reactivity
   useThreadsAnimation(
-    containerRef, 
-    color, 
-    amplitude, 
-    distance, 
+    containerRef,
+    color,
+    amplitude,
+    distance,
     enableMouseInteraction,
     effectiveAudioOptions,
     effectiveAudioData

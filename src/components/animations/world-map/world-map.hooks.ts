@@ -12,9 +12,9 @@ import { DEFAULT_VALUES } from './world-map.constants';
  */
 export const useDottedMapSVG = (theme: 'dark' | 'light' = DEFAULT_VALUES.THEME): string => {
   return useMemo(() => {
-    const map = new DottedMap({ 
-      height: DEFAULT_VALUES.MAP_HEIGHT, 
-      grid: DEFAULT_VALUES.MAP_GRID 
+    const map = new DottedMap({
+      height: DEFAULT_VALUES.MAP_HEIGHT,
+      grid: DEFAULT_VALUES.MAP_GRID
     });
 
     return map.getSVG({

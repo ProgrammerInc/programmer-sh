@@ -1,40 +1,40 @@
 'use client';
 
 import { cn } from '@/utils/app.utils';
-import React, { memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { QRCode } from 'react-qrcode-logo';
 
+import { logger } from '@/services';
+import { useQRCodePreset } from './qr-code.hooks';
 import styles from './qr-code.module.css';
-import { QRCodeProps, ImageSettings } from './qr-code.types';
-import { useQRCodePreset, useQRCodePresets } from './qr-code.hooks';
-import { logger } from '@/services/logger/logger.service';
+import { QRCodeProps } from './qr-code.types';
 
 /**
  * QR Code Component
- * 
+ *
  * A customizable QR code component that can include logos, custom colors,
  * and different visual styles.
- * 
+ *
  * Features:
  * - Customizable colors for background, foreground, and positioning markers
  * - Multiple visual styles (dots, squares, fluid)
  * - Optional logo or image in the center
  * - Configurable error correction level
  * - Optional title text below the QR code
- * 
+ *
  * @example Basic usage
  * ```tsx
- * <QRCodeComponent 
+ * <QRCodeComponent
  *   id="contact-info"
- *   value="https://example.com" 
+ *   value="https://example.com"
  * />
  * ```
- * 
+ *
  * @example Custom styling
  * ```tsx
- * <QRCodeComponent 
+ * <QRCodeComponent
  *   id="custom-qr"
- *   value="Hello World" 
+ *   value="Hello World"
  *   bgColor="#ffffff"
  *   fgColor="#000000"
  *   eyeColor="#ff0000"
@@ -43,12 +43,12 @@ import { logger } from '@/services/logger/logger.service';
  *   title="Scan to view message"
  * />
  * ```
- * 
+ *
  * @example With logo
  * ```tsx
- * <QRCodeComponent 
+ * <QRCodeComponent
  *   id="logo-qr"
- *   value="https://example.com" 
+ *   value="https://example.com"
  *   imagePreset="programmerIcon"
  * />
  * ```
@@ -75,25 +75,25 @@ export const QRCodeComponent = memo<QRCodeProps>(function QRCodeComponent({
 }) {
   // Load presets from database if an image preset is specified
   const { preset, isLoading: isPresetLoading } = useQRCodePreset(imagePreset || '');
-  
+
   // Determine which image settings to use
   const finalImageSettings = useMemo(() => {
     // If loading or no preset specified, use provided image settings
     if (isPresetLoading || !imagePreset) {
       return imageSettings;
     }
-    
+
     // If preset loaded, use it
     if (preset) {
       logger.debug(`Using QR code preset: ${imagePreset}`);
       return preset;
     }
-    
+
     // Fallback
     logger.debug('No QR code preset found, using provided image settings');
     return imageSettings;
   }, [imageSettings, imagePreset, preset, isPresetLoading]);
-  
+
   // Show loading state
   if (imagePreset && isPresetLoading) {
     return (

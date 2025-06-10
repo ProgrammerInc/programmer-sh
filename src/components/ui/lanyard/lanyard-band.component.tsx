@@ -1,16 +1,14 @@
 'use client';
 
 import { useGLTF, useTexture } from '@react-three/drei';
-import { useFrame, ThreeEvent } from '@react-three/fiber';
+import { ThreeEvent, useFrame } from '@react-three/fiber';
 import {
   BallCollider,
   CuboidCollider,
   RigidBody,
-  RigidBodyProps, 
   useRopeJoint,
   useSphericalJoint
 } from '@react-three/rapier';
-import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
@@ -42,9 +40,9 @@ type RigidBodyHandle = {
 
 /**
  * Band Component
- * 
+ *
  * A component that renders the physical lanyard strap with interactive physics.
- * 
+ *
  * @example
  * ```tsx
  * <Band maxSpeed={50} minSpeed={0} />
@@ -53,7 +51,7 @@ type RigidBodyHandle = {
 export const BandComponent: React.FC<BandProps> = ({ maxSpeed = 50, minSpeed = 0 }) => {
   // Refs for physics bodies
   const band = useRef<THREE.Mesh>(null);
-  
+
   // Need to use 'any' for internal ref handling, but we'll type the usage properly
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const fixed = useRef<any>(null);
@@ -81,12 +79,12 @@ export const BandComponent: React.FC<BandProps> = ({ maxSpeed = 50, minSpeed = 0
   };
 
   // Load 3D models and textures
-  const { nodes, materials } = useGLTF(cardGLB) as unknown as { 
-    nodes: { card: THREE.Mesh; clip: THREE.Mesh; clamp: THREE.Mesh }; 
+  const { nodes, materials } = useGLTF(cardGLB) as unknown as {
+    nodes: { card: THREE.Mesh; clip: THREE.Mesh; clamp: THREE.Mesh };
     materials: { base: THREE.MeshPhysicalMaterial; metal: THREE.MeshStandardMaterial };
   };
   const texture = useTexture(lanyard);
-  
+
   // Create curve for the lanyard path
   const [curve] = useState<THREE.CatmullRomCurve3>(
     () =>
@@ -97,7 +95,7 @@ export const BandComponent: React.FC<BandProps> = ({ maxSpeed = 50, minSpeed = 0
         new THREE.Vector3()
       ])
   );
-  
+
   // State for drag interactions
   const [dragged, drag] = useState<false | THREE.Vector3>(false);
   const [hovered, hover] = useState<boolean>(false);
@@ -159,17 +157,17 @@ export const BandComponent: React.FC<BandProps> = ({ maxSpeed = 50, minSpeed = 0
           rb.wakeUp?.();
         }
       });
-      
+
       if (card.current) {
         const cardBody = card.current as RigidBodyHandle;
-        cardBody.setNextKinematicTranslation?.({ 
+        cardBody.setNextKinematicTranslation?.({
           x: vec.x - dragged.x,
           y: vec.y - dragged.y,
           z: vec.z - dragged.z
         });
       }
     }
-    
+
     // Update physics simulation
     if (fixed.current) {
       // Handle lanyard movement
@@ -205,11 +203,11 @@ export const BandComponent: React.FC<BandProps> = ({ maxSpeed = 50, minSpeed = 0
         curve.points[1].copy(j2Body.lerped);
         curve.points[2].copy(j1Body.lerped);
         curve.points[3].copy(fixedBody.translation());
-        
+
         // Update geometry for the band
         band.current?.geometry.setPoints?.(curve.getPoints(32));
       }
-      
+
       // Apply rotational forces to the card if available
       if (cardBody) {
         ang.copy(cardBody.angvel());
@@ -241,37 +239,22 @@ export const BandComponent: React.FC<BandProps> = ({ maxSpeed = 50, minSpeed = 0
       <group position={[0, 4, 0]}>
         {/* Fixed anchor point */}
         <RigidBody ref={fixed} type={'fixed'} {...segmentProps} />
-        
+
         {/* Joint 1 */}
-        <RigidBody
-          position={[0.5, 0, 0]}
-          ref={j1}
-          type={'dynamic'}
-          {...segmentProps}
-        >
+        <RigidBody position={[0.5, 0, 0]} ref={j1} type={'dynamic'} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        
+
         {/* Joint 2 */}
-        <RigidBody
-          position={[1, 0, 0]}
-          ref={j2}
-          type={'dynamic'}
-          {...segmentProps}
-        >
+        <RigidBody position={[1, 0, 0]} ref={j2} type={'dynamic'} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        
+
         {/* Joint 3 */}
-        <RigidBody
-          position={[1.5, 0, 0]}
-          ref={j3}
-          type={'dynamic'}
-          {...segmentProps}
-        >
+        <RigidBody position={[1.5, 0, 0]} ref={j3} type={'dynamic'} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        
+
         {/* Card */}
         <RigidBody
           position={[2, 0, 0]}
@@ -299,20 +282,20 @@ export const BandComponent: React.FC<BandProps> = ({ maxSpeed = 50, minSpeed = 0
                 metalness={0.8}
               />
             </mesh>
-            
+
             {/* Clip mesh */}
             <mesh
               geometry={nodes.clip.geometry}
               material={materials.metal}
               material-roughness={0.3}
             />
-            
+
             {/* Clamp mesh */}
             <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
           </group>
         </RigidBody>
       </group>
-      
+
       {/* Band mesh */}
       <mesh ref={band}>
         <meshLineGeometry />

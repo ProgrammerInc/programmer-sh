@@ -4,7 +4,7 @@ import { cva } from 'class-variance-authority';
 
 /**
  * Button variants
- * 
+ *
  * Defines styles for different button variants and sizes
  * using class-variance-authority (CVA).
  */

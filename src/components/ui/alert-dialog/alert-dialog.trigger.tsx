@@ -13,9 +13,9 @@ import { AlertDialogTriggerProps } from './alert-dialog.types';
 
 /**
  * AlertDialogTrigger component
- * 
+ *
  * The button that opens the alert dialog when clicked.
- * 
+ *
  * @example
  * ```tsx
  * <AlertDialogTrigger>Open Alert</AlertDialogTrigger>

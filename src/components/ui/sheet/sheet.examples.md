@@ -129,7 +129,8 @@
     <SheetHeader>
       <SheetTitle>Are you absolutely sure?</SheetTitle>
       <SheetDescription>
-        This action cannot be undone. Your account and all associated data will be permanently deleted.
+        This action cannot be undone. Your account and all associated data will be permanently
+        deleted.
       </SheetDescription>
     </SheetHeader>
     <div className="py-4">
@@ -169,9 +170,9 @@
           <Switch />
         </div>
       </div>
-      
+
       <Separator />
-      
+
       <div className="space-y-4">
         <h4 className="text-sm font-medium">Notifications</h4>
         <div className="flex items-center justify-between">
@@ -182,9 +183,9 @@
           <Switch />
         </div>
       </div>
-      
+
       <Separator />
-      
+
       <div className="space-y-4">
         <h4 className="text-sm font-medium">Advanced</h4>
         <div className="flex items-center justify-between">

@@ -9,6 +9,7 @@ The Terminal History component is designed to display a list of previously execu
 ### Command History Management
 
 1. **Store Timestamp Information**
+
    - Always include timestamp information with each history item for proper chronological display.
    - Timestamps can be provided as either Date objects or ISO strings.
 
@@ -32,11 +33,13 @@ const historyItem = {
 ### Accessibility
 
 1. **Keyboard Navigation**
+
    - The component supports keyboard navigation with the `Tab` key.
    - Each history item can be focused.
    - Use the `focusLastItem` method to programmatically focus on the most recent command.
 
 2. **Screen Readers**
+
    - The component includes proper ARIA roles and labels for screen reader support.
    - Command outputs have `aria-live="polite"` to announce new content.
 
@@ -47,6 +50,7 @@ const historyItem = {
 ### Custom Styling
 
 1. **CSS Module Classes**
+
    - The component uses CSS modules with the following key classes:
      - `.container`: The main container element
      - `.history-item`: Individual command history items
@@ -64,10 +68,12 @@ const historyItem = {
 ## Performance Considerations
 
 1. **Memoization**
+
    - The component is wrapped with `React.memo` to prevent unnecessary re-renders.
    - The commands list is memoized using `useMemo` for better performance.
 
 2. **Virtualization for Large Lists**
+
    - If you have a very large command history, consider implementing virtualization using a library like `react-window` or `react-virtualized`.
 
 3. **Lazy Loading**
@@ -76,6 +82,7 @@ const historyItem = {
 ## API Integration
 
 1. **Command Execution**
+
    - The component can re-execute commands using your command system.
    - Make sure your command system is properly imported and configured.
 
@@ -86,9 +93,11 @@ const historyItem = {
 ## Troubleshooting
 
 1. **Command Not Found Errors**
+
    - If you're seeing "Command not found" errors, check that your command system is properly registered and imported.
 
 2. **Invalid Date Errors**
+
    - If you're seeing date formatting errors, ensure that timestamp values are valid Date objects or ISO date strings.
 
 3. **Performance Issues**

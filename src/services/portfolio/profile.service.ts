@@ -5,9 +5,9 @@
  * with optimized query performance.
  */
 
-import { supabase, isNotFoundError, logDbError } from '@/utils/supabase.utils';
 import { createServiceLogger, logError } from '@/services/logger/logger.utils';
-import { DbProfile, DbSkillCategory, Profile, Skill, Contact } from './portfolio.types';
+import { logDbError, supabase } from '@/utils/supabase.utils';
+import { Contact, DbSkillCategory, Profile, Skill } from './portfolio.types';
 
 // Create a dedicated logger for profile service
 const dbLogger = createServiceLogger('ProfileService');
@@ -24,10 +24,10 @@ export const fetchProfile = async (): Promise<Profile | null> => {
   try {
     // Check if we have a valid cache
     const now = Date.now();
-    if (profileCache && (now - lastFetchTime < CACHE_TTL)) {
+    if (profileCache && now - lastFetchTime < CACHE_TTL) {
       return profileCache;
     }
-    
+
     // Fetch the profile data
     const { data: profileData, error: profileError } = await supabase
       .from('portfolio_profile')
@@ -38,7 +38,7 @@ export const fetchProfile = async (): Promise<Profile | null> => {
       logDbError('fetchProfile', profileError);
       return null;
     }
-    
+
     if (!profileData) {
       dbLogger.error('No profile data found in the database');
       return null;
@@ -114,11 +114,11 @@ export const fetchProfile = async (): Promise<Profile | null> => {
       projects: [], // Will be filled by fetchProjects
       education: [] // Will be filled by fetchEducation
     };
-    
+
     // Update cache
     profileCache = profile;
     lastFetchTime = now;
-    
+
     return profile;
   } catch (error) {
     logError('Error fetching profile:', error, 'ProfileService');

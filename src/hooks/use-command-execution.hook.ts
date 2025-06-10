@@ -118,7 +118,10 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
           setAsyncCommandName(undefined);
           setCommandOutput(prevOutput =>
             prevOutput
-              ? [...prevOutput, renderCommandOutput(actualCommand, `Error executing command: ${errorMessage}`)]
+              ? [
+                  ...prevOutput,
+                  renderCommandOutput(actualCommand, `Error executing command: ${errorMessage}`)
+                ]
               : [renderCommandOutput(actualCommand, `Error executing command: ${errorMessage}`)]
           );
         });
@@ -146,13 +149,13 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
     if (cmdResult.runAfterClear) {
       setTimeout(() => {
         // Always show welcome without any prefixes
-        setCommandOutput(
-          [renderCommandOutput(
+        setCommandOutput([
+          renderCommandOutput(
             'welcome',
             cmdResult.runAfterClear?.content || '',
             cmdResult.runAfterClear?.rawHTML
-          )]
-        );
+          )
+        ]);
 
         // Only dispatch welcome event if not a special command
         if (!originalCommand.startsWith('__event_') && !originalCommand.startsWith('__init_')) {
@@ -181,8 +184,21 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
     ) => {
       setCommandOutput(prevOutput =>
         prevOutput
-          ? [...prevOutput, renderCommandOutput(actualCommand, cmdResult.content, cmdResult.rawHTML !== undefined ? cmdResult.rawHTML : false)]
-          : [renderCommandOutput(actualCommand, cmdResult.content, cmdResult.rawHTML !== undefined ? cmdResult.rawHTML : false)]
+          ? [
+              ...prevOutput,
+              renderCommandOutput(
+                actualCommand,
+                cmdResult.content,
+                cmdResult.rawHTML !== undefined ? cmdResult.rawHTML : false
+              )
+            ]
+          : [
+              renderCommandOutput(
+                actualCommand,
+                cmdResult.content,
+                cmdResult.rawHTML !== undefined ? cmdResult.rawHTML : false
+              )
+            ]
       );
 
       // Only dispatch event if it's not a special command (to prevent loops)
@@ -246,8 +262,8 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
         // Check if this is an alias command
         if (!command) {
           // Try to find a command where this is an alias
-          const commandWithAlias = Object.values(commands).find(cmd =>
-            cmd.aliases && cmd.aliases.includes(commandName)
+          const commandWithAlias = Object.values(commands).find(
+            cmd => cmd.aliases && cmd.aliases.includes(commandName)
           );
 
           if (commandWithAlias) {
@@ -278,7 +294,7 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
           if (commandName === 'support' && commands['contact']) {
             commandExecutionLogger.info('Using hardcoded support->contact fallback');
             const result = commands['contact'].execute(cmdArgs);
-            
+
             // Update lastCommand to show this is an alias of 'contact'
             setLastCommand(`support (contact)`);
 
@@ -318,14 +334,14 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
           }
 
           // For regular commands, just show the error
-          setCommandOutput(
-            prev =>
-              [...prev, renderCommandOutput(
-                'error',
-                `Command '${commandName}' not found. Try 'help' to see available commands.`,
-                false
-              )]
-          );
+          setCommandOutput(prev => [
+            ...prev,
+            renderCommandOutput(
+              'error',
+              `Command '${commandName}' not found. Try 'help' to see available commands.`,
+              false
+            )
+          ]);
           return;
         }
 
@@ -370,9 +386,10 @@ export const useCommandExecution = (commands: Record<string, Command>): CommandE
           error: errorMessage
         });
 
-        setCommandOutput(prevOutput =>
-          [...prevOutput, renderCommandOutput(commandName, `Error executing command: ${errorMessage}`, false)]
-        );
+        setCommandOutput(prevOutput => [
+          ...prevOutput,
+          renderCommandOutput(commandName, `Error executing command: ${errorMessage}`, false)
+        ]);
       }
     },
     [

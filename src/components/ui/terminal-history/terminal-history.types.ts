@@ -5,7 +5,7 @@ import { HTMLAttributes } from 'react';
 
 /**
  * HistoryItem interface represents a command entry in the terminal history.
- * 
+ *
  * @interface HistoryItem
  * @property {string} command - The command text that was executed
  * @property {string} [output] - Optional output text from the command
@@ -23,7 +23,7 @@ export interface HistoryItem {
 
 /**
  * TerminalHistoryProps interface defines props for the TerminalHistory component.
- * 
+ *
  * @interface TerminalHistoryProps
  * @extends {HTMLAttributes<HTMLDivElement>}
  * @property {HistoryItem[]} history - Array of command history items to display
@@ -32,6 +32,21 @@ export interface HistoryItem {
  * @property {boolean} [animate] - Optional flag to enable animation of command outputs
  * @property {string} [className] - Optional additional CSS class name
  */
+/**
+ * Ref interface for the TerminalHistory component
+ * Provides methods to control the terminal history display
+ */
+export type TerminalHistoryRef = {
+  /**
+   * Scrolls the terminal history to the bottom
+   */
+  scrollToBottom: () => void;
+  /**
+   * Focuses the last item in the terminal history
+   */
+  focusLastItem: () => void;
+};
+
 export interface TerminalHistoryProps extends HTMLAttributes<HTMLDivElement> {
   history: HistoryItem[];
   onCommandClick?: (command: string) => void;
@@ -41,9 +56,9 @@ export interface TerminalHistoryProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 /**
- * CommandResult interface matches the structure from command.types.ts, 
+ * CommandResult interface matches the structure from command.types.ts,
  * ensuring compatibility with the command system.
- * 
+ *
  * @interface CommandResult
  * @extends BaseCommandResult
  */

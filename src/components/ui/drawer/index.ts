@@ -1,9 +1,9 @@
 /**
  * Drawer Component Module
- * 
+ *
  * Provides a sliding panel that appears from the edge of the screen.
  * Based on the Vaul drawer component library.
- * 
+ *
  * @see https://vaul.emilkowal.ski/ for the original Vaul documentation
  */
 

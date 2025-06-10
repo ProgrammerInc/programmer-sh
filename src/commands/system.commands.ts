@@ -1,3 +1,4 @@
+/* eslint-disable no-secrets/no-secrets */
 import { createFeatureLogger } from '@/services/logger/logger.utils';
 import { Command, CommandResult } from './command.types';
 import { welcomeCommand } from './welcome.commands';

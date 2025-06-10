@@ -6,6 +6,6 @@
  * @module GridPattern
  */
 
-export { GridPattern, default } from './grid-pattern';
+export { default, GridPattern } from './grid-pattern';
 export * as GridPatternStyles from './grid-pattern.module.css';
 export type { GridPatternProps } from './grid-pattern.types';

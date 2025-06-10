@@ -1,16 +1,16 @@
 /**
  * Waves Animation Component
- * 
+ *
  * An interactive animation with dynamic wave lines that respond to mouse movement and noise.
  */
 'use client';
 
-import React, { useRef } from 'react';
 import { cn } from '@/utils/app.utils';
-import styles from './waves.module.css';
-import { WavesProps } from './waves.types';
+import React, { useRef } from 'react';
 import { CSS_CLASSES, DEFAULT_VALUES } from './waves.constants';
 import { useWavesAnimation, useWavesConfig, useWavesStyles } from './waves.hooks';
+import styles from './waves.module.css';
+import { WavesProps } from './waves.types';
 
 /**
  * Waves component that displays animated wave lines that respond to mouse movement
@@ -34,7 +34,7 @@ export const Waves: React.FC<WavesProps> = ({
   // Refs for DOM elements
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  
+
   // Configure animation settings
   const configRef = useWavesConfig({
     lineColor,
@@ -48,10 +48,10 @@ export const Waves: React.FC<WavesProps> = ({
     tension,
     maxCursorMove
   });
-  
+
   // Apply styles to the container
   useWavesStyles(containerRef, backgroundColor, lineColor, style);
-  
+
   // Initialize animation
   useWavesAnimation(containerRef, canvasRef, configRef);
 

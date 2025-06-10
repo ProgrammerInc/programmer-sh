@@ -1,16 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import {
-  Camera,
-  Mesh,
-  Plane,
-  Program,
-  Renderer,
-  Texture,
-  Transform
-} from 'ogl';
-import React, { useEffect, useRef, memo } from 'react';
+import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform } from 'ogl';
+import { memo, useEffect, useRef } from 'react';
 
 import { cn } from '@/utils/app.utils';
 import styles from './flying-posters.module.css';
@@ -131,9 +123,9 @@ void main() {
 
 /**
  * AutoBind utility
- * 
+ *
  * Automatically binds methods to the instance of a class
- * 
+ *
  * @param self - The instance to bind methods to
  * @param options - Optional configuration for method binding
  * @returns The instance with bound methods
@@ -170,7 +162,7 @@ function AutoBind(self: any, { include, exclude }: AutoBindOptions = {}) {
 
 /**
  * Linear interpolation utility
- * 
+ *
  * @param p1 - Start value
  * @param p2 - End value
  * @param t - Interpolation factor (0-1)
@@ -182,7 +174,7 @@ function lerp(p1: number, p2: number, t: number): number {
 
 /**
  * Map a value from one range to another
- * 
+ *
  * @param num - Value to map
  * @param min1 - Source range minimum
  * @param max1 - Source range maximum
@@ -206,7 +198,7 @@ function map(
 
 /**
  * Media class
- * 
+ *
  * Manages an individual poster in the flying posters effect,
  * handling its rendering and animation.
  */
@@ -359,7 +351,7 @@ class Media {
 
 /**
  * Canvas class
- * 
+ *
  * Manages the WebGL canvas and all media items within the flying posters effect.
  * Handles rendering, animation, and user interactions.
  */
@@ -609,10 +601,10 @@ class Canvas {
 
 /**
  * FlyingPosters Component
- * 
+ *
  * A WebGL-based component that displays images as 3D flying posters with
  * scroll-based navigation and animations.
- * 
+ *
  * @example
  * ```tsx
  * <FlyingPosters
@@ -689,11 +681,7 @@ const FlyingPosters = memo(function FlyingPosters({
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className={cn(styles.container, className)}
-      {...props}
-    >
+    <div ref={containerRef} className={cn(styles.container, className)} {...props}>
       <canvas ref={canvasRef} className={styles.canvas} />
     </div>
   );

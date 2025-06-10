@@ -1,10 +1,10 @@
 /**
  * Menubar Component
- * 
+ *
  * A Radix UI based menubar component for creating accessible, keyboard navigable menu interfaces.
  * This component provides a set of primitives for building custom menubars with advanced features
  * like keyboard navigation, submenu support, and accessibility.
- * 
+ *
  * @see {@link https://www.radix-ui.com/primitives/docs/components/menubar Radix UI Menubar}
  */
 
@@ -30,22 +30,22 @@ export {
 
 // Export all types
 export type {
-  MenubarProps,
-  MenubarMenuProps,
-  MenubarGroupProps,
-  MenubarPortalProps,
-  MenubarSubProps,
-  MenubarRadioGroupProps,
-  MenubarTriggerProps,
-  MenubarSubTriggerProps,
-  MenubarSubContentProps,
-  MenubarContentProps,
-  MenubarItemProps,
   MenubarCheckboxItemProps,
-  MenubarRadioItemProps,
+  MenubarContentProps,
+  MenubarGroupProps,
+  MenubarItemProps,
   MenubarLabelProps,
+  MenubarMenuProps,
+  MenubarPortalProps,
+  MenubarProps,
+  MenubarRadioGroupProps,
+  MenubarRadioItemProps,
   MenubarSeparatorProps,
-  MenubarShortcutProps
+  MenubarShortcutProps,
+  MenubarSubContentProps,
+  MenubarSubProps,
+  MenubarSubTriggerProps,
+  MenubarTriggerProps
 } from './menubar.types';
 
 // For backwards compatibility

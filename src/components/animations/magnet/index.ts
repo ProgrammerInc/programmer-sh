@@ -7,5 +7,5 @@
  * @module Magnet
  */
 
-export { Magnet, default } from './magnet';
+export { default, Magnet } from './magnet';
 export type { MagnetProps } from './magnet.types';

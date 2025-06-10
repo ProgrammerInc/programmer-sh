@@ -2,8 +2,8 @@
  * Counter component types
  */
 
-import { CSSProperties } from 'react';
 import { MotionValue } from 'framer-motion';
+import { CSSProperties } from 'react';
 
 /**
  * Props for the Number component which renders a single digit in the counter
@@ -38,9 +38,9 @@ export interface DigitProps {
  * @interface CounterProps
  * @example
  * ```tsx
- * <Counter 
- *   value={123} 
- *   fontSize={48} 
+ * <Counter
+ *   value={123}
+ *   fontSize={48}
  *   textColor="#333"
  * />
  * ```

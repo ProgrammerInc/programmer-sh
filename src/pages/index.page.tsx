@@ -1,6 +1,6 @@
+import { getCommands } from '@/commands';
 import { CommandName } from '@/commands/command.types';
 import { getCurrentCursor } from '@/commands/cursor.commands';
-import { getCommands } from '@/commands';
 import { processThemeFromUrl } from '@/commands/theme.commands';
 import { getCurrentWallpaper } from '@/commands/wallpaper.commands';
 import CursorProvider from '@/components/ui/cursor';
@@ -159,7 +159,7 @@ const Index = () => {
     if (commandToExecute) {
       // Force lowercase for consistent matching
       const normalizedCommand = commandToExecute.toLowerCase();
-      
+
       // Get all commands for checking aliases
       const allAvailableCommands = getCommands();
 
@@ -168,8 +168,8 @@ const Index = () => {
 
       // If not found as direct command, check if it's an alias
       if (!isValidCommand) {
-        const commandWithAlias = Object.values(allAvailableCommands).find(cmd => 
-          cmd.aliases && cmd.aliases.includes(normalizedCommand)
+        const commandWithAlias = Object.values(allAvailableCommands).find(
+          cmd => cmd.aliases && cmd.aliases.includes(normalizedCommand)
         );
         isValidCommand = !!commandWithAlias;
       }

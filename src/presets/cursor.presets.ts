@@ -5,7 +5,9 @@ export const cursorPresets: Record<string, Cursor> = {
     id: 'default',
     name: 'Default',
     description: 'Default cursor',
-    type: 'default'
+    type: 'animation',
+    animation: 'splash',
+    animationType: 'reactbits'
   },
   arrow: {
     id: 'arrow',

@@ -11,9 +11,12 @@ import { GL } from './circular-gallery.types';
  * @param wait - The time to wait in milliseconds
  * @returns A debounced version of the function
  */
-export function debounce<T extends (...args: unknown[]) => void>(func: T, wait: number): (...args: Parameters<T>) => void {
+export function debounce<T extends (...args: unknown[]) => void>(
+  func: T,
+  wait: number
+): (...args: Parameters<T>) => void {
   let timeout: number;
-  return function(this: unknown, ...args: Parameters<T>): void {
+  return function (this: unknown, ...args: Parameters<T>): void {
     window.clearTimeout(timeout);
     timeout = window.setTimeout(() => func.apply(this, args), wait);
   };
@@ -38,7 +41,9 @@ export function autoBind<T extends object>(instance: T): void {
   const proto = Object.getPrototypeOf(instance);
   Object.getOwnPropertyNames(proto).forEach(key => {
     if (key !== 'constructor' && typeof (instance as Record<string, unknown>)[key] === 'function') {
-      (instance as Record<string, unknown>)[key] = ((instance as Record<string, unknown>)[key] as ((...args: unknown[]) => unknown)).bind(instance);
+      (instance as Record<string, unknown>)[key] = (
+        (instance as Record<string, unknown>)[key] as (...args: unknown[]) => unknown
+      ).bind(instance);
     }
   });
 }

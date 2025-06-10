@@ -81,7 +81,7 @@ export const useTerminalAuth = () => {
     try {
       setLoading(true);
       terminalAuthLogger.debug('Attempting login', { email });
-      
+
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
@@ -115,7 +115,7 @@ export const useTerminalAuth = () => {
     try {
       setLoading(true);
       terminalAuthLogger.debug('Attempting signup', { email });
-      
+
       const { data, error } = await supabase.auth.signUp({
         email,
         password
@@ -148,7 +148,7 @@ export const useTerminalAuth = () => {
     try {
       setLoading(true);
       terminalAuthLogger.debug('Attempting logout');
-      
+
       const { error } = await supabase.auth.signOut();
 
       if (error) {

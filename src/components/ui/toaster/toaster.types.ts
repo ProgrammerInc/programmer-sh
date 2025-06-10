@@ -4,7 +4,7 @@ import React from 'react';
 
 /**
  * Props for the Toaster component
- * 
+ *
  * @interface ToasterProps
  * @extends {React.HTMLAttributes<HTMLDivElement>}
  */

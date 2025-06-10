@@ -135,7 +135,7 @@ export const getMessages = async (): Promise<CommandResult> => {
     }
 
     messageLogger.info('Messages retrieved successfully', { count: data.length });
-    
+
     const formattedMessages = data.map(formatMessage).join('\n');
 
     return {

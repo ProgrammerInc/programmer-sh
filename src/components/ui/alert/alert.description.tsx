@@ -15,7 +15,7 @@ import { AlertDescriptionProps } from './alert.types';
 
 /**
  * AlertDescription component for the content of an alert
- * 
+ *
  * @example
  * ```tsx
  * <Alert>
@@ -24,15 +24,15 @@ import { AlertDescriptionProps } from './alert.types';
  * </Alert>
  * ```
  */
-export const AlertDescription = memo(React.forwardRef<HTMLParagraphElement, AlertDescriptionProps>(
-  ({ className, ...props }, ref) => {
+export const AlertDescription = memo(
+  React.forwardRef<HTMLParagraphElement, AlertDescriptionProps>(({ className, ...props }, ref) => {
     const descriptionClassName = useMemo(() => {
       return cn(styles.description, className);
     }, [className]);
 
     return <div ref={ref} className={descriptionClassName} {...props} />;
-  }
-));
+  })
+);
 
 AlertDescription.displayName = 'AlertDescription';
 

@@ -7,6 +7,6 @@
  * @module ShootingStars
  */
 
-export { ShootingStars, default } from './shooting-stars';
+export { default, ShootingStars } from './shooting-stars';
 export * as ShootingStarsStyles from './shooting-stars.module.css';
 export type { ShootingStarsProps } from './shooting-stars.types';

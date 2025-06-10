@@ -6,8 +6,8 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { CrosshairProps } from './crosshair.types';
 import { useCrosshairHooks } from './crosshair.hooks';
+import { CrosshairProps } from './crosshair.types';
 
 /**
  * Crosshair component that creates a dynamic crosshair cursor
@@ -17,19 +17,13 @@ import { useCrosshairHooks } from './crosshair.hooks';
  * @param props - Component props
  * @returns React component
  */
-export const Crosshair: React.FC<CrosshairProps> = (props) => {
+export const Crosshair: React.FC<CrosshairProps> = props => {
   const { containerRef } = props;
   const cursorRef = useRef<HTMLDivElement>(null);
 
   // Get hooks and refs from the custom hook
-  const {
-    lineHorizontalRef,
-    lineVerticalRef,
-    filterXRef,
-    filterYRef,
-    setupCrosshair,
-    color
-  } = useCrosshairHooks(props);
+  const { lineHorizontalRef, lineVerticalRef, filterXRef, filterYRef, setupCrosshair, color } =
+    useCrosshairHooks(props);
 
   // Setup crosshair effects
   useEffect(() => {

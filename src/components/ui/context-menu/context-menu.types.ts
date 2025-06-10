@@ -33,12 +33,16 @@ export type ContextMenuSubProps = ComponentPropsWithoutRef<typeof ContextMenuPri
 /**
  * Context menu radio group props
  */
-export type ContextMenuRadioGroupProps = ComponentPropsWithoutRef<typeof ContextMenuPrimitive.RadioGroup>;
+export type ContextMenuRadioGroupProps = ComponentPropsWithoutRef<
+  typeof ContextMenuPrimitive.RadioGroup
+>;
 
 /**
  * Context menu sub trigger props with optional inset property
  */
-export type ContextMenuSubTriggerProps = ComponentPropsWithoutRef<typeof ContextMenuPrimitive.SubTrigger> & {
+export type ContextMenuSubTriggerProps = ComponentPropsWithoutRef<
+  typeof ContextMenuPrimitive.SubTrigger
+> & {
   /**
    * Whether the trigger should be inset (adds padding on the left)
    */
@@ -48,7 +52,9 @@ export type ContextMenuSubTriggerProps = ComponentPropsWithoutRef<typeof Context
 /**
  * Context menu sub content props
  */
-export type ContextMenuSubContentProps = ComponentPropsWithoutRef<typeof ContextMenuPrimitive.SubContent>;
+export type ContextMenuSubContentProps = ComponentPropsWithoutRef<
+  typeof ContextMenuPrimitive.SubContent
+>;
 
 /**
  * Context menu content props
@@ -68,12 +74,16 @@ export type ContextMenuItemProps = ComponentPropsWithoutRef<typeof ContextMenuPr
 /**
  * Context menu checkbox item props
  */
-export type ContextMenuCheckboxItemProps = ComponentPropsWithoutRef<typeof ContextMenuPrimitive.CheckboxItem>;
+export type ContextMenuCheckboxItemProps = ComponentPropsWithoutRef<
+  typeof ContextMenuPrimitive.CheckboxItem
+>;
 
 /**
  * Context menu radio item props
  */
-export type ContextMenuRadioItemProps = ComponentPropsWithoutRef<typeof ContextMenuPrimitive.RadioItem>;
+export type ContextMenuRadioItemProps = ComponentPropsWithoutRef<
+  typeof ContextMenuPrimitive.RadioItem
+>;
 
 /**
  * Context menu label props with optional inset property
@@ -88,7 +98,9 @@ export type ContextMenuLabelProps = ComponentPropsWithoutRef<typeof ContextMenuP
 /**
  * Context menu separator props
  */
-export type ContextMenuSeparatorProps = ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Separator>;
+export type ContextMenuSeparatorProps = ComponentPropsWithoutRef<
+  typeof ContextMenuPrimitive.Separator
+>;
 
 /**
  * Context menu shortcut props

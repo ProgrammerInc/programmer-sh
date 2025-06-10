@@ -2,17 +2,14 @@ import { ChartConfig } from './chart.types';
 
 /**
  * Extract item config from a payload
- * 
+ *
  * @param config Chart configuration
  * @param payload Recharts payload
  * @param key Key to lookup in the config
  * @returns The configuration for the key or undefined
  */
-export function getPayloadConfigFromPayload(
-  config: ChartConfig,
-  payload: any,
-  key: string
-) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getPayloadConfigFromPayload(config: ChartConfig, payload: any, key: string) {
   if (!payload || !key) {
     return undefined;
   }

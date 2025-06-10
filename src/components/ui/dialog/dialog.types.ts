@@ -4,7 +4,7 @@ import * as React from 'react';
 /**
  * Props for the Dialog Root component
  * @see {@link https://www.radix-ui.com/primitives/docs/components/dialog#root} for more information
- * 
+ *
  * @example
  * ```tsx
  * <Dialog>
@@ -22,7 +22,7 @@ export type DialogRootProps = React.ComponentProps<typeof DialogPrimitive.Root>;
  * Props for the Dialog Trigger component
  * The button that opens the dialog
  * @see {@link https://www.radix-ui.com/primitives/docs/components/dialog#trigger} for more information
- * 
+ *
  * @example
  * ```tsx
  * <DialogTrigger>Open Dialog</DialogTrigger>
@@ -41,7 +41,7 @@ export type DialogPortalProps = React.ComponentPropsWithoutRef<typeof DialogPrim
  * Props for the Dialog Close component
  * Button that closes the dialog when clicked
  * @see {@link https://www.radix-ui.com/primitives/docs/components/dialog#close} for more information
- * 
+ *
  * @example
  * ```tsx
  * <DialogClose>Close Dialog</DialogClose>
@@ -60,7 +60,7 @@ export type DialogOverlayProps = React.ComponentPropsWithoutRef<typeof DialogPri
  * Props for the Dialog Content component
  * The container for the dialog content
  * @see {@link https://www.radix-ui.com/primitives/docs/components/dialog#content} for more information
- * 
+ *
  * @example
  * ```tsx
  * <DialogContent>
@@ -74,7 +74,7 @@ export type DialogContentProps = React.ComponentPropsWithoutRef<typeof DialogPri
 /**
  * Props for the Dialog Header component
  * The header area of the dialog, usually containing the title and description
- * 
+ *
  * @example
  * ```tsx
  * <DialogHeader>
@@ -88,7 +88,7 @@ export type DialogHeaderProps = React.HTMLAttributes<HTMLDivElement>;
 /**
  * Props for the Dialog Footer component
  * The footer area of the dialog, usually containing the action buttons
- * 
+ *
  * @example
  * ```tsx
  * <DialogFooter>
@@ -103,7 +103,7 @@ export type DialogFooterProps = React.HTMLAttributes<HTMLDivElement>;
  * Props for the Dialog Title component
  * The title of the dialog
  * @see {@link https://www.radix-ui.com/primitives/docs/components/dialog#title} for more information
- * 
+ *
  * @example
  * ```tsx
  * <DialogTitle>Dialog Title</DialogTitle>
@@ -115,10 +115,12 @@ export type DialogTitleProps = React.ComponentPropsWithoutRef<typeof DialogPrimi
  * Props for the Dialog Description component
  * The description of the dialog
  * @see {@link https://www.radix-ui.com/primitives/docs/components/dialog#description} for more information
- * 
+ *
  * @example
  * ```tsx
  * <DialogDescription>Dialog Description</DialogDescription>
  * ```
  */
-export type DialogDescriptionProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>;
+export type DialogDescriptionProps = React.ComponentPropsWithoutRef<
+  typeof DialogPrimitive.Description
+>;

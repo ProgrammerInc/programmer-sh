@@ -7,6 +7,6 @@
  * @module ShinyText
  */
 
-export { ShinyText, default } from './shiny-text';
+export { default, ShinyText } from './shiny-text';
 export * as ShinyTextStyles from './shiny-text.module.css';
 export type { ShinyTextProps } from './shiny-text.types';

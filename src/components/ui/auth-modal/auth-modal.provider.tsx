@@ -13,7 +13,7 @@ import { AuthMode } from './auth-modal.types';
 
 /**
  * Auth Modal Provider Component
- * 
+ *
  * Provides context for managing the auth modal state throughout the application
  */
 export const AuthModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -38,14 +38,10 @@ export const AuthModalProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     modalMode,
     openModal,
     closeModal,
-    headerRef,
+    headerRef
   };
 
-  return (
-    <AuthModalContext.Provider value={contextValue}>
-      {children}
-    </AuthModalContext.Provider>
-  );
+  return <AuthModalContext.Provider value={contextValue}>{children}</AuthModalContext.Provider>;
 };
 
 export default AuthModalProvider;

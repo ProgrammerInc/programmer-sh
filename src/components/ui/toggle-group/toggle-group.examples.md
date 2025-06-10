@@ -10,11 +10,7 @@ import { AlignLeft, AlignCenter, AlignRight } from 'lucide-react';
 
 export function TextAlignmentExample() {
   return (
-    <ToggleGroup 
-      type="single" 
-      defaultValue="center" 
-      aria-label="Text alignment"
-    >
+    <ToggleGroup type="single" defaultValue="center" aria-label="Text alignment">
       <ToggleGroupItem value="left" aria-label="Left aligned">
         <AlignLeft className="h-4 w-4" />
       </ToggleGroupItem>
@@ -39,10 +35,7 @@ import { Bold, Italic, Underline } from 'lucide-react';
 
 export function TextFormattingExample() {
   return (
-    <ToggleGroup 
-      type="multiple" 
-      aria-label="Text formatting"
-    >
+    <ToggleGroup type="multiple" aria-label="Text formatting">
       <ToggleGroupItem value="bold" aria-label="Bold">
         <Bold className="h-4 w-4" />
       </ToggleGroupItem>
@@ -66,21 +59,15 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
 export function VerticalToggleGroupExample() {
   return (
-    <ToggleGroup 
-      type="single" 
+    <ToggleGroup
+      type="single"
       orientation="vertical"
-      defaultValue="1" 
+      defaultValue="1"
       aria-label="Sidebar position"
     >
-      <ToggleGroupItem value="1">
-        Option 1
-      </ToggleGroupItem>
-      <ToggleGroupItem value="2">
-        Option 2
-      </ToggleGroupItem>
-      <ToggleGroupItem value="3">
-        Option 3
-      </ToggleGroupItem>
+      <ToggleGroupItem value="1">Option 1</ToggleGroupItem>
+      <ToggleGroupItem value="2">Option 2</ToggleGroupItem>
+      <ToggleGroupItem value="3">Option 3</ToggleGroupItem>
     </ToggleGroup>
   );
 }
@@ -97,11 +84,11 @@ import { Bold, Italic, Underline } from 'lucide-react';
 
 export function ControlledToggleGroupExample() {
   const [value, setValue] = useState(['bold']);
-  
+
   return (
     <div className="space-y-4">
-      <ToggleGroup 
-        type="multiple" 
+      <ToggleGroup
+        type="multiple"
         value={value}
         onValueChange={setValue}
         aria-label="Text formatting"
@@ -116,16 +103,16 @@ export function ControlledToggleGroupExample() {
           <Underline className="h-4 w-4" />
         </ToggleGroupItem>
       </ToggleGroup>
-      
+
       <div className="p-4 border rounded">
-        <p>
-          Selected options: {value.join(', ')}
-        </p>
-        <p className={`
+        <p>Selected options: {value.join(', ')}</p>
+        <p
+          className={`
           ${value.includes('bold') ? 'font-bold' : ''}
           ${value.includes('italic') ? 'italic' : ''}
           ${value.includes('underline') ? 'underline' : ''}
-        `}>
+        `}
+        >
           Formatted text preview
         </p>
       </div>
@@ -144,9 +131,9 @@ import { AlignLeft, AlignCenter, AlignRight } from 'lucide-react';
 
 export function CustomizedToggleGroupExample() {
   return (
-    <ToggleGroup 
-      type="single" 
-      defaultValue="center" 
+    <ToggleGroup
+      type="single"
+      defaultValue="center"
       variant="outline"
       size="lg"
       aria-label="Text alignment"
@@ -175,11 +162,7 @@ import { AlignLeft, AlignCenter, AlignRight } from 'lucide-react';
 
 export function IconTextToggleGroupExample() {
   return (
-    <ToggleGroup 
-      type="single" 
-      defaultValue="center" 
-      aria-label="Text alignment"
-    >
+    <ToggleGroup type="single" defaultValue="center" aria-label="Text alignment">
       <ToggleGroupItem value="left" aria-label="Left aligned">
         <AlignLeft className="h-4 w-4 mr-1" />
         <span>Left</span>
@@ -214,18 +197,10 @@ export function DisabledToggleGroupItemsExample() {
       <ToggleGroupItem value="italic" aria-label="Italic">
         <Italic className="h-4 w-4" />
       </ToggleGroupItem>
-      <ToggleGroupItem 
-        value="strikethrough" 
-        aria-label="Strikethrough"
-        disabled
-      >
+      <ToggleGroupItem value="strikethrough" aria-label="Strikethrough" disabled>
         <Strikethrough className="h-4 w-4" />
       </ToggleGroupItem>
-      <ToggleGroupItem 
-        value="link" 
-        aria-label="Link"
-        disabled
-      >
+      <ToggleGroupItem value="link" aria-label="Link" disabled>
         <Link className="h-4 w-4" />
       </ToggleGroupItem>
     </ToggleGroup>

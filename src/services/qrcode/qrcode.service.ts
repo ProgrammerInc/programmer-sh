@@ -5,9 +5,12 @@
  * with optimized query performance.
  */
 
-import { QRCodeType, QRCode } from '@/components/ui/qrcode/qrcode.types';
-import { supabase, isNotFoundError, logDbError } from '@/utils/supabase.utils';
+import { QRCodeProps } from '@/components/ui/qr-code/qr-code.types';
 import { logger } from '@/services/logger';
+import { isNotFoundError, logDbError, supabase } from '@/utils/supabase.utils';
+
+// Define QR code types
+type QRCodeType = 'url' | 'text' | 'email' | 'tel' | 'sms' | 'wifi';
 
 // Define database QR code interface
 interface DbQRCode {
@@ -29,55 +32,62 @@ interface DbQRCode {
 /**
  * Maps a database QR code to the application QRCode type
  */
-const mapDbQRCodeToQRCode = (dbQRCode: DbQRCode): QRCode => {
-  const qrCode: QRCode = {
+const mapDbQRCodeToQRCode = (dbQRCode: DbQRCode): QRCodeProps => {
+  const qrCode: QRCodeProps = {
     id: dbQRCode.identifier,
-    name: dbQRCode.name,
-    description: dbQRCode.description || '',
-    type: dbQRCode.type as QRCodeType,
-    content: dbQRCode.content
+    value: dbQRCode.content,
+    title: dbQRCode.name
   };
 
   // Add optional properties if they exist in the database record
   if (dbQRCode.color) {
-    qrCode.color = dbQRCode.color;
+    qrCode.fgColor = dbQRCode.color; // use fgColor, not color
   }
 
   if (dbQRCode.background_color) {
-    qrCode.backgroundColor = dbQRCode.background_color;
+    qrCode.bgColor = dbQRCode.background_color; // use bgColor, not backgroundColor
   }
 
   if (dbQRCode.logo_url) {
-    qrCode.logoUrl = dbQRCode.logo_url;
+    // Use imageSettings instead of direct logoUrl
+    qrCode.imageSettings = {
+      src: dbQRCode.logo_url,
+      height: 24, // Default height
+      width: 24, // Default width
+      excavate: true // Required property for ImageSettings
+    };
   }
 
+  // Map database type to QR code type if needed
+  if (dbQRCode.type) {
+    // Store type in a custom field if needed
+  }
+
+  // Map options if needed
   if (dbQRCode.options) {
-    qrCode.options = dbQRCode.options;
+    // Map options to appropriate QRCodeProps properties
   }
 
   return qrCode;
 };
 
 // In-memory cache for QR codes
-let qrCodesCache: QRCode[] | null = null;
+let qrCodesCache: QRCodeProps[] | null = null;
 let lastFetchTime = 0;
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 /**
  * Retrieves all QR codes from the database with optimized query performance
  */
-export const getAllQRCodes = async (): Promise<QRCode[]> => {
+export const getAllQRCodes = async (): Promise<QRCodeProps[]> => {
   try {
     // Check if we have a valid cache
     const now = Date.now();
-    if (qrCodesCache && (now - lastFetchTime < CACHE_TTL)) {
+    if (qrCodesCache && now - lastFetchTime < CACHE_TTL) {
       return qrCodesCache;
     }
 
-    const { data: qrCodes, error } = await supabase
-      .from('qr_codes')
-      .select('*')
-      .order('name');
+    const { data: qrCodes, error } = await supabase.from('qr_codes').select('*').order('name');
 
     if (error) {
       logDbError('getAllQRCodes', error);
@@ -86,7 +96,7 @@ export const getAllQRCodes = async (): Promise<QRCode[]> => {
 
     // Map database QR codes to application QR codes
     const mappedQRCodes = (qrCodes as DbQRCode[]).map(mapDbQRCodeToQRCode);
-    
+
     // Update cache
     qrCodesCache = mappedQRCodes;
     lastFetchTime = now;
@@ -101,7 +111,7 @@ export const getAllQRCodes = async (): Promise<QRCode[]> => {
 /**
  * Retrieves a QR code by its identifier with optimized query performance
  */
-export const getQRCodeById = async (id: string): Promise<QRCode | null> => {
+export const getQRCodeById = async (id: string): Promise<QRCodeProps | null> => {
   try {
     // Try to find the QR code in the cache first
     if (qrCodesCache) {
@@ -135,21 +145,17 @@ export const getQRCodeById = async (id: string): Promise<QRCode | null> => {
 /**
  * Retrieves a QR code by its name with optimized query performance
  */
-export const getQRCodeByName = async (name: string): Promise<QRCode | null> => {
+export const getQRCodeByName = async (name: string): Promise<QRCodeProps | null> => {
   try {
     // Try to find the QR code in the cache first
     if (qrCodesCache) {
-      const cachedQRCode = qrCodesCache.find(qrCode => qrCode.name === name);
+      const cachedQRCode = qrCodesCache.find(qrCode => qrCode.title === name);
       if (cachedQRCode) {
         return cachedQRCode;
       }
     }
 
-    const { data, error } = await supabase
-      .from('qr_codes')
-      .select('*')
-      .eq('name', name)
-      .single();
+    const { data, error } = await supabase.from('qr_codes').select('*').eq('name', name).single();
 
     if (error) {
       if (isNotFoundError(error, 'QR code')) {
@@ -169,26 +175,31 @@ export const getQRCodeByName = async (name: string): Promise<QRCode | null> => {
 /**
  * Creates a new QR code in the database
  */
-export const createQRCode = async (qrCode: Omit<QRCode, 'id'>): Promise<QRCode | null> => {
+export const createQRCode = async (qrCodeData: {
+  name: string;
+  description?: string;
+  type: string;
+  content: string;
+  color?: string;
+  backgroundColor?: string;
+  logoUrl?: string;
+  options?: Record<string, unknown>;
+}): Promise<QRCodeProps | null> => {
   try {
     // Convert from application type to database type
     const dbQRCode: Partial<DbQRCode> = {
-      name: qrCode.name,
-      description: qrCode.description || null,
-      type: qrCode.type,
-      content: qrCode.content,
-      color: qrCode.color || null,
-      background_color: qrCode.backgroundColor || null,
-      logo_url: qrCode.logoUrl || null,
+      name: qrCodeData.name,
+      description: qrCodeData.description || null,
+      type: qrCodeData.type,
+      content: qrCodeData.content,
+      color: qrCodeData.color || null,
+      background_color: qrCodeData.backgroundColor || null,
+      logo_url: qrCodeData.logoUrl || null,
       is_active: true,
-      options: qrCode.options || null
+      options: qrCodeData.options || null
     };
 
-    const { data, error } = await supabase
-      .from('qr_codes')
-      .insert([dbQRCode])
-      .select()
-      .single();
+    const { data, error } = await supabase.from('qr_codes').insert([dbQRCode]).select().single();
 
     if (error) {
       logDbError('createQRCode', error);
@@ -208,19 +219,32 @@ export const createQRCode = async (qrCode: Omit<QRCode, 'id'>): Promise<QRCode |
 /**
  * Updates an existing QR code in the database
  */
-export const updateQRCode = async (id: string, qrCode: Partial<QRCode>): Promise<QRCode | null> => {
+export const updateQRCode = async (
+  id: string,
+  qrCodeData: Partial<{
+    name: string;
+    description?: string;
+    type: string;
+    content: string;
+    color?: string;
+    backgroundColor?: string;
+    logoUrl?: string;
+    options?: Record<string, unknown>;
+  }>
+): Promise<QRCodeProps | null> => {
   try {
     // Convert from application type to database type
     const dbQRCode: Partial<DbQRCode> = {};
-    
-    if (qrCode.name !== undefined) dbQRCode.name = qrCode.name;
-    if (qrCode.description !== undefined) dbQRCode.description = qrCode.description || null;
-    if (qrCode.type !== undefined) dbQRCode.type = qrCode.type;
-    if (qrCode.content !== undefined) dbQRCode.content = qrCode.content;
-    if (qrCode.color !== undefined) dbQRCode.color = qrCode.color || null;
-    if (qrCode.backgroundColor !== undefined) dbQRCode.background_color = qrCode.backgroundColor || null;
-    if (qrCode.logoUrl !== undefined) dbQRCode.logo_url = qrCode.logoUrl || null;
-    if (qrCode.options !== undefined) dbQRCode.options = qrCode.options || null;
+
+    if (qrCodeData.name !== undefined) dbQRCode.name = qrCodeData.name;
+    if (qrCodeData.description !== undefined) dbQRCode.description = qrCodeData.description || null;
+    if (qrCodeData.type !== undefined) dbQRCode.type = qrCodeData.type;
+    if (qrCodeData.content !== undefined) dbQRCode.content = qrCodeData.content;
+    if (qrCodeData.color !== undefined) dbQRCode.color = qrCodeData.color || null;
+    if (qrCodeData.backgroundColor !== undefined)
+      dbQRCode.background_color = qrCodeData.backgroundColor || null;
+    if (qrCodeData.logoUrl !== undefined) dbQRCode.logo_url = qrCodeData.logoUrl || null;
+    if (qrCodeData.options !== undefined) dbQRCode.options = qrCodeData.options || null;
 
     const { data, error } = await supabase
       .from('qr_codes')
@@ -249,10 +273,7 @@ export const updateQRCode = async (id: string, qrCode: Partial<QRCode>): Promise
  */
 export const deleteQRCode = async (id: string): Promise<boolean> => {
   try {
-    const { error } = await supabase
-      .from('qr_codes')
-      .delete()
-      .eq('identifier', id);
+    const { error } = await supabase.from('qr_codes').delete().eq('identifier', id);
 
     if (error) {
       logDbError('deleteQRCode', error);

@@ -69,7 +69,7 @@ import { useTheme } from '@/hooks/use-theme';
 
 export function App() {
   const { theme } = useTheme();
-  
+
   return (
     <WallpaperProvider theme={theme}>
       <div className="app-content">
@@ -90,10 +90,7 @@ import { WallpaperProvider } from '@/components/ui/wallpaper';
 
 export function InteractiveBackground() {
   return (
-    <WallpaperProvider 
-      wallpaper="particle-network" 
-      interactive={true}
-    >
+    <WallpaperProvider wallpaper="particle-network" interactive={true}>
       <div className="app-content">
         <h1>Interactive Background</h1>
         <p>Move your mouse or touch the screen to interact with the particles</p>
@@ -115,19 +112,19 @@ export function ControlledWallpaper() {
   const containerRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  
+
   const handleFadeAnimation = () => {
     // Access animation container through ref
     if (animationRef.current) {
       animationRef.current.style.opacity = '0.5';
     }
   };
-  
+
   return (
     <>
       <button onClick={handleFadeAnimation}>Fade Wallpaper</button>
-      
-      <WallpaperProvider 
+
+      <WallpaperProvider
         containerRef={containerRef}
         animationRef={animationRef}
         contentRef={contentRef}
@@ -175,28 +172,27 @@ export function CustomWallpapers() {
       background: {
         id: 'custom-color-bg',
         type: 'color',
-        colors: [{
-          id: 'bg-color',
-          color: '#1e293b',
-          type: 'hex'
-        }]
+        colors: [
+          {
+            id: 'bg-color',
+            color: '#1e293b',
+            type: 'hex'
+          }
+        ]
       }
     }
   });
-  
+
   const [activeWallpaper, setActiveWallpaper] = useState('custom-gradient');
-  
+
   return (
     <>
       <div className="controls">
         <button onClick={() => setActiveWallpaper('custom-gradient')}>Gradient</button>
         <button onClick={() => setActiveWallpaper('custom-color')}>Solid Color</button>
       </div>
-      
-      <WallpaperProvider 
-        wallpapers={customWallpapers} 
-        wallpaper={activeWallpaper}
-      >
+
+      <WallpaperProvider wallpapers={customWallpapers} wallpaper={activeWallpaper}>
         <div className="app-content">
           <h1>Custom Wallpaper Collection</h1>
           <p>Choose between different custom wallpapers</p>
@@ -231,12 +227,9 @@ export function VideoBackground() {
       }
     }
   };
-  
+
   return (
-    <WallpaperProvider 
-      wallpapers={{ 'ocean-waves': videoWallpaper }} 
-      wallpaper="ocean-waves"
-    >
+    <WallpaperProvider wallpapers={{ 'ocean-waves': videoWallpaper }} wallpaper="ocean-waves">
       <div className="app-content">
         <h1>Video Background</h1>
         <p>A calming ocean video plays in the background</p>
@@ -270,10 +263,10 @@ export function ImageBackground() {
       }
     }
   };
-  
+
   return (
-    <WallpaperProvider 
-      wallpapers={{ 'mountain-landscape': imageWallpaper }} 
+    <WallpaperProvider
+      wallpapers={{ 'mountain-landscape': imageWallpaper }}
       wallpaper="mountain-landscape"
     >
       <div className="app-content dark-content">

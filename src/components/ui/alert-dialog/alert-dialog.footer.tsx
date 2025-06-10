@@ -7,7 +7,6 @@
 'use client';
 
 import { cn } from '@/utils/app.utils';
-import * as React from 'react';
 import { memo, useMemo } from 'react';
 
 import styles from './alert-dialog.module.css';
@@ -15,9 +14,9 @@ import { AlertDialogFooterProps } from './alert-dialog.types';
 
 /**
  * AlertDialogFooter component
- * 
+ *
  * A layout component that wraps the action buttons of an alert dialog.
- * 
+ *
  * @example
  * ```tsx
  * <AlertDialogFooter>

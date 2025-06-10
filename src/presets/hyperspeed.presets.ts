@@ -1,4 +1,4 @@
-import { HyperspeedOptions } from '@/components/animations/hyperspeed';
+import { HyperspeedOptions } from '@/components/animations/hyperspeed/hyperspeed.types';
 
 export const hyperspeedPresets: Record<string, HyperspeedOptions> = {
   one: {

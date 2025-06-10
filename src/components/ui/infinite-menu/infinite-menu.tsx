@@ -9,8 +9,8 @@ import styles from './infinite-menu.module.css';
 import {
   ActiveItemCallback,
   Camera,
-  InitCallback,
   InfiniteMenuProps,
+  InitCallback,
   MenuItem,
   MovementChangeCallback
 } from './infinite-menu.types';
@@ -1120,13 +1120,13 @@ const defaultItems: MenuItem[] = [
 
 /**
  * InfiniteMenu Component
- * 
+ *
  * A WebGL-based 3D interactive menu with grid items.
  * Uses gl-matrix for 3D matrix operations and implements a custom WebGL renderer.
- * 
+ *
  * @example
  * ```tsx
- * <InfiniteMenu 
+ * <InfiniteMenu
  *   items={[
  *     {
  *       image: '/images/item1.jpg',
@@ -1134,11 +1134,13 @@ const defaultItems: MenuItem[] = [
  *       title: 'First Item',
  *       description: 'Description of the first item'
  *     }
- *   ]} 
+ *   ]}
  * />
  * ```
  */
-const InfiniteMenu = React.memo(function InfiniteMenu({ items = [] }: InfiniteMenuProps): JSX.Element {
+const InfiniteMenu = React.memo(function InfiniteMenu({
+  items = []
+}: InfiniteMenuProps): JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
   const [isMoving, setIsMoving] = useState<boolean>(false);
@@ -1189,11 +1191,7 @@ const InfiniteMenu = React.memo(function InfiniteMenu({ items = [] }: InfiniteMe
 
   return (
     <div className={styles.container}>
-      <canvas
-        id="infinite-grid-menu-canvas"
-        ref={canvasRef}
-        className={styles.canvas}
-      />
+      <canvas id="infinite-grid-menu-canvas" ref={canvasRef} className={styles.canvas} />
 
       {activeItem && (
         <>

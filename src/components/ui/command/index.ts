@@ -1,10 +1,10 @@
 /**
  * Command component module
- * 
+ *
  * A command menu powered by cmdk that can be used for command palettes, search overlays, and more.
  */
 
-import { 
+import {
   Command,
   CommandDialog,
   CommandEmpty,

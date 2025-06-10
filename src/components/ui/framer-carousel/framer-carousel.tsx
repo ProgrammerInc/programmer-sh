@@ -60,10 +60,10 @@ const SPRING_OPTIONS = { type: 'spring', stiffness: 300, damping: 30 };
 
 /**
  * CarouselItem Component
- * 
+ *
  * Renders an individual carousel item with 3D transformation effects.
  */
-const FramerCarouselItem = React.memo(function FramerCarouselItem({
+const FramerCarouselItemComponent = React.memo(function FramerCarouselItem({
   item,
   width,
   round,
@@ -84,12 +84,10 @@ const FramerCarouselItem = React.memo(function FramerCarouselItem({
       }}
       transition={transition}
     >
-      <div className={cn(
-        round ? styles['icon-container-round'] : styles['icon-container-default']
-      )}>
-        <span className={styles['icon-wrapper']}>
-          {item.icon}
-        </span>
+      <div
+        className={cn(round ? styles['icon-container-round'] : styles['icon-container-default'])}
+      >
+        <span className={styles['icon-wrapper']}>{item.icon}</span>
       </div>
       <div className={styles['content-container']}>
         <div className={styles['item-title']}>{item.title}</div>
@@ -99,11 +97,11 @@ const FramerCarouselItem = React.memo(function FramerCarouselItem({
   );
 });
 
-FramerCarouselItem.displayName = 'FramerCarouselItem';
+FramerCarouselItemComponent.displayName = 'FramerCarouselItem';
 
 /**
  * CarouselDots Component
- * 
+ *
  * Navigation dots for the carousel, showing the current position.
  */
 const FramerCarouselDots = React.memo(function FramerCarouselDots({
@@ -113,12 +111,7 @@ const FramerCarouselDots = React.memo(function FramerCarouselDots({
   round
 }: FramerCarouselDotsProps): JSX.Element {
   return (
-    <div
-      className={cn(
-        styles['dots-container'],
-        round ? styles['dots-container-round'] : ''
-      )}
-    >
+    <div className={cn(styles['dots-container'], round ? styles['dots-container-round'] : '')}>
       <div className={styles['dots-wrapper']}>
         {items.map((_, index) => (
           <motion.div
@@ -149,17 +142,17 @@ FramerCarouselDots.displayName = 'FramerCarouselDots';
 
 /**
  * FramerCarousel Component
- * 
+ *
  * A carousel component with 3D effects using Framer Motion.
  * Supports autoplay, looping, and touch/drag interactions.
- * 
+ *
  * @example
  * ```tsx
- * <FramerCarousel 
- *   items={items} 
- *   baseWidth={300} 
- *   autoplay={true} 
- *   loop={true} 
+ * <FramerCarousel
+ *   items={items}
+ *   baseWidth={300}
+ *   autoplay={true}
+ *   loop={true}
  * />
  * ```
  */
@@ -183,7 +176,7 @@ const FramerCarousel = React.memo(function FramerCarousel({
   const [isResetting, setIsResetting] = useState<boolean>(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   // Handle mouse hover events for pauseOnHover functionality
   useEffect(() => {
     if (pauseOnHover && containerRef.current) {
@@ -295,7 +288,7 @@ const FramerCarousel = React.memo(function FramerCarousel({
           // eslint-disable-next-line react-hooks/rules-of-hooks
           const rotateY = useTransform(x, range, outputRange, { clamp: false });
           return (
-            <FramerCarouselItem
+            <FramerCarouselItemComponent
               key={index}
               item={item}
               width={itemWidth}
@@ -306,8 +299,8 @@ const FramerCarousel = React.memo(function FramerCarousel({
           );
         })}
       </motion.div>
-      
-      <FramerCarouselDots 
+
+      <FramerCarouselDots
         items={items}
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
@@ -319,5 +312,5 @@ const FramerCarousel = React.memo(function FramerCarousel({
 
 FramerCarousel.displayName = 'FramerCarousel';
 
-export { FramerCarousel, FramerCarouselItem, FramerCarouselDots };
+export { FramerCarousel, FramerCarouselDots, FramerCarouselItemComponent };
 export default FramerCarousel;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 /**
  * Audio data type containing frequency information
@@ -56,7 +56,7 @@ export const DEFAULT_AUDIO_OPTIONS: AudioAnalyzerOptions = {
   fftSize: 2048,
   audioSource: 'mic',
   smoothingTimeConstant: 0.85, // Higher value for smoother transitions
-  visualSmoothingFactor: 0.3, // Smooth visual changes but keep responsiveness
+  visualSmoothingFactor: 0.3 // Smooth visual changes but keep responsiveness
 };
 
 interface WebkitWindow extends Window {
@@ -65,10 +65,10 @@ interface WebkitWindow extends Window {
 
 /**
  * Custom hook for audio analysis
- * 
- * This hook analyzes audio from microphone or audio file and returns 
+ *
+ * This hook analyzes audio from microphone or audio file and returns
  * frequency data that can be used for sound reactivity.
- * 
+ *
  * @param options - Audio analyzer configuration options
  * @returns Audio data and control functions
  */
@@ -77,7 +77,7 @@ export function useAudioAnalyzer(options: AudioAnalyzerOptions = {}) {
   const opts = useMemo(() => {
     return { ...DEFAULT_AUDIO_OPTIONS, ...options };
   }, [options]);
-  
+
   // State for audio context and related objects
   const [isAnalyzing, setIsAnalyzing] = useState(opts.enabled || false);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -87,17 +87,17 @@ export function useAudioAnalyzer(options: AudioAnalyzerOptions = {}) {
   const dataArrayRef = useRef<Uint8Array | null>(null);
   const animationFrameRef = useRef<number | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
-  
+
   // Track the previous audio data for smoothing transitions
   const prevDataRef = useRef<AudioData | null>(null);
-  
+
   // Initial audio data
   const [audioData, setAudioData] = useState<AudioData>({
     volume: 0,
     bass: 0,
     mid: 0,
     treble: 0,
-    frequencyData: new Uint8Array(0),
+    frequencyData: new Uint8Array(0)
   });
 
   // Cleanup function
@@ -144,7 +144,8 @@ export function useAudioAnalyzer(options: AudioAnalyzerOptions = {}) {
 
     try {
       // Create audio context
-      audioContextRef.current = new (window.AudioContext || (window as WebkitWindow).webkitAudioContext)();
+      audioContextRef.current = new (window.AudioContext ||
+        (window as WebkitWindow).webkitAudioContext)();
       const audioContext = audioContextRef.current;
 
       // Create analyzer node
@@ -162,7 +163,7 @@ export function useAudioAnalyzer(options: AudioAnalyzerOptions = {}) {
         // Request microphone access
         streamRef.current = await navigator.mediaDevices.getUserMedia({
           audio: true,
-          video: false,
+          video: false
         });
         sourceRef.current = audioContext.createMediaStreamSource(streamRef.current);
       } else if (opts.audioSource === 'file' && opts.audioFileUrl) {
@@ -241,14 +242,16 @@ export function useAudioAnalyzer(options: AudioAnalyzerOptions = {}) {
         let midAvg = (midSum / midCount) * sensitivity;
         let trebleAvg = (trebleSum / trebleCount) * sensitivity;
         let volumeAvg = (volumeSum / binCount) * sensitivity;
-        
+
         // Smooth audio data transitions using the previous values
         const smoothingFactor = opts.visualSmoothingFactor || 0.3;
         if (prevDataRef.current) {
           bassAvg = prevDataRef.current.bass * smoothingFactor + bassAvg * (1 - smoothingFactor);
           midAvg = prevDataRef.current.mid * smoothingFactor + midAvg * (1 - smoothingFactor);
-          trebleAvg = prevDataRef.current.treble * smoothingFactor + trebleAvg * (1 - smoothingFactor);
-          volumeAvg = prevDataRef.current.volume * smoothingFactor + volumeAvg * (1 - smoothingFactor);
+          trebleAvg =
+            prevDataRef.current.treble * smoothingFactor + trebleAvg * (1 - smoothingFactor);
+          volumeAvg =
+            prevDataRef.current.volume * smoothingFactor + volumeAvg * (1 - smoothingFactor);
         }
 
         // Clamp values
@@ -265,7 +268,7 @@ export function useAudioAnalyzer(options: AudioAnalyzerOptions = {}) {
           treble: trebleAvg,
           frequencyData: new Uint8Array(dataArray)
         };
-        
+
         // Update previous data reference for future smoothing
         prevDataRef.current = newAudioData;
 

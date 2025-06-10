@@ -17,22 +17,17 @@ import { DialogTitleProps } from './dialog.types';
  * <DialogTitle>Dialog Title</DialogTitle>
  * ```
  */
-const DialogTitle = memo(React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Title>,
-  DialogTitleProps
->(({ className, ...props }, ref) => {
-  const titleClassName = useMemo(() => {
-    return cn(styles['dialog-title'], className);
-  }, [className]);
+const DialogTitle = memo(
+  React.forwardRef<React.ElementRef<typeof DialogPrimitive.Title>, DialogTitleProps>(
+    ({ className, ...props }, ref) => {
+      const titleClassName = useMemo(() => {
+        return cn(styles['dialog-title'], className);
+      }, [className]);
 
-  return (
-    <DialogPrimitive.Title
-      ref={ref}
-      className={titleClassName}
-      {...props}
-    />
-  );
-}));
+      return <DialogPrimitive.Title ref={ref} className={titleClassName} {...props} />;
+    }
+  )
+);
 
 DialogTitle.displayName = DialogPrimitive.Title.displayName;
 

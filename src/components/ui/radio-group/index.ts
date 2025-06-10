@@ -1,10 +1,10 @@
 /**
  * Radio Group Component
- * 
+ *
  * A set of checkable buttons—known as radio buttons—where only one can be checked at a time.
  * This component is built on top of Radix UI's RadioGroup primitive for maximum
  * accessibility and customization.
- * 
+ *
  * Features:
  * - Keyboard navigation (arrow keys, space to select)
  * - Screen reader announcements
@@ -12,12 +12,12 @@
  * - Automatic ARIA attributes
  * - Customizable appearance
  * - Disabled state support
- * 
+ *
  * @example Basic usage
  * ```tsx
  * import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
  * import { Label } from '@/components/ui/label';
- * 
+ *
  * export function RadioGroupExample() {
  *   return (
  *     <RadioGroup defaultValue="option-one">
@@ -33,20 +33,20 @@
  *   );
  * }
  * ```
- * 
+ *
  * @example With form submission
  * ```tsx
  * import { useState } from 'react';
  * import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
- * 
+ *
  * export function RadioGroupForm() {
  *   const [value, setValue] = useState("default");
- *   
+ *
  *   const handleSubmit = (e) => {
  *     e.preventDefault();
  *     console.log('Selected option:', value);
  *   };
- *   
+ *
  *   return (
  *     <form onSubmit={handleSubmit}>
  *       <RadioGroup value={value} onValueChange={setValue}>

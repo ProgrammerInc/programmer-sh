@@ -1,12 +1,12 @@
 'use client';
 
 import { gsap } from 'gsap';
-import { useEffect, useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { getNoRotationTransform, getPushedTransform } from './bounce-cards.utils';
 
 /**
  * Hook to manage card animations for the BounceCards component
- * 
+ *
  * @param images - Array of image URLs
  * @param transformStyles - Array of transform styles for each card
  * @param animationDelay - Delay before animation starts

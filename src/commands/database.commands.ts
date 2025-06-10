@@ -21,7 +21,7 @@ const formatQueryOutput = (title: string, lines: string[]): string => {
  * @returns A promise that resolves after the specified duration
  */
 const mockDatabaseQuery = (duration: number = 1500): Promise<string> => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     setTimeout(() => {
       resolve('Query completed successfully!');
     }, duration);
@@ -39,13 +39,13 @@ export const queryCommand: Command = {
     // Add debug logging
     console.log('QUERY COMMAND EXECUTED', { args });
     console.log('%c DATABASE QUERY - COMMAND STARTED', 'background: #222; color: #bada55');
-    
+
     // Parse the time argument or use default
     const time = args ? parseInt(args, 10) : 1500;
     const validTime = !isNaN(time) ? time : 1500;
-    
+
     console.log('QUERY COMMAND TIME', { validTime });
-    
+
     // Log to verify we're returning an async command
     const result = {
       content: `Starting database query (will take ${validTime}ms)...`,
@@ -57,21 +57,18 @@ export const queryCommand: Command = {
         try {
           // Simulate database query
           const queryResult = await mockDatabaseQuery(validTime);
-          
+
           console.log('QUERY COMMAND COMPLETED', { queryResult });
-          
+
           return {
-            content: formatQueryOutput(
-              'Database Query Results',
-              [
-                `${queryResult}`,
-                '',
-                `Query completed in: ${validTime}ms`,
-                '',
-                'This command demonstrates the terminal loading animation',
-                'for async operations like database queries.',
-              ]
-            ),
+            content: formatQueryOutput('Database Query Results', [
+              `${queryResult}`,
+              '',
+              `Query completed in: ${validTime}ms`,
+              '',
+              'This command demonstrates the terminal loading animation',
+              'for async operations like database queries.'
+            ]),
             isError: false,
             rawHTML: true
           };

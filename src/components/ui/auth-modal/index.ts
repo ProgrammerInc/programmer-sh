@@ -1,12 +1,11 @@
 /**
  * Auth Modal Index
- * 
+ *
  * Exports the Auth Modal components, hooks, and types.
  */
 
 // Main component
-export { AuthModal } from './auth-modal';
-export { default as default } from './auth-modal';
+export { AuthModal, default as default } from './auth-modal';
 
 // Context and provider
 export { AuthModalContext } from './auth-modal.context';
@@ -16,22 +15,18 @@ export { AuthModalProvider } from './auth-modal.provider';
 export { useAuthForm, useAuthModal, useModalPosition } from './auth-modal.hooks';
 
 // Subcomponents
+export { Divider, FormInput, GoogleIcon, OAuthButton } from './auth-modal.components';
 export { AuthModalForm } from './auth-modal.form';
-export { Divider, FormInput, OAuthButton, GoogleIcon } from './auth-modal.components';
 
 // Types
-export type { 
-  AuthMode, 
-  AuthModalContextType, 
+export type {
+  AuthModalContextType,
   AuthModalProps,
+  AuthMode,
   FormInputProps,
-  OAuthButtonProps,
-  ModalFormProps 
+  ModalFormProps,
+  OAuthButtonProps
 } from './auth-modal.types';
 
 // Utils
-export { 
-  validateEmail, 
-  getModalPosition, 
-  getOAuthProviderConfig 
-} from './auth-modal.utils';
+export { getModalPosition, getOAuthProviderConfig, validateEmail } from './auth-modal.utils';

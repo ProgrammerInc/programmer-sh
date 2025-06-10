@@ -6,4 +6,4 @@
  * @module GradientCursor
  */
 
-export { GradientCursor, default } from './gradient-cursor';
+export { default, GradientCursor } from './gradient-cursor';

@@ -138,11 +138,7 @@ import { Button } from '@/components/ui/button';
 export function ProductTiltedCard({ product }) {
   return (
     <div className="relative">
-      <TiltedCard
-        imageSrc={product.imageUrl}
-        altText={product.name}
-        captionText={product.name}
-      />
+      <TiltedCard imageSrc={product.imageUrl} altText={product.name} captionText={product.name} />
       <Badge className="absolute top-2 right-2" variant="success">
         New
       </Badge>

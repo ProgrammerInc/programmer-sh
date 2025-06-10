@@ -7,5 +7,5 @@
  * @module LiquidChrome
  */
 
-export { LiquidChrome, default } from './liquid-chrome';
+export { default, LiquidChrome } from './liquid-chrome';
 export type { LiquidChromeProps } from './liquid-chrome.types';

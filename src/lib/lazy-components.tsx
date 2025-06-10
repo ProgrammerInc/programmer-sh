@@ -12,10 +12,15 @@ const createLazyComponent = <T extends object>(
 };
 
 // Heavy Three.js animations
-export const LazyGlobe = createLazyComponent(() => import('@/components/animations/globe/globe.tsx'));
+export const LazyGlobe = createLazyComponent(
+  () => import('@/components/animations/globe/globe.tsx')
+);
 
 export const LazyHyperspeed = createLazyComponent(
-  () => import(/* webpackChunkName: "hyperspeed-animation" */ '../components/animations/hyperspeed/hyperspeed.tsx')
+  () =>
+    import(
+      /* webpackChunkName: "hyperspeed-animation" */ '../components/animations/hyperspeed/hyperspeed.tsx'
+    )
 );
 
 export const LazyCosmicScene = createLazyComponent(
@@ -44,7 +49,10 @@ export const LazyParticleNetwork = createLazyComponent(
 );
 
 export const LazyAuroraBackground = createLazyComponent(
-  () => import(/* webpackChunkName: "aurora-background-animation" */ '@/components/animations/aurora-background/aurora-background.tsx')
+  () =>
+    import(
+      /* webpackChunkName: "aurora-background-animation" */ '@/components/animations/aurora-background/aurora-background.tsx'
+    )
 );
 
 export const LazyAuroraCanvas = createLazyComponent(
@@ -60,11 +68,17 @@ export const LazyBackgroundBoxes = createLazyComponent(
 );
 
 export const LazyBallpit = createLazyComponent(
-  () => import(/* webpackChunkName: "ballpit-animation" */ '@/components/animations/ballpit/ballpit.tsx')
+  () =>
+    import(
+      /* webpackChunkName: "ballpit-animation" */ '@/components/animations/ballpit/ballpit.tsx'
+    )
 );
 
 export const LazyCrazyBallpit = createLazyComponent(
-  () => import(/* webpackChunkName: "crazy-ballpit-animation" */ '@/components/animations/crazy-ballpit/ballpit.tsx')
+  () =>
+    import(
+      /* webpackChunkName: "crazy-ballpit-animation" */ '@/components/animations/crazy-ballpit/ballpit.tsx'
+    )
 );
 
 export const LazyMeteors = createLazyComponent(

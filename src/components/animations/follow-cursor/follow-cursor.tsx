@@ -114,6 +114,7 @@ export const FollowCursor = memo(function FollowCursor({
     <div className={`container ${className}`} ref={containerRef}>
       <animated.div
         ref={domTarget}
+        // eslint-disable-next-line no-secrets/no-secrets
         className="absolute w-[180px] h-[150px] bg-cover bg-[url('https://res.cloudinary.com/practicaldev/image/fetch/s--8mUhEkXE--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/km2w1ppw3yw9pd9na7mu.gif')] rounded-[15px] shadow-[0px_10px_30px_-5px_rgba(0,0,0,0.3)] transition duration-500 [transition-property:shadow,opacity] [will-change:transform] touch-none"
         style={{
           width: cardWidth,

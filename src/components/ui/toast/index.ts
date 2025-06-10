@@ -1,9 +1,9 @@
 /**
  * Toast UI Component
- * 
+ *
  * A toast component for showing temporary notifications and information to users.
  * Based on Radix UI Toast primitive with enhanced styling and functionality.
- * 
+ *
  * Features:
  * - Multiple style variants (default, destructive)
  * - Action buttons
@@ -12,7 +12,7 @@
  * - Keyboard accessible
  * - Customizable duration
  * - Responsive placement
- * 
+ *
  * @example
  * ```tsx
  * // Basic usage
@@ -29,7 +29,7 @@
  *   </Button>
  *   <ToastViewport />
  * </ToastProvider>
- * 
+ *
  * // Custom toast with action
  * toast({
  *   title: "New message",
@@ -40,8 +40,6 @@
  */
 
 // Export toast components and types
-export * from './toast.types';
-export * from './toast.variants';
 export {
   Toast,
   ToastAction,
@@ -49,8 +47,10 @@ export {
   ToastDescription,
   ToastProvider,
   ToastTitle,
-  ToastViewport,
+  ToastViewport
 } from './toast';
+export * from './toast.types';
+export * from './toast.variants';
 
 // For backwards compatibility
 import { Toast } from './toast';

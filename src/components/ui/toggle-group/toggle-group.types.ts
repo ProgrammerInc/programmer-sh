@@ -17,7 +17,7 @@ export interface ToggleGroupContextValue {
 
 /**
  * ToggleGroup component props
- * 
+ *
  * @property {"default" | "outline"} [variant] - The visual variant of the toggle group items
  * @property {"default" | "sm" | "lg"} [size] - The size of the toggle group items
  * @property {"single" | "multiple"} [type] - Whether a single or multiple items can be pressed at once
@@ -27,7 +27,7 @@ export interface ToggleGroupContextValue {
  * @property {"horizontal" | "vertical"} [orientation] - The orientation of the toggle group
  * @property {React.ReactNode} [children] - The toggle group items
  * @property {string} [className] - Additional CSS class names
- * 
+ *
  * @example
  * ```tsx
  * <ToggleGroup
@@ -52,12 +52,12 @@ export interface ToggleGroupProps
 
 /**
  * ToggleGroupItem component props
- * 
+ *
  * @property {"default" | "outline"} [variant] - The visual variant of the toggle item
  * @property {"default" | "sm" | "lg"} [size] - The size of the toggle item
  * @property {string} value - The unique value of the toggle item
  * @property {boolean} [disabled] - Whether the toggle item is disabled
- * 
+ *
  * @example
  * ```tsx
  * <ToggleGroupItem value="left" aria-label="Left aligned">

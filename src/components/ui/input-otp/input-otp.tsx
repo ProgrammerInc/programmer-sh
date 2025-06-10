@@ -1,14 +1,14 @@
 import { OTPInput, OTPInputContext } from 'input-otp';
-import * as React from 'react';
 import { Dot } from 'lucide-react';
+import * as React from 'react';
 
 import { cn } from '@/utils/app.utils';
 import styles from './input-otp.module.css';
 import {
-  InputOTPProps,
   InputOTPGroupProps,
-  InputOTPSlotProps,
-  InputOTPSeparatorProps
+  InputOTPProps,
+  InputOTPSeparatorProps,
+  InputOTPSlotProps
 } from './input-otp.types';
 
 /**
@@ -26,11 +26,7 @@ import {
  */
 const InputOTPGroupComponent = React.memo(
   React.forwardRef<HTMLDivElement, InputOTPGroupProps>(({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(styles['input-otp-group'], className)}
-      {...props}
-    />
+    <div ref={ref} className={cn(styles['input-otp-group'], className)} {...props} />
   ))
 );
 
@@ -48,31 +44,29 @@ InputOTPGroupComponent.displayName = 'InputOTPGroup';
  * ```
  */
 const InputOTPSlotComponent = React.memo(
-  React.forwardRef<HTMLDivElement, InputOTPSlotProps>(
-    ({ index, className, ...props }, ref) => {
-      const inputOTPContext = React.useContext(OTPInputContext);
-      const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index];
+  React.forwardRef<HTMLDivElement, InputOTPSlotProps>(({ index, className, ...props }, ref) => {
+    const inputOTPContext = React.useContext(OTPInputContext);
+    const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index];
 
-      return (
-        <div
-          ref={ref}
-          className={cn(
-            styles['input-otp-slot'],
-            isActive && styles['input-otp-slot-active'],
-            className
-          )}
-          {...props}
-        >
-          {char}
-          {hasFakeCaret && (
-            <div className={styles['input-otp-caret']}>
-              <div className={styles['input-otp-caret-blink']} />
-            </div>
-          )}
-        </div>
-      );
-    }
-  )
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          styles['input-otp-slot'],
+          isActive && styles['input-otp-slot-active'],
+          className
+        )}
+        {...props}
+      >
+        {char}
+        {hasFakeCaret && (
+          <div className={styles['input-otp-caret']}>
+            <div className={styles['input-otp-caret-blink']} />
+          </div>
+        )}
+      </div>
+    );
+  })
 );
 
 InputOTPSlotComponent.displayName = 'InputOTPSlot';
@@ -90,18 +84,16 @@ InputOTPSlotComponent.displayName = 'InputOTPSlot';
  * ```
  */
 const InputOTPSeparatorComponent = React.memo(
-  React.forwardRef<HTMLDivElement, InputOTPSeparatorProps>(
-    ({ className, ...props }, ref) => (
-      <div
-        ref={ref}
-        className={cn(styles['input-otp-separator'], className)}
-        role="separator"
-        {...props}
-      >
-        <Dot />
-      </div>
-    )
-  )
+  React.forwardRef<HTMLDivElement, InputOTPSeparatorProps>(({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(styles['input-otp-separator'], className)}
+      role="separator"
+      {...props}
+    >
+      <Dot />
+    </div>
+  ))
 );
 
 InputOTPSeparatorComponent.displayName = 'InputOTPSeparator';
@@ -128,10 +120,7 @@ const InputOTPComponent = React.memo(
       return (
         <OTPInput
           ref={ref}
-          containerClassName={cn(
-            styles['input-otp-container'],
-            containerClassName
-          )}
+          containerClassName={cn(styles['input-otp-container'], containerClassName)}
           className={cn(styles['input-otp'], className)}
           maxLength={props.maxLength || 4}
           {...props}
@@ -158,8 +147,8 @@ InputOTPComponent.displayName = 'InputOTP';
 const InputOTP = Object.assign(InputOTPComponent, {
   Group: InputOTPGroupComponent,
   Slot: InputOTPSlotComponent,
-  Separator: InputOTPSeparatorComponent,
+  Separator: InputOTPSeparatorComponent
 });
 
 export { InputOTP };
-export type { InputOTPProps, InputOTPGroupProps, InputOTPSlotProps, InputOTPSeparatorProps };
+export type { InputOTPGroupProps, InputOTPProps, InputOTPSeparatorProps, InputOTPSlotProps };

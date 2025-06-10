@@ -97,11 +97,7 @@ export const GridDistortion = memo(function GridDistortion({
       className={`${styles['grid-distortion-container']} ${className}`}
       aria-label="Interactive grid distortion effect"
     >
-      {error && (
-        <div className={styles['error-message']}>
-          {error}
-        </div>
-      )}
+      {error && <div className={styles['error-message']}>{error}</div>}
     </div>
   );
 });

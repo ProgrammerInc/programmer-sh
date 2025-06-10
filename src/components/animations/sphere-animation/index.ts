@@ -6,6 +6,6 @@
  * @module SphereAnimation
  */
 
-export { SphereAnimation, default } from './sphere-animation';
+export { default, SphereAnimation } from './sphere-animation';
 export * as SphereAnimationStyles from './sphere-animation.module.css';
 export type { SphereAnimationProps } from './sphere-animation.types';

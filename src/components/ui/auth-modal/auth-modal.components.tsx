@@ -15,7 +15,7 @@ import { getOAuthProviderConfig } from './auth-modal.utils';
 
 /**
  * Form Input Component
- * 
+ *
  * Renders a styled form input with label and icon
  */
 export const FormInput: React.FC<FormInputProps> = ({
@@ -31,16 +31,11 @@ export const FormInput: React.FC<FormInputProps> = ({
 }) => {
   return (
     <div className={styles.formGroup}>
-      <label
-        htmlFor={id}
-        className={styles.label}
-      >
+      <label htmlFor={id} className={styles.label}>
         {label}
       </label>
       <div className="relative">
-        <div className={styles.inputIcon}>
-          {icon}
-        </div>
+        <div className={styles.inputIcon}>{icon}</div>
         <input
           type={type}
           id={id}
@@ -91,7 +86,7 @@ export const GoogleIcon: React.FC<{ size?: number; className?: string }> = ({
 
 /**
  * OAuth Button Component
- * 
+ *
  * Renders a styled button for OAuth authentication
  */
 export const OAuthButton: React.FC<OAuthButtonProps> = ({
@@ -111,9 +106,7 @@ export const OAuthButton: React.FC<OAuthButtonProps> = ({
       className={cn(styles.oauthButton, config.className)}
       style={{ backgroundColor: config.color }}
     >
-      <span className={styles.oauthButtonIcon}>
-        {config.icon}
-      </span>
+      <span className={styles.oauthButtonIcon}>{config.icon}</span>
       {config.label}
     </button>
   );
@@ -121,7 +114,7 @@ export const OAuthButton: React.FC<OAuthButtonProps> = ({
 
 /**
  * Divider Component
- * 
+ *
  * Renders a horizontal divider with text
  */
 export const Divider: React.FC<{ text: string }> = ({ text }) => {

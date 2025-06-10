@@ -7,10 +7,31 @@
 /**
  * Supported social media platform types
  */
-export type SocialLinkType = 'bitbucket' | 'bluesky' | 'cashapp' | 'discord' | 'email' | 
-  'facebook' | 'github' | 'gitlab' | 'instagram' | 'linkedin' | 'mastodon' | 
-  'patreon' | 'paypal' | 'pinterest' | 'reddit' | 'slack' | 'snapchat' | 
-  'telegram' | 'threads' | 'tiktok' | 'twitter' | 'venmo' | 'website' | 'youtube';
+export type SocialLinkType =
+  | 'bitbucket'
+  | 'bluesky'
+  | 'cashapp'
+  | 'discord'
+  | 'email'
+  | 'facebook'
+  | 'github'
+  | 'gitlab'
+  | 'instagram'
+  | 'linkedin'
+  | 'mastodon'
+  | 'patreon'
+  | 'paypal'
+  | 'pinterest'
+  | 'reddit'
+  | 'slack'
+  | 'snapchat'
+  | 'telegram'
+  | 'threads'
+  | 'tiktok'
+  | 'twitter'
+  | 'venmo'
+  | 'website'
+  | 'youtube';
 
 /**
  * Social link information interface
@@ -35,7 +56,7 @@ export interface SocialLinkCollection {
 
 /**
  * Function to validate a social link URL
- * 
+ *
  * @param url - The URL to validate
  * @param type - The type of social link
  * @returns Whether the URL is valid for the given type
@@ -44,7 +65,7 @@ export function isValidSocialLinkUrl(url: string, type: SocialLink['type']): boo
   if (!url || typeof url !== 'string') {
     return false;
   }
-  
+
   // Basic URL validation
   try {
     new URL(url);
@@ -55,7 +76,7 @@ export function isValidSocialLinkUrl(url: string, type: SocialLink['type']): boo
     }
     return false;
   }
-  
+
   return true;
 }
 

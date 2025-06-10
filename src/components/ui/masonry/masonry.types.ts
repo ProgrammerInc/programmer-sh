@@ -1,8 +1,8 @@
 /**
  * MasonryItem Interface
- * 
+ *
  * Represents a single item in the masonry grid.
- * 
+ *
  * @example
  * ```tsx
  * const items: MasonryItem[] = [
@@ -38,10 +38,10 @@ export interface MasonryItem {
 
 /**
  * GridItem Interface
- * 
+ *
  * Extends MasonryItem with position and dimension data for rendering.
  * This interface is used internally by the Masonry component.
- * 
+ *
  * @example
  * ```tsx
  * // Typically created internally by the Masonry component
@@ -75,9 +75,9 @@ export interface GridItem extends MasonryItem {
 
 /**
  * MasonryProps Interface
- * 
+ *
  * Props for the Masonry component.
- * 
+ *
  * @example
  * ```tsx
  * <Masonry data={masonryItems} />

@@ -9,7 +9,7 @@
 
 import useMouseEnter from '@/hooks/use-mouse-enter.hook';
 import { cn } from '@/utils/app.utils';
-import React, { ElementType, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import styles from './3d-card.module.css';
 import { CardItemProps } from './3d-card.types';

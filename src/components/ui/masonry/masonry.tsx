@@ -6,7 +6,11 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 
 import styles from './masonry.module.css';
 import { GridItem, MasonryProps } from './masonry.types';
-import { MASONRY_DEFAULTS, calculateGridPositions, getColumnCountForScreenSize } from './masonry.utils';
+import {
+  MASONRY_DEFAULTS,
+  calculateGridPositions,
+  getColumnCountForScreenSize
+} from './masonry.utils';
 
 /**
  * Masonry Component
@@ -18,7 +22,7 @@ import { MASONRY_DEFAULTS, calculateGridPositions, getColumnCountForScreenSize }
  * ```tsx
  * // Basic usage
  * <Masonry data={items} />
- * 
+ *
  * // Where items is an array of MasonryItem objects
  * const items = [
  *   { id: 1, height: 400, image: '/images/example1.jpg' },
@@ -76,17 +80,13 @@ export const MasonryComponent: React.FC<MasonryProps> = ({ data }) => {
   });
 
   return (
-    <div 
-      ref={containerRef} 
-      className={styles['masonry-container']} 
+    <div
+      ref={containerRef}
+      className={styles['masonry-container']}
       style={{ height: Math.max(...heights) }}
     >
       {transitions((style, item) => (
-        <a.div
-          key={item.id}
-          style={style}
-          className={styles['masonry-item']}
-        >
+        <a.div key={item.id} style={style} className={styles['masonry-item']}>
           <div
             className={styles['masonry-image']}
             style={{

@@ -7,6 +7,6 @@
  * @module ParticleVeil
  */
 
-export { ParticleVeil, default } from './particle-veil';
+export { default, ParticleVeil } from './particle-veil';
 export * as ParticleVeilStyles from './particle-veil.module.css';
 export type { ParticleVeilProps } from './particle-veil.types';

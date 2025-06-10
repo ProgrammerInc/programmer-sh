@@ -1,6 +1,6 @@
 /**
  * Dock Component
- * 
+ *
  * A macOS-style dock that provides a magnification effect when hovering over items.
  */
 import Dock, { DockIcon, DockItem, DockLabel } from './dock';

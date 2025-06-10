@@ -1,3 +1,4 @@
+/* eslint-disable no-secrets/no-secrets */
 /**
  * Alert Dialog Content Component
  *
@@ -12,15 +13,15 @@ import * as React from 'react';
 import { memo, useMemo } from 'react';
 
 import styles from './alert-dialog.module.css';
-import { AlertDialogContentProps } from './alert-dialog.types';
 import AlertDialogOverlay from './alert-dialog.overlay';
 import AlertDialogPortal from './alert-dialog.portal';
+import { AlertDialogContentProps } from './alert-dialog.types';
 
 /**
  * AlertDialogContent component
- * 
+ *
  * Contains the main content of the alert dialog.
- * 
+ *
  * @example
  * ```tsx
  * <AlertDialogContent>
@@ -35,25 +36,22 @@ import AlertDialogPortal from './alert-dialog.portal';
  * </AlertDialogContent>
  * ```
  */
-export const AlertDialogContent = memo(React.forwardRef<
-  React.ElementRef<typeof AlertDialogPrimitive.Content>,
-  AlertDialogContentProps
->(({ className, ...props }, ref) => {
-  const contentClassName = useMemo(() => {
-    return cn(styles.content, className);
-  }, [className]);
+export const AlertDialogContent = memo(
+  React.forwardRef<React.ElementRef<typeof AlertDialogPrimitive.Content>, AlertDialogContentProps>(
+    ({ className, ...props }, ref) => {
+      const contentClassName = useMemo(() => {
+        return cn(styles.content, className);
+      }, [className]);
 
-  return (
-    <AlertDialogPortal>
-      <AlertDialogOverlay />
-      <AlertDialogPrimitive.Content
-        ref={ref}
-        className={contentClassName}
-        {...props}
-      />
-    </AlertDialogPortal>
-  );
-}));
+      return (
+        <AlertDialogPortal>
+          <AlertDialogOverlay />
+          <AlertDialogPrimitive.Content ref={ref} className={contentClassName} {...props} />
+        </AlertDialogPortal>
+      );
+    }
+  )
+);
 
 AlertDialogContent.displayName = AlertDialogPrimitive.Content.displayName;
 

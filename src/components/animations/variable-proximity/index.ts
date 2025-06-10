@@ -7,6 +7,6 @@
  * @module VariableProximity
  */
 
-export { VariableProximity, default } from './variable-proximity';
+export { default, VariableProximity } from './variable-proximity';
 export * as VariableProximityStyles from './variable-proximity.module.css';
 export type { VariableProximityProps } from './variable-proximity.types';

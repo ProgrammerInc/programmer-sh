@@ -8,29 +8,26 @@ import { memo, useMemo } from 'react';
 
 import styles from './sheet.module.css';
 import {
-  SheetCloseProps,
   SheetContentProps,
   SheetDescriptionProps,
   SheetFooterProps,
   SheetHeaderProps,
   SheetOverlayProps,
-  SheetProps,
-  SheetTitleProps,
-  SheetTriggerProps
+  SheetTitleProps
 } from './sheet.types';
 
 /**
  * Sheet Component
- * 
+ *
  * A modal dialog that slides in from the edge of the screen. Based on Radix UI's Dialog primitive.
- * 
+ *
  * Features:
  * - Can appear from different directions (top, bottom, left, right)
  * - Includes overlay that dims the background
  * - Supports header, content, and footer sections
  * - Fully accessible with keyboard navigation and screen reader support
  * - Animated entrance and exit
- * 
+ *
  * @example
  * ```tsx
  * <Sheet>
@@ -53,9 +50,9 @@ Sheet.displayName = 'Sheet';
 
 /**
  * Sheet Trigger Component
- * 
+ *
  * The button that opens the sheet dialog when clicked.
- * 
+ *
  * @example
  * ```tsx
  * <SheetTrigger>Open Sheet</SheetTrigger>
@@ -66,9 +63,9 @@ SheetTrigger.displayName = SheetPrimitive.Trigger.displayName;
 
 /**
  * Sheet Close Component
- * 
+ *
  * The button that closes the sheet dialog when clicked.
- * 
+ *
  * @example
  * ```tsx
  * <SheetClose>Close Sheet</SheetClose>
@@ -79,10 +76,10 @@ SheetClose.displayName = SheetPrimitive.Close.displayName;
 
 /**
  * Sheet Portal Component
- * 
+ *
  * Renders sheet content in a portal, ensuring it appears above other content
  * regardless of the DOM hierarchy.
- * 
+ *
  * @example
  * ```tsx
  * <SheetPortal>
@@ -91,111 +88,101 @@ SheetClose.displayName = SheetPrimitive.Close.displayName;
  * </SheetPortal>
  * ```
  */
-const SheetPortal = memo(({ ...props }) => (
-  <SheetPrimitive.Portal {...props} />
-));
+const SheetPortal = memo(({ ...props }) => <SheetPrimitive.Portal {...props} />);
 SheetPortal.displayName = 'SheetPortal';
 
 /**
  * Sheet Overlay Component
- * 
+ *
  * The semi-transparent backdrop that appears behind the sheet content.
  * Darkens the background and helps focus attention on the sheet content.
- * 
+ *
  * @example
  * ```tsx
  * <SheetOverlay className="custom-overlay-class" />
  * ```
  */
-const SheetOverlay = memo(React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Overlay>,
-  SheetOverlayProps
->(({ className, ...props }, ref) => {
-  const overlayClassName = useMemo(() => {
-    return cn(styles.overlay, className);
-  }, [className]);
+const SheetOverlay = memo(
+  React.forwardRef<React.ElementRef<typeof SheetPrimitive.Overlay>, SheetOverlayProps>(
+    ({ className, ...props }, ref) => {
+      const overlayClassName = useMemo(() => {
+        return cn(styles.overlay, className);
+      }, [className]);
 
-  return (
-    <SheetPrimitive.Overlay
-      className={overlayClassName}
-      ref={ref}
-      {...props}
-    />
-  );
-}));
+      return <SheetPrimitive.Overlay className={overlayClassName} ref={ref} {...props} />;
+    }
+  )
+);
 
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
 /**
  * Sheet Content Component
- * 
+ *
  * The main container for sheet content. Supports different positions (sides).
  * Includes a close button in the top-right corner.
- * 
+ *
  * @example
  * ```tsx
  * // Default (right side)
  * <SheetContent>
  *   Content here
  * </SheetContent>
- * 
+ *
  * // From the left side
  * <SheetContent side="left">
  *   Content here
  * </SheetContent>
- * 
+ *
  * // From the top
  * <SheetContent side="top">
  *   Content here
  * </SheetContent>
- * 
+ *
  * // From the bottom
  * <SheetContent side="bottom">
  *   Content here
  * </SheetContent>
  * ```
  */
-const SheetContent = memo(React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Content>,
-  SheetContentProps
->(({ side = 'right', className, children, ...props }, ref) => {
-  const contentClassName = useMemo(() => {
-    const sideClass = {
-      top: styles['content-top'],
-      bottom: styles['content-bottom'],
-      left: styles['content-left'],
-      right: styles['content-right']
-    }[side];
-    
-    return cn(styles.content, sideClass, className);
-  }, [side, className]);
+const SheetContent = memo(
+  React.forwardRef<React.ElementRef<typeof SheetPrimitive.Content>, SheetContentProps>(
+    ({ side = 'right', className, children, ...props }, ref) => {
+      const contentClassName = useMemo(() => {
+        const sideClass = {
+          top: styles['content-top'],
+          bottom: styles['content-bottom'],
+          left: styles['content-left'],
+          right: styles['content-right']
+        }[side];
 
-  return (
-    <SheetPortal>
-      <SheetOverlay />
-      <SheetPrimitive.Content 
-        ref={ref} 
-        className={contentClassName} 
-        {...props}
-      >
-        {children}
-        <SheetPrimitive.Close className={styles['close-button']}>
-          <X className={styles['close-icon']} />
-          <span className={styles['sr-only']}>Close</span>
-        </SheetPrimitive.Close>
-      </SheetPrimitive.Content>
-    </SheetPortal>
-  );
-}));
+        return cn(styles.content, sideClass, className);
+      }, [side, className]);
+
+      return (
+        <SheetPortal>
+          <SheetOverlay />
+          <SheetPrimitive.Content ref={ref} className={contentClassName} {...props}>
+            {children}
+            <SheetPrimitive.Close className={styles['close-button']}>
+              <X className={styles['close-icon']} />
+              <span className={styles['sr-only']}>Close</span>
+            </SheetPrimitive.Close>
+          </SheetPrimitive.Content>
+        </SheetPortal>
+      );
+    }
+  )
+);
 
 SheetContent.displayName = SheetPrimitive.Content.displayName;
 
 /**
  * Sheet Header Component
- * 
+ *
  * Container for the sheet title and description at the top of the sheet.
  * Typically contains SheetTitle and SheetDescription components.
- * 
+ *
  * @example
  * ```tsx
  * <SheetHeader>
@@ -216,10 +203,10 @@ SheetHeader.displayName = 'SheetHeader';
 
 /**
  * Sheet Footer Component
- * 
+ *
  * Container for buttons and actions at the bottom of the sheet.
  * On mobile, buttons are stacked and reversed; on desktop, they're aligned in a row.
- * 
+ *
  * @example
  * ```tsx
  * <SheetFooter>
@@ -240,38 +227,33 @@ SheetFooter.displayName = 'SheetFooter';
 
 /**
  * Sheet Title Component
- * 
+ *
  * The title of the sheet. Automatically connected to the sheet content via aria-labelledby.
- * 
+ *
  * @example
  * ```tsx
  * <SheetTitle>Edit Profile</SheetTitle>
  * ```
  */
-const SheetTitle = memo(React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Title>,
-  SheetTitleProps
->(({ className, ...props }, ref) => {
-  const titleClassName = useMemo(() => {
-    return cn(styles.title, className);
-  }, [className]);
+const SheetTitle = memo(
+  React.forwardRef<React.ElementRef<typeof SheetPrimitive.Title>, SheetTitleProps>(
+    ({ className, ...props }, ref) => {
+      const titleClassName = useMemo(() => {
+        return cn(styles.title, className);
+      }, [className]);
 
-  return (
-    <SheetPrimitive.Title
-      ref={ref}
-      className={titleClassName}
-      {...props}
-    />
-  );
-}));
+      return <SheetPrimitive.Title ref={ref} className={titleClassName} {...props} />;
+    }
+  )
+);
 
 SheetTitle.displayName = SheetPrimitive.Title.displayName;
 
 /**
  * Sheet Description Component
- * 
+ *
  * The description of the sheet. Automatically connected to the sheet content via aria-describedby.
- * 
+ *
  * @example
  * ```tsx
  * <SheetDescription>
@@ -279,22 +261,17 @@ SheetTitle.displayName = SheetPrimitive.Title.displayName;
  * </SheetDescription>
  * ```
  */
-const SheetDescription = memo(React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Description>,
-  SheetDescriptionProps
->(({ className, ...props }, ref) => {
-  const descriptionClassName = useMemo(() => {
-    return cn(styles.description, className);
-  }, [className]);
+const SheetDescription = memo(
+  React.forwardRef<React.ElementRef<typeof SheetPrimitive.Description>, SheetDescriptionProps>(
+    ({ className, ...props }, ref) => {
+      const descriptionClassName = useMemo(() => {
+        return cn(styles.description, className);
+      }, [className]);
 
-  return (
-    <SheetPrimitive.Description
-      ref={ref}
-      className={descriptionClassName}
-      {...props}
-    />
-  );
-}));
+      return <SheetPrimitive.Description ref={ref} className={descriptionClassName} {...props} />;
+    }
+  )
+);
 
 SheetDescription.displayName = SheetPrimitive.Description.displayName;
 

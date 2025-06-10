@@ -17,30 +17,25 @@ import { AlertDialogCancelProps } from './alert-dialog.types';
 
 /**
  * AlertDialogCancel component
- * 
+ *
  * The cancel button in the alert dialog.
- * 
+ *
  * @example
  * ```tsx
  * <AlertDialogCancel>Cancel</AlertDialogCancel>
  * ```
  */
-export const AlertDialogCancel = memo(React.forwardRef<
-  React.ElementRef<typeof AlertDialogPrimitive.Cancel>,
-  AlertDialogCancelProps
->(({ className, ...props }, ref) => {
-  const cancelClassName = useMemo(() => {
-    return cn(buttonVariants({ variant: 'outline' }), styles.cancel, className);
-  }, [className]);
+export const AlertDialogCancel = memo(
+  React.forwardRef<React.ElementRef<typeof AlertDialogPrimitive.Cancel>, AlertDialogCancelProps>(
+    ({ className, ...props }, ref) => {
+      const cancelClassName = useMemo(() => {
+        return cn(buttonVariants({ variant: 'outline' }), styles.cancel, className);
+      }, [className]);
 
-  return (
-    <AlertDialogPrimitive.Cancel
-      ref={ref}
-      className={cancelClassName}
-      {...props}
-    />
-  );
-}));
+      return <AlertDialogPrimitive.Cancel ref={ref} className={cancelClassName} {...props} />;
+    }
+  )
+);
 
 AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName;
 

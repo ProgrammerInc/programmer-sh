@@ -1,16 +1,17 @@
 #!/usr/bin/env ts-node
+/* eslint-disable no-secrets/no-secrets */
+
 /**
  * QR Code Presets Database Loader
- * 
+ *
  * This script loads the QR code presets from the static presets file
  * into the Supabase database.
  */
 
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
-import { v4 as uuidv4 } from 'uuid';
-import { qrcodePresets } from '../src/presets/qrcode.presets';
 import type { ImageSettings } from '../src/components/ui/qr-code/qr-code.types';
+import { qrcodePresets } from '../src/presets/qrcode.presets';
 
 // Initialize environment variables
 dotenv.config();
@@ -43,7 +44,10 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 /**
  * Insert a QR code preset if it doesn't exist
  */
-const insertQRCodePreset = async (identifier: string, preset: ImageSettings): Promise<string | null> => {
+const insertQRCodePreset = async (
+  identifier: string,
+  preset: ImageSettings
+): Promise<string | null> => {
   try {
     // Check if preset already exists
     const { data: existingPreset } = await supabase
@@ -60,8 +64,19 @@ const insertQRCodePreset = async (identifier: string, preset: ImageSettings): Pr
     // Format preset for database
     const presetData = {
       identifier,
-      name: identifier.charAt(0).toUpperCase() + identifier.slice(1).replace(/([A-Z])/g, ' $1').trim(),
-      description: `${identifier.charAt(0).toUpperCase() + identifier.slice(1).replace(/([A-Z])/g, ' $1').trim()} QR code preset`,
+      name:
+        identifier.charAt(0).toUpperCase() +
+        identifier
+          .slice(1)
+          .replace(/([A-Z])/g, ' $1')
+          .trim(),
+      description: `${
+        identifier.charAt(0).toUpperCase() +
+        identifier
+          .slice(1)
+          .replace(/([A-Z])/g, ' $1')
+          .trim()
+      } QR code preset`,
       src: preset.src,
       height: preset.height,
       width: preset.width,
@@ -102,13 +117,13 @@ const insertQRCodePreset = async (identifier: string, preset: ImageSettings): Pr
  */
 const loadQRCodePresets = async () => {
   console.log('\x1b[36mStarting QR code presets database load...\x1b[0m');
-  
+
   try {
     // Process all QR code presets in sequence
     for (const [id, preset] of Object.entries(qrcodePresets)) {
       await insertQRCodePreset(id, preset);
     }
-    
+
     console.log('\x1b[32mQR code presets loaded successfully!\x1b[0m');
   } catch (error) {
     console.error('\x1b[31mError loading QR code presets:\x1b[0m', error);

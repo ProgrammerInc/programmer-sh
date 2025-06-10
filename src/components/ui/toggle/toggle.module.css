@@ -31,7 +31,7 @@
   opacity: 0.5;
 }
 
-.toggle[data-state="on"] {
+.toggle[data-state='on'] {
   background-color: var(--accent);
   color: var(--accent-foreground);
 }

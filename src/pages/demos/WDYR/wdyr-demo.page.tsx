@@ -7,7 +7,7 @@
 
 import { logger } from '@/services/logger';
 import { memo, useCallback, useEffect, useState } from 'react';
-import './WDYRDemo.module.css';
+import './wdyr-demo.module.css';
 
 // Create a component-specific logger
 const wdyrLogger = logger.createChildLogger('WDYRDemo');

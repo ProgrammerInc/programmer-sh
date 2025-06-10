@@ -7,6 +7,6 @@
  * @module StarryBackground
  */
 
-export { StarryBackground, default } from './starry-background';
+export { default, StarryBackground } from './starry-background';
 export * as StarryBackgroundStyles from './starry-background.module.css';
 export type { StarryBackgroundProps } from './starry-background.types';

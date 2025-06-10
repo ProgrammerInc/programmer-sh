@@ -2,9 +2,9 @@ import * as React from 'react';
 
 /**
  * InputOTP Component Props
- * 
+ *
  * Props for the main OTP input component.
- * 
+ *
  * @example
  * const example = <InputOTP maxLength={6} containerClassName="custom-container" />;
  */
@@ -56,7 +56,7 @@ export interface InputOTPProps {
 
   /**
    * CSS fallback for devices without JavaScript
-   * 
+   *
    * This should be a string containing CSS styles
    */
   noScriptCSSFallback?: string;
@@ -69,9 +69,9 @@ export interface InputOTPProps {
 
 /**
  * InputOTPGroup Component Props
- * 
+ *
  * Props for the container that groups OTP input slots.
- * 
+ *
  * @example
  * const example = <InputOTPGroup className="custom-group-class">...</InputOTPGroup>;
  */
@@ -84,9 +84,9 @@ export interface InputOTPGroupProps extends React.HTMLAttributes<HTMLDivElement>
 
 /**
  * InputOTPSlot Component Props
- * 
+ *
  * Props for individual OTP input slots, including the slot index.
- * 
+ *
  * @example
  * const example = <InputOTPSlot index={0} className="custom-slot-class" />;
  */
@@ -105,9 +105,9 @@ export interface InputOTPSlotProps extends React.HTMLAttributes<HTMLDivElement> 
 
 /**
  * InputOTPSeparator Component Props
- * 
+ *
  * Props for the separator element between OTP input slots.
- * 
+ *
  * @example
  * const example = <InputOTPSeparator className="custom-separator-class" />;
  */
@@ -120,7 +120,7 @@ export interface InputOTPSeparatorProps extends React.HTMLAttributes<HTMLDivElem
 
 /**
  * OTPSlotState Interface
- * 
+ *
  * The state of an individual slot from the OTP context.
  */
 export interface OTPSlotState {

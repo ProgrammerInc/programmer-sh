@@ -15,9 +15,9 @@ import { AccordionContentProps } from './accordion.types';
 
 /**
  * AccordionContent component
- * 
+ *
  * Contains the content that is revealed when the accordion item is expanded.
- * 
+ *
  * @example
  * ```tsx
  * <AccordionContent>
@@ -25,24 +25,21 @@ import { AccordionContentProps } from './accordion.types';
  * </AccordionContent>
  * ```
  */
-export const AccordionContent = memo(React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Content>,
-  AccordionContentProps
->(({ className, children, ...props }, ref) => {
-  const contentWrapperClassName = useMemo(() => {
-    return cn(styles['content-inner'], className);
-  }, [className]);
+export const AccordionContent = memo(
+  React.forwardRef<React.ElementRef<typeof AccordionPrimitive.Content>, AccordionContentProps>(
+    ({ className, children, ...props }, ref) => {
+      const contentWrapperClassName = useMemo(() => {
+        return cn(styles['content-inner'], className);
+      }, [className]);
 
-  return (
-    <AccordionPrimitive.Content
-      ref={ref}
-      className={styles.content}
-      {...props}
-    >
-      <div className={contentWrapperClassName}>{children}</div>
-    </AccordionPrimitive.Content>
-  );
-}));
+      return (
+        <AccordionPrimitive.Content ref={ref} className={styles.content} {...props}>
+          <div className={contentWrapperClassName}>{children}</div>
+        </AccordionPrimitive.Content>
+      );
+    }
+  )
+);
 
 AccordionContent.displayName = AccordionPrimitive.Content.displayName;
 

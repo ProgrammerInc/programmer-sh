@@ -1,20 +1,20 @@
 /**
  * Resizable Components
- * 
+ *
  * A set of components that allow users to resize panels within a layout.
  * Built on top of react-resizable-panels for reliable resizing functionality.
- * 
+ *
  * Features:
  * - Horizontal and vertical resizing
  * - Customizable min and max sizes
  * - Optional visual grip handles
  * - Keyboard accessible resize controls
  * - Responsive design support
- * 
+ *
  * @example Basic horizontal layout
  * ```tsx
  * import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/components/ui/resizable';
- * 
+ *
  * export function ResizableLayout() {
  *   return (
  *     <ResizablePanelGroup direction="horizontal" className="min-h-screen">
@@ -29,11 +29,11 @@
  *   );
  * }
  * ```
- * 
+ *
  * @example Nested layouts
  * ```tsx
  * import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/components/ui/resizable';
- * 
+ *
  * export function CodeEditorLayout() {
  *   return (
  *     <ResizablePanelGroup direction="horizontal" className="min-h-screen">

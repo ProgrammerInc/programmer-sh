@@ -4,7 +4,7 @@ import { PixelConfig } from './pixel-card.types';
 
 /**
  * Pixel Card Variants
- * 
+ *
  * Predefined color and configuration variants for the PixelCard component.
  */
 export const PIXEL_CARD_VARIANTS: Record<string, PixelConfig> = {
@@ -40,7 +40,7 @@ export const PIXEL_CARD_VARIANTS: Record<string, PixelConfig> = {
 
 /**
  * Adjusts animation speed based on user's motion preferences
- * 
+ *
  * @param value - Original speed value
  * @param reducedMotion - Whether reduced motion is preferred
  * @returns Adjusted speed value

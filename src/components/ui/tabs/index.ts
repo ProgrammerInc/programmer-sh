@@ -1,8 +1,9 @@
+/* eslint-disable no-secrets/no-secrets */
 /**
  * Tabs Component
- * 
+ *
  * A set of components for building accessible tab interfaces.
- * 
+ *
  * Features:
  * - Multiple visual variants: default, underline, card, and bordered
  * - Different size options: default, small (sm), and large (lg)
@@ -10,11 +11,11 @@
  * - Keyboard navigation support
  * - Screen reader accessible
  * - Controlled and uncontrolled modes
- * 
+ *
  * @example
  * ```tsx
  * import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
- * 
+ *
  * function MyTabs() {
  *   return (
  *     <Tabs defaultValue="account">

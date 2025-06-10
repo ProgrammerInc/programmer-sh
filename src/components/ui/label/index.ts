@@ -1,11 +1,11 @@
 /**
  * Label Component
- * 
+ *
  * A form label with styling based on Radix UI's Label primitive.
  * Provides accessible labeling for form controls with customizable styling.
- * 
+ *
  * @see {@link https://www.radix-ui.com/docs/primitives/components/label Label primitive documentation}
- * 
+ *
  * @example
  * ```tsx
  * <Label htmlFor="email">Email</Label>

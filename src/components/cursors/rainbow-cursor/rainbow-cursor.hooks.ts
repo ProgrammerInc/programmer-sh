@@ -8,15 +8,24 @@
  */
 import { useCallback, useEffect, useRef } from 'react';
 
-import { CANVAS_CONTEXT_SETTINGS, CANVAS_STYLES, REDUCED_MOTION_QUERY } from './rainbow-cursor.constants';
-import type { CursorPosition, Particle, PositionSet, RainbowCursorProps } from './rainbow-cursor.types';
+import {
+  CANVAS_CONTEXT_SETTINGS,
+  CANVAS_STYLES,
+  REDUCED_MOTION_QUERY
+} from './rainbow-cursor.constants';
+import type {
+  CursorPosition,
+  Particle,
+  PositionSet,
+  RainbowCursorProps
+} from './rainbow-cursor.types';
 import {
   createParticle,
   getPulseSize,
   interpolateColors,
   resizeCanvas,
   setupCanvasStyles,
-  updateCursorPosition,
+  updateCursorPosition
 } from './rainbow-cursor.utils';
 
 /**
@@ -36,7 +45,7 @@ export const useRainbowCursor = ({
   blur = 0,
   pulseSpeed = 0.01,
   pulseMin = 0.8,
-  pulseMax = 1.2,
+  pulseMax = 1.2
 }: RainbowCursorProps) => {
   // Refs to store component state
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -89,11 +98,7 @@ export const useRainbowCursor = ({
       const nextColor = colors[(index + 1) % colors.length];
 
       ctx.beginPath();
-      ctx.strokeStyle = interpolateColors(
-        color,
-        nextColor,
-        (index + colorOffset) / colors.length
-      );
+      ctx.strokeStyle = interpolateColors(color, nextColor, (index + colorOffset) / colors.length);
 
       if (particleSets.length) {
         ctx.moveTo(particleSets[0].x, particleSets[0].y + index * (currentSize - 1));
@@ -114,7 +119,7 @@ export const useRainbowCursor = ({
   // Animation loop
   const loop = useCallback(() => {
     if (!mountedRef.current) return;
-    
+
     updateParticles();
     animationFrameRef.current = requestAnimationFrame(loop);
   }, [updateParticles]);
@@ -173,25 +178,25 @@ export const useRainbowCursor = ({
     // Add event listeners
     targetElement.addEventListener('mousemove', onMouseMove);
     window.addEventListener('resize', onWindowResize);
-    
+
     // Start animation loop
     loop();
 
     // Cleanup function
     return () => {
       mountedRef.current = false;
-      
+
       if (canvasRef.current) {
         canvasRef.current.remove();
       }
-      
+
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
-      
+
       targetElement.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('resize', onWindowResize);
-      
+
       // Clear particles array
       particlesRef.current = [];
       cursorsInittedRef.current = false;

@@ -60,9 +60,7 @@ export const CardContainer: React.FC<CardContainerProps> = ({
 
   return (
     <MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
-      <div
-        className={cn(styles.container, containerClassName)}
-      >
+      <div className={cn(styles.container, containerClassName)}>
         <div
           ref={containerRef}
           onMouseEnter={handleMouseEnter}

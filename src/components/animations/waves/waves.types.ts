@@ -1,7 +1,7 @@
 /**
  * Types for the Waves animation component
  */
-import type { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties } from 'react';
 
 /**
  * Props for the Waves component

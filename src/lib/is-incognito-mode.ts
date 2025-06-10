@@ -42,10 +42,12 @@ export const isIncognitoMode = (): boolean => {
   }
 
   // Additional detection for Safari private mode
-  if (typeof navigator !== 'undefined' && 
-      navigator.userAgent && 
-      navigator.userAgent.includes('Safari') && 
-      !navigator.userAgent.includes('Chrome')) {
+  if (
+    typeof navigator !== 'undefined' &&
+    navigator.userAgent &&
+    navigator.userAgent.includes('Safari') &&
+    !navigator.userAgent.includes('Chrome')
+  ) {
     try {
       // Try to use Safari's openDatabase method which fails in private mode
       // Use a two-step casting approach as recommended by TypeScript

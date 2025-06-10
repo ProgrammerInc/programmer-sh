@@ -2,10 +2,10 @@
 
 /**
  * TerminalHistory Component
- * 
+ *
  * Displays a list of previously executed commands and their outputs in a terminal-like
  * interface. Re-executes commands on render to ensure consistent output.
- * 
+ *
  * Features:
  * - Command history display with timestamps
  * - Re-execution of commands for consistent output
@@ -17,29 +17,29 @@
  * - Scrollable history with auto-scroll functionality
  * - Keyboard navigation support
  * - Accessibility support with ARIA attributes
- * 
+ *
  * @example
  * ```tsx
  * // Basic usage
  * <TerminalHistory history={commandHistory} />
- * 
+ *
  * // With command click handler
- * <TerminalHistory 
- *   history={commandHistory} 
- *   onCommandClick={(cmd) => console.log(`Clicked on command: ${cmd}`)} 
+ * <TerminalHistory
+ *   history={commandHistory}
+ *   onCommandClick={(cmd) => console.log(`Clicked on command: ${cmd}`)}
  * />
  *
  * // With custom prompt
- * <TerminalHistory 
+ * <TerminalHistory
  *   history={commandHistory}
- *   prompt="user@website:~$" 
+ *   prompt="user@website:~$"
  * />
  *
  * // With ref for controlling scroll
  * const historyRef = useRef<TerminalHistoryRef>(null);
- * <TerminalHistory 
+ * <TerminalHistory
  *   ref={historyRef}
- *   history={commandHistory} 
+ *   history={commandHistory}
  * />
  * // Later: historyRef.current?.scrollToBottom();
  * ```

@@ -19,11 +19,11 @@ const springValues: SpringOptions = {
 
 /**
  * TiltedCard Component
- * 
+ *
  * A card component with interactive 3D tilt effect based on mouse position.
  * The card responds to mouse movement by tilting in the direction of the cursor
  * and provides visual feedback through rotation, scaling, and optional tooltip.
- * 
+ *
  * Features:
  * - Interactive 3D rotation effect based on mouse position
  * - Smooth animations with configurable parameters
@@ -32,26 +32,26 @@ const springValues: SpringOptions = {
  * - Support for overlay content
  * - Configurable dimensions and appearance
  * - Accessible with proper alt text support
- * 
+ *
  * @example
  * ```tsx
  * // Basic usage
- * <TiltedCard 
- *   imageSrc="/path/to/image.jpg" 
+ * <TiltedCard
+ *   imageSrc="/path/to/image.jpg"
  *   altText="Description of the image"
  * />
- * 
+ *
  * // With caption and custom dimensions
- * <TiltedCard 
+ * <TiltedCard
  *   imageSrc="/path/to/image.jpg"
  *   captionText="Interactive 3D Card"
  *   containerHeight="400px"
  *   imageWidth="350px"
  *   imageHeight="350px"
  * />
- * 
+ *
  * // With overlay content
- * <TiltedCard 
+ * <TiltedCard
  *   imageSrc="/path/to/image.jpg"
  *   displayOverlayContent={true}
  *   overlayContent={<div className="p-4 text-white">Overlay Content</div>}
@@ -176,9 +176,7 @@ const TiltedCard = memo(function TiltedCard({
         />
 
         {displayOverlayContent && overlayContent && (
-          <motion.div className={styles.overlay}>
-            {overlayContent}
-          </motion.div>
+          <motion.div className={styles.overlay}>{overlayContent}</motion.div>
         )}
       </motion.div>
 

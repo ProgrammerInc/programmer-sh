@@ -1,3 +1,4 @@
+/* eslint-disable no-secrets/no-secrets */
 'use client';
 
 /**
@@ -30,7 +31,7 @@ export const AUTOPLAY_DURATION = 20;
 
 /**
  * Calculate the carousel geometry based on screen size and image count
- * 
+ *
  * @param isSmallScreen Whether the current viewport is small (e.g., mobile)
  * @param imageCount Number of images in the carousel
  * @returns Object with calculated dimensions and parameters
@@ -38,11 +39,11 @@ export const AUTOPLAY_DURATION = 20;
 export const calculateCarouselGeometry = (isSmallScreen: boolean, imageCount: number) => {
   // Base cylinder width (smaller on mobile)
   const cylinderWidth = isSmallScreen ? 1100 : 1800;
-  
+
   // Calculate face width and radius
   const faceWidth = (cylinderWidth / imageCount) * 1.5;
   const radius = cylinderWidth / (2 * Math.PI);
-  
+
   return {
     cylinderWidth,
     faceWidth,
@@ -52,7 +53,7 @@ export const calculateCarouselGeometry = (isSmallScreen: boolean, imageCount: nu
 
 /**
  * Calculate the transform style for an individual frame
- * 
+ *
  * @param index Frame index
  * @param totalFrames Total number of frames
  * @param radius Radius of the carousel cylinder

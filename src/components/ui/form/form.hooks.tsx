@@ -11,9 +11,9 @@ import { FormFieldContext, FormItemContext } from './form.context';
  * It combines context from both FormFieldContext and FormItemContext
  * with react-hook-form's field state management.
  *
- * This hook abstracts away the details of accessing field state and 
+ * This hook abstracts away the details of accessing field state and
  * generating unique IDs for accessibility attributes.
- * 
+ *
  * @returns An object containing:
  * - id: The unique ID for the form item
  * - name: The name of the field
@@ -23,12 +23,12 @@ import { FormFieldContext, FormItemContext } from './form.context';
  * - ...fieldState: The current state of the field (error, isDirty, etc.)
  *
  * @throws Error if used outside of a FormField component
- * 
+ *
  * @example
  * ```tsx
  * // Inside a form component
  * const { id, name, formItemId, error } = useFormField();
- * 
+ *
  * // Use the field information for rendering or validation
  * return (
  *   <div>

@@ -7,6 +7,6 @@
  * @module Sparkles
  */
 
-export { Sparkles, default } from './sparkles';
+export { default, Sparkles } from './sparkles';
 export * as SparklesStyles from './sparkles.module.css';
 export type { SparklesProps } from './sparkles.types';

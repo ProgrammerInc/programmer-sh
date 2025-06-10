@@ -59,15 +59,9 @@ const [value, setValue] = useState([50]);
 
 <form onSubmit={handleSubmit}>
   <label htmlFor="volume">Volume: {value}%</label>
-  <Slider 
-    id="volume"
-    defaultValue={value} 
-    max={100} 
-    step={1} 
-    onValueChange={setValue}
-  />
+  <Slider id="volume" defaultValue={value} max={100} step={1} onValueChange={setValue} />
   <button type="submit">Save</button>
-</form>
+</form>;
 ```
 
 ## With Custom Step
@@ -100,11 +94,11 @@ import { useState } from 'react';
 
 const [value, setValue] = useState([25]);
 
-<Slider 
-  value={value} 
-  onValueChange={setValue} 
-  max={100} 
-  step={1} 
+<Slider
+  value={value}
+  onValueChange={setValue}
+  max={100}
+  step={1}
 />
 
 <button onClick={() => setValue([0])}>Reset</button>

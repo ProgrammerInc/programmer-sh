@@ -4,5 +4,5 @@
  * @module
  */
 
-export { RippleCursor, default } from './ripple-cursor';
+export { default, RippleCursor } from './ripple-cursor';
 export type { RippleCursorProps } from './ripple-cursor.types';

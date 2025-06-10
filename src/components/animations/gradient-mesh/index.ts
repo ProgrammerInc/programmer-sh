@@ -7,5 +7,5 @@
  * @module GradientMesh
  */
 
-export { GradientMesh, default } from './gradient-mesh';
+export { default, GradientMesh } from './gradient-mesh';
 export type { GradientMeshProps } from './gradient-mesh.types';

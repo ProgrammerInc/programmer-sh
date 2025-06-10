@@ -4,14 +4,9 @@
  */
 
 import { Mesh, Plane, Program, Renderer, Texture, Transform } from 'ogl';
-import { 
-  GL,
-  MediaProps, 
-  ScreenSize, 
-  Viewport 
-} from './circular-gallery.types';
-import { lerp } from './circular-gallery.utils';
 import { Title } from './circular-gallery-title.class';
+import { GL, MediaProps, ScreenSize, Viewport } from './circular-gallery.types';
+import { lerp } from './circular-gallery.utils';
 
 export class Media {
   private extra: number = 0;
@@ -87,7 +82,7 @@ export class Media {
   private createShader(): void {
     const texture = new Texture(this.gl);
     this.program = new Program(this.gl, {
-      vertex: /* glsl */`
+      vertex: /* glsl */ `
         attribute vec3 position;
         attribute vec2 uv;
 
@@ -109,7 +104,7 @@ export class Media {
           gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
         }
       `,
-      fragment: /* glsl */`
+      fragment: /* glsl */ `
         precision highp float;
 
         uniform vec2 uImageSizes;
@@ -206,7 +201,8 @@ export class Media {
     if (!this.plane || !this.program) return;
 
     const y = window.innerHeight / 2;
-    this.isBefore = direction === 'right' ? this.x < -this.widthTotal / 2 : this.x < -this.widthTotal;
+    this.isBefore =
+      direction === 'right' ? this.x < -this.widthTotal / 2 : this.x < -this.widthTotal;
     this.isAfter = direction === 'right' ? this.x > this.widthTotal : this.x > this.widthTotal / 2;
 
     if (direction === 'right' && this.isBefore) {
@@ -220,19 +216,16 @@ export class Media {
     this.plane.position.x = this.x - scroll.current;
     this.plane.position.y = Math.cos((this.x - scroll.current) * 0.3) * 0.4 - 0.2;
 
-    const scaleMap = {
-      '-1': 0.5,
-      '0': 0.8,
-      '1': 0.5
-    }[Math.sign(Math.round(this.x - scroll.current))] || 0.8;
+    const scaleMap =
+      {
+        '-1': 0.5,
+        '0': 0.8,
+        '1': 0.5
+      }[Math.sign(Math.round(this.x - scroll.current))] || 0.8;
 
     this.speed = lerp(this.speed, Math.abs((scroll.current - scroll.last) * 5), 0.1);
 
-    this.plane.scale.set(
-      this.scale * scaleMap,
-      this.scale * scaleMap,
-      this.scale * scaleMap
-    );
+    this.plane.scale.set(this.scale * scaleMap, this.scale * scaleMap, this.scale * scaleMap);
 
     this.program.uniforms.uRes.value = [
       this.plane.scale.x * this.viewport.width,

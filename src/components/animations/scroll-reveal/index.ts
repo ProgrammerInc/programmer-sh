@@ -7,6 +7,6 @@
  * @module ScrollReveal
  */
 
-export { ScrollReveal, default } from './scroll-reveal';
+export { default, ScrollReveal } from './scroll-reveal';
 export * as ScrollRevealStyles from './scroll-reveal.module.css';
 export type { ScrollRevealProps } from './scroll-reveal.types';

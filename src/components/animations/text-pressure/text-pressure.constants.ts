@@ -28,6 +28,7 @@ export const DEFAULT_SETTINGS = {
   /**
    * Default font URL
    */
+  // eslint-disable-next-line no-secrets/no-secrets
   FONT_URL: 'https://res.cloudinary.com/dr6lvwubh/raw/upload/v1529908256/CompressaPRO-GX.woff2',
 
   /**

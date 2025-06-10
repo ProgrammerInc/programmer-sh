@@ -79,39 +79,39 @@ The avatar variant comes with pre-defined sizes and styles:
 
 ```tsx
 // Hide the skeleton
-<Skeleton visible={false} className="h-12 w-full" />
+<Skeleton visible={false} className="h-12 w-full" />;
 
 // Dynamic control
 const [isLoading, setIsLoading] = useState(true);
 
-<Skeleton visible={isLoading} className="h-12 w-full" />
+<Skeleton visible={isLoading} className="h-12 w-full" />;
 ```
 
 ## Accessibility
 
 ```tsx
 // Add a descriptive label for screen readers
-<Skeleton 
-  loadingLabel="Loading user profile" 
-  className="h-12 w-12 rounded-full" 
+<Skeleton
+  loadingLabel="Loading user profile"
+  className="h-12 w-12 rounded-full"
 />
 
 // Complex component with accessible label
 <div>
-  <Skeleton 
-    variant="avatar" 
-    loadingLabel="Loading user avatar" 
+  <Skeleton
+    variant="avatar"
+    loadingLabel="Loading user avatar"
   />
   <div>
-    <Skeleton 
-      variant="text" 
-      loadingLabel="Loading user name" 
-      className="w-32" 
+    <Skeleton
+      variant="text"
+      loadingLabel="Loading user name"
+      className="w-32"
     />
-    <Skeleton 
-      variant="text" 
-      loadingLabel="Loading user bio" 
-      className="w-64" 
+    <Skeleton
+      variant="text"
+      loadingLabel="Loading user bio"
+      className="w-64"
     />
   </div>
 </div>
@@ -174,21 +174,23 @@ const [isLoading, setIsLoading] = useState(true);
       <Skeleton variant="text" className="w-full" />
     </div>
   </div>
-  
+
   {/* Table rows */}
-  {Array(5).fill(null).map((_, i) => (
-    <div key={i} className="flex border-b py-4">
-      <div className="w-[30%] pr-4">
-        <Skeleton variant="text" className="w-full" />
+  {Array(5)
+    .fill(null)
+    .map((_, i) => (
+      <div key={i} className="flex border-b py-4">
+        <div className="w-[30%] pr-4">
+          <Skeleton variant="text" className="w-full" />
+        </div>
+        <div className="w-[50%] px-4">
+          <Skeleton variant="text" className="w-full" />
+        </div>
+        <div className="w-[20%] pl-4">
+          <Skeleton variant="text" className="w-2/3" />
+        </div>
       </div>
-      <div className="w-[50%] px-4">
-        <Skeleton variant="text" className="w-full" />
-      </div>
-      <div className="w-[20%] pl-4">
-        <Skeleton variant="text" className="w-2/3" />
-      </div>
-    </div>
-  ))}
+    ))}
 </div>
 ```
 
@@ -216,20 +218,22 @@ const [isLoading, setIsLoading] = useState(true);
 
 ```tsx
 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-  {Array(4).fill(null).map((_, i) => (
-    <div key={i} className="rounded-lg border p-4">
-      <div className="flex justify-between">
-        <Skeleton variant="text" className="w-20" />
-        <Skeleton variant="circle" className="h-6 w-6" />
+  {Array(4)
+    .fill(null)
+    .map((_, i) => (
+      <div key={i} className="rounded-lg border p-4">
+        <div className="flex justify-between">
+          <Skeleton variant="text" className="w-20" />
+          <Skeleton variant="circle" className="h-6 w-6" />
+        </div>
+        <div className="mt-3">
+          <Skeleton className="h-8 w-24" />
+        </div>
+        <div className="mt-4">
+          <Skeleton variant="text" className="w-full" />
+        </div>
       </div>
-      <div className="mt-3">
-        <Skeleton className="h-8 w-24" />
-      </div>
-      <div className="mt-4">
-        <Skeleton variant="text" className="w-full" />
-      </div>
-    </div>
-  ))}
+    ))}
 </div>
 ```
 
@@ -237,11 +241,14 @@ const [isLoading, setIsLoading] = useState(true);
 
 ```tsx
 <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-  {Array(8).fill(null).map((_, i) => (
-    <div key={i} className="space-y-2">
-      <Skeleton className="aspect-square w-full rounded-lg" />
-      <Skeleton variant="text" className="w-3/4" />
-      <Skeleton variant="text" className="w-1/2" />
-    </div>
-  ))}
+  {Array(8)
+    .fill(null)
+    .map((_, i) => (
+      <div key={i} className="space-y-2">
+        <Skeleton className="aspect-square w-full rounded-lg" />
+        <Skeleton variant="text" className="w-3/4" />
+        <Skeleton variant="text" className="w-1/2" />
+      </div>
+    ))}
 </div>
+```

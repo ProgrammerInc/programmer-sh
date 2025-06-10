@@ -81,6 +81,7 @@ export const GlitchCursor: React.FC = () => {
                 transform: 'translate(-50%, -50%)',
                 width: '100px',
                 height: '100px',
+                // eslint-disable-next-line no-secrets/no-secrets
                 background: `url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E")`,
                 opacity: 0.3
               }}

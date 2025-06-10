@@ -1,10 +1,10 @@
 'use client';
 
-import { HTMLAttributes, ReactNode, ButtonHTMLAttributes, SVGProps } from 'react';
+import { ButtonHTMLAttributes, HTMLAttributes, ReactNode, SVGProps } from 'react';
 
 /**
  * Props for the step indicator renderer function
- * 
+ *
  * @property step - The step number
  * @property currentStep - The current active step
  * @property onStepClick - Callback when a step is clicked
@@ -22,7 +22,7 @@ export type StepperOrientation = 'vertical' | 'horizontal';
 
 /**
  * Props for the Stepper component
- * 
+ *
  * @property children - The step components to render inside the stepper
  * @property initialStep - The initial active step (default: 1)
  * @property onStepChange - Callback when step changes
@@ -59,7 +59,7 @@ export interface StepperProps extends HTMLAttributes<HTMLDivElement> {
 
 /**
  * Props for the Step component
- * 
+ *
  * @property children - The content of the step
  */
 export interface StepProps {
@@ -68,7 +68,7 @@ export interface StepProps {
 
 /**
  * Props for the internal StepContentWrapper component
- * 
+ *
  * @property isCompleted - Whether all steps are completed
  * @property currentStep - The current active step
  * @property direction - The direction of transition (-1 for backwards, 1 for forwards)
@@ -87,7 +87,7 @@ export interface StepContentWrapperProps {
 
 /**
  * Props for the internal SlideTransition component
- * 
+ *
  * @property children - The content to render
  * @property direction - The direction of transition (-1 for backwards, 1 for forwards)
  * @property onHeightReady - Callback when height is determined
@@ -102,7 +102,7 @@ export interface SlideTransitionProps {
 
 /**
  * Props for the internal StepIndicator component
- * 
+ *
  * @property step - The step number
  * @property currentStep - The current active step
  * @property onClickStep - Callback when a step is clicked
@@ -119,7 +119,7 @@ export interface StepIndicatorProps {
 
 /**
  * Props for the internal StepConnector component
- * 
+ *
  * @property isComplete - Whether the step is completed
  * @property orientation - Layout orientation of the stepper
  */

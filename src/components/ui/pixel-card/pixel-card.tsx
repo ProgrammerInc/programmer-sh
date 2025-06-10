@@ -1,26 +1,26 @@
 'use client';
 
-import { useEffect, useRef, useCallback, useMemo, memo } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 
 import { cn } from '@/utils/app.utils';
-import { Pixel } from './pixel.class';
+import styles from './pixel-card.module.css';
 import { PixelCardProps } from './pixel-card.types';
 import { PIXEL_CARD_VARIANTS, getEffectiveSpeed } from './pixel-card.utils';
-import styles from './pixel-card.module.css';
+import { Pixel } from './pixel.class';
 
 /**
  * PixelCard component creates a card with animated pixel effects on hover/focus
- * 
+ *
  * @param props - Component properties including styling and behavior options
  * @returns A memoized React component with animated pixel effects
- * 
+ *
  * @example
  * ```tsx
  * <PixelCard>
  *   <h3>Animated Card</h3>
  *   <p>Hover or focus to see the pixel animation effect</p>
  * </PixelCard>
- * 
+ *
  * <PixelCard variant="blue" gap={10} speed={0.2}>
  *   <div>Custom configuration</div>
  * </PixelCard>
@@ -40,20 +40,16 @@ const PixelCard = memo(function PixelCard({
   const pixelsRef = useRef<Pixel[]>([]);
   const animationRef = useRef<number | null>(null);
   const timePreviousRef = useRef(performance.now());
-  
+
   // Check for reduced motion preference
   const reducedMotion = useRef(
-    typeof window !== 'undefined' ? 
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches : false
+    typeof window !== 'undefined'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false
   ).current;
 
   // Memoize configuration to prevent unnecessary recalculations
-  const { 
-    finalGap, 
-    finalSpeed, 
-    finalColors, 
-    finalNoFocus 
-  } = useMemo(() => {
+  const { finalGap, finalSpeed, finalColors, finalNoFocus } = useMemo(() => {
     const variantCfg = PIXEL_CARD_VARIANTS[variant] || PIXEL_CARD_VARIANTS.default;
     return {
       finalGap: gap ?? variantCfg.gap,
@@ -89,7 +85,7 @@ const PixelCard = memo(function PixelCard({
         const dy = y - height / 2;
         const distance = Math.sqrt(dx * dx + dy * dy);
         const delay = reducedMotion ? 0 : distance;
-        
+
         pxs.push(
           new Pixel(
             canvasRef.current,
@@ -111,7 +107,7 @@ const PixelCard = memo(function PixelCard({
     if (animationRef.current !== null) {
       animationRef.current = requestAnimationFrame(() => doAnimate(fnName));
     }
-    
+
     const timeNow = performance.now();
     const timePassed = timeNow - timePreviousRef.current;
     const timeInterval = 1000 / 60; // ~60 FPS
@@ -143,45 +139,52 @@ const PixelCard = memo(function PixelCard({
   }, []);
 
   // Handle animation with useCallback
-  const handleAnimation = useCallback((name: keyof Pixel) => {
-    if (animationRef.current !== null) {
-      cancelAnimationFrame(animationRef.current);
-    }
-    animationRef.current = requestAnimationFrame(() => doAnimate(name));
-  }, [doAnimate]);
+  const handleAnimation = useCallback(
+    (name: keyof Pixel) => {
+      if (animationRef.current !== null) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      animationRef.current = requestAnimationFrame(() => doAnimate(name));
+    },
+    [doAnimate]
+  );
 
   // Event handlers with useCallback
   const onMouseEnter = useCallback(() => handleAnimation('appear'), [handleAnimation]);
   const onMouseLeave = useCallback(() => handleAnimation('disappear'), [handleAnimation]);
-  
-  const onFocus = useCallback<React.FocusEventHandler<HTMLDivElement>>((e) => {
-    if (e.currentTarget.contains(e.relatedTarget)) return;
-    handleAnimation('appear');
-  }, [handleAnimation]);
-  
-  const onBlur = useCallback<React.FocusEventHandler<HTMLDivElement>>((e) => {
-    if (e.currentTarget.contains(e.relatedTarget)) return;
-    handleAnimation('disappear');
-  }, [handleAnimation]);
+
+  const onFocus = useCallback<React.FocusEventHandler<HTMLDivElement>>(
+    e => {
+      if (e.currentTarget.contains(e.relatedTarget)) return;
+      handleAnimation('appear');
+    },
+    [handleAnimation]
+  );
+
+  const onBlur = useCallback<React.FocusEventHandler<HTMLDivElement>>(
+    e => {
+      if (e.currentTarget.contains(e.relatedTarget)) return;
+      handleAnimation('disappear');
+    },
+    [handleAnimation]
+  );
 
   // Container class with useMemo
-  const containerClassName = useMemo(() => (
-    cn(styles.container, className)
-  ), [className]);
+  const containerClassName = useMemo(() => cn(styles.container, className), [className]);
 
   useEffect(() => {
     // Initialize pixels on mount
     initPixels();
-    
+
     // Set up resize observer
     const observer = new ResizeObserver(() => {
       initPixels();
     });
-    
+
     if (containerRef.current) {
       observer.observe(containerRef.current);
     }
-    
+
     // Cleanup function
     return () => {
       observer.disconnect();

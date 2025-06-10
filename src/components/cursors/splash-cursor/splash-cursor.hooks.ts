@@ -3,14 +3,6 @@
  */
 import { useCallback, useEffect, useRef } from 'react';
 import {
-  ColorRGB,
-  FramebufferType,
-  Pointer,
-  PointerPrototype,
-  SplashCursorProps,
-  WebGLContext
-} from './splash-cursor.types';
-import {
   ADVECTION_SHADER,
   BASE_VERTEX_SHADER,
   BLOOM_BLUR_SHADER,
@@ -21,14 +13,15 @@ import {
   COPY_SHADER,
   CURL_SHADER,
   DEFAULT_CONFIG,
-  DIVERGENCE_SHADER,
   DISPLAY_BLOOM_SHADER,
   DISPLAY_SHADER,
+  DIVERGENCE_SHADER,
   GRADIENT_SUBTRACT_SHADER,
   PRESSURE_SHADER,
   SPLAT_SHADER,
   VORTICITY_SHADER
 } from './splash-cursor.constants';
+import { FramebufferType, Pointer, SplashCursorProps, WebGLContext } from './splash-cursor.types';
 import {
   createDoubleFBO,
   createMaterial,
@@ -76,7 +69,7 @@ export function useSplashEffect(props: SplashCursorProps) {
 
   // Reference to the canvas element
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  
+
   // Track props in refs to avoid dependency issues
   const propsRef = useRef(props);
   useEffect(() => {
@@ -115,7 +108,7 @@ export function useSplashEffect(props: SplashCursorProps) {
       color: generateColor()
     };
   }, []);
-  
+
   /**
    * Update all active pointers
    */
@@ -141,7 +134,7 @@ export function useSplashEffect(props: SplashCursorProps) {
       });
     }
   }, []);
-  
+
   /**
    * Render the final output
    */
@@ -152,7 +145,7 @@ export function useSplashEffect(props: SplashCursorProps) {
 
     const { gl } = context;
     gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
-    
+
     if (config.TRANSPARENT) {
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     } else {
@@ -167,7 +160,7 @@ export function useSplashEffect(props: SplashCursorProps) {
       gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
     }
   }, []);
-  
+
   /**
    * Step the fluid simulation forward
    */
@@ -254,9 +247,17 @@ export function useSplashEffect(props: SplashCursorProps) {
       gl.bindFramebuffer(gl.FRAMEBUFFER, velocity.write.fbo);
 
       if (context.framebufferType === FramebufferType.HALF_FLOAT) {
-        gl.uniform2f(advectionMaterial.uniforms.dyeTexelSize, velocity.texelSizeX, velocity.texelSizeY);
+        gl.uniform2f(
+          advectionMaterial.uniforms.dyeTexelSize,
+          velocity.texelSizeX,
+          velocity.texelSizeY
+        );
       } else {
-        gl.uniform2f(advectionMaterial.uniforms.dyeTexelSize, velocity.texelSizeX, velocity.texelSizeY);
+        gl.uniform2f(
+          advectionMaterial.uniforms.dyeTexelSize,
+          velocity.texelSizeX,
+          velocity.texelSizeY
+        );
       }
 
       gl.uniform1i(advectionMaterial.uniforms.uVelocity, velocity.read.attach(0));
@@ -273,9 +274,17 @@ export function useSplashEffect(props: SplashCursorProps) {
       gl.bindFramebuffer(gl.FRAMEBUFFER, state.dye.write.fbo);
 
       if (context.framebufferType === FramebufferType.HALF_FLOAT) {
-        gl.uniform2f(advectionMaterial.uniforms.dyeTexelSize, state.dye.texelSizeX, state.dye.texelSizeY);
+        gl.uniform2f(
+          advectionMaterial.uniforms.dyeTexelSize,
+          state.dye.texelSizeX,
+          state.dye.texelSizeY
+        );
       } else {
-        gl.uniform2f(advectionMaterial.uniforms.dyeTexelSize, state.dye.texelSizeX, state.dye.texelSizeY);
+        gl.uniform2f(
+          advectionMaterial.uniforms.dyeTexelSize,
+          state.dye.texelSizeX,
+          state.dye.texelSizeY
+        );
       }
 
       gl.uniform1i(advectionMaterial.uniforms.uVelocity, velocity.read.attach(0));
@@ -286,7 +295,7 @@ export function useSplashEffect(props: SplashCursorProps) {
       state.dye.swap();
     }
   }, []);
-  
+
   /**
    * Apply all pointer inputs to the simulation
    */
@@ -339,7 +348,13 @@ export function useSplashEffect(props: SplashCursorProps) {
     // Double framebuffers for ping-pong technique
     state.dye = createDoubleFBO(context, dyeRes.width, dyeRes.height, gl.RGBA, framebufferType);
     state.velocity = createDoubleFBO(context, simRes.width, simRes.height, GL_RG, framebufferType);
-    state.divergence = createDoubleFBO(context, simRes.width, simRes.height, GL_RED, framebufferType);
+    state.divergence = createDoubleFBO(
+      context,
+      simRes.width,
+      simRes.height,
+      GL_RED,
+      framebufferType
+    );
     state.curl = createDoubleFBO(context, simRes.width, simRes.height, GL_RED, framebufferType);
     state.pressure = createDoubleFBO(context, simRes.width, simRes.height, GL_RED, framebufferType);
   }, [getResolution]);
@@ -347,24 +362,27 @@ export function useSplashEffect(props: SplashCursorProps) {
   /**
    * Update the nearest pointer to the current position
    */
-  const updateNearestPointer = useCallback((x: number, y: number, active: boolean) => {
-    const state = stateRef.current;
-    if (state.pointers.length === 0 && active) {
-      const pointer = createPointer(x, y);
-      state.pointers.push(pointer);
-      return;
-    }
+  const updateNearestPointer = useCallback(
+    (x: number, y: number, active: boolean) => {
+      const state = stateRef.current;
+      if (state.pointers.length === 0 && active) {
+        const pointer = createPointer(x, y);
+        state.pointers.push(pointer);
+        return;
+      }
 
-    // Find and update the nearest pointer
-    const pointer = state.pointers[0];
-    if (pointer) {
-      pointer.dx = x - pointer.x;
-      pointer.dy = y - pointer.y;
-      pointer.x = x;
-      pointer.y = y;
-      pointer.moved = true;
-    }
-  }, [createPointer]);
+      // Find and update the nearest pointer
+      const pointer = state.pointers[0];
+      if (pointer) {
+        pointer.dx = x - pointer.x;
+        pointer.dy = y - pointer.y;
+        pointer.x = x;
+        pointer.y = y;
+        pointer.moved = true;
+      }
+    },
+    [createPointer]
+  );
 
   /**
    * Main animation loop
@@ -432,20 +450,29 @@ export function useSplashEffect(props: SplashCursorProps) {
     state.materials.set('clear', createMaterial(gl, BASE_VERTEX_SHADER, CLEAR_SHADER));
     state.materials.set('color', createMaterial(gl, BASE_VERTEX_SHADER, COLOR_SHADER));
     state.materials.set('display', createMaterial(gl, BASE_VERTEX_SHADER, DISPLAY_SHADER));
-    state.materials.set('displayBloom', createMaterial(gl, BASE_VERTEX_SHADER, DISPLAY_BLOOM_SHADER));
+    state.materials.set(
+      'displayBloom',
+      createMaterial(gl, BASE_VERTEX_SHADER, DISPLAY_BLOOM_SHADER)
+    );
     state.materials.set('splat', createMaterial(gl, BASE_VERTEX_SHADER, SPLAT_SHADER));
     state.materials.set('advection', createMaterial(gl, BASE_VERTEX_SHADER, ADVECTION_SHADER));
     state.materials.set('divergence', createMaterial(gl, BASE_VERTEX_SHADER, DIVERGENCE_SHADER));
     state.materials.set('curl', createMaterial(gl, BASE_VERTEX_SHADER, CURL_SHADER));
     state.materials.set('vorticity', createMaterial(gl, BASE_VERTEX_SHADER, VORTICITY_SHADER));
     state.materials.set('pressure', createMaterial(gl, BASE_VERTEX_SHADER, PRESSURE_SHADER));
-    state.materials.set('gradientSubtract', createMaterial(gl, BASE_VERTEX_SHADER, GRADIENT_SUBTRACT_SHADER));
-    
+    state.materials.set(
+      'gradientSubtract',
+      createMaterial(gl, BASE_VERTEX_SHADER, GRADIENT_SUBTRACT_SHADER)
+    );
+
     // Bloom materials
-    state.materials.set('bloomPrefilter', createMaterial(gl, BASE_VERTEX_SHADER, BLOOM_PREFILTER_SHADER));
+    state.materials.set(
+      'bloomPrefilter',
+      createMaterial(gl, BASE_VERTEX_SHADER, BLOOM_PREFILTER_SHADER)
+    );
     state.materials.set('bloomBlur', createMaterial(gl, BASE_VERTEX_SHADER, BLOOM_BLUR_SHADER));
     state.materials.set('bloomFinal', createMaterial(gl, BASE_VERTEX_SHADER, BLOOM_FINAL_SHADER));
-    
+
     // Initialize framebuffers
     initFramebuffers();
 
@@ -454,50 +481,62 @@ export function useSplashEffect(props: SplashCursorProps) {
   }, [animate, initFramebuffers]);
 
   // Event Handlers
-  const handleMouseDown = useCallback((e: MouseEvent) => {
-    const state = stateRef.current;
-    const canvas = state.canvas;
-    if (!canvas) return;
+  const handleMouseDown = useCallback(
+    (e: MouseEvent) => {
+      const state = stateRef.current;
+      const canvas = state.canvas;
+      if (!canvas) return;
 
-    const [x, y] = updatePointerPosition(e, canvas);
-    const pointer = createPointer(x, y);
-    state.pointers.push(pointer);
-  }, [createPointer]);
+      const [x, y] = updatePointerPosition(e, canvas);
+      const pointer = createPointer(x, y);
+      state.pointers.push(pointer);
+    },
+    [createPointer]
+  );
 
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    const state = stateRef.current;
-    const canvas = state.canvas;
-    if (!canvas) return;
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      const state = stateRef.current;
+      const canvas = state.canvas;
+      if (!canvas) return;
 
-    const [x, y] = updatePointerPosition(e, canvas);
-    updateNearestPointer(x, y, e.buttons > 0);
-  }, [updateNearestPointer]);
+      const [x, y] = updatePointerPosition(e, canvas);
+      updateNearestPointer(x, y, e.buttons > 0);
+    },
+    [updateNearestPointer]
+  );
 
   const handleMouseUp = useCallback(() => {
     const state = stateRef.current;
     state.pointers = [];
   }, []);
 
-  const handleTouchStart = useCallback((e: TouchEvent) => {
-    const state = stateRef.current;
-    const canvas = state.canvas;
-    if (!canvas) return;
-    e.preventDefault();
+  const handleTouchStart = useCallback(
+    (e: TouchEvent) => {
+      const state = stateRef.current;
+      const canvas = state.canvas;
+      if (!canvas) return;
+      e.preventDefault();
 
-    const [x, y] = updatePointerPosition(e, canvas);
-    const pointer = createPointer(x, y);
-    state.pointers.push(pointer);
-  }, [createPointer]);
+      const [x, y] = updatePointerPosition(e, canvas);
+      const pointer = createPointer(x, y);
+      state.pointers.push(pointer);
+    },
+    [createPointer]
+  );
 
-  const handleTouchMove = useCallback((e: TouchEvent) => {
-    const state = stateRef.current;
-    const canvas = state.canvas;
-    if (!canvas) return;
-    e.preventDefault();
+  const handleTouchMove = useCallback(
+    (e: TouchEvent) => {
+      const state = stateRef.current;
+      const canvas = state.canvas;
+      if (!canvas) return;
+      e.preventDefault();
 
-    const [x, y] = updatePointerPosition(e, canvas);
-    updateNearestPointer(x, y, true);
-  }, [updateNearestPointer]);
+      const [x, y] = updatePointerPosition(e, canvas);
+      updateNearestPointer(x, y, true);
+    },
+    [updateNearestPointer]
+  );
 
   const handleTouchEnd = useCallback((e: TouchEvent) => {
     const state = stateRef.current;
@@ -509,11 +548,11 @@ export function useSplashEffect(props: SplashCursorProps) {
   useEffect(() => {
     const state = stateRef.current;
     state.mounted = true;
-    
+
     if (canvasRef.current) {
       state.canvas = canvasRef.current;
       initializeContext();
-      
+
       // Set up event listeners
       window.addEventListener('mousedown', handleMouseDown);
       window.addEventListener('mousemove', handleMouseMove);
@@ -526,11 +565,11 @@ export function useSplashEffect(props: SplashCursorProps) {
     // Cleanup
     return () => {
       state.mounted = false;
-      
+
       // Cancel all animation frames
       state.animations.forEach(id => cancelAnimationFrame(id));
       state.animations = [];
-      
+
       // Remove event listeners
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mousemove', handleMouseMove);
@@ -539,7 +578,15 @@ export function useSplashEffect(props: SplashCursorProps) {
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [handleMouseDown, handleMouseMove, handleMouseUp, handleTouchStart, handleTouchMove, handleTouchEnd, initializeContext]);
+  }, [
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
+    initializeContext
+  ]);
 
   return { canvasRef };
 }

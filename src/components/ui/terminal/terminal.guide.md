@@ -129,9 +129,9 @@ Theme-specific variables are included for dark and light modes.
 import { registerCommand } from '@/hooks/use-command-execution.hook';
 
 // Register a custom command
-registerCommand('custom', async (args) => {
+registerCommand('custom', async args => {
   const result = await someAsyncOperation(args);
-  
+
   return {
     content: `Operation completed with result: ${result}`,
     isError: false
@@ -160,18 +160,13 @@ import { useTerminalAuth } from '@/hooks/use-terminal-auth.hook';
 
 const EnhancedTerminal = () => {
   const { isAuthenticated, user } = useTerminalAuth();
-  
+
   // Customize initial commands based on auth state
-  const initialCommands = isAuthenticated 
-    ? [`echo "Welcome back, ${user?.username}!"`] 
+  const initialCommands = isAuthenticated
+    ? [`echo "Welcome back, ${user?.username}!"`]
     : ['echo "Please log in with: login <username>"'];
-  
-  return (
-    <Terminal 
-      initialCommands={initialCommands}
-      className="border border-blue-500"
-    />
-  );
+
+  return <Terminal initialCommands={initialCommands} className="border border-blue-500" />;
 };
 ```
 
@@ -180,16 +175,19 @@ const EnhancedTerminal = () => {
 ### Common Issues
 
 1. **Command not found errors**
+
    - Ensure the command is properly registered in the command handler map
    - Check for typos in the command name
    - Verify that the module containing the command has been loaded
 
 2. **Command output not displaying correctly**
+
    - Check that command result follows the expected format
    - Verify that HTML content is properly sanitized if using raw HTML
    - Ensure that the terminal content container is properly scrolling
 
 3. **History navigation issues**
+
    - Verify that localStorage is available and not full
    - Check that history is being properly saved and loaded
    - Ensure keyboard events are properly handled
@@ -204,11 +202,13 @@ const EnhancedTerminal = () => {
 For advanced customization beyond the provided API:
 
 1. **Custom styling**:
+
    ```tsx
    <Terminal className="my-custom-terminal" />
    ```
 
 2. **Theme customization through CSS variables**:
+
    ```css
    .my-theme-class {
      --terminal-background: rgba(30, 30, 40, 0.9);
@@ -221,7 +221,7 @@ For advanced customization beyond the provided API:
    ```tsx
    const CustomTerminal = () => {
      const terminalRef = useRef(null);
-     
+
      return (
        <div className="relative">
          <Terminal ref={terminalRef} />
@@ -244,7 +244,7 @@ import { Terminal } from '@/components/ui/terminal';
 import { FileExplorer } from '@/components/ui/file-explorer';
 
 const WorkspaceDemo = () => {
-  const handleFileSelect = (file) => {
+  const handleFileSelect = file => {
     // Execute cat command when a file is selected
     document.querySelector('.terminal-input')?.dispatchEvent(
       new CustomEvent('terminal-command', {
@@ -252,7 +252,7 @@ const WorkspaceDemo = () => {
       })
     );
   };
-  
+
   return (
     <div className="grid grid-cols-2 gap-4 h-96">
       <FileExplorer onFileSelect={handleFileSelect} />
@@ -272,14 +272,14 @@ import { useContext, useEffect, useRef } from 'react';
 const AuthTerminal = () => {
   const { user, login, logout } = useContext(AuthContext);
   const hasInitialized = useRef(false);
-  
+
   useEffect(() => {
     // Register auth commands
     const { registerCommand } = import('@/hooks/use-command-execution.hook');
-    
-    registerCommand('app-login', async (args) => {
+
+    registerCommand('app-login', async args => {
       const [username, password] = args;
-      
+
       try {
         await login(username, password);
         return { content: 'Login successful!', isError: false };
@@ -287,13 +287,13 @@ const AuthTerminal = () => {
         return { content: `Login failed: ${error.message}`, isError: true };
       }
     });
-    
+
     registerCommand('app-logout', async () => {
       await logout();
       return { content: 'Logged out successfully', isError: false };
     });
   }, [login, logout]);
-  
+
   useEffect(() => {
     if (!hasInitialized.current && user) {
       hasInitialized.current = true;
@@ -305,7 +305,7 @@ const AuthTerminal = () => {
       );
     }
   }, [user]);
-  
+
   return <Terminal />;
 };
 ```

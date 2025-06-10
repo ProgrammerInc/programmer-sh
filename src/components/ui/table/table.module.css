@@ -59,7 +59,7 @@
   background-color: hsla(var(--muted), 0.5);
 }
 
-.table-row[data-state="selected"] {
+.table-row[data-state='selected'] {
   background-color: hsl(var(--muted));
 }
 
@@ -74,7 +74,7 @@
   color: hsl(var(--muted-foreground));
 }
 
-.table-head:has([role="checkbox"]) {
+.table-head:has([role='checkbox']) {
   padding-right: 0;
 }
 
@@ -84,7 +84,7 @@
   vertical-align: middle;
 }
 
-.table-cell:has([role="checkbox"]) {
+.table-cell:has([role='checkbox']) {
   padding-right: 0;
 }
 

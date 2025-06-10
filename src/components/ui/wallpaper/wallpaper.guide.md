@@ -7,6 +7,7 @@ This guide provides best practices, accessibility considerations, and implementa
 ### When to Use Wallpapers
 
 ✅ **Do use wallpapers for:**
+
 - Creating immersive user experiences
 - Setting the mood or theme of an application
 - Providing visual cues about the current section or context
@@ -15,6 +16,7 @@ This guide provides best practices, accessibility considerations, and implementa
 - Empty states that need visual interest
 
 ❌ **Don't use wallpapers for:**
+
 - Content-heavy pages where the wallpaper may distract from important information
 - Pages where performance is absolutely critical
 - Accessibility-focused interfaces that require minimal visual complexity
@@ -51,22 +53,22 @@ import { WallpaperProvider } from '@/components/ui/wallpaper';
 
 export function AccessibleWallpaper() {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  
+
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     setPrefersReducedMotion(mediaQuery.matches);
-    
+
     const handleChange = (e: MediaQueryListEvent) => {
       setPrefersReducedMotion(e.matches);
     };
-    
+
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
-  
+
   // Choose an appropriate wallpaper based on user preference
   const wallpaperId = prefersReducedMotion ? 'static-gradient' : 'particle-network';
-  
+
   return (
     <WallpaperProvider wallpaper={wallpaperId}>
       <div className="content">
@@ -90,7 +92,7 @@ import { WallpaperProvider } from '@/components/ui/wallpaper';
 
 export function ThemedApp() {
   const { theme } = useTheme();
-  
+
   // Select a wallpaper based on current theme
   const getWallpaperId = () => {
     switch (theme) {
@@ -102,12 +104,10 @@ export function ThemedApp() {
         return 'neutral-pattern';
     }
   };
-  
+
   return (
     <WallpaperProvider wallpaper={getWallpaperId()} theme={theme}>
-      <div className="app-container">
-        {/* Your app content */}
-      </div>
+      <div className="app-container">{/* Your app content */}</div>
     </WallpaperProvider>
   );
 }
@@ -123,7 +123,7 @@ import { WallpaperProvider } from '@/components/ui/wallpaper';
 
 export function ContextualApp() {
   const router = useRouter();
-  
+
   // Select wallpaper based on current route
   const getWallpaperForRoute = () => {
     if (router.pathname.startsWith('/dashboard')) {
@@ -135,12 +135,10 @@ export function ContextualApp() {
     }
     return 'default-wallpaper';
   };
-  
+
   return (
     <WallpaperProvider wallpaper={getWallpaperForRoute()}>
-      <div className="app-container">
-        {/* Your app content */}
-      </div>
+      <div className="app-container">{/* Your app content */}</div>
     </WallpaperProvider>
   );
 }
@@ -160,7 +158,10 @@ export function OverlayContent() {
         {/* Semi-transparent container for better contrast */}
         <div className="overlay-panel">
           <h1>Important Content</h1>
-          <p>This content is placed in a semi-transparent container to ensure readability over any wallpaper.</p>
+          <p>
+            This content is placed in a semi-transparent container to ensure readability over any
+            wallpaper.
+          </p>
           <button>Action Button</button>
         </div>
       </div>
@@ -209,34 +210,32 @@ import { WallpaperProvider } from '@/components/ui/wallpaper';
 
 export function OptimizedWallpaperSwitcher() {
   const [activeWallpaper, setActiveWallpaper] = useState('default');
-  
+
   useEffect(() => {
     // Force garbage collection after wallpaper change
     // by delaying the actual wallpaper switch
     let cleanup: NodeJS.Timeout;
-    
+
     const handleWallpaperChange = (id: string) => {
       // First set to null to help cleanup previous wallpaper
       setActiveWallpaper('none');
-      
+
       // Then set to new wallpaper after a short delay
       cleanup = setTimeout(() => {
         setActiveWallpaper(id);
       }, 100);
     };
-    
+
     // Setup event listeners or other logic here
-    
+
     return () => {
       if (cleanup) clearTimeout(cleanup);
     };
   }, []);
-  
+
   return (
     <WallpaperProvider wallpaper={activeWallpaper}>
-      <div className="content">
-        {/* Content here */}
-      </div>
+      <div className="content">{/* Content here */}</div>
     </WallpaperProvider>
   );
 }

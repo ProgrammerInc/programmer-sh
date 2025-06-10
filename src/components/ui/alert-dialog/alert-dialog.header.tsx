@@ -1,3 +1,4 @@
+/* eslint-disable no-secrets/no-secrets */
 /**
  * Alert Dialog Header Component
  *
@@ -7,7 +8,6 @@
 'use client';
 
 import { cn } from '@/utils/app.utils';
-import * as React from 'react';
 import { memo, useMemo } from 'react';
 
 import styles from './alert-dialog.module.css';
@@ -15,9 +15,9 @@ import { AlertDialogHeaderProps } from './alert-dialog.types';
 
 /**
  * AlertDialogHeader component
- * 
+ *
  * A layout component that wraps the title and description of an alert dialog.
- * 
+ *
  * @example
  * ```tsx
  * <AlertDialogHeader>

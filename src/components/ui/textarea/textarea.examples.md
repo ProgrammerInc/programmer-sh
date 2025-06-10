@@ -7,7 +7,7 @@ The simplest way to use the Textarea component is with default settings:
 ```tsx
 import { Textarea } from '@/components/ui/textarea';
 
-<Textarea placeholder="Type your message here" />
+<Textarea placeholder="Type your message here" />;
 ```
 
 ## Size Variants
@@ -54,11 +54,11 @@ The textarea can automatically adjust its height based on content within specifi
 ```tsx
 import { Textarea } from '@/components/ui/textarea';
 
-<Textarea 
-  minRows={3} 
-  maxRows={8} 
-  placeholder="I will automatically grow between 3-8 rows as you type..." 
-/>
+<Textarea
+  minRows={3}
+  maxRows={8}
+  placeholder="I will automatically grow between 3-8 rows as you type..."
+/>;
 ```
 
 ## Disabled State
@@ -68,10 +68,7 @@ Disable the textarea to prevent user interaction:
 ```tsx
 import { Textarea } from '@/components/ui/textarea';
 
-<Textarea 
-  disabled 
-  value="This textarea cannot be edited" 
-/>
+<Textarea disabled value="This textarea cannot be edited" />;
 ```
 
 ## With Custom Styling
@@ -82,10 +79,7 @@ Apply custom styles to the textarea:
 import { Textarea } from '@/components/ui/textarea';
 import styles from './custom-styles.module.css';
 
-<Textarea 
-  className={styles.customTextarea} 
-  placeholder="Custom styled textarea" 
-/>
+<Textarea className={styles.customTextarea} placeholder="Custom styled textarea" />;
 ```
 
 ## Within Forms
@@ -98,20 +92,20 @@ import { useState } from 'react';
 
 const MyForm = () => {
   const [message, setMessage] = useState('');
-  
-  const handleSubmit = (e) => {
+
+  const handleSubmit = e => {
     e.preventDefault();
     console.log('Submitted message:', message);
   };
-  
+
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="message">Your Message:</label>
-      <Textarea 
+      <Textarea
         id="message"
         name="message"
         value={message}
-        onChange={(e) => setMessage(e.target.value)}
+        onChange={e => setMessage(e.target.value)}
         placeholder="Type your message here..."
         required
       />
@@ -132,12 +126,12 @@ import { useState } from 'react';
 const MessageWithCharCount = () => {
   const [message, setMessage] = useState('');
   const maxLength = 280;
-  
+
   return (
     <div>
-      <Textarea 
+      <Textarea
         value={message}
-        onChange={(e) => setMessage(e.target.value)}
+        onChange={e => setMessage(e.target.value)}
         placeholder="Type your message here..."
         maxLength={maxLength}
       />
@@ -160,8 +154,8 @@ import { useState } from 'react';
 const ValidatedTextarea = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-  
-  const validateMessage = (value) => {
+
+  const validateMessage = value => {
     if (value.length < 10) {
       setError('Message must be at least 10 characters long');
       return false;
@@ -169,16 +163,16 @@ const ValidatedTextarea = () => {
     setError('');
     return true;
   };
-  
-  const handleChange = (e) => {
+
+  const handleChange = e => {
     const newValue = e.target.value;
     setMessage(newValue);
     validateMessage(newValue);
   };
-  
+
   return (
     <div>
-      <Textarea 
+      <Textarea
         value={message}
         onChange={handleChange}
         placeholder="Type your message here..."

@@ -10,6 +10,6 @@
  */
 
 export { Spotlight } from './spotlight';
-export { Spotlight as SpotlightEnhanced, default } from './spotlight-new';
+export { default, Spotlight as SpotlightEnhanced } from './spotlight-new';
 export * as SpotlightStyles from './spotlight.module.css';
 export type { SpotlightNewProps, SpotlightProps } from './spotlight.types';

@@ -1,20 +1,21 @@
+/* eslint-disable no-secrets/no-secrets */
 'use client';
 
 import * as React from 'react';
 import { memo } from 'react';
-import { BreadcrumbProps } from './breadcrumb.types';
 import {
-  BreadcrumbList,
+  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
+  BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
-  BreadcrumbEllipsis
+  BreadcrumbSeparator
 } from './breadcrumb.components';
+import { BreadcrumbProps } from './breadcrumb.types';
 
 /**
  * Breadcrumb component for navigation hierarchy
- * 
+ *
  * @example
  * ```tsx
  * <Breadcrumb>
@@ -34,20 +35,22 @@ import {
  * </Breadcrumb>
  * ```
  */
-const Breadcrumb = memo(React.forwardRef<HTMLElement, BreadcrumbProps>(
-  ({ separator, ...props }, ref) => <nav ref={ref} aria-label="breadcrumb" {...props} />
-));
+const Breadcrumb = memo(
+  React.forwardRef<HTMLElement, BreadcrumbProps>(({ separator, ...props }, ref) => (
+    <nav ref={ref} aria-label="breadcrumb" {...props} />
+  ))
+);
 
 Breadcrumb.displayName = 'Breadcrumb';
 
 export {
   Breadcrumb,
-  BreadcrumbList,
+  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
+  BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
-  BreadcrumbEllipsis
+  BreadcrumbSeparator
 };
 
 export default Breadcrumb;

@@ -2,7 +2,7 @@
 
 /**
  * Removes any rotation from a transform string and ensures a zero-degree rotation
- * 
+ *
  * @param transformStr - The original transform string
  * @returns A transform string with rotation set to 0deg
  */
@@ -19,7 +19,7 @@ export const getNoRotationTransform = (transformStr: string): string => {
 
 /**
  * Adds a horizontal offset to a transform string that may already contain a translation
- * 
+ *
  * @param baseTransform - The original transform string
  * @param offsetX - The additional X translation to apply in pixels
  * @returns A transform string with the updated translation

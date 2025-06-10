@@ -5,19 +5,19 @@ import { cva } from 'class-variance-authority';
 /**
  * Toggle component variants
  * Defines styles for different toggle button variants and sizes
- * 
+ *
  * @deprecated Use CSS modules instead. This file is kept for backward compatibility.
  * Import styles from toggle.module.css for new components.
- * 
+ *
  * @example
  * ```tsx
  * // Instead of this:
  * <Toggle variant="outline" size="lg">Toggle</Toggle>
- * 
+ *
  * // Use CSS modules:
  * import styles from './toggle.module.css';
- * 
- * <Toggle 
+ *
+ * <Toggle
  *   className={`${styles.toggle} ${styles.outline} ${styles['size-lg']}`}
  * >
  *   Toggle

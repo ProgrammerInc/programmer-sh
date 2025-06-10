@@ -1,8 +1,8 @@
 /**
  * Button Component
- * 
+ *
  * A flexible button component with various visual styles and sizes.
- * 
+ *
  * @example
  * ```tsx
  * <Button variant="default" size="default">Click me</Button>

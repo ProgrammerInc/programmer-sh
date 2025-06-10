@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useCallback, useMemo, ReactNode, useEffect } from 'react';
-import { AudioAnalyzerOptions, AudioData, useAudioAnalyzer } from './threads.audio';
-import { 
-  ThreadsAudioContext, 
-  DEFAULT_AUDIO_DATA, 
-  DEFAULT_AUDIO_OPTIONS 
+import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  DEFAULT_AUDIO_DATA,
+  DEFAULT_AUDIO_OPTIONS,
+  ThreadsAudioContext
 } from './threads-audio-context-type';
+import { AudioAnalyzerOptions, AudioData, useAudioAnalyzer } from './threads.audio';
 
 /**
  * Context provider props interface
@@ -32,13 +32,13 @@ export function ThreadsAudioProvider({
     ...DEFAULT_AUDIO_OPTIONS,
     enabled: initialEnabled,
     audioSource: 'mic', // Default to microphone
-    sensitivity: 2.5, // Higher sensitivity for better visualization
+    sensitivity: 2.5 // Higher sensitivity for better visualization
   });
   const [manualAudioData, setManualAudioData] = useState<AudioData>(DEFAULT_AUDIO_DATA);
 
   // Initialize the audio analyzer with our options
   const { audioData, startAudioAnalysis, stopAudioAnalysis } = useAudioAnalyzer(audioOptions);
-  
+
   // Effect to start/stop audio analysis when enabled state changes
   useEffect(() => {
     if (audioEnabled) {
@@ -69,15 +69,12 @@ export function ThreadsAudioProvider({
   }, []);
 
   // Update manual audio data
-  const updateManualAudioData = useCallback(
-    (data: Partial<Omit<AudioData, 'frequencyData'>>) => {
-      setManualAudioData(current => ({
-        ...current,
-        ...data
-      }));
-    },
-    []
-  );
+  const updateManualAudioData = useCallback((data: Partial<Omit<AudioData, 'frequencyData'>>) => {
+    setManualAudioData(current => ({
+      ...current,
+      ...data
+    }));
+  }, []);
 
   // Memoize context value
   const contextValue = useMemo(
@@ -89,14 +86,20 @@ export function ThreadsAudioProvider({
       updateAudioOptions,
       updateManualAudioData
     }),
-    [audioEnabled, audioOptions, audioData, manualAudioData, toggleAudio, updateAudioOptions, updateManualAudioData]
+    [
+      audioEnabled,
+      audioOptions,
+      audioData,
+      manualAudioData,
+      toggleAudio,
+      updateAudioOptions,
+      updateManualAudioData
+    ]
   );
 
   return (
     <ThreadsAudioContext.Provider value={contextValue}>
-      {typeof children === 'function' 
-        ? children({ audioEnabled }) 
-        : children}
+      {typeof children === 'function' ? children({ audioEnabled }) : children}
     </ThreadsAudioContext.Provider>
   );
 }

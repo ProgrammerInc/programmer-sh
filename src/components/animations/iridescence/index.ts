@@ -7,5 +7,5 @@
  * @module Iridescence
  */
 
-export { Iridescence, default } from './iridescence';
+export { default, Iridescence } from './iridescence';
 export type { IridescenceProps } from './iridescence.types';

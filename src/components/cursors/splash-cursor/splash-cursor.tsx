@@ -72,7 +72,7 @@ export interface Pointer {
 
 /**
  * Creates a default pointer object with initial values
- * 
+ *
  * @returns A new pointer object with default values
  */
 function pointerPrototype(): Pointer {

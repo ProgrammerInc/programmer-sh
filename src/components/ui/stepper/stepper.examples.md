@@ -78,10 +78,7 @@ export default function StepperWithCallbacksExample() {
   };
 
   return (
-    <Stepper 
-      onStepChange={handleStepChange} 
-      onFinalStepCompleted={handleCompletion}
-    >
+    <Stepper onStepChange={handleStepChange} onFinalStepCompleted={handleCompletion}>
       <Step>Step 1 content</Step>
       <Step>Step 2 content</Step>
       <Step>Step 3 content</Step>
@@ -99,10 +96,7 @@ import { Stepper, Step } from '@/components/ui/stepper';
 
 export default function CustomButtonTextExample() {
   return (
-    <Stepper 
-      backButtonText="Previous" 
-      nextButtonText="Next Step"
-    >
+    <Stepper backButtonText="Previous" nextButtonText="Next Step">
       <Step>Step 1 content</Step>
       <Step>Step 2 content</Step>
       <Step>Step 3 content</Step>
@@ -122,14 +116,14 @@ export default function CustomStepIndicatorsExample() {
   return (
     <Stepper
       renderStepIndicator={({ step, currentStep, onStepClick }) => (
-        <button 
+        <button
           onClick={() => onStepClick(step)}
           className={`flex items-center justify-center w-8 h-8 rounded-full transition-colors ${
             currentStep === step
               ? 'bg-blue-500 text-white'
               : currentStep > step
-              ? 'bg-green-500 text-white'
-              : 'bg-gray-200 text-gray-700'
+                ? 'bg-green-500 text-white'
+                : 'bg-gray-200 text-gray-700'
           }`}
         >
           {currentStep > step ? '✓' : step}
@@ -205,15 +199,15 @@ export default function FormStepperExample() {
       password: '',
       address: '',
       city: '',
-      country: '',
-    },
+      country: ''
+    }
   });
 
   const handleStepChange = (step: number) => {
     setCurrentStep(step);
   };
 
-  const handleSubmit = methods.handleSubmit((data) => {
+  const handleSubmit = methods.handleSubmit(data => {
     console.log('Form submitted:', data);
     // Submit data to your API
   });
@@ -221,10 +215,7 @@ export default function FormStepperExample() {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit}>
-        <Stepper 
-          initialStep={currentStep} 
-          onStepChange={handleStepChange}
-        >
+        <Stepper initialStep={currentStep} onStepChange={handleStepChange}>
           <Step>
             {/* Account Information Step */}
             <h2 className="text-xl font-semibold">Account Information</h2>
@@ -258,7 +249,11 @@ import { Stepper, Step } from '@/components/ui/stepper';
 
 export default function ConditionalStepperExample() {
   const [currentStep, setCurrentStep] = useState(1);
-  const { register, handleSubmit, formState: { errors, isValid } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid }
+  } = useForm({
     mode: 'onChange'
   });
 
@@ -279,16 +274,16 @@ export default function ConditionalStepperExample() {
       <Step>
         <h2>Step 1</h2>
         <div className="mt-4">
-          <label htmlFor="email" className="block text-sm font-medium">Email</label>
+          <label htmlFor="email" className="block text-sm font-medium">
+            Email
+          </label>
           <input
             id="email"
             type="email"
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
             {...register('email', { required: true, pattern: /^\S+@\S+\.\S+$/ })}
           />
-          {errors.email && (
-            <span className="text-red-500 text-sm">Please enter a valid email</span>
-          )}
+          {errors.email && <span className="text-red-500 text-sm">Please enter a valid email</span>}
         </div>
       </Step>
       <Step>

@@ -8,6 +8,6 @@
  * @module Particles
  */
 
-export { Particles, default } from './particles';
+export { default, Particles } from './particles';
 export * as ParticlesStyles from './particles.module.css';
 export type { ParticlesProps } from './particles.types';

@@ -10,11 +10,11 @@ import { ThreadsAudioContext, ThreadsAudioContextState } from './threads-audio-c
  */
 export function useThreadsAudio(): ThreadsAudioContextState {
   const context = useContext(ThreadsAudioContext);
-  
+
   if (!context) {
     throw new Error('useThreadsAudio must be used within a ThreadsAudioProvider');
   }
-  
+
   return context;
 }
 
@@ -23,9 +23,9 @@ let audioContextAvailable: boolean | null = null;
 
 /**
  * Check if the Threads audio context is available
- * 
+ *
  * This helper checks a global flag to avoid conditional hook calls
- * 
+ *
  * @returns True if the audio context is available
  */
 export function isThreadsAudioAvailable(): boolean {
@@ -33,7 +33,7 @@ export function isThreadsAudioAvailable(): boolean {
   if (audioContextAvailable !== null) {
     return audioContextAvailable;
   }
-  
+
   // We can't call the hook directly here since this isn't a component or hook function
   // Instead, we'll just return false and let the component make the actual check
   // when it renders, which will update this flag
@@ -42,10 +42,10 @@ export function isThreadsAudioAvailable(): boolean {
 
 /**
  * Hook to safely check for audio context availability
- * 
+ *
  * Use this hook in your components to check if the audio context exists
  * and update the global flag
- * 
+ *
  * @returns True if audio context is available
  */
 export function useIsThreadsAudioAvailable(): boolean {

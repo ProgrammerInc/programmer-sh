@@ -1,23 +1,23 @@
 /**
  * Pagination Component
- * 
+ *
  * A set of components for building pagination UI with page navigation.
- * 
- * Provides a flexible API for creating pagination interfaces for content that spans 
+ *
+ * Provides a flexible API for creating pagination interfaces for content that spans
  * multiple pages. The styling is handled via CSS modules for consistency and maintainability.
- * 
+ *
  * @example
  * ```tsx
- * import { 
- *   Pagination, 
- *   PaginationContent, 
- *   PaginationEllipsis, 
- *   PaginationItem, 
- *   PaginationLink, 
- *   PaginationNext, 
- *   PaginationPrevious 
+ * import {
+ *   Pagination,
+ *   PaginationContent,
+ *   PaginationEllipsis,
+ *   PaginationItem,
+ *   PaginationLink,
+ *   PaginationNext,
+ *   PaginationPrevious
  * } from '@/components/ui/pagination';
- * 
+ *
  * export function PaginationDemo() {
  *   return (
  *     <Pagination>

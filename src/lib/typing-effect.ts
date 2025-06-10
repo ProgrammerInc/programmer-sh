@@ -26,15 +26,12 @@ export interface TypingEffectResult {
 
 /**
  * Hook that creates a typing effect for a single string of text
- * 
+ *
  * @param text - The text to be typed
  * @param options - Configuration options for the typing effect
  * @returns Object containing the display text, typing status, and completion status
  */
-export function useTypingEffect(
-  text: string,
-  options: TypeOptions = {}
-): TypingEffectResult {
+export function useTypingEffect(text: string, options: TypeOptions = {}): TypingEffectResult {
   const { speed = 100, delay = 0, cursor = true } = options;
   const [displayText, setDisplayText] = useState<string>('');
   const [index, setIndex] = useState<number>(0);
@@ -123,7 +120,7 @@ export interface MultiLineTypingEffectResult {
 
 /**
  * Hook that creates a typing effect for multiple lines of text
- * 
+ *
  * @param lines - Array of text lines to be typed sequentially
  * @param options - Configuration options for the typing effect
  * @returns Object containing the display lines, current line text, typing status, and completion status

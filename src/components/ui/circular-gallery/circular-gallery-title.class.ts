@@ -3,8 +3,8 @@
  * Responsible for rendering text labels on gallery items
  */
 
-import { Geometry, Mesh, Program, Renderer, Transform } from 'ogl';
-import { TitleProps, GL } from './circular-gallery.types';
+import { Geometry, Mesh, Program, Renderer } from 'ogl';
+import { GL, TitleProps } from './circular-gallery.types';
 import { autoBind, createTextTexture } from './circular-gallery.utils';
 
 export class Title {
@@ -59,7 +59,7 @@ export class Title {
     });
 
     const program = new Program(this.gl, {
-      vertex: /* glsl */`
+      vertex: /* glsl */ `
         attribute vec3 position;
         attribute vec2 uv;
         uniform mat4 modelViewMatrix;
@@ -70,7 +70,7 @@ export class Title {
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }
       `,
-      fragment: /* glsl */`
+      fragment: /* glsl */ `
         precision highp float;
         uniform sampler2D tMap;
         varying vec2 vUv;

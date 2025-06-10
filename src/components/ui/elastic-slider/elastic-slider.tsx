@@ -1,7 +1,7 @@
 'use client';
 
 import { animate, motion, useMotionValue, useMotionValueEvent, useTransform } from 'framer-motion';
-import React, { useEffect, useRef, useState, memo } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 
 import { cn } from '@/utils/app.utils';
 import styles from './elastic-slider.module.css';
@@ -14,10 +14,10 @@ const MAX_OVERFLOW = 50;
 
 /**
  * ElasticSlider Component
- * 
+ *
  * A slider component with elastic effects when dragging beyond the bounds.
  * It provides visual feedback through animations and haptic-like UI responses.
- * 
+ *
  * @example
  * ```tsx
  * <ElasticSlider
@@ -39,7 +39,7 @@ export const ElasticSlider = memo(function ElasticSlider({
   rightIcon = <>+</>
 }: ElasticSliderProps) {
   const sliderContainerClassName = cn(styles['slider-container'], className);
-  
+
   return (
     <div className={sliderContainerClassName}>
       <Slider
@@ -59,7 +59,7 @@ ElasticSlider.displayName = 'ElasticSlider';
 
 /**
  * Internal Slider Component
- * 
+ *
  * Implements the core slider functionality with elastic effects.
  * Handles user interactions, animations, and value calculations.
  */
@@ -207,9 +207,7 @@ const Slider = memo(function Slider({
           {rightIcon}
         </motion.div>
       </motion.div>
-      <p className={styles['slider-value']}>
-        {Math.round(value)}
-      </p>
+      <p className={styles['slider-value']}>{Math.round(value)}</p>
     </>
   );
 });
@@ -218,10 +216,10 @@ Slider.displayName = 'Slider';
 
 /**
  * Decay function for elastic effect
- * 
+ *
  * Calculates a sigmoid-based decay to create a natural-feeling elastic effect
  * when dragging beyond the slider bounds.
- * 
+ *
  * @param value - Current overflow value
  * @param max - Maximum overflow threshold
  * @returns Decayed value with sigmoid curve applied

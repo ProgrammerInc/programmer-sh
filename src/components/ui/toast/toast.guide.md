@@ -23,9 +23,9 @@ Choose appropriate durations for your toast notifications:
 
 ```tsx
 toast({
-  title: "Simple confirmation",
-  description: "Action completed",
-  duration: 3000, // 3 seconds
+  title: 'Simple confirmation',
+  description: 'Action completed',
+  duration: 3000 // 3 seconds
 });
 ```
 
@@ -38,14 +38,15 @@ toast({
 ```tsx
 // Good
 toast({
-  title: "File uploaded",
-  description: "report.pdf has been uploaded successfully"
+  title: 'File uploaded',
+  description: 'report.pdf has been uploaded successfully'
 });
 
 // Too verbose
 toast({
-  title: "File Upload Status Notification",
-  description: "We are pleased to inform you that your file named report.pdf has been successfully uploaded to our servers and is now available for viewing and sharing with other users of the application."
+  title: 'File Upload Status Notification',
+  description:
+    'We are pleased to inform you that your file named report.pdf has been successfully uploaded to our servers and is now available for viewing and sharing with other users of the application.'
 });
 ```
 
@@ -59,15 +60,15 @@ Choose the appropriate variant for your toast based on the context:
 ```tsx
 // Success message
 toast({
-  title: "Success",
-  description: "Your profile has been updated"
+  title: 'Success',
+  description: 'Your profile has been updated'
 });
 
 // Error message
 toast({
-  variant: "destructive",
-  title: "Error",
-  description: "Failed to update profile"
+  variant: 'destructive',
+  title: 'Error',
+  description: 'Failed to update profile'
 });
 ```
 
@@ -77,13 +78,9 @@ When a toast requires user action or offers a way to address the notification, i
 
 ```tsx
 toast({
-  title: "Friend request",
-  description: "Jane Doe sent you a friend request",
-  action: (
-    <ToastAction altText="Accept friend request">
-      Accept
-    </ToastAction>
-  ),
+  title: 'Friend request',
+  description: 'Jane Doe sent you a friend request',
+  action: <ToastAction altText="Accept friend request">Accept</ToastAction>
 });
 ```
 
@@ -94,9 +91,7 @@ toast({
 Always provide descriptive `altText` for ToastAction components, which is essential for screen reader users:
 
 ```tsx
-<ToastAction altText="View all notifications in your inbox">
-  View All
-</ToastAction>
+<ToastAction altText="View all notifications in your inbox">View All</ToastAction>
 ```
 
 ### 2. Keyboard Navigation
@@ -143,18 +138,19 @@ Use a stacking strategy that makes new toasts visible without hiding older ones 
 All toast components are wrapped with React.memo to minimize unnecessary re-renders:
 
 ```tsx
-const ToastTitle = memo(React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Title>,
-  ToastTitleProps
->(({ className, ...props }, ref) => {
-  return (
-    <ToastPrimitives.Title 
-      className={className ? `${styles.title} ${className}` : styles.title}
-      ref={ref} 
-      {...props} 
-    />
-  );
-}));
+const ToastTitle = memo(
+  React.forwardRef<React.ElementRef<typeof ToastPrimitives.Title>, ToastTitleProps>(
+    ({ className, ...props }, ref) => {
+      return (
+        <ToastPrimitives.Title
+          className={className ? `${styles.title} ${className}` : styles.title}
+          ref={ref}
+          {...props}
+        />
+      );
+    }
+  )
+);
 ```
 
 ## Mobile Considerations

@@ -13,9 +13,7 @@ The ToggleGroup component is a set of two-state buttons that can be toggled on o
 The ToggleGroup should have an `aria-label` that describes the purpose of the group:
 
 ```tsx
-<ToggleGroup aria-label="Text alignment">
-  {/* Items */}
-</ToggleGroup>
+<ToggleGroup aria-label="Text alignment">{/* Items */}</ToggleGroup>
 ```
 
 2. **Provide aria-labels for icon-only items**
@@ -95,8 +93,8 @@ Keep the content of all items in a group consistent - either all icons, all text
 For single selection ToggleGroups, provide a sensible default:
 
 ```tsx
-<ToggleGroup 
-  type="single" 
+<ToggleGroup
+  type="single"
   defaultValue="center" // Default selection
   aria-label="Text alignment"
 >
@@ -113,7 +111,9 @@ Use the disabled state for items that are not currently available:
 ```tsx
 <ToggleGroup type="multiple">
   <ToggleGroupItem value="bold">Bold</ToggleGroupItem>
-  <ToggleGroupItem value="link" disabled>Link</ToggleGroupItem>
+  <ToggleGroupItem value="link" disabled>
+    Link
+  </ToggleGroupItem>
 </ToggleGroup>
 ```
 
@@ -124,11 +124,7 @@ Use the disabled state for items that are not currently available:
 For simple use cases where you don't need to react to changes:
 
 ```tsx
-<ToggleGroup 
-  type="single" 
-  defaultValue="center" 
-  aria-label="Text alignment"
->
+<ToggleGroup type="single" defaultValue="center" aria-label="Text alignment">
   {/* Items */}
 </ToggleGroup>
 ```
@@ -140,14 +136,9 @@ For cases where you need to control or react to the state:
 ```tsx
 const [value, setValue] = useState('center');
 
-<ToggleGroup 
-  type="single"
-  value={value}
-  onValueChange={setValue}
-  aria-label="Text alignment"
->
+<ToggleGroup type="single" value={value} onValueChange={setValue} aria-label="Text alignment">
   {/* Items */}
-</ToggleGroup>
+</ToggleGroup>;
 
 // Do something with the value
 ```
@@ -161,11 +152,7 @@ The ToggleGroup and ToggleGroupItem components are not wrapped with React.memo b
 ```tsx
 // Memoizing a custom component that uses ToggleGroup
 const TextFormatting = memo(function TextFormatting() {
-  return (
-    <ToggleGroup type="multiple">
-      {/* Items */}
-    </ToggleGroup>
-  );
+  return <ToggleGroup type="multiple">{/* Items */}</ToggleGroup>;
 });
 ```
 
@@ -176,7 +163,7 @@ const TextFormatting = memo(function TextFormatting() {
 Ensure ToggleGroupItems have an adequate touch target size for mobile devices. Consider using the "lg" size on mobile interfaces:
 
 ```tsx
-<ToggleGroup 
+<ToggleGroup
   size="lg" // Larger touch target for mobile
   aria-label="Text formatting"
 >
@@ -189,10 +176,7 @@ Ensure ToggleGroupItems have an adequate touch target size for mobile devices. C
 On mobile devices with limited horizontal space, consider using a vertical orientation:
 
 ```tsx
-<ToggleGroup 
-  orientation="vertical" 
-  aria-label="Options"
->
+<ToggleGroup orientation="vertical" aria-label="Options">
   {/* Items */}
 </ToggleGroup>
 ```
@@ -208,12 +192,12 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 function AlignmentForm() {
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      alignment: 'center',
-    },
+      alignment: 'center'
+    }
   });
-  
-  const onSubmit = (data) => console.log(data);
-  
+
+  const onSubmit = data => console.log(data);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Controller
@@ -232,7 +216,7 @@ function AlignmentForm() {
           </ToggleGroup>
         )}
       />
-      
+
       <button type="submit">Submit</button>
     </form>
   );
@@ -253,17 +237,29 @@ function TextEditor() {
   return (
     <div className="flex flex-col gap-2">
       <ToggleGroup type="multiple" aria-label="Text formatting">
-        <ToggleGroupItem value="bold"><Bold className="h-4 w-4" /></ToggleGroupItem>
-        <ToggleGroupItem value="italic"><Italic className="h-4 w-4" /></ToggleGroupItem>
-        <ToggleGroupItem value="underline"><Underline className="h-4 w-4" /></ToggleGroupItem>
+        <ToggleGroupItem value="bold">
+          <Bold className="h-4 w-4" />
+        </ToggleGroupItem>
+        <ToggleGroupItem value="italic">
+          <Italic className="h-4 w-4" />
+        </ToggleGroupItem>
+        <ToggleGroupItem value="underline">
+          <Underline className="h-4 w-4" />
+        </ToggleGroupItem>
       </ToggleGroup>
-      
+
       <ToggleGroup type="single" defaultValue="left" aria-label="Text alignment">
-        <ToggleGroupItem value="left"><AlignLeft className="h-4 w-4" /></ToggleGroupItem>
-        <ToggleGroupItem value="center"><AlignCenter className="h-4 w-4" /></ToggleGroupItem>
-        <ToggleGroupItem value="right"><AlignRight className="h-4 w-4" /></ToggleGroupItem>
+        <ToggleGroupItem value="left">
+          <AlignLeft className="h-4 w-4" />
+        </ToggleGroupItem>
+        <ToggleGroupItem value="center">
+          <AlignCenter className="h-4 w-4" />
+        </ToggleGroupItem>
+        <ToggleGroupItem value="right">
+          <AlignRight className="h-4 w-4" />
+        </ToggleGroupItem>
       </ToggleGroup>
-      
+
       <textarea className="border p-2" placeholder="Type your text here" />
     </div>
   );
@@ -281,14 +277,14 @@ import { List, LayoutGrid } from 'lucide-react';
 
 function ContentViewer() {
   const [viewMode, setViewMode] = useState('grid');
-  
+
   return (
     <div>
       <div className="flex justify-end mb-4">
-        <ToggleGroup 
-          type="single" 
-          value={viewMode} 
-          onValueChange={setViewMode} 
+        <ToggleGroup
+          type="single"
+          value={viewMode}
+          onValueChange={setViewMode}
           aria-label="View mode"
         >
           <ToggleGroupItem value="list" aria-label="List view">
@@ -299,7 +295,7 @@ function ContentViewer() {
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
-      
+
       <div className={viewMode === 'grid' ? 'grid grid-cols-3 gap-4' : 'space-y-2'}>
         {/* Content items */}
       </div>

@@ -57,7 +57,7 @@ When using multiple toggles in a group, use consistent sizing and variants:
   <Toggle variant="outline" aria-label="Bold">
     <Bold className="h-4 w-4" />
   </Toggle>
-  
+
   <Toggle variant="outline" aria-label="Italic">
     <Italic className="h-4 w-4" />
   </Toggle>
@@ -99,13 +99,9 @@ For cases where you need to control or react to the state:
 ```tsx
 const [isPressed, setIsPressed] = useState(false);
 
-<Toggle 
-  pressed={isPressed}
-  onPressedChange={setIsPressed}
-  aria-label="Toggle option"
->
+<Toggle pressed={isPressed} onPressedChange={setIsPressed} aria-label="Toggle option">
   Option
-</Toggle>
+</Toggle>;
 
 // Do something with isPressed state
 ```
@@ -118,13 +114,11 @@ The Toggle component is wrapped with React.memo to minimize unnecessary re-rende
 
 ```tsx
 // Good: memoized callback avoids unnecessary re-renders
-const handlePressedChange = useCallback((pressed) => {
+const handlePressedChange = useCallback(pressed => {
   setIsPressed(pressed);
 }, []);
 
-<Toggle onPressedChange={handlePressedChange}>
-  Option
-</Toggle>
+<Toggle onPressedChange={handlePressedChange}>Option</Toggle>;
 ```
 
 ## Mobile Considerations
@@ -134,7 +128,7 @@ const handlePressedChange = useCallback((pressed) => {
 Ensure toggle buttons have an adequate touch target size for mobile devices. The default sizing is designed to be touch-friendly, but consider using the "lg" size on mobile interfaces:
 
 ```tsx
-<Toggle 
+<Toggle
   size="lg" // Larger touch target for mobile
   aria-label="Toggle option"
 >
@@ -157,28 +151,24 @@ import { Toggle } from '@/components/ui/toggle';
 function ToggleForm() {
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      isBold: false,
-    },
+      isBold: false
+    }
   });
-  
-  const onSubmit = (data) => console.log(data);
-  
+
+  const onSubmit = data => console.log(data);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Controller
         name="isBold"
         control={control}
         render={({ field }) => (
-          <Toggle
-            pressed={field.value}
-            onPressedChange={field.onChange}
-            aria-label="Toggle bold"
-          >
+          <Toggle pressed={field.value} onPressedChange={field.onChange} aria-label="Toggle bold">
             Bold
           </Toggle>
         )}
       />
-      
+
       <button type="submit">Submit</button>
     </form>
   );
@@ -194,12 +184,9 @@ For custom styling, use the CSS module approach:
 ```tsx
 import styles from './custom-toggle.module.css';
 
-<Toggle 
-  className={`${styles.customToggle} ${styles.rounded}`}
-  aria-label="Custom toggle"
->
+<Toggle className={`${styles.customToggle} ${styles.rounded}`} aria-label="Custom toggle">
   Custom
-</Toggle>
+</Toggle>;
 ```
 
 Custom CSS module example:
@@ -211,7 +198,7 @@ Custom CSS module example:
   color: var(--custom-text);
 }
 
-.customToggle[data-state="on"] {
+.customToggle[data-state='on'] {
   background-color: var(--custom-active-bg);
   color: var(--custom-active-text);
 }

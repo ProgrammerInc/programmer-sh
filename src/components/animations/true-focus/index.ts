@@ -7,6 +7,6 @@
  * @module TrueFocus
  */
 
-export { TrueFocus, default } from './true-focus';
+export { default, TrueFocus } from './true-focus';
 export * as TrueFocusStyles from './true-focus.module.css';
 export type { TrueFocusProps } from './true-focus.types';

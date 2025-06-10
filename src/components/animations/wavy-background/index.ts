@@ -7,6 +7,6 @@
  * @module WavyBackground
  */
 
-export { WavyBackground, default } from './wavy-background';
+export { default, WavyBackground } from './wavy-background';
 export * as WavyBackgroundStyles from './wavy-background.module.css';
 export type { WavyBackgroundProps } from './wavy-background.types';

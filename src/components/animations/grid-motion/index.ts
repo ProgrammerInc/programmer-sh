@@ -6,6 +6,6 @@
  * @module GridMotion
  */
 
-export { GridMotion, default } from './grid-motion';
+export { default, GridMotion } from './grid-motion';
 export * as GridMotionStyles from './grid-motion.module.css';
 export type { GridMotionProps } from './grid-motion.types';

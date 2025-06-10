@@ -5,17 +5,13 @@ import * as React from 'react';
 
 import { cn } from '@/utils/app.utils';
 import styles from './hover-card.module.css';
-import {
-  HoverCardContentProps,
-  HoverCardProps,
-  HoverCardTriggerProps
-} from './hover-card.types';
+import { HoverCardContentProps, HoverCardProps, HoverCardTriggerProps } from './hover-card.types';
 
 /**
  * HoverCard component
- * 
+ *
  * Card that displays additional information when hovering over a trigger element.
- * 
+ *
  * @example
  * ```tsx
  * <HoverCard>
@@ -34,15 +30,17 @@ HoverCard.displayName = HoverCardPrimitive.Root.displayName;
 
 /**
  * HoverCardTrigger component
- * 
+ *
  * Element that triggers the hover card when hovered or focused.
- * 
+ *
  * @example
  * ```tsx
  * <HoverCardTrigger>Hover over me</HoverCardTrigger>
  * ```
  */
-const HoverCardTrigger = React.memo(function HoverCardTrigger(props: HoverCardTriggerProps): JSX.Element {
+const HoverCardTrigger = React.memo(function HoverCardTrigger(
+  props: HoverCardTriggerProps
+): JSX.Element {
   return <HoverCardPrimitive.Trigger {...props} />;
 });
 
@@ -50,9 +48,9 @@ HoverCardTrigger.displayName = HoverCardPrimitive.Trigger.displayName;
 
 /**
  * HoverCardContent component
- * 
+ *
  * Content displayed when the trigger is hovered or focused.
- * 
+ *
  * @example
  * ```tsx
  * <HoverCardContent>
@@ -63,20 +61,21 @@ HoverCardTrigger.displayName = HoverCardPrimitive.Trigger.displayName;
  * </HoverCardContent>
  * ```
  */
-const HoverCardContent = React.memo(React.forwardRef<
-  React.ElementRef<typeof HoverCardPrimitive.Content>,
-  HoverCardContentProps
->(({ className, align = 'center', sideOffset = 4, ...props }, ref) => {
-  return (
-    <HoverCardPrimitive.Content
-      ref={ref}
-      align={align}
-      sideOffset={sideOffset}
-      className={cn(styles.content, className)}
-      {...props}
-    />
-  );
-}));
+const HoverCardContent = React.memo(
+  React.forwardRef<React.ElementRef<typeof HoverCardPrimitive.Content>, HoverCardContentProps>(
+    ({ className, align = 'center', sideOffset = 4, ...props }, ref) => {
+      return (
+        <HoverCardPrimitive.Content
+          ref={ref}
+          align={align}
+          sideOffset={sideOffset}
+          className={cn(styles.content, className)}
+          {...props}
+        />
+      );
+    }
+  )
+);
 
 HoverCardContent.displayName = HoverCardPrimitive.Content.displayName;
 

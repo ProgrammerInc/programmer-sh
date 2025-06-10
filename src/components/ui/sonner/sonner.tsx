@@ -8,20 +8,20 @@ import { ToasterProps } from './sonner.types';
 
 /**
  * Toaster Component - Displays toast notifications based on Sonner
- * 
+ *
  * Features:
  * - Customized styling consistent with the application theme
  * - Supports all features from Sonner including positioning, animations and customization
  * - Properly themed for dark mode by default
  * - Accessible notifications with proper focus management
- * 
+ *
  * @see {@link https://sonner.emilkowal.ski/ Sonner Documentation}
- * 
+ *
  * @example
  * ```tsx
  * // Basic usage (typically added at the root of your app)
  * import { Toaster } from '@/components/ui/sonner';
- * 
+ *
  * export default function RootLayout() {
  *   return (
  *     <html lang="en">
@@ -33,15 +33,15 @@ import { ToasterProps } from './sonner.types';
  *   );
  * }
  * ```
- * 
+ *
  * @example
  * ```tsx
  * // Using the toast API in components
  * import { toast } from 'sonner';
- * 
+ *
  * export default function MyComponent() {
  *   return (
- *     <Button 
+ *     <Button
  *       onClick={() => toast('Event has been created')}
  *     >
  *       Create Event

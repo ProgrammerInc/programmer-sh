@@ -41,10 +41,7 @@
 import InfiniteScroll from './infinite-scroll';
 
 // Export types for external usage
-export type {
-  InfiniteScrollItem,
-  InfiniteScrollProps
-} from './infinite-scroll.types';
+export type { InfiniteScrollItem, InfiniteScrollProps } from './infinite-scroll.types';
 
 // For backwards compatibility
 export default InfiniteScroll;

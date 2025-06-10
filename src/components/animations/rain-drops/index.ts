@@ -7,6 +7,6 @@
  * @module RainDrops
  */
 
-export { RainDrops, default } from './rain-drops';
+export { default, RainDrops } from './rain-drops';
 export * as RainDropsStyles from './rain-drops.module.css';
 export type { RainDropsProps } from './rain-drops.types';

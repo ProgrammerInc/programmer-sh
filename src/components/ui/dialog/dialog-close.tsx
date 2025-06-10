@@ -3,8 +3,6 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { memo } from 'react';
 
-import { DialogCloseProps } from './dialog.types';
-
 /**
  * Dialog Close Component
  * Button that closes the dialog when clicked

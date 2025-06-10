@@ -1,8 +1,7 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { act } from 'react-dom/test-utils';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
-import { Stepper, Step } from './stepper';
+import { Step, Stepper } from './stepper';
 
 describe('Stepper', () => {
   test('renders with default props', () => {
@@ -16,12 +15,12 @@ describe('Stepper', () => {
 
     // Check that the first step is rendered
     expect(screen.getByText('Step 1 content')).toBeInTheDocument();
-    
+
     // Check that the step indicators are rendered
     expect(screen.getByText('1')).toBeInTheDocument();
     expect(screen.getByText('2')).toBeInTheDocument();
     expect(screen.getByText('3')).toBeInTheDocument();
-    
+
     // Check that the next button is rendered (but not the back button on first step)
     expect(screen.getByText('Continue')).toBeInTheDocument();
     expect(screen.queryByText('Back')).not.toBeInTheDocument();
@@ -74,7 +73,7 @@ describe('Stepper', () => {
 
   test('calls onStepChange when navigating between steps', () => {
     const onStepChange = jest.fn();
-    
+
     render(
       <Stepper onStepChange={onStepChange}>
         <Step>Step 1 content</Step>
@@ -92,7 +91,7 @@ describe('Stepper', () => {
 
   test('calls onFinalStepCompleted when completing the last step', () => {
     const onFinalStepCompleted = jest.fn();
-    
+
     render(
       <Stepper initialStep={3} onFinalStepCompleted={onFinalStepCompleted}>
         <Step>Step 1 content</Step>
@@ -145,11 +144,7 @@ describe('Stepper', () => {
 
   test('supports custom button text', () => {
     render(
-      <Stepper 
-        initialStep={2}
-        backButtonText="Previous"
-        nextButtonText="Forward"
-      >
+      <Stepper initialStep={2} backButtonText="Previous" nextButtonText="Forward">
         <Step>Step 1 content</Step>
         <Step>Step 2 content</Step>
         <Step>Step 3 content</Step>
@@ -213,7 +208,7 @@ describe('Stepper', () => {
 
     // Check that the first step is rendered
     expect(screen.getByText('Step 1 content')).toBeInTheDocument();
-    
+
     // Check that the step indicators are rendered
     expect(screen.getByText('1')).toBeInTheDocument();
     expect(screen.getByText('2')).toBeInTheDocument();

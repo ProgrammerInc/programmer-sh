@@ -21,7 +21,7 @@ import {
 
 /**
  * Form Component
- * 
+ *
  * A wrapper around react-hook-form's FormProvider.
  * Creates the form context for handling form state management.
  */
@@ -29,15 +29,18 @@ const Form = FormProvider;
 
 /**
  * FormField Component
- * 
+ *
  * Provides a context wrapper for a form field.
  * Uses react-hook-form's Controller to manage the field's state.
- * 
+ *
  * @template TFieldValues The type of the form values
  * @template TName The type of the field name
  */
 const FormField = React.memo(
-  <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>(
+  <
+    TFieldValues extends FieldValues = FieldValues,
+    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  >(
     props: FormFieldProps<TFieldValues, TName>
   ) => {
     return (
@@ -52,7 +55,7 @@ FormField.displayName = 'FormField';
 
 /**
  * FormItem Component
- * 
+ *
  * A container for form elements with consistent spacing.
  * Provides context for child components.
  */
@@ -72,7 +75,7 @@ FormItem.displayName = 'FormItem';
 
 /**
  * FormLabel Component
- * 
+ *
  * A label for form inputs with error styling.
  * Automatically connects to its input field using context.
  */
@@ -83,11 +86,7 @@ const FormLabel = React.memo(
 
       return (
         <Label
-          className={cn(
-            styles['form-label'],
-            error && styles['form-label-error'],
-            className
-          )}
+          className={cn(styles['form-label'], error && styles['form-label-error'], className)}
           htmlFor={formItemId}
           ref={ref}
           {...props}
@@ -101,46 +100,23 @@ FormLabel.displayName = 'FormLabel';
 
 /**
  * FormControl Component
- * 
+ *
  * A wrapper for form inputs that adds required accessibility attributes.
  * Connects inputs to their labels, descriptions, and error messages.
  */
 const FormControl = React.memo(
-  React.forwardRef<React.ElementRef<typeof Slot>, FormControlProps>(({ className, ...props }, ref) => {
-    const { error, formDescriptionId, formItemId, formMessageId } = useFormField();
-
-    return (
-      <Slot
-        aria-describedby={
-          !error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`
-        }
-        aria-invalid={!!error}
-        className={cn(styles['form-control'], className)}
-        id={formItemId}
-        ref={ref}
-        {...props}
-      />
-    );
-  })
-);
-
-FormControl.displayName = 'FormControl';
-
-/**
- * FormDescription Component
- * 
- * A text component for providing additional information about a form field.
- * Uses a consistent style and connects to its field using context.
- */
-const FormDescription = React.memo(
-  React.forwardRef<HTMLParagraphElement, FormDescriptionProps>(
+  React.forwardRef<React.ElementRef<typeof Slot>, FormControlProps>(
     ({ className, ...props }, ref) => {
-      const { formDescriptionId } = useFormField();
+      const { error, formDescriptionId, formItemId, formMessageId } = useFormField();
 
       return (
-        <p
-          className={cn(styles['form-description'], className)}
-          id={formDescriptionId}
+        <Slot
+          aria-describedby={
+            !error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`
+          }
+          aria-invalid={!!error}
+          className={cn(styles['form-control'], className)}
+          id={formItemId}
           ref={ref}
           {...props}
         />
@@ -149,11 +125,34 @@ const FormDescription = React.memo(
   )
 );
 
+FormControl.displayName = 'FormControl';
+
+/**
+ * FormDescription Component
+ *
+ * A text component for providing additional information about a form field.
+ * Uses a consistent style and connects to its field using context.
+ */
+const FormDescription = React.memo(
+  React.forwardRef<HTMLParagraphElement, FormDescriptionProps>(({ className, ...props }, ref) => {
+    const { formDescriptionId } = useFormField();
+
+    return (
+      <p
+        className={cn(styles['form-description'], className)}
+        id={formDescriptionId}
+        ref={ref}
+        {...props}
+      />
+    );
+  })
+);
+
 FormDescription.displayName = 'FormDescription';
 
 /**
  * FormMessage Component
- * 
+ *
  * A component for displaying validation errors.
  * Automatically shows error messages from react-hook-form.
  */

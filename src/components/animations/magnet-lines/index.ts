@@ -7,5 +7,5 @@
  * @module MagnetLines
  */
 
-export { MagnetLines, default } from './magnet-lines';
+export { default, MagnetLines } from './magnet-lines';
 export type { MagnetLinesProps } from './magnet-lines.types';

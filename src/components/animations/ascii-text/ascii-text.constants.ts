@@ -36,6 +36,7 @@ export const DEFAULT_ASCII_TEXT_CONFIG: CanvasAsciiOptions = {
 export const DEFAULT_ASCII_FILTER_OPTIONS: AsciiFilterOptions = {
   fontSize: 12,
   fontFamily: "'Courier New', monospace",
+  // eslint-disable-next-line no-secrets/no-secrets
   charset: ' .\'`^",:;Il!i~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$',
   invert: true
 };

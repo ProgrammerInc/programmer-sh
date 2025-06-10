@@ -8,23 +8,23 @@ import { InputProps } from './input.types';
 
 /**
  * Input component
- * 
+ *
  * A standard form input component with consistent styling across the application.
  * The component uses CSS modules for styling and supports all standard HTML input attributes.
- * 
+ *
  * @example
  * ```tsx
  * // Basic usage
  * <Input type="text" placeholder="Enter your name" />
- * 
+ *
  * // With validation
- * <Input 
- *   type="email" 
- *   required 
- *   placeholder="example@domain.com" 
+ * <Input
+ *   type="email"
+ *   required
+ *   placeholder="example@domain.com"
  *   aria-label="Email address"
  * />
- * 
+ *
  * // Disabled state
  * <Input type="text" disabled value="Read only content" />
  * ```
@@ -34,14 +34,7 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
     // Combine default styles with any custom className
     const inputClassName = cn(styles.input, className);
 
-    return (
-      <input
-        type={type}
-        className={inputClassName}
-        ref={ref}
-        {...props}
-      />
-    );
+    return <input type={type} className={inputClassName} ref={ref} {...props} />;
   }
 );
 
@@ -50,7 +43,7 @@ InputComponent.displayName = 'Input';
 
 /**
  * Memoized Input component
- * 
+ *
  * A styled input field for collecting user data in forms.
  * Supports all standard HTML input types and attributes.
  */

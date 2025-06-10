@@ -6,17 +6,17 @@
 
 'use client';
 
-import { useContext, useCallback, useEffect, useState, useRef } from 'react';
-import { toast } from 'sonner';
 import { useTerminalAuth } from '@/hooks/use-terminal-auth.hook';
 import { supabase } from '@/integrations/supabase/supabase.client';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
 import { AuthModalContext } from './auth-modal.context';
 import { AuthMode } from './auth-modal.types';
 import { getModalPosition, getOAuthRedirectUrl, validateEmail } from './auth-modal.utils';
 
 /**
  * Hook that provides access to the Auth Modal context
- * 
+ *
  * @returns Auth Modal context values
  * @throws Error if used outside of AuthModalProvider
  */
@@ -30,7 +30,7 @@ export const useAuthModal = () => {
 
 /**
  * Hook for Auth Modal form state management
- * 
+ *
  * @param initialMode - Initial auth mode ('login' or 'signup')
  * @returns Form state and handlers
  */
@@ -120,30 +120,27 @@ export const useAuthForm = (initialMode: AuthMode) => {
     [currentMode, email, password, login, signup, validateForm, resetForm]
   );
 
-  const handleOAuthLogin = useCallback(
-    async (provider: 'github' | 'google' | 'twitter') => {
-      try {
-        setLoading(true);
+  const handleOAuthLogin = useCallback(async (provider: 'github' | 'google' | 'twitter') => {
+    try {
+      setLoading(true);
 
-        const { error } = await supabase.auth.signInWithOAuth({
-          provider,
-          options: {
-            redirectTo: getOAuthRedirectUrl()
-          }
-        });
-
-        if (error) {
-          toast.error(`${provider} login failed: ${error.message}`);
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: getOAuthRedirectUrl()
         }
-      } catch (error) {
-        console.error(`${provider} login error:`, error);
-        toast.error(`${provider} login failed`);
-      } finally {
-        setLoading(false);
+      });
+
+      if (error) {
+        toast.error(`${provider} login failed: ${error.message}`);
       }
-    },
-    []
-  );
+    } catch (error) {
+      console.error(`${provider} login error:`, error);
+      toast.error(`${provider} login failed`);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   return {
     currentMode,
@@ -158,13 +155,13 @@ export const useAuthForm = (initialMode: AuthMode) => {
     resetForm,
     toggleMode,
     handleSubmit,
-    handleOAuthLogin,
+    handleOAuthLogin
   };
 };
 
 /**
  * Hook for modal positioning and click-outside handling
- * 
+ *
  * @param isOpen - Whether the modal is open
  * @param anchorRef - Reference to the anchor element
  * @param onClose - Function to call when closing the modal
@@ -193,7 +190,7 @@ export const useModalPosition = (
   // Update position on window resize
   useEffect(() => {
     if (!isOpen) return;
-    
+
     const handleResize = () => {
       updateModalPosition();
     };
@@ -217,11 +214,7 @@ export const useModalPosition = (
   // Close on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (
-        modalRef.current && 
-        !modalRef.current.contains(e.target as Node) && 
-        isOpen
-      ) {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node) && isOpen) {
         onClose();
       }
     };

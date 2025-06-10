@@ -6,5 +6,5 @@
  * @module FairyDustCursor
  */
 
-export { FairyDustCursor, default } from './fairydust-cursor';
+export { default, FairyDustCursor } from './fairydust-cursor';
 export type { FairyDustCursorProps } from './fairydust-cursor.types';

@@ -1,13 +1,14 @@
+/* eslint-disable no-secrets/no-secrets */
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import * as React from 'react';
 
 /**
  * DropdownMenu Root Component Props
- * 
+ *
  * Props for the root DropdownMenu component that manages the state of the dropdown.
- * 
+ *
  * @see https://www.radix-ui.com/primitives/docs/components/dropdown-menu#root For more information about the Radix UI DropdownMenu Root
- * 
+ *
  * @example
  * ```tsx
  * <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
@@ -20,11 +21,11 @@ export type DropdownMenuProps = React.ComponentPropsWithoutRef<typeof DropdownMe
 
 /**
  * DropdownMenuTrigger Component Props
- * 
+ *
  * Props for the button that opens the dropdown menu when clicked.
- * 
+ *
  * @see https://www.radix-ui.com/primitives/docs/components/dropdown-menu#trigger For more information about the Radix UI DropdownMenu Trigger
- * 
+ *
  * @example
  * ```tsx
  * <DropdownMenuTrigger asChild>
@@ -32,15 +33,17 @@ export type DropdownMenuProps = React.ComponentPropsWithoutRef<typeof DropdownMe
  * </DropdownMenuTrigger>
  * ```
  */
-export type DropdownMenuTriggerProps = React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Trigger>;
+export type DropdownMenuTriggerProps = React.ComponentPropsWithoutRef<
+  typeof DropdownMenuPrimitive.Trigger
+>;
 
 /**
  * DropdownMenuGroup Component Props
- * 
+ *
  * Props for grouping related menu items together.
- * 
+ *
  * @see https://www.radix-ui.com/primitives/docs/components/dropdown-menu#group For more information about the Radix UI DropdownMenu Group
- * 
+ *
  * @example
  * ```tsx
  * <DropdownMenuGroup>
@@ -50,15 +53,17 @@ export type DropdownMenuTriggerProps = React.ComponentPropsWithoutRef<typeof Dro
  * </DropdownMenuGroup>
  * ```
  */
-export type DropdownMenuGroupProps = React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Group>;
+export type DropdownMenuGroupProps = React.ComponentPropsWithoutRef<
+  typeof DropdownMenuPrimitive.Group
+>;
 
 /**
  * DropdownMenuPortal Component Props
- * 
+ *
  * Props for portaling the dropdown menu content into the document.body.
- * 
+ *
  * @see https://www.radix-ui.com/primitives/docs/components/dropdown-menu#portal For more information about the Radix UI DropdownMenu Portal
- * 
+ *
  * @example
  * ```tsx
  * <DropdownMenuPortal>
@@ -68,15 +73,17 @@ export type DropdownMenuGroupProps = React.ComponentPropsWithoutRef<typeof Dropd
  * </DropdownMenuPortal>
  * ```
  */
-export type DropdownMenuPortalProps = React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Portal>;
+export type DropdownMenuPortalProps = React.ComponentPropsWithoutRef<
+  typeof DropdownMenuPrimitive.Portal
+>;
 
 /**
  * DropdownMenuSub Component Props
- * 
+ *
  * Props for creating nested dropdown menus.
- * 
+ *
  * @see https://www.radix-ui.com/primitives/docs/components/dropdown-menu#sub For more information about the Radix UI DropdownMenu Sub
- * 
+ *
  * @example
  * ```tsx
  * <DropdownMenuSub>
@@ -92,11 +99,11 @@ export type DropdownMenuSubProps = React.ComponentPropsWithoutRef<typeof Dropdow
 
 /**
  * DropdownMenuRadioGroup Component Props
- * 
+ *
  * Props for grouping radio items together, allowing only one to be checked at a time.
- * 
+ *
  * @see https://www.radix-ui.com/primitives/docs/components/dropdown-menu#radiogroup For more information about the Radix UI DropdownMenu RadioGroup
- * 
+ *
  * @example
  * ```tsx
  * <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
@@ -105,15 +112,17 @@ export type DropdownMenuSubProps = React.ComponentPropsWithoutRef<typeof Dropdow
  * </DropdownMenuRadioGroup>
  * ```
  */
-export type DropdownMenuRadioGroupProps = React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioGroup>;
+export type DropdownMenuRadioGroupProps = React.ComponentPropsWithoutRef<
+  typeof DropdownMenuPrimitive.RadioGroup
+>;
 
 /**
  * DropdownMenuSubTrigger Component Props
- * 
+ *
  * Props for the button that opens a nested dropdown menu when clicked or hovered.
- * 
+ *
  * @see https://www.radix-ui.com/primitives/docs/components/dropdown-menu#subtrigger For more information about the Radix UI DropdownMenu SubTrigger
- * 
+ *
  * @example
  * ```tsx
  * <DropdownMenuSubTrigger>
@@ -122,7 +131,9 @@ export type DropdownMenuRadioGroupProps = React.ComponentPropsWithoutRef<typeof 
  * </DropdownMenuSubTrigger>
  * ```
  */
-export type DropdownMenuSubTriggerProps = React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
+export type DropdownMenuSubTriggerProps = React.ComponentPropsWithoutRef<
+  typeof DropdownMenuPrimitive.SubTrigger
+> & {
   /**
    * When true, indents the item to the right, typically used for nested items
    */
@@ -131,11 +142,11 @@ export type DropdownMenuSubTriggerProps = React.ComponentPropsWithoutRef<typeof 
 
 /**
  * DropdownMenuSubContent Component Props
- * 
+ *
  * Props for the container of a nested dropdown menu's items.
- * 
+ *
  * @see https://www.radix-ui.com/primitives/docs/components/dropdown-menu#subcontent For more information about the Radix UI DropdownMenu SubContent
- * 
+ *
  * @example
  * ```tsx
  * <DropdownMenuSubContent className="p-1 bg-white shadow-lg rounded-md">
@@ -144,15 +155,17 @@ export type DropdownMenuSubTriggerProps = React.ComponentPropsWithoutRef<typeof 
  * </DropdownMenuSubContent>
  * ```
  */
-export type DropdownMenuSubContentProps = React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>;
+export type DropdownMenuSubContentProps = React.ComponentPropsWithoutRef<
+  typeof DropdownMenuPrimitive.SubContent
+>;
 
 /**
  * DropdownMenuContent Component Props
- * 
+ *
  * Props for the main container of dropdown menu items.
- * 
+ *
  * @see https://www.radix-ui.com/primitives/docs/components/dropdown-menu#content For more information about the Radix UI DropdownMenu Content
- * 
+ *
  * @example
  * ```tsx
  * <DropdownMenuContent className="w-56 p-1 bg-white shadow-lg rounded-md" sideOffset={5}>
@@ -163,15 +176,17 @@ export type DropdownMenuSubContentProps = React.ComponentPropsWithoutRef<typeof 
  * </DropdownMenuContent>
  * ```
  */
-export type DropdownMenuContentProps = React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>;
+export type DropdownMenuContentProps = React.ComponentPropsWithoutRef<
+  typeof DropdownMenuPrimitive.Content
+>;
 
 /**
  * DropdownMenuItem Component Props
- * 
+ *
  * Props for a selectable item in the dropdown menu.
- * 
+ *
  * @see https://www.radix-ui.com/primitives/docs/components/dropdown-menu#item For more information about the Radix UI DropdownMenu Item
- * 
+ *
  * @example
  * ```tsx
  * <DropdownMenuItem onSelect={() => console.log('Profile selected')}>
@@ -180,7 +195,9 @@ export type DropdownMenuContentProps = React.ComponentPropsWithoutRef<typeof Dro
  * </DropdownMenuItem>
  * ```
  */
-export type DropdownMenuItemProps = React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
+export type DropdownMenuItemProps = React.ComponentPropsWithoutRef<
+  typeof DropdownMenuPrimitive.Item
+> & {
   /**
    * When true, indents the item to the right, typically used for nested items
    */
@@ -189,11 +206,11 @@ export type DropdownMenuItemProps = React.ComponentPropsWithoutRef<typeof Dropdo
 
 /**
  * DropdownMenuCheckboxItem Component Props
- * 
+ *
  * Props for a checkbox item in the dropdown menu. Can be used to toggle options.
- * 
+ *
  * @see https://www.radix-ui.com/primitives/docs/components/dropdown-menu#checkboxitem For more information about the Radix UI DropdownMenu CheckboxItem
- * 
+ *
  * @example
  * ```tsx
  * <DropdownMenuCheckboxItem
@@ -204,15 +221,17 @@ export type DropdownMenuItemProps = React.ComponentPropsWithoutRef<typeof Dropdo
  * </DropdownMenuCheckboxItem>
  * ```
  */
-export type DropdownMenuCheckboxItemProps = React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>;
+export type DropdownMenuCheckboxItemProps = React.ComponentPropsWithoutRef<
+  typeof DropdownMenuPrimitive.CheckboxItem
+>;
 
 /**
  * DropdownMenuRadioItem Component Props
- * 
+ *
  * Props for a radio item in the dropdown menu. Should be used within a RadioGroup.
- * 
+ *
  * @see https://www.radix-ui.com/primitives/docs/components/dropdown-menu#radioitem For more information about the Radix UI DropdownMenu RadioItem
- * 
+ *
  * @example
  * ```tsx
  * <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
@@ -221,15 +240,17 @@ export type DropdownMenuCheckboxItemProps = React.ComponentPropsWithoutRef<typeo
  * </DropdownMenuRadioGroup>
  * ```
  */
-export type DropdownMenuRadioItemProps = React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>;
+export type DropdownMenuRadioItemProps = React.ComponentPropsWithoutRef<
+  typeof DropdownMenuPrimitive.RadioItem
+>;
 
 /**
  * DropdownMenuLabel Component Props
- * 
+ *
  * Props for a non-interactive label for a group of menu items.
- * 
+ *
  * @see https://www.radix-ui.com/primitives/docs/components/dropdown-menu#label For more information about the Radix UI DropdownMenu Label
- * 
+ *
  * @example
  * ```tsx
  * <DropdownMenuLabel>Account Settings</DropdownMenuLabel>
@@ -237,7 +258,9 @@ export type DropdownMenuRadioItemProps = React.ComponentPropsWithoutRef<typeof D
  * <DropdownMenuItem>Password</DropdownMenuItem>
  * ```
  */
-export type DropdownMenuLabelProps = React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label> & {
+export type DropdownMenuLabelProps = React.ComponentPropsWithoutRef<
+  typeof DropdownMenuPrimitive.Label
+> & {
   /**
    * When true, indents the label to the right, typically used for nested labels
    */
@@ -246,11 +269,11 @@ export type DropdownMenuLabelProps = React.ComponentPropsWithoutRef<typeof Dropd
 
 /**
  * DropdownMenuSeparator Component Props
- * 
+ *
  * Props for a visual separator between groups of menu items.
- * 
+ *
  * @see https://www.radix-ui.com/primitives/docs/components/dropdown-menu#separator For more information about the Radix UI DropdownMenu Separator
- * 
+ *
  * @example
  * ```tsx
  * <DropdownMenuItem>Profile</DropdownMenuItem>
@@ -259,14 +282,16 @@ export type DropdownMenuLabelProps = React.ComponentPropsWithoutRef<typeof Dropd
  * <DropdownMenuItem>Logout</DropdownMenuItem>
  * ```
  */
-export type DropdownMenuSeparatorProps = React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>;
+export type DropdownMenuSeparatorProps = React.ComponentPropsWithoutRef<
+  typeof DropdownMenuPrimitive.Separator
+>;
 
 /**
  * DropdownMenuShortcut Component Props
- * 
+ *
  * Props for displaying keyboard shortcuts next to dropdown menu items.
  * This is a custom component, not part of Radix UI Primitives.
- * 
+ *
  * @example
  * ```tsx
  * <DropdownMenuItem>

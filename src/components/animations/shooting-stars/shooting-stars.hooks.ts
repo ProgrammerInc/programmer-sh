@@ -9,7 +9,7 @@ import { getRandomStartPoint } from './shooting-stars.utils';
 
 /**
  * Hook to manage viewport dimensions
- * 
+ *
  * @returns Object containing current viewport width and height
  */
 export const useViewportDimensions = () => {
@@ -31,7 +31,7 @@ export const useViewportDimensions = () => {
 
     // Set initial dimensions
     handleResize();
-    
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -51,8 +51,11 @@ export const useShootingStars = ({
   minDelay = DEFAULT_SHOOTING_STARS.MIN_DELAY,
   maxDelay = DEFAULT_SHOOTING_STARS.MAX_DELAY,
   starWidth = DEFAULT_SHOOTING_STARS.STAR_WIDTH,
-  starHeight = DEFAULT_SHOOTING_STARS.STAR_HEIGHT,
-}: Pick<ShootingStarsProps, 'minSpeed' | 'maxSpeed' | 'minDelay' | 'maxDelay' | 'starWidth' | 'starHeight'>) => {
+  starHeight = DEFAULT_SHOOTING_STARS.STAR_HEIGHT
+}: Pick<
+  ShootingStarsProps,
+  'minSpeed' | 'maxSpeed' | 'minDelay' | 'maxDelay' | 'starWidth' | 'starHeight'
+>) => {
   const [star, setStar] = useState<ShootingStar | null>(null);
   const timerRef = useRef<NodeJS.Timeout>();
   const { width, height } = useViewportDimensions();
@@ -60,7 +63,7 @@ export const useShootingStars = ({
   // Function to create a shooting star with random properties
   const createStar = useCallback(() => {
     if (width === 0 || height === 0) return; // Don't create stars if dimensions aren't available
-    
+
     const { x, y, angle } = getRandomStartPoint(width, height);
     const newStar: ShootingStar = {
       id: Date.now(),
@@ -88,7 +91,7 @@ export const useShootingStars = ({
     if (width > 0 && height > 0) {
       createStar();
     }
-    
+
     return () => {
       if (timerRef.current) {
         clearTimeout(timerRef.current);
@@ -99,31 +102,26 @@ export const useShootingStars = ({
   // Handle the animation of the shooting star
   useEffect(() => {
     if (!star) return;
-    
+
     let animationFrameId: number;
-    
+
     const moveStar = () => {
       setStar(prevStar => {
         if (!prevStar) return null;
-        
+
         const newX = prevStar.x + prevStar.speed * Math.cos((prevStar.angle * Math.PI) / 180);
         const newY = prevStar.y + prevStar.speed * Math.sin((prevStar.angle * Math.PI) / 180);
         const newDistance = prevStar.distance + prevStar.speed;
         const newScale = 1 + newDistance / ANIMATION.SCALE_FACTOR;
-        
+
         // Remove star when it moves off screen
         const margin = ANIMATION.OFF_SCREEN_MARGIN;
-        if (
-          newX < -margin ||
-          newX > width + margin ||
-          newY < -margin ||
-          newY > height + margin
-        ) {
+        if (newX < -margin || newX > width + margin || newY < -margin || newY > height + margin) {
           // If star is off screen, return null to trigger new star creation
           // Avoid creating new star here to prevent timing issues
           return null;
         }
-        
+
         return {
           ...prevStar,
           x: newX,
@@ -132,7 +130,7 @@ export const useShootingStars = ({
           scale: newScale
         };
       });
-      
+
       animationFrameId = requestAnimationFrame(moveStar);
     };
 

@@ -13,7 +13,7 @@ export type AuthMode = 'login' | 'signup';
 
 /**
  * Auth Modal Context Type
- * 
+ *
  * @property isModalOpen - Whether the auth modal is currently open
  * @property modalMode - Current authentication mode ('login' or 'signup')
  * @property openModal - Function to open the modal with specified mode
@@ -30,7 +30,7 @@ export interface AuthModalContextType {
 
 /**
  * Auth Modal Component Props
- * 
+ *
  * @property isOpen - Whether the modal is currently open
  * @property mode - Current authentication mode ('login' or 'signup')
  * @property anchorRef - Reference to the anchor element for positioning

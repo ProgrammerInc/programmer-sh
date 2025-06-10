@@ -6,4 +6,4 @@
  * @module GlitchCursor
  */
 
-export { GlitchCursor, default } from './glitch-cursor';
+export { default, GlitchCursor } from './glitch-cursor';

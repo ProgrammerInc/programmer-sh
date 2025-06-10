@@ -23,13 +23,13 @@ export const useOutsideClick = (
           if (!ref.current || !event.target) {
             return;
           }
-          
+
           // Check if the click is outside the referenced element
           const target = event.target as Node;
           if (ref.current.contains(target)) {
             return;
           }
-          
+
           // Call the callback if the click is outside
           callback(event);
           outsideClickLogger.debug('Outside click detected');

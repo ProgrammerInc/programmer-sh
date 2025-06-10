@@ -7,6 +7,6 @@
  * @module ScrollVelocity
  */
 
-export { ScrollVelocity, default } from './scroll-velocity';
+export { default, ScrollVelocity } from './scroll-velocity';
 export * as ScrollVelocityStyles from './scroll-velocity.module.css';
 export type { ScrollVelocityProps } from './scroll-velocity.types';

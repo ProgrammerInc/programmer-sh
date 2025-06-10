@@ -29,9 +29,9 @@ The Switch component is built on top of Radix UI's Switch primitive, which ensur
 // With description
 <div>
   <label id="switch-label">Email Notifications</label>
-  <Switch 
-    aria-labelledby="switch-label" 
-    aria-describedby="switch-desc" 
+  <Switch
+    aria-labelledby="switch-label"
+    aria-describedby="switch-desc"
   />
   <p id="switch-desc">Receive email notifications for account updates.</p>
 </div>
@@ -76,7 +76,7 @@ When a user toggles a switch, the change should be visible immediately. For acti
 const [isChecked, setIsChecked] = useState(false);
 const [isLoading, setIsLoading] = useState(false);
 
-const handleChange = async (checked) => {
+const handleChange = async checked => {
   setIsLoading(true);
   setIsChecked(checked);
   // Perform an async operation
@@ -85,13 +85,9 @@ const handleChange = async (checked) => {
 };
 
 <div className="flex items-center space-x-2">
-  <Switch 
-    checked={isChecked}
-    onCheckedChange={handleChange}
-    disabled={isLoading}
-  />
+  <Switch checked={isChecked} onCheckedChange={handleChange} disabled={isLoading} />
   {isLoading && <span>Saving...</span>}
-</div>
+</div>;
 ```
 
 ### Group Related Switches
@@ -101,17 +97,17 @@ When you have multiple related switches, group them together and provide a descr
 ```tsx
 <fieldset className="space-y-4">
   <legend className="text-lg font-medium">Notification Settings</legend>
-  
+
   <div className="flex items-center justify-between">
     <label htmlFor="email-notif">Email Notifications</label>
     <Switch id="email-notif" />
   </div>
-  
+
   <div className="flex items-center justify-between">
     <label htmlFor="push-notif">Push Notifications</label>
     <Switch id="push-notif" />
   </div>
-  
+
   <div className="flex items-center justify-between">
     <label htmlFor="sms-notif">SMS Notifications</label>
     <Switch id="sms-notif" />
@@ -140,16 +136,18 @@ One of the most common use cases for switches is in settings panels.
 ```tsx
 <div className="space-y-6">
   <h2 className="text-xl font-bold">Account Settings</h2>
-  
+
   <div className="space-y-4">
     <div className="flex items-center justify-between">
       <div>
         <h3 className="font-medium">Two-Factor Authentication</h3>
-        <p className="text-sm text-muted-foreground">Add an extra layer of security to your account</p>
+        <p className="text-sm text-muted-foreground">
+          Add an extra layer of security to your account
+        </p>
       </div>
       <Switch aria-label="Toggle two-factor authentication" />
     </div>
-    
+
     <div className="flex items-center justify-between">
       <div>
         <h3 className="font-medium">Public Profile</h3>
@@ -174,7 +172,7 @@ Switches are often used to toggle feature flags or experimental features.
     </div>
     <Switch aria-label="Enable beta features" />
   </div>
-  
+
   <div className="mt-4 p-3 bg-muted rounded text-sm">
     <p className="font-medium">Warning</p>
     <p>Beta features may be unstable and could change without notice.</p>
@@ -194,11 +192,11 @@ export default function SwitchFormExample() {
   const { control, handleSubmit } = useForm({
     defaultValues: {
       emailNotifications: true,
-      marketingEmails: false,
-    },
+      marketingEmails: false
+    }
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = data => {
     console.log(data);
   };
 
@@ -206,9 +204,7 @@ export default function SwitchFormExample() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <label htmlFor="emailNotifications">
-            Email Notifications
-          </label>
+          <label htmlFor="emailNotifications">Email Notifications</label>
           <Controller
             name="emailNotifications"
             control={control}
@@ -221,29 +217,20 @@ export default function SwitchFormExample() {
             )}
           />
         </div>
-        
+
         <div className="flex items-center justify-between">
-          <label htmlFor="marketingEmails">
-            Marketing Emails
-          </label>
+          <label htmlFor="marketingEmails">Marketing Emails</label>
           <Controller
             name="marketingEmails"
             control={control}
             render={({ field }) => (
-              <Switch
-                id="marketingEmails"
-                checked={field.value}
-                onCheckedChange={field.onChange}
-              />
+              <Switch id="marketingEmails" checked={field.value} onCheckedChange={field.onChange} />
             )}
           />
         </div>
       </div>
-      
-      <button 
-        type="submit"
-        className="px-4 py-2 bg-primary text-white rounded"
-      >
+
+      <button type="submit" className="px-4 py-2 bg-primary text-white rounded">
         Save Preferences
       </button>
     </form>
@@ -257,9 +244,9 @@ The Switch component can be customized through CSS variables and the `className`
 
 ```tsx
 // Custom styling through className
-<Switch 
-  className="[&>span]:bg-blue-500 [&[data-state=checked]]:bg-green-500" 
-  aria-label="Custom styled switch" 
+<Switch
+  className="[&>span]:bg-blue-500 [&[data-state=checked]]:bg-green-500"
+  aria-label="Custom styled switch"
 />
 ```
 
@@ -277,14 +264,14 @@ const handleCheckedChange = useCallback((checked) => {
   setIsEnabled(checked);
 }, []);
 
-<Switch 
-  checked={isEnabled} 
-  onCheckedChange={handleCheckedChange} 
+<Switch
+  checked={isEnabled}
+  onCheckedChange={handleCheckedChange}
 />
 
 // Avoid this pattern in performance-sensitive areas
-<Switch 
-  checked={isEnabled} 
-  onCheckedChange={(checked) => setIsEnabled(checked)} 
+<Switch
+  checked={isEnabled}
+  onCheckedChange={(checked) => setIsEnabled(checked)}
 />
 ```

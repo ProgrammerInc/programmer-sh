@@ -1,7 +1,7 @@
 'use client';
 
-import { RefObject } from 'react';
 import { HistoryItem } from '@/components/ui/terminal-history';
+import { RefObject } from 'react';
 
 /**
  * Save command history to localStorage
@@ -41,7 +41,7 @@ export const parseCommand = (commandString: string): { command: string; args: st
   const parts = trimmed.split(/\s+/);
   const command = parts[0] || '';
   const args = parts.slice(1);
-  
+
   return { command, args };
 };
 
@@ -76,16 +76,16 @@ export const sanitizeHtml = (html: string): string => {
  */
 export const renderCommandOutput = (historyItem: HistoryItem): string => {
   if (!historyItem.output) return '';
-  
+
   // If output is already HTML, return it directly
   if (historyItem.html) {
     return historyItem.output;
   }
-  
+
   // Otherwise sanitize and format plain text
   const sanitized = sanitizeHtml(historyItem.output);
   const formatted = sanitized.replace(/\n/g, '<br>');
-  
+
   // Apply error styling if needed
   return historyItem.error ? `<span class="error">${formatted}</span>` : formatted;
 };

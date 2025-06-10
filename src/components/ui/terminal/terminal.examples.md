@@ -52,7 +52,7 @@ export default function TerminalWithSocialLinks() {
       icon: 'twitter'
     }
   ];
-  
+
   return (
     <div className="h-96 w-full">
       <Terminal socialLinks={socialLinks} />
@@ -72,18 +72,18 @@ export default function TerminalWithRefs() {
   const contentRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLFormElement>(null);
-  
+
   return (
     <div className="h-96 w-full">
-      <Terminal 
+      <Terminal
         containerRef={containerRef}
         contentRef={contentRef}
         headerRef={headerRef}
         footerRef={footerRef}
       />
-      
+
       <div className="mt-4 flex gap-2">
-        <button 
+        <button
           className="px-3 py-1 bg-blue-500 text-white rounded"
           onClick={() => {
             if (contentRef.current) {
@@ -125,24 +125,24 @@ export default function CustomCommandsTerminal() {
     const registerCustomCommands = async () => {
       // Import the command registration function
       const { registerCommand } = await import('@/hooks/use-command-execution.hook');
-      
+
       // Register a custom 'weather' command
-      registerCommand('weather', async (args) => {
+      registerCommand('weather', async args => {
         const location = args[0] || 'current';
-        
+
         // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 1000));
-        
+
         return {
           content: `Weather for ${location}: 72°F and sunny`,
           isError: false
         };
       });
     };
-    
+
     registerCustomCommands();
   }, []);
-  
+
   return (
     <div className="h-96 w-full">
       <Terminal initialCommands={['help', 'weather Berlin']} />
@@ -173,17 +173,17 @@ import { useState, useEffect } from 'react';
 
 export default function InteractiveTerminal() {
   const [messages, setMessages] = useState<string[]>([]);
-  
+
   useEffect(() => {
     // Example of external state affecting the terminal
     const timer = setInterval(() => {
       const timestamp = new Date().toLocaleTimeString();
       setMessages(prev => [...prev, `System notification at ${timestamp}`]);
     }, 30000); // Every 30 seconds
-    
+
     return () => clearInterval(timer);
   }, []);
-  
+
   useEffect(() => {
     if (messages.length > 0) {
       // You would use a proper command execution here
@@ -196,7 +196,7 @@ export default function InteractiveTerminal() {
       );
     }
   }, [messages]);
-  
+
   return (
     <div className="h-96 w-full">
       <Terminal initialCommands={['echo "Interactive terminal is running..."']} />
@@ -213,24 +213,24 @@ import { useState } from 'react';
 
 export default function ThemedTerminal() {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
-  
+
   return (
     <div className="space-y-4">
       <div className="flex gap-2">
-        <button 
+        <button
           className={`px-3 py-1 rounded ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
           onClick={() => setTheme('dark')}
         >
           Dark Theme
         </button>
-        <button 
+        <button
           className={`px-3 py-1 rounded ${theme === 'light' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
           onClick={() => setTheme('light')}
         >
           Light Theme
         </button>
       </div>
-      
+
       <div className="h-96 w-full">
         <Terminal initialCommands={[`theme ${theme}`, 'echo "Theme applied!"']} />
       </div>

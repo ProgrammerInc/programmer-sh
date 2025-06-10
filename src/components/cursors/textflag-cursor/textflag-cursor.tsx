@@ -25,14 +25,14 @@ export const TextFlagCursor = memo<TextFlagCursorProps>(({ config = {}, classNam
     ...DEFAULT_CONFIG,
     ...config
   };
-  
+
   // Use custom hook for cursor behavior
   useTextFlagCursor(textFlagConfig);
 
   // The component doesn't render anything visible directly
   // The canvas is created and managed by the hook
   return (
-    <div 
+    <div
       className={`${styles['textflag-cursor-wrapper']} ${className ?? ''}`}
       data-testid="textflag-cursor"
       {...rest}

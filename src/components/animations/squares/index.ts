@@ -7,6 +7,6 @@
  * @module Squares
  */
 
-export { Squares, default } from './squares';
+export { default, Squares } from './squares';
 export * as SquaresStyles from './squares.module.css';
 export type { SquaresProps } from './squares.types';

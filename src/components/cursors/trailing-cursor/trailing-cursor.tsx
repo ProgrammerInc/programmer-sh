@@ -9,7 +9,7 @@ import type { TrailingCursorProps } from './trailing-cursor.types';
  * @param props - Component properties
  * @returns JSX.Element | null
  */
-export const TrailingCursor: React.FC<TrailingCursorProps> = (props) => {
+export const TrailingCursor: React.FC<TrailingCursorProps> = props => {
   // Use the trailing cursor hook to handle all the effect logic
   useTrailingCursor(props);
 

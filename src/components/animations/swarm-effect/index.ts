@@ -7,6 +7,6 @@
  * @module SwarmEffect
  */
 
-export { SwarmEffect, default } from './swarm-effect';
+export { default, SwarmEffect } from './swarm-effect';
 export * as SwarmEffectStyles from './swarm-effect.module.css';
 export type { SwarmEffectProps } from './swarm-effect.types';

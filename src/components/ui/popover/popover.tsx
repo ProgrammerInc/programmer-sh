@@ -6,12 +6,7 @@ import * as React from 'react';
 import { memo, useMemo } from 'react';
 
 import styles from './popover.module.css';
-import {
-  PopoverContentProps,
-  PopoverProps,
-  PopoverTriggerProps,
-  PopoverPortalProps
-} from './popover.types';
+import { PopoverContentProps, PopoverPortalProps } from './popover.types';
 
 /**
  * Root popover component that handles the open state of the popover
@@ -27,7 +22,7 @@ PopoverTrigger.displayName = PopoverPrimitive.Trigger.displayName;
 
 /**
  * Content component that displays the popover content
- * 
+ *
  * @example
  * ```tsx
  * <Popover>
@@ -36,33 +31,32 @@ PopoverTrigger.displayName = PopoverPrimitive.Trigger.displayName;
  * </Popover>
  * ```
  */
-const PopoverPortal = memo(
-  ({ children, ...props }: PopoverPortalProps) => (
-    <PopoverPrimitive.Portal {...props}>{children}</PopoverPrimitive.Portal>
-  )
-);
+const PopoverPortal = memo(({ children, ...props }: PopoverPortalProps) => (
+  <PopoverPrimitive.Portal {...props}>{children}</PopoverPrimitive.Portal>
+));
 PopoverPortal.displayName = PopoverPrimitive.Portal.displayName;
 
-const PopoverContent = memo(React.forwardRef<
-  React.ElementRef<typeof PopoverPrimitive.Content>,
-  PopoverContentProps
->(({ className, align = 'center', sideOffset = 4, ...props }, ref) => {
-  const contentClassName = useMemo(() => {
-    return cn(styles.content, className);
-  }, [className]);
+const PopoverContent = memo(
+  React.forwardRef<React.ElementRef<typeof PopoverPrimitive.Content>, PopoverContentProps>(
+    ({ className, align = 'center', sideOffset = 4, ...props }, ref) => {
+      const contentClassName = useMemo(() => {
+        return cn(styles.content, className);
+      }, [className]);
 
-  return (
-    <PopoverPortal>
-      <PopoverPrimitive.Content
-        align={align}
-        className={contentClassName}
-        ref={ref}
-        sideOffset={sideOffset}
-        {...props}
-      />
-    </PopoverPortal>
-  );
-}));
+      return (
+        <PopoverPortal>
+          <PopoverPrimitive.Content
+            align={align}
+            className={contentClassName}
+            ref={ref}
+            sideOffset={sideOffset}
+            {...props}
+          />
+        </PopoverPortal>
+      );
+    }
+  )
+);
 
 PopoverContent.displayName = PopoverPrimitive.Content.displayName;
 

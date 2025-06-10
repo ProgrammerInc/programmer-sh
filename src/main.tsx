@@ -21,7 +21,7 @@ Sentry.init({
       maskAllText: true,
       blockAllMedia: true,
       networkDetailAllowUrls: [window.location.origin],
-      networkCaptureBodies: false,
+      networkCaptureBodies: false
     })
   ],
   // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring

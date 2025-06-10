@@ -1,7 +1,6 @@
-import { HTMLAttributes, RefObject } from 'react';
-import { ComponentProps } from 'react';
 import { Button } from '@/components/ui/button';
 import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react';
+import { ComponentProps, HTMLAttributes } from 'react';
 
 /**
  * Type for the Embla Carousel API
@@ -27,17 +26,17 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
    * @default 'horizontal'
    */
   orientation?: 'horizontal' | 'vertical';
-  
+
   /**
    * Options to pass to embla-carousel
    */
   opts?: CarouselOptions;
-  
+
   /**
    * Plugins to pass to embla-carousel
    */
   plugins?: CarouselPlugin;
-  
+
   /**
    * Callback to get the carousel API
    */
@@ -52,37 +51,37 @@ export interface CarouselContextProps {
    * Reference to the carousel element
    */
   carouselRef: ReturnType<typeof useEmblaCarousel>[0];
-  
+
   /**
    * Carousel API instance
    */
   api: CarouselApi | null;
-  
+
   /**
    * Carousel options
    */
   opts?: CarouselOptions;
-  
+
   /**
    * Carousel orientation
    */
   orientation: 'horizontal' | 'vertical';
-  
+
   /**
    * Function to scroll to the previous slide
    */
   scrollPrev: () => void;
-  
+
   /**
    * Function to scroll to the next slide
    */
   scrollNext: () => void;
-  
+
   /**
    * Whether the carousel can scroll to the previous slide
    */
   canScrollPrev: boolean;
-  
+
   /**
    * Whether the carousel can scroll to the next slide
    */

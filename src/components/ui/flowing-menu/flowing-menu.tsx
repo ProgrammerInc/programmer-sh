@@ -1,20 +1,20 @@
 'use client';
 
 import { gsap } from 'gsap';
-import React, { useRef, useMemo, memo } from 'react';
+import React, { memo, useMemo, useRef } from 'react';
 
 import styles from './flowing-menu.module.css';
 import { FlowingMenuProps, MenuItemProps } from './flowing-menu.types';
 
 /**
  * FlowingMenu Component
- * 
+ *
  * A navigation menu with flowing animations on hover.
  * Each item reveals a marquee animation when hovered.
- * 
+ *
  * @example
  * ```tsx
- * <FlowingMenu 
+ * <FlowingMenu
  *   items={[
  *     { link: "/home", text: "Home", image: "/images/home.jpg" },
  *     { link: "/about", text: "About", image: "/images/about.jpg" },
@@ -38,16 +38,16 @@ FlowingMenu.displayName = 'FlowingMenu';
 
 /**
  * MenuItem Component
- * 
+ *
  * An individual item in the FlowingMenu that displays a text label
  * and reveals an animated marquee with text and image on hover.
- * 
+ *
  * @example
  * ```tsx
- * <MenuItem 
- *   link="/about" 
- *   text="About Us" 
- *   image="/images/about.jpg" 
+ * <MenuItem
+ *   link="/about"
+ *   text="About Us"
+ *   image="/images/about.jpg"
  * />
  * ```
  */
@@ -117,22 +117,14 @@ export const MenuItem = memo(function MenuItem({ link, text, image }: MenuItemPr
   const repeatedMarqueeContent = useMemo(() => {
     return Array.from({ length: 4 }).map((_, idx) => (
       <React.Fragment key={idx}>
-        <span className={styles['marquee-text']}>
-          {text}
-        </span>
-        <div
-          className={styles['marquee-image']}
-          style={{ backgroundImage: `url(${image})` }}
-        />
+        <span className={styles['marquee-text']}>{text}</span>
+        <div className={styles['marquee-image']} style={{ backgroundImage: `url(${image})` }} />
       </React.Fragment>
     ));
   }, [text, image]);
 
   return (
-    <div
-      className={styles['menu-item']}
-      ref={itemRef}
-    >
+    <div className={styles['menu-item']} ref={itemRef}>
       <a
         className={styles['menu-item-link']}
         href={link}
@@ -141,14 +133,9 @@ export const MenuItem = memo(function MenuItem({ link, text, image }: MenuItemPr
       >
         {text}
       </a>
-      <div
-        className={styles['marquee-container']}
-        ref={marqueeRef}
-      >
+      <div className={styles['marquee-container']} ref={marqueeRef}>
         <div className={styles['marquee-inner']} ref={marqueeInnerRef}>
-          <div className={styles['marquee-content']}>
-            {repeatedMarqueeContent}
-          </div>
+          <div className={styles['marquee-content']}>{repeatedMarqueeContent}</div>
         </div>
       </div>
     </div>

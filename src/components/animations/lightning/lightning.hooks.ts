@@ -1,3 +1,4 @@
+/* eslint-disable no-secrets/no-secrets */
 import { useCallback, useEffect, useRef } from 'react';
 import { FRAGMENT_SHADER, FULL_SCREEN_QUAD_VERTICES, VERTEX_SHADER } from './lightning.constants';
 import { LightningUniforms } from './lightning.types';

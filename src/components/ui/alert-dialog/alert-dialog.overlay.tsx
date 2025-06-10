@@ -16,9 +16,9 @@ import { AlertDialogOverlayProps } from './alert-dialog.types';
 
 /**
  * AlertDialogOverlay component
- * 
+ *
  * Creates a visual overlay behind the alert dialog to emphasize its modal nature.
- * 
+ *
  * @example
  * ```tsx
  * <AlertDialogPortal>
@@ -27,22 +27,17 @@ import { AlertDialogOverlayProps } from './alert-dialog.types';
  * </AlertDialogPortal>
  * ```
  */
-export const AlertDialogOverlay = memo(React.forwardRef<
-  React.ElementRef<typeof AlertDialogPrimitive.Overlay>,
-  AlertDialogOverlayProps
->(({ className, ...props }, ref) => {
-  const overlayClassName = useMemo(() => {
-    return cn(styles.overlay, className);
-  }, [className]);
+export const AlertDialogOverlay = memo(
+  React.forwardRef<React.ElementRef<typeof AlertDialogPrimitive.Overlay>, AlertDialogOverlayProps>(
+    ({ className, ...props }, ref) => {
+      const overlayClassName = useMemo(() => {
+        return cn(styles.overlay, className);
+      }, [className]);
 
-  return (
-    <AlertDialogPrimitive.Overlay
-      ref={ref}
-      className={overlayClassName}
-      {...props}
-    />
-  );
-}));
+      return <AlertDialogPrimitive.Overlay ref={ref} className={overlayClassName} {...props} />;
+    }
+  )
+);
 
 AlertDialogOverlay.displayName = AlertDialogPrimitive.Overlay.displayName;
 

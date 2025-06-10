@@ -6,11 +6,11 @@
  */
 
 import { createServiceLogger, logError } from '@/services/logger/logger.utils';
+import { fetchEducation, invalidateEducationCache } from './education.service';
+import { fetchExperience, invalidateExperienceCache } from './experience.service';
 import { Profile } from './portfolio.types';
 import { fetchProfile, invalidateProfileCache } from './profile.service';
-import { fetchExperience, invalidateExperienceCache } from './experience.service';
-import { fetchProjects, fetchProjectById, invalidateProjectsCache } from './projects.service';
-import { fetchEducation, invalidateEducationCache } from './education.service';
+import { fetchProjectById, fetchProjects, invalidateProjectsCache } from './projects.service';
 
 // Create a dedicated logger for the main portfolio service
 const dbLogger = createServiceLogger('PortfolioService');
@@ -56,13 +56,13 @@ export const invalidatePortfolioCache = (): void => {
 
 // Re-export individual service functions for direct access
 export {
-  fetchProfile,
-  fetchExperience,
-  fetchProjects,
-  fetchProjectById,
   fetchEducation,
-  invalidateProfileCache,
+  fetchExperience,
+  fetchProfile,
+  fetchProjectById,
+  fetchProjects,
+  invalidateEducationCache,
   invalidateExperienceCache,
-  invalidateProjectsCache,
-  invalidateEducationCache
+  invalidateProfileCache,
+  invalidateProjectsCache
 };

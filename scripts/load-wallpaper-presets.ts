@@ -1,24 +1,24 @@
 #!/usr/bin/env ts-node
+/* eslint-disable no-secrets/no-secrets */
+
 /**
  * Wallpaper Presets Database Loader
- * 
+ *
  * This script loads the wallpaper presets from the static presets file
  * into the Supabase database with proper relationships between tables.
  */
 
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
-import { v4 as uuidv4 } from 'uuid';
-import wallpaperPresets from '../src/presets/wallpaper.presets';
-import type { 
-  Wallpaper, 
-  WallpaperAnimation, 
-  WallpaperBackground, 
-  WallpaperColor, 
-  WallpaperGradient, 
-  WallpaperImage, 
-  WallpaperVideo 
+import type {
+  WallpaperAnimation,
+  WallpaperBackground,
+  WallpaperColor,
+  WallpaperGradient,
+  WallpaperImage,
+  WallpaperVideo
 } from '../src/components/ui/wallpaper/wallpaper.types';
+import wallpaperPresets from '../src/presets/wallpaper.presets';
 
 // Initialize environment variables
 dotenv.config();
@@ -321,21 +321,19 @@ const insertBackground = async (
       console.error(`Error inserting background ${identifier}:`, error);
       return null;
     }
-    
+
     console.log(`Background ${identifier} inserted successfully!`);
-    
+
     // If we have colors, handle the many-to-many relationship through the junction table
     if (colors && background) {
       const colorId = await insertColor(colors);
       if (colorId) {
         // Insert into the junction table background_colors
-        const { error: junctionError } = await supabase
-          .from('background_colors')
-          .insert({
-            background_id: background.id,
-            color_id: colorId
-          });
-          
+        const { error: junctionError } = await supabase.from('background_colors').insert({
+          background_id: background.id,
+          color_id: colorId
+        });
+
         if (junctionError) {
           console.error(`Error linking background ${identifier} to color:`, junctionError);
         } else {
@@ -377,7 +375,7 @@ const insertWallpaper = async (
     if (background) {
       // If the background object doesn't have an identifier, use the wallpaper identifier
       const backgroundIdentifier = background.id || identifier;
-      
+
       // Determine background type from the wallpaper type or use a default
       let backgroundType = type;
       if (background.animation) backgroundType = 'animation';
@@ -385,13 +383,13 @@ const insertWallpaper = async (
       else if (background.gradient) backgroundType = 'gradient';
       else if (background.image) backgroundType = 'image';
       else if (background.video) backgroundType = 'video';
-      
+
       // Insert background with the appropriate components
       backgroundId = await insertBackground(
         backgroundIdentifier,
         backgroundType,
         background.animation || null,
-        (background.colors && background.colors.length > 0) ? background.colors[0] : null,
+        background.colors && background.colors.length > 0 ? background.colors[0] : null,
         background.gradient || null,
         background.image || null,
         background.video || null
@@ -439,7 +437,7 @@ const insertWallpaper = async (
  */
 const loadWallpaperPresets = async () => {
   console.log('Starting to load wallpaper presets into database...');
-  
+
   // Existing IDs to avoid duplicates
   const wallpaperIds = new Set<string>();
   const backgroundIds = new Set<string>();
@@ -448,85 +446,67 @@ const loadWallpaperPresets = async () => {
   const gradientIds = new Set<string>();
   const imageIds = new Set<string>();
   const videoIds = new Set<string>();
-  
+
   // Get existing ids from database
   const getExistingIds = async () => {
     // Get existing wallpapers
-    const { data: existingWallpapers } = await supabase
-      .from('wallpapers')
-      .select('identifier');
-    
+    const { data: existingWallpapers } = await supabase.from('wallpapers').select('identifier');
+
     if (existingWallpapers) {
       existingWallpapers.forEach(wp => wallpaperIds.add(wp.identifier));
     }
-    
+
     // Get existing backgrounds
-    const { data: existingBackgrounds } = await supabase
-      .from('backgrounds')
-      .select('identifier');
-    
+    const { data: existingBackgrounds } = await supabase.from('backgrounds').select('identifier');
+
     if (existingBackgrounds) {
       existingBackgrounds.forEach(bg => backgroundIds.add(bg.identifier));
     }
-    
+
     // Get existing animations
-    const { data: existingAnimations } = await supabase
-      .from('animations')
-      .select('identifier');
-    
+    const { data: existingAnimations } = await supabase.from('animations').select('identifier');
+
     if (existingAnimations) {
       existingAnimations.forEach(anim => animationIds.add(anim.identifier));
     }
-    
+
     // Get existing colors
-    const { data: existingColors } = await supabase
-      .from('colors')
-      .select('identifier');
-    
+    const { data: existingColors } = await supabase.from('colors').select('identifier');
+
     if (existingColors) {
       existingColors.forEach(col => colorIds.add(col.identifier));
     }
-    
+
     // Get existing gradients
-    const { data: existingGradients } = await supabase
-      .from('gradients')
-      .select('identifier');
-    
+    const { data: existingGradients } = await supabase.from('gradients').select('identifier');
+
     if (existingGradients) {
       existingGradients.forEach(grad => gradientIds.add(grad.identifier));
     }
-    
+
     // Get existing images
-    const { data: existingImages } = await supabase
-      .from('images')
-      .select('identifier');
-    
+    const { data: existingImages } = await supabase.from('images').select('identifier');
+
     if (existingImages) {
       existingImages.forEach(img => imageIds.add(img.identifier));
     }
-    
+
     // Get existing videos
-    const { data: existingVideos } = await supabase
-      .from('videos')
-      .select('identifier');
-    
+    const { data: existingVideos } = await supabase.from('videos').select('identifier');
+
     if (existingVideos) {
       existingVideos.forEach(vid => videoIds.add(vid.identifier));
     }
   };
-  
+
   // Get existing IDs first
   await getExistingIds();
-  
+
   // Process all wallpapers in sequence
   for (const [id, wallpaper] of Object.entries(wallpaperPresets)) {
-    await insertWallpaper(
-      id,
-      wallpaper.type,
-      wallpaper.background
-    );
+    await insertWallpaper(id, wallpaper.type, wallpaper.background);
   }
-  
+
   console.log('Finished loading wallpaper presets into database!');
 };
 

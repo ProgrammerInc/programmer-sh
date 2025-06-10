@@ -1,8 +1,9 @@
+/* eslint-disable no-secrets/no-secrets */
 'use client';
 
 import { cn } from '@/utils/app.utils';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import React, { memo, useState } from 'react';
+import { memo, useState } from 'react';
 
 import styles from './stack.module.css';
 import {
@@ -15,13 +16,13 @@ import {
 
 /**
  * CardRotate component - Handles the 3D rotation effect for cards in the stack
- * 
+ *
  * Features:
  * - 3D rotation based on drag position
  * - Drag with elastic constraints
  * - Send to back functionality when dragged beyond sensitivity threshold
  * - Smooth animation return to center when not sent to back
- * 
+ *
  * @example
  * ```tsx
  * <CardRotate onSendToBack={() => console.log('Card sent to back')} sensitivity={200}>
@@ -29,7 +30,11 @@ import {
  * </CardRotate>
  * ```
  */
-const CardRotate = memo(function CardRotate({ children, onSendToBack, sensitivity }: CardRotateProps) {
+const CardRotate = memo(function CardRotate({
+  children,
+  onSendToBack,
+  sensitivity
+}: CardRotateProps) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotateX = useTransform(y, [-100, 100], [60, -60]);
@@ -95,19 +100,19 @@ const DEFAULT_CARD_DIMENSIONS: CardDimensions = { width: 208, height: 208 };
 
 /**
  * Stack component - Creates an interactive stack of cards that can be dragged and rearranged
- * 
+ *
  * Features:
  * - Draggable cards with 3D rotation effects
  * - Configurable card dimensions and animation properties
  * - Optional random rotation for a more natural appearance
  * - Ability to send cards to the back via drag or click
  * - Customizable sensitivity for drag interactions
- * 
+ *
  * @example
  * ```tsx
  * // Basic usage
  * <Stack />
- * 
+ *
  * // With custom configuration
  * <Stack
  *   randomRotation={true}
@@ -115,7 +120,7 @@ const DEFAULT_CARD_DIMENSIONS: CardDimensions = { width: 208, height: 208 };
  *   cardDimensions={{ width: 300, height: 200 }}
  *   sendToBackOnClick={true}
  * />
- * 
+ *
  * // With custom cards data
  * <Stack
  *   cardsData={[
@@ -133,9 +138,7 @@ const Stack = memo(function Stack({
   animationConfig = DEFAULT_ANIMATION_CONFIG,
   sendToBackOnClick = false
 }: StackProps) {
-  const [cards, setCards] = useState<CardData[]>(
-    cardsData.length ? cardsData : DEFAULT_CARDS_DATA
-  );
+  const [cards, setCards] = useState<CardData[]>(cardsData.length ? cardsData : DEFAULT_CARDS_DATA);
 
   /**
    * Sends the card with the specified ID to the back of the stack
@@ -145,7 +148,7 @@ const Stack = memo(function Stack({
       const newCards = [...prev];
       const index = newCards.findIndex(card => card.id === id);
       if (index === -1) return prev;
-      
+
       const [card] = newCards.splice(index, 1);
       newCards.unshift(card);
       return newCards;
@@ -190,11 +193,7 @@ const Stack = memo(function Stack({
                 height: cardDimensions.height
               }}
             >
-              <img
-                src={card.img}
-                alt={`card-${card.id}`}
-                className={styles['card-image']}
-              />
+              <img src={card.img} alt={`card-${card.id}`} className={styles['card-image']} />
             </motion.div>
           </CardRotate>
         );

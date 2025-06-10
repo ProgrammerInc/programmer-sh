@@ -41,15 +41,15 @@ Use the appropriate toast type based on the nature of the message:
 ```tsx
 // Success message
 toast({
-  title: "Success",
-  description: "Your changes have been saved"
+  title: 'Success',
+  description: 'Your changes have been saved'
 });
 
 // Error message
 toast({
-  variant: "destructive",
-  title: "Error",
-  description: "Failed to save changes"
+  variant: 'destructive',
+  title: 'Error',
+  description: 'Failed to save changes'
 });
 ```
 
@@ -59,13 +59,13 @@ When a toast requires user action, include an action button:
 
 ```tsx
 toast({
-  title: "New comment",
-  description: "Someone commented on your post",
+  title: 'New comment',
+  description: 'Someone commented on your post',
   action: (
     <ToastAction altText="View comment" onClick={() => navigateToComment()}>
       View
     </ToastAction>
-  ),
+  )
 });
 ```
 
@@ -80,15 +80,15 @@ Consider the appropriate duration for different types of messages:
 ```tsx
 // Quick confirmation
 toast({
-  title: "Copied to clipboard",
-  duration: 2000, // 2 seconds
+  title: 'Copied to clipboard',
+  duration: 2000 // 2 seconds
 });
 
 // Message requiring more attention
 toast({
-  title: "Update available",
-  description: "A new version is available. Please refresh to update.",
-  duration: 8000, // 8 seconds
+  title: 'Update available',
+  description: 'A new version is available. Please refresh to update.',
+  duration: 8000 // 8 seconds
 });
 ```
 

@@ -7,6 +7,6 @@
  * @module Starfall
  */
 
-export { Starfall, default } from './starfall';
+export { default, Starfall } from './starfall';
 export * as StarfallStyles from './starfall.module.css';
 export type { StarfallProps } from './starfall.types';

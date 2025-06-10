@@ -1,5 +1,9 @@
-import { DayPickerProps, DayPickerDefaultProps, DayPickerMultipleProps, DayPickerRangeProps, DayPickerSingleProps } from 'react-day-picker';
-import * as React from 'react';
+import {
+  DayPickerDefaultProps,
+  DayPickerMultipleProps,
+  DayPickerRangeProps,
+  DayPickerSingleProps
+} from 'react-day-picker';
 
 /**
  * Base props for the Calendar component
@@ -10,12 +14,12 @@ type CalendarBaseProps = {
    * @default true
    */
   showOutsideDays?: boolean;
-  
+
   /**
    * Additional CSS class names
    */
   className?: string;
-  
+
   /**
    * Custom class names for specific calendar elements
    */

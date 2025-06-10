@@ -12,16 +12,16 @@ const authModalLogger = createFeatureLogger('AuthModal');
  */
 export const useAuthModal = (): AuthModalContextType => {
   const context = useContext(AuthModalContext);
-  
+
   if (context === undefined) {
     const error = new Error('useAuthModal must be used within an AuthModalProvider');
-    authModalLogger.error('Context access error', { 
+    authModalLogger.error('Context access error', {
       error: error.message,
-      stack: error.stack 
+      stack: error.stack
     });
     throw error;
   }
-  
+
   authModalLogger.debug('Auth modal context accessed');
   return context;
 };

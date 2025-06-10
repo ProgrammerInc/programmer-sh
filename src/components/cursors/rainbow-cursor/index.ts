@@ -4,5 +4,5 @@
  * @module RainbowCursor
  */
 
-export { RainbowCursor, default } from './rainbow-cursor';
+export { default, RainbowCursor } from './rainbow-cursor';
 export type { RainbowCursorProps } from './rainbow-cursor.types';

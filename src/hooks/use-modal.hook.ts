@@ -26,16 +26,16 @@ export const ModalContext = createContext<ModalContextType | undefined>(undefine
  */
 export const useModal = (): ModalContextType => {
   const context = useContext(ModalContext);
-  
+
   if (!context) {
     const error = new Error('useModal must be used within a ModalProvider');
-    modalLogger.error('Context access error', { 
+    modalLogger.error('Context access error', {
       error: error.message,
-      stack: error.stack 
+      stack: error.stack
     });
     throw error;
   }
-  
+
   modalLogger.debug('Modal context accessed', { isOpen: context.open });
   return context;
 };

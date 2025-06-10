@@ -1,6 +1,5 @@
 'use client';
 
-import * as React from 'react';
 import { memo, useMemo } from 'react';
 
 import { cn } from '@/utils/app.utils';

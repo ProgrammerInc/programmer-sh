@@ -46,12 +46,13 @@
 // Export the InfiniteMenu component
 import InfiniteMenu from './infinite-menu';
 
-// Export types for external usage
-export type {
-  MenuItem,
-  InfiniteMenuProps,
-  InfiniteGridMenu
+// Export types for external usage with renamed MenuItem to avoid conflicts
+export type { 
+  InfiniteGridMenu, 
+  InfiniteMenuProps, 
+  // Rename MenuItem to avoid type conflicts with other components
+  MenuItem as InfiniteMenuItem 
 } from './infinite-menu.types';
 
-// For backwards compatibility
+// Default export for easier importing
 export default InfiniteMenu;

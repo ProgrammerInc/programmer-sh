@@ -2,7 +2,8 @@
 import { createFeatureLogger } from '@/services/logger/logger.utils';
 import * as React from 'react';
 
-import type { ToastActionElement, ToastProps } from '@/components/ui/toast/toast';
+import { ToastProviderProps, ToastRootProps } from '@/components/ui';
+import type { ToastActionElement } from '@/components/ui/toast/toast';
 
 // Create a dedicated logger for toast management
 const toastLogger = createFeatureLogger('Toast');
@@ -20,7 +21,7 @@ export const TOAST_REMOVE_DELAY = 5000;
 /**
  * Toast notification interface including all properties
  */
-export type ToasterToast = ToastProps & {
+export type ToasterToast = ToastRootProps & {
   id: string;
   title?: React.ReactNode;
   description?: React.ReactNode;
@@ -147,7 +148,7 @@ export const reducer = (state: State, action: Action): State => {
           toasts: state.toasts.filter(t => t.id !== toastId)
         };
       }
-      
+
       default:
         toastLogger.warn('Unknown action type', { type: (action as { type: string }).type });
         return state;
@@ -180,7 +181,10 @@ function dispatch(action: Action): void {
     });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    toastLogger.error('Error dispatching toast action', { error: errorMessage, actionType: action.type });
+    toastLogger.error('Error dispatching toast action', {
+      error: errorMessage,
+      actionType: action.type
+    });
   }
 }
 
@@ -244,7 +248,7 @@ function useToast() {
     try {
       toastLogger.debug('Setting up toast listener');
       listeners.push(setState);
-      
+
       return () => {
         try {
           const index = listeners.indexOf(setState);

@@ -19,13 +19,13 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
    * @default 'default'
    */
   variant?: ButtonVariant;
-  
+
   /**
    * Button size
    * @default 'default'
    */
   size?: ButtonSize;
-  
+
   /**
    * When true, the button will be rendered as a child component
    * @default false

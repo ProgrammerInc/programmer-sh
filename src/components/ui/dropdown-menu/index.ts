@@ -1,9 +1,9 @@
 /**
  * Dropdown Menu Component Module
- * 
+ *
  * A dropdown menu displays a list of options when triggered.
  * Based on the Radix UI dropdown menu primitive.
- * 
+ *
  * @see https://www.radix-ui.com/primitives/docs/components/dropdown-menu for the original Radix UI documentation
  */
 

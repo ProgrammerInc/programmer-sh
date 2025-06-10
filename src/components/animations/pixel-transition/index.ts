@@ -7,6 +7,6 @@
  * @module PixelTransition
  */
 
-export { PixelTransition, default } from './pixel-transition';
+export { default, PixelTransition } from './pixel-transition';
 export * as PixelTransitionStyles from './pixel-transition.module.css';
 export type { PixelTransitionProps } from './pixel-transition.types';

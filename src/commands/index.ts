@@ -1,6 +1,5 @@
 import { createFeatureLogger } from '@/services/logger/logger.utils';
 import { Command, CommandResult } from './command.types';
-import { clearCommand, echoCommand, privacyCommand, termsCommand } from './system.commands';
 import { cursorCommand } from './cursor.commands';
 import { queryCommand } from './database.commands';
 import { debugCommand } from './debug.commands';
@@ -12,6 +11,7 @@ import { projectsCommand } from './projects.commands';
 import { resumeCommand } from './resume.commands';
 import { skillsCommand } from './skills.commands';
 import { socialCommand } from './social.commands';
+import { clearCommand, echoCommand, privacyCommand, termsCommand } from './system.commands';
 import { themeCommand } from './theme.commands';
 import { wallpaperCommand } from './wallpaper.commands';
 
@@ -70,7 +70,7 @@ export const getCommands = (): Record<string, Command> => {
     // Log all command names for debugging
     commandLogger.debug('Registered commands', { count: Object.keys(commandRegistry).length });
     commandLogger.debug('ALL COMMANDS:', Object.keys(commandRegistry).sort());
-    
+
     // Log commands with aliases for debugging
     const commandsWithAliases = Object.values(commandRegistry)
       .filter(cmd => cmd.aliases && cmd.aliases.length > 0)
@@ -173,8 +173,8 @@ export const processCommand = (commandString: string): CommandResult => {
     }
 
     // Look up command in registry
-    commandLogger.debug('Looking up command', { 
-      searchCommand: commandName, 
+    commandLogger.debug('Looking up command', {
+      searchCommand: commandName,
       available: Object.keys(commands).length,
       commandsList: Object.keys(commands).sort()
     });
@@ -201,14 +201,13 @@ export const processCommand = (commandString: string): CommandResult => {
     }
 
     // Check for command aliases
-    const commandWithAlias = Object.values(commands).find(cmd => 
-      cmd.aliases && cmd.aliases.some(alias => 
-        alias.toLowerCase() === commandName.toLowerCase()
-      )
+    const commandWithAlias = Object.values(commands).find(
+      cmd =>
+        cmd.aliases && cmd.aliases.some(alias => alias.toLowerCase() === commandName.toLowerCase())
     );
 
     // Add debug logging to check alias lookup
-    commandLogger.debug('Alias lookup', { 
+    commandLogger.debug('Alias lookup', {
       commandName,
       foundAlias: !!commandWithAlias,
       aliasCommand: commandWithAlias?.name,
@@ -219,9 +218,9 @@ export const processCommand = (commandString: string): CommandResult => {
     });
 
     if (commandWithAlias) {
-      commandLogger.info('Found command via alias', { 
-        alias: commandName, 
-        actualCommand: commandWithAlias.name 
+      commandLogger.info('Found command via alias', {
+        alias: commandName,
+        actualCommand: commandWithAlias.name
       });
       try {
         return commandWithAlias.execute(args);

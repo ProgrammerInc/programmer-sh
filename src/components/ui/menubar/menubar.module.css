@@ -30,7 +30,7 @@
   color: var(--accent-foreground);
 }
 
-.menubar-trigger[data-state="open"] {
+.menubar-trigger[data-state='open'] {
   background-color: var(--accent);
   color: var(--accent-foreground);
 }
@@ -56,7 +56,7 @@
   color: var(--accent-foreground);
 }
 
-.menubar-sub-trigger[data-state="open"] {
+.menubar-sub-trigger[data-state='open'] {
   background-color: var(--accent);
   color: var(--accent-foreground);
 }
@@ -80,11 +80,11 @@
 }
 
 /* Animation states */
-.menubar-sub-content[data-state="open"] {
+.menubar-sub-content[data-state='open'] {
   animation: menubar-fade-in 150ms ease;
 }
 
-.menubar-sub-content[data-state="closed"] {
+.menubar-sub-content[data-state='closed'] {
   animation: menubar-fade-out 150ms ease;
 }
 
@@ -98,15 +98,17 @@
   background-color: var(--popover);
   color: var(--popover-foreground);
   padding: 0.25rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 /* Animation states */
-.menubar-content[data-state="open"] {
+.menubar-content[data-state='open'] {
   animation: menubar-fade-in 150ms ease;
 }
 
-.menubar-content[data-state="closed"] {
+.menubar-content[data-state='closed'] {
   animation: menubar-fade-out 150ms ease;
 }
 

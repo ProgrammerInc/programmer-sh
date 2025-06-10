@@ -29,7 +29,7 @@ Add custom styling to the terminal header:
 Show social media links in the header:
 
 ```tsx
-<TerminalHeader 
+<TerminalHeader
   socialLinks={[
     { name: 'GitHub', url: 'https://github.com/username', icon: 'github' },
     { name: 'Twitter', url: 'https://twitter.com/username', icon: 'twitter' },
@@ -48,21 +48,18 @@ import { TerminalHeader, TerminalHeaderRef } from '@/components/ui/terminal-head
 
 const Demo = () => {
   const headerRef = useRef<TerminalHeaderRef>(null);
-  
+
   const focusUserMenu = () => {
     headerRef.current?.focusUserMenu();
   };
-  
+
   const closeUserMenu = () => {
     headerRef.current?.closeUserMenu();
   };
-  
+
   return (
     <div>
-      <TerminalHeader 
-        ref={headerRef} 
-        lastCommand="help" 
-      />
+      <TerminalHeader ref={headerRef} lastCommand="help" />
       <button onClick={focusUserMenu}>Focus User Menu</button>
       <button onClick={closeUserMenu}>Close User Menu</button>
     </div>
@@ -79,36 +76,29 @@ const TerminalDemo = () => {
   const [lastCommand, setLastCommand] = useState('');
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const headerRef = useRef<TerminalHeaderRef>(null);
-  
+
   // Command submission handler
   const handleCommandSubmit = (command: string) => {
     if (!command.trim()) return;
-    
+
     // Update last command for header display
     setLastCommand(command);
-    
+
     // Update history
     setCommandHistory(prev => [command, ...prev]);
   };
-  
+
   return (
     <div className="terminal">
-      <TerminalHeader 
+      <TerminalHeader
         ref={headerRef}
         lastCommand={lastCommand}
-        socialLinks={[
-          { name: 'GitHub', url: 'https://github.com/username', icon: 'github' },
-        ]}
+        socialLinks={[{ name: 'GitHub', url: 'https://github.com/username', icon: 'github' }]}
       />
-      
-      <div className="terminal-content">
-        {/* Terminal output content */}
-      </div>
-      
-      <TerminalFooter
-        onCommandSubmit={handleCommandSubmit}
-        commandHistory={commandHistory}
-      />
+
+      <div className="terminal-content">{/* Terminal output content */}</div>
+
+      <TerminalFooter onCommandSubmit={handleCommandSubmit} commandHistory={commandHistory} />
     </div>
   );
 };

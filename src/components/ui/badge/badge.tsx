@@ -1,17 +1,16 @@
 'use client';
 
-import * as React from 'react';
 import { memo, useMemo } from 'react';
 
 import { cn } from '@/utils/app.utils';
-import { BadgeProps } from './badge.types';
 import styles from './badge.module.css';
+import { BadgeProps } from './badge.types';
 
 /**
  * Badge component
- * 
+ *
  * A small visual indicator for statuses, labels, and categories.
- * 
+ *
  * @example
  * ```tsx
  * <Badge>Default</Badge>

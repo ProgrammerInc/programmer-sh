@@ -5,6 +5,6 @@
  * @module HyperspaceHero
  */
 
-export { HyperspaceHero, default } from './hyperspace-hero';
+export { default, HyperspaceHero } from './hyperspace-hero';
 export * as HyperspaceHeroStyles from './hyperspace-hero.module.css';
 export type { HyperspaceHeroProps } from './hyperspace-hero.types';

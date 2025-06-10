@@ -33,6 +33,7 @@ export const DEFAULT_USE_ORIGINAL_CHARS_ONLY = false;
  * Default set of characters used for scrambling
  */
 export const DEFAULT_CHARACTERS =
+  // eslint-disable-next-line no-secrets/no-secrets
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+';
 
 /**

@@ -20,31 +20,31 @@
   animation-duration: 150ms;
 }
 
-.content-animation[data-state="open"] {
+.content-animation[data-state='open'] {
   animation-name: fade-in;
 }
 
-.content-animation[data-state="closed"] {
+.content-animation[data-state='closed'] {
   animation-name: fade-out;
 }
 
 /* Positioning animations */
-.content-animation[data-side="bottom"] {
+.content-animation[data-side='bottom'] {
   transform-origin: top;
   animation-name: slide-from-top;
 }
 
-.content-animation[data-side="left"] {
+.content-animation[data-side='left'] {
   transform-origin: right;
   animation-name: slide-from-right;
 }
 
-.content-animation[data-side="right"] {
+.content-animation[data-side='right'] {
   transform-origin: left;
   animation-name: slide-from-left;
 }
 
-.content-animation[data-side="top"] {
+.content-animation[data-side='top'] {
   transform-origin: bottom;
   animation-name: slide-from-bottom;
 }
@@ -94,7 +94,7 @@
   color: var(--accent-foreground);
 }
 
-.sub-trigger[data-state="open"] {
+.sub-trigger[data-state='open'] {
   background-color: var(--accent);
   color: var(--accent-foreground);
 }

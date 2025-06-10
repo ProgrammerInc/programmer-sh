@@ -52,7 +52,8 @@
 
 /* Animation keyframes */
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: var(--skeleton-opacity-high, 1);
   }
   50% {

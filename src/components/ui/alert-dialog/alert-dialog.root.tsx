@@ -1,3 +1,4 @@
+/* eslint-disable no-secrets/no-secrets */
 /**
  * Alert Dialog Root Component
  *
@@ -13,9 +14,9 @@ import { AlertDialogProps } from './alert-dialog.types';
 
 /**
  * AlertDialog component
- * 
+ *
  * The root component that wraps all alert dialog parts.
- * 
+ *
  * @example
  * ```tsx
  * <AlertDialog>

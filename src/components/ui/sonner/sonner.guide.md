@@ -23,11 +23,13 @@ The Sonner Toast component provides a modern, accessible way to display toast no
 2. **Toast Content**: Keep toast messages concise and informative. Use descriptions for additional context.
 
 3. **Appropriate Duration**: Set appropriate durations based on content importance and length:
+
    - Brief notifications: 3-5 seconds
    - Important notifications: 5-8 seconds
    - Notifications with actions: 8-10 seconds
 
 4. **Use the Right Type**: Choose the appropriate toast type based on the message content:
+
    - `toast.success()`: For successful operations
    - `toast.error()`: For errors and failures
    - `toast.info()`: For informational messages
@@ -63,33 +65,33 @@ The Sonner Toast component provides a modern, accessible way to display toast no
 
 ### Toaster Component Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `position` | `enum` | `'top-right'` | Position of the toaster on the screen |
-| `theme` | `enum` | `'dark'` | Theme for the toaster (light, dark, system) |
-| `richColors` | `boolean` | `false` | Use rich colors for different toast types |
-| `expand` | `boolean` | `false` | Expand toasts to fill the available width |
-| `duration` | `number` | `4000` | Default duration for toasts in milliseconds |
-| `visibleToasts` | `number` | `3` | Maximum number of toasts visible at once |
-| `closeButton` | `boolean` | `false` | Show close button on toasts |
-| `offset` | `string | number` | `'32px'` | Distance from the viewport edge |
-| `className` | `string` | - | Additional classes for the toaster |
-| `toastOptions` | `object` | - | Default options for all toasts |
+| Prop            | Type      | Default       | Description                                 |
+| --------------- | --------- | ------------- | ------------------------------------------- | ------------------------------- |
+| `position`      | `enum`    | `'top-right'` | Position of the toaster on the screen       |
+| `theme`         | `enum`    | `'dark'`      | Theme for the toaster (light, dark, system) |
+| `richColors`    | `boolean` | `false`       | Use rich colors for different toast types   |
+| `expand`        | `boolean` | `false`       | Expand toasts to fill the available width   |
+| `duration`      | `number`  | `4000`        | Default duration for toasts in milliseconds |
+| `visibleToasts` | `number`  | `3`           | Maximum number of toasts visible at once    |
+| `closeButton`   | `boolean` | `false`       | Show close button on toasts                 |
+| `offset`        | `string   | number`       | `'32px'`                                    | Distance from the viewport edge |
+| `className`     | `string`  | -             | Additional classes for the toaster          |
+| `toastOptions`  | `object`  | -             | Default options for all toasts              |
 
 ### Toast Function Options
 
-| Option | Type | Description |
-|--------|------|-------------|
-| `id` | `string` | Unique identifier for the toast |
-| `icon` | `ReactNode` | Custom icon to display |
-| `description` | `string | ReactNode` | Secondary text for the toast |
-| `action` | `{ label: string, onClick: () => void }` | Action button configuration |
-| `cancel` | `{ label: string, onClick: () => void }` | Cancel button configuration |
-| `duration` | `number` | Duration in milliseconds |
-| `position` | `enum` | Override default position |
-| `important` | `boolean` | Whether the toast should not be automatically dismissed |
-| `onDismiss` | `() => void` | Callback when toast is dismissed |
-| `onAutoClose` | `() => void` | Callback when toast is automatically closed |
+| Option        | Type                                     | Description                                             |
+| ------------- | ---------------------------------------- | ------------------------------------------------------- | ---------------------------- |
+| `id`          | `string`                                 | Unique identifier for the toast                         |
+| `icon`        | `ReactNode`                              | Custom icon to display                                  |
+| `description` | `string                                  | ReactNode`                                              | Secondary text for the toast |
+| `action`      | `{ label: string, onClick: () => void }` | Action button configuration                             |
+| `cancel`      | `{ label: string, onClick: () => void }` | Cancel button configuration                             |
+| `duration`    | `number`                                 | Duration in milliseconds                                |
+| `position`    | `enum`                                   | Override default position                               |
+| `important`   | `boolean`                                | Whether the toast should not be automatically dismissed |
+| `onDismiss`   | `() => void`                             | Callback when toast is dismissed                        |
+| `onAutoClose` | `() => void`                             | Callback when toast is automatically closed             |
 
 ## Advanced Tips
 
@@ -125,18 +127,15 @@ import { useForm } from 'some-form-library';
 
 function ContactForm() {
   const { handleSubmit } = useForm();
-  
-  const onSubmit = async (data) => {
-    toast.promise(
-      submitForm(data),
-      {
-        loading: 'Sending message...',
-        success: 'Message sent successfully!',
-        error: (err) => `Error: ${err.message}`
-      }
-    );
+
+  const onSubmit = async data => {
+    toast.promise(submitForm(data), {
+      loading: 'Sending message...',
+      success: 'Message sent successfully!',
+      error: err => `Error: ${err.message}`
+    });
   };
-  
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {/* Form fields */}
@@ -151,12 +150,12 @@ function ContactForm() {
 You can use Sonner for global error handling:
 
 ```tsx
-window.addEventListener('error', (event) => {
+window.addEventListener('error', event => {
   toast.error(`Unhandled error: ${event.message}`);
 });
 
 // For promise rejections
-window.addEventListener('unhandledrejection', (event) => {
+window.addEventListener('unhandledrejection', event => {
   toast.error(`Unhandled promise rejection: ${event.reason}`);
 });
 ```

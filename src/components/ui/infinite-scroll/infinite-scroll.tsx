@@ -2,18 +2,18 @@
 
 import { gsap } from 'gsap';
 import { Observer } from 'gsap/Observer';
-import React, { useEffect, useRef, useMemo, useCallback } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 
 import { cn } from '@/utils/app.utils';
 import styles from './infinite-scroll.module.css';
-import { InfiniteScrollItem, InfiniteScrollProps } from './infinite-scroll.types';
+import { InfiniteScrollProps } from './infinite-scroll.types';
 
 /**
  * InfiniteScroll component creates a scrollable container with infinite scrolling behavior
- * 
+ *
  * The component uses GSAP for smooth animations and supports custom styling, autoplay,
  * and 3D tilting effects. Perfect for showcasing content in a continuous loop.
- * 
+ *
  * @example
  * ```tsx
  * <InfiniteScroll
@@ -144,7 +144,7 @@ const InfiniteScrollComponent: React.FC<InfiniteScrollProps> = ({
             rafIdRef.current = null;
           }
         };
-        
+
         const startTicker = () => {
           if (!rafIdRef.current) {
             rafIdRef.current = requestAnimationFrame(tick);
@@ -171,33 +171,24 @@ const InfiniteScrollComponent: React.FC<InfiniteScrollProps> = ({
         rafIdRef.current = null;
       }
     };
-  }, [
-    items,
-    autoplay,
-    autoplaySpeed,
-    autoplayDirection,
-    pauseOnHover
-  ]);
+  }, [items, autoplay, autoplaySpeed, autoplayDirection, pauseOnHover]);
 
   return (
-    <div 
-      className={styles['infinite-scroll-wrapper']} 
-      ref={wrapperRef} 
-      style={{ maxHeight }}
-    >
+    <div className={styles['infinite-scroll-wrapper']} ref={wrapperRef} style={{ maxHeight }}>
       <div
         className={styles['infinite-scroll-container']}
         ref={containerRef}
         style={inlineStyles.container}
       >
         {items.map((item, i) => (
-          <div 
+          <div
             className={cn(
               styles['infinite-scroll-item'],
-              isTilted && (tiltDirection === 'left' 
-                ? styles['infinite-scroll-tilted-left'] 
-                : styles['infinite-scroll-tilted-right'])
-            )} 
+              isTilted &&
+                (tiltDirection === 'left'
+                  ? styles['infinite-scroll-tilted-left']
+                  : styles['infinite-scroll-tilted-right'])
+            )}
             key={i}
             style={inlineStyles.item}
           >
@@ -214,7 +205,7 @@ InfiniteScrollComponent.displayName = 'InfiniteScrollComponent';
 
 /**
  * Memoized InfiniteScroll component
- * 
+ *
  * A vertical infinite scrolling container that can display any React content
  * with support for autoplay, tilting effects, and interactive scrolling.
  */

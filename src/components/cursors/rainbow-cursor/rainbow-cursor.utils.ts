@@ -16,7 +16,7 @@ import type { CursorPosition, Particle } from './rainbow-cursor.types';
  * @returns A new Particle object
  */
 export const createParticle = (x: number, y: number): Particle => ({
-  position: { x, y },
+  position: { x, y }
 });
 
 /**
@@ -60,7 +60,7 @@ export const getPulseSize = (
   time: number,
   pulseSpeed: number,
   pulseMin: number,
-  pulseMax: number,
+  pulseMax: number
 ): number => {
   const pulse = Math.sin(time * pulseSpeed);
   const scaleFactor = pulseMin + ((pulse + 1) * (pulseMax - pulseMin)) / 2;
@@ -78,12 +78,12 @@ export const getPulseSize = (
 export const setupCanvasStyles = (
   canvas: HTMLCanvasElement,
   hasWrapperEl: boolean,
-  styles: Record<string, string>,
+  styles: Record<string, string>
 ): void => {
   Object.entries(styles).forEach(([property, value]) => {
     Object.assign(canvas.style, { [property]: value });
   });
-  
+
   canvas.style.position = hasWrapperEl ? 'absolute' : 'fixed';
 };
 
@@ -98,7 +98,7 @@ export const setupCanvasStyles = (
 export const resizeCanvas = (
   canvas: HTMLCanvasElement,
   hasWrapperEl: boolean,
-  element?: HTMLElement,
+  element?: HTMLElement
 ): void => {
   if (hasWrapperEl && element) {
     canvas.width = element.clientWidth;
@@ -121,18 +121,18 @@ export const resizeCanvas = (
 export const updateCursorPosition = (
   e: MouseEvent,
   hasWrapperEl: boolean,
-  element?: HTMLElement,
+  element?: HTMLElement
 ): CursorPosition => {
   if (hasWrapperEl && element) {
     const boundingRect = element.getBoundingClientRect();
     return {
       x: e.clientX - boundingRect.left,
-      y: e.clientY - boundingRect.top,
+      y: e.clientY - boundingRect.top
     };
   }
-  
+
   return {
     x: e.clientX,
-    y: e.clientY,
+    y: e.clientY
   };
 };

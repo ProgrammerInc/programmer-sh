@@ -2,7 +2,7 @@ import React from 'react';
 
 /**
  * Offset Interface
- * 
+ *
  * Represents the x and y offset for a paper element in the folder.
  */
 export interface Offset {
@@ -10,7 +10,7 @@ export interface Offset {
    * Horizontal offset
    */
   x: number;
-  
+
   /**
    * Vertical offset
    */
@@ -19,9 +19,9 @@ export interface Offset {
 
 /**
  * FolderProps Interface
- * 
+ *
  * Props for the Folder component.
- * 
+ *
  * @example
  * ```tsx
  * <Folder
@@ -41,20 +41,20 @@ export interface FolderProps {
    * @default "#00d8ff"
    */
   color?: string;
-  
+
   /**
    * Scale factor for the folder size
    * @default 1
    */
   size?: number;
-  
+
   /**
    * Array of React nodes to display as papers in the folder.
    * Maximum of 3 items will be used.
    * @default []
    */
   items?: React.ReactNode[];
-  
+
   /**
    * Additional CSS class name
    * @default ""

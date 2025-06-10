@@ -4,5 +4,5 @@
  * @module
  */
 
-export { NeonCursor, default } from './neon-cursor';
+export { default, NeonCursor } from './neon-cursor';
 export type { NeonCursorProps } from './neon-cursor.types';

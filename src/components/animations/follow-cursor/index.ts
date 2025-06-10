@@ -5,5 +5,5 @@
  * @module FollowCursor
  */
 
-export { FollowCursor, default } from './follow-cursor';
+export { default, FollowCursor } from './follow-cursor';
 export type { FollowCursorProps } from './follow-cursor.types';

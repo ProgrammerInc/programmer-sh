@@ -10,9 +10,7 @@ The most basic usage of the Switch component:
 import { Switch } from '@/components/ui/switch';
 
 export default function BasicSwitchExample() {
-  return (
-    <Switch aria-label="Toggle option" />
-  );
+  return <Switch aria-label="Toggle option" />;
 }
 ```
 
@@ -26,14 +24,10 @@ import { Switch } from '@/components/ui/switch';
 
 export default function ControlledSwitchExample() {
   const [isChecked, setIsChecked] = useState(false);
-  
+
   return (
     <div className="flex items-center space-x-2">
-      <Switch 
-        checked={isChecked}
-        onCheckedChange={setIsChecked}
-        aria-label="Toggle dark mode"
-      />
+      <Switch checked={isChecked} onCheckedChange={setIsChecked} aria-label="Toggle dark mode" />
       <span>Dark mode is {isChecked ? 'on' : 'off'}</span>
     </div>
   );
@@ -51,10 +45,7 @@ export default function SwitchWithLabelExample() {
   return (
     <div className="flex items-center space-x-2">
       <Switch id="airplane-mode" aria-label="Toggle airplane mode" />
-      <label
-        htmlFor="airplane-mode"
-        className="text-sm font-medium leading-none"
-      >
+      <label htmlFor="airplane-mode" className="text-sm font-medium leading-none">
         Airplane Mode
       </label>
     </div>
@@ -76,12 +67,12 @@ export default function SwitchSizesExample() {
         <Switch size="sm" aria-label="Small switch" />
         <span className="text-sm">Small</span>
       </div>
-      
+
       <div className="flex items-center space-x-2">
         <Switch size="default" aria-label="Default switch" />
         <span className="text-sm">Default</span>
       </div>
-      
+
       <div className="flex items-center space-x-2">
         <Switch size="lg" aria-label="Large switch" />
         <span className="text-sm">Large</span>
@@ -105,22 +96,22 @@ export default function SwitchColorsExample() {
         <Switch colorScheme="primary" aria-label="Primary switch" />
         <span className="text-sm">Primary</span>
       </div>
-      
+
       <div className="flex items-center space-x-2">
         <Switch colorScheme="secondary" aria-label="Secondary switch" />
         <span className="text-sm">Secondary</span>
       </div>
-      
+
       <div className="flex items-center space-x-2">
         <Switch colorScheme="success" aria-label="Success switch" />
         <span className="text-sm">Success</span>
       </div>
-      
+
       <div className="flex items-center space-x-2">
         <Switch colorScheme="danger" aria-label="Danger switch" />
         <span className="text-sm">Danger</span>
       </div>
-      
+
       <div className="flex items-center space-x-2">
         <Switch colorScheme="warning" aria-label="Warning switch" />
         <span className="text-sm">Warning</span>
@@ -144,7 +135,7 @@ export default function DisabledSwitchExample() {
         <Switch disabled aria-label="Disabled unchecked" />
         <span className="text-sm text-muted-foreground">Disabled (unchecked)</span>
       </div>
-      
+
       <div className="flex items-center space-x-2">
         <Switch disabled checked aria-label="Disabled checked" />
         <span className="text-sm text-muted-foreground">Disabled (checked)</span>
@@ -169,7 +160,7 @@ export default function SwitchFormExample() {
     sms: true
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     alert(JSON.stringify(notifications, null, 2));
   };
@@ -177,7 +168,7 @@ export default function SwitchFormExample() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <h3 className="text-lg font-medium">Notification Preferences</h3>
-      
+
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <label htmlFor="email-notifications" className="text-sm">
@@ -186,12 +177,10 @@ export default function SwitchFormExample() {
           <Switch
             id="email-notifications"
             checked={notifications.email}
-            onCheckedChange={(checked) => 
-              setNotifications({ ...notifications, email: checked })
-            }
+            onCheckedChange={checked => setNotifications({ ...notifications, email: checked })}
           />
         </div>
-        
+
         <div className="flex items-center justify-between">
           <label htmlFor="push-notifications" className="text-sm">
             Push Notifications
@@ -199,12 +188,10 @@ export default function SwitchFormExample() {
           <Switch
             id="push-notifications"
             checked={notifications.push}
-            onCheckedChange={(checked) => 
-              setNotifications({ ...notifications, push: checked })
-            }
+            onCheckedChange={checked => setNotifications({ ...notifications, push: checked })}
           />
         </div>
-        
+
         <div className="flex items-center justify-between">
           <label htmlFor="sms-notifications" className="text-sm">
             SMS Notifications
@@ -212,17 +199,12 @@ export default function SwitchFormExample() {
           <Switch
             id="sms-notifications"
             checked={notifications.sms}
-            onCheckedChange={(checked) => 
-              setNotifications({ ...notifications, sms: checked })
-            }
+            onCheckedChange={checked => setNotifications({ ...notifications, sms: checked })}
           />
         </div>
       </div>
-      
-      <button 
-        type="submit"
-        className="px-4 py-2 bg-primary text-primary-foreground rounded-md"
-      >
+
+      <button type="submit" className="px-4 py-2 bg-primary text-primary-foreground rounded-md">
         Save Preferences
       </button>
     </form>
@@ -240,10 +222,7 @@ import { Switch } from '@/components/ui/switch';
 export default function SwitchWithDescriptionExample() {
   return (
     <div className="grid gap-1.5">
-      <label
-        htmlFor="terms"
-        className="text-sm font-medium leading-none"
-      >
+      <label htmlFor="terms" className="text-sm font-medium leading-none">
         Accept terms and conditions
       </label>
       <div className="flex items-center space-x-2">
@@ -271,7 +250,7 @@ export default function SwitchGroupExample() {
     darkMode: false,
     animations: true,
     soundEffects: false,
-    autoSave: true,
+    autoSave: true
   });
 
   const updateFeature = (feature, value) => {
@@ -281,7 +260,7 @@ export default function SwitchGroupExample() {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-medium">Feature Settings</h3>
-      
+
       <div className="space-y-3">
         {Object.entries(features).map(([key, value]) => (
           <div key={key} className="flex items-center justify-between">
@@ -291,7 +270,7 @@ export default function SwitchGroupExample() {
             <Switch
               id={key}
               checked={value}
-              onCheckedChange={(checked) => updateFeature(key, checked)}
+              onCheckedChange={checked => updateFeature(key, checked)}
             />
           </div>
         ))}

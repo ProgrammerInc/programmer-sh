@@ -9,10 +9,10 @@ import { TerminalHistory } from '@/components/ui/terminal-history';
 
 const commandHistory = [
   { command: 'help', timestamp: new Date() },
-  { command: 'about', timestamp: new Date() },
+  { command: 'about', timestamp: new Date() }
 ];
 
-<TerminalHistory history={commandHistory} />
+<TerminalHistory history={commandHistory} />;
 ```
 
 ## With Command Click Handler
@@ -24,7 +24,7 @@ import { TerminalHistory } from '@/components/ui/terminal-history';
 
 const commandHistory = [
   { command: 'help', timestamp: new Date() },
-  { command: 'ls -la', timestamp: new Date() },
+  { command: 'ls -la', timestamp: new Date() }
 ];
 
 const handleCommandClick = (command: string) => {
@@ -32,10 +32,7 @@ const handleCommandClick = (command: string) => {
   // Execute the command or do something else
 };
 
-<TerminalHistory 
-  history={commandHistory} 
-  onCommandClick={handleCommandClick} 
-/>
+<TerminalHistory history={commandHistory} onCommandClick={handleCommandClick} />;
 ```
 
 ## Custom Prompt
@@ -47,13 +44,10 @@ import { TerminalHistory } from '@/components/ui/terminal-history';
 
 const commandHistory = [
   { command: 'help', timestamp: new Date() },
-  { command: 'about', timestamp: new Date() },
+  { command: 'about', timestamp: new Date() }
 ];
 
-<TerminalHistory 
-  history={commandHistory}
-  prompt="user@website:~$" 
-/>
+<TerminalHistory history={commandHistory} prompt="user@website:~$" />;
 ```
 
 ## Animated Output
@@ -65,13 +59,10 @@ import { TerminalHistory } from '@/components/ui/terminal-history';
 
 const commandHistory = [
   { command: 'help', timestamp: new Date() },
-  { command: 'about', timestamp: new Date() },
+  { command: 'about', timestamp: new Date() }
 ];
 
-<TerminalHistory 
-  history={commandHistory}
-  animate={true}
-/>
+<TerminalHistory history={commandHistory} animate={true} />;
 ```
 
 ## With Ref for Controlling Scroll
@@ -85,13 +76,10 @@ import { TerminalHistory, TerminalHistoryRef } from '@/components/ui/terminal-hi
 const historyRef = useRef<TerminalHistoryRef>(null);
 const commandHistory = [
   { command: 'help', timestamp: new Date() },
-  { command: 'about', timestamp: new Date() },
+  { command: 'about', timestamp: new Date() }
 ];
 
-<TerminalHistory 
-  ref={historyRef}
-  history={commandHistory} 
-/>
+<TerminalHistory ref={historyRef} history={commandHistory} />;
 
 // Later in your code:
 const scrollToBottom = () => {
@@ -111,26 +99,27 @@ Instead of re-executing commands, you can directly provide the output:
 import { TerminalHistory } from '@/components/ui/terminal-history';
 
 const commandHistory = [
-  { 
-    command: 'echo "Hello World"', 
+  {
+    command: 'echo "Hello World"',
     output: 'Hello World',
-    timestamp: new Date() 
+    timestamp: new Date()
   },
-  { 
-    command: 'unknown-command', 
+  {
+    command: 'unknown-command',
     output: 'Command not found: unknown-command',
     error: true,
-    timestamp: new Date() 
+    timestamp: new Date()
   },
-  { 
-    command: 'help', 
-    output: '<div><h3>Available Commands</h3><ul><li>help - Display this help message</li></ul></div>',
+  {
+    command: 'help',
+    output:
+      '<div><h3>Available Commands</h3><ul><li>help - Display this help message</li></ul></div>',
     html: true,
-    timestamp: new Date() 
-  },
+    timestamp: new Date()
+  }
 ];
 
-<TerminalHistory history={commandHistory} />
+<TerminalHistory history={commandHistory} />;
 ```
 
 ## Styling
@@ -143,11 +132,8 @@ import styles from './custom-styles.module.css';
 
 const commandHistory = [
   { command: 'help', timestamp: new Date() },
-  { command: 'about', timestamp: new Date() },
+  { command: 'about', timestamp: new Date() }
 ];
 
-<TerminalHistory 
-  history={commandHistory}
-  className={styles.customTerminalHistory}
-/>
+<TerminalHistory history={commandHistory} className={styles.customTerminalHistory} />;
 ```

@@ -58,14 +58,10 @@
 <div className="space-y-4">
   <div>
     <h3 className="text-lg font-medium">Profile</h3>
-    <p className="text-sm text-muted-foreground">
-      Update your personal information.
-    </p>
+    <p className="text-sm text-muted-foreground">Update your personal information.</p>
   </div>
   <Separator />
-  <div className="space-y-2">
-    {/* Form fields */}
-  </div>
+  <div className="space-y-2">{/* Form fields */}</div>
 </div>
 ```
 

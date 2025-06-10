@@ -7,6 +7,6 @@
  * @module LetterGlitch
  */
 
-export { LetterGlitch, default } from './letter-glitch';
+export { default, LetterGlitch } from './letter-glitch';
 export * as LetterGlitchStyles from './letter-glitch.module.css';
 export type { LetterGlitchProps } from './letter-glitch.types';

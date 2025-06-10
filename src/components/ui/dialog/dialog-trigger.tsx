@@ -3,8 +3,6 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { memo } from 'react';
 
-import { DialogTriggerProps } from './dialog.types';
-
 /**
  * Dialog Trigger Component
  * The button that opens the dialog

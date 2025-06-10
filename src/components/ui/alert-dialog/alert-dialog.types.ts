@@ -13,22 +13,30 @@ export type AlertDialogProps = React.ComponentProps<typeof AlertDialogPrimitive.
 /**
  * Props for AlertDialogTrigger component
  */
-export type AlertDialogTriggerProps = React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Trigger>;
+export type AlertDialogTriggerProps = React.ComponentPropsWithoutRef<
+  typeof AlertDialogPrimitive.Trigger
+>;
 
 /**
  * Props for AlertDialogPortal component
  */
-export type AlertDialogPortalProps = React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Portal>;
+export type AlertDialogPortalProps = React.ComponentPropsWithoutRef<
+  typeof AlertDialogPrimitive.Portal
+>;
 
 /**
  * Props for AlertDialogOverlay component
  */
-export type AlertDialogOverlayProps = React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Overlay>;
+export type AlertDialogOverlayProps = React.ComponentPropsWithoutRef<
+  typeof AlertDialogPrimitive.Overlay
+>;
 
 /**
  * Props for AlertDialogContent component
  */
-export type AlertDialogContentProps = React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content>;
+export type AlertDialogContentProps = React.ComponentPropsWithoutRef<
+  typeof AlertDialogPrimitive.Content
+>;
 
 /**
  * Props for AlertDialogHeader component
@@ -43,19 +51,27 @@ export type AlertDialogFooterProps = React.HTMLAttributes<HTMLDivElement>;
 /**
  * Props for AlertDialogTitle component
  */
-export type AlertDialogTitleProps = React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Title>;
+export type AlertDialogTitleProps = React.ComponentPropsWithoutRef<
+  typeof AlertDialogPrimitive.Title
+>;
 
 /**
  * Props for AlertDialogDescription component
  */
-export type AlertDialogDescriptionProps = React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>;
+export type AlertDialogDescriptionProps = React.ComponentPropsWithoutRef<
+  typeof AlertDialogPrimitive.Description
+>;
 
 /**
  * Props for AlertDialogAction component
  */
-export type AlertDialogActionProps = React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>;
+export type AlertDialogActionProps = React.ComponentPropsWithoutRef<
+  typeof AlertDialogPrimitive.Action
+>;
 
 /**
  * Props for AlertDialogCancel component
  */
-export type AlertDialogCancelProps = React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>;
+export type AlertDialogCancelProps = React.ComponentPropsWithoutRef<
+  typeof AlertDialogPrimitive.Cancel
+>;

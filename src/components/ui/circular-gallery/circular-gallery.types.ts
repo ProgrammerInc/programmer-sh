@@ -2,7 +2,7 @@
  * Type definitions for the Circular Gallery component
  */
 
-import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform } from 'ogl';
+import { Mesh, Plane, Renderer, Transform } from 'ogl';
 
 /**
  * OpenGL renderer type
@@ -95,25 +95,25 @@ export interface CircularGalleryProps {
    * Array of gallery items to display
    */
   items?: GalleryItem[];
-  
+
   /**
    * Bend factor for the curved gallery layout
    * @default 3
    */
   bend?: number;
-  
+
   /**
    * Text color for item labels
    * @default '#ffffff'
    */
   textColor?: string;
-  
+
   /**
    * Border radius for gallery items
    * @default 0.05
    */
   borderRadius?: number;
-  
+
   /**
    * Font for text labels
    * @default 'bold 30px DM Sans'

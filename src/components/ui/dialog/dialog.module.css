@@ -34,7 +34,9 @@
   border: 1px solid var(--border);
   background-color: var(--background);
   padding: 1.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
   transition-duration: 200ms;
 }
 
@@ -79,7 +81,7 @@
     flex-direction: row;
     justify-content: flex-end;
   }
-  
+
   .dialog-footer > * + * {
     margin-left: 0.5rem;
   }
@@ -121,10 +123,11 @@
 .dialog-close:focus {
   outline: none;
 
- 
   --ring-color: var(--ring);
   --ring-offset-color: var(--background);
-  box-shadow: 0 0 0 2px var(--ring-offset-color), 0 0 0 4px var(--ring-color);
+  box-shadow:
+    0 0 0 2px var(--ring-offset-color),
+    0 0 0 4px var(--ring-color);
 }
 
 .dialog-close[data-state='open'] {

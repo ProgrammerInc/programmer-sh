@@ -41,10 +41,12 @@
 ## Form Integration
 
 ```tsx
-<form onSubmit={(e) => {
-  e.preventDefault();
-  // Handle form submission
-}}>
+<form
+  onSubmit={e => {
+    e.preventDefault();
+    // Handle form submission
+  }}
+>
   <Select name="food" required>
     <SelectTrigger className="w-[200px]">
       <SelectValue placeholder="Select a food" />
@@ -82,7 +84,9 @@
   </SelectTrigger>
   <SelectContent>
     <SelectItem value="apple">Apple</SelectItem>
-    <SelectItem value="banana" disabled>Banana (Out of Stock)</SelectItem>
+    <SelectItem value="banana" disabled>
+      Banana (Out of Stock)
+    </SelectItem>
     <SelectItem value="orange">Orange</SelectItem>
   </SelectContent>
 </Select>

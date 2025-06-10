@@ -7,7 +7,6 @@ import { Drawer as DrawerPrimitive } from 'vaul';
 import { cn } from '@/utils/app.utils';
 import styles from './drawer.module.css';
 import {
-  DrawerCloseProps,
   DrawerContentProps,
   DrawerDescriptionProps,
   DrawerFooterProps,
@@ -15,16 +14,15 @@ import {
   DrawerOverlayProps,
   DrawerPortalProps,
   DrawerProps,
-  DrawerTitleProps,
-  DrawerTriggerProps
+  DrawerTitleProps
 } from './drawer.types';
 
 /**
  * Drawer component
- * 
+ *
  * A Drawer is a panel that slides out from the edge of the screen,
  * similar to a sidebar or a dialog but with a sliding animation.
- * 
+ *
  * @example
  * ```tsx
  * <Drawer>
@@ -53,9 +51,9 @@ Drawer.displayName = 'Drawer';
 
 /**
  * DrawerTrigger component
- * 
+ *
  * Element that triggers the drawer to open when clicked.
- * 
+ *
  * @example
  * ```tsx
  * <DrawerTrigger asChild>
@@ -68,9 +66,9 @@ DrawerTrigger.displayName = DrawerPrimitive.Trigger.displayName;
 
 /**
  * DrawerPortal component
- * 
+ *
  * Portals the drawer content into the body.
- * 
+ *
  * @example
  * ```tsx
  * <DrawerPortal>
@@ -86,9 +84,9 @@ DrawerPortal.displayName = 'DrawerPortal';
 
 /**
  * DrawerClose component
- * 
+ *
  * Element that closes the drawer when clicked.
- * 
+ *
  * @example
  * ```tsx
  * <DrawerClose asChild>
@@ -101,38 +99,33 @@ DrawerClose.displayName = DrawerPrimitive.Close.displayName;
 
 /**
  * DrawerOverlay component
- * 
+ *
  * Covers the viewport when the drawer is open.
- * 
+ *
  * @example
  * ```tsx
  * <DrawerOverlay />
  * ```
  */
-const DrawerOverlay = memo(React.forwardRef<
-  React.ElementRef<typeof DrawerPrimitive.Overlay>,
-  DrawerOverlayProps
->(function DrawerOverlay({ className, ...props }, ref) {
-  const overlayClassName = useMemo(() => {
-    return cn(styles['drawer-overlay'], className);
-  }, [className]);
+const DrawerOverlay = memo(
+  React.forwardRef<React.ElementRef<typeof DrawerPrimitive.Overlay>, DrawerOverlayProps>(
+    function DrawerOverlay({ className, ...props }, ref) {
+      const overlayClassName = useMemo(() => {
+        return cn(styles['drawer-overlay'], className);
+      }, [className]);
 
-  return (
-    <DrawerPrimitive.Overlay
-      ref={ref}
-      className={overlayClassName}
-      {...props}
-    />
-  );
-}));
+      return <DrawerPrimitive.Overlay ref={ref} className={overlayClassName} {...props} />;
+    }
+  )
+);
 
 DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
 
 /**
  * DrawerContent component
- * 
+ *
  * Contains the content for the drawer.
- * 
+ *
  * @example
  * ```tsx
  * <DrawerContent>
@@ -142,36 +135,33 @@ DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
  * </DrawerContent>
  * ```
  */
-const DrawerContent = memo(React.forwardRef<
-  React.ElementRef<typeof DrawerPrimitive.Content>,
-  DrawerContentProps
->(function DrawerContent({ className, children, ...props }, ref) {
-  const contentClassName = useMemo(() => {
-    return cn(styles['drawer-content'], className);
-  }, [className]);
+const DrawerContent = memo(
+  React.forwardRef<React.ElementRef<typeof DrawerPrimitive.Content>, DrawerContentProps>(
+    function DrawerContent({ className, children, ...props }, ref) {
+      const contentClassName = useMemo(() => {
+        return cn(styles['drawer-content'], className);
+      }, [className]);
 
-  return (
-    <DrawerPortal>
-      <DrawerOverlay />
-      <DrawerPrimitive.Content
-        ref={ref}
-        className={contentClassName}
-        {...props}
-      >
-        <div className={styles['drawer-handle']} />
-        {children}
-      </DrawerPrimitive.Content>
-    </DrawerPortal>
-  );
-}));
+      return (
+        <DrawerPortal>
+          <DrawerOverlay />
+          <DrawerPrimitive.Content ref={ref} className={contentClassName} {...props}>
+            <div className={styles['drawer-handle']} />
+            {children}
+          </DrawerPrimitive.Content>
+        </DrawerPortal>
+      );
+    }
+  )
+);
 
 DrawerContent.displayName = 'DrawerContent';
 
 /**
  * DrawerHeader component
- * 
+ *
  * Container for the drawer title and description.
- * 
+ *
  * @example
  * ```tsx
  * <DrawerHeader>
@@ -192,9 +182,9 @@ DrawerHeader.displayName = 'DrawerHeader';
 
 /**
  * DrawerFooter component
- * 
+ *
  * Container for the drawer actions.
- * 
+ *
  * @example
  * ```tsx
  * <DrawerFooter>
@@ -217,38 +207,33 @@ DrawerFooter.displayName = 'DrawerFooter';
 
 /**
  * DrawerTitle component
- * 
+ *
  * The title of the drawer.
- * 
+ *
  * @example
  * ```tsx
  * <DrawerTitle>Edit Profile</DrawerTitle>
  * ```
  */
-const DrawerTitle = memo(React.forwardRef<
-  React.ElementRef<typeof DrawerPrimitive.Title>,
-  DrawerTitleProps
->(function DrawerTitle({ className, ...props }, ref) {
-  const titleClassName = useMemo(() => {
-    return cn(styles['drawer-title'], className);
-  }, [className]);
+const DrawerTitle = memo(
+  React.forwardRef<React.ElementRef<typeof DrawerPrimitive.Title>, DrawerTitleProps>(
+    function DrawerTitle({ className, ...props }, ref) {
+      const titleClassName = useMemo(() => {
+        return cn(styles['drawer-title'], className);
+      }, [className]);
 
-  return (
-    <DrawerPrimitive.Title
-      ref={ref}
-      className={titleClassName}
-      {...props}
-    />
-  );
-}));
+      return <DrawerPrimitive.Title ref={ref} className={titleClassName} {...props} />;
+    }
+  )
+);
 
 DrawerTitle.displayName = DrawerPrimitive.Title.displayName;
 
 /**
  * DrawerDescription component
- * 
+ *
  * The description of the drawer.
- * 
+ *
  * @example
  * ```tsx
  * <DrawerDescription>
@@ -256,22 +241,17 @@ DrawerTitle.displayName = DrawerPrimitive.Title.displayName;
  * </DrawerDescription>
  * ```
  */
-const DrawerDescription = memo(React.forwardRef<
-  React.ElementRef<typeof DrawerPrimitive.Description>,
-  DrawerDescriptionProps
->(function DrawerDescription({ className, ...props }, ref) {
-  const descriptionClassName = useMemo(() => {
-    return cn(styles['drawer-description'], className);
-  }, [className]);
+const DrawerDescription = memo(
+  React.forwardRef<React.ElementRef<typeof DrawerPrimitive.Description>, DrawerDescriptionProps>(
+    function DrawerDescription({ className, ...props }, ref) {
+      const descriptionClassName = useMemo(() => {
+        return cn(styles['drawer-description'], className);
+      }, [className]);
 
-  return (
-    <DrawerPrimitive.Description
-      ref={ref}
-      className={descriptionClassName}
-      {...props}
-    />
-  );
-}));
+      return <DrawerPrimitive.Description ref={ref} className={descriptionClassName} {...props} />;
+    }
+  )
+);
 
 DrawerDescription.displayName = DrawerPrimitive.Description.displayName;
 

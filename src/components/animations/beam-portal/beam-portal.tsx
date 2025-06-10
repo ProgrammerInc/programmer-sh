@@ -61,13 +61,7 @@ const BeamPortal = memo(function BeamPortal({
   );
 
   return (
-    <div
-      className={cn(
-        styles.container,
-        className
-      )}
-      {...props}
-    >
+    <div className={cn(styles.container, className)} {...props}>
       {/* Background portal effect */}
       <div className={styles['ring-container']}>
         {/* Outer ring */}
@@ -105,10 +99,7 @@ const BeamPortal = memo(function BeamPortal({
         />
 
         {/* Center glow */}
-        <div
-          className={styles['center-glow']}
-          style={containerStyle}
-        />
+        <div className={styles['center-glow']} style={containerStyle} />
       </div>
 
       {/* Content */}

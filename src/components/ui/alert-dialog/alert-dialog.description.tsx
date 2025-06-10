@@ -1,3 +1,4 @@
+/* eslint-disable no-secrets/no-secrets */
 /**
  * Alert Dialog Description Component
  *
@@ -16,30 +17,28 @@ import { AlertDialogDescriptionProps } from './alert-dialog.types';
 
 /**
  * AlertDialogDescription component
- * 
+ *
  * Provides additional details about the purpose of the alert dialog.
- * 
+ *
  * @example
  * ```tsx
  * <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
  * ```
  */
-export const AlertDialogDescription = memo(React.forwardRef<
-  React.ElementRef<typeof AlertDialogPrimitive.Description>,
-  AlertDialogDescriptionProps
->(({ className, ...props }, ref) => {
-  const descriptionClassName = useMemo(() => {
-    return cn(styles.description, className);
-  }, [className]);
+export const AlertDialogDescription = memo(
+  React.forwardRef<
+    React.ElementRef<typeof AlertDialogPrimitive.Description>,
+    AlertDialogDescriptionProps
+  >(({ className, ...props }, ref) => {
+    const descriptionClassName = useMemo(() => {
+      return cn(styles.description, className);
+    }, [className]);
 
-  return (
-    <AlertDialogPrimitive.Description
-      ref={ref}
-      className={descriptionClassName}
-      {...props}
-    />
-  );
-}));
+    return (
+      <AlertDialogPrimitive.Description ref={ref} className={descriptionClassName} {...props} />
+    );
+  })
+);
 
 AlertDialogDescription.displayName = AlertDialogPrimitive.Description.displayName;
 

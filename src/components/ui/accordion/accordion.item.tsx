@@ -15,7 +15,7 @@ import { AccordionItemProps } from './accordion.types';
 
 /**
  * AccordionItem component
- * 
+ *
  * @example
  * ```tsx
  * <AccordionItem value="unique-value">
@@ -24,16 +24,17 @@ import { AccordionItemProps } from './accordion.types';
  * </AccordionItem>
  * ```
  */
-export const AccordionItem = memo(React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Item>,
-  AccordionItemProps
->(({ className, ...props }, ref) => {
-  const itemClassName = useMemo(() => {
-    return cn(styles.item, className);
-  }, [className]);
+export const AccordionItem = memo(
+  React.forwardRef<React.ElementRef<typeof AccordionPrimitive.Item>, AccordionItemProps>(
+    ({ className, ...props }, ref) => {
+      const itemClassName = useMemo(() => {
+        return cn(styles.item, className);
+      }, [className]);
 
-  return <AccordionPrimitive.Item ref={ref} className={itemClassName} {...props} />;
-}));
+      return <AccordionPrimitive.Item ref={ref} className={itemClassName} {...props} />;
+    }
+  )
+);
 
 AccordionItem.displayName = 'AccordionItem';
 

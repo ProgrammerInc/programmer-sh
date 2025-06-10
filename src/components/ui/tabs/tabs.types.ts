@@ -20,7 +20,7 @@ export type TabsOrientation = 'horizontal' | 'vertical';
 
 /**
  * Props for the Tabs root component
- * 
+ *
  * @property {string} defaultValue - The initial active tab value
  * @property {string} value - The controlled active tab value
  * @property {function} onValueChange - Callback when the active tab changes
@@ -36,7 +36,7 @@ export interface TabsProps extends React.ComponentPropsWithoutRef<typeof TabsPri
 
 /**
  * Props for the TabsList component
- * 
+ *
  * @property {string} className - Additional CSS class names
  * @property {React.ReactNode} children - The tab trigger elements
  */
@@ -44,7 +44,7 @@ export type TabsListProps = React.ComponentPropsWithoutRef<typeof TabsPrimitive.
 
 /**
  * Props for the TabsTrigger component
- * 
+ *
  * @property {string} value - The unique value of this tab
  * @property {string} className - Additional CSS class names
  * @property {boolean} disabled - Whether the trigger is disabled
@@ -55,7 +55,7 @@ export type TabsTriggerProps = React.ComponentPropsWithoutRef<typeof TabsPrimiti
 
 /**
  * Props for the TabsContent component
- * 
+ *
  * @property {string} value - The value that activates this content
  * @property {string} className - Additional CSS class names
  * @property {boolean} forceMount - Force mounting of content when not active

@@ -33,11 +33,15 @@
  */
 
 // Import and re-export all components and types
-import FramerCarousel, { FramerCarouselDots, FramerCarouselItem } from './framer-carousel';
+import FramerCarousel from './framer-carousel';
 
 // Export types explicitly to avoid naming conflicts
-export { FramerCarouselItem, FramerCarouselDots, FramerCarousel } from './framer-carousel';
-export type { FramerCarouselDotsProps, FramerCarouselItemProps, FramerCarouselProps } from './framer-carousel.types';
+export { FramerCarousel, FramerCarouselDots, FramerCarouselItemComponent } from './framer-carousel';
+export type {
+  FramerCarouselDotsProps,
+  FramerCarouselItemProps,
+  FramerCarouselProps
+} from './framer-carousel.types';
 
 // Export default for backwards compatibility
 export default FramerCarousel;

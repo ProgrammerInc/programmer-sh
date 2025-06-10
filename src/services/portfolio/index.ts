@@ -8,10 +8,10 @@
 export * from './portfolio.service';
 
 // Direct exports of individual services for specific use cases
-export * from './profile.service';
-export * from './experience.service';
-export * from './projects.service';
 export * from './education.service';
+export * from './experience.service';
+export * from './profile.service';
+export * from './projects.service';
 
 // Export types
 export * from './portfolio.types';

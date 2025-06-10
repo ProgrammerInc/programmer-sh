@@ -64,7 +64,7 @@ export const getCurrentWallpaper = (): string => {
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     wallpaperLogger.error('Error getting current wallpaper', { error: errorMessage });
-    return 'particles'; // Fallback to default
+    return 'default'; // Fallback to default
   }
 };
 

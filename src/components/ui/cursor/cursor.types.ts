@@ -19,20 +19,20 @@ import {
   TextFlagCursorProps,
   TrailingCursorProps
 } from '@/components/cursors';
-import { CSSProperties, HTMLAttributes, RefObject } from 'react';
+import { HTMLAttributes, RefObject } from 'react';
 
 /**
  * Type of cursor to display
- * 
+ *
  * @typedef {string} CursorType
  */
 export type CursorType = 'default' | 'cursor' | 'image' | 'animation';
 
 /**
  * Cursor definition interface
- * 
+ *
  * This describes a cursor preset with all its properties
- * 
+ *
  * @interface Cursor
  */
 export interface Cursor {
@@ -73,14 +73,14 @@ export interface Cursor {
 
 /**
  * Props for the Cursor Provider component
- * 
+ *
  * @interface CursorProps
  * @extends {HTMLAttributes<HTMLDivElement>}
  * @example
  * ```tsx
- * <CursorProvider 
- *   cursor="rainbow" 
- *   theme="dark" 
+ * <CursorProvider
+ *   cursor="rainbow"
+ *   theme="dark"
  *   color="#ff5500"
  * />
  * ```

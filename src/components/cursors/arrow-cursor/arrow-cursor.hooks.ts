@@ -25,7 +25,7 @@ export const useArrowCursorTracking = () => {
     const handleMouseMove = (e: MouseEvent) => {
       // Prevent state updates if component unmounted
       if (!mountedRef.current) return;
-      
+
       // Track mouse position
       setMousePosition({ x: e.clientX, y: e.clientY });
 

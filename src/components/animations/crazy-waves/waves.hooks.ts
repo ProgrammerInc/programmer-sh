@@ -33,12 +33,20 @@ export const useWavesAnimation = (
     left: number;
     top: number;
   }>({ width: 0, height: 0, left: 0, top: 0 });
-  
+
   const noiseRef = useRef<Noise>(new Noise(Math.random()));
   const linesRef = useRef<Point[][]>([]);
   const mouseRef = useRef<Mouse>({
-    x: 0, y: 0, lx: 0, ly: 0, sx: 0, sy: 0,
-    v: 0, vs: 0, a: 0, set: false
+    x: 0,
+    y: 0,
+    lx: 0,
+    ly: 0,
+    sx: 0,
+    sy: 0,
+    v: 0,
+    vs: 0,
+    a: 0,
+    set: false
   });
 
   // Configuration with defaults
@@ -70,11 +78,11 @@ export const useWavesAnimation = (
       left: rect.left,
       top: rect.top
     };
-    
+
     // Update canvas dimensions
     canvas.width = rect.width;
     canvas.height = rect.height;
-    
+
     // Re-initialize context with any needed settings
     const ctx = canvas.getContext('2d');
     if (ctx) {
@@ -90,7 +98,7 @@ export const useWavesAnimation = (
   const setLines = useCallback(() => {
     const { width, height } = boundingRef.current;
     if (width === 0 || height === 0) return;
-    
+
     linesRef.current = [];
 
     // Ensure we cover the entire container with some margin
@@ -101,7 +109,7 @@ export const useWavesAnimation = (
     // Calculate the number of lines and points needed
     const totalLines = Math.max(3, Math.floor(oWidth / xGap));
     const totalPoints = Math.max(3, Math.floor(oHeight / yGap));
-    
+
     // Position lines across the container
     const xStart = (width - xGap * totalLines) / 2 - 50;
     const yStart = (height - yGap * totalPoints) / 2 - 50;
@@ -157,7 +165,7 @@ export const useWavesAnimation = (
     // Draw each line
     linesRef.current.forEach(points => {
       if (points.length === 0) return;
-      
+
       // Move to first point
       const firstPoint = calculateMovedPoint(points[0]);
       ctx.moveTo(firstPoint.x, firstPoint.y);
@@ -229,41 +237,44 @@ export const useWavesAnimation = (
   /**
    * Animation frame callback
    */
-  const animate = useCallback((timestamp: number) => {
-    const container = containerRef.current;
-    if (!container) return;
+  const animate = useCallback(
+    (timestamp: number) => {
+      const container = containerRef.current;
+      if (!container) return;
 
-    const mouse = mouseRef.current;
+      const mouse = mouseRef.current;
 
-    // Smooth mouse position
-    mouse.sx += (mouse.x - mouse.sx) * ANIMATION_SETTINGS.CURSOR_SMOOTHING;
-    mouse.sy += (mouse.y - mouse.sy) * ANIMATION_SETTINGS.CURSOR_SMOOTHING;
+      // Smooth mouse position
+      mouse.sx += (mouse.x - mouse.sx) * ANIMATION_SETTINGS.CURSOR_SMOOTHING;
+      mouse.sy += (mouse.y - mouse.sy) * ANIMATION_SETTINGS.CURSOR_SMOOTHING;
 
-    // Calculate velocity and angle
-    const dx = mouse.x - mouse.lx;
-    const dy = mouse.y - mouse.ly;
-    const d = Math.sqrt(dx * dx + dy * dy);
+      // Calculate velocity and angle
+      const dx = mouse.x - mouse.lx;
+      const dy = mouse.y - mouse.ly;
+      const d = Math.sqrt(dx * dx + dy * dy);
 
-    mouse.v = d;
-    mouse.vs += (d - mouse.vs) * ANIMATION_SETTINGS.CURSOR_SMOOTHING;
-    mouse.vs = Math.min(ANIMATION_SETTINGS.MAX_SMOOTHED_VELOCITY, mouse.vs);
-    mouse.lx = mouse.x;
-    mouse.ly = mouse.y;
-    mouse.a = Math.atan2(dy, dx);
+      mouse.v = d;
+      mouse.vs += (d - mouse.vs) * ANIMATION_SETTINGS.CURSOR_SMOOTHING;
+      mouse.vs = Math.min(ANIMATION_SETTINGS.MAX_SMOOTHED_VELOCITY, mouse.vs);
+      mouse.lx = mouse.x;
+      mouse.ly = mouse.y;
+      mouse.a = Math.atan2(dy, dx);
 
-    // Update CSS variables for cursor visualization
-    if (container) {
-      container.style.setProperty('--x', `${mouse.sx}px`);
-      container.style.setProperty('--y', `${mouse.sy}px`);
-    }
+      // Update CSS variables for cursor visualization
+      if (container) {
+        container.style.setProperty('--x', `${mouse.sx}px`);
+        container.style.setProperty('--y', `${mouse.sy}px`);
+      }
 
-    // Update and draw points
-    movePoints(timestamp * 0.001);
-    drawLines();
+      // Update and draw points
+      movePoints(timestamp * 0.001);
+      drawLines();
 
-    // Continue animation
-    animationFrameRef.current = requestAnimationFrame(animate);
-  }, [containerRef, drawLines, movePoints]);
+      // Continue animation
+      animationFrameRef.current = requestAnimationFrame(animate);
+    },
+    [containerRef, drawLines, movePoints]
+  );
 
   /**
    * Cleanup animation
@@ -286,16 +297,16 @@ export const useWavesAnimation = (
     // Set up canvas and context
     ctxRef.current = canvas.getContext('2d');
     if (!ctxRef.current) return;
-    
+
     // Configure canvas
     setSize();
     setLines();
-    
+
     // Start animation loop
     if (animationFrameRef.current === null) {
       animationFrameRef.current = requestAnimationFrame(animate);
     }
-    
+
     isInitializedRef.current = true;
   }, [animate, canvasRef, containerRef, setLines, setSize]);
 
@@ -351,12 +362,9 @@ export const useWavesAnimation = (
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-    
+
     if (options.backgroundColor) {
-      container.style.setProperty(
-        '--waves-background-color',
-        options.backgroundColor
-      );
+      container.style.setProperty('--waves-background-color', options.backgroundColor);
     }
 
     if (options.lineColor) {

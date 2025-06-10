@@ -1,6 +1,6 @@
 /**
  * URL Command Handler
- * 
+ *
  * Handles command extraction from URLs and provides utility functions
  * for working with URL-based commands.
  */
@@ -40,7 +40,7 @@ console.log('Valid URL commands:', validUrlCommands);
 
 /**
  * Extract command and theme from URL
- * 
+ *
  * @param url - The URL to extract parameters from
  * @returns Object containing the extracted command and theme
  * @throws Will not throw errors, returns empty strings instead
@@ -98,11 +98,11 @@ export const isValidUrlCommand = (command: string): boolean => {
   const commandParts = command.split('/');
   const commandName = commandParts.length > 1 ? commandParts[1].toLowerCase() : '';
 
-  console.log(`URL command validation: ${commandName}`, { 
-    command, 
+  console.log(`URL command validation: ${commandName}`, {
+    command,
     commandName,
     commandParts,
-    validationResult: validUrlCommands.includes(commandName as CommandName) 
+    validationResult: validUrlCommands.includes(commandName as CommandName)
   });
 
   // Special case for support alias
@@ -117,17 +117,17 @@ export const isValidUrlCommand = (command: string): boolean => {
 
 /**
  * Creates a URL string for a specific command with optional theme
- * 
+ *
  * @param command - The command to generate a URL for
  * @param theme - Optional theme parameter
  * @returns Full URL string for the command
  */
 export const createCommandUrl = (command: CommandName, theme?: string): string => {
   let url = `/${command}`;
-  
+
   if (theme && theme.trim() !== '') {
     url += `?theme=${encodeURIComponent(theme)}`;
   }
-  
+
   return url;
 };

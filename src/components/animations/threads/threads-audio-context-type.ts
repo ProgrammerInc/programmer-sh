@@ -27,14 +27,14 @@ export const DEFAULT_AUDIO_DATA: AudioData = {
 // Default audio options
 export const DEFAULT_AUDIO_OPTIONS: AudioAnalyzerOptions = {
   enabled: false,
-  sensitivity: 2.5, 
+  sensitivity: 2.5,
   bassRange: [20, 250],
   midRange: [250, 2000],
   trebleRange: [2000, 14000],
   fftSize: 2048,
   audioSource: 'mic',
-  smoothingTimeConstant: 0.75, 
-  visualSmoothingFactor: 0.2, 
+  smoothingTimeConstant: 0.75,
+  visualSmoothingFactor: 0.2
 };
 
 // Create context with default values

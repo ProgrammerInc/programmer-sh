@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import { cn } from '@/utils/app.utils';
 import styles from './glass-icons.module.css';
-import { GlassIconProps, GlassIconsItem, GlassIconsProps } from './glass-icons.types';
+import { GlassIconProps, GlassIconsProps } from './glass-icons.types';
 
 /**
  * Mapping of predefined color names to gradient values
@@ -16,47 +16,36 @@ const gradientMapping: Record<string, string> = {
   red: 'linear-gradient(hsl(3deg, 90%, 50%), hsl(348deg, 90%, 50%))',
   indigo: 'linear-gradient(hsl(253deg, 90%, 50%), hsl(238deg, 90%, 50%))',
   orange: 'linear-gradient(hsl(43deg, 90%, 50%), hsl(28deg, 90%, 50%))',
-  green: 'linear-gradient(hsl(123deg, 90%, 40%), hsl(108deg, 90%, 40%))',
+  green: 'linear-gradient(hsl(123deg, 90%, 40%), hsl(108deg, 90%, 40%))'
 };
 
 /**
  * GlassIcon Component
- * 
+ *
  * Individual glass icon button with 3D hover effect.
  */
-const GlassIcon = React.memo(function GlassIcon({ 
-  item, 
-  getBackgroundStyle 
+const GlassIcon = React.memo(function GlassIcon({
+  item,
+  getBackgroundStyle
 }: GlassIconProps): JSX.Element {
   return (
     <button
       type="button"
       aria-label={item.label}
-      className={cn(
-        styles['icon-button'],
-        item.customClass
-      )}
+      className={cn(styles['icon-button'], item.customClass)}
     >
       {/* Back layer */}
-      <span
-        className={styles['back-layer']}
-        style={getBackgroundStyle(item.color)}
-      ></span>
+      <span className={styles['back-layer']} style={getBackgroundStyle(item.color)}></span>
 
       {/* Front layer */}
       <span className={styles['front-layer']}>
-        <span
-          className={styles['icon-wrapper']}
-          aria-hidden="true"
-        >
+        <span className={styles['icon-wrapper']} aria-hidden="true">
           {item.icon}
         </span>
       </span>
 
       {/* Label */}
-      <span className={styles['icon-label']}>
-        {item.label}
-      </span>
+      <span className={styles['icon-label']}>{item.label}</span>
     </button>
   );
 });
@@ -65,23 +54,23 @@ GlassIcon.displayName = 'GlassIcon';
 
 /**
  * GlassIcons Component
- * 
+ *
  * A grid of glass-like icon buttons with 3D hover effects.
  * Each button has a colored background, a glass front layer, and a label.
- * 
+ *
  * @example
  * ```tsx
  * const items = [
  *   { icon: <HomeIcon />, color: 'blue', label: 'Home' },
  *   { icon: <SettingsIcon />, color: 'purple', label: 'Settings' },
  * ];
- * 
+ *
  * <GlassIcons items={items} className="max-w-4xl" />
  * ```
  */
-const GlassIcons = React.memo(function GlassIcons({ 
-  items, 
-  className 
+const GlassIcons = React.memo(function GlassIcons({
+  items,
+  className
 }: GlassIconsProps): JSX.Element {
   /**
    * Returns the background style based on the color name or value
@@ -96,11 +85,7 @@ const GlassIcons = React.memo(function GlassIcons({
   return (
     <div className={cn(styles['icons-container'], className)}>
       {items.map((item, index) => (
-        <GlassIcon 
-          key={index} 
-          item={item} 
-          getBackgroundStyle={getBackgroundStyle} 
-        />
+        <GlassIcon key={index} item={item} getBackgroundStyle={getBackgroundStyle} />
       ))}
     </div>
   );

@@ -11,13 +11,17 @@
   font-size: 0.875rem;
   line-height: 1.5;
   color: var(--foreground);
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
 }
 
 .textarea:focus-visible {
   outline: none;
   border-color: var(--ring);
-  box-shadow: 0 0 0 2px var(--ring-offset), 0 0 0 4px var(--ring);
+  box-shadow:
+    0 0 0 2px var(--ring-offset),
+    0 0 0 4px var(--ring);
 }
 
 .textarea:disabled {
@@ -55,7 +59,9 @@
 
 .textarea-error:focus-visible {
   border-color: var(--destructive);
-  box-shadow: 0 0 0 2px var(--ring-offset), 0 0 0 4px var(--destructive);
+  box-shadow:
+    0 0 0 2px var(--ring-offset),
+    0 0 0 4px var(--destructive);
 }
 
 .textarea-success {
@@ -64,7 +70,9 @@
 
 .textarea-success:focus-visible {
   border-color: var(--success);
-  box-shadow: 0 0 0 2px var(--ring-offset), 0 0 0 4px var(--success);
+  box-shadow:
+    0 0 0 2px var(--ring-offset),
+    0 0 0 4px var(--success);
 }
 
 /* Resizing */

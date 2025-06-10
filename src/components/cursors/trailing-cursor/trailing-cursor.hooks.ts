@@ -7,14 +7,14 @@
  * @module TrailingCursorHooks
  */
 import { useEffect, useRef } from 'react';
-import type { TrailingCursorProps, Particle } from './trailing-cursor.types';
-import { createParticle, setupCanvas, calculateCursorPosition } from './trailing-cursor.utils';
 import {
   DEFAULT_BASE_IMAGE_SRC,
   DEFAULT_PARTICLES_COUNT,
   DEFAULT_RATE,
   REDUCED_MOTION_QUERY
 } from './trailing-cursor.constants';
+import type { Particle, TrailingCursorProps } from './trailing-cursor.types';
+import { calculateCursorPosition, createParticle, setupCanvas } from './trailing-cursor.utils';
 
 /**
  * Hook to manage trailing cursor effect.
@@ -35,13 +35,13 @@ export function useTrailingCursor({
 
   // Track animation frame ID separately to avoid lint warning
   const animationFrameIdRef = useRef<number>();
-  
+
   // Track cursor position
   const cursorRef = useRef({ x: 0, y: 0 });
-  
+
   // Track particles
   const particlesRef = useRef<Particle[]>([]);
-  
+
   // Track initialization state
   const initializedRef = useRef(false);
 
@@ -50,7 +50,7 @@ export function useTrailingCursor({
     // Store props in refs to avoid dependency issues
     const hasWrapperEl = element !== undefined;
     const targetElement = hasWrapperEl ? element : document.body;
-    
+
     // Setup image
     const baseImage = new Image();
     baseImage.src = baseImageSrc;
@@ -76,9 +76,7 @@ export function useTrailingCursor({
       if (!initializedRef.current) {
         initializedRef.current = true;
         for (let i = 0; i < particles; i++) {
-          particlesRef.current.push(
-            createParticle(cursorPos.x, cursorPos.y, baseImage)
-          );
+          particlesRef.current.push(createParticle(cursorPos.x, cursorPos.y, baseImage));
         }
       }
     };
@@ -122,7 +120,7 @@ export function useTrailingCursor({
     // Add event listeners
     targetElement.addEventListener('mousemove', onMouseMove);
     window.addEventListener('resize', onWindowResize);
-    
+
     // Start animation loop
     loop();
 
@@ -130,20 +128,20 @@ export function useTrailingCursor({
     return () => {
       // First, set mounted flag to false to stop any ongoing operations
       mountedRef.current = false;
-      
+
       // Cancel animation frame if exists
       if (animationFrameIdRef.current) {
         cancelAnimationFrame(animationFrameIdRef.current);
         animationFrameIdRef.current = undefined;
       }
-      
+
       // Remove the canvas from the DOM if it exists
       canvas.remove();
-      
+
       // Remove event listeners
       targetElement.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('resize', onWindowResize);
-      
+
       // Clear particles to help with garbage collection
       particlesRef.current = [];
       initializedRef.current = false;
