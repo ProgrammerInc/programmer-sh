@@ -6,6 +6,8 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.7.3-3178C6.svg)
 ![Vite](https://img.shields.io/badge/Vite-6.3.5-646CFF.svg)
 
+![Terminal Screenshot](/public/images/terminal-programmer-sh.jpg)
+
 A modern terminal-inspired portfolio and resume website showcasing interactive animations, 3D experiences, and an immersive UI built with cutting-edge web technologies.
 
 ## 🚀 Features
