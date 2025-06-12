@@ -164,26 +164,6 @@ pnpm test
 pnpm test:e2e
 ```
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add some amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Open a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- [Radix UI](https://www.radix-ui.com/) for accessible component primitives
-- [Three.js](https://threejs.org/) for 3D graphics capabilities
-- [Tailwind CSS](https://tailwindcss.com/) for utility-first styling
-- [Vite](https://vitejs.dev/) for the lightning-fast development experience
-- [Supabase](https://supabase.io/) for backend services
-
 ## 📊 Code Statistics
 
 ```
@@ -213,6 +193,26 @@ Estimated People Required (organic) 13.81
 Processed 4306738 bytes, 4.307 megabytes (SI)
 ──────────────────────────────────────────────────────────────────────────────────────────
 ```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add some amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+- [Radix UI](https://www.radix-ui.com/) for accessible component primitives
+- [Three.js](https://threejs.org/) for 3D graphics capabilities
+- [Tailwind CSS](https://tailwindcss.com/) for utility-first styling
+- [Vite](https://vitejs.dev/) for the lightning-fast development experience
+- [Supabase](https://supabase.io/) for backend services
 
 ---
 
