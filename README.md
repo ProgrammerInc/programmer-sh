@@ -94,6 +94,7 @@ pnpm storybook
 │   ├── commands/         # Terminal command implementations
 │   ├── components/       # React components
 │   │   ├── ui/           # Core UI components
+│   │   ├── cursors/      # Cursor components
 │   │   └── animations/   # Animation components
 │   ├── data/             # Static data and content
 │   ├── errors/           # Error handling and boundary components
