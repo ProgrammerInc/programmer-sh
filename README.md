@@ -102,6 +102,7 @@ pnpm storybook
 │   ├── integrations/     # Third-party integrations
 │   ├── lib/              # Utility libraries
 │   ├── pages/            # Page components
+│   │   ├── demos/        # Demo pages
 │   ├── presets/          # Configuration presets
 │   ├── services/         # API services
 │   ├── stories/          # Storybook stories
