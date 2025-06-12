@@ -88,7 +88,7 @@ pnpm storybook
 
 ```
 ├── public/               # Static assets and favicon
-├── schemas/              # JSON schemas for validation
+├── schemas/              # SQL database schemas
 ├── scripts/              # Build and utility scripts
 ├── src/                  # Source code
 │   ├── commands/         # Terminal command implementations
