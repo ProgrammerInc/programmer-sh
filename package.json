@@ -136,7 +136,7 @@
     "caniuse-lite": "^1.0.30001705",
     "chromatic": "^11.28.0",
     "eslint": "^9.21.0",
-    "eslint-config-prettier": "^10.0.2",
+    "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-no-secrets": "^2.2.1",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
