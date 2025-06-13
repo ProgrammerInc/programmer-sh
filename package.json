@@ -72,7 +72,7 @@
     "date-fns": "^3.6.0",
     "dotted-map": "^2.2.3",
     "embla-carousel-react": "^8.5.2",
-    "framer-motion": "^12.4.10",
+    "framer-motion": "^12.18.0",
     "gl-matrix": "^3.4.3",
     "gsap": "^3.12.7",
     "html-react-parser": "^5.2.2",
